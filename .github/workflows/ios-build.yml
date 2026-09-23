@@ -15,13 +15,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Instalar dependências
+      - name: Instalar dependências do projeto
         run: npm ci
+
+      - name: Garantir dependência nativa do iOS
+        run: npm install @capacitor/ios
 
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: Apagar pasta ios antiga e gerar do zero
+      - name: Adicionar plataforma iOS e gerar Podfile
         run: |
           rm -rf ios
           npx cap add ios
