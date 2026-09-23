@@ -21,22 +21,21 @@ jobs:
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: cap sync ios
+      - name: Instalar dependências nativas (Capacitor iOS)
         run: npx cap sync ios
 
       - name: Resolver pacotes Swift (SPM)
         run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
-       - name: Compilar (sem assinatura)
+      - name: Compilar (sem assinatura)
         run: |
           cd ios/App
           xcodebuild build \
             -workspace App.xcworkspace \
             -scheme App \
             -configuration Release \
-            -destination "generic/platform=iOS" \
+            -destination "generic/platform=ios" \
             CODE_SIGNING_ALLOWED=NO
-        
 
       - name: Montar o .ipa
         run: |
