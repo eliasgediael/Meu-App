@@ -31,7 +31,7 @@ jobs:
       - name: Verificar Info.plist original
         run: |
           echo "===== INFO.PLIST ORIGINAL ====="
-          head -20 ios/App/App/Info.plist
+          head -30 ios/App/App/Info.plist
 
           echo "===== VALIDANDO ORIGINAL ====="
           plutil -lint ios/App/App/Info.plist
@@ -41,11 +41,11 @@ jobs:
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
 
-          "$PB" -c "Set :NSLocationWhenInUseUsageDescription O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida." "$PLIST"
+          "$PB" -c "Add :NSLocationWhenInUseUsageDescription string O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida." "$PLIST"
 
-          "$PB" -c "Set :NSLocationAlwaysAndWhenInUseUsageDescription O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
+          "$PB" -c "Add :NSLocationAlwaysAndWhenInUseUsageDescription string O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
-          "$PB" -c "Set :NSLocationAlwaysUsageDescription O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
+          "$PB" -c "Add :NSLocationAlwaysUsageDescription string O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
 
@@ -55,8 +55,8 @@ jobs:
 
       - name: Verificar Info.plist depois das alterações
         run: |
-          echo "===== PRIMEIRAS LINHAS ====="
-          head -30 ios/App/App/Info.plist
+          echo "===== INFO.PLIST DEPOIS ====="
+          head -40 ios/App/App/Info.plist
 
           echo "===== VALIDANDO ====="
           plutil -lint ios/App/App/Info.plist
