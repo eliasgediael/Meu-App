@@ -21,8 +21,9 @@ jobs:
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: Gerar plataforma iOS do zero no servidor
+      - name: Apagar pasta ios antiga e gerar do zero
         run: |
+          rm -rf ios
           npx cap add ios
 
       - name: Instalar Pods do CocoaPods
