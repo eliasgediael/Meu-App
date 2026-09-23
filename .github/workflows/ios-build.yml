@@ -19,7 +19,7 @@ jobs:
       - name: Instalar dependências do projeto
         run: npm ci
 
-      - name: Build web (copia o app pra www/)
+      - name: Build web
         run: npm run build
 
       - name: Recriar plataforma iOS
@@ -28,46 +28,48 @@ jobs:
           npx cap add ios
           npx cap sync ios
 
-      # A pasta ios/ é recriada do zero a cada build.
-      # Por isso as permissões precisam ser colocadas aqui.
-      - name: Permissões de localização e segundo plano (Info.plist)
+      - name: Verificar Info.plist original
+        run: |
+          echo "===== INFO.PLIST ORIGINAL ====="
+          head -20 ios/App/App/Info.plist
+
+          echo "===== VALIDANDO ORIGINAL ====="
+          plutil -lint ios/App/App/Info.plist
+
+      - name: Permissões de localização e segundo plano
         run: |
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
 
-          add_str() {
-            "$PB" -c "Add :$1 string $2" "$PLIST" 2>/dev/null || \
-            "$PB" -c "Set :$1 $2" "$PLIST"
-          }
+          "$PB" -c "Set :NSLocationWhenInUseUsageDescription O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida." "$PLIST"
 
-          add_str NSLocationWhenInUseUsageDescription "O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida."
-          add_str NSLocationAlwaysAndWhenInUseUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
-          add_str NSLocationAlwaysUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
+          "$PB" -c "Set :NSLocationAlwaysAndWhenInUseUsageDescription O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
+
+          "$PB" -c "Set :NSLocationAlwaysUsageDescription O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
+
           "$PB" -c "Add :UIBackgroundModes array" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:0 string location" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:1 string audio" "$PLIST"
 
-          plutil -extract NSLocationWhenInUseUsageDescription raw "$PLIST"
-          plutil -extract UIBackgroundModes json "$PLIST"
-
-      - name: Validar Info.plist
+      - name: Verificar Info.plist depois das alterações
         run: |
-          echo "===== VALIDANDO INFO.PLIST ====="
+          echo "===== PRIMEIRAS LINHAS ====="
+          head -30 ios/App/App/Info.plist
+
+          echo "===== VALIDANDO ====="
           plutil -lint ios/App/App/Info.plist
 
-          echo "===== CONTEÚDO DO INFO.PLIST ====="
+          echo "===== CONTEÚDO ====="
           plutil -p ios/App/App/Info.plist
 
-          echo "===== XML DO INFO.PLIST ====="
-          cat ios/App/App/Info.plist
+      - name: Resolver pacotes Swift
+        run: |
+          xcodebuild -resolvePackageDependencies \
+            -project ios/App/App.xcodeproj
 
-      - name: Resolver pacotes Swift (SPM)
-        run: xcodebuild -resolvePackageDependencies \
-          -project ios/App/App.xcodeproj
-
-      - name: Compilar (sem assinatura)
+      - name: Compilar sem assinatura
         run: |
           xcodebuild build \
             -project ios/App/App.xcodeproj \
@@ -81,7 +83,7 @@ jobs:
             PROVISIONING_PROFILE_SPECIFIER="" \
             CONFIGURATION_BUILD_DIR="$(pwd)/build"
 
-      - name: Montar o .ipa
+      - name: Montar o IPA
         run: |
           APP_PATH="build/App.app"
 
