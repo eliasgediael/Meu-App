@@ -1,0 +1,54 @@
+name: Build iOS (.ipa sem assinatura)
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Instalar dependências
+        run: npm ci
+
+      - name: Build web (copia o app pra www/)
+        run: npm run build
+
+      - name: cap sync ios
+        run: npx cap sync ios
+
+      - name: Resolver pacotes Swift (SPM)
+        run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
+
+      - name: Compilar (sem assinatura)
+        run: |
+          xcodebuild build \
+            -project ios/App/App.xcodeproj \
+            -target App \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
+
+      - name: Montar o .ipa
+        run: |
+          APP_PATH="build/Build/Products/Release-iphoneos/App.app"
+          mkdir -p Payload
+          cp -r "$APP_PATH" Payload/
+          zip -r MeuRitmo.ipa Payload
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: MeuRitmo-ipa
+          path: MeuRitmo.ipa
