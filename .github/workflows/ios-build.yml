@@ -21,42 +21,32 @@ jobs:
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: Recriar plataforma iOS e garantir Podfile
+      - name: Recriar plataforma iOS
         run: |
           rm -rf ios
           npx cap add ios
-          # Garantia absoluta: se por algum motivo o Podfile nao vier, criamos um padrao do Capacitor
-          if [ ! -f "ios/App/Podfile" ]; then
-            echo "Criando Podfile de contingencia..."
-            mkdir -p ios/App
-            cat << 'EOF' > ios/App/Podfile
-            platform :ios, '13.0'
-            use_frameworks!
-            target 'App' do
-              pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
-              pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
-            end
-          EOF
-          fi
+          npx cap sync ios
 
-      - name: Instalar Pods do CocoaPods
-        run: |
-          cd ios/App
-          pod install
+      - name: Resolver pacotes Swift (SPM)
+        run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
       - name: Compilar (sem assinatura)
         run: |
-          cd ios/App
           xcodebuild build \
-            -workspace App.xcworkspace \
-            -scheme App \
+            -project ios/App/App.xcodeproj \
+            -target App \
             -configuration Release \
-            -destination "generic/platform=ios" \
-            CODE_SIGNING_ALLOWED=NO
+            -sdk iphoneos \
+            -destination "generic/platform=iOS" \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            PROVISIONING_PROFILE_SPECIFIER=""
 
       - name: Montar o .ipa
         run: |
-          APP_PATH="ios/App/build/Build/Products/Release-iphoneos/App.app"
+          APP_PATH="build/Build/Products/Release-iphoneos/App.app"
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
           zip -r MeuRitmo.ipa Payload
