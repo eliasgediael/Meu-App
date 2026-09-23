@@ -18,25 +18,26 @@ jobs:
       - name: Instalar dependências do projeto
         run: npm ci
 
-      - name: Garantir dependência nativa do iOS
-        run: npm install @capacitor/ios
-
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: Adicionar plataforma iOS e gerar Podfile
+      - name: Recriar plataforma iOS e garantir Podfile
         run: |
           rm -rf ios
           npx cap add ios
-
-      - name: VERIFICAR ONDE O PODFILE ESTÁ (Diagnóstico)
-        run: |
-          echo "Conteudo da raiz:"
-          ls -la
-          echo "Conteudo da pasta ios (se existir):"
-          ls -la ios || true
-          echo "Conteudo da pasta ios/App (se existir):"
-          ls -la ios/App || true
+          # Garantia absoluta: se por algum motivo o Podfile nao vier, criamos um padrao do Capacitor
+          if [ ! -f "ios/App/Podfile" ]; then
+            echo "Criando Podfile de contingencia..."
+            mkdir -p ios/App
+            cat << 'EOF' > ios/App/Podfile
+            platform :ios, '13.0'
+            use_frameworks!
+            target 'App' do
+              pod 'Capacitor', :path => '../../node_modules/@capacitor/ios'
+              pod 'CapacitorCordova', :path => '../../node_modules/@capacitor/ios'
+            end
+          EOF
+          fi
 
       - name: Instalar Pods do CocoaPods
         run: |
