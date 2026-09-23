@@ -29,8 +29,9 @@ jobs:
 
       - name: Compilar (sem assinatura)
         run: |
+          cd ios/App
           xcodebuild build \
-            -workspace ios/App/App.xcworkspace \
+            -workspace App.xcworkspace \
             -scheme App \
             -configuration Release \
             -destination "generic/platform=iOS" \
