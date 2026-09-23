@@ -790,6 +790,17 @@ button.mrt-excheck svg{ width:12px; height:12px; color:#fff; }
 .mrt-tiro-bar .fill{ height:100%; background:var(--mrt-blue); border-radius:999px; transition:width 1s linear; }
 .mrt-tiro-hint{ font-size:12px; color:var(--mrt-dim); margin-bottom:18px; }
 .mrt-summarycheck{ width:64px; height:64px; border-radius:50%; background:rgba(34,197,94,0.18); color:var(--mrt-green); display:flex; align-items:center; justify-content:center; margin-bottom:16px; }
+.mrt-why{ font-size:12px; color:var(--mrt-dim); line-height:1.45; margin:0 0 14px; }
+.mrt-domsrow{ display:flex; gap:4px; }
+.mrt-domsbtn{ flex:1; height:34px; border-radius:9px; border:none; background:var(--mrt-card2); color:var(--mrt-dim); font-family:inherit; font-size:12px; font-weight:800; cursor:pointer; padding:0; }
+.mrt-domsbtn.active{ background:var(--mrt-blue); color:#fff; }
+.mrt-domsbtn.hot.active{ background:var(--mrt-amber); color:#1a1200; }
+.mrt-input{ width:100%; box-sizing:border-box; background:var(--mrt-card); border:2px solid transparent; border-radius:14px; color:var(--mrt-text); padding:15px 14px; font-family:inherit; font-size:16px; font-weight:600; }
+.mrt-input:focus{ outline:none; border-color:var(--mrt-blue); }
+.mrt-input::placeholder{ color:var(--mrt-dim); font-weight:500; }
+.mrt-quiz-title{ font-size:21px; font-weight:800; color:var(--mrt-text); margin-bottom:20px; line-height:1.3; }
+.mrt-quiz-opt{ display:block; width:100%; text-align:left; padding:17px 18px; margin-bottom:10px; background:var(--mrt-card); border-radius:16px; border:2px solid transparent; color:var(--mrt-text); font-family:inherit; font-size:14.5px; font-weight:700; cursor:pointer; }
+.mrt-quiz-opt.active{ border-color:var(--mrt-blue); background:rgba(59,130,246,0.12); color:var(--mrt-bluelight); }
 .mrt-summarycheck svg{ width:28px; height:28px; }
 .mrt-sub{ font-size:13px; color:var(--mrt-dim); font-weight:600; }
 .mrt-restcard{ background:var(--mrt-card); border-radius:20px; padding:26px 18px; text-align:center; }
@@ -814,6 +825,9 @@ button.mrt-excheck svg{ width:12px; height:12px; color:#fff; }
 .mrt-navbtn svg{ width:21px; height:21px; }
 .mrt-navbtn span{ font-size:10.5px; font-weight:700; }
 .mrt-navbtn.active{ color:var(--mrt-blue); }
+.mrt-fab-wrap{ position:fixed; left:0; right:0; bottom:calc(88px + env(safe-area-inset-bottom)); max-width:440px; margin:0 auto; display:flex; justify-content:flex-end; padding-right:20px; pointer-events:none; z-index:16; }
+.mrt-fab{ pointer-events:auto; width:52px; height:52px; border-radius:50%; background:var(--mrt-blue); border:none; color:#fff; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px -6px rgba(59,130,246,0.6); cursor:pointer; }
+.mrt-fab svg{ width:22px; height:22px; }
 </style>
 </head>
 <body>
@@ -1381,6 +1395,12 @@ async function init(){
       advanceAfterRest();
     }
   }catch(e){ state.workoutSession = null; }
+
+  try{
+    const dm = await window.storage.get('domsPernas', false);
+    state.domsPernas = (dm && dm.value) ? JSON.parse(dm.value) : {};
+  }catch(e){ state.domsPernas = {}; }
+  restaurarDomsAntigos();
 
   state.tab = 'hoje';
   state.modalOpen = false; state.modalType = null;
@@ -3384,10 +3404,12 @@ function buildHybridCorridaWeek(nivel, goal, currentLongKm, corridaDays, longaoD
     return { day, type:'Rodagem Leve', mainDesc:`${fmtKm(easyKmEach)} fácil`, mainPace:easyPaceStr+'/km', totalKm:easyKmEach, cor:'var(--blue)', objetivo:VDOT_OBJETIVO['Fácil'], modo:'hibrido' };
   });
 }
-// Musculação do modo híbrido: reaproveita buildPlan (mesmo gerador do modo solo), depois reduz série
-// por exercício e prioriza compostos, limitando isolamento a HYBRID_CONFIG.maxIsolamentoPerDay/dia.
-// seriesFactor: 1 = sem desconto (equivale ao solo, sem filtrar isolamento); HYBRID_CONFIG.muscVolumeFactor
-// = desconto padrão; qualquer valor entre os dois = ponto intermediário de uma progressão multi-semana.
+// Musculação do modo híbrido (só ele — o gerador solo, buildPlan, segue igual): cada dia tem SEMPRE o
+// esqueleto BASE (multiarticular principal, força) → AUXILIAR (composto complementar, volume) → ISOLADO
+// (monoarticular, refino), com exercícios limitados pelo TIER do nível: iniciante só Tier 1 (máquinas/
+// guiados), intermediário Tier 1-2, Tier 3 (unilaterais/instáveis/complexos) exclusivo de avançado.
+// seriesFactor: 1 = sem desconto de séries; HYBRID_CONFIG.muscVolumeFactor = desconto padrão; qualquer
+// valor entre os dois = ponto intermediário de uma progressão multi-semana.
 // Filtro de segurança simples por palavra-chave — não é avaliação clínica, só evita sugerir os
 // exercícios classicamente contraindicados pra queixa relatada. Sempre some com um aviso na tela.
 // Termos já sem acento (comparados contra o nome do exercício também sem acento) — evita bug de
@@ -3404,35 +3426,92 @@ function lesaoKeywordsFrom(lesaoText){
   const norm = (lesaoText||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
   return Object.keys(LESAO_EXERCICIO_EVITAR).filter(k=>norm.includes(k));
 }
+// Tier pelo nome (e, se o nome não diz nada, pelo nível que o exercício já tinha no POOL):
+// 3 = unilateral/instável/complexo; 2 = pesos livres e Smith; 1 = máquina/guiado.
+function exercicioTier(e){
+  const n = normalizeNoAccents(e.nome);
+  if(/bulgaro|afundo|passada|step up|terra|crossover|unilateral|arqueiro|salto|bom dia|good morning/.test(n)) return 3;
+  if(/smith/.test(n)) return 2;
+  if(/leg press|extensora|flexora|adutora|abdutora|panturrilha|peck deck|voador|pulley|puxada|pulldown|na maquina|hack|hiperextensao|remada baixa/.test(n)) return 1;
+  if(/barra|halter|cabo|corda/.test(n)) return 2;
+  return { iniciante:1, intermediario:2, avancado:3 }[e.nivel] || 2;
+}
+const HYBRID_PAPEL_SCHEME = {
+  base:     { iniciante:{series:3,reps:10,rpe:7,descanso:'90s'},    intermediario:{series:4,reps:8,rpe:8,descanso:'90–120s'},  avancado:{series:5,reps:5,rpe:9,descanso:'120–180s'} },
+  auxiliar: { iniciante:{series:3,reps:12,rpe:7,descanso:'60–90s'}, intermediario:{series:3,reps:10,rpe:7,descanso:'60–90s'}, avancado:{series:4,reps:10,rpe:8,descanso:'90s'} },
+  isolado:  { iniciante:{series:2,reps:15,rpe:6,descanso:'45–60s'}, intermediario:{series:3,reps:12,rpe:7,descanso:'45–60s'}, avancado:{series:3,reps:15,rpe:7,descanso:'45–60s'} },
+};
+// Monta o dia inteiro: escolhe BASE, AUXILIAR e ISOLADO a partir dos grupos que o split deu pra esse dia.
+function buildHybridMuscDay(nivel, equip, spec, dayIdx, used, isSafe){
+  const pool = POOL[equip] || POOL.academia;
+  const allowed = nivel==='iniciante' ? [1] : nivel==='intermediario' ? [1,2] : [1,2,3];
+  const cands = (g, tiers)=> (pool[g]||[]).filter(e=>tiers.includes(exercicioTier(e)) && isSafe(e.nome));
+  // Iniciante sem nenhum Tier 1 no grupo (ex: treino em casa) cai pro Tier 2 — nunca pro Tier 3.
+  const candsGrupo = (g)=>{ let c = cands(g, allowed); if(!c.length && nivel==='iniciante') c = cands(g, [1,2]); return c; };
+  let groups = Object.keys(spec);
+  if(groups.length >= 5){
+    const grandes = ['Pernas','Peito','Costas'].filter(g=>groups.includes(g));
+    const rot = grandes.length ? dayIdx % grandes.length : 0;
+    groups = grandes.slice(rot).concat(grandes.slice(0,rot)).concat(groups.filter(g=>!grandes.includes(g)));
+  }else{
+    groups.sort((a,b)=>spec[b]-spec[a]);
+  }
+  const taken = new Set();
+  const pick = (g, composto, preferTier, evitarPadroes)=>{
+    let list = candsGrupo(g).filter(e=>!taken.has(e.nome) && (composto===null || (composto ? isExercicioComposto(e.nome)!==false : isExercicioComposto(e.nome)===false)));
+    if(evitarPadroes) list = list.filter(e=>!evitarPadroes.has(padraoMovimento(e.nome)));
+    if(preferTier){ const t = list.filter(e=>exercicioTier(e)===preferTier); if(t.length) list = t; }
+    if(!list.length) return null;
+    const e = list[(used[g]||0) % list.length];
+    used[g] = (used[g]||0)+1;
+    taken.add(e.nome);
+    return e;
+  };
+  const out = [];
+  let baseGrupo = null, baseEx = null;
+  for(const g of groups){ const e = pick(g, true, 2, null); if(e){ out.push({ e, papel:'base', grupo:g }); baseGrupo = g; baseEx = e; break; } }
+  // O auxiliar complementa o base em OUTRO padrão de movimento (não repete barra fixa + barra fixa supinada,
+  // agachamento + agachamento frontal...); só repete o padrão se não sobrar nenhuma alternativa. Avançado
+  // prefere Tier 3 aqui (unilateral/complexo), que é onde esse tier faz sentido.
+  const ordemAux = groups.slice(1).concat(groups.slice(0,1));
+  const evitar = new Set(baseEx ? [padraoMovimento(baseEx.nome)] : []);
+  const tierAux = nivel==='avancado' ? 3 : 0;
+  let aux = null, auxGrupo = null;
+  for(const g of ordemAux){ aux = pick(g, true, tierAux, evitar); if(aux){ auxGrupo = g; break; } }
+  if(!aux){ for(const g of ordemAux){ aux = pick(g, true, tierAux, null); if(aux){ auxGrupo = g; break; } } }
+  if(aux) out.push({ e:aux, papel:'auxiliar', grupo:auxGrupo });
+  const isoOrder = groups.filter(g=>g!==baseGrupo).concat(baseGrupo ? [baseGrupo] : []);
+  for(const g of isoOrder){ const e = pick(g, false, 0, null); if(e){ out.push({ e, papel:'isolado', grupo:g }); break; } }
+  if(!out.length){ for(const g of groups){ const e = pick(g, null, 0, null); if(e){ out.push({ e, papel:'base', grupo:g }); break; } } }
+  return out;
+}
+// Agrupa variações do mesmo movimento (barra fixa / barra fixa supinada / puxada = "puxada vertical") pra
+// o auxiliar não virar só uma cópia do base.
+function padraoMovimento(nome){
+  const n = normalizeNoAccents(nome);
+  const mapa = [['agachamento','agachamento'],['hack','agachamento'],['leg press','leg press'],['afundo','unilateral perna'],['passada','unilateral perna'],['step up','unilateral perna'],['terra','dobradica'],['stiff','dobradica'],['bom dia','dobradica'],['elevacao de quadril','quadril'],['ponte','quadril'],['supino','supino'],['flexao','flexao'],['mergulho','mergulho'],['desenvolvimento','desenvolvimento'],['arnold','desenvolvimento'],['remada','remada'],['puxada','puxada vertical'],['pulldown','puxada vertical'],['barra fixa','puxada vertical'],['crossover','crucifixo'],['crucifixo','crucifixo'],['peck deck','crucifixo'],['voador','crucifixo']];
+  const hit = mapa.find(([k])=>n.includes(k));
+  return hit ? hit[1] : n;
+}
 function buildHybridMuscPlan(nivel, muscDays, equip, seriesFactor, lesaoText, tempoMaxMin){
-  const objetivo = 'hipertrofia';
-  const basePlan = buildPlan(nivel, muscDays, equip, objetivo);
-  const baseSeries = nivel==='avancado' ? SETREPS.avancado[objetivo].series : SETREPS[nivel].series;
-  const reducedSeries = Math.max(2, Math.round(baseSeries * seriesFactor));
   const keywords = lesaoKeywordsFrom(lesaoText);
   const isSafe = (nome)=>{
     if(!keywords.length) return true;
     const n = nome.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
     return !keywords.some(k => LESAO_EXERCICIO_EVITAR[k].some(term => n.includes(term)));
   };
-  if(seriesFactor >= 1){
-    // No teto (equivale ao solo), não faz sentido priorizar composto/limitar isolamento — essas regras
-    // existem só pra poupar volume quando há desconto de verdade.
-    Object.keys(basePlan).forEach(day=>{
-      basePlan[day] = basePlan[day].filter(e=>isSafe(e.nome));
-      basePlan[day].forEach(e=>{ e.series = String(reducedSeries); e.modo='hibrido'; });
+  const templates = splitTemplate(nivel, muscDays.length);
+  const used = {};
+  const basePlan = {};
+  muscDays.forEach((day, i)=>{
+    const spec = templates[i] || templates[templates.length-1];
+    basePlan[day] = buildHybridMuscDay(nivel, equip, spec, i, used, isSafe).map(({e, papel, grupo})=>{
+      const sch = HYBRID_PAPEL_SCHEME[papel][nivel] || HYBRID_PAPEL_SCHEME[papel].intermediario;
+      const series = Math.max(2, Math.round(sch.series * seriesFactor));
+      return { nome:e.nome, series:String(series), reps:String(sch.reps), carga:'', grupo, repdbId:e.id, descanso:sch.descanso, modo:'hibrido', papel, tier:exercicioTier(e), rpe:sch.rpe };
     });
-  }else{
-    Object.keys(basePlan).forEach(day=>{
-      const safe = basePlan[day].filter(e=>isSafe(e.nome));
-      const compostos = safe.filter(e => isExercicioComposto(e.nome) !== false);
-      const isolamentos = safe.filter(e => isExercicioComposto(e.nome) === false).slice(0, HYBRID_CONFIG.maxIsolamentoPerDay);
-      const list = compostos.concat(isolamentos);
-      list.forEach(e=>{ e.series = String(reducedSeries); e.modo = 'hibrido'; });
-      basePlan[day] = list;
-    });
-  }
-  // Corta pelo tempo máximo de sessão — tira do fim da lista (isolamento por último) até caber.
+  });
+  // Corta pelo tempo máximo de sessão — tira do fim da lista (isolado por último) até caber.
   if(tempoMaxMin){
     Object.keys(basePlan).forEach(day=>{
       let list = basePlan[day];
@@ -3497,6 +3576,7 @@ function buildAllHybridWeeks(draft, sched, totalWeeks, checkins, checkinDetails)
     const corridaWeek = sched.corridaDays.length ? buildHybridCorridaWeek(draft.nivelCorrida||draft.nivel, draft.corridaGoal, draft.corridaCurrentLong, sched.corridaDays, sched.longaoDay, corridaKmFactor, !!draft.lesao) : [];
     const muscPlan = sched.muscDays.length ? buildHybridMuscPlan(draft.nivelMusc||draft.nivel, sched.muscDays, draft.equip, muscSeriesFactor, draft.lesao, draft.tempoMaxMin) : {};
     const legEasingNotes = applyHybridLegDayEasing(corridaWeek, muscPlan);
+    annotateHybridJustifications(corridaWeek, muscPlan, focoFromObjetivo(draft.objetivo));
     weeks.push({ weekNumber:w, phaseLabel, totalWeeks, corridaWeek, muscPlan, legEasingNotes });
   }
   return weeks;
@@ -3514,7 +3594,7 @@ function materializeHybridWeekIntoState(week, startMondayISO){
     const dNew = new Date(monday);
     dNew.setDate(dNew.getDate()+idx);
     state.treinos.push({ day: w.day+' '+vdotFormatDDMM(dNew), type:w.type, mainDesc:w.mainDesc, mainPace:w.mainPace,
-      totalKm:w.totalKm, cor:w.cor, objetivo:w.objetivo, modo:w.modo, warmupDesc:'', warmupPace:'', cooldownDesc:'', cooldownPace:'', steps:null });
+      totalKm:w.totalKm, cor:w.cor, objetivo:w.objetivo, modo:w.modo, justificativa:w.justificativa, warmupDesc:'', warmupPace:'', cooldownDesc:'', cooldownPace:'', steps:null });
   });
   Object.keys(week.muscPlan).forEach(d=>{
     state.musculacao[d] = week.muscPlan[d].map(e => ({ id: Date.now().toString(36)+Math.random().toString(36).slice(2,6), done:false, ...e }));
@@ -3528,19 +3608,132 @@ function materializeHybridWeekIntoState(week, startMondayISO){
 // Regra 1 da cascata híbrida: em vez de proibir longão e perna pesada no mesmo dia, reduz
 // pernas pra manutenção (carga leve) nesse dia — só ocorre quando "separado" deixa os dois
 // caírem no mesmo dia (em "alternado" os dias nunca coincidem, então isso não faz nada).
+const CORRIDA_TIPOS_PESADOS = ['Longão','Intervalado','Repetição'];
 function applyHybridLegDayEasing(corridaWeek, muscPlan){
   const notes = [];
-  const longao = corridaWeek.find(w=>w.type==='Longão');
-  if(!longao) return notes;
-  const dayPlan = muscPlan[longao.day];
-  if(!dayPlan || !dayPlan.length) return notes;
-  const pernasCount = dayPlan.filter(e=>e.grupo==='Pernas').length;
-  if(pernasCount/dayPlan.length < 0.5) return notes;
-  dayPlan.forEach(e=>{
-    if(e.grupo==='Pernas'){ e.series = '2'; e.manutencao = true; }
+  corridaWeek.filter(w=>CORRIDA_TIPOS_PESADOS.includes(w.type)).forEach(w=>{
+    const dayPlan = muscPlan[w.day];
+    if(!dayPlan || !dayPlan.length) return;
+    const pernas = dayPlan.filter(e=>e.grupo==='Pernas');
+    if(!pernas.length) return;
+    pernas.forEach(e=>{ e.series = '2'; e.manutencao = true; e.rpe = Math.min(e.rpe||6, 6); });
+    w.pernasEmManutencao = true;
+    notes.push(`${w.day} tem ${w.type.toLowerCase()} essa semana — pernas ficou em modo manutenção (2 séries, esforço leve) em vez de empilhar dois treinos pesados de perna no mesmo dia.`);
   });
-  notes.push(`${longao.day} coincide com o longão essa semana — pernas ficou em modo manutenção (carga leve, 2 séries) em vez de empilhar dois treinos pesados de perna no mesmo dia.`);
   return notes;
+}
+/* ---------- Dor nas pernas (DOMS) do dia ---------- */
+// Nota ≥ 7 → só HOJE: a corrida vira regenerativa (E) e as séries de perna caem 25%. A musculação é
+// guardada por dia da semana (recorrente), então o corte é desfeito sozinho assim que a data muda;
+// a corrida é datada, então a troca fica só naquele dia e a original é restaurada se a nota baixar.
+async function saveDomsPernas(){ try{ await window.storage.set('domsPernas', JSON.stringify(state.domsPernas||{}), false); }catch(e){} }
+function restaurarDomsAntigos(){
+  const hoje = todayISO(); let mudou = false;
+  DAY_ABBR.forEach(d=>(state.musculacao[d]||[]).forEach(ex=>{
+    if(ex._seriesOriginal!=null && ex._domsData!==hoje){ ex.series = ex._seriesOriginal; delete ex._seriesOriginal; delete ex._domsData; mudou = true; }
+  }));
+  if(mudou) saveMusc();
+}
+function aplicarDomsDeHoje(nota){
+  const hoje = todayISO();
+  const day = DAY_ABBR[(new Date().getDay()+6)%7];
+  const alta = nota!=null && nota>=7;
+  restaurarDomsAntigos();
+  (state.musculacao[day]||[]).forEach(ex=>{
+    if(ex.grupo!=='Pernas') return;
+    if(alta && ex._seriesOriginal==null){
+      ex._seriesOriginal = ex.series; ex._domsData = hoje;
+      ex.series = String(Math.max(1, Math.round((parseInt(ex.series,10)||1)*0.75)));
+    }else if(!alta && ex._seriesOriginal!=null){
+      ex.series = ex._seriesOriginal; delete ex._seriesOriginal; delete ex._domsData;
+    }
+  });
+  saveMusc();
+  const entry = state.treinos.find(t=>dayAbbrevOf(t.day)===day && t.day.includes(vdotFormatDDMM(new Date())));
+  if(entry){
+    if(alta && !entry._domsOriginal){
+      const paces = state.corridaVdotData && state.corridaVdotData.paces;
+      const nivel = (state.hybridPlanData && state.hybridPlanData.draft && state.hybridPlanData.draft.nivelCorrida) || 'intermediario';
+      const teto = (VDOT_EASY_CEIL_KM[nivel] || 8) * 0.5;
+      const km = Math.max(2, roundToHalf(Math.min(entry.totalKm || teto, teto)));
+      const paceStr = paces ? `${daysToPaceStr(paces.Es)}–${daysToPaceStr(paces.Ef)}/km` : (entry.mainPace || '');
+      entry._domsOriginal = JSON.parse(JSON.stringify(entry));
+      entry.type = 'Corrida Regenerativa';
+      entry.mainDesc = `${fmtKm(km)} fácil`;
+      entry.mainPace = paceStr;
+      entry.totalKm = km;
+      entry.totalMin = paces ? Math.round(minFromKmAtPace(km, paces.Es)) : undefined;
+      entry.steps = [{ name:'Corrida fácil', km, pace:paceStr, tipo:'distancia' }];
+      entry.objetivo = VDOT_OBJETIVO['Fácil'];
+      entry.justificativa = `Dor nas pernas ${nota}/10: corrida trocada por regenerativo (E) só hoje.`;
+    }else if(!alta && entry._domsOriginal){
+      const original = entry._domsOriginal;
+      Object.keys(entry).forEach(k=>delete entry[k]);
+      Object.assign(entry, original);
+    }
+    saveTreinos();
+  }
+}
+function setDomsPernas(nota){
+  const hoje = todayISO();
+  state.domsPernas = state.domsPernas || {};
+  if(state.domsPernas[hoje]===nota) delete state.domsPernas[hoje]; else state.domsPernas[hoje] = nota;
+  saveDomsPernas();
+  aplicarDomsDeHoje(state.domsPernas[hoje]);
+  render();
+}
+// Frase do dia mostrada no card: a dor nas pernas de hoje (se ≥ 7) tem prioridade sobre a justificativa do plano.
+function justificativaDoDia(day, sub){
+  const ehHoje = state.weekOffset===0 && day===DAY_ABBR[(new Date().getDay()+6)%7];
+  const nota = ehHoje ? (state.domsPernas||{})[todayISO()] : null;
+  if(nota!=null && nota>=7){
+    if(sub==='corrida') return `Dor nas pernas ${nota}/10: corrida trocada por regenerativo (E) só hoje.`;
+    if(muscListForDay(day).some(e=>e.grupo==='Pernas')) return `Dor nas pernas ${nota}/10: séries de perna −25% só hoje.`;
+  }
+  if(sub==='corrida'){ const e = treinoEntryForDay(day); return (e && e.justificativa) || ''; }
+  const l = muscListForDay(day);
+  return (l.length && l[0].justificativa) || '';
+}
+function zonaVdotDoTipo(tipo){
+  const t = String(tipo||'').toLowerCase();
+  if(/interval/.test(t)) return 'I';
+  if(/repeti/.test(t)) return 'R';
+  if(/limiar|tempo/.test(t)) return 'T';
+  if(/prova/.test(t)) return 'M';
+  return 'E';
+}
+const JUSTIFICATIVA_CORRIDA = {
+  'Longão': 'Longão em ritmo fácil (E) constrói resistência e economia de corrida sem estresse extra — por isso não tem perna pesada no mesmo dia.',
+  'Limiar': 'Limiar (T) empurra o ponto em que o lactato acumula; é a única sessão de qualidade da semana pra não competir com a recuperação da musculação.',
+  'Rodagem Leve': 'Corrida fácil (E) reforça a base aeróbica e recupera ativamente entre os estímulos de força, sem somar fadiga.',
+};
+// Uma frase por dia explicando por que o treino encaixa daquele jeito — regra fixa em cima do que a
+// geração de fato fez (não é texto solto): dia misto, perna em manutenção, corrida sozinha ou só musculação.
+function annotateHybridJustifications(corridaWeek, muscPlan, foco){
+  const dias = new Set([...corridaWeek.map(w=>w.day), ...Object.keys(muscPlan)]);
+  dias.forEach(day=>{
+    const run = corridaWeek.find(w=>w.day===day);
+    const list = muscPlan[day];
+    const temMusc = !!(list && list.length);
+    let frase;
+    if(run && temMusc){
+      if(run.pernasEmManutencao){
+        frase = `Dia de ${run.type.toLowerCase()} e musculação: pernas em manutenção (2 séries, esforço leve) pra não somar dois estímulos pesados de perna no mesmo dia.`;
+      }else{
+        const isQuality = run.type==='Limiar';
+        const corridaFirst = foco==='corrida' || (foco==='equilibrado' && isQuality);
+        frase = `Corrida e musculação no mesmo dia: ${corridaFirst ? 'corrida primeiro' : 'musculação primeiro'} (a prioridade do seu objetivo, com o corpo fresco), com ${isQuality ? '1–2h' : 'pelo menos 6h'} de intervalo pra a segunda não sair prejudicada.`;
+      }
+    }else if(run){
+      frase = JUSTIFICATIVA_CORRIDA[run.type] || JUSTIFICATIVA_CORRIDA['Rodagem Leve'];
+    }else if(temMusc){
+      const base = list.find(e=>e.papel==='base') || list[0];
+      frase = `${base.grupo} começa pelo multiarticular com o corpo fresco (força), completa o volume no auxiliar e fecha no isolado — máximo estímulo com o menor custo de recuperação pras corridas da semana.`;
+    }
+    if(!frase) return;
+    if(run) run.justificativa = frase;
+    if(temMusc) list.forEach(e=>{ e.justificativa = frase; });
+  });
 }
 // Fase 4 (parcial): quando corrida e musc caem no mesmo dia, sugere ordem (prioridade primeiro,
 // com o corpo fresco) e intervalo mínimo — baseado no artigo do Alex Viada (Stronger by Science):
@@ -5052,6 +5245,16 @@ function render(){
     wireGpsRunScreen();
     return;
   }
+  if(state.modalType==='gerarHibrido' && state.modalOpen && state.hybridDraft){
+    root.innerHTML = renderHybridQuizModal(state.hybridDraft);
+    wireHybridQuizModal();
+    return;
+  }
+  if(state.modalType==='onboarding' && state.modalOpen){
+    root.innerHTML = renderOnboardingScreen();
+    wireOnboardingScreen();
+    return;
+  }
   // UI_V2: cara nova, telas antigas intactas por baixo (chave desliga tudo isso e volta pro shell de
   // sempre). Início e Treino já estão migradas — as outras abas continuam no shell antigo até serem
   // aprovadas uma por vez.
@@ -5068,6 +5271,16 @@ function render(){
   if(UI_V2 && state.tab==='meusTreinos' && !state.treinoV2Escape){
     root.innerHTML = renderTreinoV2Shell();
     wireTreinoV2();
+    return;
+  }
+  if(UI_V2 && state.tab==='perfil' && !state.treinoV2Escape){
+    root.innerHTML = renderPerfilV2Shell();
+    wirePerfilV2();
+    return;
+  }
+  if(UI_V2 && state.tab==='turma' && !state.treinoV2Escape){
+    root.innerHTML = renderTurmaV2Shell();
+    wireTurmaV2();
     return;
   }
   const tab = state.tab;
@@ -5376,30 +5589,7 @@ function render(){
     el.onclick = (ev)=>{ ev.stopPropagation(); openEsteiraIntro(el.getAttribute('data-startesteira')); };
   });
   if(tab==='turma'){
-    document.querySelectorAll('[data-turmagroup]').forEach(el=>{
-      el.onclick = ()=>{
-        state.turmaSelectedGroupId = el.getAttribute('data-turmagroup');
-        state.turmaGroupDetail = null;
-        loadGroupDetail(state.turmaSelectedGroupId);
-        render();
-      };
-    });
-    const btnJoin = document.getElementById('turmaBtnJoin');
-    if(btnJoin) btnJoin.onclick = ()=>{ state.turmaShowJoin=!state.turmaShowJoin; state.turmaShowCreate=false; render(); };
-    const btnCreate = document.getElementById('turmaBtnCreate');
-    if(btnCreate) btnCreate.onclick = ()=>{ state.turmaShowCreate=!state.turmaShowCreate; state.turmaShowJoin=false; render(); };
-    const joinConfirm = document.getElementById('turmaJoinConfirm');
-    if(joinConfirm) joinConfirm.onclick = ()=>{ joinGroupByCode(document.getElementById('turmaJoinCode').value).then(render); };
-    const createConfirm = document.getElementById('turmaCreateConfirm');
-    if(createConfirm) createConfirm.onclick = ()=>{ createGroup(document.getElementById('turmaGroupName').value).then(render); };
-    const btnNewChallenge = document.getElementById('turmaBtnNewChallenge');
-    if(btnNewChallenge) btnNewChallenge.onclick = ()=>{ state.turmaShowNewChallenge=!state.turmaShowNewChallenge; render(); };
-    document.querySelectorAll('[data-turmachallengedays]').forEach(el=>{
-      el.onclick = ()=>{
-        const name = (document.getElementById('turmaChallengeName')||{}).value || 'Desafio '+el.getAttribute('data-turmachallengedays')+' dias';
-        createGroupChallenge(state.turmaSelectedGroupId, name, parseInt(el.getAttribute('data-turmachallengedays'),10)).then(render);
-      };
-    });
+    wireTurmaExtras();
   }
   const btnOnboardingOk = document.getElementById('btnOnboardingOk');
   if(btnOnboardingOk) btnOnboardingOk.onclick = ()=> answerOnboardingCheckin('ok');
@@ -5507,139 +5697,6 @@ function render(){
 
   if(tab === 'perfil'){
     wirePerfilExtras();
-  }
-// Extraído do shell antigo (nome/idade/peso/altura/sexo, foto, sou-personal, código de compartilhar,
-// revogar acesso, login/logout, backup e apagar tudo) — reaproveitado tanto pelo shell clássico quanto
-// pela tela Perfil nova, sem duplicar toda essa fiação (login/compartilhamento são chamadas assíncronas
-// de verdade no Firebase, não quis reimplementar duas vezes).
-function wirePerfilExtras(){
-    ['pfNome','pfIdade','pfPeso','pfAltura','pfSexo'].forEach(id=>{
-      const el = document.getElementById(id);
-      if(el) el.onchange = ()=>{
-        state.perfil = {
-          ...state.perfil,
-          nome: document.getElementById('pfNome').value.trim(),
-          idade: document.getElementById('pfIdade').value.trim(),
-          peso: document.getElementById('pfPeso').value.trim(),
-          altura: document.getElementById('pfAltura').value.trim(),
-          sexo: document.getElementById('pfSexo').value,
-        };
-        savePerfil(); render();
-      };
-    });
-    const avatarBtn = document.getElementById('drawerAvatarBtn');
-    const fotoInput = document.getElementById('drawerFotoInput');
-    if(avatarBtn && fotoInput){
-      avatarBtn.onclick = ()=>{ state.modalType = 'fotoOptions'; state.modalOpen = true; render(); };
-      fotoInput.onchange = (e)=>{
-        const file = e.target.files[0];
-        if(!file) return;
-        readAndResizeImage(file, 160, (dataUrl)=>{
-          state.perfil = { ...state.perfil, foto: dataUrl };
-          savePerfil(); render();
-        });
-      };
-    }
-    const perfilMoreToggle = document.querySelector('[data-perfilmore]');
-    if(perfilMoreToggle) perfilMoreToggle.onclick = ()=>{ state.perfilMaisOpcoesOpen = !state.perfilMaisOpcoesOpen; render(); };
-    const btnExportBackup = document.getElementById('btnExportBackup');
-    if(btnExportBackup) btnExportBackup.onclick = exportBackup;
-    const btnImportBackup = document.getElementById('btnImportBackup');
-    const importBackupInput = document.getElementById('importBackupInput');
-    if(btnImportBackup && importBackupInput){
-      btnImportBackup.onclick = ()=> importBackupInput.click();
-      importBackupInput.onchange = (e)=>{
-        const file = e.target.files[0];
-        if(file) importBackupFile(file);
-      };
-    }
-    const btnApagarTudo = document.getElementById('btnApagarTudo');
-    if(btnApagarTudo) btnApagarTudo.onclick = apagarTudo;
-    const btnSignOut = document.getElementById('btnSignOut');
-    if(btnSignOut) btnSignOut.onclick = ()=>{ if(confirm('Sair da conta? O app continua funcionando, mas volta a salvar só nesse aparelho (sem sincronizar/compartilhar) até você entrar de novo.')) firebase.auth().signOut(); };
-    const btnAuthEntrar = document.getElementById('btnAuthEntrar');
-    const btnAuthCriarConta = document.getElementById('btnAuthCriarConta');
-    const doEmailAuth = (mode)=>{
-      if(state.authBusy) return;
-      const email = (document.getElementById('inAuthEmail').value||'').trim();
-      const senha = document.getElementById('inAuthSenha').value||'';
-      state.authInfo = null;
-      if(!email || !senha){ state.authError = 'Preenche e-mail e senha.'; render(); return; }
-      state.authError = null; state.authBusy = mode;
-      render();
-      const call = mode==='criar' ? auth.createUserWithEmailAndPassword(email, senha) : auth.signInWithEmailAndPassword(email, senha);
-      call.catch(function(e){
-        state.authError = authErrorMessage(e.code, e.message);
-      }).finally(function(){
-        state.authBusy = null;
-        render();
-      });
-    };
-    if(btnAuthEntrar) btnAuthEntrar.onclick = ()=>doEmailAuth('entrar');
-    if(btnAuthCriarConta) btnAuthCriarConta.onclick = ()=>doEmailAuth('criar');
-    const btnAuthEsqueciSenha = document.getElementById('btnAuthEsqueciSenha');
-    if(btnAuthEsqueciSenha) btnAuthEsqueciSenha.onclick = ()=>{
-      if(state.authBusy) return;
-      const email = (document.getElementById('inAuthEmail').value||'').trim();
-      state.authError = null; state.authInfo = null;
-      if(!email){ state.authError = 'Digita seu e-mail no campo acima primeiro.'; render(); return; }
-      state.authBusy = 'reset';
-      render();
-      // Mesmo pra conta que só tinha Google (sem senha nenhuma), esse e-mail cria uma senha nova pra ela —
-      // não perde nada do que já tinha, só passa a poder entrar com e-mail+senha também.
-      auth.sendPasswordResetEmail(email).then(function(){
-        state.authInfo = 'Mandei um e-mail pra você definir uma senha nova. Depois de definir, volta aqui e usa "Entrar".';
-      }).catch(function(e){
-        state.authError = authErrorMessage(e.code, e.message);
-      }).finally(function(){
-        state.authBusy = null;
-        render();
-      });
-    };
-
-    const souPersonalToggle = document.getElementById('souPersonalToggle');
-    if(souPersonalToggle) souPersonalToggle.onclick = async ()=>{
-      if(state.perfil.souPersonal){
-        state.perfil = { ...state.perfil, souPersonal:false };
-        savePerfil(); render();
-        return;
-      }
-      const allowed = await checkIsAllowedTrainer(state.authUser.email);
-      if(!allowed){ alert('Fala com o suporte pra virar personal trainer.'); return; }
-      state.perfil = { ...state.perfil, souPersonal:true };
-      savePerfil(); render();
-    };
-    const btnGenShareCode = document.getElementById('btnGenShareCode');
-    if(btnGenShareCode) btnGenShareCode.onclick = async ()=>{
-      btnGenShareCode.textContent = 'Gerando...';
-      try{
-        const code = await generateShareCode();
-        state.shareCodeShown = code;
-      }catch(e){ alert('Não consegui gerar o código: '+e.message); }
-      render();
-    };
-    const btnCopyShareCode = document.getElementById('btnCopyShareCode');
-    if(btnCopyShareCode) btnCopyShareCode.onclick = ()=>{
-      navigator.clipboard.writeText(state.shareCodeShown).then(()=>{
-        btnCopyShareCode.textContent = 'Copiado!';
-        setTimeout(()=>{ btnCopyShareCode.textContent = 'Copiar'; }, 1500);
-      });
-    };
-    document.querySelectorAll('[data-revokeaccess]').forEach(el=>{
-      el.onclick = async ()=>{
-        if(!confirm('Remover o acesso desse personal ao seu treino?')) return;
-        await revokeAccess(el.getAttribute('data-revokeaccess'));
-        state.clientTrainers = await listWhoHasAccessToMe();
-        render();
-      };
-    });
-    // Carrega quem tem acesso a mim assim que entra no Perfil (não bloqueia a primeira renderização).
-    // A trava evita loop infinito: sem ela, cada render() dispara uma busca nova, que ao terminar chama
-    // render() de novo, que dispara outra busca — travando a aba inteira (bug real pego em teste).
-    if(!state._clientTrainersFetched){
-      state._clientTrainersFetched = true;
-      listWhoHasAccessToMe().then(list=>{ state.clientTrainers = list; render(); }).catch(()=>{});
-    }
   }
 
   if(tab === 'alunas'){
@@ -6269,104 +6326,6 @@ function wirePerfilExtras(){
       };
     }
 
-    if(state.modalType === 'gerarHibrido'){
-      const hd = state.hybridDraft;
-      // Campos de escolha única (pill ou linha de opção) — cada passo só tem um grupo ativo por vez,
-      // então basta procurar qualquer elemento com esses atributos na tela do passo atual.
-      const singleSelect = (attr, field, isNum)=>{
-        document.querySelectorAll(`[${attr}]`).forEach(el=>{
-          el.onclick = ()=>{
-            hd[field] = isNum ? parseFloat(el.getAttribute(attr)) : el.getAttribute(attr);
-            render();
-          };
-        });
-      };
-      singleSelect('data-hybnivelcorrida','nivelCorrida',false);
-      singleSelect('data-hybnivelmusc','nivelMusc',false);
-      singleSelect('data-hybobjetivo','objetivo',false);
-      singleSelect('data-hybgoal','corridaGoal',true);
-      singleSelect('data-hybtempo','tempoMaxMin',true);
-      singleSelect('data-hybequip','equip',false);
-      singleSelect('data-hybweeks','weeksChoice',true);
-      singleSelect('data-hyblocalcorrida','localCorrida',false);
-      document.querySelectorAll('[data-hybmesmodia]').forEach(el=>{
-        el.onclick = ()=>{ hd.mesmoDia = el.getAttribute('data-hybmesmodia')==='1'; render(); };
-      });
-      document.querySelectorAll('[data-hybrelogio]').forEach(el=>{
-        el.onclick = ()=>{ hd.temRelogio = el.getAttribute('data-hybrelogio')==='1'; render(); };
-      });
-      document.querySelectorAll('[data-hybavailday]').forEach(el=>{
-        el.onclick = ()=>{
-          const d = el.getAttribute('data-hybavailday');
-          hd.availableDays = hd.availableDays || [];
-          hd.availableDays = hd.availableDays.includes(d) ? hd.availableDays.filter(x=>x!==d) : [...hd.availableDays, d];
-          render();
-        };
-      });
-      const currentLongInput = document.getElementById('hybCurrentLong');
-      if(currentLongInput) currentLongInput.onchange = ()=>{ hd.corridaCurrentLong = currentLongInput.value.trim(); };
-      const lesaoInput = document.getElementById('hybLesao');
-      if(lesaoInput) lesaoInput.onchange = ()=>{ hd.lesao = lesaoInput.value.trim(); };
-
-      const backBtnHyb = document.getElementById('hybQuizBack');
-      if(backBtnHyb) backBtnHyb.onclick = ()=>{ hd.step = Math.max(0, (hd.step||0)-1); render(); };
-      const nextBtnHyb = document.getElementById('hybQuizNext');
-      if(nextBtnHyb) nextBtnHyb.onclick = ()=>{
-        // Só o passo dos dias disponíveis tem validação própria — os outros sempre têm um valor
-        // padrão já selecionado, então nunca ficam "vazios".
-        if((hd.step||0)===4){
-          const avail = hd.availableDays||[];
-          if(avail.length===0){ alert('Marca pelo menos 1 dia disponível pra treinar.'); return; }
-          if(avail.length>=7){ alert('Deixa pelo menos 1 dia de descanso na semana.'); return; }
-        }
-        hd.step = (hd.step||0)+1;
-        render();
-      };
-
-      const btnGerarHibrido = document.getElementById('btnGerarHibrido');
-      if(btnGerarHibrido) btnGerarHibrido.onclick = ()=>{
-        if(!state.corridaVdotData || !state.corridaVdotData.vdot){
-          alert('Antes de gerar um treino híbrido, defina seu VDOT (menu "⋯" da Corrida → Ver VDOT).');
-          return;
-        }
-        const foco = focoFromObjetivo(hd.objetivo);
-        const dayPicks = autoDistributeHybridDays(hd.availableDays||[], foco, hd.mesmoDia);
-        const corridaDays = DAY_ABBR.filter(d => dayPicks[d]==='corrida' || dayPicks[d]==='ambos');
-        const muscDays = DAY_ABBR.filter(d => dayPicks[d]==='musc' || dayPicks[d]==='ambos');
-        if(corridaDays.length===0 && muscDays.length===0){ alert('Marca pelo menos 1 dia disponível pra treinar.'); return; }
-
-        const warnings = [];
-        const consecWarn = hybridConsecutiveRunWarning(corridaDays);
-        if(consecWarn) warnings.push(consecWarn);
-
-        const longaoDay = corridaDays.length ? pickLongaoDay(corridaDays) : null;
-        const sched = { corridaDays, muscDays, longaoDay };
-        const totalWeeks = hd.weeksChoice || 8;
-        const draft = {
-          nivelCorrida:hd.nivelCorrida, nivelMusc:hd.nivelMusc, objetivo:hd.objetivo,
-          corridaGoal:hd.corridaGoal, corridaCurrentLong:hd.corridaCurrentLong,
-          equip:hd.equip, lesao:hd.lesao, tempoMaxMin:hd.tempoMaxMin,
-          temRelogio:hd.temRelogio, localCorrida:hd.localCorrida,
-        };
-        const checkins = {};
-        const plan = buildAllHybridWeeks(draft, sched, totalWeeks, checkins);
-        const week1 = plan[0];
-        const sameDayNotes = buildHybridSameDayNotes(week1.corridaWeek, week1.muscPlan, foco);
-
-        const startMonday = vdotISODate(vdotStartMonday(new Date()));
-        materializeHybridWeekIntoState(week1, startMonday);
-        state.hybridPlanData = { draft, sched, totalWeeks, checkins, foco, dayPicks, plan, startMonday, currentWeekIndex:1 };
-        saveHybridPlanData();
-        state.modalOpen = false;
-        state.modalType = null;
-        state.hybridDraft = null;
-        state.tab = 'hoje';
-        const allNotes = [...warnings, ...week1.legEasingNotes, ...sameDayNotes];
-        if(allNotes.length) alert(allNotes.join('\n\n'));
-        render();
-      };
-    }
-
     if(state.modalType === 'importTreinos'){
       document.querySelectorAll('[data-importweek]').forEach(el=>{
         el.onchange = ()=>{
@@ -6423,22 +6382,6 @@ function wirePerfilExtras(){
         state.modalType = null;
         state.tab = 'corrida';
         render();
-      };
-    }
-
-    if(state.modalType === 'onboarding'){
-      document.getElementById('obSkip').onclick = ()=>{
-        saveOnboardingDone(); state.modalOpen=false; render();
-      };
-      document.getElementById('obSave').onclick = ()=>{
-        state.perfil = {
-          nome: document.getElementById('obNome').value.trim(),
-          idade: document.getElementById('obIdade').value.trim(),
-          peso: document.getElementById('obPeso').value.trim(),
-          altura: document.getElementById('obAltura').value.trim(),
-        };
-        savePerfil(); saveOnboardingDone();
-        state.modalOpen=false; render();
       };
     }
 
@@ -6619,6 +6562,162 @@ function wirePerfilExtras(){
       state.modalOpen = false;
       render();
     };
+  }
+}
+// Extraído do shell antigo (nome/idade/peso/altura/sexo, foto, sou-personal, código de compartilhar,
+// revogar acesso, login/logout, backup e apagar tudo) — reaproveitado tanto pelo shell clássico quanto
+// pela tela Perfil nova, sem duplicar toda essa fiação (login/compartilhamento são chamadas assíncronas
+// de verdade no Firebase, não quis reimplementar duas vezes).
+// Extraído do shell antigo (entrar/criar grupo, selecionar grupo, criar desafio) — reaproveitado tanto
+// pelo shell clássico quanto pela tela Turma nova. loadGroupDetail/loadMyGroups são leituras reais no
+// Firestore, por isso não reimplemento — só chamo de novo.
+function wireTurmaExtras(){
+  document.querySelectorAll('[data-turmagroup]').forEach(el=>{
+    el.onclick = ()=>{
+      state.turmaSelectedGroupId = el.getAttribute('data-turmagroup');
+      state.turmaGroupDetail = null;
+      loadGroupDetail(state.turmaSelectedGroupId);
+      render();
+    };
+  });
+  const btnJoin = document.getElementById('turmaBtnJoin');
+  if(btnJoin) btnJoin.onclick = ()=>{ state.turmaShowJoin=!state.turmaShowJoin; state.turmaShowCreate=false; render(); };
+  const btnCreate = document.getElementById('turmaBtnCreate');
+  if(btnCreate) btnCreate.onclick = ()=>{ state.turmaShowCreate=!state.turmaShowCreate; state.turmaShowJoin=false; render(); };
+  const joinConfirm = document.getElementById('turmaJoinConfirm');
+  if(joinConfirm) joinConfirm.onclick = ()=>{ joinGroupByCode(document.getElementById('turmaJoinCode').value).then(render); };
+  const createConfirm = document.getElementById('turmaCreateConfirm');
+  if(createConfirm) createConfirm.onclick = ()=>{ createGroup(document.getElementById('turmaGroupName').value).then(render); };
+  const btnNewChallenge = document.getElementById('turmaBtnNewChallenge');
+  if(btnNewChallenge) btnNewChallenge.onclick = ()=>{ state.turmaShowNewChallenge=!state.turmaShowNewChallenge; render(); };
+  document.querySelectorAll('[data-turmachallengedays]').forEach(el=>{
+    el.onclick = ()=>{
+      const name = (document.getElementById('turmaChallengeName')||{}).value || 'Desafio '+el.getAttribute('data-turmachallengedays')+' dias';
+      createGroupChallenge(state.turmaSelectedGroupId, name, parseInt(el.getAttribute('data-turmachallengedays'),10)).then(render);
+    };
+  });
+}
+function wirePerfilExtras(){
+  ['pfNome','pfIdade','pfPeso','pfAltura','pfSexo'].forEach(id=>{
+    const el = document.getElementById(id);
+    if(el) el.onchange = ()=>{
+      state.perfil = {
+        ...state.perfil,
+        nome: document.getElementById('pfNome').value.trim(),
+        idade: document.getElementById('pfIdade').value.trim(),
+        peso: document.getElementById('pfPeso').value.trim(),
+        altura: document.getElementById('pfAltura').value.trim(),
+        sexo: document.getElementById('pfSexo').value,
+      };
+      savePerfil(); render();
+    };
+  });
+  const avatarBtn = document.getElementById('drawerAvatarBtn');
+  const fotoInput = document.getElementById('drawerFotoInput');
+  if(avatarBtn && fotoInput){
+    avatarBtn.onclick = ()=>{ state.treinoV2Escape = true; state.modalType = 'fotoOptions'; state.modalOpen = true; render(); };
+    fotoInput.onchange = (e)=>{
+      const file = e.target.files[0];
+      if(!file) return;
+      readAndResizeImage(file, 160, (dataUrl)=>{
+        state.perfil = { ...state.perfil, foto: dataUrl };
+        savePerfil(); render();
+      });
+    };
+  }
+  const perfilMoreToggle = document.querySelector('[data-perfilmore]');
+  if(perfilMoreToggle) perfilMoreToggle.onclick = ()=>{ state.perfilMaisOpcoesOpen = !state.perfilMaisOpcoesOpen; render(); };
+  const btnExportBackup = document.getElementById('btnExportBackup');
+  if(btnExportBackup) btnExportBackup.onclick = exportBackup;
+  const btnImportBackup = document.getElementById('btnImportBackup');
+  const importBackupInput = document.getElementById('importBackupInput');
+  if(btnImportBackup && importBackupInput){
+    btnImportBackup.onclick = ()=> importBackupInput.click();
+    importBackupInput.onchange = (e)=>{
+      const file = e.target.files[0];
+      if(file) importBackupFile(file);
+    };
+  }
+  const btnApagarTudo = document.getElementById('btnApagarTudo');
+  if(btnApagarTudo) btnApagarTudo.onclick = apagarTudo;
+  const btnSignOut = document.getElementById('btnSignOut');
+  if(btnSignOut) btnSignOut.onclick = ()=>{ if(confirm('Sair da conta? O app continua funcionando, mas volta a salvar só nesse aparelho (sem sincronizar/compartilhar) até você entrar de novo.')) firebase.auth().signOut(); };
+  const btnAuthEntrar = document.getElementById('btnAuthEntrar');
+  const btnAuthCriarConta = document.getElementById('btnAuthCriarConta');
+  const doEmailAuth = (mode)=>{
+    if(state.authBusy) return;
+    const email = (document.getElementById('inAuthEmail').value||'').trim();
+    const senha = document.getElementById('inAuthSenha').value||'';
+    state.authInfo = null;
+    if(!email || !senha){ state.authError = 'Preenche e-mail e senha.'; render(); return; }
+    state.authError = null; state.authBusy = mode;
+    render();
+    const call = mode==='criar' ? auth.createUserWithEmailAndPassword(email, senha) : auth.signInWithEmailAndPassword(email, senha);
+    call.catch(function(e){
+      state.authError = authErrorMessage(e.code, e.message);
+    }).finally(function(){
+      state.authBusy = null;
+      render();
+    });
+  };
+  if(btnAuthEntrar) btnAuthEntrar.onclick = ()=>doEmailAuth('entrar');
+  if(btnAuthCriarConta) btnAuthCriarConta.onclick = ()=>doEmailAuth('criar');
+  const btnAuthEsqueciSenha = document.getElementById('btnAuthEsqueciSenha');
+  if(btnAuthEsqueciSenha) btnAuthEsqueciSenha.onclick = ()=>{
+    if(state.authBusy) return;
+    const email = (document.getElementById('inAuthEmail').value||'').trim();
+    state.authError = null; state.authInfo = null;
+    if(!email){ state.authError = 'Digita seu e-mail no campo acima primeiro.'; render(); return; }
+    state.authBusy = 'reset';
+    render();
+    auth.sendPasswordResetEmail(email).then(function(){
+      state.authInfo = 'Mandei um e-mail pra você definir uma senha nova. Depois de definir, volta aqui e usa "Entrar".';
+    }).catch(function(e){
+      state.authError = authErrorMessage(e.code, e.message);
+    }).finally(function(){
+      state.authBusy = null;
+      render();
+    });
+  };
+  const souPersonalToggle = document.getElementById('souPersonalToggle');
+  if(souPersonalToggle) souPersonalToggle.onclick = async ()=>{
+    if(state.perfil.souPersonal){
+      state.perfil = { ...state.perfil, souPersonal:false };
+      savePerfil(); render();
+      return;
+    }
+    const allowed = await checkIsAllowedTrainer(state.authUser.email);
+    if(!allowed){ alert('Fala com o suporte pra virar personal trainer.'); return; }
+    state.perfil = { ...state.perfil, souPersonal:true };
+    savePerfil(); render();
+  };
+  const btnGenShareCode = document.getElementById('btnGenShareCode');
+  if(btnGenShareCode) btnGenShareCode.onclick = async ()=>{
+    btnGenShareCode.textContent = 'Gerando...';
+    try{
+      const code = await generateShareCode();
+      state.shareCodeShown = code;
+    }catch(e){ alert('Não consegui gerar o código: '+e.message); }
+    render();
+  };
+  const btnCopyShareCode = document.getElementById('btnCopyShareCode');
+  if(btnCopyShareCode) btnCopyShareCode.onclick = ()=>{
+    navigator.clipboard.writeText(state.shareCodeShown).then(()=>{
+      btnCopyShareCode.textContent = 'Copiado!';
+      setTimeout(()=>{ btnCopyShareCode.textContent = 'Copiar'; }, 1500);
+    });
+  };
+  document.querySelectorAll('[data-revokeaccess]').forEach(el=>{
+    el.onclick = async ()=>{
+      if(!confirm('Remover o acesso desse personal ao seu treino?')) return;
+      await revokeAccess(el.getAttribute('data-revokeaccess'));
+      state.clientTrainers = await listWhoHasAccessToMe();
+      render();
+    };
+  });
+  if(!state._clientTrainersFetched){
+    state._clientTrainersFetched = true;
+    listWhoHasAccessToMe().then(list=>{ state.clientTrainers = list; render(); }).catch(()=>{});
   }
 }
 
@@ -6945,7 +7044,7 @@ function wireHojeV2(){
   });
   if(state.modalType==='hybridCheckin') wireHybridCheckinModal();
   const diagBtn = document.getElementById('mrtStartDiagnostico');
-  if(diagBtn) diagBtn.onclick = ()=>{ state.treinoV2Escape = true; state.modalType='gerar'; state.modalOpen=true; render(); };
+  if(diagBtn) diagBtn.onclick = openHybridCreate;
 }
 
 /* ============================================================================================
@@ -7116,7 +7215,19 @@ function renderTreinoV2Content(){
 
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day) : renderTreinoV2Corrida(day, currentChip ? currentChip.label : null);
 
-  return header + counterRow + daystrip + dayName + toggle + weekNav + chipsHtml + dayContent;
+  return header + counterRow + daystrip + dayName + toggle + weekNav + chipsHtml + renderTreinoV2Doms(day) + dayContent;
+}
+// Só aparece no dia de hoje (semana atual) e só quando o dia tem corrida ou perna — é onde a nota muda alguma coisa.
+function renderTreinoV2Doms(day){
+  if(state.weekOffset!==0 || day!==DAY_ABBR[(new Date().getDay()+6)%7]) return '';
+  const temPerna = (state.musculacao[day]||[]).some(e=>e.grupo==='Pernas');
+  if(!temPerna && !treinoEntryForDay(day)) return '';
+  const nota = (state.domsPernas||{})[todayISO()];
+  return `
+    <div class="mrt-card" style="padding:14px 16px;">
+      <div class="mrt-runlabel" style="color:var(--mrt-dim);margin-bottom:10px;">DOR NAS PERNAS HOJE</div>
+      <div class="mrt-domsrow">${Array.from({length:11},(_,n)=>`<button class="mrt-domsbtn ${nota===n?'active':''} ${n>=7?'hot':''}" data-mrtdoms="${n}">${n}</button>`).join('')}</div>
+    </div>`;
 }
 function renderTreinoV2Musc(day){
   const list = muscListForDay(day);
@@ -7125,12 +7236,16 @@ function renderTreinoV2Musc(day){
   }
   const compostos = list.filter(ex => isExercicioComposto(ex.nome) !== false);
   const isolamentos = list.filter(ex => isExercicioComposto(ex.nome) === false);
-  const ordered = compostos.concat(isolamentos);
+  // Plano gerado pelo híbrido já vem na ordem BASE → AUXILIAR → ISOLADO; o resto segue "compostos primeiro".
+  const PAPEL_RANK = { base:0, auxiliar:1, isolado:2 };
+  const ordered = list.every(e=>e.papel) ? [...list].sort((a,b)=>PAPEL_RANK[a.papel]-PAPEL_RANK[b.papel]) : compostos.concat(isolamentos);
   const totalSeries = list.reduce((s,ex)=>s+(parseInt(ex.series,10)||0), 0);
   const allDone = list.every(e=>e.done);
+  const why = justificativaDoDia(day, 'musculacao');
   const summary = `
     <div class="mrt-card">
-      <div class="mrt-summarytitle">Treino de ${(DAY_FULLNAME[day]||day).split('-')[0]}</div>
+      <div class="mrt-summarytitle" style="margin-bottom:${why?'6px':'14px'};">Treino de ${(DAY_FULLNAME[day]||day).split('-')[0]}</div>
+      ${why ? `<div class="mrt-why">${why}</div>` : ''}
       <div class="mrt-metricsrow">
         <div class="mrt-metric"><div class="mrt-metrick">Duração</div><div class="mrt-metricv">~${estimateWorkoutMinutes(list)}min</div></div>
         <div class="mrt-metric"><div class="mrt-metrick">Exercícios</div><div class="mrt-metricv">${list.length}</div></div>
@@ -7146,7 +7261,7 @@ function renderTreinoV2Musc(day){
       <div style="flex:1;min-width:0;">
         <div class="mrt-exname ${ex.done?'done':''}">${ex.nome}</div>
         <div style="margin:5px 0;"><span class="mrt-chip">${ex.grupo}</span></div>
-        <div class="mrt-exmeta">${ex.series}×${ex.reps}${pr?' · PR '+pr+'kg':''}</div>
+        <div class="mrt-exmeta">${ex.series}×${ex.reps}${ex.rpe?' · RPE '+ex.rpe:''}${pr?' · PR '+pr+'kg':''}</div>
       </div>
       <div class="mrt-excheck ${ex.done?'done':''}" data-mrtexdone="${ex.id}">${ex.done?CHECK_SVG:''}</div>
     </div>`;
@@ -7163,10 +7278,12 @@ function renderTreinoV2Corrida(day, tLabel){
   const relogio = (state.equipamentos && state.equipamentos.relogio) || '';
   const garminBadge = /garmin/i.test(relogio) ? `<div class="mrt-chip">Garmin</div>` : '';
   const phaseParts = treinoPhaseParts();
-  const chipTop = (phaseParts || garminBadge) ? `<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+  const chipTop = `<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
     ${phaseParts ? `<div class="mrt-chip">Semana ${phaseParts.weekNumber} · ${phaseParts.phaseName}</div>` : ''}
+    <div class="mrt-chip">Zona ${zonaVdotDoTipo(entry.type)}</div>
     ${garminBadge}
-  </div>` : '';
+  </div>`;
+  const whyCorrida = justificativaDoDia(day, 'corrida');
   const avgPace = corridaAvgPaceLabel(entry);
   const stepsHtml = (entry.steps && entry.steps.length) ? `
     <div class="mrt-blockbars">
@@ -7202,6 +7319,7 @@ function renderTreinoV2Corrida(day, tLabel){
         <button class="mrt-btnsecondary" id="mrtSendGarmin">${ICONS.watch} Enviar ao Garmin</button>
       </div>
       ${entry.objetivo ? `<div class="mrt-focusline">Foco: ${entry.objetivo}</div>` : ''}
+      ${whyCorrida ? `<div class="mrt-why" style="margin-top:8px;">${whyCorrida}</div>` : ''}
       ${stepsHtml}
     </div>`;
 }
@@ -7255,8 +7373,8 @@ function wireTreinoV2(){
   };
   const redoPlanBtn = document.getElementById('mrtRedoPlan');
   if(redoPlanBtn) redoPlanBtn.onclick = ()=>{
-    state.treinoMoreMenuOpen = false; state.treinoV2Escape = true;
-    state.modalType = 'gerar'; state.modalOpen = true; render();
+    state.treinoMoreMenuOpen = false;
+    openHybridCreate();
   };
 
   document.querySelectorAll('[data-mrtexdone]').forEach(el=>{
@@ -7264,6 +7382,9 @@ function wireTreinoV2(){
   });
   document.querySelectorAll('[data-mrtex]').forEach(el=>{
     el.onclick = ()=>{ state.treinoV2Escape = true; openQuickWeightModal(el.getAttribute('data-mrtex')); };
+  });
+  document.querySelectorAll('[data-mrtdoms]').forEach(el=>{
+    el.onclick = ()=> setDomsPernas(parseInt(el.getAttribute('data-mrtdoms'),10));
   });
   const startWorkoutBtn = document.getElementById('mrtStartWorkout');
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
@@ -7333,6 +7454,380 @@ function wireTreinoTemplateActions(){
       state.modalType = 'scheduleMuscTemplate'; state.modalOpen = true; render();
     };
   });
+}
+/* ============ TELA PERFIL (V2) ============ */
+function mrtPerfilGridCard(icon, title, sub, tabgo){
+  return `<div class="mrt-card" style="padding:16px;cursor:pointer;" data-tabgo="${tabgo}">
+    <div style="width:34px;height:34px;border-radius:10px;background:rgba(59,130,246,0.15);color:var(--mrt-bluelight);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">${icon}</div>
+    <div style="font-size:13.5px;font-weight:800;color:var(--mrt-text);margin-bottom:2px;">${title}</div>
+    <div style="font-size:11px;color:var(--mrt-dim);line-height:1.3;">${sub}</div>
+  </div>`;
+}
+function renderDadosPessoaisModal(){
+  const foto = state.perfil.foto;
+  return `
+    <div class="modal-overlay" id="mrtDadosOverlay">
+      <div class="modal">
+        <h3>Dados pessoais</h3>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+          <div class="drawer-avatar" id="drawerAvatarBtn" style="cursor:pointer;width:56px;height:56px;font-size:19px;${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}"></div>
+          <div style="font-size:12px;color:var(--text-dim);">Toca na foto pra trocar</div>
+        </div>
+        <input type="file" id="drawerFotoInput" accept="image/*" style="display:none;">
+        <div class="field"><label>Nome</label><input type="text" id="pfNome" value="${state.perfil.nome||''}"></div>
+        <div class="field-row">
+          <div class="field"><label>Idade</label><input type="text" id="pfIdade" inputmode="numeric" value="${state.perfil.idade||''}"></div>
+          <div class="field"><label>Peso (kg)</label><input type="text" id="pfPeso" inputmode="decimal" value="${state.perfil.peso||''}"></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>Altura (cm)</label><input type="text" id="pfAltura" inputmode="numeric" value="${state.perfil.altura||''}"></div>
+          <div class="field"><label>Sexo</label>
+            <select id="pfSexo">
+              <option value="">Selecionar</option>
+              <option value="masculino" ${state.perfil.sexo==='masculino'?'selected':''}>Masculino</option>
+              <option value="feminino" ${state.perfil.sexo==='feminino'?'selected':''}>Feminino</option>
+            </select>
+          </div>
+        </div>
+        <div class="leg-desc" style="white-space:normal;font-size:11.5px;color:var(--text-dim);margin:-8px 0 16px;">Altura e sexo são usados só pra calcular o percentual de gordura em Medidas corporais.</div>
+        <button class="secondary" style="width:100%;" id="mrtCloseDadosPessoais">Fechar</button>
+      </div>
+    </div>`;
+}
+function renderPerfilV2Content(){
+  const nome = state.perfil.nome || '';
+  const initials = nome.trim() ? nome.trim().split(/\s+/).map(w=>w[0]).slice(0,2).join('').toUpperCase() : '?';
+  const foto = state.perfil.foto;
+  const header = `
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;">
+      <div class="mrt-avatar" style="width:60px;height:60px;font-size:19px;${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':initials}</div>
+      <div style="flex:1;min-width:0;">
+        <div class="mrt-runtitle" style="font-size:18px;">${nome||'Sem nome'}</div>
+        <div class="mrt-chips" style="margin-top:6px;">
+          <div class="mrt-chip">Musculação —</div>
+          <div class="mrt-chip">Corrida —</div>
+        </div>
+      </div>
+    </div>
+    <button class="mrt-btnsecondary" style="width:100%;margin-bottom:18px;" id="mrtEditDadosBtn">Editar dados</button>`;
+
+  const grid = `
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      ${mrtPerfilGridCard(ICONS.chart, 'Progresso', 'Sua evolução de carga', 'progresso')}
+      ${mrtPerfilGridCard(ICONS.compare, 'Comparativo', 'Compare períodos', 'comparativo')}
+      ${mrtPerfilGridCard(ICONS.calendar, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : 'Registre suas medidas'; })(), 'medidas')}
+      ${mrtPerfilGridCard(ICONS.shoe, 'Equipamentos', (()=>{ const t=state.equipamentos.tenis.find(x=>x.ativo); return t ? t.nome+' · '+t.km+'km' : 'Tênis e relógio'; })(), 'equipamentos')}
+    </div>`;
+
+  const phaseParts = treinoPhaseParts();
+  const planoCard = phaseParts ? `
+    <div class="mrt-card">
+      <div class="mrt-runlabel" style="color:var(--mrt-bluelight);">MEU PLANO</div>
+      <div class="mrt-runtitle" style="font-size:16px;margin:4px 0 4px;">${phaseParts.phaseName}</div>
+      <div style="font-size:12.5px;color:var(--mrt-dim);margin-bottom:14px;">Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div>
+      <button class="mrt-btnsecondary" style="width:100%;" id="mrtRedoDiagBtn">Refazer diagnóstico</button>
+    </div>` : `
+    <div class="mrt-card">
+      <div class="mrt-runlabel" style="color:var(--mrt-bluelight);">MEU PLANO</div>
+      <div class="mrt-runtitle" style="font-size:16px;margin:4px 0 14px;">Você ainda não tem um plano gerado</div>
+      <button class="mrt-btnprimary" style="width:100%;" id="mrtRedoDiagBtn">Fazer diagnóstico</button>
+    </div>`;
+
+  // Seção do personal trainer é a mesma de sempre (código de compartilhar, alunos com acesso) — só
+  // embrulhada num card novo. Login/compartilhamento são chamadas assíncronas de verdade no Firebase,
+  // por isso reaproveito o HTML e a fiação (wirePerfilExtras) em vez de duplicar.
+  const trainerCard = `
+    <div class="mrt-card">
+      <div class="mrt-runtitle" style="font-size:15px;margin-bottom:14px;">Personal Trainer</div>
+      ${(state.authUser && !state.viewingClient) ? `
+        <div style="display:flex;align-items:center;justify-content:space-between;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:12px 14px;margin-bottom:12px;">
+          <div>
+            <div style="font-size:14px;font-weight:600;">Sou personal trainer</div>
+            <div style="font-size:11.5px;color:var(--text-dim);margin-top:2px;">Libera a área de alunos</div>
+          </div>
+          <div id="souPersonalToggle" style="width:44px;height:26px;border-radius:14px;background:${state.perfil.souPersonal?'var(--accent)':'var(--surface-2)'};position:relative;cursor:pointer;flex-shrink:0;border:1px solid var(--border);">
+            <div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:${state.perfil.souPersonal?'21px':'2px'};transition:left .15s ease;box-shadow:0 1px 3px rgba(0,0,0,0.3);"></div>
+          </div>
+        </div>
+        ${(state.perfil.souPersonal) ? `<button class="mrt-btnsecondary" style="width:100%;margin-bottom:10px;" data-tabgo="alunas">Ver alunos${state.trainerClients.length?' ('+state.trainerClients.length+')':''}</button>` : ''}
+        <div class="leg-tag" style="margin-bottom:10px;">Compartilhar meu treino</div>
+        <div style="font-size:12px;color:var(--text-dim);margin-bottom:10px;">Gera um código pra um personal acompanhar e editar seu treino.</div>
+        ${state.shareCodeShown ? `
+          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--accent-soft);border-radius:12px;padding:14px;margin-bottom:10px;">
+            <div style="font-size:22px;font-weight:800;letter-spacing:2px;color:var(--accent);">${state.shareCodeShown}</div>
+            <button class="secondary" id="btnCopyShareCode" style="padding:8px 14px;font-size:12.5px;">Copiar</button>
+          </div>
+        ` : `<button class="secondary" id="btnGenShareCode" style="width:100%;margin-bottom:10px;">Gerar código</button>`}
+        <div id="clientTrainersList">
+          ${state.clientTrainers.length ? state.clientTrainers.map(t=>`
+            <div class="leg-card" style="margin-bottom:8px;">
+              <div class="leg-left"><div class="leg-tag">Personal</div><div class="leg-desc">${t.trainerEmail || t.trainerUid}</div></div>
+              <button class="del-btn" data-revokeaccess="${t.id}" title="Remover acesso">×</button>
+            </div>
+          `).join('') : `<div style="font-size:12px;color:var(--text-dim);">Ninguém tem acesso ao seu treino ainda.</div>`}
+        </div>
+      ` : `<div style="font-size:12.5px;color:var(--mrt-dim);">Entre na sua conta (mais abaixo, em "Conta") pra compartilhar seu treino com um personal.</div>`}
+    </div>`;
+
+  const relogio = state.equipamentos.relogio || '';
+  const integracoesCard = `
+    <div class="mrt-card">
+      <div class="mrt-runtitle" style="font-size:15px;margin-bottom:4px;">Integrações</div>
+      ${relogio ? `<div style="font-size:12px;color:var(--mrt-dim);margin-bottom:12px;">Seu relógio cadastrado: ${relogio}</div>` : ''}
+      ${['Garmin','Strava'].map(svc=>`
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-top:1px solid var(--mrt-border);">
+          <div>
+            <div style="font-size:13.5px;font-weight:700;color:var(--mrt-text);">${svc}</div>
+            <div style="font-size:11px;color:var(--mrt-dim);margin-top:2px;">Não conectado</div>
+          </div>
+          <button class="mrt-btnsecondary" style="width:auto;height:auto;padding:8px 14px;font-size:12px;" data-mrtintegrar="${svc}">Conectar</button>
+        </div>`).join('')}
+      <div class="mrt-blocklabel" style="margin-top:16px;">Saúde do relógio</div>
+      <div class="mrt-wex-grid2x2" style="margin-top:8px;">
+        <div class="mrt-cardinner"><div class="mrt-metrick">Sono</div><div class="mrt-metricv">—</div></div>
+        <div class="mrt-cardinner"><div class="mrt-metrick">Estresse</div><div class="mrt-metricv">—</div></div>
+        <div class="mrt-cardinner"><div class="mrt-metrick">FC repouso</div><div class="mrt-metricv">—</div></div>
+        <div class="mrt-cardinner"><div class="mrt-metrick">HRV</div><div class="mrt-metricv">—</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--mrt-dim);margin-top:10px;">Sem dados do relógio ainda — conecte um serviço acima quando essa integração existir.</div>
+    </div>`;
+
+  const prefsCard = `
+    <div class="mrt-card">
+      <div class="mrt-runtitle" style="font-size:15px;margin-bottom:6px;">Preferências</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--mrt-border);">
+        <div style="font-size:13px;color:var(--mrt-text);">Voz nos treinos</div>
+        <div id="mrtPrefVoz" style="width:44px;height:26px;border-radius:14px;background:${state.vozAtiva===false?'var(--mrt-card2)':'var(--mrt-blue)'};position:relative;cursor:pointer;flex-shrink:0;">
+          <div style="width:20px;height:20px;border-radius:50%;background:#fff;position:absolute;top:2px;left:${state.vozAtiva===false?'2px':'20px'};transition:left .15s ease;"></div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--mrt-border);cursor:pointer;" data-mrtprefstub="Unidades">
+        <div style="font-size:13px;color:var(--mrt-text);">Unidades</div>
+        <div style="font-size:12px;color:var(--mrt-dim);">km</div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-top:1px solid var(--mrt-border);cursor:pointer;" data-mrtprefstub="Som">
+        <div style="font-size:13px;color:var(--mrt-text);">Som</div>
+        <div style="font-size:12px;color:var(--mrt-dim);">Ligado</div>
+      </div>
+    </div>`;
+
+  const contaCard = `
+    <div class="mrt-card">
+      <div class="mrt-runtitle" style="font-size:15px;margin-bottom:12px;">Conta</div>
+      ${state.authUser ? `
+        <div style="font-size:12.5px;color:var(--mrt-dim);margin-bottom:10px;">Conectado como ${state.authUser.email}</div>
+        <button class="mrt-btnsecondary" style="width:100%;" id="btnSignOut">Sair da conta</button>
+      ` : `
+        <div class="field"><input type="email" id="inAuthEmail" placeholder="seu@email.com" autocomplete="email"></div>
+        <div class="field"><input type="password" id="inAuthSenha" placeholder="Senha (mín. 6 caracteres)" autocomplete="current-password"></div>
+        ${state.authError ? `<div style="font-size:12px;color:var(--mrt-red);margin-bottom:10px;">${state.authError}</div>` : ''}
+        ${state.authInfo ? `<div style="font-size:12px;color:var(--mrt-green);margin-bottom:10px;">${state.authInfo}</div>` : ''}
+        <div style="display:flex;gap:8px;">
+          <button class="mrt-btnsecondary" id="btnAuthEntrar" ${state.authBusy?'disabled':''} style="flex:1;${state.authBusy?'opacity:0.6;':''}">${state.authBusy==='entrar'?'Entrando...':'Entrar'}</button>
+          <button class="mrt-btnsecondary" id="btnAuthCriarConta" ${state.authBusy?'disabled':''} style="flex:1;${state.authBusy?'opacity:0.6;':''}">${state.authBusy==='criar'?'Criando...':'Criar conta'}</button>
+        </div>
+        <button id="btnAuthEsqueciSenha" ${state.authBusy?'disabled':''} style="width:100%;background:none;border:none;color:var(--mrt-dim);font-size:12px;font-weight:600;padding:12px 0 0;cursor:pointer;text-decoration:underline;">${state.authBusy==='reset'?'Enviando...':'Esqueci minha senha / já tinha conta com Google'}</button>
+      `}
+    </div>`;
+
+  const maisOpcoesCard = `
+    <div class="mrt-card">
+      <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" data-perfilmore="1">
+        <div class="mrt-runtitle" style="font-size:14px;color:var(--mrt-dim);">Mais opções</div>
+        <div class="phase-chevron ${state.perfilMaisOpcoesOpen?'open':''}" style="color:var(--mrt-dim);">${CHEVRON_SVG}</div>
+      </div>
+      ${state.perfilMaisOpcoesOpen ? `
+        <div style="margin-top:14px;">
+          <button class="mrt-btnsecondary" style="width:100%;margin-bottom:8px;" id="btnExportBackup">Exportar backup</button>
+          <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
+          <button class="mrt-btnsecondary" style="width:100%;margin-bottom:8px;" id="btnImportBackup">Importar backup</button>
+          <button class="mrt-btnsecondary" style="width:100%;color:var(--mrt-red);" id="btnApagarTudo">Apagar todos os dados</button>
+        </div>
+      ` : ''}
+    </div>`;
+
+  return header + grid + planoCard + trainerCard + integracoesCard + prefsCard + contaCard + maisOpcoesCard;
+}
+function renderPerfilV2Shell(){
+  return `
+    <div class="mrt-root">
+      <div class="mrt-scroll">${renderPerfilV2Content()}</div>
+      ${renderMrtNav()}
+      ${state.modalType==='dadosPessoais' ? renderDadosPessoaisModal() : (state.modalOpen ? renderModal() : '')}
+    </div>`;
+}
+function wirePerfilV2(){
+  document.querySelectorAll('[data-tabgo]').forEach(el=>{
+    el.onclick = ()=>{
+      const destTab = el.getAttribute('data-tabgo');
+      if(destTab==='hoje' || destTab==='meusTreinos'){
+        const todayAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
+        state.selectedDayHoje = todayAbbr; state.selectedDayMusc = todayAbbr; state.selectedDayCorrida = todayAbbr;
+        state.weekOffset = 0;
+      }
+      if(destTab!=='perfil'){ state._clientTrainersFetched = false; }
+      state.tab = destTab;
+      render();
+    };
+  });
+  const editDadosBtn = document.getElementById('mrtEditDadosBtn');
+  if(editDadosBtn) editDadosBtn.onclick = ()=>{ state.modalType='dadosPessoais'; state.modalOpen=true; render(); };
+  const closeDadosBtn = document.getElementById('mrtCloseDadosPessoais');
+  if(closeDadosBtn) closeDadosBtn.onclick = ()=>{ state.modalOpen=false; state.modalType=null; render(); };
+  const dadosOverlay = document.getElementById('mrtDadosOverlay');
+  if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
+  const redoDiagBtn = document.getElementById('mrtRedoDiagBtn');
+  if(redoDiagBtn) redoDiagBtn.onclick = openHybridCreate;
+  const vozToggle = document.getElementById('mrtPrefVoz');
+  if(vozToggle) vozToggle.onclick = ()=>{ state.vozAtiva = state.vozAtiva===false; render(); };
+  document.querySelectorAll('[data-mrtprefstub]').forEach(el=>{
+    el.onclick = ()=> alert(`"${el.getAttribute('data-mrtprefstub')}" ainda não é personalizável nesta versão.`);
+  });
+  document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{
+    el.onclick = ()=> alert(`Integração com ${el.getAttribute('data-mrtintegrar')} ainda não existe no app.`);
+  });
+  wirePerfilExtras();
+}
+/* ============ TELA TURMA (V2) ============ */
+function mrtRingSvg(pct, color, size){
+  size = size||82;
+  const stroke=9, r=(size-stroke)/2, c=2*Math.PI*r;
+  const off = c*(1-Math.max(0,Math.min(100,pct))/100);
+  return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="var(--mrt-card2)" stroke-width="${stroke}"/>
+    <circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${color}" stroke-width="${stroke}" stroke-linecap="round"
+      stroke-dasharray="${c}" stroke-dashoffset="${off}" transform="rotate(-90 ${size/2} ${size/2})"/>
+  </svg>`;
+}
+function renderTurmaV2Content(){
+  if(!state.authUser){
+    return `<div class="mrt-restcard">${ICONS.user}<div class="t">Entre na sua conta</div><div class="s">Pra participar de grupos e desafios com amigos.</div></div>
+      <button class="mrt-btnprimary" style="margin-top:14px;" data-tabgo="perfil">Ir pro Perfil</button>`;
+  }
+  if(!state._turmaGroupsFetched){
+    state._turmaGroupsFetched = true;
+    loadMyGroups().then(()=>{ if(state.turmaSelectedGroupId) loadGroupDetail(state.turmaSelectedGroupId); else render(); });
+  }
+  const groups = state.turmaGroups || [];
+  const groupChipsHtml = groups.map(g=>`<div class="mrt-chip ${state.turmaSelectedGroupId===g.id?'current':''}" style="cursor:pointer;" data-turmagroup="${g.id}">${g.name}</div>`).join('');
+  const topBar = `
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px;">
+      <div class="mrt-title">Turma</div>
+      <div style="display:flex;gap:8px;">
+        <button class="mrt-btnsecondary" style="width:auto;height:auto;padding:9px 14px;font-size:12.5px;" id="turmaBtnJoin">Entrar</button>
+        <button class="mrt-btnprimary" style="width:auto;height:auto;padding:9px 14px;font-size:12.5px;" id="turmaBtnCreate">+ Grupo</button>
+      </div>
+    </div>
+    ${groupChipsHtml ? `<div class="mrt-chips" style="margin-bottom:16px;flex-wrap:wrap;">${groupChipsHtml}</div>` : ''}
+    ${state.turmaShowJoin ? `<div class="mrt-card"><input type="text" id="turmaJoinCode" placeholder="Código do convite" maxlength="8" style="width:100%;text-transform:uppercase;background:var(--mrt-card2);border:none;border-radius:10px;color:var(--mrt-text);padding:12px;font-family:inherit;margin-bottom:10px;box-sizing:border-box;"><button class="mrt-btnprimary" id="turmaJoinConfirm">Entrar</button></div>` : ''}
+    ${state.turmaShowCreate ? `<div class="mrt-card"><input type="text" id="turmaGroupName" placeholder="Nome do grupo" style="width:100%;background:var(--mrt-card2);border:none;border-radius:10px;color:var(--mrt-text);padding:12px;font-family:inherit;margin-bottom:10px;box-sizing:border-box;"><button class="mrt-btnprimary" id="turmaCreateConfirm">Criar</button></div>` : ''}
+  `;
+  if(!groups.length){
+    return topBar + `<div class="mrt-restcard">${ICONS.flame}<div class="t">Sem grupo ainda</div><div class="s">Cria um grupo ou entra com o código de convite de um amigo pra começar um desafio de constância junto.</div></div>`;
+  }
+  const detail = state.turmaGroupDetail;
+  if(!detail || detail.groupId!==state.turmaSelectedGroupId){
+    return topBar + `<div class="mrt-sub" style="text-align:center;margin-top:30px;display:block;">Carregando grupo…</div>`;
+  }
+  const members = detail.members||[];
+  const sorted = [...members].sort((a,b)=>Object.keys(b.checkins||{}).length-Object.keys(a.checkins||{}).length);
+  const me = members.find(m=>m.uid===state.authUser.uid) || { name:state.authUser.name||state.perfil.nome||'Você', checkins:{} };
+  const meCount = Object.keys(me.checkins||{}).length;
+  const leader = sorted[0];
+  const leaderCount = leader ? Object.keys(leader.checkins||{}).length : 0;
+  const challenge = detail.challenge;
+  const group = groups.find(g=>g.id===state.turmaSelectedGroupId);
+  const inviteRow = group ? `<div class="mrt-sub" style="margin-bottom:14px;display:block;">Código do grupo: <b style="color:var(--mrt-text);">${group.inviteCode}</b></div>` : '';
+
+  let challengeSection;
+  if(!challenge){
+    challengeSection = `
+      <div class="mrt-card">
+        <div class="mrt-runlabel" style="color:var(--mrt-bluelight);">SEM DESAFIO ATIVO</div>
+        <div class="mrt-runtitle" style="font-size:16px;margin:6px 0 14px;">Bora começar um desafio de constância?</div>
+        <button class="mrt-btnprimary" style="width:100%;" id="turmaBtnNewChallenge">Criar desafio</button>
+        ${state.turmaShowNewChallenge ? `
+          <div style="margin-top:14px;">
+            <input type="text" id="turmaChallengeName" placeholder="Nome do desafio (ex: Desafio 21 dias)" style="width:100%;background:var(--mrt-card2);border:none;border-radius:10px;color:var(--mrt-text);padding:12px;font-family:inherit;margin-bottom:10px;box-sizing:border-box;">
+            <div style="display:flex;gap:8px;">${[7,14,21,30].map(n=>`<button class="mrt-btnsecondary" style="flex:1;" data-turmachallengedays="${n}">${n}d</button>`).join('')}</div>
+          </div>` : ''}
+      </div>`;
+  }else{
+    const daysElapsed = Math.max(1, Math.floor((Date.parse(todayISO())-Date.parse(challenge.startDateISO))/86400000)+1);
+    const daysRemaining = Math.max(0, challenge.totalDays-daysElapsed);
+    const groupDone = members.reduce((s,m)=>s+Object.keys(m.checkins||{}).length,0);
+    const groupGoal = challenge.totalDays * Math.max(1, members.length);
+    const groupPct = Math.min(100, Math.round((groupDone/groupGoal)*100));
+    challengeSection = `
+      <div class="mrt-card">
+        <div class="mrt-runlabel" style="color:var(--mrt-amber);">🔥 ${challenge.name}</div>
+        <div class="mrt-runtitle" style="font-size:18px;margin:6px 0 16px;">Faltam ${daysRemaining} dia${daysRemaining===1?'':'s'}</div>
+        <div style="display:flex;align-items:center;gap:16px;">
+          <div style="position:relative;flex-shrink:0;width:82px;height:82px;">${mrtRingSvg(groupPct,'var(--mrt-blue)',82)}<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:var(--mrt-text);">${groupPct}%</div></div>
+          <div style="flex:1;min-width:0;">
+            <div class="mrt-metrick">META COLETIVA</div>
+            <div style="font-size:13px;color:var(--mrt-text);font-weight:700;margin-top:4px;">${groupDone} de ${groupGoal} treinos</div>
+          </div>
+        </div>
+      </div>
+      <div class="mrt-wex-grid2x2" style="grid-template-columns:1fr 1fr 1fr;">
+        <div class="mrt-card" style="padding:14px 6px;text-align:center;"><div class="mrt-avatar" style="margin:0 auto 8px;">${(leader&&leader.name||'?')[0].toUpperCase()}</div><div class="mrt-metrick">Líder</div><div class="mrt-metricv">${leaderCount}</div></div>
+        <div class="mrt-card" style="padding:14px 6px;text-align:center;border:2px solid var(--mrt-blue);"><div class="mrt-avatar" style="margin:0 auto 8px;">${(me.name||'V')[0].toUpperCase()}</div><div class="mrt-metrick">Você</div><div class="mrt-metricv">${meCount}</div></div>
+        <div class="mrt-card" style="padding:14px 6px;text-align:center;"><div class="mrt-avatar" style="margin:0 auto 8px;background:var(--mrt-card2);color:var(--mrt-dim);">${daysRemaining}</div><div class="mrt-metrick">Restam</div><div class="mrt-metricv" style="font-size:13px;">dias</div></div>
+      </div>
+      <div class="mrt-blocklabel" style="margin-top:4px;">Top 3</div>
+      <div class="mrt-card">
+        ${sorted.length ? sorted.slice(0,3).map((m,i)=>`
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 0;${i>0?'border-top:1px solid var(--mrt-border);':''}">
+            <div style="width:20px;font-size:12.5px;font-weight:800;color:var(--mrt-dim);">${i+1}º</div>
+            <div class="mrt-avatar" style="width:32px;height:32px;font-size:12px;">${(m.name||'?')[0].toUpperCase()}</div>
+            <div style="flex:1;min-width:0;font-size:13px;font-weight:700;color:var(--mrt-text);">${m.name||'Atleta'}</div>
+            <div style="font-size:13px;font-weight:800;color:var(--mrt-text);">${Object.keys(m.checkins||{}).length}</div>
+          </div>`).join('') : `<div class="mrt-sub">Ninguém no grupo ainda.</div>`}
+      </div>`;
+  }
+
+  const feedSection = `
+    <div class="mrt-blocklabel" style="margin-top:4px;">Check-ins recentes</div>
+    ${!detail.feed.length ? `<div class="mrt-card"><div class="mrt-sub">Ninguém fez check-in ainda.</div></div>` : detail.feed.map(f=>`
+      <div class="mrt-card" style="display:flex;align-items:center;gap:10px;padding:12px 16px;">
+        <div class="mrt-avatar" style="width:32px;height:32px;font-size:12px;">${(f.name||'?')[0].toUpperCase()}</div>
+        <div style="flex:1;min-width:0;font-size:12.5px;color:var(--mrt-text);"><b>${f.name||'Atleta'}</b> ${f.text}</div>
+      </div>`).join('')}
+  `;
+
+  return topBar + inviteRow + challengeSection + `<div style="margin-top:8px;">${feedSection}</div>` + `<div style="height:70px;"></div>`;
+}
+function renderTurmaV2Shell(){
+  const showFab = state.authUser && state.turmaGroups && state.turmaGroups.length;
+  return `
+    <div class="mrt-root">
+      <div class="mrt-scroll">${renderTurmaV2Content()}</div>
+      ${showFab ? `<div class="mrt-fab-wrap"><button class="mrt-fab" id="mrtTurmaCheckinFab" title="Fazer check-in">${ICONS.plus}</button></div>` : ''}
+      ${renderMrtNav()}
+      ${state.modalOpen ? renderModal() : ''}
+    </div>`;
+}
+function wireTurmaV2(){
+  document.querySelectorAll('[data-tabgo]').forEach(el=>{
+    el.onclick = ()=>{
+      const destTab = el.getAttribute('data-tabgo');
+      if(destTab==='hoje' || destTab==='meusTreinos'){
+        const todayAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
+        state.selectedDayHoje = todayAbbr; state.selectedDayMusc = todayAbbr; state.selectedDayCorrida = todayAbbr;
+        state.weekOffset = 0;
+      }
+      state.tab = destTab;
+      render();
+    };
+  });
+  const fab = document.getElementById('mrtTurmaCheckinFab');
+  if(fab) fab.onclick = ()=>{
+    if(!confirm('Registrar um check-in manual de hoje pro grupo?')) return;
+    markGroupCheckinsToday('fez check-in manual');
+    alert('Check-in registrado!');
+  };
+  wireTurmaExtras();
 }
 function renderTurma(){
   if(!state.authUser){
@@ -8294,122 +8789,374 @@ function focoFromObjetivo(objetivo){
 // Quiz passo-a-passo pra criar o treino híbrido — substitui o formulário único com a grade de
 // 7 dias × 4 botões (confusa) por uma pergunta de cada vez; o algoritmo decide sozinho quais dias
 // viram corrida/musculação a partir de "dias disponíveis" + "foco do planejamento".
+// Primeiro contato: tela cheia (boas-vindas + dados) que já emenda no diagnóstico. Não usa o sistema de
+// modal antigo — a fiação dele só existia no shell clássico, e por isso os botões ficavam mortos na tela nova.
+function renderOnboardingScreen(){
+  if(!state.onboardingDraft) state.onboardingDraft = { nome:'', idade:'', peso:'', altura:'', sexo:'' };
+  const d = state.onboardingDraft;
+  return `
+    <div class="mrt-root">
+      <div class="mrt-scroll">
+        <div style="padding-top:calc(28px + env(safe-area-inset-top));margin-bottom:26px;">
+          <div class="mrt-runlabel" style="color:var(--mrt-bluelight);">MEU RITMO</div>
+          <div class="mrt-quiz-title" style="font-size:28px;margin:6px 0 0;">Bem-vindo</div>
+        </div>
+        <div class="mrt-blocklabel" style="margin-top:0;">Nome</div>
+        <input class="mrt-input" id="obNome" type="text" placeholder="Seu nome" value="${d.nome.replace(/"/g,'&quot;')}" autocomplete="given-name">
+        <div style="display:flex;gap:12px;margin-top:16px;">
+          <div style="flex:1;"><div class="mrt-blocklabel" style="margin-top:0;">Idade</div><input class="mrt-input" id="obIdade" type="text" inputmode="numeric" placeholder="28" value="${d.idade}"></div>
+          <div style="flex:1;"><div class="mrt-blocklabel" style="margin-top:0;">Peso (kg)</div><input class="mrt-input" id="obPeso" type="text" inputmode="decimal" placeholder="78" value="${d.peso}"></div>
+          <div style="flex:1;"><div class="mrt-blocklabel" style="margin-top:0;">Altura (cm)</div><input class="mrt-input" id="obAltura" type="text" inputmode="numeric" placeholder="178" value="${d.altura}"></div>
+        </div>
+        <div class="mrt-blocklabel" style="margin-top:16px;">Sexo</div>
+        <div style="display:flex;gap:8px;">
+          ${[['masculino','Masculino'],['feminino','Feminino']].map(([v,l])=>`<div class="mrt-chip ${d.sexo===v?'current':''}" style="padding:12px 20px;font-size:13.5px;cursor:pointer;" data-obsexo="${v}">${l}</div>`).join('')}
+        </div>
+      </div>
+      <div style="padding:14px 18px calc(14px + env(safe-area-inset-bottom));">
+        <button class="mrt-btnprimary" style="width:100%;" id="obSave">Continuar</button>
+        <div style="text-align:center;margin-top:12px;"><button id="obSkip" style="background:none;border:none;color:var(--mrt-dim);font-size:13px;font-weight:700;font-family:inherit;cursor:pointer;padding:6px 12px;">Agora não</button></div>
+      </div>
+    </div>`;
+}
+function wireOnboardingScreen(){
+  const d = state.onboardingDraft;
+  if(!d) return;
+  [['obNome','nome'],['obIdade','idade'],['obPeso','peso'],['obAltura','altura']].forEach(([id,campo])=>{
+    const el = document.getElementById(id);
+    if(el) el.oninput = ()=>{ d[campo] = el.value; };
+  });
+  document.querySelectorAll('[data-obsexo]').forEach(el=>{
+    el.onclick = ()=>{ const v = el.getAttribute('data-obsexo'); d.sexo = d.sexo===v ? '' : v; render(); };
+  });
+  const encerrar = ()=>{ state.onboardingDraft = null; state.modalOpen = false; state.modalType = null; };
+  const btnSkip = document.getElementById('obSkip');
+  if(btnSkip) btnSkip.onclick = ()=>{ saveOnboardingDone(); encerrar(); render(); };
+  const btnSave = document.getElementById('obSave');
+  if(btnSave) btnSave.onclick = ()=>{
+    state.perfil = { ...state.perfil, nome:d.nome.trim(), idade:d.idade.trim(), peso:d.peso.trim(), altura:d.altura.trim(), sexo:d.sexo };
+    savePerfil(); saveOnboardingDone(); encerrar();
+    openHybridCreate();
+  };
+}
+// Fiação do quiz híbrido — extraída pra função própria (era só um branch dentro da fiação genérica de
+// modais) porque agora essa tela roda em tela cheia própria, fora do sistema de modal antigo.
+function wireHybridQuizModal(){
+  const hd = state.hybridDraft;
+  if(!hd) return;
+  if(hd.step === 'preview'){
+    const btnComecar = document.getElementById('mrtBtnComecarSemana');
+    if(btnComecar) btnComecar.onclick = ()=>{
+      const notes = hd.previewNotes;
+      state.modalOpen = false; state.modalType = null; state.hybridDraft = null; state.tab = 'hoje';
+      if(notes && notes.length) alert(notes.join('\n\n'));
+      render();
+    };
+    return;
+  }
+  const singleSelect = (attr, field, isNum)=>{
+    document.querySelectorAll(`[${attr}]`).forEach(el=>{
+      el.onclick = ()=>{
+        hd[field] = isNum ? parseFloat(el.getAttribute(attr)) : el.getAttribute(attr);
+        render();
+      };
+    });
+  };
+  singleSelect('data-hybnivelcorrida','nivelCorrida',false);
+  singleSelect('data-hybnivelmusc','nivelMusc',false);
+  singleSelect('data-hybobjetivo','objetivo',false);
+  singleSelect('data-hybgoal','corridaGoal',true);
+  singleSelect('data-hybtempo','tempoMaxMin',true);
+  singleSelect('data-hybequip','equip',false);
+  singleSelect('data-hybweeks','weeksChoice',true);
+  singleSelect('data-hyblocalcorrida','localCorrida',false);
+  singleSelect('data-hybfreq','muscFreqChoice',true);
+  document.querySelectorAll('[data-hybmesmodia]').forEach(el=>{
+    el.onclick = ()=>{ hd.mesmoDia = el.getAttribute('data-hybmesmodia')==='1'; render(); };
+  });
+  document.querySelectorAll('[data-hybrelogio]').forEach(el=>{
+    el.onclick = ()=>{ hd.temRelogio = el.getAttribute('data-hybrelogio')==='1'; render(); };
+  });
+  document.querySelectorAll('[data-hybavailday]').forEach(el=>{
+    el.onclick = ()=>{
+      const d = el.getAttribute('data-hybavailday');
+      hd.availableDays = hd.availableDays || [];
+      hd.availableDays = hd.availableDays.includes(d) ? hd.availableDays.filter(x=>x!==d) : [...hd.availableDays, d];
+      render();
+    };
+  });
+  const currentLongInput = document.getElementById('hybCurrentLong');
+  if(currentLongInput) currentLongInput.onchange = ()=>{ hd.corridaCurrentLong = currentLongInput.value.trim(); };
+  const lesaoInput = document.getElementById('hybLesao');
+  if(lesaoInput) lesaoInput.onchange = ()=>{ hd.lesao = lesaoInput.value.trim(); };
+
+  // Tempo de prova recente (opcional) — usa exatamente a mesma conta de VDOT que a tela "Ver VDOT" já
+  // usava, só que dentro do quiz. "Não sei" só marca uma flag pro botão final saber que precisa de um
+  // VDOT padrão pelo nível (não trava o quiz esperando um teste que a pessoa não tem).
+  const vdotSaveBtn = document.getElementById('hybVdotTestSave');
+  if(vdotSaveBtn) vdotSaveBtn.onclick = ()=>{
+    const distKey = document.getElementById('hybVdotTestDist').value;
+    const timeStr = document.getElementById('hybVdotTestTime').value;
+    const timeSec = parseClockInput(timeStr);
+    if(!timeSec){ alert('Digita o tempo no formato mm:ss (ex: 24:30)'); return; }
+    const vdot = vdotFromTest(distKey, timeSec);
+    const paces = computeVdotPaces(vdot);
+    state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim(), vdot, paces };
+    saveCorridaVdotData();
+    render();
+  };
+  const vdotNaoSeiBtn = document.getElementById('hybVdotNaoSei');
+  if(vdotNaoSeiBtn) vdotNaoSeiBtn.onclick = ()=>{ hd.step = (hd.step||0)+1; render(); };
+
+  const exitBtnHyb = document.getElementById('hybQuizExit');
+  if(exitBtnHyb) exitBtnHyb.onclick = ()=>{
+    if(!confirm('Sair do diagnóstico? As respostas não ficam salvas.')) return;
+    state.modalOpen = false; state.modalType = null; state.hybridDraft = null; render();
+  };
+  const backBtnHyb = document.getElementById('hybQuizBack');
+  if(backBtnHyb) backBtnHyb.onclick = ()=>{ hd.step = Math.max(0, (hd.step||0)-1); render(); };
+  const nextBtnHyb = document.getElementById('hybQuizNext');
+  if(nextBtnHyb) nextBtnHyb.onclick = ()=>{
+    // Só o passo dos dias disponíveis tem validação própria — os outros sempre têm um valor
+    // padrão já selecionado, então nunca ficam "vazios".
+    if((hd.step||0)===4){
+      const avail = hd.availableDays||[];
+      if(avail.length===0){ alert('Marca pelo menos 1 dia disponível pra treinar.'); return; }
+      if(avail.length>=7){ alert('Deixa pelo menos 1 dia de descanso na semana.'); return; }
+    }
+    hd.step = (hd.step||0)+1;
+    render();
+  };
+
+  const btnGerarHibrido = document.getElementById('btnGerarHibrido');
+  if(btnGerarHibrido) btnGerarHibrido.onclick = ()=>{
+    if(!state.corridaVdotData || !state.corridaVdotData.vdot){
+      // Sem teste nem VDOT manual: usa um VDOT padrão pelo nível informado, só pra não travar quem
+      // pulou o teste — a pessoa sempre pode refazer o teste de verdade depois em "Ver VDOT".
+      const fallbackVdot = { iniciante:30, intermediario:40, avancado:50 }[hd.nivelCorrida] || 35;
+      state.corridaVdotData = { ...(state.corridaVdotData||{}), vdot: fallbackVdot, paces: computeVdotPaces(fallbackVdot) };
+      saveCorridaVdotData();
+    }
+    const foco = focoFromObjetivo(hd.objetivo);
+    let dayPicks = autoDistributeHybridDays(hd.availableDays||[], foco, hd.mesmoDia);
+    const autoMuscCount = DAY_ABBR.filter(d=>dayPicks[d]==='musc'||dayPicks[d]==='ambos').length;
+    if(hd.muscFreqChoice && hd.muscFreqChoice!==autoMuscCount){
+      dayPicks = adjustMuscFrequency(dayPicks, hd.availableDays||[], hd.muscFreqChoice);
+    }
+    const corridaDays = DAY_ABBR.filter(d => dayPicks[d]==='corrida' || dayPicks[d]==='ambos');
+    const muscDays = DAY_ABBR.filter(d => dayPicks[d]==='musc' || dayPicks[d]==='ambos');
+    if(corridaDays.length===0 && muscDays.length===0){ alert('Marca pelo menos 1 dia disponível pra treinar.'); return; }
+
+    const warnings = [];
+    const consecWarn = hybridConsecutiveRunWarning(corridaDays);
+    if(consecWarn) warnings.push(consecWarn);
+
+    const longaoDay = corridaDays.length ? pickLongaoDay(corridaDays) : null;
+    const sched = { corridaDays, muscDays, longaoDay };
+    const totalWeeks = hd.weeksChoice || 8;
+    const draft = {
+      nivelCorrida:hd.nivelCorrida, nivelMusc:hd.nivelMusc, objetivo:hd.objetivo,
+      corridaGoal:hd.corridaGoal, corridaCurrentLong:hd.corridaCurrentLong,
+      equip:hd.equip, lesao:hd.lesao, tempoMaxMin:hd.tempoMaxMin,
+      temRelogio:hd.temRelogio, localCorrida:hd.localCorrida,
+    };
+    const checkins = {};
+    const plan = buildAllHybridWeeks(draft, sched, totalWeeks, checkins);
+    const week1 = plan[0];
+    const sameDayNotes = buildHybridSameDayNotes(week1.corridaWeek, week1.muscPlan, foco);
+
+    const startMonday = vdotISODate(vdotStartMonday(new Date()));
+    materializeHybridWeekIntoState(week1, startMonday);
+    state.hybridPlanData = { draft, sched, totalWeeks, checkins, foco, dayPicks, plan, startMonday, currentWeekIndex:1 };
+    saveHybridPlanData();
+    hd.previewDayPicks = dayPicks;
+    hd.previewNotes = [...warnings, ...week1.legEasingNotes, ...sameDayNotes];
+    hd.step = 'preview';
+    render();
+  };
+}
+// Ajusta quantos dias viram musculação SEM mexer em autoDistributeHybridDays (que continua sendo a
+// única fonte de verdade da distribuição automática) — só corta ou completa a partir do que ela já
+// decidiu, usado quando a pessoa escolhe uma frequência diferente da recomendada na tela de resultado.
+function adjustMuscFrequency(dayPicks, availableDays, targetCount){
+  const picks = { ...dayPicks };
+  const muscDays = DAY_ABBR.filter(d=>picks[d]==='musc'||picks[d]==='ambos');
+  if(muscDays.length > targetCount){
+    muscDays.slice(targetCount).forEach(d=>{ picks[d] = picks[d]==='ambos' ? 'corrida' : 'descanso'; });
+  }else if(muscDays.length < targetCount){
+    const need = targetCount - muscDays.length;
+    const candidates = (availableDays||[]).filter(d=>picks[d]==='descanso'||!picks[d]);
+    candidates.slice(0, need).forEach(d=>{ picks[d] = 'musc'; });
+  }
+  return picks;
+}
+function renderHybridResultBody(hd){
+  const nivelLabel = {iniciante:'Iniciante',intermediario:'Intermediário',avancado:'Avançado'};
+  const nivelScorePct = {iniciante:35, intermediario:65, avancado:90};
+  const foco = focoFromObjetivo(hd.objetivo);
+  const autoDayPicks = autoDistributeHybridDays(hd.availableDays||[], foco, hd.mesmoDia);
+  const autoMuscCount = DAY_ABBR.filter(d=>autoDayPicks[d]==='musc'||autoDayPicks[d]==='ambos').length;
+  const freqChoice = hd.muscFreqChoice || autoMuscCount || 3;
+  const vdot = (state.corridaVdotData && state.corridaVdotData.vdot) || null;
+  const muscScore = nivelScorePct[hd.nivelMusc] || 50;
+  // O VDOT já é literalmente um índice de capacidade aeróbica — normalizo pra uma escala de 0-100
+  // só pra ficar no mesmo formato visual do score de musculação (que não tem um número "de verdade").
+  const corridaScore = vdot ? Math.max(5, Math.min(100, Math.round(((vdot-20)/50)*100))) : (nivelScorePct[hd.nivelCorrida] || 50);
+  const hybridScore = Math.round((muscScore+corridaScore)/2);
+  const hybridNivel = hybridScore>=75 ? 'Avançado' : hybridScore>=45 ? 'Intermediário' : 'Iniciante';
+  let freqOptions = [3,5].filter(n=>n<=Math.max(1,(hd.availableDays||[]).length));
+  if(!freqOptions.length) freqOptions = [Math.max(1,(hd.availableDays||[]).length)];
+  if(!freqOptions.includes(autoMuscCount) && autoMuscCount>0 && autoMuscCount<=(hd.availableDays||[]).length) freqOptions.push(autoMuscCount);
+  freqOptions = [...new Set(freqOptions)].sort((a,b)=>a-b);
+  return `
+    <div class="mrt-quiz-title">Seu diagnóstico</div>
+    <div style="display:flex;gap:12px;margin-bottom:12px;">
+      <div class="mrt-card" style="flex:1;padding:16px;text-align:center;">
+        <div class="mrt-runlabel" style="color:var(--mrt-blue);">MUSCULAÇÃO</div>
+        <div class="mrt-runtitle" style="font-size:15px;margin:6px 0 4px;">${nivelLabel[hd.nivelMusc]||'—'}</div>
+        <div style="font-size:24px;font-weight:800;color:var(--mrt-text);">${muscScore}</div>
+      </div>
+      <div class="mrt-card" style="flex:1;padding:16px;text-align:center;">
+        <div class="mrt-runlabel" style="color:var(--mrt-blue);">CORRIDA</div>
+        <div class="mrt-runtitle" style="font-size:15px;margin:6px 0 4px;">${nivelLabel[hd.nivelCorrida]||'—'}</div>
+        <div style="font-size:24px;font-weight:800;color:var(--mrt-text);">${corridaScore}</div>
+        ${vdot ? `<div style="font-size:10.5px;color:var(--mrt-dim);margin-top:2px;">VDOT ${vdot.toFixed(1)}</div>` : ''}
+      </div>
+    </div>
+    <div class="mrt-card" style="text-align:center;margin-bottom:20px;">
+      <div class="mrt-runlabel" style="color:var(--mrt-bluelight);">NÍVEL HÍBRIDO</div>
+      <div class="mrt-runtitle" style="font-size:18px;margin:6px 0 2px;">${hybridNivel}</div>
+      <div style="font-size:30px;font-weight:800;color:var(--mrt-text);">${hybridScore}</div>
+    </div>
+    <div class="mrt-blocklabel" style="margin-top:0;">Frequência de musculação</div>
+    ${freqOptions.map(n=>`
+      <div class="mrt-quiz-opt ${freqChoice===n?'active':''}" data-hybfreq="${n}">
+        ${n}x por semana${n===autoMuscCount?' <span style="color:var(--mrt-bluelight);">· recomendado</span>':''}
+        <div style="font-size:11.5px;color:var(--mrt-dim);font-weight:500;margin-top:4px;">${n<=3?'Ideal pra conciliar com a corrida':'Mais volume de treino'}</div>
+      </div>`).join('')}
+  `;
+}
+function renderHybridPreviewScreen(hd){
+  const dayPicks = hd.previewDayPicks || {};
+  return `
+    <div class="mrt-root">
+      <div class="mrt-scroll" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:10vh;">
+        <div class="mrt-summarycheck">${CHECK_SVG}</div>
+        <div class="mrt-runtitle" style="font-size:20px;margin-bottom:6px;">Sua semana está pronta!</div>
+        <div class="mrt-sub" style="margin-bottom:22px;">Confira os dias antes de começar</div>
+        <div class="mrt-daystrip" style="width:100%;margin-bottom:26px;">
+          ${DAY_ABBR.map(d=>{
+            const p = dayPicks[d];
+            const hasAtividade = p && p!=='descanso';
+            const label = p==='ambos'?'Ambos':p==='corrida'?'Corrida':p==='musc'?'Musc.':'Descanso';
+            return `<div class="mrt-daycol">
+              <div class="mrt-dayletter">${d}</div>
+              <div class="mrt-daycircle ${hasAtividade?'has':''}">${hasAtividade?CHECK_SVG:''}</div>
+              <div style="font-size:8.5px;color:var(--mrt-dim);margin-top:4px;">${label}</div>
+            </div>`;
+          }).join('')}
+        </div>
+        <button class="mrt-btnprimary" style="width:100%;" id="mrtBtnComecarSemana">Começar</button>
+      </div>
+    </div>`;
+}
 function renderHybridQuizModal(hd){
+  if(hd.step === 'preview') return renderHybridPreviewScreen(hd);
   const step = hd.step||0;
   const total = HYBRID_QUIZ_STEPS.length;
   const pct = Math.round(((step+1)/total)*100);
-  const pill = (active, attr, val, label)=> `<div class="day-pill ${active?'active':''}" data-${attr}="${val}">${label}</div>`;
+  const opt = (active, attr, val, label)=> `<div class="mrt-quiz-opt ${active?'active':''}" data-${attr}="${val}">${label}</div>`;
   let body = '';
   if(step===0){
-    body = `<h3>Qual seu nível na corrida?</h3>
-      <div class="quiz-optlist">
-        ${pill(hd.nivelCorrida==='iniciante','hybnivelcorrida','iniciante','Iniciante')}
-        ${pill(hd.nivelCorrida==='intermediario','hybnivelcorrida','intermediario','Intermediário')}
-        ${pill(hd.nivelCorrida==='avancado','hybnivelcorrida','avancado','Avançado')}
-      </div>`;
+    body = `<div class="mrt-quiz-title">Qual seu nível na musculação?</div>
+      ${opt(hd.nivelMusc==='iniciante','hybnivelmusc','iniciante','Iniciante')}
+      ${opt(hd.nivelMusc==='intermediario','hybnivelmusc','intermediario','Intermediário')}
+      ${opt(hd.nivelMusc==='avancado','hybnivelmusc','avancado','Avançado')}`;
   }else if(step===1){
-    body = `<h3>Qual seu nível na musculação?</h3>
-      <div class="quiz-optlist">
-        ${pill(hd.nivelMusc==='iniciante','hybnivelmusc','iniciante','Iniciante')}
-        ${pill(hd.nivelMusc==='intermediario','hybnivelmusc','intermediario','Intermediário')}
-        ${pill(hd.nivelMusc==='avancado','hybnivelmusc','avancado','Avançado')}
-      </div>`;
+    const cv = state.corridaVdotData;
+    body = `<div class="mrt-quiz-title">Qual seu nível na corrida?</div>
+      ${opt(hd.nivelCorrida==='iniciante','hybnivelcorrida','iniciante','Iniciante')}
+      ${opt(hd.nivelCorrida==='intermediario','hybnivelcorrida','intermediario','Intermediário')}
+      ${opt(hd.nivelCorrida==='avancado','hybnivelcorrida','avancado','Avançado')}
+      <div class="mrt-blocklabel" style="margin-top:22px;">Tempo de prova recente (opcional)</div>
+      ${cv && cv.vdot ? `<div class="mrt-card" style="padding:14px 16px;"><div class="mrt-metrick">VDOT calculado</div><div class="mrt-metricv">${cv.vdot.toFixed(1)}${cv.testDist?' · '+({'1600':'1600m','3000':'3km','5000':'5km','10000':'10km'}[cv.testDist]||'')+' em '+cv.testTime:''}</div></div>`
+        : `<div class="mrt-card">
+        <div style="display:flex;gap:8px;margin-bottom:10px;">
+          <select id="hybVdotTestDist" class="mrt-wex-pseselect" style="flex:1;width:auto;padding:10px;">
+            <option value="1600">1600m</option>
+            <option value="3000">3km</option>
+            <option value="5000" selected>5km</option>
+            <option value="10000">10km</option>
+          </select>
+          <input type="text" id="hybVdotTestTime" placeholder="mm:ss" style="flex:1;background:var(--mrt-card2);border:none;border-radius:8px;color:var(--mrt-text);padding:10px;font-family:inherit;">
+        </div>
+        <button class="mrt-btnsecondary" style="width:100%;" id="hybVdotTestSave">Calcular</button>
+      </div>
+      <div style="text-align:center;margin-top:10px;"><button id="hybVdotNaoSei" style="background:none;border:none;color:var(--mrt-dim);font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;">Não sei / pular</button></div>`}`;
   }else if(step===2){
     const opts = [['emagrecer','Emagrecer'],['massa','Ganhar massa muscular'],['performance','Performance na corrida'],['saude','Saúde geral'],['prova','Me preparar pra uma prova']];
-    body = `<h3>Qual seu objetivo principal?</h3>
-      <div class="quiz-optlist">
-        ${opts.map(([v,l])=>`<div class="quiz-optrow ${hd.objetivo===v?'active':''}" data-hybobjetivo="${v}">${l}</div>`).join('')}
-      </div>`;
+    body = `<div class="mrt-quiz-title">Qual seu objetivo principal?</div>
+      ${opts.map(([v,l])=>opt(hd.objetivo===v,'hybobjetivo',v,l)).join('')}`;
   }else if(step===3){
-    body = `<h3>Meta de corrida</h3>
-      <div class="field"><div style="display:flex;gap:8px;flex-wrap:wrap;">
-        ${pill(hd.corridaGoal==5,'hybgoal','5','5km')}
-        ${pill(hd.corridaGoal==10,'hybgoal','10','10km')}
-        ${pill(hd.corridaGoal==21.0975,'hybgoal','21.0975','21km')}
-        ${pill(hd.corridaGoal==42.195,'hybgoal','42.195','42km')}
-      </div></div>
-      <div class="field"><label>Sua rodagem mais longa hoje em dia (km)</label>
-        <input type="text" inputmode="decimal" id="hybCurrentLong" value="${hd.corridaCurrentLong||''}" placeholder="ex: 8"></div>`;
+    body = `<div class="mrt-quiz-title">Meta de corrida</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;">
+        ${[[5,'5km'],[10,'10km'],[21.0975,'21km'],[42.195,'42km']].map(([v,l])=>`<div class="mrt-chip ${hd.corridaGoal==v?'current':''}" style="padding:10px 16px;font-size:13px;cursor:pointer;" data-hybgoal="${v}">${l}</div>`).join('')}
+      </div>
+      <div class="mrt-blocklabel" style="margin-top:0;">Sua rodagem mais longa hoje em dia (km)</div>
+      <input type="text" inputmode="decimal" id="hybCurrentLong" value="${hd.corridaCurrentLong||''}" placeholder="ex: 8" style="width:100%;background:var(--mrt-card2);border:none;border-radius:12px;color:var(--mrt-text);padding:14px;font-family:inherit;font-size:14px;">`;
   }else if(step===4){
-    body = `<h3>Quais dias você tem disponível pra treinar?</h3>
-      <p class="modal-sub">Deixa pelo menos 1 dia de descanso na semana.</p>
-      <div class="quiz-daygrid">
-        ${DAY_ABBR.map(d=>`<div class="day-pill" data-hybavailday="${d}" style="flex:1;min-width:40px;${(hd.availableDays||[]).includes(d)?'background:var(--accent);border-color:var(--accent);color:#fff;':''}">${d}</div>`).join('')}
+    body = `<div class="mrt-quiz-title">Quais dias você tem disponível pra treinar?</div>
+      <div class="mrt-sub" style="margin-bottom:16px;">Deixa pelo menos 1 dia de descanso na semana.</div>
+      <div style="display:flex;gap:6px;">
+        ${DAY_ABBR.map(d=>`<div class="mrt-quiz-opt" style="flex:1;text-align:center;padding:14px 4px;margin-bottom:0;${(hd.availableDays||[]).includes(d)?'border-color:var(--mrt-blue);background:rgba(59,130,246,0.15);color:var(--mrt-bluelight);':''}" data-hybavailday="${d}">${d}</div>`).join('')}
       </div>`;
   }else if(step===5){
-    body = `<h3>Prefere corrida e musculação no mesmo dia, ou em dias separados?</h3>
-      <div class="quiz-optlist">
-        <div class="quiz-optrow ${hd.mesmoDia===false?'active':''}" data-hybmesmodia="0">Em dias separados</div>
-        <div class="quiz-optrow ${hd.mesmoDia===true?'active':''}" data-hybmesmodia="1">No mesmo dia</div>
-      </div>`;
+    body = `<div class="mrt-quiz-title">Prefere corrida e musculação no mesmo dia, ou em dias separados?</div>
+      ${opt(hd.mesmoDia===false,'hybmesmodia','0','Em dias separados')}
+      ${opt(hd.mesmoDia===true,'hybmesmodia','1','No mesmo dia')}`;
   }else if(step===6){
-    body = `<h3>Tempo máximo por sessão de musculação?</h3>
-      <div class="quiz-optlist">
-        ${[30,45,60,90].map(v=>`<div class="quiz-optrow ${hd.tempoMaxMin==v?'active':''}" data-hybtempo="${v}">${v} minutos</div>`).join('')}
-      </div>`;
+    body = `<div class="mrt-quiz-title">Tempo máximo por sessão de musculação?</div>
+      ${[30,45,60,90].map(v=>opt(hd.tempoMaxMin==v,'hybtempo',v,v+' minutos')).join('')}`;
   }else if(step===7){
-    body = `<h3>Tem alguma lesão ou dor ativa?</h3>
-      <p class="modal-sub">Usamos isso só pra evitar sugerir exercícios de risco pra sua queixa — não substitui avaliação profissional.</p>
-      <div class="field"><input type="text" id="hybLesao" value="${hd.lesao||''}" placeholder="Ex: dor no joelho — ou deixa em branco"></div>`;
+    body = `<div class="mrt-quiz-title">Tem alguma lesão ou dor ativa?</div>
+      <div class="mrt-sub" style="margin-bottom:14px;">Usamos isso só pra evitar sugerir exercícios de risco pra sua queixa — não substitui avaliação profissional.</div>
+      <input type="text" id="hybLesao" value="${hd.lesao||''}" placeholder="Ex: dor no joelho — ou deixa em branco" style="width:100%;background:var(--mrt-card2);border:none;border-radius:12px;color:var(--mrt-text);padding:14px;font-family:inherit;font-size:14px;">`;
   }else if(step===8){
-    body = `<h3>Onde vai treinar musculação?</h3>
-      <div class="quiz-optlist">
-        <div class="quiz-optrow ${hd.equip==='academia'?'active':''}" data-hybequip="academia">Academia completa</div>
-        <div class="quiz-optrow ${hd.equip==='halteres'?'active':''}" data-hybequip="halteres">Casa com halteres</div>
-        <div class="quiz-optrow ${hd.equip==='corpo'?'active':''}" data-hybequip="corpo">Só peso do corpo</div>
-      </div>`;
+    body = `<div class="mrt-quiz-title">Onde vai treinar musculação?</div>
+      ${opt(hd.equip==='academia','hybequip','academia','Academia completa')}
+      ${opt(hd.equip==='halteres','hybequip','halteres','Casa com halteres')}
+      ${opt(hd.equip==='corpo','hybequip','corpo','Só peso do corpo')}`;
   }else if(step===9){
-    body = `<h3>Como você costuma correr?</h3>
-      <div class="quiz-optlist">
-        <div class="quiz-optrow ${hd.temRelogio===true?'active':''}" data-hybrelogio="1">Tenho relógio GPS</div>
-        <div class="quiz-optrow ${hd.temRelogio===false?'active':''}" data-hybrelogio="0">Não tenho — uso o celular ou percepção de esforço</div>
-      </div>
-      <h3 style="margin-top:18px;">Onde corre?</h3>
-      <div class="quiz-optlist">
-        <div class="quiz-optrow ${hd.localCorrida==='rua'?'active':''}" data-hyblocalcorrida="rua">Na rua</div>
-        <div class="quiz-optrow ${hd.localCorrida==='esteira'?'active':''}" data-hyblocalcorrida="esteira">Na esteira</div>
-        <div class="quiz-optrow ${hd.localCorrida==='ambos'?'active':''}" data-hyblocalcorrida="ambos">Os dois</div>
-      </div>`;
+    body = `<div class="mrt-quiz-title">Tem relógio GPS?</div>
+      ${opt(hd.temRelogio===true,'hybrelogio','1','Tenho relógio GPS')}
+      ${opt(hd.temRelogio===false,'hybrelogio','0','Não tenho — uso celular ou percepção de esforço')}
+      <div class="mrt-blocklabel" style="margin-top:22px;">Onde corre?</div>
+      ${opt(hd.localCorrida==='rua','hyblocalcorrida','rua','Na rua')}
+      ${opt(hd.localCorrida==='esteira','hyblocalcorrida','esteira','Na esteira')}
+      ${opt(hd.localCorrida==='ambos','hyblocalcorrida','ambos','Os dois')}`;
   }else if(step===10){
-    body = `<h3>Duração do plano</h3>
-      <div class="quiz-optlist">
-        <div class="quiz-optrow ${hd.weeksChoice==8?'active':''}" data-hybweeks="8">8 semanas</div>
-        <div class="quiz-optrow ${hd.weeksChoice==12?'active':''}" data-hybweeks="12">12 semanas</div>
-        <div class="quiz-optrow ${hd.weeksChoice==16?'active':''}" data-hybweeks="16">16 semanas</div>
-      </div>
-      <p class="modal-sub" style="margin-top:10px;">A corrida e a musculação nunca sobem juntas na mesma semana — revezam em blocos de 4 semanas, com descarga a cada 4ª.</p>`;
+    body = `<div class="mrt-quiz-title">Duração do plano</div>
+      ${opt(hd.weeksChoice==8,'hybweeks',8,'8 semanas')}
+      ${opt(hd.weeksChoice==12,'hybweeks',12,'12 semanas')}
+      ${opt(hd.weeksChoice==16,'hybweeks',16,'16 semanas')}
+      <div class="mrt-sub" style="margin-top:10px;">A corrida e a musculação nunca sobem juntas na mesma semana — revezam em blocos de 4 semanas, com descarga a cada 4ª.</div>`;
   }else{
-    const nivelLabel = {iniciante:'Iniciante',intermediario:'Intermediário',avancado:'Avançado'};
-    const focoLabel = {equilibrado:'Equilíbrio 50/50',corrida:'Mais corrida (70/30)',musculacao:'Mais força (70/30)'};
-    const foco = focoFromObjetivo(hd.objetivo);
-    const dayPicks = autoDistributeHybridDays(hd.availableDays||[], foco, hd.mesmoDia);
-    const corridaDays = DAY_ABBR.filter(d=>dayPicks[d]==='corrida'||dayPicks[d]==='ambos');
-    const muscDays = DAY_ABBR.filter(d=>dayPicks[d]==='musc'||dayPicks[d]==='ambos');
-    const goalLabel = {5:'5km',10:'10km','21.0975':'21km','42.195':'42km'}[hd.corridaGoal] || '';
-    body = `<h3>Confere se tá tudo certo</h3>
-      <div style="margin:12px 0;">
-        <div class="quiz-summary-row"><span class="k">Nível corrida / musc.</span><span class="v">${nivelLabel[hd.nivelCorrida]||''} / ${nivelLabel[hd.nivelMusc]||''}</span></div>
-        <div class="quiz-summary-row"><span class="k">Intensidade (a partir do objetivo)</span><span class="v">${focoLabel[foco]||''}</span></div>
-        <div class="quiz-summary-row"><span class="k">Meta de corrida</span><span class="v">${goalLabel}</span></div>
-        <div class="quiz-summary-row"><span class="k">Dias de corrida</span><span class="v">${corridaDays.join(', ')||'—'}</span></div>
-        <div class="quiz-summary-row"><span class="k">Dias de musculação</span><span class="v">${muscDays.join(', ')||'—'}</span></div>
-        <div class="quiz-summary-row"><span class="k">Tempo máx./sessão</span><span class="v">${hd.tempoMaxMin||'—'} min</span></div>
-        <div class="quiz-summary-row"><span class="k">Lesão relatada</span><span class="v">${hd.lesao||'Nenhuma'}</span></div>
-        <div class="quiz-summary-row"><span class="k">Duração do plano</span><span class="v">${hd.weeksChoice} semanas</span></div>
-      </div>
-      <div id="hybWarn"></div>`;
+    body = renderHybridResultBody(hd);
   }
   const isFirst = step===0, isLast = step===total-1;
   return `
-    <div class="modal-overlay">
-      <div class="modal">
-        <div class="quiz-progress"><div class="fill" style="width:${pct}%"></div></div>
-        <div class="quiz-steplabel">Passo ${step+1} de ${total}</div>
-        ${body}
-        <div class="modal-actions">
-          <button class="secondary" id="${isFirst?'modalCancel':'hybQuizBack'}">${isFirst?'Cancelar':'Voltar'}</button>
-          <button class="primary" id="${isLast?'btnGerarHibrido':'hybQuizNext'}">${isLast?'Gerar treino híbrido':'Próximo'}</button>
+    <div class="mrt-root">
+      <div class="mrt-scroll">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-top:calc(14px + env(safe-area-inset-top));">
+          <button class="mrt-wex-x" id="${isFirst?'hybQuizExit':'hybQuizBack'}">${isFirst?'✕':'‹'}</button>
+          <div class="mrt-sub">Passo ${step+1} de ${total}</div>
+          <div style="width:34px;"></div>
         </div>
+        <div class="mrt-counterbar" style="height:6px;margin-bottom:24px;"><div class="fill" style="width:${pct}%"></div></div>
+        ${body}
+      </div>
+      <div style="padding:14px 18px calc(14px + env(safe-area-inset-bottom));">
+        <button class="mrt-btnprimary" style="width:100%;" id="${isLast?'btnGerarHibrido':'hybQuizNext'}">${isLast?'Gerar meu plano':'Próximo'}</button>
       </div>
     </div>`;
 }
@@ -8454,22 +9201,6 @@ function renderModal(){
           </table>
           <button class="secondary" id="btnAddSet" style="width:100%;margin-bottom:14px;">+ Adicionar série</button>
           <div class="modal-actions"><button class="secondary" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Salvar</button></div>
-        </div>
-      </div>`;
-  }
-  if(state.modalType === 'onboarding'){
-    return `
-      <div class="modal-overlay">
-        <div class="modal">
-          <h3>Bem-vindo</h3>
-          <p class="modal-sub">Só pra personalizar seu espaço — pode pular se quiser.</p>
-          <div class="field"><label>Nome</label><input type="text" id="obNome" placeholder="Seu nome" autofocus></div>
-          <div class="field-row">
-            <div class="field"><label>Idade</label><input type="text" id="obIdade" inputmode="numeric" placeholder="28"></div>
-            <div class="field"><label>Peso (kg)</label><input type="text" id="obPeso" inputmode="decimal" placeholder="78"></div>
-          </div>
-          <div class="field"><label>Altura (cm)</label><input type="text" id="obAltura" inputmode="numeric" placeholder="178"></div>
-          <div class="modal-actions"><button class="secondary" id="obSkip">Agora não</button><button class="primary" id="obSave">Começar</button></div>
         </div>
       </div>`;
   }
