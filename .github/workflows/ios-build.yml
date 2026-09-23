@@ -19,7 +19,7 @@ jobs:
       - name: Instalar dependências do projeto
         run: npm ci
 
-      - name: Build web
+      - name: Build web (copia o app pra www/)
         run: npm run build
 
       - name: Recriar plataforma iOS
@@ -28,7 +28,9 @@ jobs:
           npx cap add ios
           npx cap sync ios
 
-      - name: Permissões de localização e segundo plano
+      # A pasta ios/ é recriada do zero a cada build.
+      # Por isso as permissões precisam ser colocadas aqui.
+      - name: Permissões de localização e segundo plano (Info.plist)
         run: |
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
@@ -39,16 +41,16 @@ jobs:
           }
 
           add_str NSLocationWhenInUseUsageDescription "O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida."
-
           add_str NSLocationAlwaysAndWhenInUseUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
-
           add_str NSLocationAlwaysUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
 
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
-
           "$PB" -c "Add :UIBackgroundModes array" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:0 string location" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:1 string audio" "$PLIST"
+
+          plutil -extract NSLocationWhenInUseUsageDescription raw "$PLIST"
+          plutil -extract UIBackgroundModes json "$PLIST"
 
       - name: Validar Info.plist
         run: |
@@ -62,10 +64,8 @@ jobs:
           cat ios/App/App/Info.plist
 
       - name: Resolver pacotes Swift (SPM)
-        run: |
-          xcodebuild \
-            -resolvePackageDependencies \
-            -project ios/App/App.xcodeproj
+        run: xcodebuild -resolvePackageDependencies \
+          -project ios/App/App.xcodeproj
 
       - name: Compilar (sem assinatura)
         run: |
@@ -85,12 +85,20 @@ jobs:
         run: |
           APP_PATH="build/App.app"
 
+          rm -rf Payload
           mkdir -p Payload
+
           cp -r "$APP_PATH" Payload/
 
-          cd Payload
-          zip -r ../MeuRitmo.ipa App.app
-          cd ..
+          echo "===== CONTEÚDO DO PAYLOAD ====="
+          find Payload -maxdepth 2 -print
+
+          zip -r MeuRitmo.ipa Payload
+
+      - name: Verificar estrutura do IPA
+        run: |
+          echo "===== ESTRUTURA DO IPA ====="
+          unzip -l MeuRitmo.ipa
 
       - uses: actions/upload-artifact@v4
         with:
