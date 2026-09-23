@@ -8,6 +8,7 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +19,7 @@ jobs:
       - name: Instalar dependências do projeto
         run: npm ci
 
-      - name: Build web (copia o app pra www/)
+      - name: Build web
         run: npm run build
 
       - name: Recriar plataforma iOS
@@ -27,25 +28,44 @@ jobs:
           npx cap add ios
           npx cap sync ios
 
-      # A pasta ios/ é recriada do zero a cada build, então as permissões precisam ser colocadas aqui — sem
-      # elas o iOS nunca pergunta "Permitir localização" e o GPS fica parado em "aguardando permissão".
-      - name: Permissões de localização e segundo plano (Info.plist)
+      - name: Permissões de localização e segundo plano
         run: |
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
-          add_str() { "$PB" -c "Add :$1 string $2" "$PLIST" 2>/dev/null || "$PB" -c "Set :$1 $2" "$PLIST"; }
+
+          add_str() {
+            "$PB" -c "Add :$1 string $2" "$PLIST" 2>/dev/null || \
+            "$PB" -c "Set :$1 $2" "$PLIST"
+          }
+
           add_str NSLocationWhenInUseUsageDescription "O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida."
+
           add_str NSLocationAlwaysAndWhenInUseUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
+
           add_str NSLocationAlwaysUsageDescription "O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano."
+
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
+
           "$PB" -c "Add :UIBackgroundModes array" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:0 string location" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:1 string audio" "$PLIST"
-          plutil -extract NSLocationWhenInUseUsageDescription raw "$PLIST"
-          plutil -extract UIBackgroundModes json "$PLIST"
+
+      - name: Validar Info.plist
+        run: |
+          echo "===== VALIDANDO INFO.PLIST ====="
+          plutil -lint ios/App/App/Info.plist
+
+          echo "===== CONTEÚDO DO INFO.PLIST ====="
+          plutil -p ios/App/App/Info.plist
+
+          echo "===== XML DO INFO.PLIST ====="
+          cat ios/App/App/Info.plist
 
       - name: Resolver pacotes Swift (SPM)
-        run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
+        run: |
+          xcodebuild \
+            -resolvePackageDependencies \
+            -project ios/App/App.xcodeproj
 
       - name: Compilar (sem assinatura)
         run: |
@@ -64,9 +84,13 @@ jobs:
       - name: Montar o .ipa
         run: |
           APP_PATH="build/App.app"
+
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
-          zip -r MeuRitmo.ipa Payload
+
+          cd Payload
+          zip -r ../MeuRitmo.ipa App.app
+          cd ..
 
       - uses: actions/upload-artifact@v4
         with:
