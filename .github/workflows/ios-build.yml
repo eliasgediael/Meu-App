@@ -21,8 +21,11 @@ jobs:
       - name: Build web (copia o app pra www/)
         run: npm run build
 
-      - name: Sincronizar Capacitor iOS
-        run: npx cap sync ios
+      - name: Recriar plataforma iOS do Capacitor
+        run: |
+          rm -rf ios
+          npx cap add ios
+          npx cap sync ios
 
       - name: Instalar Pods do CocoaPods
         run: |
