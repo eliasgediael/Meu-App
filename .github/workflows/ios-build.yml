@@ -30,17 +30,11 @@ jobs:
       - name: Compilar (sem assinatura)
         run: |
           xcodebuild build \
-            -project ios/App/App.xcodeproj \
+            -workspace ios/App/App.xcworkspace \
             -scheme App \
-            -target App \
             -configuration Release \
-            -sdk iphoneos \
-            -destination 'generic/platform=iOS' \
-            -derivedDataPath build \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            PROVISIONING_PROFILE_SPECIFIER=""
+            -destination "generic/platform=iOS" \
+            CODE_SIGNING_ALLOWED=NO
 
       - name: Montar o .ipa
         run: |
