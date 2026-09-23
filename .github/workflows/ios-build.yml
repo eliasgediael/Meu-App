@@ -29,6 +29,15 @@ jobs:
           rm -rf ios
           npx cap add ios
 
+      - name: VERIFICAR ONDE O PODFILE ESTÁ (Diagnóstico)
+        run: |
+          echo "Conteudo da raiz:"
+          ls -la
+          echo "Conteudo da pasta ios (se existir):"
+          ls -la ios || true
+          echo "Conteudo da pasta ios/App (se existir):"
+          ls -la ios/App || true
+
       - name: Instalar Pods do CocoaPods
         run: |
           cd ios/App
