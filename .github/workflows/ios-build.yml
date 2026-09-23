@@ -31,6 +31,7 @@ jobs:
         run: |
           xcodebuild build \
             -project ios/App/App.xcodeproj \
+            -scheme App \
             -target App \
             -configuration Release \
             -sdk iphoneos \
