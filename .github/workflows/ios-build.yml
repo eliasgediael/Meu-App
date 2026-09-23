@@ -38,15 +38,15 @@ jobs:
             -configuration Release \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
-            -derivedDataPath build \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
-            PROVISIONING_PROFILE_SPECIFIER=""
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            CONFIGURATION_BUILD_DIR="$(pwd)/build"
 
       - name: Montar o .ipa
         run: |
-          APP_PATH="build/Build/Products/Release-iphoneos/App.app"
+          APP_PATH="build/App.app"
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
           zip -r MeuRitmo.ipa Payload
