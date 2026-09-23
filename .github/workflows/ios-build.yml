@@ -29,7 +29,7 @@ jobs:
 
       - name: Compilar (sem assinatura)
         run: |
-          cd ios/App
+          cd ios
           xcodebuild build \
             -workspace App.xcworkspace \
             -scheme App \
@@ -39,7 +39,7 @@ jobs:
 
       - name: Montar o .ipa
         run: |
-          APP_PATH="build/Build/Products/Release-iphoneos/App.app"
+          APP_PATH="ios/build/Build/Products/Release-iphoneos/App.app"
           mkdir -p Payload
           cp -r "$APP_PATH" Payload/
           zip -r MeuRitmo.ipa Payload
