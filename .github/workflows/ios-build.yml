@@ -28,7 +28,7 @@ jobs:
         run: xcodebuild -resolvePackageDependencies -project ios/App/App.xcodeproj
 
       - name: Compilar (sem assinatura)
-        run: |
+        run: xcodebuild build -workspace ios/App/App.xcworkspace -scheme App -configuration Release -destination "generic/platform=iOS" CODE_SIGNING_ALLOWED=NO
           cd ios/App
           xcodebuild build \
             -workspace App.xcworkspace \
