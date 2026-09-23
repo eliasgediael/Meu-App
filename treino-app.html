@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Treino">
-<meta name="theme-color" content="#0A0F0D">
+<meta name="theme-color" content="#070B14">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
@@ -21,40 +21,41 @@
 <script src="native-bridge.js"></script>
 <style>
 
-/* Tema escuro fixo (não depende do modo claro/escuro do sistema) — Meu Ritmo, paleta "Noite + esmeralda"
-   (escolhida entre 3 opções): tom frio profundo, esmeralda como única cor de ação/corrida, rosa-coral
-   como tom secundário de musculação — cada cor com uma função só, nunca em fundo inteiro. */
+/* Tema escuro fixo (não depende do modo claro/escuro do sistema) — Meu Ritmo, paleta azul. Estes tokens
+   são a paleta "antiga" das classes que ainda não têm versão .mrt-* (pop-ups, campos, botões .primary/
+   .secondary, telas clássicas): apontam pros mesmos valores da paleta nova, então nada fica verde.
+   Verde (--green) só significa "certo/concluído". */
 :root{
-  --bg:#0A0F0D;
-  --surface:#131B18;
-  --surface-2:#1D2823;
-  --accent:#10B981;
-  --accent-soft:rgba(16,185,129,0.20);
-  --blue:#10B981;
-  --blue-soft:rgba(16,185,129,0.20);
-  --amber:#FFC24B;
-  --amber-soft:rgba(255,194,75,0.18);
-  --text:#F5F7FA;
-  --text-dim:#8A94A6;
-  --border:#243330;
-  --danger:#FF4D5E;
-  --rep:#FB7185;
-  --green:#10B981;
-  --green-soft:rgba(16,185,129,0.20);
-  --strength:#FB7185;
-  --strength-soft:rgba(251,113,133,0.18);
-  --teal:#10B981;
-  --teal-soft:rgba(16,185,129,0.20);
+  --bg:#070B14;
+  --surface:#0F1626;
+  --surface-2:#16203A;
+  --accent:#3B82F6;
+  --accent-soft:rgba(59,130,246,0.18);
+  --blue:#3B82F6;
+  --blue-soft:rgba(59,130,246,0.18);
+  --amber:#F59E0B;
+  --amber-soft:rgba(245,158,11,0.18);
+  --text:#F3F6FB;
+  --text-dim:#8B97AD;
+  --border:#1E2A44;
+  --danger:#EF4444;
+  --rep:#60A5FA;
+  --green:#22C55E;
+  --green-soft:rgba(34,197,94,0.18);
+  --strength:#60A5FA;
+  --strength-soft:rgba(96,165,250,0.18);
+  --teal:#60A5FA;
+  --teal-soft:rgba(96,165,250,0.18);
   --shadow-sm:0 1px 2px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.28);
   --shadow-md:0 6px 16px rgba(0,0,0,0.4), 0 14px 30px -10px rgba(0,0,0,0.5);
-  --shadow-accent:0 10px 24px -8px rgba(16,185,129,0.5);
+  --shadow-accent:0 10px 24px -8px rgba(59,130,246,0.5);
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:'Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:'Plus Jakarta Sans','Manrope',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   min-height:100vh;
   display:flex; justify-content:center;
 }
@@ -2134,8 +2135,8 @@ async function ensureGpsMap(){
   gpsMapEl.style.cssText = 'width:100%;height:100%;';
   gpsMapInstance = L.map(gpsMapEl, { zoomControl:false, attributionControl:false }).setView([-14.235,-51.9253], 4);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(gpsMapInstance);
-  gpsMapPolyline = L.polyline([], { color:'#2D6CDF', weight:4 }).addTo(gpsMapInstance);
-  gpsMapMarker = L.circleMarker([-14.235,-51.9253], { radius:7, color:'#fff', weight:2, fillColor:'#2D6CDF', fillOpacity:1 }).addTo(gpsMapInstance);
+  gpsMapPolyline = L.polyline([], { color:'#3B82F6', weight:4 }).addTo(gpsMapInstance);
+  gpsMapMarker = L.circleMarker([-14.235,-51.9253], { radius:7, color:'#fff', weight:2, fillColor:'#3B82F6', fillOpacity:1 }).addTo(gpsMapInstance);
   attachGpsMapToSlot();
 }
 function attachGpsMapToSlot(){
@@ -2159,7 +2160,8 @@ function resetGpsMap(){
 // Hoje o gerador de corrida só produz etapas por distância (km) — o motor já suporta 'tempo' (contagem
 // regressiva) e 'aberta' (avança só no botão de Lap, pra treino de pista) pra quando isso existir.
 function gpsStepsFromEntry(entry){
-  return (entry.steps||[]).map(s=>({
+  const etapas = (entry.gpsSteps && entry.gpsSteps.length) ? entry.gpsSteps : (entry.steps||[]);
+  return etapas.map(s=>({
     name: s.name, km: s.km, pace: s.pace, desc: s.desc,
     tipo: s.tipo || 'distancia', metaSeg: s.metaSeg || null,
   }));
@@ -2327,8 +2329,18 @@ async function startGpsRun(day){
   gr.status = 'permission';
   gr.denyReason = null;
   render();
+  // Se nenhuma posição chegar (permissão que nunca aparece, plugin sem resposta...), em vez de ficar
+  // mudo em "aguardando permissão" mostra a tela de erro com "Tentar de novo".
+  setTimeout(()=>{
+    const g = state.gpsRun;
+    if(g && g.status==='permission'){
+      if(gpsWatchId!=null){ gpsStopWatch(gpsWatchId); gpsWatchId = null; }
+      g.denyReason = 'timeout'; g.status = 'denied'; render();
+    }
+  }, 30000);
   await gpsRequestWakeLock();
-  gpsWatchId = await gpsStartWatch();
+  try{ gpsWatchId = await gpsStartWatch(); }
+  catch(e){ gpsOnError({ code:2, message:String((e && e.message) || e) }); }
 }
 function gpsOnError(err){
   const gr = state.gpsRun;
@@ -2469,7 +2481,10 @@ async function gpsResumeRun(){
   gr.status = 'running';
   gr.lastPoint = null; // evita contar a distância "pulada" entre o ponto de antes e depois da pausa
   gpsRequestWakeLock();
-  if(gr.mode!=='esteira') gpsWatchId = await gpsStartWatch();
+  if(gr.mode!=='esteira'){
+    try{ gpsWatchId = await gpsStartWatch(); }
+    catch(e){ gpsOnError({ code:2, message:String((e && e.message) || e) }); return; }
+  }
   render();
 }
 async function finishGpsRun(){
@@ -2749,10 +2764,13 @@ function renderGpsPermission(){
     </div>`;
 }
 function renderGpsDenied(gr){
+  const nativo = !!(window.NativeBridge && window.NativeBridge.isNative());
   const msg = gr.denyReason==='negada'
-    ? 'Você negou o acesso à localização. Pra rastrear com GPS, precisa permitir localização pra esse site nas configurações do navegador.'
+    ? (nativo ? 'Você negou o acesso à localização. Vá em Ajustes → Privacidade e Segurança → Serviços de Localização → Meu Ritmo e permita (de preferência "Sempre").'
+              : 'Você negou o acesso à localização. Pra rastrear com GPS, precisa permitir localização pra esse site nas configurações do navegador.')
     : gr.denyReason==='timeout'
-    ? 'Demorou demais pra pegar sinal de GPS. Verifique se a localização do celular está ligada e tente de novo em local aberto.'
+    ? (nativo ? 'O GPS não respondeu. Confira em Ajustes → Privacidade e Segurança → Serviços de Localização se o Meu Ritmo tem permissão, e tente de novo em local aberto.'
+              : 'Demorou demais pra pegar sinal de GPS. Verifique se a localização do celular está ligada e tente de novo em local aberto.')
     : 'Não consegui acessar sua localização agora.';
   return `
     <div class="mrt-root">
@@ -3325,28 +3343,6 @@ function autoDistributeHybridDays(availableDays, focoPlanejamento, mesmoDia){
     }
     if(!brokeSomething) break;
   }
-  return avoidHeavyLegsBeforeQuality(dayPicks);
-}
-// Regra anti-interferência (Meu Ritmo, fase 2): evita cair musculação na véspera do longão ou da sessão
-// de qualidade de corrida (limiar/intervalado) — usa os MESMOS critérios que decidem qual dia vira longão
-// (pickLongaoDay) e qual vira qualidade (1º dia de corrida que não é o longão, igual buildHybridCorridaWeek),
-// pra ficar consistente com o plano de corrida que realmente vai ser gerado. Só mexe quando dá pra trocar
-// sem afetar a contagem de cada modo (troca um 'musc' isolado por um dia de descanso disponível).
-function avoidHeavyLegsBeforeQuality(dayPicks){
-  const corridaDays = DAY_ABBR.filter(d=>dayPicks[d]==='corrida'||dayPicks[d]==='ambos');
-  if(corridaDays.length<2) return dayPicks;
-  const longaoDay = pickLongaoDay(corridaDays);
-  const qualityDay = corridaDays.find(d=>d!==longaoDay);
-  // As duas vésperas protegidas de uma vez, ANTES de mexer em qualquer uma — senão consertar a véspera
-  // do longão pode "roubar" o dia de descanso liberado e reintroduzir musc na véspera da qualidade
-  // (ou vice-versa), trocando um problema pelo outro em vez de resolver.
-  const sensitiveSlots = [longaoDay, qualityDay].filter(Boolean).map(qDay=>DAY_ABBR[(DAY_ABBR.indexOf(qDay)+6)%7]);
-  sensitiveSlots.forEach(dayBefore=>{
-    if(dayPicks[dayBefore]==='musc'){
-      const restCandidate = DAY_ABBR.find(d=>dayPicks[d]==='descanso' && d!==dayBefore && !sensitiveSlots.includes(d));
-      if(restCandidate){ dayPicks[dayBefore]='descanso'; dayPicks[restCandidate]='musc'; }
-    }
-  });
   return dayPicks;
 }
 function pickLongaoDay(corridaDays){
@@ -3355,53 +3351,288 @@ function pickLongaoDay(corridaDays){
   const sorted = [...corridaDays].sort((a,b)=>DAY_ABBR.indexOf(a)-DAY_ABBR.indexOf(b));
   return sorted[sorted.length-1];
 }
-// Aviso (não bloqueia) quando a própria escolha da pessoa empilha 3+ dias de corrida seguidos sem
-// descanso entre eles — real reclamação de treino sem pausa que motivou essa simplificação.
-function hybridConsecutiveRunWarning(corridaDays){
-  const idxs = corridaDays.map(d=>DAY_ABBR.indexOf(d)).sort((a,b)=>a-b);
-  let streak = 1, maxStreak = 1;
-  for(let i=1;i<idxs.length;i++){
-    if(idxs[i]===idxs[i-1]+1){ streak++; maxStreak = Math.max(maxStreak, streak); }
-    else streak = 1;
+// ===== Motor híbrido (Etapa 2) =====================================================================
+// 1) Matriz de fadiga local (pernas) e agenda da semana: decide qual dia é Leg Day / superiores / full body
+//    e qual dia de corrida é longão / qualidade / leve, respeitando o teto diário, a recuperação noturna e a
+//    regra bilateral de 24h (nunca Leg Day colado em treino intenso de corrida, nem o contrário).
+// 2) Sessões de corrida sempre em 3 blocos (aquecimento Z1 → principal → volta à calma Z1), com paces do VDOT e
+//    metragens/minutagens proporcionais à prova-alvo e ao nível.
+const HYBRID_FADIGA_PERNA = { LEG_DAY_HEAVY:40, RUN_INTERVALS_VO2MAX:40, RUN_TEMPO_THRESHOLD:30, RUN_LONG_RUN:35, UPPER_BODY:0, FULL_BODY_LIGHT:15, RUN_EASY_Z2:10, REST:0 };
+const HYBRID_FADIGA_TETO_DIA = 50;
+const HYBRID_FADIGA_RECUPERACAO = 25;
+const HYBRID_RUN_INTENSA = ['RUN_INTERVALS_VO2MAX','RUN_TEMPO_THRESHOLD'];
+// Fadiga acumulada por dia (a semana se repete, então roda 2 voltas pra herdar o domingo na segunda).
+function hybridFadigaSemana(runCode, muscCode){
+  const out = {};
+  let acc = 0;
+  for(let volta=0; volta<2; volta++){
+    DAY_ABBR.forEach(d=>{
+      const pontos = (HYBRID_FADIGA_PERNA[runCode[d]]||0) + (HYBRID_FADIGA_PERNA[muscCode[d]]||0);
+      acc = Math.max(0, acc - HYBRID_FADIGA_RECUPERACAO) + pontos;
+      if(volta===1) out[d] = { pontos, acumulada:acc };
+    });
   }
-  return maxStreak>=3 ? `Você marcou ${maxStreak} dias de corrida seguidos sem descanso entre eles — isso aumenta risco de lesão. Considera intercalar com descanso ou musculação.` : null;
+  return out;
 }
-// Corrida do modo híbrido: gera 1 semana simples (sem periodização multi-semana), com km reduzido e
-// no máximo 1 sessão de qualidade — reaproveita o VDOT/paces já calculados, sem mexer no gerador
-// solo (que tem taper/progressão multi-semana e não devia ser usado com volume alterado).
-// kmFactor: 1 = sem desconto (equivale ao solo); HYBRID_CONFIG.corridaKmFactor = desconto padrão de
-// interferência; qualquer valor entre os dois = ponto intermediário de uma progressão multi-semana.
-function buildHybridCorridaWeek(nivel, goal, currentLongKm, corridaDays, longaoDay, kmFactor, temLesao){
+function hybridScheduleCost(runCode, muscCode, legTarget, legMissCost){
+  const nx = d=>DAY_ABBR[(DAY_ABBR.indexOf(d)+1)%7];
+  const pv = d=>DAY_ABBR[(DAY_ABBR.indexOf(d)+6)%7];
+  const intensa = c=>HYBRID_RUN_INTENSA.includes(c);
+  let cost = 0;
+  const legs = DAY_ABBR.filter(d=>muscCode[d]==='LEG_DAY_HEAVY');
+  DAY_ABBR.forEach(d=>{
+    const pts = (HYBRID_FADIGA_PERNA[runCode[d]]||0) + (HYBRID_FADIGA_PERNA[muscCode[d]]||0);
+    if(pts > HYBRID_FADIGA_TETO_DIA) cost += 10000;
+    if(muscCode[d]==='LEG_DAY_HEAVY'){
+      if(intensa(runCode[nx(d)])) cost += 5000;
+      if(intensa(runCode[pv(d)])) cost += 5000;
+      if(runCode[pv(d)]==='RUN_LONG_RUN') cost += 60;
+      if(runCode[nx(d)]==='RUN_LONG_RUN') cost += 80;
+      if(runCode[d]) cost += 8;
+    }
+    if(muscCode[d]==='FULL_BODY_LIGHT' && runCode[d]==='RUN_LONG_RUN') cost += 20;
+    if((intensa(runCode[d]) && runCode[nx(d)]==='RUN_LONG_RUN') || (runCode[d]==='RUN_LONG_RUN' && intensa(runCode[nx(d)]))) cost += 60;
+  });
+  for(let i=0;i<legs.length;i++) for(let j=i+1;j<legs.length;j++){
+    const gap = Math.abs(DAY_ABBR.indexOf(legs[i])-DAY_ABBR.indexOf(legs[j]));
+    if(Math.min(gap, 7-gap) < 3) cost += 5000;
+  }
+  const fad = hybridFadigaSemana(runCode, muscCode);
+  DAY_ABBR.forEach(d=>{
+    const a = fad[d].acumulada;
+    if(a > HYBRID_FADIGA_TETO_DIA){ const ex = a-HYBRID_FADIGA_TETO_DIA; cost += ex*6 + ex*ex*0.5; }
+    cost += a*0.3;
+  });
+  cost += Math.max(0, legTarget - legs.length) * (legMissCost || 400);
+  if(legTarget>0 && legs.length===0) cost += 350; // plano híbrido sem nenhum dia de perna é o pior desfecho
+  return cost;
+}
+function hybridCombinations(arr, k){
+  if(k===0) return [[]];
+  if(arr.length<k) return [];
+  const [first, ...rest] = arr;
+  return hybridCombinations(rest, k-1).map(c=>[first, ...c]).concat(hybridCombinations(rest, k));
+}
+// Decide a semana inteira de uma vez (busca exaustiva — no máx. 7 dias, então é instantâneo). Leg Days: 1 quando há
+// 1–3 dias de musculação, até 2 (com ≥72h entre eles) a partir de 4 dias; 1 único dia de musculação vira full body.
+// foco decide o que cede primeiro quando a semana não comporta tudo: quem treina pra correr mantém a sessão forte,
+// quem treina pra ganhar massa mantém os dois Leg Days.
+function planHybridWeekTypes(sched, nivelCorrida, corridaGoal, foco){
+  const custoSemQualidade = foco==='corrida' ? 700 : foco==='musculacao' ? 250 : 400;
+  const custoSemPerna = foco==='musculacao' ? 500 : 400;
+  const { corridaDays, muscDays, longaoDay } = sched;
+  const qualityKind = !corridaDays.length ? null : nivelCorrida==='iniciante' ? 'fartlek' : (corridaGoal<=10 ? 'intervalo' : 'tempo');
+  const qualityCode = qualityKind==='intervalo' ? 'RUN_INTERVALS_VO2MAX' : qualityKind==='tempo' ? 'RUN_TEMPO_THRESHOLD' : 'RUN_EASY_Z2';
+  const legTarget = muscDays.length>=4 ? 2 : muscDays.length>=2 ? 1 : 0;
+  const upperCode = muscDays.length===1 ? 'FULL_BODY_LIGHT' : 'UPPER_BODY';
+  // null = semana sem sessão de qualidade — só entra quando não há outro jeito de encaixar o Leg Day (custo alto, mas menor que perder a perna).
+  const qualityCandidates = (corridaDays.length>=2 && qualityKind) ? [...corridaDays.filter(d=>d!==longaoDay), null] : [null];
+  let best = null;
+  qualityCandidates.forEach(q=>{
+    const runCode = {};
+    corridaDays.forEach(d=>{ runCode[d] = d===longaoDay ? 'RUN_LONG_RUN' : d===q ? qualityCode : 'RUN_EASY_Z2'; });
+    for(let k=legTarget; k>=0; k--){
+      hybridCombinations(muscDays, k).forEach(legs=>{
+        const muscCode = {};
+        muscDays.forEach(d=>{ muscCode[d] = legs.includes(d) ? 'LEG_DAY_HEAVY' : upperCode; });
+        const cost = hybridScheduleCost(runCode, muscCode, legTarget, custoSemPerna) + (q===null && corridaDays.length>=2 ? custoSemQualidade : 0);
+        if(!best || cost < best.cost) best = { cost, q, runCode:{...runCode}, muscCode };
+      });
+    }
+  });
+  const runTipos = {}, muscTipos = {};
+  corridaDays.forEach(d=>{ runTipos[d] = d===longaoDay ? 'longo' : d===best.q ? 'qualidade' : 'leve'; });
+  muscDays.forEach(d=>{ muscTipos[d] = best.muscCode[d]==='LEG_DAY_HEAVY' ? 'leg' : best.muscCode[d]==='FULL_BODY_LIGHT' ? 'full' : 'upper'; });
+  return { runTipos, muscTipos, qualityKind, runCode:best.runCode, muscCode:best.muscCode, fadiga:hybridFadigaSemana(best.runCode, best.muscCode) };
+}
+
+// ---------- Corrida híbrida ----------
+// Volume semanal / longão por prova-alvo (km) — o nível escolhe onde na faixa a pessoa cai (e escala tudo pra
+// baixo pro iniciante, que não deve receber o mesmo volume de um avançado). Quando os dias escolhidos não deixam
+// bater a faixa, o motor só usa o teto seguro de cada sessão — sem aviso.
+const HYBRID_WEEKLY_KM = { 5:[15,28], 10:[25,42], '21.0975':[38,60], '42.195':[55,85] };
+const HYBRID_LONG_KM = { 5:[5,8], 10:[8,13], '21.0975':[12,18], '42.195':[18,32] };
+const HYBRID_NIVEL_POS = { iniciante:0.15, intermediario:0.4, avancado:0.85 };
+const HYBRID_NIVEL_ESCALA = { iniciante:0.85, intermediario:1, avancado:1 };
+const HYBRID_WARMUP_MIN = { 5:{iniciante:10,intermediario:12,avancado:15}, 10:{iniciante:10,intermediario:10,avancado:10}, '21.0975':{iniciante:8,intermediario:9,avancado:10}, '42.195':{iniciante:5,intermediario:6,avancado:8} };
+const HYBRID_COOLDOWN_MIN = { iniciante:5, intermediario:8, avancado:10 };
+const HYBRID_ZONA = { E:'Z2', M:'Z3', T:'Z4', I:'Z5', R:'Z5' };
+const HB_WALK_PACE = '10:30 ~ 12:00/km';
+const HB_WALK_KM_MIN = 0.0917;
+// Tiros por prova: 5K = repetições curtas (200–600m), 10K = médias (600–1200m). {reps, m, rest(seg de trote)}.
+const HB_INTERVALO_VARIANTS = {
+  5:  [{reps:8,m:400,rest:90},{reps:6,m:600,rest:120},{reps:10,m:300,rest:75},{reps:12,m:200,rest:60}],
+  10: [{reps:6,m:800,rest:120},{reps:5,m:1000,rest:150},{reps:4,m:1200,rest:180},{reps:8,m:600,rest:90}],
+};
+// Sustentação: 21K = tempo run (contínuo ou blocos longos em T); 42K = blocos em ritmo de maratona (M).
+const HB_TEMPO_VARIANTS = {
+  '21.0975': [{cont:30},{reps:4,m:2000,rest:120},{cont:25},{reps:3,m:3000,rest:150}],
+  '42.195':  [{reps:2,km:6,recKm:2},{reps:2,km:8,recKm:3},{reps:3,km:5,recKm:2},{reps:1,km:12,recKm:0}],
+};
+function hbFmtRest(sec){ const m = Math.floor(sec/60), s = sec%60; return s ? `${m}'${String(s).padStart(2,'0')}"` : `${m}'`; }
+function hbKmDeMin(ctx, min){ return Math.max(0.5, roundToHalf(kmFromMinAtPace(min, ctx.paces.Es))); }
+function hbAquecTexto(ctx, completo){
+  if(ctx.ini) return 'caminhada rápida + trote muito leve e mobilidade de quadril e tornozelo';
+  if(!completo) return 'trote leve e mobilidade de quadril e tornozelo';
+  if(ctx.goalKey==5) return 'educativos (skipping, joelho alto, calcanhar-glúteo) + 4 acelerações de 20s';
+  if(ctx.goalKey==10) return 'trote leve + educativos (skipping, joelho alto)';
+  return 'trote leve + mobilidade de quadril e tornozelo';
+}
+// Monta a sessão nos 3 blocos e devolve tudo que o app precisa (blocos de exibição + etapas do GPS).
+function hbMontarSessao(ctx, cfg){
+  const wKm = hbKmDeMin(ctx, cfg.warmMin), cKm = hbKmDeMin(ctx, cfg.coolMin);
+  const mKm = Math.max(0.5, roundToHalf(cfg.main.km));
+  const wStep = { name:'Aquecimento', km:wKm, pace:ctx.easyPace, zona:'Z1', desc:`${cfg.warmMin} min em Z1 · ${hbAquecTexto(ctx, cfg.completo)}` };
+  const mStep = { name:'Principal', km:mKm, pace:cfg.main.pace, zona:cfg.main.zona, desc:cfg.main.desc };
+  const cStep = { name:'Desaquecimento', km:cKm, pace:ctx.easyPace, zona:'Z1', desc:`${cfg.coolMin} min em Z1 · ${ctx.ini ? 'caminhada e alongamento passivo' : 'trote leve, caminhada e alongamento passivo'}` };
+  const gpsMain = (cfg.main.gps && cfg.main.gps.length) ? cfg.main.gps : [{ ...mStep, name:cfg.main.gpsName||'Principal', tipo:'distancia' }];
+  return {
+    type:cfg.type, cor:cfg.cor, objetivo:cfg.objetivo, sessao:cfg.sessao, modo:'hibrido',
+    warmupDesc:wStep.desc, warmupPace:wStep.pace, mainDesc:cfg.main.desc, mainPace:cfg.main.pace, cooldownDesc:cStep.desc, cooldownPace:cStep.pace,
+    zonaFC:cfg.main.zona,
+    totalKm: wKm + mKm + cKm,
+    totalMin: Math.round(cfg.warmMin + cfg.coolMin + cfg.main.min),
+    steps:[wStep, mStep, cStep],
+    gpsSteps:[{ ...wStep, tipo:'distancia' }, ...gpsMain, { ...cStep, tipo:'distancia' }],
+  };
+}
+// Iniciante: nunca corre contínuo nem faz tiro — alterna trote e caminhada em E-Pace, e o trote cresce com as semanas.
+function hbRunWalk(ctx, alvoKm, bonusTrote){
+  const t = Math.min(6, 2 + Math.floor((ctx.weekNumber-1)/2)) + (bonusTrote||0), w = 1;
+  const kmMinTrote = 1/(ctx.paces.Es*1440);
+  const ciclo = t*kmMinTrote + w*HB_WALK_KM_MIN;
+  const n = Math.max(3, Math.min(14, Math.round(alvoKm/ciclo)));
+  const gps = [];
+  for(let i=1;i<=n;i++){
+    gps.push({ name:`Trote ${i}/${n}`, km:t*kmMinTrote, pace:ctx.easyPace, zona:'Z2', desc:`Trote ${t} min`, tipo:'tempo', metaSeg:t*60 });
+    gps.push({ name:`Caminhada ${i}/${n}`, km:w*HB_WALK_KM_MIN, pace:HB_WALK_PACE, zona:'Z1', desc:`Caminhada ${w} min`, tipo:'tempo', metaSeg:w*60 });
+  }
+  return { desc:`${n} × (${t}' trote + ${w}' caminhada) em Z2`, pace:ctx.easyPace, zona:'Z2', km:n*ciclo, min:n*(t+w), gps };
+}
+function hbSessaoLeve(ctx, alvoKm){
+  const warmMin = Math.max(5, Math.round(ctx.warmMin*0.6)), coolMin = 5;
+  const mainAlvo = Math.max(1, alvoKm - hbKmDeMin(ctx, warmMin) - hbKmDeMin(ctx, coolMin));
+  const main = ctx.ini ? hbRunWalk(ctx, mainAlvo, 0) : { desc:`${fmtKm(roundToHalf(mainAlvo))} contínuos em Z2`, pace:ctx.easyPace, zona:'Z2', km:mainAlvo, min:minFromKmAtPace(mainAlvo, (ctx.paces.Es+ctx.paces.Ef)/2) };
+  return hbMontarSessao(ctx, { type:'Rodagem Leve', cor:'var(--blue)', objetivo:VDOT_OBJETIVO['Fácil'], sessao:'RUN_EASY_Z2', warmMin, coolMin, completo:false, main });
+}
+function hbSessaoLongo(ctx, longKm){
+  const warmMin = Math.max(5, Math.round(ctx.warmMin*0.6)), coolMin = 5;
+  const mainAlvo = Math.max(1.5, longKm - hbKmDeMin(ctx, warmMin) - hbKmDeMin(ctx, coolMin));
+  let main;
+  if(ctx.ini){
+    main = hbRunWalk(ctx, mainAlvo, 1);
+  }else if(ctx.goalKey==='42.195'){
+    // Maratona: 70% em Z2 e os 30% finais em ritmo de prova (simula o desgaste do fim da corrida).
+    const eKm = roundToHalf(mainAlvo*0.7), mKm = Math.max(0.5, roundToHalf(mainAlvo - eKm));
+    main = { desc:`${fmtKm(eKm)} em Z2 + ${fmtKm(mKm)} finais em ritmo de maratona (${daysToPaceStr(ctx.paces.M)}/km)`, pace:ctx.easyPace, zona:'Z2/Z3', km:eKm+mKm,
+      min: minFromKmAtPace(eKm, ctx.paces.Es) + minFromKmAtPace(mKm, ctx.paces.M),
+      gps:[{ name:'Longão em Z2', km:eKm, pace:ctx.easyPace, zona:'Z2', desc:`${fmtKm(eKm)} em Z2`, tipo:'distancia' }, { name:'Ritmo de maratona', km:mKm, pace:paceRangeWithMargin(ctx.paces.M,3)+'/km', zona:'Z3', desc:`${fmtKm(mKm)} em ritmo de prova`, tipo:'distancia' }] };
+  }else{
+    main = { desc:`${fmtKm(roundToHalf(mainAlvo))} contínuos em Z2`, pace:ctx.easyPace, zona:'Z2', km:mainAlvo, min:minFromKmAtPace(mainAlvo, ctx.paces.Es), gpsName:'Longão' };
+  }
+  return hbMontarSessao(ctx, { type:'Longão', cor:'var(--green)', objetivo:VDOT_OBJETIVO['Longão'], sessao:'RUN_LONG_RUN', warmMin, coolMin, completo:false, main });
+}
+function hbQualidadeFartlek(ctx){
+  const reps = Math.min(8, 5 + Math.floor((ctx.weekNumber-1)/3));
+  const modKm = kmFromMinAtPace(1, ctx.paces.M), troteKm = kmFromMinAtPace(2, ctx.paces.Es);
+  const gps = [];
+  for(let i=1;i<=reps;i++){
+    gps.push({ name:`Moderado ${i}/${reps}`, km:modKm, pace:paceRangeWithMargin(ctx.paces.M,3)+'/km', zona:'Z3', desc:"1' em ritmo moderado", tipo:'tempo', metaSeg:60 });
+    gps.push({ name:`Trote ${i}/${reps}`, km:troteKm, pace:ctx.easyPace, zona:'Z2', desc:"Trote leve 2'", tipo:'tempo', metaSeg:120 });
+  }
+  const main = { desc:`${reps} × (1' em ritmo moderado + 2' de trote leve) — sem esforço máximo`, pace:paceRangeWithMargin(ctx.paces.M,3)+'/km', zona:'Z3', km:reps*(modKm+troteKm), min:reps*3, gps };
+  return hbMontarSessao(ctx, { type:'Fartlek Leve', cor:'var(--amber)', objetivo:VDOT_OBJETIVO['Fartlek'], sessao:'RUN_EASY_Z2', warmMin:ctx.warmMin, coolMin:HYBRID_COOLDOWN_MIN.iniciante, completo:true, main });
+}
+function hbQualidadeIntervalo(ctx, longKm){
+  const lista = HB_INTERVALO_VARIANTS[ctx.goalKey] || HB_INTERVALO_VARIANTS[10];
+  const coolMin = HYBRID_COOLDOWN_MIN[ctx.nivel];
+  const cap = longKm*0.85 - hbKmDeMin(ctx, ctx.warmMin) - hbKmDeMin(ctx, coolMin);
+  const v = lista[(ctx.weekNumber-1) % lista.length];
+  const paceKey = v.m<=300 ? 'R' : 'I';
+  const restKm = kmFromMinAtPace(v.rest/60, ctx.paces.Es);
+  let reps = Math.max(4, Math.round((v.reps + (ctx.nivel==='avancado' ? 2 : 0)) * ctx.kmFactor));
+  const mainKmDe = r=>r*v.m/1000 + (r-1)*restKm;
+  while(reps>4 && mainKmDe(reps)>cap) reps--;
+  const paceStr = paceRangeWithMargin(ctx.paces[paceKey],3)+'/km';
+  const gps = [];
+  for(let i=1;i<=reps;i++){
+    gps.push({ name:`Tiro ${i}/${reps}`, km:v.m/1000, pace:paceStr, zona:'Z5', desc:`${v.m}m`, tipo:'distancia' });
+    if(i<reps) gps.push({ name:`Trote ${i}/${reps}`, km:restKm, pace:ctx.easyPace, zona:'Z1', desc:`Trote ${hbFmtRest(v.rest)}`, tipo:'tempo', metaSeg:v.rest });
+  }
+  const main = { desc:`${reps} × ${v.m}m em Z5 (ritmo ${paceKey}), trote ${hbFmtRest(v.rest)} entre`, pace:paceStr, zona:'Z5', km:mainKmDe(reps),
+    min: reps*minFromKmAtPace(v.m/1000, ctx.paces[paceKey]) + (reps-1)*v.rest/60, gps };
+  return hbMontarSessao(ctx, { type:'Intervalado', cor:'var(--danger)', objetivo:VDOT_OBJETIVO['Intervalado'], sessao:'RUN_INTERVALS_VO2MAX', warmMin:ctx.warmMin, coolMin, completo:true, main });
+}
+function hbQualidadeTempo(ctx, longKm){
+  const lista = HB_TEMPO_VARIANTS[ctx.goalKey] || HB_TEMPO_VARIANTS['21.0975'];
+  const coolMin = HYBRID_COOLDOWN_MIN[ctx.nivel];
+  const cap = longKm*0.85 - hbKmDeMin(ctx, ctx.warmMin) - hbKmDeMin(ctx, coolMin);
+  const v = lista[(ctx.weekNumber-1) % lista.length];
+  const isMaratona = ctx.goalKey==='42.195';
+  const paceKey = isMaratona ? 'M' : 'T', zona = isMaratona ? 'Z3' : 'Z4';
+  const paceStr = paceRangeWithMargin(ctx.paces[paceKey],3)+'/km';
+  const escala = (ctx.nivel==='avancado' ? 1 : 0.85) * ctx.kmFactor;
+  const build = (s)=>{
+    const gps = []; let km = 0, min = 0, desc;
+    if(v.cont){
+      const m = Math.max(15, Math.round(v.cont*s));
+      km = kmFromMinAtPace(m, ctx.paces.T); min = m;
+      desc = `${m} min contínuos em limiar (Z3/Z4)`;
+      gps.push({ name:'Limiar', km, pace:paceStr, zona, desc:`${m} min em limiar`, tipo:'distancia' });
+    }else if(isMaratona){
+      const bk = Math.max(3, roundToHalf(v.km*s)), rec = v.recKm ? Math.max(1, roundToHalf(v.recKm*s)) : 0;
+      for(let i=1;i<=v.reps;i++){
+        gps.push({ name:v.reps>1 ? `Ritmo de maratona ${i}/${v.reps}` : 'Ritmo de maratona', km:bk, pace:paceStr, zona, desc:`${fmtKm(bk)} em ritmo de prova`, tipo:'distancia' });
+        if(i<v.reps && rec) gps.push({ name:`Recuperação ${i}/${v.reps}`, km:rec, pace:ctx.easyPace, zona:'Z2', desc:`${fmtKm(rec)} em Z2`, tipo:'distancia' });
+      }
+      km = v.reps*bk + (v.reps-1)*rec; min = v.reps*minFromKmAtPace(bk, ctx.paces.M) + (v.reps-1)*minFromKmAtPace(rec, ctx.paces.Es);
+      desc = v.reps>1 ? `${v.reps} × ${fmtKm(bk)} em ritmo de maratona (Z3), ${fmtKm(rec)} em Z2 entre` : `${fmtKm(bk)} contínuos em ritmo de maratona (Z3)`;
+    }else{
+      const reps = Math.max(2, Math.round(v.reps*s));
+      const restKm = kmFromMinAtPace(v.rest/60, ctx.paces.Es);
+      for(let i=1;i<=reps;i++){
+        gps.push({ name:`Limiar ${i}/${reps}`, km:v.m/1000, pace:paceStr, zona, desc:`${v.m}m em limiar`, tipo:'distancia' });
+        if(i<reps) gps.push({ name:`Trote ${i}/${reps}`, km:restKm, pace:ctx.easyPace, zona:'Z1', desc:`Trote ${hbFmtRest(v.rest)}`, tipo:'tempo', metaSeg:v.rest });
+      }
+      km = reps*v.m/1000 + (reps-1)*restKm; min = reps*minFromKmAtPace(v.m/1000, ctx.paces.T) + (reps-1)*v.rest/60;
+      desc = `${reps} × ${v.m}m em limiar (Z4), trote ${hbFmtRest(v.rest)} entre`;
+    }
+    return { desc, pace:paceStr, zona, km, min, gps };
+  };
+  let s = escala, main = build(s);
+  while(main.km>cap && s>0.4){ s -= 0.1; main = build(s); }
+  return hbMontarSessao(ctx, { type:'Limiar', cor:'var(--amber)', objetivo:VDOT_OBJETIVO['Limiar'], sessao:'RUN_TEMPO_THRESHOLD', warmMin:ctx.warmMin, coolMin, completo:true, main });
+}
+function buildHybridCorridaWeek(nivel, goal, currentLongKm, corridaDays, longaoDay, kmFactor, temLesao, tipos, weekNumber){
   if(!corridaDays.length) return [];
-  const cv = state.corridaVdotData;
-  const paces = cv.paces;
-  const [minKm, maxKm] = VDOT_WEEKLY_KM_RANGE[nivel][goal] || VDOT_WEEKLY_KM_RANGE[nivel][10];
-  // Com lesão/dor relatada, reduz o volume semanal ~15% por precaução — não substitui avaliação
-  // profissional, só evita empurrar o mesmo volume de sempre em cima de uma queixa ativa.
-  const weeklyKm = ((minKm+maxKm)/2) * kmFactor * (temLesao ? 0.85 : 1);
-  const longMax = (VDOT_LONG_RUN_MAX_KM[nivel][goal] || VDOT_LONG_RUN_MAX_KM[nivel][10]) * kmFactor;
-  const longKm = Math.min(longMax, Math.max(parseFloat(currentLongKm)||longMax*0.6, weeklyKm*VDOT_LONG_RUN_PCT));
-  const n = corridaDays.length;
-  const allowQuality = nivel!=='iniciante' && n>=2 && HYBRID_CONFIG.maxQualitySessions>0;
-  // A sessão de qualidade tem duração fixa (~20min contínuos em T) — nunca deriva do "resto da
-  // semana", senão ela vira gigante quando sobram poucos dias de corrida (bug real que apareceu no teste).
-  const qualityKm = allowQuality ? roundToHalf(kmFromMinAtPace(20, paces.T)) : 0;
-  const easyDaysCount = Math.max(0, n - 1 - (allowQuality?1:0));
-  const remainingKm = Math.max(0, weeklyKm - longKm - qualityKm);
-  const easyCeil = VDOT_EASY_CEIL_KM[nivel];
-  const easyKmEach = easyDaysCount>0 ? roundToHalf(Math.min(easyCeil, Math.max(3, remainingKm/easyDaysCount))) : 0;
-  const longKmRounded = roundToHalf(longKm);
-  const easyPaceStr = `${daysToPaceStr(paces.Es)}–${daysToPaceStr(paces.Ef)}`;
-  // Sessão de qualidade cai no primeiro dia de corrida (em ordem cronológica) que não é o longão.
-  const qualityDay = allowQuality ? corridaDays.find(d=>d!==longaoDay) : null;
+  const paces = state.corridaVdotData.paces;
+  const goalKey = String(HYBRID_WEEKLY_KM[goal] ? goal : 10);
+  const [wLo, wHi] = HYBRID_WEEKLY_KM[goalKey], [lLo, lHi] = HYBRID_LONG_KM[goalKey];
+  const pos = HYBRID_NIVEL_POS[nivel] ?? 0.4, esc = HYBRID_NIVEL_ESCALA[nivel] ?? 1;
+  // Com lesão/dor relatada, reduz o volume semanal ~15% por precaução.
+  const weeklyKm = (wLo + pos*(wHi-wLo)) * esc * kmFactor * (temLesao ? 0.85 : 1);
+  const longMax = (lLo + pos*(lHi-lLo)) * esc * kmFactor;
+  const cur = parseFloat(currentLongKm) || 0;
+  const longKm = Math.max(3, roundToHalf(Math.min(longMax, Math.max(cur || longMax*0.6, weeklyKm*VDOT_LONG_RUN_PCT))));
+  const ctx = {
+    nivel, ini: nivel==='iniciante', goalKey, paces, kmFactor, weekNumber: weekNumber||1,
+    easyPace: `${daysToPaceStr(paces.Ef)} ~ ${daysToPaceStr(paces.Es)}/km`,
+    warmMin: (HYBRID_WARMUP_MIN[goalKey] || HYBRID_WARMUP_MIN[10])[nivel] || 10,
+  };
+  const qDay = corridaDays.find(d=>tipos.runTipos[d]==='qualidade') || null;
+  let qSession = null;
+  if(qDay){
+    qSession = tipos.qualityKind==='fartlek' ? hbQualidadeFartlek(ctx) : tipos.qualityKind==='intervalo' ? hbQualidadeIntervalo(ctx, longKm) : hbQualidadeTempo(ctx, longKm);
+  }
+  const easyDays = corridaDays.filter(d=>tipos.runTipos[d]==='leve');
+  const remaining = Math.max(0, weeklyKm - longKm - (qSession ? qSession.totalKm : 0));
+  const easyKm = easyDays.length ? roundToHalf(Math.max(3, Math.min(VDOT_EASY_CEIL_KM[nivel]||8, longKm-0.5, remaining/easyDays.length))) : 0;
   return corridaDays.map(day=>{
-    if(day===longaoDay){
-      return { day, type:'Longão', mainDesc:`${fmtKm(longKmRounded)} contínuo`, mainPace:easyPaceStr+'/km', totalKm:longKmRounded, cor:'var(--green)', objetivo:VDOT_OBJETIVO['Longão'], modo:'hibrido' };
-    }
-    if(day===qualityDay){
-      return { day, type:'Limiar', mainDesc:'20min ritmo forte contínuo', mainPace:paceRangeWithMargin(paces.T,3)+'/km', totalKm:qualityKm, cor:'var(--amber)', objetivo:VDOT_OBJETIVO['Limiar'], modo:'hibrido' };
-    }
-    return { day, type:'Rodagem Leve', mainDesc:`${fmtKm(easyKmEach)} fácil`, mainPace:easyPaceStr+'/km', totalKm:easyKmEach, cor:'var(--blue)', objetivo:VDOT_OBJETIVO['Fácil'], modo:'hibrido' };
+    const t = tipos.runTipos[day];
+    // Corrida leve no mesmo dia de Leg Day pesado fica curta (teto de 5km) — a perna já levou o estímulo do dia.
+    const kmLeve = (tipos.muscTipos && tipos.muscTipos[day]==='leg') ? Math.min(easyKm, 5) : easyKm;
+    const s = t==='longo' ? hbSessaoLongo(ctx, longKm) : t==='qualidade' ? qSession : hbSessaoLeve(ctx, kmLeve);
+    return { day, ...s };
   });
 }
 // Musculação do modo híbrido (só ele — o gerador solo, buildPlan, segue igual): cada dia tem SEMPRE o
@@ -3436,53 +3667,76 @@ function exercicioTier(e){
   if(/barra|halter|cabo|corda/.test(n)) return 2;
   return { iniciante:1, intermediario:2, avancado:3 }[e.nivel] || 2;
 }
+// Volume por nível (séries × reps × descanso) — dentro das faixas do motor: iniciante 3×10–12 / 90s, intermediário
+// 3–4×8–12 / 75s, avançado 4×6–10 / 60–90s. O papel (base → auxiliar → isolado) escolhe o ponto da faixa.
 const HYBRID_PAPEL_SCHEME = {
-  base:     { iniciante:{series:3,reps:10,rpe:7,descanso:'90s'},    intermediario:{series:4,reps:8,rpe:8,descanso:'90–120s'},  avancado:{series:5,reps:5,rpe:9,descanso:'120–180s'} },
-  auxiliar: { iniciante:{series:3,reps:12,rpe:7,descanso:'60–90s'}, intermediario:{series:3,reps:10,rpe:7,descanso:'60–90s'}, avancado:{series:4,reps:10,rpe:8,descanso:'90s'} },
-  isolado:  { iniciante:{series:2,reps:15,rpe:6,descanso:'45–60s'}, intermediario:{series:3,reps:12,rpe:7,descanso:'45–60s'}, avancado:{series:3,reps:15,rpe:7,descanso:'45–60s'} },
+  base:     { iniciante:{series:3,reps:10,rpe:7,descanso:'90s'}, intermediario:{series:4,reps:8,rpe:8,descanso:'75s'}, avancado:{series:4,reps:6,rpe:9,descanso:'90s'} },
+  auxiliar: { iniciante:{series:3,reps:12,rpe:7,descanso:'90s'}, intermediario:{series:3,reps:10,rpe:7,descanso:'75s'}, avancado:{series:4,reps:8,rpe:8,descanso:'75s'} },
+  isolado:  { iniciante:{series:3,reps:12,rpe:6,descanso:'90s'}, intermediario:{series:3,reps:12,rpe:7,descanso:'75s'}, avancado:{series:4,reps:10,rpe:7,descanso:'60s'} },
 };
-// Monta o dia inteiro: escolhe BASE, AUXILIAR e ISOLADO a partir dos grupos que o split deu pra esse dia.
-function buildHybridMuscDay(nivel, equip, spec, dayIdx, used, isSafe){
+const HB_MUSC_QTD = { iniciante:5, intermediario:6, avancado:7 };
+// Cada "slot" é uma função do treino (joelho, quadril, unilateral...) com uma lista de preferências (regex sobre o
+// nome sem acento, em ordem) — assim funciona com qualquer equipamento do POOL e respeita o tier do nível.
+const HB_SLOT = {
+  joelho:    { papel:'base',     grupo:'Pernas', from:['Pernas'], pref:{ default:[/agachamento livre/,/agachamento frontal/,/hack/,/leg press/,/smith/,/agachamento/], iniciante:[/leg press/,/hack/,/smith/,/goblet|agachamento com halteres/,/agachamento/] } },
+  quadril:   { papel:'auxiliar', grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff/,/terra/,/bom dia/,/elevacao de quadril/,/ponte de gluteo/,/flexora/], iniciante:[/flexora/,/hiperextensao/,/ponte de gluteo/] } },
+  unilateral:{ papel:'auxiliar', grupo:'Pernas', from:['Pernas'], pref:{ default:[/bulgaro/,/afundo|passada|step up/,/leg press/,/hack/,/smith/,/agachamento/], iniciante:[/hack/,/smith/,/leg press/,/agachamento/] } },
+  quadrIso:  { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/extensora/,/flexora/] } },
+  panturrilha:{ papel:'isolado', grupo:'Pernas', from:['Pernas'], pref:{ default:[/panturrilha/] } },
+  posterior: { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/flexora/,/extensora/] } },
+  adutora:   { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/abdutora|adutora/,/panturrilha/] } },
+  empHoriz:  { papel:'base',     grupo:'Peito',  from:['Peito'], pref:{ default:[/supino reto com barra/,/supino reto com halteres|supino com halteres/,/supino inclinado com halteres/,/supino inclinado com barra/,/supino/], iniciante:[/smith/,/supino com halteres|supino reto com halteres/,/supino/] } },
+  puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/barra fixa/,/puxada/,/pulldown/], iniciante:[/puxada frontal/,/pulldown/] } },
+  empVert:   { papel:'auxiliar', grupo:'Ombro',  from:['Ombro'], pref:{ default:[/desenvolvimento militar|desenvolvimento com halteres/,/arnold/,/desenvolvimento/], iniciante:[/desenvolvimento na maquina/,/desenvolvimento/] } },
+  puxHoriz:  { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/remada curvada com barra/,/remada curvada com halteres/,/remada cavalinho/,/remada baixa/,/remada unilateral/,/remada na maquina/,/remada/], iniciante:[/remada baixa/,/remada na maquina/,/remada/] } },
+  ombroIso:  { papel:'isolado',  grupo:'Ombro',  from:['Ombro'], pref:{ default:[/elevacao lateral/] } },
+  triceps:   { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/triceps/] } },
+  biceps:    { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/rosca direta/,/rosca/] } },
+  core:      { papel:'isolado',  grupo:'Core',   from:['Core'], pref:{ default:[/prancha/,/abdominal/] } },
+};
+const HB_SESSAO_SLOTS = {
+  leg:   ['joelho','quadril','unilateral','quadrIso','panturrilha','posterior','adutora'],
+  upper: ['empHoriz','puxVert','empVert','puxHoriz','ombroIso','triceps','biceps'],
+  full:  ['joelho','empHoriz','puxVert','quadril','empVert','puxHoriz','core'],
+};
+// Uma sessão inteira (Leg Day / Superiores / Full body) — sem repetir exercício no dia, sem repetir o mesmo padrão
+// de movimento quando há alternativa, e preferindo o que ainda não apareceu em outros dias da semana.
+function buildHybridMuscSession(tipo, nivel, equip, weekTaken, isSafe){
   const pool = POOL[equip] || POOL.academia;
   const allowed = nivel==='iniciante' ? [1] : nivel==='intermediario' ? [1,2] : [1,2,3];
-  const cands = (g, tiers)=> (pool[g]||[]).filter(e=>tiers.includes(exercicioTier(e)) && isSafe(e.nome));
-  // Iniciante sem nenhum Tier 1 no grupo (ex: treino em casa) cai pro Tier 2 — nunca pro Tier 3.
-  const candsGrupo = (g)=>{ let c = cands(g, allowed); if(!c.length && nivel==='iniciante') c = cands(g, [1,2]); return c; };
-  let groups = Object.keys(spec);
-  if(groups.length >= 5){
-    const grandes = ['Pernas','Peito','Costas'].filter(g=>groups.includes(g));
-    const rot = grandes.length ? dayIdx % grandes.length : 0;
-    groups = grandes.slice(rot).concat(grandes.slice(0,rot)).concat(groups.filter(g=>!grandes.includes(g)));
-  }else{
-    groups.sort((a,b)=>spec[b]-spec[a]);
-  }
-  const taken = new Set();
-  const pick = (g, composto, preferTier, evitarPadroes)=>{
-    let list = candsGrupo(g).filter(e=>!taken.has(e.nome) && (composto===null || (composto ? isExercicioComposto(e.nome)!==false : isExercicioComposto(e.nome)===false)));
-    if(evitarPadroes) list = list.filter(e=>!evitarPadroes.has(padraoMovimento(e.nome)));
-    if(preferTier){ const t = list.filter(e=>exercicioTier(e)===preferTier); if(t.length) list = t; }
-    if(!list.length) return null;
-    const e = list[(used[g]||0) % list.length];
-    used[g] = (used[g]||0)+1;
-    taken.add(e.nome);
-    return e;
-  };
+  const relaxed = nivel==='iniciante' ? [1,2] : allowed;
+  const slots = HB_SESSAO_SLOTS[tipo].slice(0, HB_MUSC_QTD[nivel] || 6);
+  const taken = new Set(), padroes = new Set();
   const out = [];
-  let baseGrupo = null, baseEx = null;
-  for(const g of groups){ const e = pick(g, true, 2, null); if(e){ out.push({ e, papel:'base', grupo:g }); baseGrupo = g; baseEx = e; break; } }
-  // O auxiliar complementa o base em OUTRO padrão de movimento (não repete barra fixa + barra fixa supinada,
-  // agachamento + agachamento frontal...); só repete o padrão se não sobrar nenhuma alternativa. Avançado
-  // prefere Tier 3 aqui (unilateral/complexo), que é onde esse tier faz sentido.
-  const ordemAux = groups.slice(1).concat(groups.slice(0,1));
-  const evitar = new Set(baseEx ? [padraoMovimento(baseEx.nome)] : []);
-  const tierAux = nivel==='avancado' ? 3 : 0;
-  let aux = null, auxGrupo = null;
-  for(const g of ordemAux){ aux = pick(g, true, tierAux, evitar); if(aux){ auxGrupo = g; break; } }
-  if(!aux){ for(const g of ordemAux){ aux = pick(g, true, tierAux, null); if(aux){ auxGrupo = g; break; } } }
-  if(aux) out.push({ e:aux, papel:'auxiliar', grupo:auxGrupo });
-  const isoOrder = groups.filter(g=>g!==baseGrupo).concat(baseGrupo ? [baseGrupo] : []);
-  for(const g of isoOrder){ const e = pick(g, false, 0, null); if(e){ out.push({ e, papel:'isolado', grupo:g }); break; } }
-  if(!out.length){ for(const g of groups){ const e = pick(g, null, 0, null); if(e){ out.push({ e, papel:'base', grupo:g }); break; } } }
+  slots.forEach((slotKey, idx)=>{
+    const slot = HB_SLOT[slotKey];
+    const regexes = slot.pref[nivel] || slot.pref.default;
+    const todos = [];
+    slot.from.forEach(g=>(pool[g]||[]).forEach(e=>todos.push({ e, g })));
+    const acha = (tiers, evitarPadrao, repetir)=>{
+      for(const re of regexes){
+        const c = todos.find(({e})=>re.test(normalizeNoAccents(e.nome)) && tiers.includes(exercicioTier(e)) && isSafe(e.nome) && !taken.has(e.nome) && (repetir || !weekTaken.has(e.nome)) && !(evitarPadrao && padroes.has(padraoMovimento(e.nome))));
+        if(c) return c.e;
+      }
+      return null;
+    };
+    let e = null;
+    for(const repetir of [false, true]){
+      e = acha(allowed, true, repetir) || acha(allowed, false, repetir) || acha(relaxed, true, repetir) || acha(relaxed, false, repetir);
+      if(e) break;
+    }
+    // Sem nada que case (ex.: treino em casa só com peso do corpo): qualquer exercício do grupo que combine com o papel.
+    if(!e){
+      const composto = slot.papel!=='isolado';
+      const c = todos.filter(({e:x})=>relaxed.includes(exercicioTier(x)) && isSafe(x.nome) && !taken.has(x.nome) && (composto ? isExercicioComposto(x.nome)!==false : isExercicioComposto(x.nome)!==true));
+      if(c.length) e = c[0].e;
+    }
+    if(!e) return;
+    taken.add(e.nome); weekTaken.add(e.nome); padroes.add(padraoMovimento(e.nome));
+    // No full body só o primeiro é "base"; os compostos seguintes são auxiliares e o core fecha como isolado.
+    const papel = tipo==='full' ? (idx===0 ? 'base' : slot.papel==='isolado' ? 'isolado' : 'auxiliar') : slot.papel;
+    out.push({ e, papel, grupo:slot.grupo });
+  });
   return out;
 }
 // Agrupa variações do mesmo movimento (barra fixa / barra fixa supinada / puxada = "puxada vertical") pra
@@ -3493,29 +3747,29 @@ function padraoMovimento(nome){
   const hit = mapa.find(([k])=>n.includes(k));
   return hit ? hit[1] : n;
 }
-function buildHybridMuscPlan(nivel, muscDays, equip, seriesFactor, lesaoText, tempoMaxMin){
+function buildHybridMuscPlan(nivel, muscDays, equip, seriesFactor, lesaoText, tempoMaxMin, tipos){
   const keywords = lesaoKeywordsFrom(lesaoText);
   const isSafe = (nome)=>{
     if(!keywords.length) return true;
     const n = nome.normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase();
     return !keywords.some(k => LESAO_EXERCICIO_EVITAR[k].some(term => n.includes(term)));
   };
-  const templates = splitTemplate(nivel, muscDays.length);
-  const used = {};
+  const weekTaken = new Set();
   const basePlan = {};
-  muscDays.forEach((day, i)=>{
-    const spec = templates[i] || templates[templates.length-1];
-    basePlan[day] = buildHybridMuscDay(nivel, equip, spec, i, used, isSafe).map(({e, papel, grupo})=>{
+  muscDays.forEach(day=>{
+    const tipo = (tipos && tipos.muscTipos && tipos.muscTipos[day]) || 'upper';
+    basePlan[day] = buildHybridMuscSession(tipo, nivel, equip, weekTaken, isSafe).map(({e, papel, grupo})=>{
       const sch = HYBRID_PAPEL_SCHEME[papel][nivel] || HYBRID_PAPEL_SCHEME[papel].intermediario;
-      const series = Math.max(2, Math.round(sch.series * seriesFactor));
-      return { nome:e.nome, series:String(series), reps:String(sch.reps), carga:'', grupo, repdbId:e.id, descanso:sch.descanso, modo:'hibrido', papel, tier:exercicioTier(e), rpe:sch.rpe };
+      // Piso de 3 séries: o desconto de interferência não pode levar a ficha abaixo da faixa do nível (3–4 séries).
+      const series = Math.max(3, Math.round(sch.series * seriesFactor));
+      return { nome:e.nome, series:String(series), reps:String(sch.reps), carga:'', grupo, repdbId:e.id, descanso:sch.descanso, modo:'hibrido', papel, tier:exercicioTier(e), rpe:sch.rpe, sessao:tipo==='leg' ? 'LEG_DAY_HEAVY' : tipo==='full' ? 'FULL_BODY_LIGHT' : 'UPPER_BODY' };
     });
   });
-  // Corta pelo tempo máximo de sessão — tira do fim da lista (isolado por último) até caber.
+  // Corta pelo tempo máximo de sessão — tira do fim da lista (isolado por último) até caber, sem passar de 3 exercícios.
   if(tempoMaxMin){
     Object.keys(basePlan).forEach(day=>{
       let list = basePlan[day];
-      while(list.length>1 && estimateWorkoutMinutes(list) > tempoMaxMin){ list = list.slice(0, -1); }
+      while(list.length>3 && estimateWorkoutMinutes(list) > tempoMaxMin){ list = list.slice(0, -1); }
       basePlan[day] = list;
     });
   }
@@ -3567,17 +3821,20 @@ function buildHybridProgressionFactors(totalWeeks, checkins, checkinDetails){
 // volume/série de cada semana muda conforme a progressão (e conforme os check-ins semanais já dados).
 function buildAllHybridWeeks(draft, sched, totalWeeks, checkins, checkinDetails){
   const { corridaFactors, muscFactors } = buildHybridProgressionFactors(totalWeeks, checkins, checkinDetails);
+  const nivelC = draft.nivelCorrida||draft.nivel, nivelM = draft.nivelMusc||draft.nivel;
+  // A agenda (quem é Leg Day, longão, qualidade) é estrutural — igual em todas as semanas; só volume e séries mudam.
+  const tipos = planHybridWeekTypes(sched, nivelC, draft.corridaGoal, focoFromObjetivo(draft.objetivo));
   const weeks = [];
   for(let w=1; w<=totalWeeks; w++){
     const pos = ((w-1) % 4) + 1;
     const phaseLabel = pos===4 ? 'Descarga' : pos===2 ? 'Semana da musculação' : 'Semana da corrida';
     const corridaKmFactor = sched.muscDays.length>0 ? corridaFactors[w-1] : 1;
     const muscSeriesFactor = sched.corridaDays.length>0 ? muscFactors[w-1] : 1;
-    const corridaWeek = sched.corridaDays.length ? buildHybridCorridaWeek(draft.nivelCorrida||draft.nivel, draft.corridaGoal, draft.corridaCurrentLong, sched.corridaDays, sched.longaoDay, corridaKmFactor, !!draft.lesao) : [];
-    const muscPlan = sched.muscDays.length ? buildHybridMuscPlan(draft.nivelMusc||draft.nivel, sched.muscDays, draft.equip, muscSeriesFactor, draft.lesao, draft.tempoMaxMin) : {};
+    const corridaWeek = sched.corridaDays.length ? buildHybridCorridaWeek(nivelC, draft.corridaGoal, draft.corridaCurrentLong, sched.corridaDays, sched.longaoDay, corridaKmFactor, !!draft.lesao, tipos, w) : [];
+    const muscPlan = sched.muscDays.length ? buildHybridMuscPlan(nivelM, sched.muscDays, draft.equip, muscSeriesFactor, draft.lesao, draft.tempoMaxMin, tipos) : {};
     const legEasingNotes = applyHybridLegDayEasing(corridaWeek, muscPlan);
-    annotateHybridJustifications(corridaWeek, muscPlan, focoFromObjetivo(draft.objetivo));
-    weeks.push({ weekNumber:w, phaseLabel, totalWeeks, corridaWeek, muscPlan, legEasingNotes });
+    const periodos = annotateHybridJustifications(corridaWeek, muscPlan, focoFromObjetivo(draft.objetivo), tipos);
+    weeks.push({ weekNumber:w, phaseLabel, totalWeeks, corridaWeek, muscPlan, legEasingNotes, fadiga:tipos.fadiga, periodos });
   }
   return weeks;
 }
@@ -3594,7 +3851,9 @@ function materializeHybridWeekIntoState(week, startMondayISO){
     const dNew = new Date(monday);
     dNew.setDate(dNew.getDate()+idx);
     state.treinos.push({ day: w.day+' '+vdotFormatDDMM(dNew), type:w.type, mainDesc:w.mainDesc, mainPace:w.mainPace,
-      totalKm:w.totalKm, cor:w.cor, objetivo:w.objetivo, modo:w.modo, justificativa:w.justificativa, warmupDesc:'', warmupPace:'', cooldownDesc:'', cooldownPace:'', steps:null });
+      totalKm:w.totalKm, totalMin:w.totalMin||null, cor:w.cor, objetivo:w.objetivo, modo:w.modo, justificativa:w.justificativa, periodos:w.periodos||null,
+      warmupDesc:w.warmupDesc||'', warmupPace:w.warmupPace||'', cooldownDesc:w.cooldownDesc||'', cooldownPace:w.cooldownPace||'',
+      steps:w.steps||null, gpsSteps:w.gpsSteps||null, sessao:w.sessao||null });
   });
   Object.keys(week.muscPlan).forEach(d=>{
     state.musculacao[d] = week.muscPlan[d].map(e => ({ id: Date.now().toString(36)+Math.random().toString(36).slice(2,6), done:false, ...e }));
@@ -3664,6 +3923,7 @@ function aplicarDomsDeHoje(nota){
       entry.totalKm = km;
       entry.totalMin = paces ? Math.round(minFromKmAtPace(km, paces.Es)) : undefined;
       entry.steps = [{ name:'Corrida fácil', km, pace:paceStr, tipo:'distancia' }];
+      entry.gpsSteps = null;
       entry.objetivo = VDOT_OBJETIVO['Fácil'];
       entry.justificativa = `Dor nas pernas ${nota}/10: corrida trocada por regenerativo (E) só hoje.`;
     }else if(!alta && entry._domsOriginal){
@@ -3703,56 +3963,57 @@ function zonaVdotDoTipo(tipo){
   return 'E';
 }
 const JUSTIFICATIVA_CORRIDA = {
-  'Longão': 'Longão em ritmo fácil (E) constrói resistência e economia de corrida sem estresse extra — por isso não tem perna pesada no mesmo dia.',
-  'Limiar': 'Limiar (T) empurra o ponto em que o lactato acumula; é a única sessão de qualidade da semana pra não competir com a recuperação da musculação.',
-  'Rodagem Leve': 'Corrida fácil (E) reforça a base aeróbica e recupera ativamente entre os estímulos de força, sem somar fadiga.',
+  'Longão': 'Longão em Z2 constrói resistência e economia de corrida sem estresse extra — por isso não tem perna pesada no mesmo dia nem no seguinte.',
+  'Limiar': 'Limiar empurra o ponto em que o lactato acumula; é a única sessão forte da semana pra não competir com a recuperação da musculação.',
+  'Intervalado': 'Tiros em Z5 elevam o VO2máx; é a única sessão de alta intensidade da semana, com pernas descansadas dos dois lados.',
+  'Fartlek Leve': 'Variar o ritmo em blocos curtos e moderados solta o corpo sem picos de exaustão — o estímulo certo pro seu nível.',
+  'Rodagem Leve': 'Corrida fácil em Z2 reforça a base aeróbica e recupera ativamente entre os estímulos de força, sem somar fadiga.',
 };
+const JUSTIFICATIVA_MUSC = {
+  leg: 'Leg Day pesado (joelho, quadril e isoladores) com as pernas frescas — sem tiros nem tempo no dia anterior e no seguinte pra fadiga não acumular.',
+  upper: 'Superiores não geram fadiga de perna: mantêm o estímulo de força sem atrapalhar as corridas da semana.',
+  full: 'Full body com pernas moderadas: um único dia de força cobre o corpo todo sem pesar nas corridas.',
+};
+// Dia duplo: qual modalidade vai em qual período. Quem sai "pesado" (perna, tiro, tempo, longão) ocupa a manhã com o
+// corpo fresco; a outra fica pra noite, com pelo menos 6h de intervalo.
+function hbPeriodosDiaDuplo(run, muscTipo, foco){
+  const forte = run.type==='Intervalado' || run.type==='Limiar' || run.type==='Longão';
+  let manha;
+  if(muscTipo==='leg') manha = 'musculacao';
+  else if(forte) manha = 'corrida';
+  else manha = foco==='musculacao' ? 'musculacao' : 'corrida';
+  const nomeCorrida = `corrida (${run.type.toLowerCase()})`;
+  const nomeMusc = muscTipo==='leg' ? 'musculação (pernas)' : muscTipo==='full' ? 'musculação (full body)' : 'musculação (superiores)';
+  const primeiro = manha==='corrida' ? nomeCorrida : nomeMusc, segundo = manha==='corrida' ? nomeMusc : nomeCorrida;
+  return { manha, noite: manha==='corrida' ? 'musculacao' : 'corrida', intervaloMinH:6, texto:`Manhã: ${primeiro} · Noite: ${segundo} (mín. 6h entre as duas).` };
+}
 // Uma frase por dia explicando por que o treino encaixa daquele jeito — regra fixa em cima do que a
-// geração de fato fez (não é texto solto): dia misto, perna em manutenção, corrida sozinha ou só musculação.
-function annotateHybridJustifications(corridaWeek, muscPlan, foco){
+// geração de fato fez (não é texto solto). Devolve também as sugestões de período dos dias duplos.
+function annotateHybridJustifications(corridaWeek, muscPlan, foco, tipos){
   const dias = new Set([...corridaWeek.map(w=>w.day), ...Object.keys(muscPlan)]);
+  const periodos = {};
   dias.forEach(day=>{
     const run = corridaWeek.find(w=>w.day===day);
     const list = muscPlan[day];
     const temMusc = !!(list && list.length);
+    const muscTipo = (tipos && tipos.muscTipos && tipos.muscTipos[day]) || 'upper';
     let frase;
     if(run && temMusc){
-      if(run.pernasEmManutencao){
-        frase = `Dia de ${run.type.toLowerCase()} e musculação: pernas em manutenção (2 séries, esforço leve) pra não somar dois estímulos pesados de perna no mesmo dia.`;
-      }else{
-        const isQuality = run.type==='Limiar';
-        const corridaFirst = foco==='corrida' || (foco==='equilibrado' && isQuality);
-        frase = `Corrida e musculação no mesmo dia: ${corridaFirst ? 'corrida primeiro' : 'musculação primeiro'} (a prioridade do seu objetivo, com o corpo fresco), com ${isQuality ? '1–2h' : 'pelo menos 6h'} de intervalo pra a segunda não sair prejudicada.`;
-      }
+      const p = hbPeriodosDiaDuplo(run, muscTipo, foco);
+      periodos[day] = p;
+      const soma = muscTipo==='leg' ? 'Leg Day (40) + corrida leve (10) = teto de 50 pontos de fadiga de perna.' : run.type==='Rodagem Leve' || run.type==='Fartlek Leve' ? 'A fadiga de perna do dia fica baixa.' : 'Sem perna pesada junto: a fadiga de perna vem só da corrida.';
+      frase = `${soma} ${p.texto}`;
+      if(run.pernasEmManutencao) frase = `Pernas em manutenção (2 séries, esforço leve) pra não somar dois estímulos pesados no dia. ${p.texto}`;
     }else if(run){
       frase = JUSTIFICATIVA_CORRIDA[run.type] || JUSTIFICATIVA_CORRIDA['Rodagem Leve'];
     }else if(temMusc){
-      const base = list.find(e=>e.papel==='base') || list[0];
-      frase = `${base.grupo} começa pelo multiarticular com o corpo fresco (força), completa o volume no auxiliar e fecha no isolado — máximo estímulo com o menor custo de recuperação pras corridas da semana.`;
+      frase = JUSTIFICATIVA_MUSC[muscTipo] || JUSTIFICATIVA_MUSC.upper;
     }
     if(!frase) return;
-    if(run) run.justificativa = frase;
-    if(temMusc) list.forEach(e=>{ e.justificativa = frase; });
+    if(run){ run.justificativa = frase; if(periodos[day]) run.periodos = periodos[day]; }
+    if(temMusc) list.forEach(e=>{ e.justificativa = frase; if(periodos[day]) e.periodos = periodos[day]; });
   });
-}
-// Fase 4 (parcial): quando corrida e musc caem no mesmo dia, sugere ordem (prioridade primeiro,
-// com o corpo fresco) e intervalo mínimo — baseado no artigo do Alex Viada (Stronger by Science):
-// cardio longo/leve logo após musculação é pior (hormônios catabólicos), tiro curto/intenso tolera bem.
-function buildHybridSameDayNotes(corridaWeek, muscPlan, foco){
-  const notes = [];
-  corridaWeek.forEach(w=>{
-    const dayPlan = muscPlan[w.day];
-    if(!dayPlan || !dayPlan.length) return;
-    const isQuality = w.type === 'Limiar';
-    const corridaFirst = foco==='corrida' || (foco==='equilibrado' && isQuality);
-    const ordem = corridaFirst ? 'corrida antes da musculação' : 'musculação antes da corrida';
-    const intervalo = isQuality ? 'pelo menos 1-2h de intervalo' : 'pelo menos 6h de intervalo';
-    const motivo = isQuality
-      ? 'treino de qualidade curto tolera ficar perto da musculação'
-      : 'evite fazer essa corrida logo em seguida da musculação';
-    notes.push(`${w.day}: corrida (${w.type}) e musculação no mesmo dia. Sugestão: ${ordem}, com ${intervalo} — ${motivo}.`);
-  });
-  return notes;
+  return periodos;
 }
 function clearAllMusculacao(){
   if(!confirm('Isso apaga TODOS os exercícios de musculação de todos os dias da semana. Não dá pra desfazer. Continuar?')) return;
@@ -3853,6 +4114,7 @@ const VDOT_OBJETIVO = {
   'Limiar': 'Melhora sua capacidade de sustentar um ritmo forte por mais tempo, empurrando o limiar de lactato.',
   'Intervalado': 'Desenvolve potência aeróbica (VO2max) — o estímulo mais efetivo pra melhorar seu VDOT.',
   'Repetição': 'Melhora economia de corrida e velocidade pura, com descanso completo entre os tiros.',
+  'Fartlek': 'Introduz variação de ritmo em blocos curtos e moderados, sem picos de exaustão — prepara o corpo pra corridas mais fortes no futuro.',
   'Prova': 'Dia de colocar o trabalho em prática, no ritmo alvo calculado pro seu objetivo.',
 };
 function minFromKmAtPace(km, paceDaysPerKm){ return (km*paceDaysPerKm*86400) / 60; }
@@ -6129,9 +6391,6 @@ function render(){
           const weeksEl = document.querySelector('#vdotWeeksPills .day-pill.active');
           totalWeeks = parseInt(weeksEl.getAttribute('data-weeks'),10);
         }
-        if(!state.vdotPlanWarnMsg && diasArr.length <= 3 && goal >= 21.0975){
-          state.vdotPlanWarnMsg = `Com só ${diasArr.length} dia${diasArr.length>1?'s':''} de treino por semana pra ${VDOT_GOAL_NAME[goal]}, o longão acaba sendo uma fatia bem grande do volume total (não tem como dividir entre poucos dias). Se puder encaixar mais um dia de corrida, o treino fica mais equilibrado.`;
-        }
         const paces = state.corridaVdotData.paces;
         const raceTimeSec = predictRaceTimeSec(state.corridaVdotData.vdot, goal);
         const phases = buildVdotPhases(totalWeeks, goal);
@@ -7294,7 +7553,8 @@ function renderTreinoV2Corrida(day, tLabel){
       <div class="mrt-blockrow">
         <div class="mrt-blockchip" style="background:${mrtStepColor(s.name)};">${s.name}</div>
         <div style="flex:1;min-width:0;">
-          <div class="mrt-blockname">${fmtKm(s.km)}</div>
+          <div class="mrt-blockname">${fmtKm(s.km)}${s.zona ? ' · '+s.zona : ''}</div>
+          ${s.desc ? `<div class="mrt-blockmeta">${s.desc}</div>` : ''}
           ${s.pace ? `<div class="mrt-blockmeta">Ritmo ${s.pace}</div>` : ''}
         </div>
       </div>`).join('')}
@@ -8847,9 +9107,7 @@ function wireHybridQuizModal(){
   if(hd.step === 'preview'){
     const btnComecar = document.getElementById('mrtBtnComecarSemana');
     if(btnComecar) btnComecar.onclick = ()=>{
-      const notes = hd.previewNotes;
       state.modalOpen = false; state.modalType = null; state.hybridDraft = null; state.tab = 'hoje';
-      if(notes && notes.length) alert(notes.join('\n\n'));
       render();
     };
     return;
@@ -8947,10 +9205,6 @@ function wireHybridQuizModal(){
     const muscDays = DAY_ABBR.filter(d => dayPicks[d]==='musc' || dayPicks[d]==='ambos');
     if(corridaDays.length===0 && muscDays.length===0){ alert('Marca pelo menos 1 dia disponível pra treinar.'); return; }
 
-    const warnings = [];
-    const consecWarn = hybridConsecutiveRunWarning(corridaDays);
-    if(consecWarn) warnings.push(consecWarn);
-
     const longaoDay = corridaDays.length ? pickLongaoDay(corridaDays) : null;
     const sched = { corridaDays, muscDays, longaoDay };
     const totalWeeks = hd.weeksChoice || 8;
@@ -8963,14 +9217,12 @@ function wireHybridQuizModal(){
     const checkins = {};
     const plan = buildAllHybridWeeks(draft, sched, totalWeeks, checkins);
     const week1 = plan[0];
-    const sameDayNotes = buildHybridSameDayNotes(week1.corridaWeek, week1.muscPlan, foco);
 
     const startMonday = vdotISODate(vdotStartMonday(new Date()));
     materializeHybridWeekIntoState(week1, startMonday);
     state.hybridPlanData = { draft, sched, totalWeeks, checkins, foco, dayPicks, plan, startMonday, currentWeekIndex:1 };
     saveHybridPlanData();
     hd.previewDayPicks = dayPicks;
-    hd.previewNotes = [...warnings, ...week1.legEasingNotes, ...sameDayNotes];
     hd.step = 'preview';
     render();
   };

@@ -26,6 +26,13 @@ function toWebLikePosition(loc) {
   };
 }
 
+// O plugin avisa permissão negada com { code: 'NOT_AUTHORIZED' }; o app espera o formato da Web API
+// (err.code === err.PERMISSION_DENIED), senão toda negação virava "indisponível".
+function toWebLikeError(error) {
+  const negada = error && error.code === 'NOT_AUTHORIZED';
+  return { code: negada ? 1 : 2, PERMISSION_DENIED: 1, POSITION_UNAVAILABLE: 2, TIMEOUT: 3, message: (error && error.message) || '' };
+}
+
 async function watchPosition(onPosition, onError) {
   try {
     await Geolocation.requestPermissions({ permissions: ['location'] });
@@ -39,7 +46,7 @@ async function watchPosition(onPosition, onError) {
       distanceFilter: 0,
     },
     (location, error) => {
-      if (error) { onError(error); return; }
+      if (error) { onError(toWebLikeError(error)); return; }
       if (location) onPosition(toWebLikePosition(location));
     }
   );
