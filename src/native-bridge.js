@@ -39,7 +39,7 @@ async function watchPosition(onPosition, onError) {
   } catch (e) { /* segue e deixa o addWatcher pedir de novo se precisar */ }
   const watcherId = await BackgroundGeolocation.addWatcher(
     {
-      backgroundTitle: 'Meu Ritmo está rastreando sua corrida',
+      backgroundTitle: 'Forza Run está rastreando sua corrida',
       backgroundMessage: 'Toque para voltar ao treino.',
       requestPermissions: true,
       stale: false,

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <rect width="1024" height="1024" rx="228" fill="#0A0B0A"/>
+  <g transform="translate(512 520) scale(.9) translate(-512 -512) translate(50 0) skewX(-12) translate(100 0)">
+    <g fill="#86F24A">
+      <!-- haste -->
+      <rect x="300" y="240" width="120" height="560" rx="60"/>
+      <!-- braço de cima -->
+      <rect x="300" y="240" width="440" height="116" rx="58"/>
+      <!-- braço do meio vira seta pra frente -->
+      <path d="M300 470 H600 V420 L730 520 L600 620 V570 H300 Z" stroke="#86F24A" stroke-width="16" stroke-linejoin="round"/>
+    </g>
+    <!-- rastro de corrida -->
+    <g fill="#86F24A" opacity=".55">
+      <rect x="130" y="660" width="130" height="36" rx="18"/>
+      <rect x="180" y="730" width="80" height="36" rx="18"/>
+    </g>
+  </g>
+</svg>
