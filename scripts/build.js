@@ -14,6 +14,7 @@ fs.copyFileSync(path.join(root, 'treino-app.html'), path.join(out, 'index.html')
 fs.copyFileSync(path.join(root, 'icon-180.png'), path.join(out, 'icon-180.png'));
 fs.copyFileSync(path.join(root, 'manifest.json'), path.join(out, 'manifest.json'));
 fs.cpSync(path.join(root, 'gifs'), path.join(out, 'gifs'), { recursive: true });
+fs.cpSync(path.join(root, 'data'), path.join(out, 'data'), { recursive: true });
 
 esbuild.buildSync({
   entryPoints: [path.join(root, 'src', 'native-bridge.js')],
