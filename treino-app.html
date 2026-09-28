@@ -7966,6 +7966,7 @@ function renderWorkoutSession(){
       <div class="mrt-root">
         <div class="mrt-scroll" style="opacity:0.35;pointer-events:none;padding-top:calc(18px + env(safe-area-inset-top));">${topbar}</div>
         <div class="mrt-wex-restsheet">
+          <div style="display:flex;justify-content:flex-start;margin-bottom:8px;"><button class="mrt-wex-x" data-wexexit>${ICONS.xmark}</button></div>
           <div class="mrt-wex-resttitle">DESCANSO</div>
           <div class="mrt-restring">
             <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="10"/><circle cx="100" cy="100" r="${R}" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${C*(1-pct)}" transform="rotate(-90 100 100)"/></svg>
@@ -8036,7 +8037,7 @@ function renderWorkoutSession(){
         ${topbar}
         <div class="mrt-card">
           <div style="display:flex;gap:14px;align-items:center;">
-            ${exThumbHtml(ex, 72)}
+            ${ex.repdbId ? `<button style="padding:0;border:none;background:none;cursor:pointer;flex-shrink:0;" data-wexverexec="${repdbImg(ex.repdbId)}">${exThumbHtml(ex, 72)}</button>` : exThumbHtml(ex, 72)}
             <div style="flex:1;min-width:0;">
               <div class="mrt-runtitle" style="font-size:20px;letter-spacing:-0.2px;">${ex.nome}</div>
               <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
@@ -8119,8 +8120,7 @@ function abrirEditorSerie(campo){
   });
 }
 function wireWorkoutSession(){
-  const exitEl = document.querySelector('[data-wexexit]');
-  if(exitEl) exitEl.onclick = exitWorkoutSession;
+  document.querySelectorAll('[data-wexexit]').forEach(el=>{ el.onclick = exitWorkoutSession; });
   const skipSerieEl = document.querySelector('[data-wexskipserie]');
   if(skipSerieEl) skipSerieEl.onclick = pularSerieAction;
   document.querySelectorAll('[data-wexedit]').forEach(el=>{
@@ -8128,8 +8128,9 @@ function wireWorkoutSession(){
   });
   const addSerieEl = document.querySelector('[data-wexaddserie]');
   if(addSerieEl) addSerieEl.onclick = addExtraSerie;
-  const verExecEl = document.querySelector('[data-wexverexec]');
-  if(verExecEl) verExecEl.onclick = ()=> openZoom(verExecEl.getAttribute('data-wexverexec'));
+  document.querySelectorAll('[data-wexverexec]').forEach(el=>{
+    el.onclick = ()=> openZoom(el.getAttribute('data-wexverexec'));
+  });
   document.querySelectorAll('[data-wexjump]').forEach(el=>{
     el.onclick = ()=> pularParaExercicio(parseInt(el.getAttribute('data-wexjump'),10));
   });
@@ -10663,8 +10664,7 @@ function wireHojeV2(){
       const tipo = el.getAttribute('data-v2start');
       const day = state.selectedDayHoje;
       if(tipo==='musculacao'){ startWorkoutSession(day); return; }
-      state.tab='meusTreinos'; state.treinosSubTab='corrida'; state.selectedDayCorrida=day; state.selectedDayMusc=day; state.expandedPhase=day;
-      render();
+      openGpsIntro(day);
     };
   });
   document.querySelectorAll('[data-v2go]').forEach(el=>{
