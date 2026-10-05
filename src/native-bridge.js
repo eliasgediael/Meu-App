@@ -47,7 +47,7 @@ async function watchPosition(onPosition, onError) {
   } catch (e) { /* segue e deixa o addWatcher pedir de novo se precisar */ }
   const watcherId = await BackgroundGeolocation.addWatcher(
     {
-      backgroundTitle: 'Meu Ritmo está rastreando sua corrida',
+      backgroundTitle: 'Forza Run está rastreando sua corrida',
       backgroundMessage: 'Toque para voltar ao treino.',
       requestPermissions: true,
       stale: false,
@@ -87,10 +87,20 @@ async function preferredPortugueseVoice() {
   } catch (e) { preferredVoiceIndex = -1; }
   return preferredVoiceIndex;
 }
-async function speak(text) {
+// Vozes em português instaladas no aparelho (a lista muda de iPhone para iPhone).
+async function listarVozesPt() {
+  try {
+    const { voices = [] } = await TextToSpeech.getSupportedVoices();
+    return voices.map((v, i) => ({ index: i, nome: v.name || ('Voz ' + (i + 1)), lang: v.lang || '' })).filter((v) => /^pt([-_]|$)/i.test(v.lang));
+  } catch (e) { return []; }
+}
+// nomeVoz: voz escolhida em Preferências; sem escolha (ou voz não encontrada) usa a feminina automática.
+async function speak(text, nomeVoz) {
   try {
     await TextToSpeech.stop();
-    const voice = await preferredPortugueseVoice();
+    let voice = -1;
+    if (nomeVoz) { const v = (await listarVozesPt()).find((x) => x.nome === nomeVoz); if (v) voice = v.index; }
+    if (voice < 0) voice = await preferredPortugueseVoice();
     await TextToSpeech.speak({ text, lang: 'pt-BR', rate: 0.96, pitch: 1.04, category: 'ambient', ...(voice >= 0 ? { voice } : {}) });
   } catch (e) {}
 }
@@ -145,5 +155,5 @@ async function cancelarAvisoDescanso() {
   try { await LocalNotifications.removeDeliveredNotifications({ notifications: [{ id: ID_AVISO_DESCANSO, title: '', body: '' }] }); } catch (e) {}
 }
 
-window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, vibrate,
+window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, listarVozesPt, vibrate,
   vibrarFimDescanso, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };
