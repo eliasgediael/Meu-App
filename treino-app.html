@@ -1364,6 +1364,130 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .mrt-setcheck.on{ color:var(--on-accent); }
 .mrt-bibhero img{ background:#FFFFFF; }
 .day-pill .dot.done{ box-shadow:none; }
+
+/* ---------- Etapa 2: componentes compartilhados (valem pro app inteiro) ---------- */
+.mrt-scroll{ padding-left:20px; padding-right:20px; padding-top:calc(24px + env(safe-area-inset-top)); }
+.mrt-header{ align-items:center; margin-bottom:24px; }
+.mrt-title{ font-size:32px; font-weight:800; letter-spacing:-0.8px; line-height:1.1; color:var(--text); }
+.mrt-sub{ font-size:14px; font-weight:500; color:var(--text-dim); }
+.mrt-morebtn{ width:44px; height:44px; background:var(--surface-2); }
+.mrt-card{ border-radius:16px; padding:20px; margin-bottom:16px; }
+.mrt-summarytitle{ font-size:20px; font-weight:700; color:var(--text); }
+.mrt-metrick{ font-size:12px; font-weight:500; letter-spacing:0; text-transform:none; color:var(--text-faint); margin-top:2px; }
+.mrt-blocklabel{ font-size:13px; font-weight:600; letter-spacing:0.04em; color:var(--text-faint); }
+.tag{ height:24px; padding:0 10px; font-size:12px; font-weight:600; letter-spacing:0; text-transform:none; background:var(--surface-2); color:var(--text); }
+.tag-musc, .tag-run, .tag-hib, .tag-gold, .tag-done{ background:var(--surface-2); color:var(--text); }
+.btn-primary, .btn-secondary, .btn-outline{ height:52px; border-radius:12px; font-size:16px; }
+.btn-secondary{ background:var(--surface-2); color:var(--text); font-weight:600; }
+.mrt-donelabel{ font-size:15px; font-weight:700; color:var(--text); }
+.mrt-toggle{ background:var(--surface-2); border-radius:12px; padding:3px; }
+.mrt-togglebtn{ border-radius:10px; color:var(--text-dim); font-weight:600; }
+.mrt-togglebtn.active, .mrt-togglebtn.active.musc, .mrt-togglebtn.active.run{ background:var(--surface); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.10); }
+.mrt-weeknavbtn{ width:44px; height:44px; background:none; color:var(--text); }
+.mrt-chip{ background:var(--surface-2); color:var(--text-dim); font-weight:600; }
+.mrt-chip.current{ background:var(--text); color:#FFFFFF; }
+
+/* Seções, rótulos, cards e linhas de lista */
+.ds-section{ margin-bottom:28px; }
+.ds-labelrow{ display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:12px; }
+.ds-label{ font-size:13px; font-weight:600; letter-spacing:0.04em; text-transform:uppercase; color:var(--text-faint); }
+.ds-aside{ font-size:14px; font-weight:600; color:var(--text-dim); }
+.ds-link{ background:none; border:none; padding:8px 0; font-family:inherit; font-size:14px; font-weight:600; color:var(--text); cursor:pointer; }
+.ds-card{ border:1px solid var(--border); border-radius:16px; padding:20px; background:var(--surface); }
+.ds-card.tap{ cursor:pointer; }
+.ds-cardhead{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:16px; }
+.ds-cardhead .chev{ color:#BBBBBB; display:flex; }
+.ds-kicker{ font-size:14px; font-weight:500; color:var(--text-dim); }
+.ds-title{ font-size:28px; font-weight:800; letter-spacing:-0.6px; line-height:1.15; color:var(--text); margin:4px 0 18px; }
+.ds-title.sm{ font-size:20px; letter-spacing:-0.3px; margin:0; }
+.ds-stats3{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin-bottom:18px; }
+.ds-stats3:last-child{ margin-bottom:0; }
+.ds-stats3 .mrt-metricv{ font-size:19px; font-weight:700; letter-spacing:-0.2px; }
+.ds-stats3 .mrt-metricv small{ font-size:13px; font-weight:600; color:var(--text-dim); }
+.ds-divtop{ border-top:1px solid var(--border); padding-top:14px; margin-top:14px; }
+.ds-card .mrt-blockbars{ height:6px; gap:3px; margin:0 0 18px; }
+.ds-card .mrt-blockbar{ border-radius:var(--r-pill); }
+.ds-list{ display:flex; flex-direction:column; }
+.ds-row{ display:flex; align-items:center; gap:14px; width:100%; min-height:56px; padding:0; background:none; border:none; border-top:1px solid var(--border);
+  font-family:inherit; font-size:16px; font-weight:500; color:var(--text); text-align:left; cursor:pointer; }
+.ds-list .ds-row:last-child{ border-bottom:1px solid var(--border); }
+.ds-row > svg{ width:20px; height:20px; flex-shrink:0; color:var(--text); stroke-width:1.75; }
+.ds-row .nm{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.ds-row .aside{ font-size:14px; color:var(--text-faint); }
+.ds-row .chev{ color:#BBBBBB; display:flex; flex-shrink:0; }
+.ds-inrow{ min-height:48px; margin-top:18px; font-size:14px; color:var(--text-dim); }
+.ds-muted{ font-size:13px; font-weight:500; color:var(--text-faint); }
+.ds-strong{ font-size:14px; font-weight:700; color:var(--text); }
+
+/* Início: saudação e semana */
+.mrt-greetrow{ margin-bottom:28px; align-items:flex-start; }
+.mrt-greetdate{ font-size:14px; font-weight:500; color:var(--text-dim); margin:0 0 4px; }
+.mrt-greettitle{ font-size:32px; font-weight:800; letter-spacing:-0.8px; line-height:1.1; color:var(--text); }
+.mrt-avatar{ width:44px; height:44px; background:var(--surface-2); color:var(--text); font-size:14px; font-weight:700; }
+.ds-wk{ margin-bottom:4px; }
+.ds-wk .mrt-wkcol{ gap:6px; cursor:default; }
+.ds-wk .mrt-wkletter{ font-size:12px; font-weight:600; letter-spacing:0; color:var(--text-faint); }
+.ds-wk .mrt-wkcol.today .mrt-wkletter{ color:var(--text); font-weight:700; }
+.ds-wk .mrt-wkdot{ width:36px; height:36px; box-sizing:border-box; font-size:14px; font-weight:600; color:var(--text-faint); border:1.5px solid transparent; }
+.ds-wk .mrt-wkdot.rest{ border-color:transparent; color:#BBBBBB; }
+.ds-wk .mrt-wkdot.plan{ border-color:var(--border); }
+.ds-wk .mrt-wkdot.plan.today{ border:2px solid var(--text); color:var(--text); font-weight:700; }
+.ds-wk .mrt-wkdot.done{ background:var(--text); border-color:var(--text); color:#FFFFFF; }
+.ds-wk .mrt-wkmark{ display:none; }
+
+/* Treino: plano, semana e lista de dias */
+.ds-plan{ margin-bottom:20px; }
+.ds-plan .ds-labelrow{ margin-bottom:10px; }
+.ds-planname{ font-size:15px; font-weight:600; color:var(--text); }
+.ds-bar{ height:4px; border-radius:var(--r-pill); background:#EEEEEE; overflow:hidden; }
+.ds-bar i{ display:block; height:100%; background:var(--text); border-radius:var(--r-pill); }
+.ds-weeknav{ display:flex; align-items:center; justify-content:space-between; margin:0 -10px 8px; }
+.ds-weektitle{ text-align:center; }
+.ds-weektitle b{ display:block; font-size:16px; font-weight:700; color:var(--text); }
+.ds-weektitle span{ font-size:13px; font-weight:500; color:var(--text-faint); }
+.ds-daylist{ display:flex; flex-direction:column; margin-bottom:8px; }
+.ds-dayrow{ display:flex; align-items:center; gap:16px; padding:14px 12px; margin:0 -12px; border-top:1px solid var(--border); cursor:pointer; }
+.ds-dayrow.sel{ background:var(--bg-2); border-radius:14px; border-top-color:transparent; }
+.ds-dayrow.sel + .ds-dayrow{ border-top-color:transparent; }
+.ds-daydate{ width:40px; flex-shrink:0; text-align:center; }
+.ds-daydate span{ display:block; font-size:11px; font-weight:600; color:var(--text-faint); }
+.ds-daydate b{ display:block; font-size:20px; font-weight:700; color:var(--text-faint); }
+.ds-dayrow.today .ds-daydate span, .ds-dayrow.sel .ds-daydate span{ color:var(--text); font-weight:700; }
+.ds-dayrow.today .ds-daydate b, .ds-dayrow.sel .ds-daydate b{ color:var(--text); font-weight:800; }
+.ds-daytxt{ flex:1; min-width:0; }
+.ds-daytxt .nm{ font-size:16px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ds-daytxt .nm.rest{ font-weight:500; color:var(--text-faint); }
+.ds-daytxt .mt{ font-size:14px; color:var(--text-dim); margin-top:2px; }
+.ds-done{ width:24px; height:24px; border-radius:50%; background:var(--text); color:#FFFFFF; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.ds-done svg{ width:13px; height:13px; }
+.ds-pill{ height:28px; padding:0 12px; border-radius:var(--r-pill); background:var(--text); color:#FFFFFF; font-size:13px; font-weight:700; display:flex; align-items:center; flex-shrink:0; }
+.ds-dayhead{ font-size:20px; font-weight:700; color:var(--text); margin:24px 0 14px; }
+
+/* Resumo da corrida: seções separadas por divisória, sem caixas */
+.gps-sum-map{ height:calc(380px + env(safe-area-inset-top)); margin:0 -20px 24px; }
+.gps-sum-head{ margin-bottom:20px; }
+.gps-sum-head .mrt-sub{ margin:0 0 4px; }
+.gps-sum-head .mrt-title{ font-size:30px; }
+.gps-sum-main{ padding-bottom:20px; }
+.gps-sum-main .k, .gps-sum-sec .k{ font-size:13px; font-weight:500; color:var(--text-dim); }
+.gps-sum-main .v{ font-size:30px; letter-spacing:-1px; }
+.gps-sum-sec{ margin-bottom:0; border-bottom:none; }
+.gps-sum .mrt-card{ border:none; border-top:1px solid var(--border); border-radius:0; padding:24px 0 12px; margin:0; background:none; }
+.gps-card-head .t{ font-size:20px; font-weight:700; }
+.gps-card-head .r{ font-size:14px; }
+.gps-split{ grid-template-columns:40px 60px 1fr; gap:12px; padding:9px 0; }
+.gps-split.head{ font-size:12px; font-weight:600; letter-spacing:0; text-transform:none; color:var(--text-faint); }
+.gps-split.head .km, .gps-split.head .pc{ font-size:12px; font-weight:600; color:var(--text-faint); }
+.gps-split .km{ font-size:15px; font-weight:600; color:var(--text-dim); }
+.gps-split .pc{ font-size:16px; font-weight:700; }
+.gps-split .bar{ height:8px; }
+.gps-split.best .pc{ font-weight:800; }
+.mrt-pvrhead{ font-size:12px; font-weight:600; letter-spacing:0; text-transform:none; color:var(--text-faint); }
+.mrt-pvrrow{ font-size:15px; padding:12px 0; border-top-color:#F0F0F0; }
+.mrt-pvrrow .l{ font-weight:500; }
+.mrt-pvrrow .p{ color:var(--text); }
+.mrt-pvrrow .r{ font-weight:700; }
+.gps-sum .btn-primary, .gps-sum .btn-secondary{ height:52px; }
 </style>
 </head>
 <body>
@@ -6320,10 +6444,10 @@ function renderGpsSummary(gr){
   const entry = pvr.entry;
   // Status em etiqueta: dentro do planejado = verde; fora = dourado (nunca vermelho — ritmo mais lento não é erro).
   const statusTag = (label, cmp)=>{
-    if(cmp.status==='Certo') return `<span class="tag tag-done">Dentro</span>`;
-    if(cmp.status==='—') return `<span class="tag">—</span>`;
+    if(cmp.status==='Certo') return `<span class="ds-muted">Dentro</span>`;
+    if(cmp.status==='—') return `<span class="ds-muted">—</span>`;
     const txt = label==='Ritmo médio' ? (cmp.status==='Abaixo' ? 'Mais rápido' : 'Mais lento') : cmp.status;
-    return `<span class="tag tag-gold">${txt}</span>`;
+    return `<span class="ds-muted">${txt}</span>`;
   };
   const an = gpsRunAnalysis(gr);
   const temMapa = an.track.length >= 2;
@@ -6342,8 +6466,8 @@ function renderGpsSummary(gr){
           <button class="mrt-wex-x" id="gpsBtnCloseSummary">${ICONS.xmark}</button>
         </div>`}
         <div class="gps-sum-head">
-          <div class="mrt-title">${entry && entry.type || 'Corrida'}</div>
           <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
+          <div class="mrt-title">${entry && entry.type || 'Corrida'}</div>
         </div>
         <div class="gps-sum-main">
           <div class="c"><div class="k">Distância</div><div class="v">${fmtKmMedido(gr.totalDistKm)}<small> km</small></div></div>
@@ -6360,7 +6484,7 @@ function renderGpsSummary(gr){
         <div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
             <div class="mrt-summarytitle" style="font-size:17px;margin:0;">Planejado × Realizado</div>
-            ${pvr.geral ? `<span class="tag ${pvr.geral==='Ótimo'?'tag-done':'tag-gold'}">${pvr.geral}</span>` : ''}
+            ${pvr.geral ? `<span class="ds-strong">${pvr.geral}</span>` : ''}
           </div>
           <div class="mrt-pvrhead"><span></span><span>Plano</span><span>Real</span><span></span></div>
           ${pvr.rows.map(r=>`
@@ -11101,6 +11225,59 @@ function abrirEditorAtalhos(){
   });
   montar();
 }
+// Ícone de seta "›" das linhas de lista.
+const DS_CHEV = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
+// Semana no Início: 7 bolinhas (feito = preta com check; hoje = anel preto com o dia; planejado = anel cinza;
+// descanso = traço) + números da semana. Junta o que antes eram os dois cards contadores e o card "Sua semana".
+function mrtSemanaSecao(){
+  const hojeAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
+  const overall = weekCounts(), musc = weekCounts('musculacao'), corrida = weekCounts('corrida');
+  const cols = DAY_ABBR.map(d=>{
+    const st = dayStatus(d);
+    const hoje = d===hojeAbbr && (state.weekOffset||0)===0;
+    const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
+    const cls = st==='done' ? 'done' : hoje ? 'plan today' : st==='pending' ? 'plan' : 'rest';
+    const inner = st==='done' ? CHECK_SVG : st==='none' && !hoje ? '–' : dia;
+    return `<div class="mrt-wkcol ${hoje?'today':''}"><div class="mrt-wkletter">${d.charAt(0)}</div><div class="mrt-wkdot ${cls}">${inner}</div></div>`;
+  }).join('');
+  const seg = semanasSeguidas();
+  return `<div class="ds-section">
+    <div class="ds-labelrow"><div class="ds-label">Semana</div>${overall.scheduled?`<div class="ds-aside">${overall.done} de ${overall.scheduled} treinos</div>`:''}</div>
+    <div class="mrt-wkrow ds-wk">${cols}</div>
+    <div class="ds-stats3 ds-divtop">
+      ${mrtMetricHtml(musc.done+'/'+musc.scheduled,'Musculação')}
+      ${mrtMetricHtml(corrida.done+'/'+corrida.scheduled,'Corrida')}
+      ${mrtMetricHtml(seg+(seg===1?' semana':' semanas'),'Sequência')}
+    </div>
+  </div>`;
+}
+function mrtCheckinRow(){
+  const hp = state.hybridPlanData;
+  if(!(hp && hp.plan && hp.plan.length && !(hp.checkins && hp.checkins[hp.currentWeekIndex||1]))) return '';
+  return `<button class="ds-row" data-mrthojectx="checkin">${ICONS.clipboard}<span class="nm">Check-in da semana ${hp.currentWeekIndex||1}</span><span class="aside">Pendente</span><span class="chev">${DS_CHEV}</span></button>`;
+}
+function mrtAtalhosLista(){
+  const lista = (state.atalhos && state.atalhos.length===4 ? state.atalhos : ATALHOS_PADRAO).filter(k=>ATALHOS_DEF[k]);
+  return `<div class="ds-section">
+    <div class="ds-labelrow"><div class="ds-label">Atalhos</div><button class="ds-link" id="mrtAtalhosEdit">Editar</button></div>
+    <div class="ds-list">${lista.map(k=>`<div class="ds-row" data-atalho="${k}">${ICONS[ATALHOS_DEF[k].icon]}<span class="nm">${ATALHOS_DEF[k].nome}</span><span class="chev">${DS_CHEV}</span></div>`).join('')}</div>
+  </div>`;
+}
+function mrtUltimaCorrida(){
+  const entries = Object.entries(state.corridaProgress||{}).filter(([k,v])=>v && v.done && v.data);
+  if(!entries.length) return '';
+  entries.sort((a,b)=> (b[1].data||'').localeCompare(a[1].data||''));
+  const [dayKey, prog] = entries[0];
+  const entry = state.treinos.find(t=>t.day===dayKey);
+  if(!entry) return '';
+  return `<div class="ds-section">
+    <div class="ds-labelrow"><div class="ds-label">Última corrida</div><div class="ds-aside">${dayKey}</div></div>
+    <div class="ds-card ${prog.gpsRunId?'tap':''}" ${prog.gpsRunId?`data-lastrun="${dayKey}"`:''}>
+      <div class="ds-cardhead"><div class="ds-title sm">${entry.type||'Corrida'}</div>${prog.gpsRunId?`<span class="chev">${DS_CHEV}</span>`:''}</div>
+      <div class="ds-stats3">${mrtMetricHtml(prog.km?String(prog.km).replace('.',',')+'km':'—','Distância')}${mrtMetricHtml(prog.tempo||'—','Tempo')}${mrtMetricHtml(prog.pace||'—','Ritmo')}</div>
+    </div>
+  </div>`;
+}
 function renderHojeV2Content(){
   atualizarSemanaCompleta();
   const day = state.selectedDayHoje;
@@ -11112,7 +11289,7 @@ function renderHojeV2Content(){
 
   const greetRow = `
     <div class="mrt-greetrow">
-      <div style="min-width:0;"><div class="mrt-greettitle">${saud}${nome1?', '+nome1:''}</div><div class="mrt-greetdate">${dataStr}</div></div>
+      <div style="min-width:0;"><div class="mrt-greetdate">${dataStr}</div><div class="mrt-greettitle">${saud}${nome1?', '+nome1:''}</div></div>
       <div class="mrt-avatar" data-tabgo="perfil" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div>
     </div>`;
 
@@ -11123,33 +11300,29 @@ function renderHojeV2Content(){
   const parts = treinoPhaseParts();
   let heroHtml;
   if(!sessions.length){
-    heroHtml = `<div class="empty-state" style="margin-bottom:12px;">
-      <div class="icon-box lg">${ICONS.calendar}</div>
-      <div class="t">Dia de descanso</div>
-      <div class="s">Um alongamento ou uma caminhada leve ajudam na recuperação.<br>${treinoNextWorkoutHint(day)}</div>
-    </div>`;
+    heroHtml = `<div class="ds-section"><div class="ds-label">Hoje</div>
+      <div class="ds-card">
+        <div class="ds-title">Dia de descanso</div>
+        <div class="ds-kicker" style="margin-top:6px;">${treinoNextWorkoutHint(day)}</div>
+      </div></div>`;
   }else{
     const info = MODAL_INFO[primary.tipo];
-    heroHtml = `
-      <div class="mrt-card hero-card">
-        <div class="hero-top"><span class="tag ${info.tag}">${info.nome}</span><span class="hero-week">${parts?`Semana ${parts.weekNumber} de ${parts.totalWeeks}`:''}</span></div>
-        <div class="mrt-runtitle" style="margin:12px 0 16px;">${primary.titulo}</div>
-        <div class="mrt-metricsrow">${primary.metrics.map(m=>mrtMetricHtml(m.v, m.k)).join('')}</div>
+    heroHtml = `<div class="ds-section">
+      <div class="ds-labelrow"><div class="ds-label">Hoje</div>${parts?`<div class="ds-aside">Semana ${parts.weekNumber} de ${parts.totalWeeks}</div>`:''}</div>
+      <div class="ds-card">
+        <div class="ds-kicker">${info.nome}</div>
+        <div class="ds-title">${primary.titulo}</div>
+        <div class="ds-stats3">${primary.metrics.map(m=>mrtMetricHtml(m.v, m.k)).join('')}</div>
         ${mrtBarraBlocos(primary.steps)}
-        ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<button class="btn-primary" data-v2start="${primary.tipo}">${ICONS.play} Iniciar ${primary.tipo==='corrida'?'corrida':'treino'}</button>`}
-        ${secondary ? `<div class="mrt-divider"></div>
-        <div class="hero-next" data-v2go="${secondary.tipo}">
-          <div class="icon-box ${MODAL_INFO[secondary.tipo].box}">${ICONS[secondary.tipo==='corrida'?'run':'dumbbell']}</div>
-          <div class="txt">Depois: ${secondary.resumo}</div><span class="chev">${ICONS.chevR}</span>
-        </div>` : ''}
-      </div>`;
+        ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<button class="btn-primary" data-v2start="${primary.tipo}">Começar</button>`}
+        ${secondary ? `<div class="ds-row ds-inrow" data-v2go="${secondary.tipo}"><span class="nm">Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></div>` : ''}
+      </div></div>`;
   }
-
-  // Ordem do PROMPT-VISUAL (saudação, treino de hoje, contadores, check-in se pendente, Turma) primeiro;
-  // o resto (semana em pontos, último treino, atalhos, retomada de cautela, diagnóstico) continua depois,
-  // só com a roupagem nova — são seções úteis que o documento não cortou, só não nomeou no esqueleto.
-  return greetRow + heroHtml + renderMrtCounterRow() + mrtCheckinCard() + mrtTurmaCard()
-    + mrtSemanaCard() + mrtLastWorkoutCard() + mrtAtalhosSection() + qv2CartaoPausa() + mrtDiagnosticoCard();
+  const checkin = mrtCheckinRow();
+  // Ordem da prévia: saudação, treino de hoje, semana, check-in, atalhos; depois as seções que já
+  // existiam (turma, última corrida, retomada, diagnóstico) no mesmo estilo.
+  return greetRow + heroHtml + mrtSemanaSecao() + (checkin?`<div class="ds-section"><div class="ds-list">${checkin}</div></div>`:'')
+    + mrtTurmaCard() + mrtUltimaCorrida() + mrtAtalhosLista() + qv2CartaoPausa() + mrtDiagnosticoCard();
 }
 function renderHojeV2Shell(){
   return `
@@ -11283,10 +11456,10 @@ function renderTreinoV2Content(){
     ((state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas'));
 
   const header = `
-    <div class="mrt-header" style="margin-bottom:14px;">
-      <div><div class="mrt-title">Treino</div><div class="mrt-sub">Sua semana de treinos</div></div>
+    <div class="mrt-header">
+      <div class="mrt-title">Treino</div>
       <div class="mrt-morewrap">
-        <button class="mrt-morebtn" id="mrtMoreBtn">${ICONS.dots}</button>
+        <button class="mrt-morebtn" id="mrtMoreBtn" aria-label="Opções do plano">${ICONS.dots}</button>
         <div class="mrt-moremenu ${state.treinoMoreMenuOpen?'open':''}" id="mrtMoreMenu">
           <button id="mrtPlanDetails">${ICONS.clipboard} Detalhes do plano</button>
           <button id="mrtEditDay">${ICONS.pencil} Editar treino do dia</button>
@@ -11297,29 +11470,46 @@ function renderTreinoV2Content(){
       </div>
     </div>`;
 
-  const counters = renderMrtCounterRow();
+  // Progresso do plano (quando existe): "Semana X de Y" + fase, barra fina preta.
+  const planoBar = phaseParts ? `
+    <div class="ds-section ds-plan">
+      <div class="ds-labelrow"><div class="ds-planname">${phaseParts.phaseName||'Plano'}</div><div class="ds-aside">Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div></div>
+      <div class="ds-bar"><i style="width:${Math.round(phaseParts.weekNumber/phaseParts.totalWeeks*100)}%;"></i></div>
+    </div>` : '';
 
-  const daystrip = `
-    <div class="mrt-wkrow" style="margin:16px 0;">
-      ${DAY_ABBR.map(d=>{
-        const st = dayStatus(d);
-        const temC = !!treinoEntryForDay(d), temM = muscListForDay(d).length>0;
-        const cor = temC && temM ? 'var(--hib)' : temC ? 'var(--run)' : 'var(--musc)';
-        const corSoft = temC && temM ? 'var(--hib-soft)' : temC ? 'var(--run-soft)' : 'var(--musc-soft)';
-        const cls = st==='done' ? 'done' : st==='pending' ? 'plan' : 'rest';
-        const hoje = d===DAY_ABBR[(new Date().getDay()+6)%7] && (state.weekOffset||0)===0;
-        const sel = d===day;
-        const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
-        const inner = st==='done' ? CHECK_SVG : (sel ? dia : '');
-        return `<div class="mrt-wkcol ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
-          <div class="mrt-wkletter">${d}</div>
-          <div class="mrt-wkdot ${cls}" style="${cls==='plan'?`border-color:${cor};background:${corSoft};`:''}">${inner}</div>
-          <div class="mrt-wkmark"></div>
-        </div>`;
-      }).join('')}
+  const relLabel = (state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas');
+  const weekNav = `
+    <div class="ds-weeknav">
+      <button class="mrt-weeknavbtn" id="mrtWeekPrev" aria-label="Semana anterior">${ICONS.back}</button>
+      <div class="ds-weektitle"><b>${relLabel}</b><span>${dayDateLabel('Seg')} – ${dayDateLabel('Dom')}</span></div>
+      <button class="mrt-weeknavbtn" id="mrtWeekNext" aria-label="Próxima semana">${ICONS.chevR}</button>
     </div>`;
 
-  const nomeDia = `<div class="mrt-summarytitle" style="font-size:17px;margin-bottom:12px;">${DAY_FULLNAME[day]||day}</div>`;
+  // Lista da semana: uma linha por dia (toque seleciona o dia; o detalhe aparece embaixo).
+  const hojeAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
+  const hojeIdx = DAY_ABBR.indexOf(hojeAbbr);
+  const daylist = `<div class="ds-daylist">${DAY_ABBR.map((d,i)=>{
+    const st = dayStatus(d);
+    const ce = treinoEntryForDay(d), ml = muscListForDay(d);
+    const hoje = d===hojeAbbr && (state.weekOffset||0)===0;
+    const passado = (state.weekOffset||0)<0 || ((state.weekOffset||0)===0 && i<hojeIdx);
+    const sel = d===day;
+    let nome, meta;
+    if(ce && ml.length){ nome = ce.type||'Corrida'; meta = 'Corrida + musculação'; }
+    else if(ce){ nome = ce.type||'Corrida'; meta = 'Corrida'+(ce.totalKm?' · '+String(fmtKm(ce.totalKm)).replace('.',','):''); }
+    else if(ml.length){ nome = muscTituloDoDia(d, ml); meta = 'Musculação · '+ml.length+' exercício'+(ml.length===1?'':'s'); }
+    const status = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
+      : hoje ? `<span class="ds-pill">Hoje</span>`
+      : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>` : '';
+    const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
+    return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
+      <div class="ds-daydate"><span>${d.toUpperCase()}</span><b>${dia}</b></div>
+      <div class="ds-daytxt">${nome?`<div class="nm">${nome}</div><div class="mt">${meta}</div>`:`<div class="nm rest">Descanso</div>`}</div>
+      ${status}
+    </div>`;
+  }).join('')}</div>`;
+
+  const nomeDia = `<div class="ds-dayhead">${DAY_FULLNAME[day]||day}</div>`;
 
   // Seletor Musculação | Corrida só quando o dia tem os dois; com um só, mostra direto o que existe.
   const temC = !!treinoEntryForDay(day), temM = muscListForDay(day).length>0;
@@ -11331,16 +11521,9 @@ function renderTreinoV2Content(){
       <button class="mrt-togglebtn run ${sub==='corrida'?'active':''}" data-mrtsub="corrida">${ICONS.run} Corrida</button>
     </div>` : '';
 
-  const weekNav = `
-    <div class="mrt-weeknav" style="margin:14px 0 12px;">
-      <button class="mrt-weeknavbtn" id="mrtWeekPrev">${ICONS.back}</button>
-      <div class="mrt-weeklabel">${weekLabel}</div>
-      <button class="mrt-weeknavbtn" id="mrtWeekNext">${ICONS.chevR}</button>
-    </div>`;
-
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
-  return header + counters + daystrip + nomeDia + toggle + weekNav + chips + dayContent;
+  return header + planoBar + weekNav + daylist + nomeDia + toggle + chips + dayContent;
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
