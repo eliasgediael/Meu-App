@@ -9,7 +9,7 @@ const sharp = require('sharp');
 
 const raiz = path.join(__dirname, '..');
 const svgPath = path.join(raiz, 'brand', 'logo.svg');
-const FUNDO = '#0A0B0A';
+const FUNDO = '#111111';
 
 async function quadrado(svg, tamanho, destino){
   await sharp(svg, { density: 600 })

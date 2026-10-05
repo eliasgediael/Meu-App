@@ -73,10 +73,25 @@ async function releaseWakeLock() {
   try { await KeepAwake.allowSleep(); } catch (e) {}
 }
 
+let preferredVoiceIndex = null;
+async function preferredPortugueseVoice() {
+  if (preferredVoiceIndex !== null) return preferredVoiceIndex;
+  try {
+    const { voices = [] } = await TextToSpeech.getSupportedVoices();
+    const isPt = (v) => /^pt([-_]|$)/i.test(v.lang || '');
+    const female = /female|feminina|francisca|luciana|maria|joana|catarina|fernanda|helena|camila|victoria/i;
+    let idx = voices.findIndex((v) => isPt(v) && female.test(v.name || ''));
+    if (idx < 0) idx = voices.findIndex((v) => /^pt[-_]BR$/i.test(v.lang || ''));
+    if (idx < 0) idx = voices.findIndex(isPt);
+    preferredVoiceIndex = idx >= 0 ? idx : -1;
+  } catch (e) { preferredVoiceIndex = -1; }
+  return preferredVoiceIndex;
+}
 async function speak(text) {
   try {
     await TextToSpeech.stop();
-    await TextToSpeech.speak({ text, lang: 'pt-BR', rate: 1.0, category: 'ambient' });
+    const voice = await preferredPortugueseVoice();
+    await TextToSpeech.speak({ text, lang: 'pt-BR', rate: 0.96, pitch: 1.04, category: 'ambient', ...(voice >= 0 ? { voice } : {}) });
   } catch (e) {}
 }
 

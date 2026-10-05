@@ -411,7 +411,7 @@ button.secondary{ min-height:52px; padding:0 18px; background:var(--surface-2); 
 .blk-card{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--r-icon); margin-bottom:8px; overflow:hidden; }
 .blk-head{ display:flex; align-items:center; gap:10px; padding:11px 12px; cursor:pointer; }
 .blk-dot{ width:8px; height:8px; border-radius:50%; flex-shrink:0; }
-.blk-name{ flex:1; font-size:13.5px; font-weight:700; min-width:0; }
+.blk-name{ flex:1; font-size:13.5px; font-weight:700; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .blk-sum{ font-size:12px; color:var(--text-dim); white-space:nowrap; }
 .blk-x{ width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:var(--text-dim); font-size:16px; cursor:pointer; flex-shrink:0; }
 .blk-handle{ width:22px; height:28px; display:flex; align-items:center; justify-content:center; color:var(--text-dim); flex-shrink:0; cursor:grab; touch-action:none; }
@@ -755,6 +755,51 @@ input[type=file]{ display:none; }
 .mrt-blockgrouplabel{ font-size:11px; font-weight:700; color:var(--mrt-bluelight); margin:8px 0 2px; }
 
 /* Execução de musculação (fases 'exercise'/'rest' de renderWorkoutSession) */
+.mrt-wex-progress{ height:4px; margin:0 18px 18px; border-radius:var(--r-pill); background:var(--surface-2); overflow:hidden; }
+.mrt-wex-progress > i{ display:block; height:100%; background:var(--data); border-radius:inherit; transition:width .2s ease; }
+.mrt-wex-hero{ margin:0 18px 14px; }
+.mrt-wex-hero h1{ margin:0; max-width:360px; font-size:27px; line-height:1.05; letter-spacing:-0.8px; font-weight:800; }
+.mrt-wex-titlerow{ display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.mrt-wex-gif{ flex-shrink:0; padding:0; border:none; background:none; cursor:pointer; border-radius:var(--r-input); }
+.mrt-wex-extras{ display:flex; justify-content:center; gap:8px; margin:0 18px 12px; }
+.mrt-wex-herotags{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.mrt-muscle-layout{ display:grid; grid-template-columns:minmax(0,1.1fr) minmax(118px,.9fr); gap:14px; align-items:center; margin-top:10px; }
+.mrt-muscle-map{ display:grid; grid-template-columns:1fr 1fr; gap:4px; align-items:end; min-width:0; }
+.mrt-muscle-figure{ width:100%; height:auto; max-height:230px; overflow:visible; }
+.mrt-muscle-figure .body{ fill:#F4F4F4; stroke:#B8B8B8; stroke-width:1.2; }
+.mrt-muscle-figure .detail{ fill:none; stroke:#D4D4D4; stroke-width:.8; stroke-linecap:round; }
+.mrt-muscle-figure .muscle{ fill:#E7E7E7; stroke:#C8C8C8; stroke-width:.55; transition:fill .18s ease,stroke .18s ease,opacity .18s ease; }
+.mrt-muscle-figure .muscle.secondary{ fill:#FFB39A; stroke:#FF8B64; }
+.mrt-muscle-figure .muscle.primary{ fill:var(--data); stroke:#E6400A; }
+.mrt-anat{ width:100%; height:auto; max-height:178px; display:block; overflow:visible; }
+.mrt-anat path{ stroke:none; mix-blend-mode:multiply; transition:fill-opacity .18s ease; }
+.mrt-anat path.primary{ fill:var(--data); fill-opacity:.82; }
+.mrt-anat path.secondary{ fill:#FF9A73; fill-opacity:.5; }
+.mrt-muscle-meta{ min-width:0; padding-left:14px; border-left:1px solid var(--border); }
+.mrt-muscle-meta .label{ font-size:12px; color:var(--text-dim); margin-bottom:3px; }
+.mrt-muscle-meta .value{ font-size:18px; font-weight:800; line-height:1.2; }
+.mrt-muscle-meta .rule{ height:1px; background:var(--border); margin:14px 0; }
+.mrt-muscle-key{ display:flex; flex-direction:column; gap:7px; margin-top:14px; }
+.mrt-muscle-key span{ display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--text-dim); line-height:1.25; }
+.mrt-muscle-key i{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
+.mrt-muscle-key .p i{ background:var(--data); }
+.mrt-muscle-key .s i{ background:#FFB39A; }
+.mrt-current-set{ margin:0 18px 14px; padding:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-card); }
+.mrt-current-set-grid{ display:grid; grid-template-columns:.7fr 1.25fr 1fr 1fr; gap:8px; align-items:end; }
+.mrt-current-field label{ display:block; margin-bottom:8px; color:var(--text-dim); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.mrt-current-field .big{ min-height:62px; display:flex; align-items:center; justify-content:center; border-radius:var(--r-input); background:var(--surface-2); font-size:28px; font-weight:800; font-variant-numeric:tabular-nums; }
+.mrt-current-field .big small{ margin-left:3px; font-size:12px; color:var(--text-dim); }
+.mrt-current-field button.big{ width:100%; border:1.5px solid transparent; color:var(--text); font-family:inherit; cursor:pointer; }
+.mrt-current-field button.big:focus-visible{ outline:none; border-color:var(--data); }
+.mrt-current-set .btn-primary{ margin-top:14px; }
+.mrt-future-sets{ margin:0 18px 6px; padding:0; }
+@media(max-width:360px){
+  .mrt-wex-hero h1{ font-size:28px; }
+  .mrt-muscle-layout{ grid-template-columns:1fr; }
+  .mrt-muscle-meta{ padding:12px 0 0; border-left:0; border-top:1px solid var(--border); }
+  .mrt-current-set-grid{ grid-template-columns:.65fr 1.2fr 1fr; }
+  .mrt-current-field.pse{ grid-column:2 / 4; }
+}
 .mrt-wex-topbar{ display:flex; align-items:center; justify-content:space-between; gap:10px; padding:calc(14px + env(safe-area-inset-top)) 18px 14px; }
 .mrt-wex-x{ width:34px; height:34px; border-radius:var(--r-icon); background:var(--mrt-card); border:none; color:var(--mrt-text); font-size:16px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
 .mrt-wex-titles{ flex:1; min-width:0; text-align:center; }
@@ -1946,7 +1991,7 @@ async function exitClientView(){
 // em telas v2 — só as funções de dados/lógica abaixo são importadas). true = tela Início já usa a v2;
 // false = volta tudo pro shell de sempre. As telas antigas continuam intactas por baixo até aprovação.
 // Logo da marca (preenchido por scripts/gerar-icones.js a partir de brand/logo.svg); vazio = a tela de boas-vindas fica só com o texto.
-const LOGO_SVG = /*LOGO_SVG_START*/"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\">\n  <rect width=\"1024\" height=\"1024\" rx=\"228\" fill=\"#0A0B0A\"/>\n  <g transform=\"translate(512 520) scale(.9) translate(-512 -512) translate(50 0) skewX(-12) translate(100 0)\">\n    <g fill=\"#86F24A\">\n      \n      <rect x=\"300\" y=\"240\" width=\"120\" height=\"560\" rx=\"60\"/>\n      \n      <rect x=\"300\" y=\"240\" width=\"440\" height=\"116\" rx=\"58\"/>\n      \n      <path d=\"M300 470 H600 V420 L730 520 L600 620 V570 H300 Z\" stroke=\"#86F24A\" stroke-width=\"16\" stroke-linejoin=\"round\"/>\n    </g>\n    \n    <g fill=\"#86F24A\" opacity=\".55\">\n      <rect x=\"130\" y=\"660\" width=\"130\" height=\"36\" rx=\"18\"/>\n      <rect x=\"180\" y=\"730\" width=\"80\" height=\"36\" rx=\"18\"/>\n    </g>\n  </g>\n</svg>"/*LOGO_SVG_END*/;
+const LOGO_SVG = /*LOGO_SVG_START*/"<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1024 1024\">\n  <rect width=\"1024\" height=\"1024\" rx=\"228\" fill=\"#111111\"/>\n  <g transform=\"translate(512 520) scale(.9) translate(-512 -512) translate(50 0) skewX(-12) translate(100 0)\">\n    <g fill=\"#FFFFFF\">\n      \n      <rect x=\"300\" y=\"240\" width=\"120\" height=\"560\" rx=\"60\"/>\n      \n      <rect x=\"300\" y=\"240\" width=\"440\" height=\"116\" rx=\"58\"/>\n      \n      <path d=\"M300 470 H600 V420 L730 520 L600 620 V570 H300 Z\" stroke=\"#FFFFFF\" stroke-width=\"16\" stroke-linejoin=\"round\"/>\n    </g>\n    \n    <g fill=\"#FFFFFF\" opacity=\".55\">\n      <rect x=\"130\" y=\"660\" width=\"130\" height=\"36\" rx=\"18\"/>\n      <rect x=\"180\" y=\"730\" width=\"80\" height=\"36\" rx=\"18\"/>\n    </g>\n  </g>\n</svg>"/*LOGO_SVG_END*/;
 const UI_V2 = true;
 const DAY_ABBR = ['Seg','Ter','Qua','Qui','Sex','Sáb','Dom'];
 const GROUPS = ['Peito','Costas','Pernas','Ombro','Braço','Core'];
@@ -2102,6 +2147,71 @@ function exercicioPorNome(nome){
 function equipamentoDoExercicio(nome){
   const it = exercicioPorNome(nome);
   return (it && it.cat && it.cat.equipamento) || null;
+}
+// Mapa anatômico vetorial. O catálogo já informa musculoPrim/musculosSec; esta camada apenas normaliza
+// os nomes para as regiões visuais. Exercícios personalizados sem catálogo continuam funcionando e
+// exibem o corpo neutro, sem inventar músculos.
+const MUSCLE_REGION_ALIASES = {
+  'peitoral':['chest'], 'peitoral superior':['chest'], 'serrátil anterior':['chest','obliques'],
+  'ombros':['shoulders'], 'deltoides':['shoulders'], 'deltoide posterior':['rear-shoulders'], 'manguito rotador':['rear-shoulders'],
+  'bíceps':['biceps'], 'braquial':['biceps'], 'tríceps':['triceps'], 'antebraço':['forearms'],
+  'abdômen':['abs'], 'core':['abs','obliques'], 'oblíquos':['obliques'],
+  'dorsal':['lats'], 'parte superior das costas':['upper-back'], 'romboides':['upper-back'], 'trapézio':['traps'],
+  'lombar':['lower-back'], 'coluna':['lower-back'],
+  'glúteos':['glutes'], 'quadríceps':['quads'], 'posterior de coxa':['hamstrings'],
+  'adutores':['adductors'], 'abdutores':['glutes'], 'flexores do quadril':['hip-flexors'],
+  'panturrilha':['calves'], 'sóleo':['calves'], 'estabilizadores do tornozelo':['calves'],
+  'tornozelos':['calves'], 'pés':['calves']
+};
+function muscleRegionsForExercise(nome){
+  const item = exercicioPorNome(nome), cat = item && item.cat;
+  if(!cat) return { primary:[], secondary:[], primaryLabel:'Sem dados', secondaryLabel:'' };
+  const expand = (labels)=> [...new Set(labels.flatMap(label=>MUSCLE_REGION_ALIASES[String(label||'').toLocaleLowerCase('pt-BR')]||[]))];
+  return {
+    primary:expand([cat.musculoPrim]), secondary:expand(cat.musculosSec||[]),
+    primaryLabel:cat.musculoPrim||'Sem dados', secondaryLabel:(cat.musculosSec||[]).join(' · ')
+  };
+}
+function muscleClass(id, activation){
+  if(activation.primary.includes(id)) return 'muscle primary';
+  if(activation.secondary.includes(id)) return 'muscle secondary';
+  return 'muscle';
+}
+// Figura anatômica (brand/anatomy-body-v1.png → gifs/anatomia/*.webp, por scripts/gerar-anatomia.js) com uma
+// máscara por região muscular por cima: principal em laranja forte, secundário em laranja claro, resto neutro.
+// Polígonos no espaço 360×1080 da figura; 'lados' são desenhados à esquerda e espelhados no eixo do corpo.
+const ANATOMIA = {"frente":{"eixo":198.7,"lados":{"shoulders":[[115,212],[95,208],[72,220],[58,243],[53,272],[58,302],[74,300],[92,282],[104,258],[112,234]],"chest":[[106,232],[130,212],[160,208],[192,214],[196,240],[194,275],[181,298],[150,303],[116,291],[103,265]],"biceps":[[62,302],[88,292],[102,312],[100,350],[92,384],[78,394],[64,386],[56,350]],"forearms":[[58,394],[92,396],[100,420],[90,470],[72,505],[54,505],[38,480],[36,440],[46,406]],"obliques":[[110,316],[150,318],[156,360],[160,420],[150,446],[126,432],[112,392],[104,352]],"hip-flexors":[[130,458],[158,462],[172,500],[164,508],[142,492]],"quads":[[100,470],[128,456],[156,466],[170,506],[168,560],[176,620],[175,665],[164,700],[140,706],[116,692],[101,652],[94,592],[95,522]],"adductors":[[172,506],[192,508],[197,545],[193,600],[182,640],[176,600],[170,555]],"calves":[[95,745],[112,738],[118,780],[115,840],[104,862],[94,830],[92,790]],"calves-2":[[142,750],[160,745],[168,790],[164,840],[150,860],[140,820],[138,780]]},"centro":{"abs":[[160,312],[198,306],[238,312],[240,360],[236,420],[226,470],[212,500],[199,510],[186,500],[172,470],[162,420],[158,360]]}},"costas":{"eixo":167,"lados":{"rear-shoulders":[[95,212],[62,218],[38,238],[28,268],[32,300],[48,294],[70,270],[98,250]],"upper-back":[[100,234],[124,228],[148,250],[150,298],[120,306],[92,300],[80,286],[86,256]],"lats":[[82,302],[122,304],[150,300],[160,340],[150,392],[132,426],[118,420],[96,380],[84,340]],"triceps":[[40,284],[62,286],[76,312],[74,352],[62,382],[42,380],[30,346],[28,310]],"forearms":[[30,384],[60,384],[66,420],[58,470],[46,505],[28,505],[14,470],[14,422]],"glutes":[[100,450],[130,440],[164,446],[167,482],[161,540],[140,560],[110,556],[92,526],[88,482]],"hamstrings":[[72,562],[100,552],[140,556],[160,566],[158,612],[150,662],[140,700],[120,712],[100,700],[82,660],[72,612]],"calves":[[76,742],[100,722],[120,726],[145,742],[150,790],[140,835],[120,845],[108,826],[90,840],[72,820],[67,780]]},"centro":{"traps":[[152,142],[182,142],[190,170],[250,204],[228,224],[200,238],[184,300],[167,340],[150,300],[134,238],[106,224],[84,204],[144,170]],"lower-back":[[148,352],[186,352],[200,392],[205,440],[167,452],[129,440],[134,392]]}}};
+function anatomiaCurva(pts){
+  // contorno suave (Catmull-Rom fechado) a partir dos pontos da máscara
+  const n = pts.length, p = (i)=>pts[(i+n)%n];
+  let d = 'M'+p(0)[0]+','+p(0)[1];
+  for(let i=0;i<n;i++){
+    const p0=p(i-1), p1=p(i), p2=p(i+1), p3=p(i+2);
+    const c1=[p1[0]+(p2[0]-p0[0])/6, p1[1]+(p2[1]-p0[1])/6], c2=[p2[0]-(p3[0]-p1[0])/6, p2[1]-(p3[1]-p1[1])/6];
+    d += 'C'+c1.map(v=>v.toFixed(1)).join(',')+' '+c2.map(v=>v.toFixed(1)).join(',')+' '+p2[0]+','+p2[1];
+  }
+  return d+'Z';
+}
+function anatomiaFiguraHtml(lado, a, rotulo){
+  const f = ANATOMIA[lado];
+  const regiao = (id, pts)=>{ const base = id.replace(/-\d+$/,''); const cls = muscleClass(base, a); return cls==='muscle' ? '' : `<path class="${cls}" data-muscle="${base}" d="${anatomiaCurva(pts)}"/>`; };
+  let corpo = '';
+  Object.entries(f.lados).forEach(([id, pts])=>{ corpo += regiao(id, pts) + regiao(id, pts.map(([x,y])=>[+(2*f.eixo-x).toFixed(1), y])); });
+  Object.entries(f.centro).forEach(([id, pts])=>{ corpo += regiao(id, pts); });
+  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="img" aria-label="${rotulo}"><image href="gifs/anatomia/${lado}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
+}
+function muscleFrontSvg(a){ return anatomiaFiguraHtml('frente', a, 'Mapa muscular frontal'); }
+function muscleBackSvg(a){ return anatomiaFiguraHtml('costas', a, 'Mapa muscular traseiro'); }
+function muscleMapHtml(nome){
+  const a=muscleRegionsForExercise(nome);
+  return `<div class="mrt-muscle-layout">
+    <div class="mrt-muscle-map">${muscleFrontSvg(a)}${muscleBackSvg(a)}</div>
+    <div class="mrt-muscle-meta">
+      <div class="label">Principal</div><div class="value">${a.primaryLabel}</div>
+      ${a.secondaryLabel?`<div class="rule"></div><div class="label">Secundários</div><div class="value" style="font-size:14px;">${a.secondaryLabel}</div>`:''}
+      <div class="mrt-muscle-key"><span class="p"><i></i>Principal</span><span class="s"><i></i>Secundário</span></div>
+    </div>
+  </div>`;
 }
 // Equipamento de um exercício que só existe no catálogo, a partir do campo "equipamento" dele.
 function equipCatalogo(item){
@@ -3561,12 +3671,18 @@ function distribuirSessoes(est, prio, freq, ajustes){
       const sD = (runAt[d] && runAt[d].dura) || (muscAt[d] && muscAt[d].dura);
       const sN = (runAt[nx(d)] && runAt[nx(d)].dura) || (muscAt[nx(d)] && muscAt[nx(d)].dura);
       if(sD && sN) cost += 40;
+      const muscD = muscAt[d], muscN = muscAt[nx(d)];
+      const runD = runAt[d], runN = runAt[nx(d)];
+      // Para iniciante, recuperação mínima é regra de segurança — não apenas preferência estética.
+      if(est.capacidade.musc==='iniciante' && muscD && muscN) cost += 10000;
+      if(est.capacidade.musc==='iniciante' && ((runD && runD.tipo==='longa' && muscN) || (muscD && runN && runN.tipo==='longa'))) cost += 10000;
     });
     dias.forEach(d=>{
       const r = runAt[d.dia], m = muscAt[d.dia];
       if(r && (r.tipo==='longa' || r.tipo==='rodagem')){
         cost += 15*Math.min(1, r.durMin/d.minutos);
         if(est.disp.longaPref===d.dia) cost -= 8;
+        else if(!est.disp.longaPref && r.tipo==='longa' && (d.dia==='Sáb' || d.dia==='Dom')) cost -= 6;
       }
       if(r && r.tipo==='qualidade') cost += 6*Math.min(1, r.durMin/d.minutos);
       const pr = prio.principal==='corrida' ? r : m;
@@ -3888,6 +4004,19 @@ function validarPlano(est, prio, freq, dist, semana, ajustes){
   if(prio.tipo!=='equilibrado' && nP===0) A('V8', 'a modalidade principal ficou fora da semana');
   // V9 distribuição
   if(dist.melhor && dist.melhor.custo>=5000) E('V9', `conflito de estímulos na distribuição (custo ${Math.round(dist.melhor.custo)})`);
+  const nx = d=>DAY_ABBR[(DAY_ABBR.indexOf(d)+1)%7];
+  const sessaoEm = (d,mod)=>semana.sessoes.find(s=>s.dia===d && (!mod || s.modalidade===mod));
+  DAY_ABBR.forEach(d=>{
+    const atualM = sessaoEm(d,'musculacao'), proxM = sessaoEm(nx(d),'musculacao');
+    const atualR = sessaoEm(d,'corrida'), proxR = sessaoEm(nx(d),'corrida');
+    if(est.capacidade.musc==='iniciante' && atualM && proxM) E('V9', `${d}/${nx(d)}: musculação em dias consecutivos para iniciante`);
+    if(est.capacidade.musc==='iniciante' && ((atualR && atualR.tipo==='longa' && proxM) || (atualM && proxR && proxR.tipo==='longa'))){
+      E('V9', `${d}/${nx(d)}: longão adjacente à musculação para iniciante`);
+    }
+    const durasD = semana.sessoes.filter(s=>s.dia===d && (s.dura || s.tipo==='longa')).length;
+    const durasN = semana.sessoes.filter(s=>s.dia===nx(d) && (s.dura || s.tipo==='longa')).length;
+    if(durasD && durasN) E('V9', `${d}/${nx(d)}: estímulos altos em dias consecutivos`);
+  });
   if(est.corrida.regime==='run_walk'){
     const d = DAY_ABBR; semana.corridaWeek.forEach(w=>{ const nx = d[(d.indexOf(w.day)+1)%7]; if(semana.corridaWeek.some(x=>x.day===nx)) E('V9', 'run/walk em dias seguidos'); });
   }
@@ -5095,6 +5224,12 @@ function qv2CartaoPausa(){
 function qv2LinkNovo(estilo){
   if(QUESTIONARIO_V2_PADRAO) return '';
   return `<button class="btn-ghost" style="${estilo||'width:100%;margin-top:4px;'}" data-qv2open>Novo questionário</button>`;
+}
+// Refazer plano/diagnóstico com um plano em andamento: confirma antes (sem plano, abre direto).
+async function confirmarRefazerPlano(){
+  const temPlano = !!((state.hybridPlanData && state.hybridPlanData.plan) || (state.corridaVdotData && state.corridaVdotData.plan));
+  if(!temPlano) return true;
+  return await confirmarApp({ titulo:'Refazer o plano?', texto:'O plano novo substitui o atual quando você terminar. O histórico continua salvo.', ok:'Refazer' });
 }
 function abrirDiagnostico(){ if(QUESTIONARIO_V2_PADRAO) qv2Abrir(); else openHybridCreate(); }
 document.addEventListener('click', (ev)=>{
@@ -6462,14 +6597,25 @@ function speak(text){
     speechSynthesis.cancel(); // não deixa avisos se empilharem atrás um do outro
     const u = new SpeechSynthesisUtterance(text);
     u.lang = 'pt-BR';
-    u.rate = 1.0;
+    const vozes = speechSynthesis.getVoices ? speechSynthesis.getVoices() : [];
+    const pt = vozes.filter(v=>/^pt([-_]|$)/i.test(v.lang||''));
+    const feminina = pt.find(v=>/female|feminina|francisca|luciana|maria|joana|catarina|fernanda|helena|camila|victoria/i.test(v.name||''));
+    u.voice = feminina || pt.find(v=>/^pt[-_]BR$/i.test(v.lang||'')) || pt[0] || null;
+    u.rate = 0.96;
+    u.pitch = 1.04;
     speechSynthesis.speak(u);
   }catch(e){}
 }
-function paceRangeLabel(step){
+function paceFalado(sec){
+  const total = Math.max(0, Math.round(Number(sec)||0));
+  const min = Math.floor(total/60), seg = total%60;
+  return `${min} minuto${min===1?'':'s'}${seg ? ` e ${seg} segundo${seg===1?'':'s'}` : ''}`;
+}
+function paceRangeLabel(step, falado){
   const range = step && parsePaceRangeToSec(step.pace);
   if(!range) return null;
-  return range.lo===range.hi ? formatPace(range.lo) : (formatPace(range.hi)+' a '+formatPace(range.lo));
+  const fmt = falado ? paceFalado : formatPace;
+  return range.lo===range.hi ? fmt(range.lo) : (fmt(range.hi)+' a '+fmt(range.lo));
 }
 // "Tiro" aqui cobre qualquer bloco de esforço forte (tiro/intervalado/repetição) — é nesses que faz
 // sentido a contagem regressiva falada antes de começar (correr de verdade exige alguns segundos de
@@ -6483,7 +6629,7 @@ function gpsAnnounceStep(gr, step, isFirst){
     const kmh = gr.stepKmh;
     speak(prefix + `Próximo bloco: ${step.name}. Coloque a esteira em ${String(kmh).replace('.',',')} quilômetros por hora.` + countdown);
   }else{
-    const paceLabel = paceRangeLabel(step);
+    const paceLabel = paceRangeLabel(step, true);
     speak(prefix + `Próximo bloco: ${step.name}.` + (paceLabel ? ` Ritmo alvo: ${paceLabel} por quilômetro.` : '') + countdown);
   }
 }
@@ -9866,11 +10012,11 @@ async function compartilharResumoTreino(ws){
   const cor = (n)=>cssVar(n);
   c.fillStyle = cor('--bg'); c.fillRect(0,0,W,H);
   const grad = c.createRadialGradient(W/2, 0, 60, W/2, 0, 1100);
-  grad.addColorStop(0, 'rgba(134,242,74,0.22)'); grad.addColorStop(1, 'rgba(0,0,0,0)');
+  grad.addColorStop(0, 'rgba(17,17,17,0.06)'); grad.addColorStop(1, 'rgba(0,0,0,0)');
   c.fillStyle = grad; c.fillRect(0,0,W,H);
   const font = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif";
   c.textAlign = 'center';
-  c.fillStyle = cor('--accent'); c.font = `800 44px ${font}`; c.fillText('FORZA RUN', W/2, 180);
+  c.fillStyle = cor('--accent'); c.font = `800 44px ${font}`; c.fillText('MEU RITMO', W/2, 180);
   c.fillStyle = cor('--text'); c.font = `800 96px ${font}`; c.fillText('Treino concluído', W/2, 420);
   c.fillStyle = cor('--text-dim'); c.font = `500 44px ${font}`;
   c.fillText(new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}), W/2, 500);
@@ -9902,6 +10048,7 @@ function confeteHtml(){
 function renderWorkoutSession(){
   const ws = state.workoutSession;
   const list = state.musculacao[ws.day] || [];
+  const totalSeriesPlanned = list.reduce((s,e)=>s+workoutSeriesCountFor(e,ws), 0);
   if(ws.phase === 'summary'){
     const prev = lastVolumeForDay(ws.day, todayISO());
     const minTot = Math.max(1, Math.round((ws.elapsedSec||0)/60));
@@ -9966,7 +10113,6 @@ function renderWorkoutSession(){
   // o mesmo topo meio apagado atrás da bandeja de descanso, pra dar contexto sem competir com o timer).
   const ex = list[ws.exIdx];
   const elapsedMin = Math.floor((Date.now()-ws.startedAt)/60000);
-  const totalSeriesPlanned = list.reduce((s,e)=>s+workoutSeriesCountFor(e,ws), 0);
   const topbar = `
     <div class="mrt-wex-topbar">
       <button class="mrt-wex-x" data-wexexit>${ICONS.xmark}</button>
@@ -10025,34 +10171,23 @@ function renderWorkoutSession(){
   const touched = ws.curTouched || {};
   const doneSetsForEx = setsDeHoje(ex);
   const val = (txt, unit, faint, edit)=> `<button class="mrt-val ${faint?'faint':''}" ${edit?`data-wexedit="${edit}"`:'disabled'}>${txt}${unit?`<small>${unit}</small>`:''}</button>`;
-  const tableRows = Array.from({length:seriesCount}, (_,i)=>{
-    if(i<ws.serieIdx){
-      const s = doneSetsForEx[i]||{};
-      return `<tr class="mrt-wex-row done">
-        <td class="n">${i+1}</td>
-        <td>${val(s.peso!=null?s.peso:'—', s.peso!=null?'kg':'', false, null)}</td>
-        <td>${val(s.reps!=null?s.reps:'—', '', false, null)}</td>
-        <td>${val(s.pse!=null?s.pse:'—', '', false, null)}</td>
-        <td><div class="mrt-setcheck on">${CHECK_SVG}</div></td>
-      </tr>`;
-    }
-    if(i===ws.serieIdx){
-      return `<tr class="mrt-wex-row current">
-        <td class="n">${i+1}</td>
-        <td>${val(ws.curPeso, 'kg', !touched.peso, 'peso')}</td>
-        <td>${val(ws.curReps, '', !touched.reps, 'reps')}</td>
-        <td>${val(ws.curPse!=null?ws.curPse:'—', '', ws.curPse==null, 'pse')}</td>
-        <td><button class="mrt-setcheck" data-wexconcluir title="Concluir série" aria-label="Concluir série"></button></td>
-      </tr>`;
-    }
-    return `<tr class="mrt-wex-row">
+  const completedRows = Array.from({length:Math.min(ws.serieIdx, seriesCount)}, (_,i)=>{
+    const s = doneSetsForEx[i]||{};
+    return `<tr class="mrt-wex-row done">
       <td class="n">${i+1}</td>
-      <td>${val(ws.curPeso, 'kg', true, null)}</td>
-      <td>${val(ws.curReps, '', true, null)}</td>
-      <td>${val('—', '', true, null)}</td>
-      <td><div class="mrt-setcheck ghost"></div></td>
+      <td>${val(s.peso!=null?s.peso:'—', s.peso!=null?'kg':'', false, null)}</td>
+      <td>${val(s.reps!=null?s.reps:'—', '', false, null)}</td>
+      <td>${val(s.pse!=null?s.pse:'—', '', false, null)}</td>
+      <td><div class="mrt-setcheck on">${CHECK_SVG}</div></td>
     </tr>`;
   }).join('');
+  const futureRows = Array.from({length:seriesCount},(_,i)=>i).filter(i=>i>ws.serieIdx).map(i=>`<tr class="mrt-wex-row">
+    <td class="n">${i+1}</td>
+    <td>${val(ws.curPeso, 'kg', true, null)}</td>
+    <td>${val(ws.curReps, '', true, null)}</td>
+    <td>${val('—', '', true, null)}</td>
+    <td><div class="mrt-setcheck ghost"></div></td>
+  </tr>`).join('');
 
   const upcoming = list.slice(ws.exIdx+1);
   const upcomingHtml = upcoming.length ? `
@@ -10072,41 +10207,44 @@ function renderWorkoutSession(){
     <div class="mrt-root">
       <div class="mrt-scroll">
         ${topbar}
-        <div class="mrt-card">
-          <div style="display:flex;gap:14px;align-items:center;">
-            ${ex.repdbId ? `<button style="padding:0;border:none;background:none;cursor:pointer;flex-shrink:0;" data-wexverexec="${repdbImg(ex.repdbId)}">${exThumbHtml(ex, 72)}</button>` : exThumbHtml(ex, 72)}
-            <div style="flex:1;min-width:0;">
-              <div class="mrt-runtitle" style="font-size:20px;letter-spacing:-0.2px;">${ex.nome}</div>
-              <div style="margin-top:8px;display:flex;gap:6px;flex-wrap:wrap;">
-                <span class="tag tag-musc">${ex.grupo}</span>
-                ${equipamentoDoExercicio(ex.nome) ? `<span class="tag">${equipamentoDoExercicio(ex.nome)}</span>` : ''}
-                ${sug.direction==='subir' ? `<span class="tag tag-done">↑ subir carga</span>` : ''}
-                ${recordeAqui ? `<span class="tag tag-gold">${ICONS.trophy} Recorde</span>` : ''}
-              </div>
-            </div>
+        <div class="mrt-wex-progress" aria-label="${ws.doneSeries} de ${totalSeriesPlanned} séries concluídas"><i style="width:${Math.round((ws.doneSeries/Math.max(1,totalSeriesPlanned))*100)}%"></i></div>
+        <section class="mrt-wex-hero">
+          <div class="mrt-wex-titlerow">
+            <h1>${ex.nome}</h1>
+            ${ex.repdbId ? `<button class="mrt-wex-gif" data-wexverexec="${repdbImg(ex.repdbId)}" aria-label="Ver execução">${exThumbHtml(ex, 64)}</button>` : ''}
           </div>
-          ${ultima ? `<div class="mrt-lastline">Última vez: <b>${ultima}</b></div>` : ''}
-          ${(sug.direction && sug.peso) ? `<div class="mrt-lastline">Hoje: <b>${String(sug.peso).replace('.',',')} kg × ${sug.reps}</b> · ${sug.motivo}</div>` : ''}
+          <div class="mrt-wex-herotags">
+            <span class="tag tag-musc">${ex.grupo}</span>
+            ${equipamentoDoExercicio(ex.nome) ? `<span class="tag">${equipamentoDoExercicio(ex.nome)}</span>` : ''}
+            ${sug.direction==='subir' ? `<span class="tag tag-done">↑ subir carga</span>` : ''}
+            ${recordeAqui ? `<span class="tag tag-gold">${ICONS.trophy} Recorde</span>` : ''}
+          </div>
+          ${muscleMapHtml(ex.nome)}
           <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;">
             ${ex.repdbId ? `<button class="mrt-linkbtn" style="padding-left:0;" data-wexverexec="${repdbImg(ex.repdbId)}">${ICONS.eye} Ver execução</button>` : ''}
             <button class="mrt-linkbtn" style="padding-left:0;" data-wexdescanso>${ICONS.clock} Descanso: ${ex.descanso||'90s'}</button>
           </div>
+        </section>
+        <section class="mrt-current-set">
+          <div class="mrt-current-set-grid">
+            <div class="mrt-current-field"><label>Série</label><div class="big">${ws.serieIdx+1}<small>/${seriesCount}</small></div></div>
+            <div class="mrt-current-field"><label>Carga</label><button class="big ${!touched.peso?'faint':''}" data-wexedit="peso">${String(ws.curPeso).replace('.',',')}<small>kg</small></button></div>
+            <div class="mrt-current-field"><label>Reps</label><button class="big ${!touched.reps?'faint':''}" data-wexedit="reps">${ws.curReps}</button></div>
+            <div class="mrt-current-field pse"><label>PSE</label><button class="big ${ws.curPse==null?'faint':''}" data-wexedit="pse">${ws.curPse!=null?ws.curPse:'—'}</button></div>
+          </div>
+          <button class="btn-primary" data-wexconcluir>Concluir série</button>
+        </section>
+        <section class="mrt-wex-hero" style="margin-top:4px;">
+          ${ultima ? `<div class="mrt-lastline" style="margin-top:0;">Última vez: <b>${ultima}</b></div>` : ''}
+          ${(sug.direction && sug.peso) ? `<div class="mrt-lastline">Hoje: <b>${String(sug.peso).replace('.',',')} kg × ${sug.reps}</b> · ${sug.motivo}</div>` : ''}
           <button class="mrt-detailstoggle ${state.wexDetalhesOpen?'open':''}" data-wexdetalhes>Detalhes do exercício ${ICONS.chevR}</button>
-          ${state.wexDetalhesOpen ? (()=>{ const info = bibInfo(ex.nome, ex.grupo); return `
-          <div class="mrt-detailsbody">
-            ${exThumbHtml(ex, 180)}
-            <ol class="mrt-passos">${(info.passos||[]).map(p=>`<li>${p}</li>`).join('')}</ol>
-          </div>`; })() : ''}
-        </div>
-        <div class="mrt-card">
-          <table class="mrt-wex-table">
-            <thead><tr><th>Série</th><th>Carga</th><th>Reps</th><th>PSE</th><th></th></tr></thead>
-            <tbody>${tableRows}</tbody>
-          </table>
-          <button class="btn-add" style="margin-top:12px;" data-wexaddserie>+ Adicionar série</button>
-        </div>
-        <div style="text-align:center;margin-bottom:12px;"><button class="btn-ghost" data-wexskipserie>Pular série</button></div>
+          ${state.wexDetalhesOpen ? (()=>{ const info = bibInfo(ex.nome, ex.grupo); return `<div class="mrt-detailsbody">${exThumbHtml(ex, 180)}<ol class="mrt-passos">${(info.passos||[]).map(p=>`<li>${p}</li>`).join('')}</ol></div>`; })() : ''}
+        </section>
+        ${completedRows ? `<section class="mrt-card mrt-future-sets"><div class="mrt-blocklabel" style="margin-top:0;">Séries concluídas</div><table class="mrt-wex-table"><thead><tr><th>Série</th><th>Carga</th><th>Reps</th><th>PSE</th><th></th></tr></thead><tbody>${completedRows}</tbody></table></section>` : ''}
+        ${futureRows ? `<section class="mrt-card mrt-future-sets"><div class="mrt-blocklabel" style="margin-top:0;">Próximas séries</div><table class="mrt-wex-table"><thead><tr><th>Série</th><th>Carga</th><th>Reps</th><th>PSE</th><th></th></tr></thead><tbody>${futureRows}</tbody></table></section>` : ''}
+        <div class="mrt-wex-extras"><button class="btn-ghost" data-wexaddserie>+ Adicionar série</button><button class="btn-ghost" data-wexskipserie>Pular série</button></div>
         ${upcomingHtml}
+        <div style="height:18px"></div>
       </div>
     </div>`;
 }
@@ -10812,15 +10950,24 @@ function goBack(){
   }, {passive:true});
 })();
 let __ultimaAbaRenderizada = null;
+let __rolagemAntesDoRender = { chave:null, y:0 };
 function mrtFadeDeAba(){
   const chave = state.tab + '|' + (state.bibDetalhe||'');
+  const sc = document.querySelector('.mrt-scroll');
   if(__ultimaAbaRenderizada!==null && __ultimaAbaRenderizada!==chave){
-    const sc = document.querySelector('.mrt-scroll');
     if(sc) sc.classList.add('mrt-fadein');
+  }else if(sc && __rolagemAntesDoRender.chave===chave && __rolagemAntesDoRender.y>0){
+    // Continua na mesma aba: o conteúdo foi redesenhado, a posição na tela fica onde estava.
+    sc.scrollTop = __rolagemAntesDoRender.y;
   }
   __ultimaAbaRenderizada = chave;
 }
 function render(){
+  { const sc = document.querySelector('.mrt-scroll'); __rolagemAntesDoRender = { chave:__ultimaAbaRenderizada, y: sc ? sc.scrollTop : 0 }; }
+  // Telas cheias (treino, corrida, questionário, modais antigos) não são uma aba: ao voltar, a aba abre do topo.
+  const telaCheia = state.workoutSession || state.gpsRun || state.qv2 || (state.modalOpen && (state.modalType==='gerarHibrido' || state.modalType==='onboarding'))
+    || !(UI_V2 && !state.treinoV2Escape && (['hoje','meusTreinos','perfil','turma'].includes(state.tab) || SUB_V2_TABS.includes(state.tab)));
+  if(telaCheia) __ultimaAbaRenderizada = null;
   if(state.workoutSession){
     root.innerHTML = renderWorkoutSession();
     wireWorkoutSession();
@@ -13696,7 +13843,11 @@ function wireTreinoV2(){
   const editDayBtn = document.getElementById('mrtEditDay');
   if(editDayBtn) editDayBtn.onclick = ()=>{
     state.treinoMoreMenuOpen = false; state.treinoV2Escape = true;
-    if(state.treinosSubTab==='corrida'){ openCorridaBuilder(state.selectedDayCorrida); state.modalType='editCorrida'; }
+    // Mesma regra do seletor Musculação | Corrida: dia com um tipo só abre o editor desse tipo.
+    const dEd = state.selectedDayCorrida || state.selectedDayMusc;
+    const temC = !!treinoEntryForDay(dEd), temM = muscListForDay(dEd).length>0;
+    const ehCorrida = (temC && !temM) || (!(temM && !temC) && state.treinosSubTab==='corrida');
+    if(ehCorrida){ openCorridaBuilder(state.selectedDayCorrida); state.modalType='editCorrida'; }
     else{ state.modalType='musc'; state.editingExId=null; }
     state.modalOpen = true; render();
   };
@@ -13711,8 +13862,9 @@ function wireTreinoV2(){
     state.modalType = 'treinoTemplates'; state.modalOpen = true; render();
   };
   const redoPlanBtn = document.getElementById('mrtRedoPlan');
-  if(redoPlanBtn) redoPlanBtn.onclick = ()=>{
-    state.treinoMoreMenuOpen = false;
+  if(redoPlanBtn) redoPlanBtn.onclick = async ()=>{
+    state.treinoMoreMenuOpen = false; render();
+    if(!(await confirmarRefazerPlano())) return;
     openHybridCreate();
   };
 
@@ -14013,10 +14165,15 @@ function wireProgressoV2(){
 /* ---------- Comparativo ---------- */
 function renderComparativoV2(){
   const rows = [];
-  DAY_ABBR.forEach(d=>{
+  // Últimas 4 semanas, da mais recente para a mais antiga (antes só a semana atual: vazio no começo da semana).
+  const offOrig = state.weekOffset;
+  try{ for(let off=0; off>-4; off--){ state.weekOffset = off;
+  const seg = displayedWeekMonday();
+  [...DAY_ABBR].reverse().forEach(d=>{
     const entry = treinoEntryForDay(d);
     const prog = corridaEntryProgress(d);
     if(!entry || !prog || !(prog.pace || prog.tempo || prog.km)) return;
+    const dataDia = new Date(seg.getFullYear(), seg.getMonth(), seg.getDate()+DAY_ABBR.indexOf(d));
     const plannedPaceSec = parsePaceToSec(entry.mainPace);
     const realPaceSec = parsePaceToSec(prog.pace);
     let tag = '';
@@ -14028,6 +14185,7 @@ function renderComparativoV2(){
     const feedback = corridaFeedbackText(entry, prog);
     rows.push(`
       <div class="mrt-card">
+        <div class="mrt-sub" style="margin:0 0 8px;">${DAY_FULLNAME[d]||d}, ${vdotFormatDDMM(dataDia)}</div>
         <div class="hero-top"><span class="tag tag-run">${entry.type||'Treino'}</span>${tag}</div>
         <div class="mrt-cmpgrid">
           <div><div class="mrt-metrick" style="margin:0;">Planejado</div><div class="cv">${entry.totalKm ? fmtKm(entry.totalKm) : '—'}</div><div class="cs">${entry.mainPace||'—'}</div></div>
@@ -14036,6 +14194,7 @@ function renderComparativoV2(){
         ${feedback ? `<div class="mrt-why" style="margin:12px 0 0;font-size:13px;">${feedback.text}</div>` : ''}
       </div>`);
   });
+  } }finally{ state.weekOffset = offOrig; }
   if(!rows.length) return `<div class="empty-state"><div class="icon-box lg run">${ICONS.compare}</div><div class="t">Nada pra comparar ainda</div><div class="s">Conclua um treino de corrida pra ver o planejado ao lado do realizado.</div></div>`;
   return rows.join('');
 }
@@ -14518,7 +14677,7 @@ function wirePerfilV2(){
   const dadosOverlay = document.getElementById('mrtDadosOverlay');
   if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
   const redoDiagBtn = document.getElementById('mrtRedoDiagBtn');
-  if(redoDiagBtn) redoDiagBtn.onclick = abrirDiagnostico;
+  if(redoDiagBtn) redoDiagBtn.onclick = async ()=>{ if(await confirmarRefazerPlano()) abrirDiagnostico(); };
   wirePerfilExtras();
 }
 /* ---------- Telas secundárias do Perfil ---------- */
@@ -15842,7 +16001,7 @@ function renderOnboardingScreen(){
       <div class="mrt-scroll" style="display:flex;flex-direction:column;">
         <div style="padding-top:calc(36px + env(safe-area-inset-top));margin-bottom:28px;">
           ${LOGO_SVG ? `<div class="mrt-logo">${LOGO_SVG}</div>` : ''}
-          <div class="mrt-runlabel" style="color:var(--accent);margin-bottom:12px;">FORZA RUN</div>
+          <div class="mrt-runlabel" style="color:var(--accent);margin-bottom:12px;">MEU RITMO</div>
           <div class="mrt-welcometitle">Musculação e corrida num plano só, ajustado toda semana</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:18px;">
