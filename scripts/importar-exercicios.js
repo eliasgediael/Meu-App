@@ -86,6 +86,10 @@ async function main() {
       passos: t[1], apelidos: t[2] || []
     });
   }
+  // Correções da auditoria de mídia (ângulos de câmera duplicados, animação que não confere, nome/passos):
+  // ficam em scripts/correcoes-exercicios.json pra não se perderem quando o catálogo é regerado.
+  const corr = JSON.parse(fs.readFileSync(path.join(__dirname, 'correcoes-exercicios.json'), 'utf8'));
+  lista.forEach(ex => { if (corr[ex.id]) Object.assign(ex, corr[ex.id]); });
   fs.writeFileSync(path.join(DATA, 'exercicios.json'), JSON.stringify(lista, null, 1));
   console.log('exercícios gerados:', lista.length);
   console.log('WebP gerados: ' + (bytes / 1024 / 1024).toFixed(2) + ' MB (' + (bytes / 1024).toFixed(0) + ' KB)');

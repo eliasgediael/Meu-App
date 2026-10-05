@@ -4,7 +4,8 @@
 // existe — então todo o código de GPS/voz do app continua caindo nas APIs web originais sem mudança.
 import { Capacitor, registerPlugin } from '@capacitor/core';
 import { Geolocation } from '@capacitor/geolocation';
-import { Haptics, ImpactStyle } from '@capacitor/haptics';
+import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 // Este plugin não publica um wrapper JS pronto — é registrado direto (é o padrão documentado dele).
@@ -83,4 +84,51 @@ async function vibrate() {
   try { await Haptics.impact({ style: ImpactStyle.Light }); } catch (e) {}
 }
 
-window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, vibrate };
+// Fim do descanso: vibração forte e bem marcada (notificação de sucesso + dois toques pesados), diferente
+// da vibração leve dos toques comuns do app.
+async function vibrarFimDescanso() {
+  try {
+    await Haptics.notification({ type: NotificationType.Success });
+    setTimeout(() => { Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {}); }, 350);
+    setTimeout(() => { Haptics.impact({ style: ImpactStyle.Heavy }).catch(() => {}); }, 600);
+  } catch (e) {}
+}
+
+// Aviso de fim do descanso com a tela bloqueada / app em segundo plano: o JavaScript do app fica parado
+// pelo iOS nesse estado, então quem toca o som é uma notificação local agendada para a hora exata em que
+// o descanso acaba. O app agenda ao sair da tela e cancela ao voltar (com o app aberto, quem toca é o app).
+const ID_AVISO_DESCANSO = 4201;
+async function permissaoAvisos() {
+  try {
+    const st = await LocalNotifications.checkPermissions();
+    if (st.display === 'granted') return true;
+    if (st.display === 'denied') return false;
+    const r = await LocalNotifications.requestPermissions();
+    return r.display === 'granted';
+  } catch (e) { return false; }
+}
+async function agendarAvisoDescanso(quandoMs) {
+  try {
+    await LocalNotifications.cancel({ notifications: [{ id: ID_AVISO_DESCANSO }] }).catch(() => {});
+    if (!(quandoMs > Date.now() + 500)) return false;
+    const st = await LocalNotifications.checkPermissions();
+    if (st.display !== 'granted') return false;
+    await LocalNotifications.schedule({
+      notifications: [{
+        id: ID_AVISO_DESCANSO,
+        title: 'Descanso acabou',
+        body: 'Hora da próxima série.',
+        sound: 'fim-descanso.wav',
+        schedule: { at: new Date(quandoMs), allowWhileIdle: true },
+      }],
+    });
+    return true;
+  } catch (e) { return false; }
+}
+async function cancelarAvisoDescanso() {
+  try { await LocalNotifications.cancel({ notifications: [{ id: ID_AVISO_DESCANSO }] }); } catch (e) {}
+  try { await LocalNotifications.removeDeliveredNotifications({ notifications: [{ id: ID_AVISO_DESCANSO, title: '', body: '' }] }); } catch (e) {}
+}
+
+window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, vibrate,
+  vibrarFimDescanso, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };

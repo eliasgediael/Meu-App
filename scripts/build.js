@@ -15,6 +15,9 @@ fs.copyFileSync(path.join(root, 'icon-180.png'), path.join(out, 'icon-180.png'))
 fs.copyFileSync(path.join(root, 'manifest.json'), path.join(out, 'manifest.json'));
 fs.cpSync(path.join(root, 'gifs'), path.join(out, 'gifs'), { recursive: true });
 fs.cpSync(path.join(root, 'data'), path.join(out, 'data'), { recursive: true });
+// Som do fim do descanso: em sons/ para o app e também na raiz do www para a notificação local do iOS achar pelo nome (fim-descanso.wav).
+fs.cpSync(path.join(root, 'sons'), path.join(out, 'sons'), { recursive: true });
+fs.copyFileSync(path.join(root, 'sons', 'fim-descanso.wav'), path.join(out, 'fim-descanso.wav'));
 
 esbuild.buildSync({
   entryPoints: [path.join(root, 'src', 'native-bridge.js')],

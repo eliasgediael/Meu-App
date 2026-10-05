@@ -1953,10 +1953,17 @@ const GROUPS = ['Peito','Costas','Pernas','Ombro','Braço','Core'];
 // Grupos da biblioteca completa (o gerador de planos usa só GROUPS).
 const GROUPS_TODOS = [...GROUPS, 'Cardio', 'Alongamento'];
 // Ids antigos (em inglês) que ficaram salvos em planos já gerados -> id numérico equivalente da biblioteca atual.
-const REPDB_LEGADO = {"incline-db-press":"0289","push-ups":"0662","db-fly":"0308","diamond-push-ups":"0283","single-arm-db-row":"0292","bent-over-db-row":"0293","superman":"0489","db-squat":"0413","walking-lunge":"1460","dumbbell-romanian-deadlift":"1459","bulgarian-split-squat":"0410","dumbbell-shoulder-press":"0405","lateral-raise":"0334","dumbbell-front-raise":"0310","arnold-press":"2137","bicep-curl":"0294","hammer-curl":"0313","overhead-tricep-extension":"0351","single-arm-dumbbell-overhead-tricep-extension":"0333","plank":"0464","crunches":"0274","lying-leg-raise":"0620","side-plank":"3544","close-grip-push-ups":"0259","archer-push-ups":"0717","neutral-grip-pull-ups":"0651","negative-pull-ups":"0652","glute-bridge":"3013","bodyweight-squat":"3119","bodyweight-reverse-lunge":"0410","wall-sit":"3119","pike-push-ups":"3662","downward-dog-to-plank":"3665","bench-dips":"0814","mountain-climbers":"0630"};
-function repdbId(id){ return id ? (REPDB_LEGADO[id] || id) : id; }
+const REPDB_LEGADO = {"incline-db-press":"0314","push-ups":"0662","db-fly":"0308","diamond-push-ups":"0283","single-arm-db-row":"0292","bent-over-db-row":"0293","superman":"","db-squat":"0413","walking-lunge":"1460","dumbbell-romanian-deadlift":"1459","bulgarian-split-squat":"0410","dumbbell-shoulder-press":"0405","lateral-raise":"0334","dumbbell-front-raise":"0310","arnold-press":"2137","bicep-curl":"0294","hammer-curl":"0313","overhead-tricep-extension":"0092","single-arm-dumbbell-overhead-tricep-extension":"0092","plank":"","crunches":"0274","lying-leg-raise":"0620","side-plank":"3544","close-grip-push-ups":"0259","archer-push-ups":"","neutral-grip-pull-ups":"0651","negative-pull-ups":"0652","glute-bridge":"3013","bodyweight-squat":"3119","bodyweight-reverse-lunge":"0381","wall-sit":"","pike-push-ups":"3662","downward-dog-to-plank":"3665","bench-dips":"0814","mountain-climbers":"0630"};
+function repdbId(id){ if(!id) return id; return Object.prototype.hasOwnProperty.call(REPDB_LEGADO, id) ? (REPDB_LEGADO[id] || null) : id; }
 // Animação do exercício: tenta gifs/<id>.webp (leve) e, se não existir, gifs/<id>.gif (ver repdbFallback).
-function repdbImg(id){ id = repdbId(id); return id ? ('gifs/'+id+'.webp') : null; }
+function repdbImg(id){
+  id = repdbId(id);
+  if(!id) return null;
+  const c = EX_CAT_ID.get(id);
+  if(c && c.midiaIncorreta) return null;
+  if(c && c.oculto && c.principal) id = c.principal;
+  return 'gifs/'+id+'.webp';
+}
 function repdbFallback(img, grupo, size){
   if(img.dataset.fb!=='1' && /\.webp$/.test(img.src)){ img.dataset.fb = '1'; img.src = img.src.replace(/\.webp$/, '.gif'); return; }
   img.onerror = null;
@@ -1978,27 +1985,27 @@ function openZoom(src){
 const POOL = {
   academia: {
     Peito: [{nome:'Supino reto com barra',id:'0025',nivel:'intermediario'},{nome:'Supino reto com halteres',id:'0289',nivel:'intermediario'},{nome:'Supino inclinado com halteres',id:'0314',nivel:'intermediario'},{nome:'Supino inclinado com barra',id:'0047',nivel:'intermediario'},{nome:'Supino declinado com barra',id:'0033',nivel:'avancado'},{nome:'Supino declinado com halteres',id:'0301',nivel:'intermediario'},{nome:'Supino na máquina Smith',id:'0748',nivel:'iniciante'},{nome:'Crucifixo com halteres',id:'0308',nivel:'intermediario'},{nome:'Crucifixo inclinado com halteres',id:'0319',nivel:'intermediario'},{nome:'Crossover no cabo',id:'1270',nivel:'intermediario'},{nome:'Peck deck (voador na máquina)',id:'0596',nivel:'iniciante'},{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'},{nome:'Mergulho nas paralelas (peito)',id:'0251',nivel:'intermediario'},{nome:'Pullover com halter',id:'0375',nivel:'intermediario'},{nome:'Supino pegada fechada',id:'0030',nivel:'intermediario'}],
-    Costas: [{nome:'Puxada frontal na polia',id:'2330',nivel:'iniciante'},{nome:'Barra fixa (pegada neutra)',id:'0651',nivel:'intermediario'},{nome:'Barra fixa supinada',id:'1326',nivel:'intermediario'},{nome:'Remada curvada com barra',id:'0027',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada baixa no cabo',id:'0861',nivel:'iniciante'},{nome:'Remada cavalinho (T-bar)',id:'1349',nivel:'intermediario'},{nome:'Remada na máquina',id:'0581',nivel:'iniciante'},{nome:'Levantamento terra com barra',id:'0032',nivel:'avancado'},{nome:'Levantamento terra sumô',id:'0117',nivel:'avancado'},{nome:'Stiff com barra',id:'0116',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Hiperextensão lombar',id:'0573',nivel:'iniciante'},{nome:'Encolhimento com barra',id:'0095',nivel:'iniciante'},{nome:'Encolhimento com halteres',id:'0406',nivel:'iniciante'},{nome:'Pulldown reto (braço estendido)',id:'0238',nivel:'iniciante'},{nome:'Bom dia (good morning)',id:'0044',nivel:'avancado'}],
-    Pernas: [{nome:'Agachamento livre com barra',id:'0043',nivel:'intermediario'},{nome:'Agachamento com halteres (goblet)',id:'1760',nivel:'iniciante'},{nome:'Agachamento frontal com barra',id:'0042',nivel:'avancado'},{nome:'Agachamento sumô na máquina Smith',id:'3142',nivel:'intermediario'},{nome:'Agachamento búlgaro com halteres',id:'0410',nivel:'avancado'},{nome:'Agachamento com salto',id:'0514',nivel:'avancado'},{nome:'Leg press 45 graus',id:'0739',nivel:'iniciante'},{nome:'Cadeira extensora',id:'0585',nivel:'iniciante'},{nome:'Mesa flexora (deitado)',id:'0586',nivel:'iniciante'},{nome:'Cadeira flexora (sentado)',id:'0599',nivel:'iniciante'},{nome:'Afundo com halteres',id:'0336',nivel:'intermediario'},{nome:'Passada (afundo caminhando)',id:'1460',nivel:'intermediario'},{nome:'Afundo com barra',id:'0054',nivel:'avancado'},{nome:'Passada reversa com halteres',id:'0381',nivel:'intermediario'},{nome:'Elevação de panturrilha em pé',id:'1375',nivel:'iniciante'},{nome:'Elevação de panturrilha sentado',id:'0594',nivel:'iniciante'},{nome:'Cadeira adutora',id:'0598',nivel:'iniciante'},{nome:'Cadeira abdutora',id:'0597',nivel:'iniciante'},{nome:'Step up com halteres',id:'0431',nivel:'intermediario'},{nome:'Agachamento hack',id:'0743',nivel:'intermediario'},{nome:'Elevação de quadril com barra',id:'1409',nivel:'intermediario'},{nome:'Agachamento na máquina Smith',id:'0770',nivel:'iniciante'},{nome:'Panturrilha no leg press',id:'1391',nivel:'iniciante'}],
-    Ombro: [{nome:'Desenvolvimento com halteres sentado',id:'0405',nivel:'intermediario'},{nome:'Desenvolvimento militar sentado com barra',id:'0091',nivel:'intermediario'},{nome:'Desenvolvimento Arnold',id:'2137',nivel:'intermediario'},{nome:'Desenvolvimento na máquina',id:'0603',nivel:'iniciante'},{nome:'Elevação lateral com halteres',id:'0334',nivel:'iniciante'},{nome:'Elevação lateral no cabo',id:'0178',nivel:'iniciante'},{nome:'Elevação frontal com halteres',id:'0310',nivel:'iniciante'},{nome:'Elevação frontal com barra',id:'0041',nivel:'iniciante'},{nome:'Crucifixo inverso com halteres',id:'0380',nivel:'intermediario'},{nome:'Remada alta com barra',id:'0120',nivel:'intermediario'},{nome:'Remada alta com halteres',id:'0437',nivel:'iniciante'},{nome:'Elevação lateral na máquina',id:'0584',nivel:'iniciante'}],
+    Costas: [{nome:'Puxada frontal na polia',id:'0198',nivel:'iniciante'},{nome:'Barra fixa (pegada neutra)',id:'0651',nivel:'intermediario'},{nome:'Barra fixa supinada',id:'1326',nivel:'intermediario'},{nome:'Remada curvada com barra',id:'0027',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada baixa no cabo',id:'0861',nivel:'iniciante'},{nome:'Remada cavalinho (T-bar)',id:'1349',nivel:'intermediario'},{nome:'Remada na máquina',id:'0581',nivel:'iniciante'},{nome:'Levantamento terra com barra',id:'0032',nivel:'avancado'},{nome:'Levantamento terra sumô',id:'0117',nivel:'avancado'},{nome:'Stiff com barra',id:'0116',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Hiperextensão lombar',id:'0489',nivel:'iniciante'},{nome:'Encolhimento com barra',id:'0095',nivel:'iniciante'},{nome:'Encolhimento com halteres',id:'0406',nivel:'iniciante'},{nome:'Pulldown reto (braço estendido)',id:'0238',nivel:'iniciante'},{nome:'Bom dia (good morning)',id:'0044',nivel:'avancado'}],
+    Pernas: [{nome:'Agachamento livre com barra',id:'0043',nivel:'intermediario'},{nome:'Agachamento com halteres (goblet)',id:'1760',nivel:'iniciante'},{nome:'Agachamento frontal com barra',id:'0042',nivel:'avancado'},{nome:'Agachamento sumô na máquina Smith',id:'3142',nivel:'intermediario'},{nome:'Agachamento búlgaro com halteres',id:'0410',nivel:'avancado'},{nome:'Agachamento com salto',id:'0514',nivel:'avancado'},{nome:'Leg press 45 graus',id:'0739',nivel:'iniciante'},{nome:'Cadeira extensora',id:'0585',nivel:'iniciante'},{nome:'Mesa flexora (deitado)',id:'0586',nivel:'iniciante'},{nome:'Cadeira flexora (sentado)',id:'0599',nivel:'iniciante'},{nome:'Afundo com halteres',id:'0336',nivel:'intermediario'},{nome:'Passada (afundo caminhando)',id:'1460',nivel:'intermediario'},{nome:'Afundo com barra',id:'0054',nivel:'avancado'},{nome:'Passada reversa com halteres',id:'0381',nivel:'intermediario'},{nome:'Elevação de panturrilha em pé',id:'0605',nivel:'iniciante'},{nome:'Elevação de panturrilha sentado',id:'0594',nivel:'iniciante'},{nome:'Cadeira adutora',id:'0598',nivel:'iniciante'},{nome:'Cadeira abdutora',id:'0597',nivel:'iniciante'},{nome:'Step up com halteres',id:'0431',nivel:'intermediario'},{nome:'Agachamento hack',id:'0743',nivel:'intermediario'},{nome:'Elevação de quadril com barra',id:'1409',nivel:'intermediario'},{nome:'Agachamento na máquina Smith',id:'0770',nivel:'iniciante'},{nome:'Panturrilha no leg press',id:'1391',nivel:'iniciante'}],
+    Ombro: [{nome:'Desenvolvimento com halteres sentado',id:'0405',nivel:'intermediario'},{nome:'Desenvolvimento militar sentado com barra',id:'0091',nivel:'intermediario'},{nome:'Desenvolvimento Arnold',id:'2137',nivel:'intermediario'},{nome:'Desenvolvimento na máquina',id:'0587',nivel:'iniciante'},{nome:'Elevação lateral com halteres',id:'0334',nivel:'iniciante'},{nome:'Elevação lateral no cabo',id:'0178',nivel:'iniciante'},{nome:'Elevação frontal com halteres',id:'0310',nivel:'iniciante'},{nome:'Elevação frontal com barra',id:'0041',nivel:'iniciante'},{nome:'Crucifixo inverso com halteres',id:'0380',nivel:'intermediario'},{nome:'Remada alta com barra',id:'0120',nivel:'intermediario'},{nome:'Remada alta com halteres',id:'0437',nivel:'iniciante'},{nome:'Elevação lateral na máquina',id:'0584',nivel:'iniciante'}],
     'Braço': [{nome:'Rosca direta com barra',id:'0031',nivel:'iniciante'},{nome:'Rosca direta com halteres',id:'0294',nivel:'iniciante'},{nome:'Rosca alternada com halteres',id:'0285',nivel:'iniciante'},{nome:'Rosca martelo',id:'0313',nivel:'iniciante'},{nome:'Rosca Scott com barra',id:'0070',nivel:'intermediario'},{nome:'Rosca concentrada',id:'0297',nivel:'iniciante'},{nome:'Rosca no cabo',id:'0868',nivel:'iniciante'},{nome:'Rosca inversa com barra',id:'0080',nivel:'intermediario'},{nome:'Tríceps testa com barra',id:'0061',nivel:'intermediario'},{nome:'Tríceps testa com halteres',id:'0351',nivel:'intermediario'},{nome:'Tríceps francês com barra',id:'0092',nivel:'intermediario'},{nome:'Tríceps no pulley barra reta',id:'0201',nivel:'iniciante'},{nome:'Tríceps no pulley corda',id:'0200',nivel:'iniciante'},{nome:'Tríceps coice com halter',id:'0333',nivel:'intermediario'},{nome:'Mergulho no banco (tríceps)',id:'0129',nivel:'iniciante'},{nome:'Rosca de punho',id:'0126',nivel:'iniciante'},{nome:'Rosca de punho inversa',id:'0082',nivel:'iniciante'},{nome:'Tríceps coice no cabo',id:'1728',nivel:'intermediario'}],
-    Core: [{nome:'Abdominal tradicional (crunch)',id:'0274',nivel:'iniciante'},{nome:'Abdominal infra (elevação de pernas deitado)',id:'0620',nivel:'iniciante'},{nome:'Elevação de pernas na barra',id:'0472',nivel:'intermediario'},{nome:'Prancha',id:'0464',nivel:'iniciante'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Abdominal no cabo',id:'0175',nivel:'iniciante'},{nome:'Rotação russa (russian twist)',id:'0687',nivel:'intermediario'},{nome:'Escalador (mountain climber)',id:'0630',nivel:'intermediario'}],
+    Core: [{nome:'Abdominal tradicional (crunch)',id:'0274',nivel:'iniciante'},{nome:'Abdominal infra (elevação de pernas deitado)',id:'0620',nivel:'iniciante'},{nome:'Elevação de pernas na barra',id:'0472',nivel:'intermediario'},{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Abdominal no cabo',id:'0175',nivel:'iniciante'},{nome:'Rotação russa (russian twist)',id:'0687',nivel:'intermediario'},{nome:'Escalador (mountain climber)',id:'0630',nivel:'intermediario'}],
   },
   halteres: {
     Peito: [{nome:'Supino com halteres',id:'0289',nivel:'iniciante'},{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Crucifixo com halteres',id:'0308',nivel:'intermediario'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'}],
-    Costas: [{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Superman',id:'0489',nivel:'iniciante'}],
+    Costas: [{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Superman',id:null,nivel:'iniciante'}],
     Pernas: [{nome:'Agachamento com halteres',id:'0413',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'}],
     Ombro: [{nome:'Desenvolvimento com halteres',id:'0405',nivel:'intermediario'},{nome:'Elevação lateral',id:'0334',nivel:'iniciante'},{nome:'Elevação frontal',id:'0310',nivel:'iniciante'},{nome:'Arnold press',id:'2137',nivel:'intermediario'}],
-    'Braço': [{nome:'Rosca direta com halteres',id:'0294',nivel:'iniciante'},{nome:'Rosca martelo',id:'0313',nivel:'iniciante'},{nome:'Tríceps francês',id:'0351',nivel:'intermediario'},{nome:'Tríceps unilateral',id:'0333',nivel:'intermediario'}],
-    Core: [{nome:'Prancha',id:'0464',nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'}],
+    'Braço': [{nome:'Rosca direta com halteres',id:'0294',nivel:'iniciante'},{nome:'Rosca martelo',id:'0313',nivel:'iniciante'},{nome:'Tríceps francês',id:'0092',nivel:'intermediario'},{nome:'Tríceps unilateral',id:'0333',nivel:'intermediario'}],
+    Core: [{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'}],
   },
   corpo: {
-    Peito: [{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'},{nome:'Flexão fechada',id:'0259',nivel:'iniciante'},{nome:'Flexão arqueiro',id:'0717',nivel:'avancado'}],
-    Costas: [{nome:'Superman',id:'0489',nivel:'iniciante'},{nome:'Barra fixa',id:'0651',nivel:'intermediario'},{nome:'Barra fixa negativa',id:'0652',nivel:'intermediario'},{nome:'Ponte de glúteo',id:'3013',nivel:'iniciante'}],
-    Pernas: [{nome:'Agachamento livre',id:'3119',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'},{nome:'Cadeira (wall sit)',id:'3119',nivel:'iniciante'}],
+    Peito: [{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'},{nome:'Flexão fechada',id:'0259',nivel:'iniciante'},{nome:'Flexão arqueiro',id:null,nivel:'avancado'}],
+    Costas: [{nome:'Superman',id:null,nivel:'iniciante'},{nome:'Barra fixa',id:'0651',nivel:'intermediario'},{nome:'Barra fixa negativa',id:'0652',nivel:'intermediario'},{nome:'Ponte de glúteo',id:'3013',nivel:'iniciante'}],
+    Pernas: [{nome:'Agachamento livre',id:'3119',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'},{nome:'Cadeira (wall sit)',id:null,nivel:'iniciante'}],
     Ombro: [{nome:'Flexão pike',id:'3662',nivel:'intermediario'},{nome:'Cão-prancha dinâmico',id:'3665',nivel:'iniciante'}],
     'Braço': [{nome:'Flexão fechada',id:'0259',nivel:'iniciante'},{nome:'Mergulho no banco',id:'0814',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'}],
-    Core: [{nome:'Prancha',id:'0464',nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Escalador',id:'0630',nivel:'intermediario'}],
+    Core: [{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Escalador',id:'0630',nivel:'intermediario'}],
   },
 };
 /* ---------- Catálogo completo (data/exercicios.json) ----------
@@ -2038,11 +2045,53 @@ function exerciciosCompletos(){
     out.push(item); if(id) porId.set(id, item); porNome.set(item.nome, item);
   };
   Object.keys(POOL).forEach(eq=>{ Object.keys(POOL[eq]).forEach(g=>{ POOL[eq][g].forEach(e=>add({ nome:e.nome, id:e.id, grupo:g, nivel:e.nivel })); }); });
-  EX_CATALOGO.forEach(c=>add({ nome:c.nome, id:c.id, grupo:c.grupo, nivel:nivelCatalogo(c), soCatalogo:true }));
+  EX_CATALOGO.forEach(c=>{ if(!c.oculto) add({ nome:c.nome, id:c.id, grupo:c.grupo, nivel:nivelCatalogo(c), soCatalogo:true }); });
   _exCompleto = out;
   _exPorNome = new Map();
   out.forEach(x=>{ _exPorNome.set(x.nome, x); x.aliases.forEach(a=>{ if(!_exPorNome.has(a)) _exPorNome.set(a, x); }); });
   return out;
+}
+// Correções da auditoria de mídia aplicadas ao que já está salvo (musculação da semana, rotinas, ajustes da
+// semana e histórico de cargas). Regras por id; algumas só valem com o nome antigo (o mesmo id é usado
+// corretamente por outro exercício). null = sem animação correta disponível (mostra o ícone do grupo).
+const MIDIA_REMAP_ID = { '1461':'0043', '1462':'0043', '1463':'0739', '1464':'0739', '0603':'0587' };
+const MIDIA_REMAP_NOME = [
+  ['Puxada frontal na polia','2330','0198'], ['Hiperextensão lombar','0573','0489'], ['Elevação de panturrilha em pé','1375','0605'],
+  ['Prancha','0464',null], ['Superman','0489',null], ['Flexão arqueiro','0717',null], ['Cadeira (wall sit)','3119',null],
+  ['Tríceps francês','0351','0092'], ['Supino inclinado com halteres','0289','0314'],
+];
+function novoIdMidia(ex){
+  if(!ex || !ex.repdbId) return undefined;
+  const r = MIDIA_REMAP_NOME.find(([n, de])=>ex.nome===n && ex.repdbId===de);
+  if(r) return r[2];
+  if(Object.prototype.hasOwnProperty.call(MIDIA_REMAP_ID, ex.repdbId)) return MIDIA_REMAP_ID[ex.repdbId];
+  return undefined;
+}
+function migrarMidiasExercicios(){
+  let mudouMusc = false, mudouTpl = false, mudouOrig = false, mudouHist = false;
+  const moverHist = (de, para)=>{
+    const h = state.historicoCarga || {};
+    if(!de || !para || de===para || !h[de]) return;
+    h[para] = [...(h[para]||[]), ...h[de]].sort((a,b)=>String(a.data||'').localeCompare(String(b.data||'')));
+    delete h[de]; mudouHist = true;
+  };
+  const tratar = (lista)=>{
+    let mudou = false;
+    (lista||[]).forEach(ex=>{
+      const novo = novoIdMidia(ex);
+      if(novo===undefined) return;
+      moverHist(ex.repdbId, novo || ex.nome);
+      ex.repdbId = novo; mudou = true;
+    });
+    return mudou;
+  };
+  Object.values(state.musculacao||{}).forEach(l=>{ if(tratar(l)) mudouMusc = true; });
+  (state.muscTemplates||[]).forEach(t=>{ if(tratar(t.exercicios)) mudouTpl = true; });
+  Object.values(state.muscAjusteOrig||{}).forEach(o=>{ if(tratar(o.lista)) mudouOrig = true; });
+  if(mudouMusc) saveMusc();
+  if(mudouTpl) saveMuscTemplates();
+  if(mudouOrig) saveMuscAjusteOrig();
+  if(mudouHist) saveHistoricoCarga();
 }
 function exercicioPorNome(nome){
   exerciciosCompletos();
@@ -3998,8 +4047,27 @@ async function gerarPrimeiroPlanoV2(opcoes){
     state.corridaVdotData = { ...(state.corridaVdotData || {}), vdot:vd, paces:computeVdotPaces(vd) };
     await saveCorridaVdotData();
   }
-  const startMonday = vdotISODate(vdotStartMonday(new Date()));
-  materializeHybridWeekIntoState(r.semana, startMonday);
+  // Plano começa NESTA semana (estrutura por dia da semana, agenda por data real): a semana 1 é a semana
+  // atual e só os dias de hoje em diante entram na agenda. Na segunda seguinte começa a semana 2.
+  const inicioPlano = todayISO();
+  const startMonday = vdotISODate(vdotMondayOf(new Date()));
+  // Semana 1 criada no meio da semana: o motor redistribui as sessões só nos dias que ainda restam
+  // (com as mesmas regras de 24 h e de fadiga). A trajetória das próximas semanas continua a da semana cheia.
+  const idxHoje = (new Date().getDay()+6)%7;
+  if(idxHoje>0){
+    try{
+      const parcial = JSON.parse(JSON.stringify(state.athleteProfile));
+      const porDia = {};
+      DAY_ABBR.slice(0, idxHoje).forEach(d=>{ porDia[d] = { disponivel:false, minutos:null }; });
+      definirAthleteDisponibilidade(parcial, porDia, { origem:'informado', confianca:'alta', forcar:true });
+      const r1 = gerarPlanoSemanal(parcial, opcoes);
+      if(r1 && !r1.bloqueado && r1.semana && ((r1.semana.corridaWeek||[]).length || Object.keys(r1.semana.muscPlan||{}).length)){
+        r1.semana.weekNumber = 1; r1.semana.totalWeeks = r.semana.totalWeeks; r1.semana.phaseLabel = r.semana.phaseLabel;
+        r.semana = r1.semana; // agenda da semana dos dias que restam; o padrão semanal (sched) continua o da semana cheia
+      }
+    }catch(e){ console.warn('[plano] semana 1 parcial: usando a semana cheia', e); }
+  }
+  materializeHybridWeekIntoState(r.semana, startMonday, [], inicioPlano);
   const pendentes = [];
   for(let w=2; w<=r.semana.totalWeeks; w++){
     const t = r.trajetoria[w-1];
@@ -4007,7 +4075,7 @@ async function gerarPrimeiroPlanoV2(opcoes){
   }
   const draft = toLegacyDraft(state.athleteProfile);
   const foco = focoFromObjetivo(draft.objetivo);
-  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
+  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
   await saveHybridPlanData();
   return r;
 }
@@ -4468,6 +4536,7 @@ function treinosPerdidos(){
     const tratados = state.perdidosTratados || {};
     for(let i=0; i<hojeIdx(); i++){
       const d = DAY_ABBR[i];
+      if(antesDoInicioDoPlano(d)) continue;
       const e = treinoEntryForDay(d);
       if(e && !isCorridaDone(d) && !tratados[e.day+'|corrida']) out.push({ dia:d, mod:'corrida', id:e.day+'|corrida', titulo: resumoCorrida(e), chave: corridaIntensa(e) || !!e.chave });
       const l = muscListForDay(d);
@@ -5188,6 +5257,8 @@ async function init(){
   state.perdidosTratados = await lerJson('perdidosTratados', {});
   state.preferencias = { autoPause:false, vozKm:true, ...(await lerJson('preferencias', {})) };
   state.recordesCorrida = await lerJson('recordesCorrida', {});
+  // Auditoria da biblioteca: exercícios salvos que apontavam para a animação de outro movimento.
+  try{ migrarMidiasExercicios(); }catch(e){ console.warn('[biblioteca] migração de mídia falhou', e); }
   // Plano vivo: coloca na agenda a semana do plano que corresponde à data de hoje.
   try{ await atualizarSemanaDoPlano(); }catch(e){ console.warn('[plano] avanço de semana falhou', e); }
 
@@ -7185,7 +7256,10 @@ function renderEsteiraRunning(gr){
     </div>`;
 }
 function renderGpsIntro(gr){
-  const wakeLockWarn = !('wakeLock' in navigator);
+  // App do iPhone: GPS nativo em segundo plano (BackgroundGeolocation + UIBackgroundModes location) e tela
+  // ligada pelo KeepAwake. O aviso antigo de "travar a tela para o GPS" só vale para o app aberto no navegador.
+  const nativo = !!(window.NativeBridge && window.NativeBridge.isNative && window.NativeBridge.isNative());
+  const wakeLockWarn = !nativo && !('wakeLock' in navigator);
   return `
     <div class="mrt-root">
       <div class="mrt-scroll" style="padding-top:calc(18px + env(safe-area-inset-top));display:flex;flex-direction:column;">
@@ -7198,7 +7272,9 @@ function renderGpsIntro(gr){
           <div class="mrt-card" style="text-align:left;">
             <div class="mrt-sub" style="line-height:1.5;">
               Vamos pedir <b style="color:var(--mrt-text);">permissão de localização</b> pra acompanhar sua rota, distância e pace em tempo real.<br><br>
-              <b style="color:var(--mrt-text);">Mantenha o app aberto e a tela ligada durante a corrida</b> — se trocar de app ou travar a tela, o rastreamento pode parar (limitação de app web, sem GPS em segundo plano).
+              ${nativo
+                ? `Pode bloquear a tela durante a corrida. <b style="color:var(--mrt-text);">Não feche o app</b> (deslizar para cima na troca de apps): isso encerra o GPS.`
+                : `<b style="color:var(--mrt-text);">Mantenha o app aberto e a tela ligada durante a corrida</b> — no navegador, trocar de app ou travar a tela pode parar o rastreamento.`}
             </div>
           </div>
           ${wakeLockWarn ? `<div class="mrt-card" style="background:var(--gold-soft);text-align:left;"><div class="mrt-sub" style="color:var(--mrt-amber);">⚠️ Seu navegador não suporta manter a tela ligada automaticamente. Ative isso manualmente nas configurações do celular antes de começar.</div></div>` : ''}
@@ -8556,7 +8632,7 @@ function buildAllHybridWeeks(draft, sched, totalWeeks, checkins, checkinDetails)
 }
 // Materializa uma semana do plano híbrido em state.treinos/state.musculacao — mesmo padrão que
 // materializeVdotWeekIntoTreinos usa pro plano solo, só que cobre as duas coleções de uma vez.
-function materializeHybridWeekIntoState(week, startMondayISO, diasMuscAnteriores){
+function materializeHybridWeekIntoState(week, startMondayISO, diasMuscAnteriores, aPartirDeISO){
   // Dias de musculação da semana anterior do plano que não existem na nova: a lista (que é por dia da
   // semana) sairia "fantasma". Só limpa dia que veio do plano (origem null), nunca treino manual/modelo.
   (diasMuscAnteriores||[]).forEach(d=>{
@@ -8575,6 +8651,7 @@ function materializeHybridWeekIntoState(week, startMondayISO, diasMuscAnteriores
     const idx = DAY_ABBR.indexOf(w.day);
     const dNew = new Date(monday);
     dNew.setDate(dNew.getDate()+idx);
+    if(aPartirDeISO && vdotISODate(dNew) < aPartirDeISO) return; // dia da semana 1 que já tinha passado quando o plano foi criado
     state.treinos.push({ day: w.day+' '+vdotFormatDDMM(dNew), type:w.type, mainDesc:w.mainDesc, mainPace:w.mainPace,
       totalKm:w.totalKm, totalMin:w.totalMin||null, cor:w.cor, objetivo:w.objetivo, modo:w.modo, justificativa:w.justificativa, periodos:w.periodos||null,
       warmupDesc:w.warmupDesc||'', warmupPace:w.warmupPace||'', cooldownDesc:w.cooldownDesc||'', cooldownPace:w.cooldownPace||'',
@@ -9358,6 +9435,9 @@ function startWorkoutSession(day){
   };
   saveWorkoutSession();
   render();
+  getAudioCtx(); // toque de "Começar" destrava o áudio e já carrega o som do fim do descanso
+  // No iPhone, pede (uma vez) a permissão de notificação usada para o aviso de fim do descanso com a tela bloqueada.
+  if(window.NativeBridge && NativeBridge.permissaoAvisos){ NativeBridge.permissaoAvisos().catch(()=>{}); }
 }
 function currentWorkoutExercise(){
   const ws = state.workoutSession;
@@ -9372,25 +9452,52 @@ function getAudioCtx(){
     try{ __audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){ return null; }
   }
   if(__audioCtx.state === 'suspended') __audioCtx.resume().catch(()=>{});
+  carregarSomFimDescanso(__audioCtx);
   return __audioCtx;
 }
-// Som de "descanso acabou" — dois tons curtos ascendentes (tipo "pliiinnn"), mais uma vibração como
-// reforço caso o volume esteja baixo/mudo.
+// Som de "descanso acabou": três toques de sino (dois curtos e um mais alto), o mesmo arquivo que a
+// notificação do iPhone toca com a tela bloqueada (sons/fim-descanso.wav, gerado por
+// scripts/gerar-som-descanso.js). Diferente de qualquer outro som/voz do app. Vem com vibração forte.
+let __somFimDescanso = null, __somFimDescansoCarregando = false;
+function carregarSomFimDescanso(ctx){
+  if(__somFimDescanso || __somFimDescansoCarregando || !ctx || typeof fetch!=='function') return;
+  __somFimDescansoCarregando = true;
+  fetch('sons/fim-descanso.wav').then(r=>{ if(!r.ok) throw new Error(r.status); return r.arrayBuffer(); })
+    .then(ab=>new Promise((ok, falha)=>{ const pr = ctx.decodeAudioData(ab, ok, falha); if(pr && pr.then) pr.then(ok, falha); }))
+    .then(b=>{ __somFimDescanso = b; })
+    .catch(()=>{ __somFimDescansoCarregando = false; });
+}
+function tocarSomFimDescanso(ctx){
+  if(__somFimDescanso){
+    const src = ctx.createBufferSource(), g = ctx.createGain();
+    src.buffer = __somFimDescanso; g.gain.value = 1;
+    src.connect(g); g.connect(ctx.destination); src.start();
+    return;
+  }
+  // Sem o arquivo (ainda carregando ou offline no navegador): os mesmos três toques sintetizados.
+  const now = ctx.currentTime;
+  [[1046.5, 0, 0.16, 0.5], [1046.5, 0.2, 0.16, 0.5], [1568, 0.4, 0.32, 0.6]].forEach(([freq, ini, dec, vol])=>{
+    const osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = 'triangle'; osc.frequency.value = freq;
+    const t0 = now+ini, t1 = t0 + dec*5;
+    gain.gain.setValueAtTime(0.0001, t0);
+    gain.gain.exponentialRampToValueAtTime(vol, t0+0.006);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t1);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(t0); osc.stop(t1+0.02);
+  });
+}
 function playRestEndSound(){
   const ctx = getAudioCtx();
   if(ctx){
-    const now = ctx.currentTime;
-    [[880, now, 0.15], [1320, now+0.13, 0.22]].forEach(([freq, start, dur])=>{
-      const osc = ctx.createOscillator(), gain = ctx.createGain();
-      osc.type = 'sine'; osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.25, start+0.02);
-      gain.gain.exponentialRampToValueAtTime(0.0001, start+dur);
-      osc.connect(gain); gain.connect(ctx.destination);
-      osc.start(start); osc.stop(start+dur+0.02);
-    });
+    // Depois de bloquear/voltar, o iOS deixa o contexto "suspended"/"interrupted": retoma antes de tocar.
+    if(ctx.state !== 'running' && ctx.resume){ ctx.resume().then(()=>tocarSomFimDescanso(ctx)).catch(()=>{}); }
+    else tocarSomFimDescanso(ctx);
   }
-  if(navigator.vibrate){ try{ navigator.vibrate([80,40,80]); }catch(e){} }
+  try{
+    if(window.NativeBridge && NativeBridge.vibrarFimDescanso) NativeBridge.vibrarFimDescanso();
+    else if(navigator.vibrate) navigator.vibrate([200,100,200,100,400]);
+  }catch(e){}
 }
 // Recorde: carga maior que qualquer série anterior do exercício, ou a mesma carga com mais repetições. Só conta quando já
 // existe histórico (a primeira vez de um exercício não é "recorde", é ponto de partida).
@@ -9506,16 +9613,55 @@ function pularParaExercicio(idx){
   saveWorkoutSession();
   render();
 }
-let workoutRestInterval = null;
+let workoutRestInterval = null, workoutRestTimeout = null, avisoDescansoAgendado = false;
+// Fim do descanso: o som toca no momento exato (timeout até restEndAt), não no próximo tique de 1 s.
+// Se o app ficou em segundo plano / tela bloqueada, quem avisou foi a notificação local; ao voltar
+// atrasado, o app só avança (sem tocar o som de novo).
+function fimDoDescanso(){
+  const ws = state.workoutSession;
+  if(!ws || ws.phase!=='rest') return;
+  const atraso = Date.now() - ws.restEndAt;
+  const notificacaoAvisou = avisoDescansoAgendado && (atraso > 3000 || document.visibilityState==='hidden');
+  if(!notificacaoAvisou) playRestEndSound();
+  avisoDescansoAgendado = false;
+  advanceAfterRest();
+}
+function agendarFimDoDescanso(){
+  if(workoutRestTimeout){ clearTimeout(workoutRestTimeout); workoutRestTimeout = null; }
+  const ws = state.workoutSession;
+  if(!ws || ws.phase!=='rest' || !ws.restEndAt) return;
+  workoutRestTimeout = setTimeout(()=>{ workoutRestTimeout = null; if(Date.now() >= ws.restEndAt - 30) fimDoDescanso(); else agendarFimDoDescanso(); }, Math.max(0, ws.restEndAt - Date.now()));
+}
 function ensureRestTicking(){
+  agendarFimDoDescanso();
   if(workoutRestInterval) return;
   workoutRestInterval = setInterval(()=>{
     if(!state.workoutSession || state.workoutSession.phase!=='rest'){ stopRestTicking(); return; }
-    if(Date.now() >= state.workoutSession.restEndAt){ playRestEndSound(); advanceAfterRest(); }
+    if(Date.now() >= state.workoutSession.restEndAt) fimDoDescanso();
     else render();
   }, 1000);
 }
-function stopRestTicking(){ if(workoutRestInterval){ clearInterval(workoutRestInterval); workoutRestInterval=null; } }
+function stopRestTicking(){
+  if(workoutRestInterval){ clearInterval(workoutRestInterval); workoutRestInterval=null; }
+  if(workoutRestTimeout){ clearTimeout(workoutRestTimeout); workoutRestTimeout=null; }
+}
+// Tela bloqueada / app em segundo plano durante o descanso: o iOS para o JavaScript, então o aviso passa
+// para uma notificação local na hora exata do fim. Ao voltar para o app, ela é cancelada.
+document.addEventListener('visibilitychange', ()=>{
+  if(!(window.NativeBridge && NativeBridge.agendarAvisoDescanso)) return;
+  const ws = state.workoutSession;
+  if(document.visibilityState==='hidden'){
+    if(ws && ws.phase==='rest' && ws.restEndAt > Date.now()){
+      avisoDescansoAgendado = true;
+      NativeBridge.agendarAvisoDescanso(ws.restEndAt).then(ok=>{ if(!ok) avisoDescansoAgendado = false; }).catch(()=>{ avisoDescansoAgendado = false; });
+    }
+  }else{
+    NativeBridge.cancelarAvisoDescanso();
+    if(ws && ws.phase==='rest'){
+      if(Date.now() >= ws.restEndAt) fimDoDescanso(); else { avisoDescansoAgendado = false; agendarFimDoDescanso(); }
+    }
+  }
+});
 function advanceAfterRest(){
   const ws = state.workoutSession;
   if(!ws) return;
@@ -9549,6 +9695,7 @@ function addRestTime(sec){
   ws.restEndAt = Math.max(Date.now()+1000, ws.restEndAt + sec*1000);
   if(sec>0) ws.restTotalSec += sec;
   saveWorkoutSession();
+  agendarFimDoDescanso();
   render();
 }
 // Fase 8 — Desafio de constância, só local por enquanto (sem backend/ranking). O modelo já reserva
@@ -10521,7 +10668,20 @@ async function saveAtalhos(){ try{ await window.storage.set('atalhos', JSON.stri
 
 
 // 'done' = tem algo feito naquele dia, 'pending' = tem treino agendado mas ainda não feito, 'none' = dia livre.
+// Data de início do plano (o dia em que foi criado). Dias anteriores não contam como treino da semana.
+function inicioDoPlanoISO(){
+  const hp = state.hybridPlanData, cv = state.corridaVdotData;
+  return (hp && hp.plan && hp.inicioPlano) || (cv && cv.plan && cv.inicioPlano) || null;
+}
+function antesDoInicioDoPlano(d){
+  const ini = inicioDoPlanoISO();
+  if(!ini) return false;
+  const m = displayedWeekMonday();
+  const dt = new Date(m.getFullYear(), m.getMonth(), m.getDate()+DAY_ABBR.indexOf(d));
+  return vdotISODate(dt) < ini;
+}
 function dayStatus(d, tab){
+  if(antesDoInicioDoPlano(d)) return 'none';
   const hasCorrida = !!treinoEntryForDay(d);
   const muscList = muscListForDay(d);
   const hasMusc = muscList.length>0;
@@ -12860,13 +13020,14 @@ function renderTreinoV2Content(){
     if(ce && ml.length){ nome = ce.type||'Corrida'; meta = 'Corrida + musculação'; }
     else if(ce){ nome = ce.type||'Corrida'; meta = 'Corrida'+(ce.totalKm?' · '+String(fmtKm(ce.totalKm)).replace('.',','):''); }
     else if(ml.length){ nome = muscTituloDoDia(d, ml); meta = 'Musculação · '+ml.length+' exercício'+(ml.length===1?'':'s'); }
+    if(antesDoInicioDoPlano(d)){ nome = null; }
     const status = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
       : hoje ? `<span class="ds-pill">Hoje</span>`
       : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>` : '';
     const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate"><span>${d.toUpperCase()}</span><b>${dia}</b></div>
-      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">Descanso</div>`}</div>
+      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">${antesDoInicioDoPlano(d) ? 'Antes do início do plano' : 'Descanso'}</div>`}</div>
       ${status}
     </div>`;
   }).join('')}</div>`;
@@ -12958,6 +13119,15 @@ function renderTreinoV2Doms(day, sub){
   return renderPorQueEAjuste(day, sub);
 }
 
+const GRUPO_ICONE = {
+  Peito:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-3 6-3 9 0 3-3 6-3 9 0v4c-3 3-6 3-9 0-3 3-6 3-9 0z"/></svg>`,
+  Costas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l8 14 8-14"/><path d="M9 5l3 5 3-5"/></svg>`,
+  Pernas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-2 9 2 9"/><path d="M15 3l2 9-2 9"/><path d="M9 12h6"/></svg>`,
+  Ombro:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M4 20c0-5 3-8 8-8s8 3 8 8"/></svg>`,
+  'Braço':`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19l5-5"/><path d="M10 14l3-6a3 3 0 0 1 5 1c0 3-2 5-5 6"/></svg>`,
+  Core:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="4"/><path d="M7 9h10"/><path d="M7 15h10"/><path d="M12 3v18"/></svg>`,
+};
+// Miniatura do exercício: a imagem, ou um ícone do grupo muscular em violeta — nunca um quadrado vazio.
 function exThumbHtml(ex, size){
   size = size||56;
   if(ex.repdbId) return `<img class="mrt-exthumb" width="${size}" height="${size}" loading="lazy" style="width:${size}px;height:${size}px;" src="${repdbImg(ex.repdbId)}" alt="" onerror="repdbFallback(this,'${(ex.grupo||'').replace(/'/g,'')}',${size})">`;

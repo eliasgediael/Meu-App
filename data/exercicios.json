@@ -1107,7 +1107,7 @@
  },
  {
   "id": "2330",
-  "nome": "Puxada frontal na polia",
+  "nome": "Puxada unilateral em pé na polia",
   "nomeEn": "cable lat pulldown full range of motion",
   "grupo": "Costas",
   "musculoPrim": "Dorsal",
@@ -1118,17 +1118,16 @@
   ],
   "equipamento": "Polia",
   "passos": [
-   "Sente na máquina de puxada com os joelhos presos sob os apoios.",
-   "Segure a barra com pegada pronada, um pouco mais aberta que a largura dos ombros.",
-   "Incline-se levemente para trás, com o peito aberto e uma leve curva na lombar.",
-   "Puxe a barra em direção à parte alta do peito, aproximando as escápulas.",
-   "Faça uma breve pausa embaixo e solte a barra devagar até a posição inicial.",
-   "Repita pelo número de repetições desejado."
+   "Fique em pé de frente para a polia alta, com os pés na largura dos ombros e os joelhos levemente flexionados.",
+   "Segure o puxador com uma mão, braço estendido acima da cabeça e o tronco firme.",
+   "Puxe o cotovelo para baixo e para trás, em direção à lateral do corpo, aproximando a escápula da coluna.",
+   "Faça uma breve pausa embaixo, sentindo o dorsal contrair.",
+   "Volte devagar até estender o braço de novo e repita; depois troque de lado."
   ],
   "apelidos": [
-   "puxada",
-   "pulldown",
-   "puxada alta"
+   "puxada unilateral",
+   "pulldown unilateral",
+   "puxada no crossover"
   ]
  },
  {
@@ -3263,7 +3262,10 @@
    "Empurre pelos calcanhares para subir, estendendo quadril e joelhos.",
    "Repita pelo número de repetições desejado."
   ],
-  "apelidos": []
+  "apelidos": [],
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0043 (outro ângulo de câmera)",
+  "principal": "0043"
  },
  {
   "id": "1462",
@@ -3288,7 +3290,10 @@
    "Empurre pelos calcanhares para subir, estendendo quadril e joelhos.",
    "Repita pelo número de repetições desejado."
   ],
-  "apelidos": []
+  "apelidos": [],
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0043 (outro ângulo de câmera)",
+  "principal": "0043"
  },
  {
   "id": "1001",
@@ -3487,7 +3492,10 @@
    "Dobre os joelhos devagar e traga a plataforma de volta, controlando o movimento.",
    "Repita pelo número de repetições desejado."
   ],
-  "apelidos": []
+  "apelidos": [],
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0739 (outro ângulo de câmera)",
+  "principal": "0739"
  },
  {
   "id": "1463",
@@ -3509,7 +3517,10 @@
    "Faça uma breve pausa no alto e dobre os joelhos devagar para voltar à posição inicial.",
    "Repita pelo número de repetições desejado."
   ],
-  "apelidos": []
+  "apelidos": [],
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0739 (outro ângulo de câmera)",
+  "principal": "0739"
  },
  {
   "id": "2810",
@@ -3909,7 +3920,8 @@
    "Faça uma breve pausa no alto e desça a barra devagar até a posição inicial.",
    "Repita pelo número de repetições desejado."
   ],
-  "apelidos": []
+  "apelidos": [],
+  "midiaIncorreta": true
  },
  {
   "id": "0120",
@@ -4060,7 +4072,10 @@
   "apelidos": [
    "desenvolvimento articulado",
    "ombro na máquina"
-  ]
+  ],
+  "oculto": true,
+  "motivoOculto": "animação não corresponde ao movimento; usar 0587",
+  "principal": "0587"
  },
  {
   "id": "0091",

@@ -1,0 +1,45 @@
+{
+ "1461": {
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0043 (outro ângulo de câmera)",
+  "principal": "0043"
+ },
+ "1462": {
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0043 (outro ângulo de câmera)",
+  "principal": "0043"
+ },
+ "1463": {
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0739 (outro ângulo de câmera)",
+  "principal": "0739"
+ },
+ "1464": {
+  "oculto": true,
+  "motivoOculto": "mesmo exercício do 0739 (outro ângulo de câmera)",
+  "principal": "0739"
+ },
+ "2330": {
+  "nome": "Puxada unilateral em pé na polia",
+  "passos": [
+   "Fique em pé de frente para a polia alta, com os pés na largura dos ombros e os joelhos levemente flexionados.",
+   "Segure o puxador com uma mão, braço estendido acima da cabeça e o tronco firme.",
+   "Puxe o cotovelo para baixo e para trás, em direção à lateral do corpo, aproximando a escápula da coluna.",
+   "Faça uma breve pausa embaixo, sentindo o dorsal contrair.",
+   "Volte devagar até estender o braço de novo e repita; depois troque de lado."
+  ],
+  "apelidos": [
+   "puxada unilateral",
+   "pulldown unilateral",
+   "puxada no crossover"
+  ]
+ },
+ "0603": {
+  "oculto": true,
+  "motivoOculto": "animação não corresponde ao movimento; usar 0587",
+  "principal": "0587"
+ },
+ "0041": {
+  "midiaIncorreta": true
+ }
+}
