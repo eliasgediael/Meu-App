@@ -1111,6 +1111,95 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-legend{ display:flex; gap:16px; margin-top:12px; font-size:12px; color:var(--text-dim); }
 .mrt-legend i{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
 
+/* ---------- Corrida GPS: mapa + rota ---------- */
+.gps-leaflet{ background:#1a1d21; }
+.gps-leaflet .leaflet-control-attribution{ background:transparent; color:rgba(255,255,255,.35); font-size:9px; padding:0 6px 2px; }
+.gps-leaflet .leaflet-control-attribution a{ color:inherit; }
+.gps-pin{ background:none; border:none; }
+.gps-pin i{ display:block; width:100%; height:100%; border-radius:50%; box-sizing:border-box; }
+.gps-pin-me i{ background:var(--accent); border:3px solid #fff; box-shadow:0 0 0 7px color-mix(in srgb, var(--accent) 28%, transparent), 0 2px 6px rgba(0,0,0,.55); }
+.gps-pin-start i{ background:var(--success); border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+.gps-pin-end i{ border:2.5px solid #fff; background:repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0/7px 7px; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+.gps-fab{ width:44px; height:44px; border-radius:50%; border:none; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  background:color-mix(in srgb, var(--surface) 90%, transparent); color:var(--text); box-shadow:0 4px 14px rgba(0,0,0,.45);
+  -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
+.gps-fab svg{ width:19px; height:19px; }
+.gps-fab.on{ color:var(--accent); }
+
+/* ---------- Corrida GPS ao vivo: mapa dominante, painel de métricas embaixo ---------- */
+.gps-live{ background:var(--bg); }
+.gps-live-map{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; background:#1a1d21; }
+.gps-mapslot{ position:absolute; inset:0; }
+.gps-live-map .leaflet-bottom{ bottom:18px; } /* crédito do mapa acima da borda do painel */
+.gps-live-top{ position:absolute; z-index:1000; top:calc(10px + env(safe-area-inset-top)); left:14px; right:14px; display:flex; align-items:center; justify-content:space-between; gap:10px; pointer-events:none; }
+.gps-live-top > *{ pointer-events:auto; }
+.gps-live-pill{ padding:7px 16px; border-radius:var(--r-pill); text-align:center; background:color-mix(in srgb, var(--surface) 90%, transparent); box-shadow:0 4px 14px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
+.gps-live-pill .t{ font-size:14px; font-weight:800; color:var(--text); line-height:1.2; }
+.gps-live-pill .s{ font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
+.gps-live-ctrls{ position:absolute; z-index:1000; right:14px; bottom:30px; display:flex; flex-direction:column; gap:10px; }
+.gps-live-sheet{ flex:0 0 auto; position:relative; z-index:1001; margin-top:-18px; background:var(--bg); border-radius:22px 22px 0 0; padding:14px 16px calc(4px + env(safe-area-inset-bottom)); box-shadow:0 -8px 24px rgba(0,0,0,.35); }
+.gps-live-sheet .mrt-runfoot{ margin:12px 0 4px; }
+.gps-live-sheet .mrt-holdhint{ margin-bottom:6px; }
+.gps-mcard{ position:relative; background:var(--surface); border-radius:var(--r-card); overflow:hidden; }
+.gps-mexpand{ position:absolute; right:6px; bottom:6px; width:32px; height:32px; border:none; background:none; color:var(--text-dim); display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+.gps-mexpand svg{ width:16px; height:16px; }
+.gps-step{ padding:12px 16px 8px; border-left:4px solid var(--stepcor); background:color-mix(in srgb, var(--stepcor) 10%, transparent); }
+.gps-live-sheet > .gps-step{ border-radius:var(--r-card); }
+.gps-step-row{ display:flex; align-items:center; gap:8px; }
+.gps-step-row .nm{ font-size:14px; font-weight:800; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.gps-step-row .tm{ margin-left:auto; font-size:12.5px; color:var(--text-dim); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.gps-step-row .tm b{ color:var(--text); font-weight:800; }
+.gps-step-row .tag{ flex-shrink:0; }
+.gps-step-bar{ height:4px; border-radius:var(--r-pill); background:color-mix(in srgb, var(--text) 10%, transparent); overflow:hidden; margin-top:8px; }
+.gps-step-bar i{ display:block; height:100%; background:var(--stepcor); border-radius:var(--r-pill); transition:width .4s linear; }
+.gps-step .mrt-nextrow{ margin-top:4px; }
+.gps-m3{ display:grid; grid-template-columns:1fr 1.35fr 1fr; align-items:end; padding:14px 8px 16px; text-align:center; }
+.gps-m3 .v{ font-size:26px; font-weight:800; letter-spacing:-0.8px; line-height:1; color:var(--text); font-variant-numeric:tabular-nums; white-space:nowrap; }
+.gps-m3 .main .v{ font-size:48px; letter-spacing:-2px; }
+.gps-m3 .k{ font-size:11px; font-weight:600; color:var(--text-dim); margin-top:6px; white-space:nowrap; }
+.gps-m3 .main{ cursor:pointer; }
+/* Métricas em tela cheia (sem mapa): números gigantes empilhados. */
+.gps-live-big{ position:relative; flex:1 1 auto; min-height:0; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:4vh; padding:calc(70px + env(safe-area-inset-top)) 16px 30px; text-align:center; }
+.gps-live-big .gps-live-expand{ position:absolute; right:14px; bottom:30px; }
+.gps-live-big .v{ font-weight:800; color:var(--text); line-height:1; font-variant-numeric:tabular-nums; letter-spacing:-2px; white-space:nowrap; }
+.gps-live-big .v.md{ font-size:44px; }
+.gps-live-big .v.xl{ font-size:min(30vw,128px); letter-spacing:-4px; }
+.gps-live-big .v.lg{ font-size:min(18vw,76px); }
+.gps-live-big .k{ font-size:13px; font-weight:600; color:var(--text-dim); margin-top:8px; }
+.gps-live-big #gpsPaceTap{ cursor:pointer; }
+
+/* ---------- Resumo pós-corrida ---------- */
+.mrt-scroll.gps-sum{ padding-top:0; }
+.gps-sum-map{ position:relative; height:calc(320px + env(safe-area-inset-top)); margin:0 -18px 18px; overflow:hidden; background:#1a1d21; }
+.gps-sum-close{ position:absolute; z-index:1000; top:calc(10px + env(safe-area-inset-top)); right:14px; }
+.gps-sum-head{ margin-bottom:16px; }
+.gps-sum-head .mrt-title{ margin-bottom:2px; }
+.gps-sum-main{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding-bottom:18px; border-bottom:1px solid var(--border); }
+.gps-sum-sec{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; padding:16px 0 18px; margin-bottom:16px; border-bottom:1px solid var(--border); }
+.gps-sum-main .k, .gps-sum-sec .k{ font-size:12px; font-weight:600; color:var(--text-dim); margin-bottom:4px; }
+.gps-sum-main .v{ font-size:27px; font-weight:800; letter-spacing:-0.8px; line-height:1.05; color:var(--text); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.gps-sum-sec .v{ font-size:19px; font-weight:800; letter-spacing:-0.3px; color:var(--text); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.gps-sum-main small, .gps-sum-sec small{ font-size:12px; font-weight:700; color:var(--text-dim); letter-spacing:0; }
+.gps-card-head{ display:flex; align-items:baseline; justify-content:space-between; margin-bottom:12px; }
+.gps-card-head .t{ font-size:17px; font-weight:700; color:var(--text); }
+.gps-card-head .r{ font-size:12.5px; color:var(--text-dim); }
+.gps-card-head .r b{ color:var(--text); font-weight:800; }
+.gps-chart-plot{ position:relative; height:140px; }
+.gps-chart-plot svg{ display:block; width:100%; height:100%; overflow:visible; }
+.gps-chart-plot .ylab{ position:absolute; right:0; font-size:10.5px; font-weight:600; color:var(--text-faint); background:color-mix(in srgb, var(--surface) 80%, transparent); padding:0 3px; border-radius:4px; }
+.gps-chart-plot .ylab.top{ top:0; }
+.gps-chart-plot .ylab.bot{ bottom:0; }
+.gps-chart-x{ display:flex; justify-content:space-between; font-size:10.5px; font-weight:600; color:var(--text-faint); margin-top:6px; }
+.gps-split{ display:grid; grid-template-columns:44px 56px 1fr; align-items:center; gap:10px; padding:7px 0; font-variant-numeric:tabular-nums; }
+.gps-split.head{ padding-top:0; font-size:11px; font-weight:700; color:var(--text-dim); text-transform:uppercase; letter-spacing:.06em; }
+.gps-split .km{ font-size:14px; font-weight:700; color:var(--text-dim); }
+.gps-split .pc{ font-size:15px; font-weight:800; color:var(--text); }
+.gps-split.head .km, .gps-split.head .pc{ font-size:11px; color:var(--text-dim); font-weight:700; }
+.gps-split .bar{ height:10px; }
+.gps-split .bar i{ display:block; height:100%; border-radius:var(--r-pill); background:color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
+.gps-split.best .bar i{ background:var(--accent); }
+.gps-split.best .pc{ color:var(--accent); }
+
 /* ============================================================================================
    PROMPTS 6 e 7 — telas secundárias, Perfil, quiz, boas-vindas, Turma
    ============================================================================================ */
@@ -4954,37 +5043,230 @@ function loadLeafletLib(){
   });
   return _leafletLoadPromise;
 }
-let gpsMapEl = null, gpsMapInstance = null, gpsMapPolyline = null, gpsMapMarker = null;
+// Base cartográfica: CARTO Dark Matter — grátis, sem chave/token, ruas discretas e poucos nomes, então a
+// rota vira o elemento de destaque (e combina com o app, que é escuro). Substitui os tiles do
+// tile.openstreetmap.org, cuja política de uso não permite app em produção. {r} pede a versão @2x em tela retina.
+const GPS_TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
+const GPS_TILE_ATTR = '© OpenStreetMap © CARTO';
+function gpsAddBaseLayer(map){
+  L.tileLayer(GPS_TILE_URL, { maxZoom:20, subdomains:'abcd' }).addTo(map);
+  L.control.attribution({ prefix:false, position:'bottomleft' }).addAttribution(GPS_TILE_ATTR).addTo(map);
+}
+// Rota = brilho largo e translúcido por baixo + linha sólida por cima, pontas e junções arredondadas.
+function gpsRouteLayers(map){
+  const cor = cssVar('--accent');
+  const glow = L.polyline([], { color:cor, weight:13, opacity:0.22, lineCap:'round', lineJoin:'round', interactive:false }).addTo(map);
+  const line = L.polyline([], { color:cor, weight:5, opacity:1, lineCap:'round', lineJoin:'round', interactive:false }).addTo(map);
+  return {
+    line,
+    setLatLngs(ll){ glow.setLatLngs(ll); line.setLatLngs(ll); },
+    addLatLng(p){ glow.addLatLng(p); line.addLatLng(p); },
+  };
+}
+function gpsDotIcon(cls, size){
+  return L.divIcon({ className:'gps-pin '+cls, html:'<i></i>', iconSize:[size,size], iconAnchor:[size/2,size/2] });
+}
+function gpsPinMarker(latlng, cls, size, z){
+  return L.marker(latlng, { icon:gpsDotIcon(cls,size), interactive:false, keyboard:false, zIndexOffset:z||0 });
+}
+let gpsMapEl = null, gpsMapInstance = null, gpsRoute = null, gpsMapMarker = null, gpsMapStartMarker = null;
+// gpsMapFollow: o mapa acompanha a posição; arrastar desliga, o botão de centralizar religa.
+// gpsMapHidden: o render anterior não tinha o slot (modo métricas em tela cheia) — ao voltar, recentraliza.
+let gpsMapFollow = true, gpsMapLast = null, gpsMapHidden = false;
 async function ensureGpsMap(){
   if(gpsMapInstance){ attachGpsMapToSlot(); return; }
   try{ await loadLeafletLib(); }catch(e){ return; }
   if(gpsMapInstance){ attachGpsMapToSlot(); return; }
   gpsMapEl = document.createElement('div');
+  gpsMapEl.className = 'gps-leaflet';
   gpsMapEl.style.cssText = 'width:100%;height:100%;';
   gpsMapInstance = L.map(gpsMapEl, { zoomControl:false, attributionControl:false }).setView([-14.235,-51.9253], 4);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom:19 }).addTo(gpsMapInstance);
-  gpsMapPolyline = L.polyline([], { color:cssVar('--accent'), weight:4 }).addTo(gpsMapInstance);
-  gpsMapMarker = L.circleMarker([-14.235,-51.9253], { radius:7, color:cssVar('--text'), weight:2, fillColor:cssVar('--accent'), fillOpacity:1 }).addTo(gpsMapInstance);
+  gpsAddBaseLayer(gpsMapInstance);
+  gpsRoute = gpsRouteLayers(gpsMapInstance);
+  gpsMapMarker = gpsPinMarker([-14.235,-51.9253], 'gps-pin-me', 22, 1000).addTo(gpsMapInstance);
+  gpsMapInstance.on('dragstart', ()=>{ gpsMapFollow = false; syncGpsRecenterBtn(); });
+  // A tela re-renderiza a cada segundo; enquanto o dedo está no mapa o tick pula o render pra não
+  // interromper o arrasto/pinça (ver ensureGpsTicking e gpsOnPosition).
+  const solta = ()=>{ window.__mapTouching = false; };
+  gpsMapEl.addEventListener('touchstart', ()=>{ window.__mapTouching = true; }, { passive:true });
+  gpsMapEl.addEventListener('touchend', solta, { passive:true });
+  gpsMapEl.addEventListener('touchcancel', solta, { passive:true });
+  // Pontos que chegaram enquanto a lib carregava (ou corrida retomada depois de reabrir o app).
+  const gr = state.gpsRun;
+  if(gr && gr.points && gr.points.length) gpsRedrawLiveRoute(gr.points);
   attachGpsMapToSlot();
+}
+function gpsRedrawLiveRoute(points){
+  if(!gpsMapInstance) return;
+  const ll = gpsCleanTrack(points).map(p=>[p.lat,p.lng]);
+  gpsRoute.setLatLngs(ll);
+  if(!ll.length) return;
+  if(gpsMapStartMarker) gpsMapStartMarker.remove();
+  gpsMapStartMarker = gpsPinMarker(ll[0], 'gps-pin-start', 14, -100).addTo(gpsMapInstance);
+  gpsMapLast = ll[ll.length-1];
+  gpsMapMarker.setLatLng(gpsMapLast);
+  gpsMapInstance.setView(gpsMapLast, 17, { animate:false });
 }
 function attachGpsMapToSlot(){
   const slot = document.getElementById('gpsMapSlot');
   if(!slot || !gpsMapEl) return;
   if(slot !== gpsMapEl.parentElement) slot.appendChild(gpsMapEl);
-  if(gpsMapInstance) setTimeout(()=>gpsMapInstance.invalidateSize(), 0);
+  const voltouDoOculto = gpsMapHidden;
+  gpsMapHidden = false;
+  if(gpsMapInstance) setTimeout(()=>{
+    gpsMapInstance.invalidateSize();
+    if(voltouDoOculto && gpsMapFollow && gpsMapLast) gpsMapInstance.setView(gpsMapLast, Math.max(gpsMapInstance.getZoom(),16), { animate:false });
+  }, 0);
 }
 function updateGpsMapPoint(lat, lng){
+  gpsMapLast = [lat,lng];
   if(!gpsMapInstance) return;
-  const isFirst = gpsMapPolyline.getLatLngs().length === 0;
-  gpsMapPolyline.addLatLng([lat,lng]);
+  const isFirst = gpsRoute.line.getLatLngs().length === 0;
+  gpsRoute.addLatLng([lat,lng]);
   gpsMapMarker.setLatLng([lat,lng]);
-  if(isFirst) gpsMapInstance.setView([lat,lng], 17);
-  else gpsMapInstance.panTo([lat,lng]);
+  if(isFirst){
+    if(gpsMapStartMarker) gpsMapStartMarker.remove();
+    gpsMapStartMarker = gpsPinMarker([lat,lng], 'gps-pin-start', 14, -100).addTo(gpsMapInstance);
+    gpsMapInstance.setView([lat,lng], 17);
+  }
+  else if(gpsMapFollow) gpsMapInstance.panTo([lat,lng]);
+}
+function gpsRecenterMap(){
+  gpsMapFollow = true;
+  syncGpsRecenterBtn();
+  if(gpsMapInstance && gpsMapLast) gpsMapInstance.setView(gpsMapLast, Math.max(gpsMapInstance.getZoom(),16));
+}
+function syncGpsRecenterBtn(){
+  const b = document.getElementById('gpsBtnRecenter');
+  if(b) b.classList.toggle('on', gpsMapFollow);
 }
 function cssVar(nome){ return getComputedStyle(document.documentElement).getPropertyValue(nome).trim(); }
 function resetGpsMap(){
-  if(gpsMapPolyline) gpsMapPolyline.setLatLngs([]);
+  if(gpsRoute) gpsRoute.setLatLngs([]);
+  if(gpsMapStartMarker){ gpsMapStartMarker.remove(); gpsMapStartMarker = null; }
+  gpsMapFollow = true; gpsMapLast = null;
 }
+
+// Mapa estático do resumo pós-corrida: instância própria, sem arrasto/zoom (não briga com a rolagem da
+// tela), enquadrando a rota inteira com marcador de início e de fim. Guardado como o mapa ao vivo.
+let gpsSumMapEl = null, gpsSumMapInstance = null, gpsSumRoute = null, gpsSumPins = [], gpsSumKey = null;
+async function ensureGpsSummaryMap(track){
+  try{ await loadLeafletLib(); }catch(e){ return; }
+  const slot = document.getElementById('gpsSumMapSlot');
+  if(!slot || track.length<2) return;
+  if(!gpsSumMapInstance){
+    gpsSumMapEl = document.createElement('div');
+    gpsSumMapEl.className = 'gps-leaflet';
+    gpsSumMapEl.style.cssText = 'width:100%;height:100%;';
+    gpsSumMapInstance = L.map(gpsSumMapEl, { zoomControl:false, attributionControl:false, dragging:false, touchZoom:false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, keyboard:false, tap:false });
+    gpsAddBaseLayer(gpsSumMapInstance);
+    gpsSumRoute = gpsRouteLayers(gpsSumMapInstance);
+  }
+  if(slot !== gpsSumMapEl.parentElement) slot.appendChild(gpsSumMapEl);
+  const key = track.length+'_'+track[0].t+'_'+track[track.length-1].t;
+  const ll = track.map(p=>[p.lat,p.lng]);
+  if(key !== gpsSumKey){
+    gpsSumKey = key;
+    gpsSumRoute.setLatLngs(ll);
+    gpsSumPins.forEach(m=>m.remove());
+    gpsSumPins = [
+      gpsPinMarker(ll[0], 'gps-pin-start', 16, 10).addTo(gpsSumMapInstance),
+      gpsPinMarker(ll[ll.length-1], 'gps-pin-end', 18, 20).addTo(gpsSumMapInstance),
+    ];
+  }
+  setTimeout(()=>{
+    gpsSumMapInstance.invalidateSize();
+    gpsSumMapInstance.fitBounds(L.latLngBounds(ll), { padding:[36,36], maxZoom:17, animate:false });
+  }, 0);
+}
+
+// ---------- Análise da trilha gravada (base do resumo: rota, parciais e gráficos) ----------
+// Refaz sobre os pontos gravados o mesmo filtro do gpsOnPosition: salto de velocidade impossível não soma
+// distância nem vira referência, e o 1º ponto depois de uma retomada (seg:1) começa um trecho novo sem
+// somar a distância "pulada" durante a pausa. Devolve só os pontos aceitos, com distância (km) e tempo
+// ativo (s) acumulados — funções puras, sem ler `state`.
+function gpsCleanTrack(points){
+  const out = [];
+  let ref = null, distKm = 0, movSec = 0;
+  (points||[]).forEach(p=>{
+    if(!p || p.lat==null || p.lng==null) return;
+    if(ref && !p.seg){
+      const dt = (p.timestamp - ref.timestamp)/1000;
+      const dKm = haversineKm(ref.lat, ref.lng, p.lat, p.lng);
+      const v = dt>0 ? (dKm/dt)*3600 : 0;
+      if(v > GPS_MAX_SPEED_KMH) return;
+      distKm += dKm; movSec += Math.max(0, dt);
+    }
+    ref = p;
+    out.push({ lat:p.lat, lng:p.lng, t:p.timestamp, alt:p.alt!=null ? p.alt : null, distKm, movSec });
+  });
+  return out;
+}
+// Tempo ativo acumulado numa distância qualquer (interpolação linear entre os pontos vizinhos).
+function gpsSecAtKm(track, d){
+  if(d <= 0) return 0;
+  for(let i=1;i<track.length;i++){
+    const a = track[i-1], b = track[i];
+    if(b.distKm >= d){
+      const span = b.distKm - a.distKm;
+      return span>0 ? a.movSec + (d-a.distKm)/span*(b.movSec-a.movSec) : b.movSec;
+    }
+  }
+  return track.length ? track[track.length-1].movSec : 0;
+}
+// Parciais por km. A última, se incompleta (≥50m), entra com a distância que tiver.
+function gpsKmSplits(track){
+  const splits = [];
+  if(track.length<2) return splits;
+  const total = track[track.length-1].distKm;
+  let prevSec = 0;
+  for(let km=1; km<=total; km++){
+    const s = gpsSecAtKm(track, km);
+    splits.push({ km, distKm:1, sec:s-prevSec, paceSec:s-prevSec });
+    prevSec = s;
+  }
+  const resto = total - Math.floor(total);
+  if(resto >= 0.05){
+    const sec = track[track.length-1].movSec - prevSec;
+    splits.push({ km:total, distKm:resto, sec, paceSec:sec/resto, parcial:true });
+  }
+  return splits;
+}
+// Séries pros gráficos (~100 amostras ao longo da distância). Ritmo numa janela de 300m centrada, que
+// suaviza o tremor do GPS sem esconder subida/tiro; altitude só quando o aparelho entregou o campo.
+function gpsPaceSeries(track){
+  if(track.length<2) return [];
+  const total = track[track.length-1].distKm;
+  if(total < 0.2) return [];
+  const passo = Math.max(0.02, total/100), meia = Math.min(0.15, total/4);
+  const out = [];
+  for(let d=passo/2; d<total; d+=passo){
+    const lo = Math.max(0, d-meia), hi = Math.min(total, d+meia);
+    const sec = gpsSecAtKm(track, hi) - gpsSecAtKm(track, lo);
+    if(hi>lo && sec>0) out.push({ distKm:d, paceSec:sec/(hi-lo) });
+  }
+  return out;
+}
+function gpsAltSeries(track){
+  const comAlt = track.filter(p=>p.alt!=null);
+  if(comAlt.length < 4) return [];
+  const passo = Math.max(1, Math.floor(comAlt.length/100));
+  return comAlt.filter((p,i)=>i%passo===0).map(p=>({ distKm:p.distKm, alt:p.alt }));
+}
+// Tudo que o resumo usa, calculado uma vez por corrida (o render pode rodar de novo sem refazer contas).
+let _gpsAnalysisCache = { key:null, val:null };
+function gpsRunAnalysis(gr){
+  const pts = gr.points || [];
+  const key = pts.length+'_'+(pts[0] ? pts[0].timestamp : '')+'_'+(pts.length ? pts[pts.length-1].timestamp : '');
+  if(_gpsAnalysisCache.key === key) return _gpsAnalysisCache.val;
+  const track = gpsCleanTrack(pts);
+  const val = { track, splits:gpsKmSplits(track), paceSeries:gpsPaceSeries(track), altSeries:gpsAltSeries(track) };
+  _gpsAnalysisCache = { key, val };
+  return val;
+}
+// Distância medida pelo GPS: 2 casas com vírgula, truncada ("0,38", "6,03"). Distância de plano
+// continua com fmtKm/roundToHalf — isto aqui é só leitura do que foi corrido.
+function fmtKmMedido(km){ return (Math.floor((km||0)*100+1e-6)/100).toFixed(2).replace('.',','); }
 
 // Hoje o gerador de corrida só produz etapas por distância (km) — o motor já suporta 'tempo' (contagem
 // regressiva) e 'aberta' (avança só no botão de Lap, pra treino de pista) pra quando isso existir.
@@ -5195,7 +5477,8 @@ function gpsOnPosition(pos){
   if(accuracy!=null && accuracy > GPS_MAX_ACCURACY_M){ render(); return; }
   // Altitude só pra estimar ganho de elevação no resumo pós-corrida — nem todo navegador/dispositivo
   // entrega esse campo (fica null quando não tem), então o cálculo de elevação sempre tolera faltar.
-  gr.points.push({ lat, lng, timestamp: t, alt: pos.coords.altitude });
+  gr.points.push({ lat, lng, timestamp: t, alt: pos.coords.altitude, ...(gr.segNext ? { seg:1 } : {}) });
+  gr.segNext = false;
   if(gr.lastPoint){
     const dtSec = (t - gr.lastPoint.t)/1000;
     const dKm = haversineKm(gr.lastPoint.lat, gr.lastPoint.lng, lat, lng);
@@ -5216,7 +5499,7 @@ function gpsOnPosition(pos){
   }
   gpsCheckAutoAdvance();
   gpsPersist();
-  render();
+  if(!window.__mapTouching) render();
 }
 function gpsFinalizeCurrentStep(){
   const gr = state.gpsRun;
@@ -5309,6 +5592,7 @@ async function gpsResumeRun(){
   if(!gr.stepStartedAt) gr.stepStartedAt = Date.now();
   gr.status = 'running';
   gr.lastPoint = null; // evita contar a distância "pulada" entre o ponto de antes e depois da pausa
+  gr.segNext = true; // marca o próximo ponto gravado como início de trecho (o resumo refaz esse corte)
   gpsRequestWakeLock();
   if(gr.mode!=='esteira'){
     try{ gpsWatchId = await gpsStartWatch(); }
@@ -5328,7 +5612,12 @@ async function finishGpsRun(){
   const totalElapsedSec = Math.round(gpsTotalElapsedSec(gr));
   const resultado = {
     etapas_executadas: gr.etapasExecutadas,
-    pontos_gps: gr.points.map(p=>({ lat:p.lat, lng:p.lng, timestamp:p.timestamp })),
+    pontos_gps: gr.points.map(p=>{
+      const o = { lat:p.lat, lng:p.lng, timestamp:p.timestamp };
+      if(p.alt!=null) o.alt = Math.round(p.alt*10)/10; // elevação do resumo reaberto pelo histórico
+      if(p.seg) o.seg = 1;
+      return o;
+    }),
     distancia_total_km: Math.round(gr.totalDistKm*1000)/1000,
     tempo_total_seg: totalElapsedSec,
   };
@@ -5401,7 +5690,7 @@ function ensureGpsTicking(){
       if(state.gpsRun.tiroModalUntil && Date.now()>=state.gpsRun.tiroModalUntil) confirmTiroModal();
       gpsCheckAutoAdvance();
       gpsCheckZoneAlert();
-      if(!window.__holdingFinish) render();
+      if(!window.__holdingFinish && !window.__mapTouching) render();
     }
   }, 1000);
 }
@@ -5659,36 +5948,79 @@ function renderGpsRunning(gr){
   const sinalLabel = gr.lastAccuracy==null ? 'Buscando sinal…' : gr.lastAccuracy<=15 ? 'GPS forte' : gr.lastAccuracy>30 ? 'GPS fraco' : 'GPS médio';
   const sinalOk = gr.lastAccuracy!=null && gr.lastAccuracy<=15;
   const zone = gpsZoneStatus(gr, step, paceAtualSec);
-  // Toque na métrica gigante alterna: tempo na etapa → distância restante → pace atual.
-  const heroMetric = gr.heroMetric || 'tempo';
-  let heroVal, heroLabel;
-  if(heroMetric==='distancia'){
-    if(step && step.tipo==='distancia' && step.km){ heroVal = fmtKm(Math.max(0, step.km-gr.stepDistKm)); heroLabel = 'restantes'; }
-    else{ heroVal = fmtKm(gr.stepDistKm); heroLabel = 'na etapa'; }
-  }else if(heroMetric==='pace'){
-    heroVal = paceAtualSec ? formatPace(paceAtualSec) : '—'; heroLabel = '/km agora';
-  }else{
-    heroVal = formatClock(stepElapsed); heroLabel = 'na etapa';
-  }
-  heroVal = String(heroVal).replace('.',',');
   const zoneTag = zone.label ? `<span class="tag ${zone.cls==='zone-ok'?'tag-done':'tag-gold'}">${zone.label}</span>` : '';
+  // Ritmo no centro: toque alterna atual ↔ médio.
+  const paceMedio = gr.paceMode==='medio';
+  const paceSec = paceMedio ? paceAvgSec : paceAtualSec;
+  const paceVal = paceSec ? formatPace(paceSec) : '—';
+  const paceLbl = paceMedio ? 'Ritmo médio (/km)' : 'Ritmo atual (/km)';
+  const tempoVal = formatClock(totalElapsed);
+  const distVal = fmtKmMedido(gr.totalDistKm);
+  const expandido = !!gr.liveExpanded;
+  const icExpand = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4l-7 7"/><path d="M10 20H4v-6"/><path d="M4 20l7-7"/></svg>`;
+  const icCollapse = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10h-6V4"/><path d="M14 10l7-7"/><path d="M4 14h6v6"/><path d="M10 14l-7 7"/></svg>`;
+  const icMira = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.5" fill="currentColor" stroke="none"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>`;
+  // Faixa da etapa: nome + tempo/distância restante + progresso + próximo/pular.
+  const tiroInfo = tiroPositionInfo(gr, step);
+  const stepNome = tiroInfo ? `Tiro ${tiroInfo.idx} de ${tiroInfo.total}` : (step ? step.name : '');
+  const stepCor = step ? mrtStepColor(step.name) : 'var(--run)';
+  const stepDir = !step ? ''
+    : step.tipo==='distancia' && step.km ? `${fmtKmMedido(Math.max(0, step.km-gr.stepDistKm))} km restantes`
+    : step.tipo==='tempo' && step.metaSeg ? `${formatClock(Math.max(0, step.metaSeg-stepElapsed))} restantes`
+    : `${fmtKmMedido(gr.stepDistKm)} km na etapa`;
+  const etapaHtml = !step ? '' : `
+    <div class="gps-step" style="--stepcor:${stepCor};">
+      <div class="gps-step-row">
+        <span class="nm">${stepNome}${gr.status==='paused'?' · pausado':''}</span>
+        ${zoneTag}
+        <span class="tm"><b>${formatClock(stepElapsed)}</b> · ${stepDir}</span>
+      </div>
+      <div class="gps-step-bar"><i style="width:${progressPct}%;"></i></div>
+      <div class="mrt-nextrow">
+        <div class="nx">${nextStep ? `Próximo: <b>${nextStep.name}${nextStep.tipo==='tempo'&&nextStep.metaSeg?' · '+formatDuration(nextStep.metaSeg):(nextStep.km?' · '+String(fmtKm(nextStep.km)).replace('.',','):'')}</b>` : 'Última etapa'}</div>
+        <button class="btn-ghost" style="padding:6px 4px;" id="gpsBtnSkipStep">Pular ›</button>
+      </div>
+    </div>`;
+  const topo = `
+    <div class="gps-live-top">
+      <button class="gps-fab" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button>
+      <div class="gps-live-pill"><div class="t">Corrida</div><div class="s" style="color:${sinalOk?'var(--accent)':'var(--text-dim)'};">${sinalLabel}${gr.lastAccuracy!=null?' · ±'+Math.round(gr.lastAccuracy)+'m':''}</div></div>
+      <button class="gps-fab" id="mrtVozToggle" aria-label="Voz">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}</button>
+    </div>`;
+  if(expandido){
+    return `
+      <div class="mrt-root gps-live expanded">
+        <div class="gps-live-big">
+          ${topo}
+          <button class="gps-fab gps-live-expand" id="gpsBtnExpand" aria-label="Mostrar mapa">${icCollapse}</button>
+          <div class="b"><div class="v md">${tempoVal}</div><div class="k">Tempo</div></div>
+          <div class="b" id="gpsPaceTap"><div class="v xl">${paceVal}</div><div class="k">${paceLbl}</div></div>
+          <div class="b"><div class="v lg">${distVal}</div><div class="k">Distância (km)</div></div>
+        </div>
+        <div class="gps-live-sheet">
+          ${etapaHtml}
+          ${corridaRodape(gr, isAberta)}
+        </div>
+      </div>`;
+  }
   return `
-    <div class="mrt-root">
-      <div class="mrt-scroll">
-        <div class="mrt-wex-topbar" style="padding-top:calc(14px + env(safe-area-inset-top));">
-          <button class="mrt-wex-x" id="gpsExitRunning">${ICONS.xmark}</button>
-          <div class="mrt-wex-titles"><div class="mrt-wex-title">Corrida</div><div class="mrt-wex-sub" style="color:${sinalOk?'var(--accent)':'var(--text-dim)'};">${sinalLabel}${gr.lastAccuracy!=null?' · ±'+Math.round(gr.lastAccuracy)+'m':''}</div></div>
-          <button class="mrt-wex-x" id="mrtVozToggle" title="Voz">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}</button>
+    <div class="mrt-root gps-live">
+      <div class="gps-live-map">
+        <div id="gpsMapSlot" class="gps-mapslot"></div>
+        ${topo}
+        <div class="gps-live-ctrls">
+          <button class="gps-fab${gpsMapFollow?' on':''}" id="gpsBtnRecenter" aria-label="Centralizar">${icMira}</button>
         </div>
-        ${corridaEtapaCard(gr, step, nextStep, heroVal, heroLabel, progressPct, zoneTag)}
-        <div class="mrt-wex-grid2x2">
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(formatClock(stepElapsed),'Tempo')}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(fmtKm(gr.totalDistKm),'Distância')}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(paceAtualSec ? formatPace(paceAtualSec) : '—','Pace atual')}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(paceAvgSec ? formatPace(paceAvgSec) : '—','Pace médio')}</div>
-        </div>
-        <div class="mrt-card" style="padding:0;overflow:hidden;">
-          <div id="gpsMapSlot" style="width:100%;height:220px;"></div>
+      </div>
+      <div class="gps-live-sheet">
+        <div class="gps-mcard">
+          ${etapaHtml}
+          <div class="gps-m3">
+            <div class="c"><div class="v">${tempoVal}</div><div class="k">Tempo</div></div>
+            <div class="c main" id="gpsPaceTap"><div class="v">${paceVal}</div><div class="k">${paceLbl}</div></div>
+            <div class="c"><div class="v">${distVal}</div><div class="k">Distância (km)</div></div>
+          </div>
+          <button class="gps-mexpand" id="gpsBtnExpand" aria-label="Métricas em tela cheia">${icExpand}</button>
         </div>
         ${corridaRodape(gr, isAberta)}
       </div>
@@ -5813,6 +6145,68 @@ function renderAvaliacaoTreino(gr, pvr, elevGain, kcal){
         </div>`).join('')}
     </div>`;
 }
+// Gráfico de ritmo ao longo da distância: eixo invertido (mais rápido em cima), linha média tracejada e,
+// quando o aparelho gravou altitude, o perfil de elevação em cinza por trás. SVG esticado na largura do
+// card (preserveAspectRatio none + traço sem escala); os rótulos ficam em HTML pra não deformar.
+function renderGpsPaceChart(an, paceMedioSec){
+  const s = an.paceSeries;
+  if(s.length < 4) return '';
+  const W = 300, H = 120, total = an.track[an.track.length-1].distKm;
+  const ord = s.map(p=>p.paceSec).sort((a,b)=>a-b);
+  const med = ord[Math.floor(ord.length/2)];
+  const yMin = ord[0], yMax = Math.max(yMin+20, Math.min(ord[ord.length-1], med*1.5));
+  const x = d=>(d/total*W).toFixed(1);
+  const y = p=>(6 + (Math.min(Math.max(p,yMin),yMax)-yMin)/(yMax-yMin)*(H-12)).toFixed(1);
+  const linha = s.map((p,i)=>(i?'L':'M')+x(p.distKm)+' '+y(p.paceSec)).join(' ');
+  const area = linha+` L${x(s[s.length-1].distKm)} ${H} L${x(s[0].distKm)} ${H} Z`;
+  let elev = '';
+  const a = an.altSeries;
+  if(a.length >= 4){
+    const aMin = Math.min(...a.map(p=>p.alt)), aMax = Math.max(...a.map(p=>p.alt));
+    const ya = v=>(H - 4 - (aMax>aMin ? (v-aMin)/(aMax-aMin) : 0.5)*(H*0.42)).toFixed(1);
+    elev = `<path d="${a.map((p,i)=>(i?'L':'M')+x(p.distKm)+' '+ya(p.alt)).join(' ')} L${x(a[a.length-1].distKm)} ${H} L${x(a[0].distKm)} ${H} Z" style="fill:var(--surface-2)"/>`;
+  }
+  const media = paceMedioSec ? `<line x1="0" x2="${W}" y1="${y(paceMedioSec)}" y2="${y(paceMedioSec)}" style="stroke:var(--text-faint)" stroke-width="1" stroke-dasharray="4 4" vector-effect="non-scaling-stroke"/>` : '';
+  const kmMeio = String(Math.round(total/2*10)/10).replace('.',',');
+  return `
+    <div class="mrt-card gps-chart">
+      <div class="gps-card-head"><span class="t">Ritmo</span>${paceMedioSec?`<span class="r">Médio <b>${formatPace(paceMedioSec)}</b> /km</span>`:''}</div>
+      <div class="gps-chart-plot">
+        <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+          <defs><linearGradient id="gpsPaceGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.35"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
+          ${elev}
+          <path d="${area}" fill="url(#gpsPaceGrad)"/>
+          ${media}
+          <path d="${linha}" fill="none" style="stroke:var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+        </svg>
+        <span class="ylab top">${formatPace(yMin)}</span><span class="ylab bot">${formatPace(yMax)}</span>
+      </div>
+      <div class="gps-chart-x"><span>0</span><span>${kmMeio}</span><span>${fmtKmMedido(total)} km</span></div>
+      ${a.length>=4 ? `<div class="mrt-legend"><span><i style="background:var(--accent);"></i>Ritmo</span><span><i style="background:var(--surface-2);"></i>Elevação</span></div>` : ''}
+    </div>`;
+}
+// Parciais por km: número do km, ritmo e barra proporcional à velocidade (mais rápido = mais longa);
+// o km mais rápido fica destacado.
+function renderGpsSplits(an){
+  const sp = an.splits;
+  if(!sp.length) return '';
+  const paces = sp.map(s=>s.paceSec);
+  const pMin = Math.min(...paces), pMax = Math.max(...paces);
+  const inteiros = sp.filter(s=>!s.parcial);
+  const melhor = inteiros.length ? Math.min(...inteiros.map(s=>s.paceSec)) : null;
+  const rows = sp.map(s=>{
+    const w = pMax>pMin ? 45 + (pMax-s.paceSec)/(pMax-pMin)*55 : 100;
+    const top = melhor!=null && !s.parcial && s.paceSec===melhor;
+    const kmTxt = s.parcial ? String(Math.round(s.km*100)/100).replace('.',',') : s.km;
+    return `<div class="gps-split${top?' best':''}"><span class="km">${kmTxt}</span><span class="pc">${formatPace(s.paceSec)}</span><span class="bar"><i style="width:${w.toFixed(0)}%;"></i></span></div>`;
+  }).join('');
+  return `
+    <div class="mrt-card">
+      <div class="gps-card-head"><span class="t">Parciais</span></div>
+      <div class="gps-split head"><span class="km">Km</span><span class="pc">Ritmo</span><span class="bar"></span></div>
+      ${rows}
+    </div>`;
+}
 function renderGpsSummary(gr){
   const totalElapsed = Math.round(gpsTotalElapsedSec(gr));
   const paceSec = gr.totalDistKm>0.05 ? totalElapsed/gr.totalDistKm : null;
@@ -5827,21 +6221,38 @@ function renderGpsSummary(gr){
     const txt = label==='Ritmo médio' ? (cmp.status==='Abaixo' ? 'Mais rápido' : 'Mais lento') : cmp.status;
     return `<span class="tag tag-gold">${txt}</span>`;
   };
+  const an = gpsRunAnalysis(gr);
+  const temMapa = an.track.length >= 2;
+  const splitsInteiros = an.splits.filter(s=>!s.parcial);
+  const melhorKm = splitsInteiros.length ? Math.min(...splitsInteiros.map(s=>s.paceSec)) : null;
+  // Hierarquia: mapa → distância/tempo/ritmo → métricas secundárias → gráfico → parciais → o resto.
   return `
     <div class="mrt-root">
-      <div class="mrt-scroll">
+      <div class="mrt-scroll gps-sum">
+        ${temMapa ? `
+        <div class="gps-sum-map">
+          <div id="gpsSumMapSlot" class="gps-mapslot"></div>
+          <button class="gps-fab gps-sum-close" id="gpsBtnCloseSummary" aria-label="Fechar">${ICONS.xmark}</button>
+        </div>` : `
         <div style="display:flex;justify-content:flex-end;margin:calc(4px + env(safe-area-inset-top)) 0 8px;">
           <button class="mrt-wex-x" id="gpsBtnCloseSummary">${ICONS.xmark}</button>
+        </div>`}
+        <div class="gps-sum-head">
+          <div class="mrt-title">${entry && entry.type || 'Corrida'}</div>
+          <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
         </div>
-        <div style="margin-bottom:16px;">
-          <div class="mrt-title" style="margin-bottom:2px;">${entry && entry.type || 'Corrida'}</div>
-          <div class="mrt-sub" style="margin-bottom:12px;">${DAY_FULLNAME[gr.day]||gr.day}</div>
-          <div style="display:flex;gap:8px;flex-wrap:wrap;">
-            <span class="tag tag-run lg">${fmtKm(gr.totalDistKm)}</span>
-            <span class="tag tag-run lg">${formatClock(totalElapsed)}</span>
-            <span class="tag tag-run lg">${paceSec?formatPace(paceSec)+'/km':'—'}</span>
-          </div>
+        <div class="gps-sum-main">
+          <div class="c"><div class="k">Distância</div><div class="v">${fmtKmMedido(gr.totalDistKm)}<small> km</small></div></div>
+          <div class="c"><div class="k">Tempo</div><div class="v">${formatClock(totalElapsed)}</div></div>
+          <div class="c"><div class="k">Ritmo médio</div><div class="v">${paceSec?formatPace(paceSec):'—'}<small> /km</small></div></div>
         </div>
+        <div class="gps-sum-sec">
+          <div class="c"><div class="k">Elevação</div><div class="v">${elevGain!=null?elevGain+'<small> m</small>':'—'}</div></div>
+          <div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>
+          <div class="c"><div class="k">Melhor km</div><div class="v">${melhorKm?formatPace(melhorKm)+'<small> /km</small>':'—'}</div></div>
+        </div>
+        ${renderGpsPaceChart(an, paceSec)}
+        ${renderGpsSplits(an)}
         <div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
             <div class="mrt-summarytitle" style="font-size:17px;margin:0;">Planejado × Realizado</div>
@@ -5853,12 +6264,8 @@ function renderGpsSummary(gr){
               <span class="l">${r.label}</span><span class="p">${r.plan}</span><span class="r">${r.real}</span><span class="s">${statusTag(r.label, r.cmp)}</span>
             </div>`).join('')}
         </div>
-        <div class="mrt-wex-grid2x2">
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(elevGain!=null?elevGain+'m':'—','Elevação',true)}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(kcal+'kcal','Calorias',true)}</div>
-        </div>
-        ${renderAvaliacaoTreino(gr, pvr, elevGain, kcal)}
         ${renderPaceBlockChart(gr)}
+        ${renderAvaliacaoTreino(gr, pvr, elevGain, kcal)}
         <div class="mrt-card">
           <div class="mrt-runlabel" style="color:var(--accent);">No próximo treino</div>
           <div style="font-size:14px;line-height:1.5;margin-top:6px;">${nextWorkoutAdjustmentText(pvr)}</div>
@@ -5881,12 +6288,9 @@ function wireGpsRunScreen(){
   if(byId('gpsExitRunning')) byId('gpsExitRunning').onclick = gpsExitRun;
   if(byId('gpsBtnPause')) byId('gpsBtnPause').onclick = ()=> gr.status==='paused' ? gpsResumeRun() : gpsPauseRun();
   if(byId('gpsBtnLap')) byId('gpsBtnLap').onclick = gpsLapStep;
-  if(byId('gpsHeroTap')) byId('gpsHeroTap').onclick = ()=>{
-    const order = ['tempo','distancia','pace'];
-    const cur = order.indexOf(gr.heroMetric||'tempo');
-    gr.heroMetric = order[(cur+1)%order.length];
-    render();
-  };
+  if(byId('gpsPaceTap')) byId('gpsPaceTap').onclick = ()=>{ gr.paceMode = gr.paceMode==='medio' ? 'atual' : 'medio'; render(); };
+  if(byId('gpsBtnExpand')) byId('gpsBtnExpand').onclick = ()=>{ gr.liveExpanded = !gr.liveExpanded; render(); };
+  if(byId('gpsBtnRecenter')) byId('gpsBtnRecenter').onclick = gpsRecenterMap;
   const holdBtn = byId('gpsBtnFinish');
   if(holdBtn){
     let timer = null;
@@ -5915,6 +6319,8 @@ function wireGpsRunScreen(){
   if(byId('mrtTiroConfirm')) byId('mrtTiroConfirm').onclick = confirmTiroModal;
   if(gr.status==='finished') contarNumeros();
   if(byId('gpsMapSlot')) ensureGpsMap();
+  else if(gr.status==='running' || gr.status==='paused') gpsMapHidden = true;
+  if(byId('gpsSumMapSlot')) ensureGpsSummaryMap(gpsRunAnalysis(gr).track);
   ensureGpsTicking();
 }
 
@@ -7895,18 +8301,21 @@ function renderWorkoutSession(){
       </div>`;
     }
     const hoje = new Date();
+    const nTreino = state.workoutSessionsLog.length;
     return `
       <div class="mrt-root">
         ${recordes.length ? confeteHtml() : ''}
-        <div class="mrt-scroll" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:calc(8vh + env(safe-area-inset-top));">
+        <div class="mrt-scroll" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:calc(6vh + env(safe-area-inset-top));">
+          ${LOGO_SVG ? `<div class="mrt-logo" style="width:40px;height:40px;margin-bottom:10px;">${LOGO_SVG}</div>` : ''}
+          <div class="mrt-sub" style="margin-bottom:2px;">${hoje.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})} · ${String(hoje.getHours()).padStart(2,'0')}:${String(hoje.getMinutes()).padStart(2,'0')}</div>
+          <div class="mrt-runtitle" style="font-size:16px;margin-bottom:18px;">${muscTituloDoDia(ws.day, list)}</div>
           <div class="mrt-summarycheck pop">${CHECK_SVG}</div>
-          <div class="mrt-title" style="margin-bottom:4px;">Treino concluído!</div>
-          <div class="mrt-sub" style="margin-bottom:22px;">${hoje.toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'})} · ${String(hoje.getHours()).padStart(2,'0')}:${String(hoje.getMinutes()).padStart(2,'0')}</div>
+          <div class="mrt-title" style="margin-bottom:22px;">${recordes.length ? 'Novo recorde pessoal!' : 'Treino concluído!'}</div>
           <div class="mrt-summarygrid">
+            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(nTreino+'º','Treino',true)}</div>
             <div class="mrt-card" style="margin:0;">${mrtMetricHtml(minTot+'min','Tempo',true)}</div>
+            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(ws.doneSeries+'/'+totalSeriesPlanned,'Séries',true)}</div>
             <div class="mrt-card" style="margin:0;">${mrtMetricHtml(Math.round(ws.totalVolume).toLocaleString('pt-BR')+'kg','Volume',true)}</div>
-            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(ws.doneSeries,'Séries',true)}</div>
-            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(estimarKcalMusc(minTot)+'kcal','Calorias',true)}</div>
           </div>
           ${compareHtml}
           ${recordes.length ? `<div class="mrt-card" style="width:100%;text-align:left;">
@@ -10486,7 +10895,7 @@ async function abrirResumoCorrida(dayKey){
   const abbr = dayAbbrevOf(dayKey);
   state.gpsRun = {
     status:'finished', mode:'gps', day:abbr, steps: entry ? gpsStepsFromEntry(entry) : [], stepIndex:0,
-    etapasExecutadas: rec.etapas_executadas||[], points:(rec.pontos_gps||[]).map(p=>({ lat:p.lat, lng:p.lng, timestamp:p.timestamp })),
+    etapasExecutadas: rec.etapas_executadas||[], points:(rec.pontos_gps||[]).map(p=>({ lat:p.lat, lng:p.lng, timestamp:p.timestamp, alt:p.alt!=null?p.alt:null, ...(p.seg?{seg:1}:{}) })),
     totalDistKm: rec.distancia_total_km||0, finalElapsedSec: rec.tempo_total_seg||0, somenteLeitura:true,
   };
   render();
