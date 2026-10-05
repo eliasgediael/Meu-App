@@ -10,8 +10,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Forza Run">
-<meta name="theme-color" content="#0E1113">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap">
+<meta name="theme-color" content="#FFFFFF">
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
@@ -27,30 +26,37 @@
    aparecem em etiquetas, anéis, ícones e gráficos — nunca em botão. Os nomes antigos (--blue, --strength,
    --teal, --amber, --green, --rep) continuam existindo como apelidos das cores novas. */
 :root{
-  --bg:#0E1113;
-  --surface:#171B1E;
-  --surface-2:#1F2427;
-  --border:#2A3034;
-  --text:#F2F5F5;
-  --text-dim:#8E999C;
-  --text-faint:#5A6266;
-  --accent:#2DD4BF;
-  --accent-soft:rgba(45,212,191,0.15);
-  --accent-light:#99F6E4;
-  --on-accent:#0E1113;
-  --success:#34D399;
-  --success-soft:rgba(52,211,153,0.16);
+  /* Design system claro (branco/preto/cinza). Uma única cor de destaque (--data) só pra rota do mapa e
+     dado em destaque nos gráficos; botões e navegação ativa usam preto (--accent). Fixo aqui no :root,
+     sem depender do modo claro/escuro do sistema. */
+  color-scheme:light;
+  --bg:#FFFFFF;
+  --bg-2:#F7F7F7;
+  --surface:#FFFFFF;
+  --surface-2:#F2F2F2;
+  --border:#E5E5E5;
+  --text:#111111;
+  --text-dim:#6B6B6B;
+  --text-faint:#999999;
+  --accent:#111111;
+  --accent-soft:#F2F2F2;
+  --accent-light:#6B6B6B;
+  --on-accent:#FFFFFF;
+  --data:#FF5A1F;
+  --success:#111111;
+  --success-soft:#F2F2F2;
   --done:var(--success);
-  --musc:#2DD4BF;
-  --musc-soft:rgba(45,212,191,0.16);
-  --run:#60A5FA;
-  --run-soft:rgba(96,165,250,0.16);
-  --hib:#A78BFA;
-  --hib-soft:rgba(167,139,250,0.16);
-  --gold:#FBBF24;
-  --gold-soft:rgba(251,191,36,0.16);
-  --danger:#F87171;
-  --r-card:20px; --r-input:14px; --r-icon:12px; --r-pill:999px;
+  /* Tipos de treino sem cor própria: diferenciados por texto/ícone, não por cor. */
+  --musc:#111111;
+  --musc-soft:#F2F2F2;
+  --run:#111111;
+  --run-soft:#F2F2F2;
+  --hib:#6B6B6B;
+  --hib-soft:#F2F2F2;
+  --gold:#6B6B6B;
+  --gold-soft:#F2F2F2;
+  --danger:#D92D20;
+  --r-card:16px; --r-input:12px; --r-icon:12px; --r-pill:999px;
   --medal-silver:#C0C7D0; --medal-bronze:#C08457;
   /* apelidos dos nomes antigos */
   --blue:var(--run); --blue-soft:var(--run-soft);
@@ -59,22 +65,23 @@
   --strength:var(--musc); --strength-soft:var(--musc-soft);
   --teal:var(--hib); --teal-soft:var(--hib-soft);
   --rep:var(--run);
-  --shadow-sm:0 1px 2px rgba(0,0,0,0.3), 0 2px 8px rgba(0,0,0,0.28);
-  --shadow-md:0 6px 16px rgba(0,0,0,0.4), 0 14px 30px -10px rgba(0,0,0,0.5);
-  --shadow-accent:0 12px 24px -12px color-mix(in srgb, var(--accent) 55%, transparent);
+  --font:-apple-system,BlinkMacSystemFont,'SF Pro Text','SF Pro Display','Helvetica Neue',sans-serif;
+  --shadow-sm:none;
+  --shadow-md:0 8px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.06);
+  --shadow-accent:none;
 }
 *{box-sizing:border-box;}
 html,body{margin:0;padding:0;}
 body{
   background:var(--bg);
   color:var(--text);
-  font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:var(--font);
   min-height:100vh;
   display:flex; justify-content:center;
 }
 #app{ width:100%; max-width:440px; min-height:100vh; display:flex; flex-direction:column; padding-top:env(safe-area-inset-top); }
 
-/* Números e títulos grandes (peso 800 da Plus Jakarta Sans) usam dígitos tabulares — não "pulam" de largura,
+/* Números e títulos grandes (peso 800) usam dígitos tabulares — não "pulam" de largura,
    importante pra pace/tempo em execução ao vivo. */
 .header-title, .next-step-title, .week-overview-value, .challenge-stat .v, .wex-title, .wex-stepper .val,
 .wex-resttimer, .wex-summarytitle, .gps-permtitle, .gps-steptitle, .gps-bigfield, .esteira-remainhero .v,
@@ -640,7 +647,7 @@ input[type=file]{ display:none; }
   --mrt-green:var(--success); --mrt-amber:var(--gold); --mrt-red:var(--danger);
   --mrt-musc:var(--musc); --mrt-run:var(--run); --mrt-hib:var(--hib);
   position:fixed; inset:0; background:var(--mrt-bg); color:var(--mrt-text);
-  font-family:'Plus Jakarta Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-family:var(--font);
   display:flex; flex-direction:column; max-width:440px; margin:0 auto;
   font-variant-numeric:tabular-nums;
 }
@@ -1112,25 +1119,27 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-legend i{ display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:6px; vertical-align:middle; }
 
 /* ---------- Corrida GPS: mapa + rota ---------- */
-.gps-leaflet{ background:#1a1d21; }
-.gps-leaflet .leaflet-control-attribution{ background:transparent; color:rgba(255,255,255,.35); font-size:9px; padding:0 6px 2px; }
-.gps-leaflet .leaflet-control-attribution a{ color:inherit; }
+.gps-map{ background:#F5F5F3; }
+/* Crédito do OpenStreetMap (obrigatório): botão (i) discreto que abre o texto. */
+.gps-map .maplibregl-ctrl-attrib{ background:rgba(255,255,255,.75); color:#6B6B6B; font-size:10px; }
+.gps-map .maplibregl-ctrl-attrib a{ color:inherit; }
 .gps-pin{ background:none; border:none; }
 .gps-pin i{ display:block; width:100%; height:100%; border-radius:50%; box-sizing:border-box; }
-.gps-pin-me i{ background:var(--accent); border:3px solid #fff; box-shadow:0 0 0 7px color-mix(in srgb, var(--accent) 28%, transparent), 0 2px 6px rgba(0,0,0,.55); }
-.gps-pin-start i{ background:var(--success); border:3px solid #fff; box-shadow:0 1px 4px rgba(0,0,0,.5); }
-.gps-pin-end i{ border:2.5px solid #fff; background:repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0/7px 7px; box-shadow:0 1px 4px rgba(0,0,0,.5); }
+/* Posição atual: ponto preto com anel branco e halo; início: anel na cor da rota; fim: quadriculado. */
+.gps-pin-me i{ background:#111; border:3px solid #fff; box-shadow:0 0 0 8px rgba(17,17,17,.14), 0 2px 6px rgba(0,0,0,.35); }
+.gps-pin-start i{ background:#fff; border:4px solid #FF5A1F; box-shadow:0 1px 4px rgba(0,0,0,.3); }
+.gps-pin-end i{ border:2.5px solid #fff; background:repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0/7px 7px; box-shadow:0 1px 4px rgba(0,0,0,.35); }
 .gps-fab{ width:44px; height:44px; border-radius:50%; border:none; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
   background:color-mix(in srgb, var(--surface) 90%, transparent); color:var(--text); box-shadow:0 4px 14px rgba(0,0,0,.45);
   -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
 .gps-fab svg{ width:19px; height:19px; }
-.gps-fab.on{ color:var(--accent); }
+.gps-fab.on{ color:var(--data); }
 
 /* ---------- Corrida GPS ao vivo: mapa dominante, painel de métricas embaixo ---------- */
 .gps-live{ background:var(--bg); }
-.gps-live-map{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; background:#1a1d21; }
+.gps-live-map{ position:relative; flex:1 1 auto; min-height:0; overflow:hidden; background:#F5F5F3; }
 .gps-mapslot{ position:absolute; inset:0; }
-.gps-live-map .leaflet-bottom{ bottom:18px; } /* crédito do mapa acima da borda do painel */
+.gps-live-map .maplibregl-ctrl-bottom-left{ bottom:18px; } /* crédito do mapa acima da borda do painel */
 .gps-live-top{ position:absolute; z-index:1000; top:calc(10px + env(safe-area-inset-top)); left:14px; right:14px; display:flex; align-items:center; justify-content:space-between; gap:10px; pointer-events:none; }
 .gps-live-top > *{ pointer-events:auto; }
 .gps-live-pill{ padding:7px 16px; border-radius:var(--r-pill); text-align:center; background:color-mix(in srgb, var(--surface) 90%, transparent); box-shadow:0 4px 14px rgba(0,0,0,.45); -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); }
@@ -1170,7 +1179,7 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 
 /* ---------- Resumo pós-corrida ---------- */
 .mrt-scroll.gps-sum{ padding-top:0; }
-.gps-sum-map{ position:relative; height:calc(320px + env(safe-area-inset-top)); margin:0 -18px 18px; overflow:hidden; background:#1a1d21; }
+.gps-sum-map{ position:relative; height:calc(320px + env(safe-area-inset-top)); margin:0 -18px 18px; overflow:hidden; background:#F5F5F3; }
 .gps-sum-close{ position:absolute; z-index:1000; top:calc(10px + env(safe-area-inset-top)); right:14px; }
 .gps-sum-head{ margin-bottom:16px; }
 .gps-sum-head .mrt-title{ margin-bottom:2px; }
@@ -1197,8 +1206,8 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .gps-split.head .km, .gps-split.head .pc{ font-size:11px; color:var(--text-dim); font-weight:700; }
 .gps-split .bar{ height:10px; }
 .gps-split .bar i{ display:block; height:100%; border-radius:var(--r-pill); background:color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
-.gps-split.best .bar i{ background:var(--accent); }
-.gps-split.best .pc{ color:var(--accent); }
+.gps-split.best .bar i{ background:var(--data); }
+.gps-split.best .pc{ color:var(--data); }
 
 /* ============================================================================================
    PROMPTS 6 e 7 — telas secundárias, Perfil, quiz, boas-vindas, Turma
@@ -1324,6 +1333,37 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .mrt-avatar::after{ content:''; position:absolute; left:50%; top:50%; width:44px; height:44px; transform:translate(-50%,-50%); }
 .mrt-morebtn{ width:44px; height:44px; }
 .mrt-donebtn{ width:44px; height:44px; }
+
+/* ============================================================================================
+   DESIGN SYSTEM CLARO — base (etapa 1). Sobrescreve só o que dependia do tema escuro ou de cor
+   por tipo de treino: ícones sem quadradinho colorido, navegação ativa em preto, sombras mínimas,
+   véus de modal escuros e controles sobre o mapa claros.
+   ============================================================================================ */
+.icon-box, .icon-box.musc, .icon-box.run, .icon-box.hib, .icon-box.gold{ background:transparent; color:var(--text); }
+.mrt-navbtn{ color:var(--text-faint); }
+.mrt-navbtn .lbl{ font-weight:500; }
+.mrt-navbtn.active{ color:var(--text); }
+.mrt-navbtn.active .lbl{ font-weight:700; }
+.mrt-navbtn.active .pill{ background:transparent; }
+.mrt-nav{ background:var(--bg); border-top:1px solid var(--border); }
+.modal-overlay, .sheet-overlay{ background:rgba(17,17,17,0.38); }
+.mrt-moremenu button:hover{ background:var(--surface-2); }
+.mrt-card{ border:1px solid var(--border); }
+.btn-primary{ box-shadow:none; }
+.btn-outline{ border-color:var(--text); color:var(--text); }
+.gps-btnfinish{ color:#FFFFFF; }
+.gps-fab{ background:rgba(255,255,255,0.94); color:var(--text); box-shadow:0 1px 6px rgba(0,0,0,0.14); }
+.gps-live-pill{ background:rgba(255,255,255,0.94); box-shadow:0 1px 6px rgba(0,0,0,0.14); }
+.gps-live-sheet{ box-shadow:0 -1px 0 var(--border), 0 -8px 24px rgba(0,0,0,0.06); }
+.gps-mcard{ border:1px solid var(--border); }
+.gps-split .bar i{ background:var(--border); }
+.gps-chart-plot .ylab{ background:rgba(255,255,255,0.85); }
+.mrt-moremenu{ background:var(--surface); border:1px solid var(--border); box-shadow:var(--shadow-md); }
+.mrt-wex-restsheet{ background:var(--surface); box-shadow:0 -1px 0 var(--border), 0 -8px 24px rgba(0,0,0,0.08); }
+.blk-card.dragging{ box-shadow:var(--shadow-md); }
+.mrt-setcheck.on{ color:var(--on-accent); }
+.mrt-bibhero img{ background:#FFFFFF; }
+.day-pill .dot.done{ box-shadow:none; }
 </style>
 </head>
 <body>
@@ -5021,91 +5061,145 @@ function gpsStopWatch(watchId){
   navigator.geolocation.clearWatch(watchId);
 }
 
-// Mapa da corrida (Leaflet). Carregado sob demanda (só quem inicia uma corrida com GPS baixa a lib) e
-// mantido num <div> criado UMA vez e guardado aqui — a tela de corrida re-renderiza inteira a cada
-// segundo (pra atualizar o timer), e se o mapa estivesse dentro desse HTML ele seria destruído e
+// Mapa da corrida (MapLibre GL JS + OpenFreeMap). Carregado sob demanda (só quem inicia uma corrida com GPS
+// baixa a lib) e mantido num <div> criado UMA vez e guardado aqui — a tela de corrida re-renderiza inteira a
+// cada segundo (pra atualizar o timer), e se o mapa estivesse dentro desse HTML ele seria destruído e
 // recriado a cada tick (piscando e perdendo zoom). Em vez disso, o slot vazio no HTML só recebe esse
 // elemento via appendChild a cada render — isso MOVE o nó existente, não recria o mapa por baixo.
-let _leafletLoadPromise = null;
-function loadLeafletLib(){
-  if(window.L) return Promise.resolve();
-  if(_leafletLoadPromise) return _leafletLoadPromise;
-  _leafletLoadPromise = new Promise((resolve, reject)=>{
+// OpenFreeMap: grátis, sem cadastro, sem chave e sem limite de uso; só exige o crédito do OpenStreetMap,
+// que o controle de atribuição mostra (o texto vem do próprio estilo).
+const MAPLIBRE_VER = '5.9.0';
+const GPS_MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';
+const GPS_ROUTE_COLOR = '#FF5A1F';
+let _mapLibLoadPromise = null;
+function loadMapLib(){
+  if(window.maplibregl) return Promise.resolve();
+  if(_mapLibLoadPromise) return _mapLibLoadPromise;
+  _mapLibLoadPromise = new Promise((resolve, reject)=>{
     const link = document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css';
+    link.href = `https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/${MAPLIBRE_VER}/maplibre-gl.css`;
     document.head.appendChild(link);
     const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js';
+    script.src = `https://cdnjs.cloudflare.com/ajax/libs/maplibre-gl/${MAPLIBRE_VER}/maplibre-gl.js`;
     script.onload = ()=>resolve();
-    script.onerror = ()=>{ _leafletLoadPromise = null; reject(new Error('Falha ao carregar o mapa.')); };
+    script.onerror = ()=>{ _mapLibLoadPromise = null; reject(new Error('Falha ao carregar o mapa.')); };
     document.head.appendChild(script);
   });
-  return _leafletLoadPromise;
+  return _mapLibLoadPromise;
 }
-// Base cartográfica: CARTO Dark Matter — grátis, sem chave/token, ruas discretas e poucos nomes, então a
-// rota vira o elemento de destaque (e combina com o app, que é escuro). Substitui os tiles do
-// tile.openstreetmap.org, cuja política de uso não permite app em produção. {r} pede a versão @2x em tela retina.
-const GPS_TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
-const GPS_TILE_ATTR = '© OpenStreetMap © CARTO';
-function gpsAddBaseLayer(map){
-  L.tileLayer(GPS_TILE_URL, { maxZoom:20, subdomains:'abcd' }).addTo(map);
-  L.control.attribution({ prefix:false, position:'bottomleft' }).addAttribution(GPS_TILE_ATTR).addTo(map);
+// Deixa o Positron (já claro e neutro) ainda mais limpo pra corrida: some escudo de rodovia, aeroporto,
+// ferrovia, divisa, nome de rua pequena/trilha e rótulos de vilarejo/estado/país; parque, mata e água em
+// tons bem leves. Ids que não existirem no estilo são ignorados (o estilo pode mudar de versão).
+const GPS_MAP_HIDE = /^(highway-shield|road_shield|airport|aeroway|railway|boundary|label_other|label_village|label_state|label_country|highway-name-path|highway-name-minor|waterway_line_label)/;
+function gpsTuneStyle(map){
+  (map.getStyle().layers||[]).forEach(l=>{ if(GPS_MAP_HIDE.test(l.id)) map.setLayoutProperty(l.id, 'visibility', 'none'); });
+  const pinta = (id, prop, val)=>{ if(map.getLayer(id)){ try{ map.setPaintProperty(id, prop, val); }catch(e){} } };
+  pinta('background', 'background-color', '#F5F5F3');
+  pinta('park', 'fill-color', '#E4EDE0');
+  pinta('landcover_wood', 'fill-color', '#E6EEE3');
+  pinta('water', 'fill-color', '#DCE4EA');
+  pinta('building', 'fill-color', '#ECECE9');
 }
-// Rota = brilho largo e translúcido por baixo + linha sólida por cima, pontas e junções arredondadas.
-function gpsRouteLayers(map){
-  const cor = cssVar('--accent');
-  const glow = L.polyline([], { color:cor, weight:13, opacity:0.22, lineCap:'round', lineJoin:'round', interactive:false }).addTo(map);
-  const line = L.polyline([], { color:cor, weight:5, opacity:1, lineCap:'round', lineJoin:'round', interactive:false }).addTo(map);
-  return {
-    line,
-    setLatLngs(ll){ glow.setLatLngs(ll); line.setLatLngs(ll); },
-    addLatLng(p){ glow.addLatLng(p); line.addLatLng(p); },
-  };
+function gpsLineGeo(coords){ return { type:'Feature', properties:{}, geometry:{ type:'LineString', coordinates:coords } }; }
+// Rota = contorno branco por baixo + linha na cor de destaque por cima, pontas e junções arredondadas;
+// a espessura cresce com o zoom pra continuar legível de perto e de longe.
+function gpsAddRouteLayers(map, coords){
+  map.addSource('rota', { type:'geojson', data:gpsLineGeo(coords||[]) });
+  const layout = { 'line-cap':'round', 'line-join':'round' };
+  map.addLayer({ id:'rota-borda', type:'line', source:'rota', layout, paint:{ 'line-color':'#FFFFFF', 'line-width':['interpolate',['linear'],['zoom'], 12,5, 16,9, 19,13] } });
+  map.addLayer({ id:'rota', type:'line', source:'rota', layout, paint:{ 'line-color':GPS_ROUTE_COLOR, 'line-width':['interpolate',['linear'],['zoom'], 12,3, 16,5.5, 19,8] } });
 }
-function gpsDotIcon(cls, size){
-  return L.divIcon({ className:'gps-pin '+cls, html:'<i></i>', iconSize:[size,size], iconAnchor:[size/2,size/2] });
+function gpsSetRoute(map, coords){
+  const src = map && map.getSource && map.getSource('rota');
+  if(src) src.setData(gpsLineGeo(coords));
 }
-function gpsPinMarker(latlng, cls, size, z){
-  return L.marker(latlng, { icon:gpsDotIcon(cls,size), interactive:false, keyboard:false, zIndexOffset:z||0 });
+function gpsNewMap(el, opts){
+  const map = new maplibregl.Map(Object.assign({
+    container:el, style:GPS_MAP_STYLE_URL, center:[-51.9253,-14.235], zoom:3,
+    attributionControl:false, dragRotate:false, pitchWithRotate:false, touchPitch:false,
+    // O container sai e volta do DOM a cada render: sem isso o ResizeObserver veria 0×0 e limparia o
+    // canvas a cada segundo. O tamanho é conferido à mão em gpsMapFit.
+    trackResize:false,
+  }, opts||{}));
+  if(map.touchZoomRotate) map.touchZoomRotate.disableRotation();
+  map.addControl(new maplibregl.AttributionControl({ compact:true }), 'bottom-left');
+  return map;
 }
-let gpsMapEl = null, gpsMapInstance = null, gpsRoute = null, gpsMapMarker = null, gpsMapStartMarker = null;
+// Só redimensiona quando o tamanho do container mudou de verdade (resize limpa e redesenha o canvas).
+function gpsMapFit(map, el){
+  const w = el.clientWidth, h = el.clientHeight;
+  if(!w || !h) return false;
+  if(el.dataset.w==w && el.dataset.h==h) return false;
+  el.dataset.w = w; el.dataset.h = h;
+  map.resize();
+  return true;
+}
+function gpsPinMarker(lngLat, cls, size, z){
+  const el = document.createElement('div');
+  el.className = 'gps-pin '+cls;
+  el.style.width = el.style.height = size+'px';
+  el.style.zIndex = String(z||1);
+  el.innerHTML = '<i></i>';
+  return new maplibregl.Marker({ element:el }).setLngLat(lngLat);
+}
+// Coordenadas guardadas como [lng, lat] (ordem do MapLibre/GeoJSON).
+let gpsMapEl = null, gpsMapInstance = null, gpsMapReady = false, gpsRouteCoords = [];
+let gpsMapMarker = null, gpsMapMarkerOn = false, gpsMapStartMarker = null;
 // gpsMapFollow: o mapa acompanha a posição; arrastar desliga, o botão de centralizar religa.
 // gpsMapHidden: o render anterior não tinha o slot (modo métricas em tela cheia) — ao voltar, recentraliza.
 let gpsMapFollow = true, gpsMapLast = null, gpsMapHidden = false;
+const GPS_FOLLOW_ZOOM = 16.5;
 async function ensureGpsMap(){
   if(gpsMapInstance){ attachGpsMapToSlot(); return; }
-  try{ await loadLeafletLib(); }catch(e){ return; }
+  try{ await loadMapLib(); }catch(e){ return; }
   if(gpsMapInstance){ attachGpsMapToSlot(); return; }
   gpsMapEl = document.createElement('div');
-  gpsMapEl.className = 'gps-leaflet';
+  gpsMapEl.className = 'gps-map';
   gpsMapEl.style.cssText = 'width:100%;height:100%;';
-  gpsMapInstance = L.map(gpsMapEl, { zoomControl:false, attributionControl:false }).setView([-14.235,-51.9253], 4);
-  gpsAddBaseLayer(gpsMapInstance);
-  gpsRoute = gpsRouteLayers(gpsMapInstance);
-  gpsMapMarker = gpsPinMarker([-14.235,-51.9253], 'gps-pin-me', 22, 1000).addTo(gpsMapInstance);
-  gpsMapInstance.on('dragstart', ()=>{ gpsMapFollow = false; syncGpsRecenterBtn(); });
+  // Precisa estar no DOM (com tamanho) na criação — o MapLibre mede o container nesse momento.
+  const slot = document.getElementById('gpsMapSlot');
+  if(slot) slot.appendChild(gpsMapEl);
+  try{ gpsMapInstance = gpsNewMap(gpsMapEl); }
+  catch(e){ gpsMapInstance = null; gpsMapEl = null; return; } // sem WebGL: fica só o fundo, corrida segue normal
+  gpsMapMarker = gpsPinMarker([0,0], 'gps-pin-me', 22, 3);
+  gpsMapInstance.on('load', ()=>{
+    gpsTuneStyle(gpsMapInstance);
+    gpsAddRouteLayers(gpsMapInstance, gpsRouteCoords);
+    gpsMapReady = true;
+    // Pontos que chegaram enquanto a lib/estilo carregava (ou corrida retomada depois de reabrir o app).
+    const gr = state.gpsRun;
+    if(gr && gr.points && gr.points.length) gpsRedrawLiveRoute(gr.points);
+  });
+  // Só arrasto feito pelo dedo (originalEvent) desliga o "seguir"; movimentos da câmera pelo código, não.
+  gpsMapInstance.on('dragstart', (ev)=>{ if(ev && ev.originalEvent){ gpsMapFollow = false; syncGpsRecenterBtn(); } });
   // A tela re-renderiza a cada segundo; enquanto o dedo está no mapa o tick pula o render pra não
   // interromper o arrasto/pinça (ver ensureGpsTicking e gpsOnPosition).
   const solta = ()=>{ window.__mapTouching = false; };
   gpsMapEl.addEventListener('touchstart', ()=>{ window.__mapTouching = true; }, { passive:true });
   gpsMapEl.addEventListener('touchend', solta, { passive:true });
   gpsMapEl.addEventListener('touchcancel', solta, { passive:true });
-  // Pontos que chegaram enquanto a lib carregava (ou corrida retomada depois de reabrir o app).
-  const gr = state.gpsRun;
-  if(gr && gr.points && gr.points.length) gpsRedrawLiveRoute(gr.points);
+  gpsMapEl.dataset.w = gpsMapEl.clientWidth; gpsMapEl.dataset.h = gpsMapEl.clientHeight;
   attachGpsMapToSlot();
 }
-function gpsRedrawLiveRoute(points){
+function gpsShowMe(lngLat){
   if(!gpsMapInstance) return;
-  const ll = gpsCleanTrack(points).map(p=>[p.lat,p.lng]);
-  gpsRoute.setLatLngs(ll);
-  if(!ll.length) return;
+  gpsMapMarker.setLngLat(lngLat);
+  if(!gpsMapMarkerOn){ gpsMapMarker.addTo(gpsMapInstance); gpsMapMarkerOn = true; }
+}
+function gpsPlaceStart(lngLat){
   if(gpsMapStartMarker) gpsMapStartMarker.remove();
-  gpsMapStartMarker = gpsPinMarker(ll[0], 'gps-pin-start', 14, -100).addTo(gpsMapInstance);
-  gpsMapLast = ll[ll.length-1];
-  gpsMapMarker.setLatLng(gpsMapLast);
-  gpsMapInstance.setView(gpsMapLast, 17, { animate:false });
+  gpsMapStartMarker = gpsPinMarker(lngLat, 'gps-pin-start', 16, 2).addTo(gpsMapInstance);
+}
+function gpsRedrawLiveRoute(points){
+  gpsRouteCoords = gpsCleanTrack(points).map(p=>[p.lng,p.lat]);
+  if(!gpsMapInstance) return;
+  gpsSetRoute(gpsMapInstance, gpsRouteCoords);
+  if(!gpsRouteCoords.length) return;
+  gpsPlaceStart(gpsRouteCoords[0]);
+  gpsMapLast = gpsRouteCoords[gpsRouteCoords.length-1];
+  gpsShowMe(gpsMapLast);
+  if(gpsMapFollow) gpsMapInstance.jumpTo({ center:gpsMapLast, zoom:Math.max(gpsMapInstance.getZoom(), GPS_FOLLOW_ZOOM) });
 }
 function attachGpsMapToSlot(){
   const slot = document.getElementById('gpsMapSlot');
@@ -5113,28 +5207,26 @@ function attachGpsMapToSlot(){
   if(slot !== gpsMapEl.parentElement) slot.appendChild(gpsMapEl);
   const voltouDoOculto = gpsMapHidden;
   gpsMapHidden = false;
-  if(gpsMapInstance) setTimeout(()=>{
-    gpsMapInstance.invalidateSize();
-    if(voltouDoOculto && gpsMapFollow && gpsMapLast) gpsMapInstance.setView(gpsMapLast, Math.max(gpsMapInstance.getZoom(),16), { animate:false });
-  }, 0);
+  if(!gpsMapInstance) return;
+  gpsMapFit(gpsMapInstance, gpsMapEl);
+  if(voltouDoOculto && gpsMapFollow && gpsMapLast) gpsMapInstance.jumpTo({ center:gpsMapLast });
 }
 function updateGpsMapPoint(lat, lng){
-  gpsMapLast = [lat,lng];
+  gpsMapLast = [lng,lat];
+  gpsRouteCoords.push(gpsMapLast);
   if(!gpsMapInstance) return;
-  const isFirst = gpsRoute.line.getLatLngs().length === 0;
-  gpsRoute.addLatLng([lat,lng]);
-  gpsMapMarker.setLatLng([lat,lng]);
-  if(isFirst){
-    if(gpsMapStartMarker) gpsMapStartMarker.remove();
-    gpsMapStartMarker = gpsPinMarker([lat,lng], 'gps-pin-start', 14, -100).addTo(gpsMapInstance);
-    gpsMapInstance.setView([lat,lng], 17);
+  if(gpsMapReady) gpsSetRoute(gpsMapInstance, gpsRouteCoords);
+  gpsShowMe(gpsMapLast);
+  if(gpsRouteCoords.length === 1){
+    gpsPlaceStart(gpsMapLast);
+    gpsMapInstance.jumpTo({ center:gpsMapLast, zoom:GPS_FOLLOW_ZOOM });
   }
-  else if(gpsMapFollow) gpsMapInstance.panTo([lat,lng]);
+  else if(gpsMapFollow) gpsMapInstance.easeTo({ center:gpsMapLast, duration:800 });
 }
 function gpsRecenterMap(){
   gpsMapFollow = true;
   syncGpsRecenterBtn();
-  if(gpsMapInstance && gpsMapLast) gpsMapInstance.setView(gpsMapLast, Math.max(gpsMapInstance.getZoom(),16));
+  if(gpsMapInstance && gpsMapLast) gpsMapInstance.easeTo({ center:gpsMapLast, zoom:Math.max(gpsMapInstance.getZoom(), GPS_FOLLOW_ZOOM), duration:500 });
 }
 function syncGpsRecenterBtn(){
   const b = document.getElementById('gpsBtnRecenter');
@@ -5142,42 +5234,54 @@ function syncGpsRecenterBtn(){
 }
 function cssVar(nome){ return getComputedStyle(document.documentElement).getPropertyValue(nome).trim(); }
 function resetGpsMap(){
-  if(gpsRoute) gpsRoute.setLatLngs([]);
+  gpsRouteCoords = [];
+  if(gpsMapInstance) gpsSetRoute(gpsMapInstance, []);
   if(gpsMapStartMarker){ gpsMapStartMarker.remove(); gpsMapStartMarker = null; }
+  if(gpsMapMarkerOn){ gpsMapMarker.remove(); gpsMapMarkerOn = false; }
   gpsMapFollow = true; gpsMapLast = null;
 }
 
 // Mapa estático do resumo pós-corrida: instância própria, sem arrasto/zoom (não briga com a rolagem da
 // tela), enquadrando a rota inteira com marcador de início e de fim. Guardado como o mapa ao vivo.
-let gpsSumMapEl = null, gpsSumMapInstance = null, gpsSumRoute = null, gpsSumPins = [], gpsSumKey = null;
+let gpsSumMapEl = null, gpsSumMapInstance = null, gpsSumReady = false, gpsSumCoords = [], gpsSumPins = [], gpsSumKey = null;
+function gpsSumFit(){
+  if(!gpsSumMapInstance || gpsSumCoords.length<2) return;
+  const b = new maplibregl.LngLatBounds(gpsSumCoords[0], gpsSumCoords[0]);
+  gpsSumCoords.forEach(c=>b.extend(c));
+  gpsSumMapInstance.fitBounds(b, { padding:40, maxZoom:17, duration:0 });
+}
 async function ensureGpsSummaryMap(track){
-  try{ await loadLeafletLib(); }catch(e){ return; }
+  try{ await loadMapLib(); }catch(e){ return; }
   const slot = document.getElementById('gpsSumMapSlot');
   if(!slot || track.length<2) return;
   if(!gpsSumMapInstance){
     gpsSumMapEl = document.createElement('div');
-    gpsSumMapEl.className = 'gps-leaflet';
+    gpsSumMapEl.className = 'gps-map';
     gpsSumMapEl.style.cssText = 'width:100%;height:100%;';
-    gpsSumMapInstance = L.map(gpsSumMapEl, { zoomControl:false, attributionControl:false, dragging:false, touchZoom:false, scrollWheelZoom:false, doubleClickZoom:false, boxZoom:false, keyboard:false, tap:false });
-    gpsAddBaseLayer(gpsSumMapInstance);
-    gpsSumRoute = gpsRouteLayers(gpsSumMapInstance);
+    slot.appendChild(gpsSumMapEl);
+    try{ gpsSumMapInstance = gpsNewMap(gpsSumMapEl, { interactive:false }); }
+    catch(e){ gpsSumMapInstance = null; gpsSumMapEl = null; return; }
+    gpsSumMapEl.dataset.w = gpsSumMapEl.clientWidth; gpsSumMapEl.dataset.h = gpsSumMapEl.clientHeight;
+    gpsSumMapInstance.on('load', ()=>{
+      gpsTuneStyle(gpsSumMapInstance);
+      gpsAddRouteLayers(gpsSumMapInstance, gpsSumCoords);
+      gpsSumReady = true;
+    });
   }
   if(slot !== gpsSumMapEl.parentElement) slot.appendChild(gpsSumMapEl);
+  gpsMapFit(gpsSumMapInstance, gpsSumMapEl);
   const key = track.length+'_'+track[0].t+'_'+track[track.length-1].t;
-  const ll = track.map(p=>[p.lat,p.lng]);
   if(key !== gpsSumKey){
     gpsSumKey = key;
-    gpsSumRoute.setLatLngs(ll);
+    gpsSumCoords = track.map(p=>[p.lng,p.lat]);
+    if(gpsSumReady) gpsSetRoute(gpsSumMapInstance, gpsSumCoords);
     gpsSumPins.forEach(m=>m.remove());
     gpsSumPins = [
-      gpsPinMarker(ll[0], 'gps-pin-start', 16, 10).addTo(gpsSumMapInstance),
-      gpsPinMarker(ll[ll.length-1], 'gps-pin-end', 18, 20).addTo(gpsSumMapInstance),
+      gpsPinMarker(gpsSumCoords[0], 'gps-pin-start', 16, 1).addTo(gpsSumMapInstance),
+      gpsPinMarker(gpsSumCoords[gpsSumCoords.length-1], 'gps-pin-end', 18, 2).addTo(gpsSumMapInstance),
     ];
   }
-  setTimeout(()=>{
-    gpsSumMapInstance.invalidateSize();
-    gpsSumMapInstance.fitBounds(L.latLngBounds(ll), { padding:[36,36], maxZoom:17, animate:false });
-  }, 0);
+  gpsSumFit();
 }
 
 // ---------- Análise da trilha gravada (base do resumo: rota, parciais e gráficos) ----------
@@ -6173,11 +6277,11 @@ function renderGpsPaceChart(an, paceMedioSec){
       <div class="gps-card-head"><span class="t">Ritmo</span>${paceMedioSec?`<span class="r">Médio <b>${formatPace(paceMedioSec)}</b> /km</span>`:''}</div>
       <div class="gps-chart-plot">
         <svg viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
-          <defs><linearGradient id="gpsPaceGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--accent);stop-opacity:.35"/><stop offset="1" style="stop-color:var(--accent);stop-opacity:0"/></linearGradient></defs>
+          <defs><linearGradient id="gpsPaceGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--data);stop-opacity:.18"/><stop offset="1" style="stop-color:var(--data);stop-opacity:0"/></linearGradient></defs>
           ${elev}
           <path d="${area}" fill="url(#gpsPaceGrad)"/>
           ${media}
-          <path d="${linha}" fill="none" style="stroke:var(--accent)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+          <path d="${linha}" fill="none" style="stroke:var(--data)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
         </svg>
         <span class="ylab top">${formatPace(yMin)}</span><span class="ylab bot">${formatPace(yMax)}</span>
       </div>
@@ -8242,7 +8346,7 @@ async function compartilharResumoTreino(ws){
   const grad = c.createRadialGradient(W/2, 0, 60, W/2, 0, 1100);
   grad.addColorStop(0, 'rgba(134,242,74,0.22)'); grad.addColorStop(1, 'rgba(0,0,0,0)');
   c.fillStyle = grad; c.fillRect(0,0,W,H);
-  const font = "'Plus Jakarta Sans', -apple-system, sans-serif";
+  const font = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif";
   c.textAlign = 'center';
   c.fillStyle = cor('--accent'); c.font = `800 44px ${font}`; c.fillText('FORZA RUN', W/2, 180);
   c.fillStyle = cor('--text'); c.font = `800 96px ${font}`; c.fillText('Treino concluído', W/2, 420);

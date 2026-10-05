@@ -63,6 +63,13 @@ jobs:
           "$PB" -c "Add :UIBackgroundModes:0 string location" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:1 string audio" "$PLIST"
 
+      - name: Tema claro fixo (barra de status com texto escuro mesmo com o iPhone no modo escuro)
+        run: |
+          PLIST="ios/App/App/Info.plist"
+          PB=/usr/libexec/PlistBuddy
+          "$PB" -c "Delete :UIUserInterfaceStyle" "$PLIST" 2>/dev/null || true
+          "$PB" -c "Add :UIUserInterfaceStyle string Light" "$PLIST"
+
       - name: Verificar Info.plist depois das alterações
         run: |
           echo "===== INFO.PLIST DEPOIS ====="
