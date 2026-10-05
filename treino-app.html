@@ -1418,6 +1418,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-inrow{ min-height:48px; margin-top:18px; font-size:14px; color:var(--text-dim); }
 .ds-muted{ font-size:13px; font-weight:500; color:var(--text-faint); }
 .ds-strong{ font-size:14px; font-weight:700; color:var(--text); }
+.ds-danger{ height:48px; background:none; border:none; font-family:inherit; font-size:15px; font-weight:600; color:var(--danger); cursor:pointer; }
 
 /* Início: saudação e semana */
 .mrt-greetrow{ margin-bottom:28px; align-items:flex-start; }
@@ -5874,6 +5875,7 @@ async function finishGpsRun(){
     km: String(resultado.distancia_total_km),
     data: todayISO(), shoeCredit, gpsRunId: runId,
   };
+  gr.progressKey = corridaProgressKey(gr.day); gr.runId = runId; // pro "Excluir atividade" do resumo
   if(isTodayDayAbbrev(gr.day)){ markChallengeCheckinToday(); markGroupCheckinsToday('fez corrida'+(resultado.distancia_total_km?' · '+fmtKm(resultado.distancia_total_km):'')); }
   saveCorridaProgress();
   render();
@@ -5887,6 +5889,30 @@ function gpsExitRun(){
   render();
 }
 function gpsCloseSummary(){ state.gpsRun = null; render(); }
+// Exclui uma atividade já feita (GPS ou esteira): apaga a gravação, limpa distância/tempo/ritmo/data e o
+// "feito" do dia e devolve ao tênis os km que tinham sido somados. O treino planejado continua no plano;
+// check-in de desafio/turma já enviado não é desfeito.
+async function gpsDeleteActivity(){
+  const gr = state.gpsRun;
+  if(!gr || !gr.progressKey) return;
+  if(!confirm('Excluir esta atividade? Não dá para desfazer.')) return;
+  const key = gr.progressKey;
+  const prev = state.corridaProgress[key];
+  const p = (prev && typeof prev==='object') ? prev : {};
+  if(p.shoeCredit){
+    const t = state.equipamentos.tenis.find(x=>x.id===p.shoeCredit.tenisId);
+    if(t){ t.km = Math.max(0, Math.round((t.km-p.shoeCredit.km)*10)/10); saveEquipamentos(); }
+  }
+  const runId = gr.runId || p.gpsRunId;
+  if(runId) await gpsDbDelete(runId);
+  const { done, pace, tempo, km, data, shoeCredit, gpsRunId, ...resto } = p;
+  if(Object.keys(resto).length) state.corridaProgress[key] = resto;
+  else delete state.corridaProgress[key];
+  saveCorridaProgress();
+  state.gpsRun = null;
+  render();
+  showToast('Atividade excluída');
+}
 const GPS_ZONE_ALERT_MIN_INTERVAL_MS = 45000; // não repete aviso de zona antes de 45s
 const GPS_ZONE_TOLERANCE_SEC = 10; // margem além da faixa do bloco antes de avisar (seg/km)
 // Compara o pace ATUAL suavizado (não o médio — senão o aviso reage devagar demais) com a faixa de
@@ -6501,6 +6527,7 @@ function renderGpsSummary(gr){
         <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
           <button class="btn-primary" id="gpsBtnCloseSummary2">Concluir</button>
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
+          ${gr.progressKey ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
       </div>
     </div>`;
@@ -6530,6 +6557,7 @@ function wireGpsRunScreen(){
   }
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
+  if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
   if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=>{
     const distTxt = fmtKm(gr.totalDistKm), tempoTxt = formatClock(Math.round(gpsTotalElapsedSec(gr)));
     const texto = `Acabei de correr ${distTxt} em ${tempoTxt} pelo Forza Run!`;
@@ -11125,6 +11153,7 @@ async function abrirResumoCorrida(dayKey){
     status:'finished', mode:'gps', day:abbr, steps: entry ? gpsStepsFromEntry(entry) : [], stepIndex:0,
     etapasExecutadas: rec.etapas_executadas||[], points:(rec.pontos_gps||[]).map(p=>({ lat:p.lat, lng:p.lng, timestamp:p.timestamp, alt:p.alt!=null?p.alt:null, ...(p.seg?{seg:1}:{}) })),
     totalDistKm: rec.distancia_total_km||0, finalElapsedSec: rec.tempo_total_seg||0, somenteLeitura:true,
+    progressKey: dayKey, runId: prog.gpsRunId,
   };
   render();
 }
@@ -11743,6 +11772,9 @@ function renderTreinoV2Corrida(day, phaseParts){
   }
   const done = isCorridaDone(day);
   const avgPace = corridaAvgPaceLabel(entry);
+  // Corrida gravada (GPS/esteira) do dia, marcada ou não: dá pra reabrir o resumo (e excluir por lá).
+  const progDia = corridaEntryProgress(day);
+  const gravada = progDia && progDia.gpsRunId ? `<div class="ds-row ds-inrow" data-lastrun="${corridaProgressKey(day)}" style="margin:0 0 16px;"><span class="nm">Ver atividade gravada</span><span class="chev">${DS_CHEV}</span></div>` : '';
   const tAtual = phaseParts ? treinoProgressaoChips(phaseParts).find(c=>c.current) : null;
   const rotulo = 'CORRIDA' + (tAtual ? ` · ${tAtual.label}` : '');
   const stepsHtml = (entry.steps && entry.steps.length) ? `
@@ -11773,6 +11805,7 @@ function renderTreinoV2Corrida(day, phaseParts){
       </div>
       ${entry.objetivo ? `<div class="mrt-focoline">Foco: ${entry.objetivo}</div>` : ''}
       ${renderTreinoV2Doms(day)}
+      ${gravada}
       <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
       ${(state.equipItens && state.equipItens.esteira===false) ? '' : `<button class="btn-secondary" style="margin-top:8px;" data-startesteira="${day}">${ICONS.run} Esteira</button>`}
       ${stepsHtml}
@@ -11993,6 +12026,7 @@ function wireTreinoV2(){
   const startWorkoutBtn = document.getElementById('mrtStartWorkout');
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
 
+  document.querySelectorAll('[data-lastrun]').forEach(el=>{ el.onclick = ()=> abrirResumoCorrida(el.getAttribute('data-lastrun')); });
   document.querySelectorAll('[data-mrtdonecorrida]').forEach(el=>{
     el.onclick = (ev)=>{ ev.stopPropagation(); hapticLeve(); toggleCorridaDone(el.getAttribute('data-mrtdonecorrida')); };
   });
