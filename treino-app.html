@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Forza Run</title>
+<title>Meu Ritmo</title>
 <link rel="icon" href="icon-180.png">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="manifest" href="manifest.json">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Forza Run">
+<meta name="apple-mobile-web-app-title" content="Meu Ritmo">
 <meta name="theme-color" content="#FFFFFF">
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+<!-- Firebase NÃO é carregado aqui: vem por carregarFirebase() no script principal, sem bloquear a abertura
+     (sem internet o app abre e funciona local; a nuvem entra quando o SDK conseguir carregar). -->
 <!-- Só existe dentro do app nativo (gerado pelo build do Capacitor); no PWA/web esse arquivo não existe
      e o 404 é inofensivo — window.NativeBridge fica undefined e o app usa as APIs web normalmente. -->
 <script src="native-bridge.js"></script>
@@ -1420,6 +1419,80 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-strong{ font-size:14px; font-weight:700; color:var(--text); }
 .ds-danger{ height:48px; background:none; border:none; font-family:inherit; font-size:15px; font-weight:600; color:var(--danger); cursor:pointer; }
 
+/* ---------- Treinador: por quê, check-in, ajustar, perdido, diário ---------- */
+.ds-why{ font-size:14px; line-height:1.45; color:var(--text-dim); margin:0 0 16px; }
+.ds-btnrow{ display:flex; gap:10px; }
+.ds-btnrow .btn-primary{ flex:1.4; }
+.ds-btnrow .btn-secondary{ flex:1; }
+.btn-primary.sm, .btn-secondary.sm{ height:44px; font-size:15px; }
+.ds-static{ cursor:default; }
+.ds-ckcard{ display:flex; flex-direction:column; gap:12px; padding:16px; }
+.ds-ckrow{ display:flex; align-items:center; gap:12px; }
+.ds-ckrow .lb{ width:64px; flex-shrink:0; font-size:14px; font-weight:600; color:var(--text); }
+.ds-seg{ flex:1; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:4px; background:var(--surface-2); border-radius:10px; padding:3px; }
+.ds-seg button{ height:36px; border:none; border-radius:8px; background:none; font-family:inherit; font-size:13px; font-weight:600; color:var(--text-dim); cursor:pointer; }
+.ds-seg button.on{ background:var(--surface); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.10); }
+.sheet .ds-ckrow{ margin-bottom:12px; }
+.ds-ajlist{ margin-top:4px; }
+.ds-ajop{ display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:14px 0; background:none; border:none; border-top:1px solid var(--border); font-family:inherit; text-align:left; cursor:pointer; }
+.ds-ajop:last-child{ border-bottom:1px solid var(--border); }
+.ds-ajop .t{ font-size:16px; font-weight:600; color:var(--text); display:flex; align-items:center; gap:8px; }
+.ds-ajop .t em{ font-style:normal; font-size:11px; font-weight:700; color:#FFFFFF; background:var(--text); border-radius:var(--r-pill); padding:2px 8px; }
+.ds-ajop .s{ font-size:13.5px; color:var(--text-dim); line-height:1.4; }
+.ds-ajop.rec .t{ font-weight:700; }
+.ds-alerta{ border-color:var(--text); }
+.ds-alerta .t{ font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.ds-alerta .s{ font-size:14px; color:var(--text-dim); line-height:1.4; margin-bottom:14px; }
+.ds-diario{ display:flex; gap:14px; padding:12px 0; border-top:1px solid var(--border); }
+.ds-diario .dt{ width:44px; flex-shrink:0; font-size:13px; font-weight:700; color:var(--text-faint); font-variant-numeric:tabular-nums; }
+.ds-diario .tx{ font-size:14px; color:var(--text); line-height:1.4; }
+.ds-diario .tx span{ display:block; font-size:13px; color:var(--text-dim); margin-top:2px; }
+.ds-star{ height:12px; font-size:11px; line-height:12px; color:var(--text); }
+.ds-star-in{ font-size:13px; color:var(--text); }
+.ds-seg4{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+.btn-primary.ds-btn-perigo{ background:var(--danger); color:#FFFFFF; }
+/* ---------- Criadores: busca de exercício, configuração, rotina ---------- */
+.ds-search{ position:relative; margin:4px 0 10px; }
+.ds-search input{ width:100%; box-sizing:border-box; height:46px; border-radius:12px; border:none; background:var(--surface-2); padding:0 42px 0 14px; font-family:inherit; font-size:16px; color:var(--text); -webkit-appearance:none; appearance:none; }
+.ds-search input:focus{ outline:2px solid var(--text); outline-offset:0; background:var(--surface); }
+.ds-search-x{ position:absolute; right:6px; top:7px; width:32px; height:32px; border-radius:50%; border:none; background:var(--border); color:var(--text-dim); font-size:18px; line-height:1; cursor:pointer; }
+.ds-chiprow{ display:flex; gap:6px; overflow-x:auto; scrollbar-width:none; margin-bottom:10px; }
+.ds-chiprow::-webkit-scrollbar{ display:none; }
+.ds-chiprow.wrap{ flex-wrap:wrap; overflow:visible; }
+.ds-chip{ flex-shrink:0; height:36px; padding:0 14px; border-radius:var(--r-pill); border:none; background:var(--surface-2); font-family:inherit; font-size:14px; font-weight:600; color:var(--text-dim); cursor:pointer; }
+.ds-chip.on{ background:var(--text); color:#FFFFFF; }
+.ds-exlist{ max-height:52vh; overflow-y:auto; -webkit-overflow-scrolling:touch; margin:0 -4px; }
+.ds-exitem{ display:flex; align-items:center; gap:12px; width:100%; padding:8px 4px; border:none; border-bottom:1px solid var(--border); background:none; font-family:inherit; text-align:left; cursor:pointer; }
+.ds-exitem .mrt-exthumb, .ds-exhead .mrt-exthumb{ border-radius:10px; flex-shrink:0; }
+.ds-exitem .nm{ flex:1; min-width:0; font-size:15px; font-weight:600; color:var(--text); }
+.ds-exitem .nm small{ display:block; font-size:12.5px; font-weight:500; color:var(--text-faint); margin-top:1px; }
+.ds-exhead{ display:flex; align-items:center; gap:12px; margin-bottom:16px; }
+.ds-stepper{ display:flex; align-items:center; gap:8px; padding:10px 0; border-bottom:1px solid var(--border); }
+.ds-stepper .lb{ flex:1; font-size:15px; font-weight:600; color:var(--text); }
+.ds-stepper input{ width:72px; height:40px; text-align:center; border:none; border-radius:10px; background:var(--surface-2); font-family:inherit; font-size:17px; font-weight:700; color:var(--text); }
+.ds-stepper button{ width:40px; height:40px; border-radius:10px; border:none; background:var(--surface-2); font-size:20px; font-weight:600; color:var(--text); cursor:pointer; }
+.ds-stepper .un{ font-size:14px; color:var(--text-dim); }
+.ds-actions{ display:flex; flex-direction:column; gap:8px; margin-top:18px; }
+.ds-input{ width:100%; box-sizing:border-box; height:48px; border-radius:12px; border:none; background:var(--surface-2); padding:0 14px; font-family:inherit; font-size:16px; color:var(--text); }
+.ds-rotrow{ gap:6px; }
+.ds-rotmain{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:2px; padding:10px 0; border:none; background:none; font-family:inherit; text-align:left; cursor:pointer; }
+.ds-rotmain .nm{ font-size:15px; font-weight:600; color:var(--text); }
+.ds-rotmain .aside{ font-size:13px; color:var(--text-faint); }
+.ds-mini{ width:36px; height:36px; flex-shrink:0; border-radius:10px; border:none; background:var(--surface-2); color:var(--text); font-size:16px; cursor:pointer; }
+.ds-mini:disabled{ opacity:.3; }
+.blk-seq{ margin:0 0 12px; padding-left:20px; font-size:14px; line-height:1.6; color:var(--text); }
+.blk-seq b{ font-weight:700; }
+.gps-comofoi{ margin-top:4px; }
+/* Corrida: aguardando GPS / contagem / extras ao vivo */
+.mrt-scroll.gps-wait{ display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; position:relative; }
+.gps-wait-x{ position:absolute; top:calc(16px + env(safe-area-inset-top)); left:16px; }
+.gps-wait-ic{ width:72px; height:72px; border-radius:50%; background:var(--surface-2); color:var(--text-faint); display:flex; align-items:center; justify-content:center; margin-bottom:18px; }
+.gps-wait-ic svg{ width:32px; height:32px; }
+.gps-wait-ic.ok{ background:var(--text); color:#FFFFFF; }
+.gps-wait-btns{ width:100%; max-width:320px; display:flex; flex-direction:column; gap:6px; margin-top:28px; }
+.gps-count{ font-size:120px; font-weight:800; letter-spacing:-4px; line-height:1; color:var(--text); font-variant-numeric:tabular-nums; margin-bottom:8px; }
+.gps-extra{ text-align:center; font-size:12.5px; font-weight:600; color:var(--text-dim); padding:0 8px 12px; font-variant-numeric:tabular-nums; }
+
 /* Início: saudação e semana */
 .mrt-greetrow{ margin-bottom:28px; align-items:flex-start; }
 .mrt-greetdate{ font-size:14px; font-weight:500; color:var(--text-dim); margin:0 0 4px; }
@@ -1502,16 +1575,25 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 // vira opcional, só pra sincronizar/compartilhar — nunca mais bloqueia o uso do app.
 function makeLocalStorage(){
   return {
+    kind: 'local',
     get: async function(key){
       try{ return { value: localStorage.getItem('treinoapp:'+key) }; }
       catch(e){ return { value: null }; }
     },
     set: async function(key, value){
-      try{ localStorage.setItem('treinoapp:'+key, value); }catch(e){}
+      try{ localStorage.setItem('treinoapp:'+key, value); }
+      catch(e){ console.warn('[armazenamento] não consegui gravar localmente:', key, e); }
     },
   };
 }
 if(!window.storage) window.storage = makeLocalStorage();
+function lsGet(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }
+function lsSet(k, v){
+  try{ if(v==null) localStorage.removeItem(k); else localStorage.setItem(k, v); return true; }
+  catch(e){ console.warn('[armazenamento] não consegui gravar localmente:', k, e); return false; }
+}
+function lsLista(k){ try{ const v = JSON.parse(lsGet(k)||'[]'); return Array.isArray(v) ? v : []; }catch(e){ return []; } }
+function lsGravarLista(k, arr){ return lsSet(k, arr && arr.length ? JSON.stringify(arr) : null); }
 
 /* ---------- Login com e-mail/senha + dados na nuvem (Firebase) ---------- */
 // Trocado de Google Sign-In pra e-mail+senha: o login com Google nunca saiu confiável no Safari do
@@ -1526,6 +1608,7 @@ function authErrorMessage(code, fallback){
     'auth/email-already-in-use': 'Já existe conta com esse e-mail. Toca em "Entrar" em vez de criar.',
     'auth/weak-password': 'Senha muito curta — usa pelo menos 6 caracteres.',
     'auth/operation-not-allowed': 'Login por e-mail/senha não está habilitado no projeto Firebase ainda.',
+    'auth/network-request-failed': 'Sem conexão com a internet. Tenta de novo quando tiver sinal.',
     'auth/too-many-requests': 'Muitas tentativas erradas seguidas — o Firebase bloqueou por alguns minutos como proteção. Espera um pouco e tenta de novo.',
   };
   return map[code] || fallback;
@@ -1539,27 +1622,167 @@ const firebaseConfig = {
   appId: "1:679932143430:web:c00bbb3c9195cffc7d2747",
   measurementId: "G-CHKSQ9DNG6",
 };
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.firestore();
+// O SDK do Firebase vem da internet e é carregado SEM bloquear a abertura: sem conexão (ou com o
+// servidor do Google fora) o app abre e funciona local. Até o SDK carregar, `auth` e `db` são versões
+// "indisponíveis" — toda chamada falha como falha de rede, que é exatamente o que o resto do código já
+// trata (try/catch, mensagens de erro de login).
+const FIREBASE_SDK_URLS = [
+  'https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js',
+  'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js',
+  'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js',
+];
+function fbErroOffline(){
+  const e = new Error('Sem conexão com a nuvem agora. Tenta de novo quando tiver internet.');
+  e.code = 'auth/network-request-failed';
+  return e;
+}
+const AUTH_INDISPONIVEL = {
+  currentUser: null,
+  onAuthStateChanged(){ return ()=>{}; },
+  signInWithEmailAndPassword(){ return Promise.reject(fbErroOffline()); },
+  createUserWithEmailAndPassword(){ return Promise.reject(fbErroOffline()); },
+  sendPasswordResetEmail(){ return Promise.reject(fbErroOffline()); },
+  signOut(){ return Promise.reject(fbErroOffline()); },
+};
+const DB_INDISPONIVEL = { collection(){ throw fbErroOffline(); } };
+let auth = AUTH_INDISPONIVEL, db = DB_INDISPONIVEL, firebasePronto = false, _firebaseCarregando = null;
+function carregarScript(src, timeoutMs){
+  return new Promise((resolve, reject)=>{
+    const s = document.createElement('script');
+    let fim = false;
+    const t = setTimeout(()=>{ if(!fim){ fim = true; reject(new Error('Tempo esgotado ao carregar '+src)); } }, timeoutMs);
+    s.onload = ()=>{ if(!fim){ fim = true; clearTimeout(t); resolve(); } };
+    s.onerror = ()=>{ if(!fim){ fim = true; clearTimeout(t); s.remove(); reject(new Error('Falha ao carregar '+src)); } };
+    s.src = src;
+    document.head.appendChild(s);
+  });
+}
+// Carrega os 3 scripts em ordem (auth/firestore dependem do app) e inicializa. Falhou → libera pra tentar
+// de novo depois (evento "online"), sem deixar nada pela metade marcado como pronto.
+function carregarFirebase(){
+  if(firebasePronto) return Promise.resolve(true);
+  if(_firebaseCarregando) return _firebaseCarregando;
+  _firebaseCarregando = (async ()=>{
+    try{
+      if(typeof firebase==='undefined' || !firebase.firestore || !firebase.auth){
+        for(const u of FIREBASE_SDK_URLS) await carregarScript(u, 15000);
+      }
+      if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      auth = firebase.auth();
+      db = firebase.firestore();
+      firebasePronto = true;
+      return true;
+    }finally{ _firebaseCarregando = null; }
+  })();
+  return _firebaseCarregando;
+}
 
-// Cada campo que o app já salvava local (treinos, musculacao, perfil, historicoCarga...) vira um
-// documento próprio dentro de users/{uid}/data/{chave} — o resto do app não precisa saber disso,
-// já que só fala com window.storage.get/set, exatamente como falava com o localStorage antes.
-function makeFirestoreStorage(uid){
-  const col = db.collection('users').doc(uid).collection('data');
-  return {
+/* ---------- Nuvem: leitura/escrita que sabem quando falharam ---------- */
+// "Não consegui falar com a nuvem" ≠ "a nuvem não tem esse dado". Leitura devolve {ok:false} quando
+// falha (nunca um "vazio" inventado); escrita lança erro quando falha (nunca sucesso silencioso).
+// Estado só interno por enquanto (sem UI) — dá pra inspecionar em window.__cloudStatus.
+const cloudStatus = { sdk:'carregando', readOk:null, writeOk:null, lastError:null, failedReads:0, failedWrites:0, pendingWrites:0, blockedWrites:0, migracaoOk:null, gpsSync:null };
+window.__cloudStatus = cloudStatus;
+const CLOUD_TIMEOUT_MS = 8000;
+let cloudDownUntil = 0;
+function comTimeout(p, ms){
+  return Promise.race([p, new Promise((_, rej)=>setTimeout(()=>rej(new Error('Tempo esgotado falando com a nuvem')), ms))]);
+}
+function nuvemAcessivel(){ return firebasePronto && navigator.onLine!==false && Date.now()>=cloudDownUntil; }
+// Depois de uma falha, para de tentar por 30s — sem isso, abrir o app sem rede esperaria o timeout em
+// cada uma das ~25 chaves lidas pelo init().
+function marcarFalhaNuvem(e){
+  cloudDownUntil = Date.now()+30000;
+  cloudStatus.lastError = String((e && e.message) || e);
+  console.warn('[nuvem]', cloudStatus.lastError);
+}
+function docNuvem(uid, key){ return db.collection('users').doc(uid).collection('data').doc(key); }
+async function cloudRead(uid, key){
+  if(!nuvemAcessivel()) return { ok:false };
+  try{
+    const snap = await comTimeout(docNuvem(uid, key).get(), CLOUD_TIMEOUT_MS);
+    return { ok:true, exists:snap.exists, value: snap.exists ? snap.data().value : null };
+  }catch(e){ marcarFalhaNuvem(e); return { ok:false }; }
+}
+async function cloudWrite(uid, key, value){
+  if(!nuvemAcessivel()) throw new Error('Nuvem indisponível');
+  try{ await comTimeout(docNuvem(uid, key).set({ value }), CLOUD_TIMEOUT_MS); }
+  catch(e){ marcarFalhaNuvem(e); throw e; }
+}
+const nuvemCachePrefix = (uid)=>'treinoapp:u:'+uid+':';
+// Storage da conta logada: nuvem + cópia local por usuário (treinoapp:u:{uid}:{chave}).
+// - Leitura: nuvem quando dá; sem nuvem, a cópia local (último estado conhecido). Sem nuvem E sem cópia
+//   local, a chave fica "insegura": o app segue com o padrão em memória, mas NUNCA escreve essa chave na
+//   nuvem nesta sessão (senão o padrão vazio sobrescreveria o dado de verdade que pode estar lá).
+// - Escrita: sempre na cópia local; na nuvem quando dá. Falhou → entra na fila de pendentes (persistida),
+//   reenviada por flushPendentes() quando a conexão volta. Chave pendente é lida da cópia local (é a mais nova).
+// opts.cache=false (personal vendo a aluna): sem cópia local nem fila; as mesmas regras de chave insegura.
+function makeSyncedStorage(uid, opts){
+  opts = opts || {};
+  const usaCache = opts.cache !== false;
+  const pref = nuvemCachePrefix(uid);
+  const pendKey = pref+'__pendentes';
+  const inseguras = new Set();
+  const lerPend = ()=> usaCache ? lsLista(pendKey) : [];
+  const gravarPend = (arr)=>{ if(usaCache){ lsGravarLista(pendKey, arr); cloudStatus.pendingWrites = arr.length; } };
+  const store = {
+    kind: 'nuvem', uid,
     get: async function(key){
-      try{
-        const snap = await col.doc(key).get();
-        return { value: snap.exists ? snap.data().value : null };
-      }catch(e){ return { value: null }; }
+      const local = usaCache ? lsGet(pref+key) : null;
+      if(usaCache && lerPend().includes(key)) return { value: local };
+      const r = await cloudRead(uid, key);
+      if(r.ok){
+        cloudStatus.readOk = true;
+        inseguras.delete(key);
+        if(usaCache) lsSet(pref+key, r.value);
+        return { value: r.value };
+      }
+      cloudStatus.readOk = false; cloudStatus.failedReads++;
+      if(usaCache && local!=null) return { value: local };
+      inseguras.add(key);
+      return { value: null };
     },
     set: async function(key, value){
-      try{ await col.doc(key).set({ value }); }catch(e){}
+      // Chave insegura nem vai pra cópia local: senão, numa próxima abertura sem rede, esse valor montado em
+      // cima do padrão viraria "último estado conhecido" e acabaria indo pra nuvem por cima do dado real.
+      if(inseguras.has(key)){
+        cloudStatus.blockedWrites++;
+        console.warn('[nuvem] escrita bloqueada (a leitura dessa chave falhou nesta sessão):', key);
+        return;
+      }
+      const cacheOk = usaCache ? lsSet(pref+key, value) : false;
+      try{
+        await cloudWrite(uid, key, value);
+        cloudStatus.writeOk = true;
+        const p = lerPend();
+        if(p.includes(key)) gravarPend(p.filter(k=>k!==key));
+      }catch(e){
+        cloudStatus.writeOk = false; cloudStatus.failedWrites++;
+        const p = lerPend().filter(k=>k!==key);
+        // Só enfileira se a cópia local ficou com o valor novo — senão o reenvio mandaria um valor velho.
+        if(cacheOk) p.push(key);
+        gravarPend(p);
+      }
+    },
+    flushPendentes: async function(){
+      const p = lerPend();
+      if(!p.length) return true;
+      if(!nuvemAcessivel()) return false;
+      const resto = [];
+      for(const key of p){
+        if(inseguras.has(key) || !nuvemAcessivel()){ resto.push(key); continue; }
+        try{ await cloudWrite(uid, key, lsGet(pref+key)); }catch(e){ resto.push(key); }
+      }
+      gravarPend(resto);
+      if(!resto.length) cloudStatus.writeOk = true;
+      return !resto.length;
     },
   };
+  cloudStatus.pendingWrites = lerPend().length;
+  return store;
 }
+// Mantido pelo nome antigo (personal vendo a aluna): agora com as mesmas garantias de falha.
+function makeFirestoreStorage(uid){ return makeSyncedStorage(uid, { cache:false }); }
 /* ---------- Personal x aluna: código de compartilhamento e troca de contexto ---------- */
 function randomShareCode(){
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; // sem 0/O e 1/I, pra não confundir na hora de digitar
@@ -1640,7 +1863,7 @@ async function createGroup(name){
 async function joinGroupByCode(code){
   if(!state.authUser || !code || !code.trim()) return;
   const snap = await db.collection('groups').where('inviteCode','==', code.toUpperCase().trim()).limit(1).get();
-  if(snap.empty){ alert('Código não encontrado.'); return; }
+  if(snap.empty){ showToast('Código não encontrado'); return; }
   const doc = snap.docs[0];
   const myName = state.authUser.name || state.perfil.nome || 'Atleta';
   await doc.ref.update({ memberUids: firebase.firestore.FieldValue.arrayUnion(state.authUser.uid) });
@@ -3688,8 +3911,13 @@ function gerarPlanoSemanal(perfil, opcoes){
   opcoes = opcoes || {};
   const est = lerEstado(perfil, opcoes);
   if(est.cautela.bloqueado) return motorDescricaoBloqueio(est);
+  // Semana N do plano vivo: o volume de corrida vem da trajetória calculada na semana 1 (progressão,
+  // descarga, polimento) em vez da carga inicial.
+  if(opcoes.alvoSemana && opcoes.alvoSemana.corridaMinAlvo>0 && est.corrida && est.corrida.carga){
+    est.corrida.carga = { ...est.corrida.carga, min: opcoes.alvoSemana.corridaMinAlvo };
+  }
   const prio = definirPrioridade(est);
-  let ajustes = { reduzir:0, semQualidade:false, semDobros:false, volumeFator:1, aliviarInferior:false, semProgressao:false };
+  let ajustes = { reduzir:0, semQualidade:false, semDobros:false, volumeFator:1, aliviarInferior:false, semProgressao:false, ...(opcoes.ajustesIniciais||{}) };
   let cons = null, val = null, ciclos = 0;
   const historicoVal = [];
   for(let ciclo=1; ciclo<=3; ciclo++){
@@ -3784,13 +4012,512 @@ async function gerarPrimeiroPlanoV2(opcoes){
   return r;
 }
 /* ===== fim MOTOR V2 ===== */
+/* ===== PLANO VIVO + TREINADOR (motor do dia a dia) =====
+   Tudo aqui trabalha em cima dos dados que o app já tem: state.treinos (corrida datada), state.musculacao
+   (lista por dia da semana), state.corridaProgress e state.workoutSessionsLog (o que foi feito de verdade),
+   state.hybridPlanData / state.corridaVdotData (planos). Novos dados persistidos: diarioTreinador,
+   checkinDiario, muscAjusteOrig, perdidosTratados (todos no BACKUP_KEYS). */
+
+/* ---------- datas da semana REAL (independe de qual semana a tela está mostrando) ---------- */
+function hojeAbbr(){ return DAY_ABBR[(new Date().getDay()+6)%7]; }
+function hojeIdx(){ return (new Date().getDay()+6)%7; }
+function segundaAtual(){ return vdotMondayOf(new Date()); }
+function dataDoDiaSemanaAtual(d){ const m = segundaAtual(); m.setDate(m.getDate()+DAY_ABBR.indexOf(d)); return m; }
+function chaveDiaAtual(d){ return d+' '+vdotFormatDDMM(dataDoDiaSemanaAtual(d)); }
+function isoDoDiaAtual(d){ return vdotISODate(dataDoDiaSemanaAtual(d)); }
+// Roda fn com a tela "apontando" pra semana atual (treinoEntryForDay/dayDateLabel dependem de weekOffset).
+function naSemanaAtual(fn){
+  const off = state.weekOffset;
+  state.weekOffset = 0;
+  try{ return fn(); } finally{ state.weekOffset = off; }
+}
+
+/* ---------- sessões-chave ---------- */
+function ehTipoCorridaChave(tipo){ return /interval|repeti|limiar|tempo|longão|longao|prova/i.test(String(tipo||'')); }
+function corridaIntensa(entry){ return !!entry && (ehTipoCorridaChave(entry.type)); }
+function muscPernasPesado(lista){
+  if(!lista || !lista.length) return false;
+  if(lista[0] && lista[0].sessao==='LEG_DAY_HEAVY') return true;
+  return lista.filter(e=>e.grupo==='Pernas').length >= 3;
+}
+function muscTemPernas(lista){ return !!(lista && lista.some(e=>e.grupo==='Pernas')); }
+// Musculação é chave quando o objetivo principal é força/massa e o dia é de perna pesada (sessão que
+// mais pesa e que o plano protege).
+function focoDoPlanoMusc(){
+  const hp = state.hybridPlanData;
+  const f = hp && (hp.foco || (hp.draft && focoFromObjetivo(hp.draft.objetivo)));
+  return f==='musculacao' || f==='massa' || f==='forca';
+}
+function ehSessaoChaveMusc(lista){ return focoDoPlanoMusc() && muscPernasPesado(lista); }
+function ehSessaoChaveDia(d){
+  return naSemanaAtual(()=>{
+    const e = treinoEntryForDay(d);
+    return !!((e && (e.chave || corridaIntensa(e))) || ehSessaoChaveMusc(muscListForDay(d)));
+  });
+}
+// Para a semana exibida na tela (pode não ser a atual).
+function ehSessaoChaveDiaExibido(d){
+  const e = treinoEntryForDay(d);
+  return !!((e && (e.chave || corridaIntensa(e))) || ehSessaoChaveMusc(muscListForDay(d)));
+}
+
+/* ---------- plano vivo: a semana atual do plano entra sozinha na agenda ---------- */
+function semanaDoPlanoPara(startMondayISO, segunda){
+  return Math.floor((segunda - new Date(startMondayISO+'T00:00:00'))/(7*86400000)) + 1;
+}
+// Gera a semana N do plano V2 com o perfil atual + meta da trajetória + ajuste vindo do check-in.
+function gerarSemanaV2(n){
+  const hp = state.hybridPlanData;
+  if(!hp || !state.athleteProfile) return null;
+  const alvo = (hp.trajetoria||[])[n-1] || null;
+  const aj = (hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n) ? hp.ajusteProximaSemana.ajustes : null;
+  let r;
+  try{ r = gerarPlanoSemanal(state.athleteProfile, { alvoSemana:alvo, ajustesIniciais:aj }); }
+  catch(e){ console.warn('[plano] não consegui gerar a semana', n, e); return null; }
+  if(!r || r.bloqueado || !r.semana) return null;
+  const w = r.semana;
+  w.weekNumber = n; w.totalWeeks = hp.plan.length;
+  if(alvo && alvo.fase) w.phaseLabel = alvo.fase;
+  const f = alvo && alvo.muscSeriesFator;
+  if(f && f!==1){
+    Object.keys(w.muscPlan||{}).forEach(d=>w.muscPlan[d].forEach(e=>{ const s = parseInt(e.series,10); if(s) e.series = String(Math.max(2, Math.round(s*f))); }));
+  }
+  (w.corridaWeek||[]).forEach(c=>{ if(ehTipoCorridaChave(c.type)) c.chave = true; });
+  return w;
+}
+// Chamada no init: descobre em que semana do plano estamos pela data e coloca essa semana na agenda (uma
+// vez por semana — materializadaSeg). Semanas passadas ficam como histórico; nada concluído é apagado.
+async function atualizarSemanaDoPlano(){
+  const seg = segundaAtual();
+  const segISO = vdotISODate(seg);
+  restaurarAjustesMuscAntigos(segISO);
+  const hp = state.hybridPlanData;
+  if(hp && hp.plan && hp.plan.length && hp.startMonday){
+    const n = semanaDoPlanoPara(hp.startMonday, seg);
+    if(n<1 || n>hp.plan.length) return;
+    if(hp.currentWeekIndex===n && hp.materializadaSeg===segISO) return;
+    const anterior = hp.plan[(hp.currentWeekIndex||1)-1];
+    const diasMuscAnteriores = anterior && anterior.muscPlan ? Object.keys(anterior.muscPlan) : [];
+    let week = hp.plan[n-1];
+    if(hp.motorV2 && (!week || week.pendente)){
+      if(!state.athleteProfile){ try{ await carregarAthleteProfile(); }catch(e){} }
+      const gerada = gerarSemanaV2(n);
+      if(gerada) week = hp.plan[n-1] = gerada;
+    }
+    if(!week || week.pendente) return; // não deu pra gerar (perfil ausente): tenta de novo na próxima abertura
+    if(hp.materializadaSeg!==segISO || hp.currentWeekIndex!==n){
+      // A semana 1 já foi materializada na criação do plano; as outras entram aqui.
+      if(!(n===1 && !hp.materializadaSeg)) materializeHybridWeekIntoState(week, hp.startMonday, diasMuscAnteriores);
+      hp.currentWeekIndex = n;
+      hp.materializadaSeg = segISO;
+      await saveHybridPlanData();
+    }
+    return;
+  }
+  const cv = state.corridaVdotData;
+  if(cv && cv.plan && cv.plan.length && cv.startMonday){
+    const n = semanaDoPlanoPara(cv.startMonday, seg);
+    if(n<1 || n>cv.plan.length) return;
+    if(cv.currentWeekIndex===n && cv.materializadaSeg===segISO) return;
+    const week = cv.plan.find(w=>w.weekNumber===n);
+    if(!week) return;
+    materializeVdotWeekIntoTreinos(week, cv.startMonday);
+    state.corridaVdotData = { ...cv, currentWeekIndex:n, materializadaSeg:segISO };
+    await saveCorridaVdotData();
+  }
+}
+// Prévia de semana futura (tela Treino): corrida do plano daquela semana sem gravar na agenda.
+const _previaSemanas = {};
+function entradaPreviaDoPlano(d){
+  if((state.weekOffset||0)<=0) return null;
+  const hp = state.hybridPlanData, cv = state.corridaVdotData;
+  const seg = displayedWeekMonday();
+  const dataTxt = vdotFormatDDMM(new Date(seg.getFullYear(), seg.getMonth(), seg.getDate()+DAY_ABBR.indexOf(d)));
+  if(hp && hp.plan && hp.startMonday){
+    const n = semanaDoPlanoPara(hp.startMonday, seg);
+    if(n<1 || n>hp.plan.length) return null;
+    let w = hp.plan[n-1];
+    if(w && w.pendente && hp.motorV2){
+      if(!_previaSemanas[n]) _previaSemanas[n] = gerarSemanaV2(n);
+      w = _previaSemanas[n];
+    }
+    const c = w && w.corridaWeek ? w.corridaWeek.find(x=>x.day===d) : null;
+    return c ? { ...c, day: d+' '+dataTxt, previa:true, chave: !!(c.chave || ehTipoCorridaChave(c.type)) } : null;
+  }
+  if(cv && cv.plan && cv.startMonday){
+    const n = semanaDoPlanoPara(cv.startMonday, seg);
+    const w = cv.plan.find(x=>x.weekNumber===n);
+    const c = w && w.days ? w.days.find(x=>x.day===d) : null;
+    return c ? { ...c, type: c.title || c.type, day: d+' '+dataTxt, previa:true, chave: ehTipoCorridaChave(c.type) } : null;
+  }
+  return null;
+}
+
+/* ---------- carga real (o que foi FEITO, não o planejado) ---------- */
+function pontosPernasCorrida(tipo){
+  const t = String(tipo||'');
+  if(/interval|repeti/i.test(t)) return 40;
+  if(/longão|longao/i.test(t)) return 35;
+  if(/limiar|tempo/i.test(t)) return 30;
+  if(/regenerat|recupera/i.test(t)) return 5;
+  return 10;
+}
+function minutosDeTempo(txt){
+  const p = String(txt||'').split(':').map(x=>parseInt(x,10));
+  if(p.some(isNaN) || !p.length) return 0;
+  return p.length===3 ? p[0]*60+p[1]+p[2]/60 : p[0]+(p[1]||0)/60;
+}
+const COMO_FOI_FATOR = { 1:0.85, 2:1, 3:1.2, 4:1.4 };
+function eventosDeCarga(){
+  const ev = [];
+  Object.entries(state.corridaProgress||{}).forEach(([k,v])=>{
+    if(!v || typeof v!=='object' || !v.done || !v.data) return;
+    const e = (state.treinos||[]).find(t=>t.day===k);
+    const tipo = e ? e.type : '';
+    const min = minutosDeTempo(v.tempo) || (e && e.totalMin) || ((parseFloat(v.km)||0)*6.5);
+    const f = COMO_FOI_FATOR[v.comoFoi] || 1;
+    const intens = ehTipoCorridaChave(tipo) ? 1.5 : 1;
+    ev.push({ data:v.data, pernas: pontosPernasCorrida(tipo)*f, geral: min*intens*f, tipo:'corrida' });
+  });
+  (state.workoutSessionsLog||[]).forEach(s=>{
+    if(!s || !s.data) return;
+    const seriesPerna = (s.exercicios||[]).filter(x=>x.grupo==='Pernas').reduce((t,x)=>t+(parseInt(x.series,10)||0), 0);
+    const f = COMO_FOI_FATOR[s.comoFoi] || 1;
+    const pernas = (seriesPerna>=9 ? 40 : seriesPerna>=4 ? 20 : seriesPerna>0 ? 10 : 0) * f;
+    ev.push({ data:s.data, pernas, geral: ((s.duracaoSeg||2700)/60)*1.2*f, tipo:'musc' });
+  });
+  return ev;
+}
+function diasEntre(isoA, isoB){ return Math.round((new Date(isoB+'T00:00:00') - new Date(isoA+'T00:00:00'))/86400000); }
+// Estados simples pra interface: baixa / moderada / alta (sem números na tela).
+function cargaReal(){
+  const hoje = todayISO();
+  const ev = eventosDeCarga();
+  // Pernas: cada sessão soma seus pontos e recupera ~25 pontos por dia.
+  let pernas = 0;
+  ev.forEach(e=>{ const d = diasEntre(e.data, hoje); if(d>=0 && d<=3) pernas += Math.max(0, e.pernas - 25*d); });
+  // Geral: últimos 7 dias × média semanal das 4 semanas anteriores.
+  let aguda = 0, cronica = 0, semanaAnterior = 0;
+  ev.forEach(e=>{ const d = diasEntre(e.data, hoje); if(d>=0 && d<7) aguda += e.geral; if(d>=7 && d<35) cronica += e.geral; if(d>=7 && d<14) semanaAnterior += e.geral; });
+  const cronSem = cronica/4;
+  const ci = (state.checkinDiario||{})[hoje];
+  let nivelPernas = pernas>=50 ? 2 : pernas>=25 ? 1 : 0;
+  if(ci && ci.pernas===3) nivelPernas = Math.min(2, nivelPernas+1);
+  if(ci && ci.dor===3) nivelPernas = 2;
+  const razao = cronSem>0 ? aguda/cronSem : (aguda>0 ? 1 : 0);
+  let nivelGeral = cronSem>0 ? (razao>1.3 ? 2 : razao>=0.8 ? 1 : 0) : (aguda>240 ? 2 : aguda>60 ? 1 : 0);
+  if(ci && ci.energia===1) nivelGeral = Math.min(2, nivelGeral+1);
+  const nomes = ['baixa','moderada','alta'];
+  const tendencia = semanaAnterior>0 ? (aguda>semanaAnterior*1.15 ? 'subindo' : aguda<semanaAnterior*0.85 ? 'caindo' : 'estável') : (aguda>0 ? 'subindo' : 'estável');
+  return { pernas:nomes[nivelPernas], geral:nomes[nivelGeral], nivelPernas, nivelGeral, tendencia, pontosPernas:Math.round(pernas), razao: Math.round(razao*100)/100 };
+}
+
+/* ---------- check-in diário (3 toques) — unifica com a dor nas pernas (DOMS) ---------- */
+async function saveCheckinDiario(){ try{ await window.storage.set('checkinDiario', JSON.stringify(state.checkinDiario||{}), false); }catch(e){} }
+function checkinDiarioPendente(){ return !(state.checkinDiario||{})[todayISO()]; }
+// energia: 1 baixa · 2 ok · 3 alta | pernas: 1 leves · 2 normais · 3 pesadas | dor: 1 nenhuma · 2 leve · 3 forte
+const DOR_PARA_DOMS = { 1:0, 2:4, 3:7 };
+async function registrarCheckinDiario(resp){
+  state.checkinDiario = state.checkinDiario || {};
+  state.checkinDiario[todayISO()] = { ...resp, em:Date.now() };
+  // Mantém só ~60 dias.
+  const chaves = Object.keys(state.checkinDiario).sort();
+  chaves.slice(0, Math.max(0, chaves.length-60)).forEach(k=>delete state.checkinDiario[k]);
+  await saveCheckinDiario();
+  // A dor nas pernas do check-in é a mesma informação da escala de DOMS: alimenta a regra existente
+  // (dor ≥7 → corrida regenerativa e −25% nas séries de perna só hoje).
+  if(resp.dor){
+    state.domsPernas = state.domsPernas || {};
+    state.domsPernas[todayISO()] = DOR_PARA_DOMS[resp.dor];
+    saveDomsPernas();
+    aplicarDomsDeHoje(DOR_PARA_DOMS[resp.dor]);
+  }
+}
+
+/* ---------- conflitos de 24 h entre corrida e musculação ---------- */
+function retratoDia(d, sim){
+  if(sim && sim[d]) return sim[d];
+  return naSemanaAtual(()=>({ corrida: treinoEntryForDay(d), musc: muscListForDay(d) }));
+}
+function conflitosDoDia(d, sim){
+  const i = DAY_ABBR.indexOf(d);
+  const out = [];
+  const hoje = retratoDia(d, sim);
+  const ontem = i>0 ? retratoDia(DAY_ABBR[i-1], sim) : null;
+  const amanha = i<6 ? retratoDia(DAY_ABBR[i+1], sim) : null;
+  const intensa = (r)=> r && corridaIntensa(r.corrida);
+  const pesado = (r)=> r && muscPernasPesado(r.musc);
+  if(intensa(hoje) && pesado(hoje)) out.push('corrida forte e pernas pesadas no mesmo dia');
+  if(intensa(hoje) && pesado(ontem)) out.push('corrida forte no dia seguinte às pernas pesadas');
+  if(pesado(hoje) && intensa(amanha)) out.push('pernas pesadas na véspera de corrida forte');
+  if(pesado(hoje) && intensa(ontem)) out.push('pernas pesadas no dia seguinte a corrida forte');
+  if(intensa(hoje) && (intensa(ontem) || intensa(amanha))) out.push('dois treinos fortes de corrida seguidos');
+  return out;
+}
+
+/* ---------- diário do treinador ---------- */
+async function saveDiarioTreinador(){ try{ await window.storage.set('diarioTreinador', JSON.stringify(state.diarioTreinador||[]), false); }catch(e){} }
+function registrarNoDiario(reg){
+  state.diarioTreinador = state.diarioTreinador || [];
+  state.diarioTreinador.unshift({ data:todayISO(), em:Date.now(), ...reg });
+  if(state.diarioTreinador.length>200) state.diarioTreinador.length = 200;
+  saveDiarioTreinador();
+}
+function resumoCorrida(e){ return e ? `${e.type||'Corrida'}${e.totalKm ? ' · '+String(e.totalKm).replace('.',',')+' km' : ''}` : 'sem corrida'; }
+function resumoMusc(l){ return l && l.length ? `${muscTituloDoDia(hojeAbbr(), l)} · ${l.length} exercício${l.length===1?'':'s'}` : 'sem musculação'; }
+
+/* ---------- ajustes de musculação são da semana: guardam o original e voltam sozinhos ---------- */
+async function saveMuscAjusteOrig(){ try{ await window.storage.set('muscAjusteOrig', JSON.stringify(state.muscAjusteOrig||{}), false); }catch(e){} }
+function guardarOriginalMusc(d){
+  state.muscAjusteOrig = state.muscAjusteOrig || {};
+  const seg = vdotISODate(segundaAtual());
+  if(state.muscAjusteOrig[d] && state.muscAjusteOrig[d].semana===seg) return; // já guardado nesta semana
+  state.muscAjusteOrig[d] = { semana:seg, lista: JSON.parse(JSON.stringify(state.musculacao[d]||[])) };
+}
+function restaurarAjustesMuscAntigos(segISO){
+  const o = state.muscAjusteOrig || {};
+  let mudou = false;
+  Object.keys(o).forEach(d=>{
+    if(o[d].semana===segISO) return;
+    const lista = o[d].lista || [];
+    if(lista.length) state.musculacao[d] = lista.map(e=>({ ...e, done:false }));
+    else delete state.musculacao[d];
+    delete o[d]; mudou = true;
+  });
+  if(mudou){ saveMusc(); saveMuscAjusteOrig(); }
+}
+
+/* ---------- "Por quê?" do dia ---------- */
+function papelCorrida(e){
+  const t = String(e.type||'');
+  if(/interval|repeti/i.test(t)) return 'Treino forte da semana para ganhar velocidade';
+  if(/limiar|tempo/i.test(t)) return 'Ritmo de limiar para sustentar velocidade por mais tempo';
+  if(/longão|longao/i.test(t)) return 'Longão para construir resistência';
+  if(/regenerat/i.test(t)) return 'Corrida bem leve para recuperar';
+  if(/fartlek/i.test(t)) return 'Variação leve de ritmo sem picos de cansaço';
+  return 'Corrida leve para somar volume sem cansar';
+}
+function papelMusc(l){
+  if(muscPernasPesado(l)) return 'Força de pernas';
+  if(!muscTemPernas(l)) return 'Força de superiores, sem cansar as pernas';
+  return 'Força do corpo todo com pernas moderadas';
+}
+// Uma ou duas frases: papel do treino + contexto (ontem/carga/check-in) + o que protege (amanhã).
+function porQueHoje(d, sub){
+  const exibido = { corrida: treinoEntryForDay(d), musc: muscListForDay(d) };
+  const i = DAY_ABBR.indexOf(d);
+  const e = (sub==='musculacao') ? null : exibido.corrida;
+  const l = (sub==='corrida') ? [] : exibido.musc;
+  const ehHoje = (state.weekOffset||0)===0 && d===hojeAbbr();
+  const nota = ehHoje ? (state.domsPernas||{})[todayISO()] : null;
+  if(nota!=null && nota>=7){
+    if(e) return `Dor nas pernas ${nota}/10: hoje a corrida vira regenerativa para não piorar.`;
+    if(muscTemPernas(l)) return `Dor nas pernas ${nota}/10: séries de perna −25% só hoje.`;
+  }
+  if(e && e.ajuste && e.ajuste.motivo) return `Ajustado: ${e.ajuste.motivo}`;
+  let papel = e ? papelCorrida(e) : (l && l.length ? papelMusc(l) : '');
+  if(!papel) return '';
+  const ontem = i>0 ? { corrida: treinoEntryForDay(DAY_ABBR[i-1]), musc: muscListForDay(DAY_ABBR[i-1]) } : null;
+  const amanha = i<6 ? { corrida: treinoEntryForDay(DAY_ABBR[i+1]), musc: muscListForDay(DAY_ABBR[i+1]) } : null;
+  const partes = [];
+  if(ontem && muscPernasPesado(ontem.musc)) partes.push('ontem foi dia de pernas');
+  else if(ontem && corridaIntensa(ontem.corrida)) partes.push(`ontem teve ${String(ontem.corrida.type).toLowerCase()}`);
+  if(ehHoje){
+    const c = cargaReal();
+    if(c.pernas==='alta' && !partes.length) partes.push('suas pernas estão carregadas');
+    const ci = (state.checkinDiario||{})[todayISO()];
+    if(ci && ci.energia===1) partes.push('você marcou energia baixa');
+  }
+  let protege = '';
+  if(amanha && corridaIntensa(amanha.corrida) && !(e && corridaIntensa(e))) protege = ` para chegar inteiro ao ${String(amanha.corrida.type).toLowerCase()} de amanhã`;
+  else if(amanha && muscPernasPesado(amanha.musc) && e && !corridaIntensa(e)) protege = ' e deixar as pernas prontas para amanhã';
+  const ctx = partes.join(' e ');
+  return `${papel}${protege}.` + (ctx ? ' '+ctx.charAt(0).toUpperCase()+ctx.slice(1)+'.' : '');
+}
+
+/* ---------- escada de ajuste (manter → mais leve → reduzir → trocar → mover → descansar) ---------- */
+function paceFacil(){
+  const cv = state.corridaVdotData;
+  return cv && cv.paces && cv.paces.E ? cv.paces.E : '';
+}
+function copiaCorrida(e){ return { type:e.type, totalKm:e.totalKm, totalMin:e.totalMin, steps:e.steps, gpsSteps:e.gpsSteps, mainPace:e.mainPace, mainDesc:e.mainDesc }; }
+function marcarAjusteCorrida(e, motivo){ if(!e.ajuste) e.ajuste = { original: copiaCorrida(e) }; e.ajuste.motivo = motivo; }
+function escalarPassos(steps, f){ return (steps||[]).map(s=>({ ...s, km: s.km ? roundToHalf(s.km*f) || s.km : s.km, metaSeg: s.metaSeg ? Math.round(s.metaSeg*f) : s.metaSeg })); }
+// Destinos possíveis pra mover a sessão de `d` (até o fim da semana), sem criar conflito de 24 h e sem
+// ocupar dia que já tem a mesma modalidade. `aPartir` = índice do primeiro dia permitido.
+function destinosParaMover(d, mod, aPartir){
+  const atual = {};
+  DAY_ABBR.forEach(x=>{ atual[x] = retratoDia(x); });
+  const out = [];
+  for(let i=aPartir; i<7; i++){
+    const alvo = DAY_ABBR[i];
+    if(alvo===d) continue;
+    if(mod==='corrida' && atual[alvo].corrida) continue;
+    if(mod==='musc' && atual[alvo].musc && atual[alvo].musc.length) continue;
+    const sim = {};
+    DAY_ABBR.forEach(x=>{ sim[x] = { corrida: atual[x].corrida, musc: atual[x].musc }; });
+    if(mod==='corrida'){ sim[alvo].corrida = atual[d].corrida; sim[d].corrida = null; }
+    else { sim[alvo].musc = atual[d].musc; sim[d].musc = []; }
+    const novos = [alvo, DAY_ABBR[i-1], DAY_ABBR[i+1]].filter(Boolean).flatMap(x=>conflitosDoDia(x, sim));
+    if(!novos.length) out.push(alvo);
+  }
+  return out;
+}
+async function moverSessao(d, alvo, mod, motivo){
+  if(mod==='corrida'){
+    const e = naSemanaAtual(()=>treinoEntryForDay(d));
+    if(!e) return false;
+    const antes = resumoCorrida(e);
+    marcarAjusteCorrida(e, motivo || `movido de ${DAY_FULLNAME[d]||d} para ${DAY_FULLNAME[alvo]||alvo}`);
+    e.day = chaveDiaAtual(alvo);
+    saveTreinos();
+    registrarNoDiario({ dia:alvo, original:`${DAY_FULLNAME[d]||d}: ${antes}`, alteracao:'Movido', motivo: motivo||'', novo:`${DAY_FULLNAME[alvo]||alvo}: ${antes}` });
+  }else{
+    guardarOriginalMusc(d); guardarOriginalMusc(alvo);
+    const lista = state.musculacao[d] || [];
+    state.musculacao[alvo] = lista; delete state.musculacao[d];
+    saveMusc(); saveMuscAjusteOrig();
+    registrarNoDiario({ dia:alvo, original:`${DAY_FULLNAME[d]||d}: musculação`, alteracao:'Movido', motivo: motivo||'', novo:`${DAY_FULLNAME[alvo]||alvo}: musculação` });
+  }
+  return true;
+}
+// Opções calculadas pro dia: cada uma com título, explicação, se é a recomendada e a ação.
+function opcoesAjuste(d){
+  return naSemanaAtual(()=>{
+    const e = treinoEntryForDay(d);
+    const l = muscListForDay(d);
+    const corridaPendente = e && !isCorridaDone(d) ? e : null;
+    const muscPendente = l.length && !l.every(x=>x.done) ? l : null;
+    if(!corridaPendente && !muscPendente) return [];
+    const carga = cargaReal();
+    const ci = (state.checkinDiario||{})[todayISO()] || null;
+    const chave = !!((corridaPendente && corridaIntensa(corridaPendente)) || (muscPendente && ehSessaoChaveMusc(muscPendente)));
+    const cansado = carga.nivelPernas>=2 || carga.nivelGeral>=2 || (ci && (ci.energia===1 || ci.pernas===3 || ci.dor===3));
+    const i = DAY_ABBR.indexOf(d);
+    const motivoBase = ci && ci.energia===1 ? 'energia baixa no check-in' : ci && ci.pernas===3 ? 'pernas pesadas no check-in' : carga.nivelPernas>=2 ? 'carga alta nas pernas' : carga.nivelGeral>=2 ? 'carga alta na semana' : 'escolha sua';
+    const opcoes = [];
+    const mod = corridaPendente ? 'corrida' : 'musc';
+    // 1. manter + orientação
+    opcoes.push({ id:'manter', titulo:'Manter como está', desc: cansado ? 'Aqueça bem e pare se sentir dor fora do normal.' : 'Tudo certo para o treino planejado.', recomendado: !cansado,
+      aplicar: ()=>{ registrarNoDiario({ dia:d, original: corridaPendente ? resumoCorrida(corridaPendente) : resumoMusc(muscPendente), alteracao:'Mantido', motivo: motivoBase, novo:'igual' }); return 'Treino mantido.'; } });
+    // 2. mais leve (intensidade)
+    if(corridaPendente && corridaIntensa(corridaPendente) && !/longão|longao/i.test(corridaPendente.type)){
+      opcoes.push({ id:'leve', titulo:'Deixar mais leve', desc:'Troca o treino forte por corrida leve na mesma distância.', recomendado: cansado && !chave,
+        aplicar: ()=>{ const antes = resumoCorrida(corridaPendente); marcarAjusteCorrida(corridaPendente, `mais leve hoje (${motivoBase})`);
+          corridaPendente.type = 'Rodagem Leve'; corridaPendente.chave = false; if(paceFacil()) corridaPendente.mainPace = paceFacil();
+          corridaPendente.steps = null; corridaPendente.gpsSteps = null; saveTreinos();
+          registrarNoDiario({ dia:d, original:antes, alteracao:'Mais leve', motivo:motivoBase, novo:resumoCorrida(corridaPendente) }); return 'Treino ficou mais leve.'; } });
+    }else if(muscPendente){
+      opcoes.push({ id:'leve', titulo:'Deixar mais leve', desc:'Mesmos exercícios com esforço moderado (~10% menos carga).', recomendado: cansado && !chave && !corridaPendente,
+        aplicar: ()=>{ guardarOriginalMusc(d); state.musculacao[d] = (state.musculacao[d]||[]).map(x=>({ ...x, rpe: Math.min(x.rpe||7, 6), leve:true })); saveMusc(); saveMuscAjusteOrig();
+          registrarNoDiario({ dia:d, original:resumoMusc(muscPendente), alteracao:'Mais leve', motivo:motivoBase, novo:'mesmos exercícios, esforço moderado' }); return 'Musculação mais leve hoje.'; } });
+    }
+    // 3. reduzir volume
+    if(corridaPendente && parseFloat(corridaPendente.totalKm)>0){
+      const novoKm = Math.max(1, roundToHalf(parseFloat(corridaPendente.totalKm)*0.7));
+      opcoes.push({ id:'reduzir', titulo:`Reduzir para ${String(novoKm).replace('.',',')} km`, desc:'Mesmo tipo de treino, cerca de 30% menos volume.', recomendado: cansado && chave,
+        aplicar: ()=>{ const antes = resumoCorrida(corridaPendente); const f = novoKm/parseFloat(corridaPendente.totalKm); marcarAjusteCorrida(corridaPendente, `volume reduzido (${motivoBase})`);
+          corridaPendente.totalKm = novoKm; if(corridaPendente.totalMin) corridaPendente.totalMin = Math.round(corridaPendente.totalMin*f);
+          corridaPendente.steps = corridaPendente.steps ? escalarPassos(corridaPendente.steps, f) : corridaPendente.steps;
+          corridaPendente.gpsSteps = corridaPendente.gpsSteps ? escalarPassos(corridaPendente.gpsSteps, f) : corridaPendente.gpsSteps; saveTreinos();
+          registrarNoDiario({ dia:d, original:antes, alteracao:'Volume reduzido', motivo:motivoBase, novo:resumoCorrida(corridaPendente) }); return 'Volume reduzido.'; } });
+    }else if(muscPendente){
+      opcoes.push({ id:'reduzir', titulo:'Versão curta', desc:'Mantém os exercícios principais e tira uma série de cada.', recomendado:false,
+        aplicar: ()=>{ guardarOriginalMusc(d); const base = (state.musculacao[d]||[]);
+          // O plano já vem com os exercícios principais primeiro (base → auxiliar → isolado).
+          const manter = base.slice(0, Math.min(4, base.length));
+          state.musculacao[d] = manter.map(x=>({ ...x, series: String(Math.max(2, (parseInt(x.series,10)||3)-1)) })); saveMusc(); saveMuscAjusteOrig();
+          registrarNoDiario({ dia:d, original:resumoMusc(muscPendente), alteracao:'Versão curta', motivo:motivoBase, novo:resumoMusc(state.musculacao[d]) }); return 'Versão curta pronta.'; } });
+    }
+    // 4. trocar tipo (corrida forte/longão → regenerativo curto)
+    if(corridaPendente && corridaIntensa(corridaPendente)){
+      opcoes.push({ id:'trocar', titulo:'Trocar por regenerativo', desc:'30 min bem leves no lugar do treino forte.', recomendado:false,
+        aplicar: ()=>{ const antes = resumoCorrida(corridaPendente); marcarAjusteCorrida(corridaPendente, `trocado por regenerativo (${motivoBase})`);
+          corridaPendente.type = 'Regenerativo'; corridaPendente.chave = false; corridaPendente.totalKm = Math.max(2, roundToHalf(Math.min(5, (parseFloat(corridaPendente.totalKm)||5)*0.5)));
+          corridaPendente.totalMin = 30; if(paceFacil()) corridaPendente.mainPace = paceFacil(); corridaPendente.steps = null; corridaPendente.gpsSteps = null; saveTreinos();
+          registrarNoDiario({ dia:d, original:antes, alteracao:'Trocado', motivo:motivoBase, novo:resumoCorrida(corridaPendente) }); return 'Trocado por regenerativo.'; } });
+    }
+    // 5. mover (protege sessão-chave)
+    const destinos = destinosParaMover(d, mod, Math.max(hojeIdx(), i)+1);
+    if(destinos.length){
+      const alvo = destinos[0];
+      opcoes.push({ id:'mover', titulo:`Mover para ${(DAY_FULLNAME[alvo]||alvo).split('-')[0].toLowerCase()}`, desc: chave ? 'Faz o treino importante com o corpo mais descansado.' : 'Passa a sessão para outro dia livre da semana.', recomendado: cansado && chave,
+        aplicar: async ()=>{ await moverSessao(d, alvo, mod, motivoBase); return `Movido para ${DAY_FULLNAME[alvo]||alvo}.`; } });
+    }
+    // 6. descanso / mobilidade
+    opcoes.push({ id:'descansar', titulo:'Descansar hoje', desc: chave ? 'O treino-chave é descartado nesta semana.' : 'Hoje fica só mobilidade leve.', recomendado: !!(ci && ci.dor===3),
+      aplicar: ()=>{
+        if(corridaPendente){ const antes = resumoCorrida(corridaPendente); marcarAjusteCorrida(corridaPendente, `descanso (${motivoBase})`); corridaPendente.descanso = true; saveTreinos();
+          registrarNoDiario({ dia:d, original:antes, alteracao:'Descanso', motivo:motivoBase, novo:'descanso / mobilidade' }); }
+        if(muscPendente){ guardarOriginalMusc(d); state.musculacao[d] = []; saveMusc(); saveMuscAjusteOrig();
+          registrarNoDiario({ dia:d, original:resumoMusc(muscPendente), alteracao:'Descanso', motivo:motivoBase, novo:'descanso / mobilidade' }); }
+        return 'Dia de descanso.';
+      } });
+    // Garante exatamente uma recomendada.
+    if(!opcoes.some(o=>o.recomendado)) opcoes[0].recomendado = true;
+    let achou = false; opcoes.forEach(o=>{ if(o.recomendado){ if(achou) o.recomendado = false; achou = true; } });
+    return opcoes;
+  });
+}
+
+/* ---------- treino perdido ---------- */
+async function savePerdidosTratados(){ try{ await window.storage.set('perdidosTratados', JSON.stringify(state.perdidosTratados||{}), false); }catch(e){} }
+function treinosPerdidos(){
+  return naSemanaAtual(()=>{
+    const out = [];
+    const tratados = state.perdidosTratados || {};
+    for(let i=0; i<hojeIdx(); i++){
+      const d = DAY_ABBR[i];
+      const e = treinoEntryForDay(d);
+      if(e && !isCorridaDone(d) && !tratados[e.day+'|corrida']) out.push({ dia:d, mod:'corrida', id:e.day+'|corrida', titulo: resumoCorrida(e), chave: corridaIntensa(e) || !!e.chave });
+      const l = muscListForDay(d);
+      const idM = isoDoDiaAtual(d)+'|musc';
+      if(l.length && !l.some(x=>x.done) && !tratados[idM]) out.push({ dia:d, mod:'musc', id:idM, titulo:'Musculação', chave: ehSessaoChaveMusc(l) });
+    }
+    // Sessões-chave primeiro.
+    return out.sort((a,b)=>(b.chave?1:0)-(a.chave?1:0));
+  });
+}
+function propostaPerdido(p){
+  const destinos = destinosParaMover(p.dia, p.mod, hojeIdx());
+  return { alvo: p.chave && destinos.length ? destinos[0] : null };
+}
+async function resolverPerdido(p, acao){
+  state.perdidosTratados = state.perdidosTratados || {};
+  state.perdidosTratados[p.id] = acao;
+  if(acao==='remarcar'){
+    const { alvo } = propostaPerdido(p);
+    if(alvo) await moverSessao(p.dia, alvo, p.mod, 'treino perdido remarcado');
+  }else{
+    registrarNoDiario({ dia:p.dia, original:p.titulo, alteracao:'Não reposto', motivo:'treino perdido', novo:'segue a semana sem repor' });
+  }
+  await savePerdidosTratados();
+}
+
+/* ---------- check-in semanal pelo motor V2 ---------- */
+// Não reconstrói o plano com o motor antigo: guarda a resposta e transforma em ajuste da próxima
+// semana (gerada pelo V2 quando ela começar). Semanas futuras já geradas voltam a "pendente".
+function aplicarCheckinSemanalV2(hp, week, d, resposta){
+  const severo = (d.fadiga && d.fadiga>=4) || !!d.dor;
+  const ajustes = {};
+  if(severo) ajustes.volumeFator = 0.8;
+  if(d.dor) ajustes.aliviarInferior = true;
+  if(d.fadiga && d.fadiga>=5) ajustes.semQualidade = true;
+  if(resposta==='facil' && !severo) ajustes.volumeFator = 1.05;
+  const plan = hp.plan.map(w=> (w.weekNumber>week && !w.pendente && w.motorV2) ? { ...w, corridaWeek:[], muscPlan:{}, pendente:true, alvo:(hp.trajetoria||[])[w.weekNumber-1]||null } : w);
+  Object.keys(_previaSemanas).forEach(k=>delete _previaSemanas[k]);
+  return { ...hp, plan, ajusteProximaSemana: Object.keys(ajustes).length ? { semana: week+1, ajustes } : null };
+}
+/* ===== fim PLANO VIVO + TREINADOR ===== */
+
 /* ===== QUESTIONÁRIO V2 — interface =====
    Telas do Questionário V2 (congelado) → grava o athleteProfile → "O que entendi" → fluxo de cautela (se houver alerta) →
    confirmação → gerarPrimeiroPlanoV2() (motor). Nenhuma lógica de treino aqui: a interface só coleta respostas, mostra o
    resumo e chama o motor. O quiz antigo continua existindo, intacto, como fluxo alternativo.
    QUESTIONARIO_V2_PADRAO=false: os botões antigos ("Começar", "Fazer diagnóstico") seguem abrindo o quiz antigo e o V2
    fica disponível por um botão próprio; true: os mesmos botões passam a abrir o V2. */
-const QUESTIONARIO_V2_PADRAO = false;
+// Etapa 2 (motor único): todas as entradas de criação/refação de plano abrem o Questionário V2 → motor V2.
+const QUESTIONARIO_V2_PADRAO = true;
 const QV2_OBJ = [['prova','Correr uma prova'],['desempenho_corrida','Melhorar na corrida (sem prova)'],['massa','Ganhar massa muscular'],['forca','Ganhar força'],['emagrecer','Emagrecer'],['saude','Saúde e condicionamento'],['retorno','Voltar à rotina após uma pausa']];
 const QV2_DIST = [[5,'5 km'],[10,'10 km'],[21.0975,'21 km'],[42.195,'42 km']];
 const QV2_SIT_C = [['regular','Regularmente'],['ocasional','De vez em quando'],['parado','Já corri e parei'],['nunca','Nunca corri']];
@@ -4120,18 +4847,27 @@ function qv2Render(){
     return qv2Shell('Montando sua semana…', `<div class="mrt-sub">Isso leva só um instante.</div>`, {});
   }
   if(q.fase==='pronto'){
-    const r = q.resultado || {}, picks = r.dayPicks || {};
-    const cor = (v)=>v==='ambos' ? 'var(--hib)' : v==='corrida' ? 'var(--run)' : 'var(--musc)';
-    const rot = (v)=>v==='ambos' ? 'Ambos' : v==='corrida' ? 'Corrida' : v==='musc' ? 'Musc.' : 'Descanso';
-    const inicio = q.inicioTexto ? `<div class="mrt-sub" style="margin-bottom:18px;">${q.inicioTexto}</div>` : '';
-    return `<div class="mrt-root"><div class="mrt-scroll" style="display:flex;flex-direction:column;align-items:center;text-align:center;padding-top:10vh;">
-      <div class="mrt-summarycheck">${CHECK_SVG}</div>
-      <div class="mrt-runtitle" style="font-size:20px;margin-bottom:6px;">Sua semana está pronta!</div>
-      ${inicio || '<div class="mrt-sub" style="margin-bottom:22px;">Confira os dias antes de começar</div>'}
-      <div class="mrt-wkrow" style="width:100%;margin-bottom:26px;">${DAY_ABBR.map(d=>{ const v = picks[d]; const at = v && v!=='descanso';
-        return `<div class="mrt-wkcol"><div class="mrt-wkletter">${d}</div><div class="mrt-wkdot ${at?'plan':'rest'}" style="${at?'border-color:'+cor(v)+';':''}"></div><div style="font-size:9px;color:var(--text-dim);">${rot(v||'descanso')}</div></div>`; }).join('')}</div>
-      </div>
-      <div style="padding:14px 18px calc(14px + env(safe-area-inset-bottom));"><button class="btn-primary" id="qv2VerTreino">Ver meu treino</button><button class="btn-ghost" style="width:100%;margin-top:4px;" id="qv2VerInicio">Ir para o início</button></div></div>`;
+    // Semana explicada: cada dia com o que tem, duração, ★ nos treinos-chave e o horário dos dias duplos.
+    const r = q.resultado || {}, sem = r.semana || { corridaWeek:[], muscPlan:{} };
+    const inicio = q.inicioTexto ? `<div class="mrt-sub" style="margin-bottom:14px;">${q.inicioTexto}</div>` : '';
+    const linhas = DAY_ABBR.map(d=>{
+      const c = (sem.corridaWeek||[]).find(x=>x.day===d);
+      const m = (sem.muscPlan||{})[d];
+      const partes = [];
+      if(c) partes.push(`${c.type}${c.totalMin ? ' · '+formatDuration(c.totalMin*60) : (c.totalKm ? ' · '+String(c.totalKm).replace('.',',')+' km' : '')}`);
+      if(m && m.length) partes.push(`${muscTituloDoDia(d, m)} · ${m.length} exercícios`);
+      const chave = (c && (c.chave || ehTipoCorridaChave(c.type)));
+      const duplo = sem.periodos && sem.periodos[d] && sem.periodos[d].texto;
+      return `<div class="ds-dayrow" style="cursor:default;"><div class="ds-daydate"><span>${d.toUpperCase()}</span></div>
+        <div class="ds-daytxt">${partes.length ? `<div class="nm">${partes.join(' + ')}${chave?' <span class="ds-star-in">★</span>':''}</div>${duplo?`<div class="mt">${duplo}</div>`:''}` : '<div class="nm rest">Descanso</div>'}</div></div>`;
+    }).join('');
+    return `<div class="mrt-root"><div class="mrt-scroll">
+      <div class="mrt-title" style="margin-bottom:4px;">Sua semana está pronta</div>
+      ${inicio || '<div class="mrt-sub" style="margin-bottom:14px;">Confira os dias antes de começar</div>'}
+      <div class="ds-daylist">${linhas}</div>
+      <div class="ds-why" style="margin-top:14px;">★ = treino-chave: o plano protege esses dias. Pernas pesadas nunca ficam na véspera de um treino forte de corrida, e o treino se ajusta quando você marcar cansaço no check-in.</div>
+      <button class="btn-primary" id="qv2VerTreino">Ver meu treino</button><button class="btn-ghost" style="width:100%;margin-top:4px;" id="qv2VerInicio">Ir para o início</button>
+    </div></div>`;
   }
   return '';
 }
@@ -4200,7 +4936,7 @@ function qv2Wire(){
   if(back) back.onclick = ()=>{
     if(q.fase==='perguntas'){
       if(q.idx>0){ q.idx--; qv2Refresh(); return; }
-      if(confirm('Sair do questionário? As respostas não ficam salvas.')) qv2Sair();
+      confirmarApp({ titulo:'Sair do questionário?', texto:'As respostas não ficam salvas.', ok:'Sair', perigo:true }).then(ok=>{ if(ok) qv2Sair(); });
     }else if(q.fase==='entendi'){ q.fase = 'perguntas'; q.idx = Math.max(0, qv2Telas(R).length-1); qv2Refresh(); }
     else if(q.fase==='cautela'){ if(q.resumo){ q.fase = 'entendi'; qv2Refresh(); } else qv2Sair(); }
     else qv2Sair();
@@ -4394,9 +5130,13 @@ async function init(){
   // Se a página recarregou no meio de uma corrida com GPS, o watchPosition/wakeLock antigos morreram,
   // mas os pontos gravados no IndexedDB não — restaura como "pausado" e deixa o usuário decidir se retoma.
   try{
-    const activeRun = await gpsDbGet('activeRun');
-    if(activeRun && activeRun.status !== 'finished'){
-      state.gpsRun = { ...activeRun, status: 'paused', pauseBeganAt: activeRun.pauseBeganAt || Date.now() };
+    const activeRun = await gpsCarregarCorridaAtiva();
+    if(activeRun && activeRun.status !== 'finished' && !(state.gpsRun && state.gpsRun.status!=='finished')){
+      // Já estava pausada: a pausa começou quando a pessoa pausou (pauseBeganAt gravado). Estava correndo
+      // quando o app fechou: a pausa começa no último momento em que a corrida estava viva (checkpoint/último
+      // ponto) — nunca "agora", senão o tempo com o app fechado viraria tempo correndo.
+      const inicioPausa = (activeRun.status==='paused' && activeRun.pauseBeganAt) ? activeRun.pauseBeganAt : gpsUltimoMomentoVivo(activeRun);
+      state.gpsRun = { ...activeRun, status: 'paused', pauseBeganAt: inicioPausa };
     }
   }catch(e){}
 
@@ -4439,6 +5179,17 @@ async function init(){
       await window.storage.set('weekTrackMonday', currentMonday, false);
     }
   }catch(e){}
+
+  // Dados do treinador do dia a dia (plano vivo, check-in, diário, ajustes da semana, preferências).
+  const lerJson = async (k, padrao)=>{ try{ const r = await window.storage.get(k, false); return (r && r.value) ? JSON.parse(r.value) : padrao; }catch(e){ return padrao; } };
+  state.diarioTreinador = await lerJson('diarioTreinador', []);
+  state.checkinDiario = await lerJson('checkinDiario', {});
+  state.muscAjusteOrig = await lerJson('muscAjusteOrig', {});
+  state.perdidosTratados = await lerJson('perdidosTratados', {});
+  state.preferencias = { autoPause:false, vozKm:true, ...(await lerJson('preferencias', {})) };
+  state.recordesCorrida = await lerJson('recordesCorrida', {});
+  // Plano vivo: coloca na agenda a semana do plano que corresponde à data de hoje.
+  try{ await atualizarSemanaDoPlano(); }catch(e){ console.warn('[plano] avanço de semana falhou', e); }
 
   try{
     const wl = await window.storage.get('workoutSessionsLog', false);
@@ -5036,8 +5787,12 @@ function wireHybridCheckinModal(){
       draft.lesao = (draft.lesao ? draft.lesao+', ' : '') + d.dorRegiao;
     }
     if(d.motivos.includes('sem_tempo')) draft.tempoMaxMin = Math.max(20, Math.round((draft.tempoMaxMin||45)*0.8));
-    const plan = buildAllHybridWeeks(draft, hp.sched, hp.totalWeeks, checkins, checkinDetails);
-    state.hybridPlanData = { ...hp, draft, checkins, checkinDetails, plan };
+    if(hp.motorV2){
+      state.hybridPlanData = { ...aplicarCheckinSemanalV2(hp, week, d, resposta), draft, checkins, checkinDetails };
+    }else{
+      const plan = buildAllHybridWeeks(draft, hp.sched, hp.totalWeeks, checkins, checkinDetails);
+      state.hybridPlanData = { ...hp, draft, checkins, checkinDetails, plan };
+    }
     saveHybridPlanData();
     state.hybridCheckinDraft = null;
     state.modalOpen = false;
@@ -5047,7 +5802,7 @@ function wireHybridCheckinModal(){
     if(dorReportada && d.dorRegiao) motivoMsgs.push(`dor no(a) ${d.dorRegiao} — evitando exercícios que sobrecarregam a região`);
     if(d.motivos.includes('sem_tempo')) motivoMsgs.push('sem tempo — encurtando a sessão de musculação');
     if(d.motivos.includes('enjoei')) motivoMsgs.push('enjoei do treino — considera trocar alguns exercícios manualmente na tela de Musculação');
-    alert('Check-in registrado!' + (motivoMsgs.length ? '\n\nAjustes: '+motivoMsgs.join('; ')+'.' : ' A progressão das próximas semanas já foi ajustada.'));
+    showToast(motivoMsgs.length ? 'Check-in registrado — próxima semana ajustada' : 'Check-in registrado');
     render();
   };
   const cancelBtn = document.getElementById('modalCancel');
@@ -5066,7 +5821,8 @@ async function answerOnboardingCheckin(status){
   }
 }
 
-function todayISO(){ return new Date().toISOString().slice(0,10); }
+// Data LOCAL (antes era UTC: no Brasil, depois das 21h o app gravava a data do dia seguinte).
+function todayISO(){ const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 // Progresso de corrida é guardado pela data completa do treino (ex: "Sex 04/09"), não só pelo dia da
 // semana — assim marcar sexta como feito não fica "grudado" quando chega a sexta de outra semana.
 function corridaProgressKey(dayAbbrev){
@@ -5085,14 +5841,65 @@ function isCorridaDone(day){ const v = corridaEntryProgress(day); return !!(v &&
 // uma corrida longa passa fácil do limite prático de localStorage) pra sobreviver a um reload no meio do treino.
 const GPS_DB_NAME = 'treinoAppGps';
 const GPS_DB_STORE = 'runs';
+// Conexão reaproveitada (antes abria uma nova a cada leitura/gravação). Se o iOS fechar a conexão, abre de novo.
+let _gpsDbConn = null;
 function gpsDbOpen(){
+  if(_gpsDbConn) return Promise.resolve(_gpsDbConn);
   return new Promise((resolve,reject)=>{
     if(!window.indexedDB){ reject(new Error('IndexedDB indisponível')); return; }
     const req = indexedDB.open(GPS_DB_NAME, 1);
     req.onupgradeneeded = ()=>{ req.result.createObjectStore(GPS_DB_STORE, {keyPath:'id'}); };
-    req.onsuccess = ()=> resolve(req.result);
+    req.onsuccess = ()=>{
+      const conn = req.result;
+      conn.onclose = ()=>{ if(_gpsDbConn===conn) _gpsDbConn = null; };
+      conn.onversionchange = ()=>{ conn.close(); if(_gpsDbConn===conn) _gpsDbConn = null; };
+      _gpsDbConn = conn;
+      resolve(conn);
+    };
     req.onerror = ()=> reject(req.error);
   });
+}
+// Corrida concluída = registro "run_<timestamp>" (id estável, usado também no backup e na nuvem).
+// "activeRun" e "activeRun_pts_N" são a corrida em andamento e ficam de fora.
+function gpsEhCorridaSalva(r){ return !!(r && typeof r.id==='string' && r.id.startsWith('run_')); }
+async function gpsDbAll(){
+  try{
+    const db = await gpsDbOpen();
+    return await new Promise((resolve,reject)=>{
+      const tx = db.transaction(GPS_DB_STORE,'readonly');
+      const req = tx.objectStore(GPS_DB_STORE).getAll();
+      req.onsuccess = ()=>resolve(req.result||[]);
+      req.onerror = ()=>reject(req.error);
+    });
+  }catch(e){ _gpsDbConn = null; return []; }
+}
+// Várias gravações numa transação só (checkpoint da corrida em andamento: blocos de pontos + metadados).
+async function gpsDbPutMany(records){
+  try{
+    const db = await gpsDbOpen();
+    return await new Promise((resolve,reject)=>{
+      const tx = db.transaction(GPS_DB_STORE,'readwrite');
+      const st = tx.objectStore(GPS_DB_STORE);
+      records.forEach(r=>st.put(r));
+      tx.oncomplete = ()=>resolve(true);
+      tx.onerror = ()=>reject(tx.error);
+      tx.onabort = ()=>reject(tx.error);
+    });
+  }catch(e){ _gpsDbConn = null; console.warn('[gps] falha ao gravar no aparelho', e); return false; }
+}
+// Apaga a corrida em andamento inteira (metadados + todos os blocos de pontos).
+async function gpsDbLimparAtiva(){
+  try{
+    const db = await gpsDbOpen();
+    return await new Promise((resolve)=>{
+      const tx = db.transaction(GPS_DB_STORE,'readwrite');
+      const st = tx.objectStore(GPS_DB_STORE);
+      const req = st.getAllKeys();
+      req.onsuccess = ()=>{ (req.result||[]).forEach(k=>{ if(typeof k==='string' && k.startsWith('activeRun')) st.delete(k); }); };
+      tx.oncomplete = ()=>resolve(true);
+      tx.onerror = ()=>resolve(false);
+    });
+  }catch(e){ _gpsDbConn = null; return false; }
 }
 async function gpsDbPut(record){
   try{
@@ -5103,7 +5910,7 @@ async function gpsDbPut(record){
       tx.oncomplete = ()=>resolve(true);
       tx.onerror = ()=>reject(tx.error);
     });
-  }catch(e){ return false; }
+  }catch(e){ _gpsDbConn = null; return false; }
 }
 async function gpsDbGet(id){
   try{
@@ -5114,7 +5921,7 @@ async function gpsDbGet(id){
       req.onsuccess = ()=>resolve(req.result||null);
       req.onerror = ()=>reject(req.error);
     });
-  }catch(e){ return null; }
+  }catch(e){ _gpsDbConn = null; return null; }
 }
 async function gpsDbDelete(id){
   try{
@@ -5125,7 +5932,7 @@ async function gpsDbDelete(id){
       tx.oncomplete = ()=>resolve(true);
       tx.onerror = ()=>resolve(false);
     });
-  }catch(e){ return false; }
+  }catch(e){ _gpsDbConn = null; return false; }
 }
 
 function haversineKm(lat1,lng1,lat2,lng2){
@@ -5139,7 +5946,7 @@ function haversineKm(lat1,lng1,lat2,lng2){
 const GPS_MAX_ACCURACY_M = 30;
 const GPS_MAX_SPEED_KMH = 25;
 const GPS_WATCH_OPTS = { enableHighAccuracy:true, maximumAge:0, timeout:10000 };
-const GPS_PACE_WINDOW_SEC = 12;
+const GPS_PACE_WINDOW_SEC = 25; // antes 12 s: oscilava demais com o ruído do GPS
 
 // Pace "atual" suavizado por janela móvel — função pura (só depende dos argumentos, sem ler `state`),
 // pra poder testar com traços de GPS fixos. `points` já vem filtrado (gpsOnPosition só empurra pontos
@@ -5567,7 +6374,7 @@ function esteiraSkipStep(){
 }
 function openEsteiraIntro(day){
   const entry = treinoEntryForDay(day);
-  if(!entry){ alert('Não achei o treino de corrida desse dia.'); return; }
+  if(!entry){ showToast('Não achei o treino de corrida desse dia.'); return; }
   state.gpsRun = gpsNewRunState(day, entry, 'esteira');
   state.gpsRun.stepKmh = esteiraDefaultKmhForStep(gpsCurrentStep());
   state.gpsRun.inclinePct = 0;
@@ -5621,8 +6428,8 @@ function gpsCurrentStep(){ const gr=state.gpsRun; return gr ? gr.steps[gr.stepIn
 
 function openGpsIntro(day){
   const entry = treinoEntryForDay(day);
-  if(!entry){ alert('Não achei o treino de corrida desse dia.'); return; }
-  if(!navigator.geolocation){ alert('Seu navegador não suporta localização por GPS.'); return; }
+  if(!entry){ showToast('Não achei o treino de corrida desse dia.'); return; }
+  if(!navigator.geolocation){ showToast('Este aparelho não oferece localização por GPS.'); return; }
   state.gpsRun = gpsNewRunState(day, entry);
   resetGpsMap();
   render();
@@ -5693,14 +6500,26 @@ function gpsOnError(err){
 }
 function gpsOnPosition(pos){
   const gr = state.gpsRun;
-  if(!gr || gr.status==='paused' || gr.status==='finished') return;
+  if(!gr || gr.status==='finished') return;
   const { latitude:lat, longitude:lng, accuracy } = pos.coords;
   const t = pos.timestamp || Date.now();
+  // Pausa automática: com o GPS ainda ligado, volta sozinha quando a pessoa sai do lugar.
+  if(gr.status==='paused'){
+    if(gr.autoPausado && accuracy!=null && accuracy<=GPS_MAX_ACCURACY_M && gr.apRef && haversineKm(gr.apRef.lat, gr.apRef.lng, lat, lng) > 0.015){
+      const pausou = gr.pauseBeganAt ? Math.max(0, t - gr.pauseBeganAt) : 0;
+      gr.pausedMs += pausou; gr.stepPausedMs += pausou;
+      gr.pauseBeganAt = null; gr.status = 'running'; gr.autoPausado = false;
+      gr.lastPoint = null; gr.segNext = true; gr.apRef = { lat, lng, t };
+      speak('Retomando.');
+    }else return;
+  }
   gr.lastAccuracy = accuracy;
-  if(gr.status==='permission' || gr.status==='denied'){
-    gr.status = 'running';
-    gr.startedAt = t;
-    gr.stepStartedAt = t;
+  // Antes de começar: só acompanha a precisão (tela "Aguardando GPS") e guarda o último fix.
+  if(gr.status==='permission' || gr.status==='denied' || gr.status==='aguardando' || gr.status==='contagem'){
+    if(gr.status!=='contagem') gr.status = 'aguardando';
+    gr.ultimoFix = { lat, lng, t, alt: pos.coords.altitude, accuracy };
+    render();
+    return;
   }
   // Ponto com precisão fraca: descarta o ponto inteiro, não soma distância nem vira referência.
   if(accuracy!=null && accuracy > GPS_MAX_ACCURACY_M){ render(); return; }
@@ -5719,16 +6538,70 @@ function gpsOnPosition(pos){
     if(speedKmh <= GPS_MAX_SPEED_KMH){
       gr.totalDistKm += dKm;
       gr.stepDistKm += dKm;
+      // Tempo em movimento: só trechos com deslocamento real (≥1,5 km/h) e sem buraco de sinal.
+      if(speedKmh >= 1.5 && dtSec <= 30) gr.movingMs = (gr.movingMs||0) + dtSec*1000;
       gr.lastPoint = { lat, lng, t };
       updateGpsMapPoint(lat, lng);
+      gpsMarcarKm(gr);
     }
   }else{
     gr.lastPoint = { lat, lng, t };
     updateGpsMapPoint(lat, lng);
   }
+  gpsVerificarPausaAuto(gr, lat, lng, t);
   gpsCheckAutoAdvance();
   gpsPersist();
   if(!window.__mapTouching) render();
+}
+// Cada km completo: guarda o tempo do km (ativo, sem pausas) e fala, se a voz por km estiver ligada.
+function gpsMarcarKm(gr){
+  const kmInt = Math.floor(gr.totalDistKm);
+  if(kmInt <= (gr.kmAnunciado||0)) return;
+  const decorrido = gpsTotalElapsedSec(gr);
+  const seg = Math.max(1, Math.round(decorrido - (gr.kmUltimoDecorrido||0)));
+  gr.kmAnunciado = kmInt; gr.kmUltimoDecorrido = decorrido; gr.ultimoKmSeg = seg;
+  if(!state.preferencias || state.preferencias.vozKm!==false){
+    const m = Math.floor(seg/60), sRest = seg%60;
+    speak(`${kmInt} quilômetro${kmInt>1?'s':''}. Último quilômetro em ${m} minuto${m===1?'':'s'}${sRest?' e '+sRest+' segundos':''}.`);
+  }
+}
+// Pausa automática (Preferências): parado ~10 s (menos de 10 m de deslocamento) → pausa sem desligar o GPS.
+function gpsVerificarPausaAuto(gr, lat, lng, t){
+  if(!state.preferencias || !state.preferencias.autoPause || gr.status!=='running' || gr.mode==='esteira') return;
+  if(!gr.apRef || haversineKm(gr.apRef.lat, gr.apRef.lng, lat, lng) > 0.010){ gr.apRef = { lat, lng, t }; return; }
+  if(t - gr.apRef.t >= 10000){
+    gr.status = 'paused'; gr.autoPausado = true; gr.pauseBeganAt = gr.apRef.t;
+    speak('Pausa automática.');
+    gpsPersist(true);
+  }
+}
+// "Começar" na tela Aguardando GPS → contagem de 3 s → corrida começa de verdade.
+function gpsComecarContagem(){
+  const gr = state.gpsRun;
+  if(!gr || (gr.status!=='aguardando' && gr.status!=='permission')) return;
+  gr.status = 'contagem';
+  gr.contagemAte = Date.now() + 3000;
+  hapticLeve();
+  render();
+}
+function gpsIniciarDeVerdade(){
+  const gr = state.gpsRun;
+  if(!gr || gr.status!=='contagem') return;
+  const agora = Date.now();
+  gr.status = 'running'; gr.startedAt = agora; gr.stepStartedAt = agora;
+  gr.movingMs = 0; gr.kmAnunciado = 0; gr.kmUltimoDecorrido = 0;
+  // O último fix (se recente e bom) vira o ponto de partida da rota.
+  const f = gr.ultimoFix;
+  if(f && agora - f.t < 15000 && (f.accuracy==null || f.accuracy<=GPS_MAX_ACCURACY_M)){
+    gr.points.push({ lat:f.lat, lng:f.lng, timestamp:agora, alt:f.alt });
+    gr.lastPoint = { lat:f.lat, lng:f.lng, t:agora };
+    gr.apRef = { lat:f.lat, lng:f.lng, t:agora };
+    updateGpsMapPoint(f.lat, f.lng);
+  }
+  hapticForte();
+  speak('Vai!');
+  gpsPersist(true);
+  render();
 }
 function gpsFinalizeCurrentStep(){
   const gr = state.gpsRun;
@@ -5795,19 +6668,85 @@ function gpsCheckAutoAdvance(){
   else if(step.tipo==='tempo' && step.metaSeg && gpsStepElapsedSec(gr) >= step.metaSeg) gpsAdvanceStep();
   // tipo==='aberta' só avança pelo botão de Lap.
 }
-async function gpsPersist(){
+// Checkpoint da corrida em andamento, incremental: os pontos ficam em blocos de GPS_PTS_BLOCO
+// ("activeRun_pts_0", "_1"...) e cada checkpoint grava só o(s) bloco(s) que mudaram + os metadados
+// ("activeRun", sem o array de pontos) — antes o array inteiro era regravado a cada ponto (~1/s).
+// No máximo 1 checkpoint a cada GPS_PERSIST_INTERVALO_MS durante a corrida (perda máxima ~5s se o app
+// morrer); pausa e app indo pro fundo forçam na hora. savedAt = último momento em que a corrida estava
+// viva — é o que o init() usa pra não contar como "correndo" o tempo com o app fechado.
+const GPS_PTS_BLOCO = 100;
+const GPS_PERSIST_INTERVALO_MS = 5000;
+let _gpsPersist = { run:null, gravados:0, ultimo:0, timer:null, fila:Promise.resolve() };
+function gpsPersist(forcar){
   const gr = state.gpsRun;
-  if(!gr) return;
-  await gpsDbPut({ id:'activeRun', ...gr });
+  if(!gr || gr.status==='finished') return Promise.resolve();
+  const agora = Date.now();
+  if(!forcar && agora - _gpsPersist.ultimo < GPS_PERSIST_INTERVALO_MS){
+    if(!_gpsPersist.timer){
+      _gpsPersist.timer = setTimeout(()=>{ _gpsPersist.timer = null; gpsPersist(true); }, GPS_PERSIST_INTERVALO_MS - (agora - _gpsPersist.ultimo));
+    }
+    return _gpsPersist.fila;
+  }
+  if(_gpsPersist.timer){ clearTimeout(_gpsPersist.timer); _gpsPersist.timer = null; }
+  _gpsPersist.ultimo = agora;
+  // Em fila: um checkpoint nunca intercala com o anterior.
+  _gpsPersist.fila = _gpsPersist.fila.then(async ()=>{
+    const g = state.gpsRun;
+    if(!g || g.status==='finished') return;
+    if(_gpsPersist.run !== g){ _gpsPersist.run = g; _gpsPersist.gravados = 0; } // corrida nova (ou restaurada): regrava tudo uma vez
+    const pts = g.points || [];
+    const total = pts.length;
+    const nBlocos = Math.ceil(total / GPS_PTS_BLOCO);
+    const primeiro = Math.floor(_gpsPersist.gravados / GPS_PTS_BLOCO);
+    const regs = [];
+    for(let i=primeiro; i<nBlocos; i++){
+      regs.push({ id:'activeRun_pts_'+i, pts: pts.slice(i*GPS_PTS_BLOCO, (i+1)*GPS_PTS_BLOCO) });
+    }
+    const { points, ...meta } = g;
+    regs.push({ ...meta, id:'activeRun', ptsBlocos:nBlocos, ptsTotal:total, savedAt:Date.now() });
+    const ok = await gpsDbPutMany(regs);
+    if(ok) _gpsPersist.gravados = total;
+  }).catch(e=>console.warn('[gps] checkpoint falhou', e));
+  return _gpsPersist.fila;
 }
+// Lê a corrida em andamento: formato novo (metadados + blocos) ou antigo (pontos dentro do "activeRun").
+async function gpsCarregarCorridaAtiva(){
+  const meta = await gpsDbGet('activeRun');
+  if(!meta) return null;
+  if(meta.ptsBlocos!=null){
+    const pts = [];
+    for(let i=0; i<meta.ptsBlocos; i++){
+      const b = await gpsDbGet('activeRun_pts_'+i);
+      if(b && Array.isArray(b.pts)) pts.push(...b.pts);
+    }
+    meta.points = pts;
+  }
+  if(!Array.isArray(meta.points)) meta.points = [];
+  delete meta.id; delete meta.ptsBlocos; delete meta.ptsTotal;
+  return meta;
+}
+// Momento em que a corrida restaurada estava viva pela última vez (checkpoint ou último ponto) — vira
+// o início da pausa. Date.now() só como último recurso, quando não há nada gravado.
+function gpsUltimoMomentoVivo(r){
+  const ultimoPonto = r.points && r.points.length ? r.points[r.points.length-1].timestamp : 0;
+  const t = Math.max(r.savedAt||0, ultimoPonto||0, r.startedAt||0);
+  return t>0 ? Math.min(t, Date.now()) : Date.now();
+}
+// App indo pro fundo / sendo fechado no meio da corrida: checkpoint imediato.
+function gpsCheckpointAoSair(){
+  if(state.gpsRun && (state.gpsRun.status==='running' || state.gpsRun.status==='paused')) gpsPersist(true);
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden') gpsCheckpointAoSair(); });
+window.addEventListener('pagehide', gpsCheckpointAoSair);
 function gpsPauseRun(){
   const gr = state.gpsRun;
+  if(gr && gr.status==='paused' && gr.autoPausado){ gr.autoPausado = false; if(gpsWatchId!=null){ gpsStopWatch(gpsWatchId); gpsWatchId=null; } gpsPersist(true); render(); return; }
   if(!gr || gr.status!=='running') return;
   gr.status = 'paused';
   gr.pauseBeganAt = Date.now();
   if(gpsWatchId!=null){ gpsStopWatch(gpsWatchId); gpsWatchId=null; }
   gpsReleaseWakeLock();
-  gpsPersist();
+  gpsPersist(true);
   render();
 }
 async function gpsResumeRun(){
@@ -5820,10 +6759,12 @@ async function gpsResumeRun(){
   if(!gr.startedAt) gr.startedAt = Date.now();
   if(!gr.stepStartedAt) gr.stepStartedAt = Date.now();
   gr.status = 'running';
+  const jaComGps = !!gr.autoPausado && gpsWatchId!=null;
+  gr.autoPausado = false; gr.apRef = null;
   gr.lastPoint = null; // evita contar a distância "pulada" entre o ponto de antes e depois da pausa
   gr.segNext = true; // marca o próximo ponto gravado como início de trecho (o resumo refaz esse corte)
   gpsRequestWakeLock();
-  if(gr.mode!=='esteira'){
+  if(gr.mode!=='esteira' && !jaComGps){
     try{ gpsWatchId = await gpsStartWatch(); }
     catch(e){ gpsOnError({ code:2, message:String((e && e.message) || e) }); return; }
   }
@@ -5851,8 +6792,14 @@ async function finishGpsRun(){
     tempo_total_seg: totalElapsedSec,
   };
   const runId = 'run_'+Date.now();
-  await gpsDbPut({ id: runId, day: gr.day, finishedAt: Date.now(), ...resultado });
-  await gpsDbDelete('activeRun');
+  // ownerUid: de quem é a corrida neste aparelho (a sincronização só envia corridas da conta logada).
+  const salvouCorrida = await gpsDbPut({ id: runId, day: gr.day, finishedAt: Date.now(), ownerUid: (state.authUser && !state.viewingClient) ? state.authUser.uid : null, ...resultado });
+  // Só apaga o checkpoint da corrida em andamento se a corrida concluída foi gravada de verdade; espera
+  // antes o checkpoint que estiver em curso (senão ele recriaria o "activeRun" depois de apagado).
+  if(_gpsPersist.timer){ clearTimeout(_gpsPersist.timer); _gpsPersist.timer = null; }
+  await _gpsPersist.fila;
+  if(salvouCorrida) await gpsDbLimparAtiva();
+  else console.warn('[gps] não consegui gravar a corrida concluída; o checkpoint foi mantido');
 
   // Alimenta o mesmo registro que o log manual (pace/tempo/km) usa, pra aparecer no histórico normal.
   const paceSecPerKm = resultado.distancia_total_km>0 ? totalElapsedSec/resultado.distancia_total_km : null;
@@ -5876,15 +6823,18 @@ async function finishGpsRun(){
     data: todayISO(), shoeCredit, gpsRunId: runId,
   };
   gr.progressKey = corridaProgressKey(gr.day); gr.runId = runId; // pro "Excluir atividade" do resumo
+  gr.novosRecordes = atualizarRecordesCorrida(gr, runId);
   if(isTodayDayAbbrev(gr.day)){ markChallengeCheckinToday(); markGroupCheckinsToday('fez corrida'+(resultado.distancia_total_km?' · '+fmtKm(resultado.distancia_total_km):'')); }
   saveCorridaProgress();
   render();
+  sincronizarCorridasGps();
 }
-function gpsExitRun(){
-  if(!confirm('Sair sem salvar essa corrida? O progresso registrado até agora vai se perder.')) return;
+async function gpsExitRun(){
+  if(!(await confirmarApp({ titulo:'Sair sem salvar?', texto:'O que foi registrado nesta corrida vai se perder.', ok:'Sair sem salvar', perigo:true }))) return;
   if(gpsWatchId!=null){ gpsStopWatch(gpsWatchId); gpsWatchId=null; }
   gpsReleaseWakeLock();
-  gpsDbDelete('activeRun');
+  if(_gpsPersist.timer){ clearTimeout(_gpsPersist.timer); _gpsPersist.timer = null; }
+  _gpsPersist.fila.then(()=>gpsDbLimparAtiva());
   state.gpsRun = null;
   render();
 }
@@ -5895,7 +6845,7 @@ function gpsCloseSummary(){ state.gpsRun = null; render(); }
 async function gpsDeleteActivity(){
   const gr = state.gpsRun;
   if(!gr || !gr.progressKey) return;
-  if(!confirm('Excluir esta atividade? Não dá para desfazer.')) return;
+  if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A gravação, a distância e o tempo deste dia somem. Não dá para desfazer.', ok:'Excluir', perigo:true }))) return;
   const key = gr.progressKey;
   const prev = state.corridaProgress[key];
   const p = (prev && typeof prev==='object') ? prev : {};
@@ -5904,7 +6854,10 @@ async function gpsDeleteActivity(){
     if(t){ t.km = Math.max(0, Math.round((t.km-p.shoeCredit.km)*10)/10); saveEquipamentos(); }
   }
   const runId = gr.runId || p.gpsRunId;
-  if(runId) await gpsDbDelete(runId);
+  if(runId){
+    await gpsDbDelete(runId);
+    gpsMarcarExcluidaNuvem(runId); // some também da nuvem (agora ou quando a conexão voltar)
+  }
   const { done, pace, tempo, km, data, shoeCredit, gpsRunId, ...resto } = p;
   if(Object.keys(resto).length) state.corridaProgress[key] = resto;
   else delete state.corridaProgress[key];
@@ -5912,6 +6865,109 @@ async function gpsDeleteActivity(){
   state.gpsRun = null;
   render();
   showToast('Atividade excluída');
+  sincronizarCorridasGps();
+}
+
+/* ---------- Corridas GPS na nuvem ---------- */
+// Cada corrida concluída vira um documento em users/{uid}/data/gpsRun__{id} (mesma coleção que o app já
+// usa, então vale a mesma regra de segurança do Firestore) e o índice users/{uid}/data/gpsRunsIndex
+// guarda os ids (arrayUnion/arrayRemove: dois aparelhos não apagam a alteração um do outro).
+// Por conta, neste aparelho: __gpsEnviadas (ids já confirmados na nuvem — nunca reenvia) e
+// __gpsExcluidas (excluídas aqui, a apagar na nuvem quando der).
+const GPS_NUVEM_TAM_MAX = 900000; // documento do Firestore tem limite de 1 MB
+function gpsPontosCompactos(pontos, passo){
+  const out = [];
+  (pontos||[]).forEach((p,i)=>{
+    if(passo>1 && i%passo!==0 && !p.seg && i!==pontos.length-1) return;
+    out.push([Math.round(p.lat*1e6)/1e6, Math.round(p.lng*1e6)/1e6, p.timestamp, p.alt!=null ? Math.round(p.alt*10)/10 : null, p.seg ? 1 : 0]);
+  });
+  return JSON.stringify(out);
+}
+function gpsParaNuvem(r){
+  const { pontos_gps, ownerUid, ...resto } = r;
+  let passo = 1, pts = gpsPontosCompactos(pontos_gps, 1);
+  // Corrida muito longa: reduz a densidade de pontos só na cópia da nuvem (a do aparelho fica completa).
+  while(pts.length > GPS_NUVEM_TAM_MAX && passo < 16){ passo *= 2; pts = gpsPontosCompactos(pontos_gps, passo); }
+  // Ida e volta em JSON tira campos undefined (o Firestore recusa o documento inteiro se tiver algum).
+  return { corrida: JSON.parse(JSON.stringify(resto)), pontos: pts, pontosPasso: passo, formato: 1 };
+}
+function gpsDaNuvem(d, uid){
+  let arr = [];
+  try{ arr = JSON.parse(d.pontos||'[]'); }catch(e){ arr = []; }
+  const pontos_gps = arr.map(a=>{
+    const o = { lat:a[0], lng:a[1], timestamp:a[2] };
+    if(a[3]!=null) o.alt = a[3];
+    if(a[4]) o.seg = 1;
+    return o;
+  });
+  const c = { ...(d.corrida||{}) };
+  delete c.ownerUid;
+  return { ...c, pontos_gps, ownerUid: uid };
+}
+function gpsMarcarExcluidaNuvem(runId){
+  if(!state.authUser || state.viewingClient) return;
+  const pref = nuvemCachePrefix(state.authUser.uid);
+  const exc = lsLista(pref+'__gpsExcluidas');
+  if(!exc.includes(runId)){ exc.push(runId); lsGravarLista(pref+'__gpsExcluidas', exc); }
+}
+let _gpsSyncRodando = false;
+async function sincronizarCorridasGps(){
+  if(_gpsSyncRodando || !state.authUser || state.viewingClient || !nuvemAcessivel()) return;
+  _gpsSyncRodando = true;
+  const uid = state.authUser.uid;
+  const pref = nuvemCachePrefix(uid);
+  const col = ()=> db.collection('users').doc(uid).collection('data');
+  const FV = firebase.firestore.FieldValue;
+  let tudoOk = true;
+  try{
+    const idxSnap = await comTimeout(col().doc('gpsRunsIndex').get(), CLOUD_TIMEOUT_MS);
+    const indice = new Set((idxSnap.exists && Array.isArray(idxSnap.data().ids)) ? idxSnap.data().ids : []);
+    const enviadas = new Set(lsLista(pref+'__gpsEnviadas'));
+    // 1) Exclusões feitas neste aparelho.
+    const excluidas = lsLista(pref+'__gpsExcluidas');
+    const restoExc = [];
+    for(const id of excluidas){
+      try{
+        await comTimeout(col().doc('gpsRun__'+id).delete(), CLOUD_TIMEOUT_MS);
+        await comTimeout(col().doc('gpsRunsIndex').set({ ids: FV.arrayRemove(id) }, { merge:true }), CLOUD_TIMEOUT_MS);
+        indice.delete(id); enviadas.delete(id);
+      }catch(e){ marcarFalhaNuvem(e); restoExc.push(id); tudoOk = false; }
+    }
+    lsGravarLista(pref+'__gpsExcluidas', restoExc);
+    // 2) Envia as corridas desta conta que a nuvem ainda não tem.
+    const locais = (await gpsDbAll()).filter(gpsEhCorridaSalva);
+    for(const r of locais){
+      if(r.ownerUid && r.ownerUid!==uid) continue;          // de outra conta usada neste aparelho
+      if(indice.has(r.id)){ enviadas.add(r.id); continue; }
+      if(enviadas.has(r.id)) continue;                      // já esteve na nuvem e foi apagada em outro aparelho
+      if(restoExc.includes(r.id)) continue;
+      if(!nuvemAcessivel()){ tudoOk = false; break; }
+      try{
+        await comTimeout(col().doc('gpsRun__'+r.id).set(gpsParaNuvem(r)), CLOUD_TIMEOUT_MS);
+        await comTimeout(col().doc('gpsRunsIndex').set({ ids: FV.arrayUnion(r.id) }, { merge:true }), CLOUD_TIMEOUT_MS);
+        indice.add(r.id); enviadas.add(r.id);
+        if(!r.ownerUid) await gpsDbPut({ ...r, ownerUid: uid }); // corrida feita sem login passa a ser desta conta
+      }catch(e){ marcarFalhaNuvem(e); tudoOk = false; break; }
+    }
+    // 3) Baixa as que estão na nuvem e não neste aparelho (outro aparelho, reinstalação).
+    const idsLocais = new Set(locais.map(r=>r.id));
+    for(const id of indice){
+      if(idsLocais.has(id) || restoExc.includes(id)) continue;
+      if(!nuvemAcessivel()){ tudoOk = false; break; }
+      try{
+        const snap = await comTimeout(col().doc('gpsRun__'+id).get(), CLOUD_TIMEOUT_MS);
+        if(snap.exists){
+          const ok = await gpsDbPut({ ...gpsDaNuvem(snap.data(), uid), id });
+          if(ok) enviadas.add(id); else tudoOk = false;
+        }
+      }catch(e){ marcarFalhaNuvem(e); tudoOk = false; break; }
+    }
+    lsGravarLista(pref+'__gpsEnviadas', [...enviadas]);
+  }catch(e){ marcarFalhaNuvem(e); tudoOk = false; }
+  finally{
+    cloudStatus.gpsSync = tudoOk ? 'ok' : 'incompleta';
+    _gpsSyncRodando = false;
+  }
 }
 const GPS_ZONE_ALERT_MIN_INTERVAL_MS = 45000; // não repete aviso de zona antes de 45s
 const GPS_ZONE_TOLERANCE_SEC = 10; // margem além da faixa do bloco antes de avisar (seg/km)
@@ -5939,6 +6995,10 @@ function ensureGpsTicking(){
   if(gpsTickIntervalRef) return;
   gpsTickIntervalRef = setInterval(()=>{
     if(!state.gpsRun){ clearInterval(gpsTickIntervalRef); gpsTickIntervalRef=null; return; }
+    if(state.gpsRun.status==='contagem'){
+      if(Date.now() >= (state.gpsRun.contagemAte||0)) gpsIniciarDeVerdade(); else render();
+      return;
+    }
     if(state.gpsRun.status==='running'){
       if(state.gpsRun.mode==='esteira') esteiraUpdateDistance();
       if(state.gpsRun.tiroModalUntil && Date.now()>=state.gpsRun.tiroModalUntil) confirmTiroModal();
@@ -5961,6 +7021,7 @@ function renderGpsRunScreen(){
   }
   if(gr.status==='intro') return renderGpsIntro(gr);
   if(gr.status==='permission') return renderGpsPermission();
+  if(gr.status==='aguardando' || gr.status==='contagem') return renderGpsAguardando(gr);
   if(gr.status==='denied') return renderGpsDenied(gr);
   if(gr.status==='finished') return renderGpsSummary(gr);
   return renderGpsRunning(gr);
@@ -6146,6 +7207,27 @@ function renderGpsIntro(gr){
       </div>
     </div>`;
 }
+// Aguardando GPS: mostra a precisão; "Começar" fica pronto quando o sinal está bom (≤20 m), com a opção
+// de começar mesmo assim. Depois vem a contagem de 3 s.
+function renderGpsAguardando(gr){
+  const acc = gr.lastAccuracy;
+  const bom = acc!=null && acc<=20;
+  if(gr.status==='contagem'){
+    const falta = Math.max(1, Math.ceil(((gr.contagemAte||0) - Date.now())/1000));
+    return `<div class="mrt-root"><div class="mrt-scroll gps-wait"><div class="gps-count">${falta}</div><div class="mrt-sub">Prepare-se</div></div></div>`;
+  }
+  const qual = acc==null ? 'Procurando sinal…' : bom ? 'Sinal bom' : acc<=30 ? 'Sinal razoável' : 'Sinal fraco';
+  return `<div class="mrt-root"><div class="mrt-scroll gps-wait">
+    <button class="mrt-wex-x gps-wait-x" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button>
+    <div class="gps-wait-ic ${bom?'ok':''}">${gpsIcon()}</div>
+    <div class="mrt-title" style="font-size:26px;">Aguardando GPS</div>
+    <div class="mrt-sub" style="margin-top:6px;">${qual}${acc!=null?' · precisão ±'+Math.round(acc)+' m':''}</div>
+    <div class="gps-wait-btns">
+      <button class="btn-primary" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>Começar</button>
+      ${!bom ? `<button class="btn-ghost" id="gpsBtnComecarMesmo">Começar mesmo assim</button>` : ''}
+    </div>
+  </div></div>`;
+}
 function renderGpsPermission(){
   return `
     <div class="mrt-root">
@@ -6159,10 +7241,10 @@ function renderGpsPermission(){
 function renderGpsDenied(gr){
   const nativo = !!(window.NativeBridge && window.NativeBridge.isNative());
   const msg = gr.denyReason==='negada'
-    ? (nativo ? 'Você negou o acesso à localização. Vá em Ajustes → Privacidade e Segurança → Serviços de Localização → Forza Run e permita (de preferência "Sempre").'
+    ? (nativo ? 'Você negou o acesso à localização. Vá em Ajustes → Privacidade e Segurança → Serviços de Localização → Meu Ritmo e permita (de preferência "Sempre").'
               : 'Você negou o acesso à localização. Pra rastrear com GPS, precisa permitir localização pra esse site nas configurações do navegador.')
     : gr.denyReason==='timeout'
-    ? (nativo ? 'O GPS não respondeu. Confira em Ajustes → Privacidade e Segurança → Serviços de Localização se o Forza Run tem permissão, e tente de novo em local aberto.'
+    ? (nativo ? 'O GPS não respondeu. Confira em Ajustes → Privacidade e Segurança → Serviços de Localização se o Meu Ritmo tem permissão, e tente de novo em local aberto.'
               : 'Demorou demais pra pegar sinal de GPS. Verifique se a localização do celular está ligada e tente de novo em local aberto.')
     : 'Não consegui acessar sua localização agora.';
   return `
@@ -6193,7 +7275,13 @@ function renderGpsRunning(gr){
   const stepElapsed = gpsStepElapsedSec(gr);
   const totalElapsed = gpsTotalElapsedSec(gr);
   const paceAvgSec = gr.totalDistKm>0.05 ? totalElapsed/gr.totalDistKm : null;
-  const paceAtualSec = gr.status==='running' ? movingWindowPaceSec(gr.points, Date.now()) : null;
+  // Ritmo atual: janela de 25 s + suavização (no máximo 1 atualização por segundo).
+  const paceBruto = gr.status==='running' ? movingWindowPaceSec(gr.points, Date.now()) : null;
+  if(paceBruto && (!gr.paceSuaveEm || Date.now()-gr.paceSuaveEm>=900)){
+    gr.paceSuave = gr.paceSuave ? gr.paceSuave*0.7 + paceBruto*0.3 : paceBruto;
+    gr.paceSuaveEm = Date.now();
+  }
+  const paceAtualSec = gr.status==='running' && paceBruto ? gr.paceSuave : null;
   const isAberta = step && step.tipo==='aberta';
   const progressPct = !step ? 0
     : step.tipo==='distancia' && step.km ? Math.min(100, (gr.stepDistKm/step.km)*100)
@@ -6274,6 +7362,7 @@ function renderGpsRunning(gr){
             <div class="c main" id="gpsPaceTap"><div class="v">${paceVal}</div><div class="k">${paceLbl}</div></div>
             <div class="c"><div class="v">${distVal}</div><div class="k">Distância (km)</div></div>
           </div>
+          <div class="gps-extra">Em movimento ${formatClock((gr.movingMs||0)/1000)}${gr.ultimoKmSeg ? ' · Último km '+formatClock(gr.ultimoKmSeg) : ''}${gr.autoPausado ? ' · Pausa automática' : ''}</div>
           <button class="gps-mexpand" id="gpsBtnExpand" aria-label="Métricas em tela cheia">${icExpand}</button>
         </div>
         ${corridaRodape(gr, isAberta)}
@@ -6461,6 +7550,97 @@ function renderGpsSplits(an){
       ${rows}
     </div>`;
 }
+// Tempo em movimento a partir da trilha limpa: trechos com deslocamento real (≥1,5 km/h) e sem buraco de sinal.
+function gpsTempoEmMovimento(track){
+  let s = 0;
+  for(let i=1;i<track.length;i++){
+    const dt = (track[i].t - track[i-1].t)/1000, dk = track[i].distKm - track[i-1].distKm;
+    if(dt>0 && dt<=30 && (dk/dt)*3600 >= 1.5) s += dt;
+  }
+  return s;
+}
+// Menor tempo (ativo) para cobrir `km` em qualquer trecho da corrida. null se a corrida não chegou lá.
+function gpsMelhorEsforco(track, km){
+  const n = track.length;
+  if(n<2 || track[n-1].distKm < km) return null;
+  let melhor = Infinity, j = 1;
+  for(let i=0;i<n;i++){
+    const alvo = track[i].distKm + km;
+    if(alvo > track[n-1].distKm) break;
+    while(j<n-1 && track[j].distKm < alvo) j++;
+    const a = track[j-1], b = track[j];
+    const span = b.distKm - a.distKm;
+    const sec = span>0 ? a.movSec + (alvo-a.distKm)/span*(b.movSec-a.movSec) : b.movSec;
+    melhor = Math.min(melhor, sec - track[i].movSec);
+  }
+  return isFinite(melhor) && melhor>0 ? melhor : null;
+}
+const RECORDE_DISTS = [[1,'1 km'],[5,'5 km'],[10,'10 km'],[21.0975,'21 km']];
+async function saveRecordesCorrida(){ try{ await window.storage.set('recordesCorrida', JSON.stringify(state.recordesCorrida||{}), false); }catch(e){} }
+// Atualiza os recordes com a corrida concluída. Só conta distância realmente coberta pela trilha GPS
+// (nada estimado). A primeira marca de cada distância é registrada, mas não vira "novo recorde".
+function atualizarRecordesCorrida(gr, runId){
+  if(gr.mode==='esteira') return [];
+  const track = gpsCleanTrack(gr.points);
+  if(track.length<2) return [];
+  state.recordesCorrida = state.recordesCorrida || {};
+  const R = state.recordesCorrida;
+  const novos = [];
+  RECORDE_DISTS.forEach(([km, rot])=>{
+    const seg = gpsMelhorEsforco(track, km);
+    if(!seg) return;
+    const k = String(km);
+    if(!R[k] || seg < R[k].seg){
+      if(R[k]) novos.push({ rotulo:rot, seg, anterior:R[k].seg });
+      R[k] = { seg:Math.round(seg), data:todayISO(), runId };
+    }
+  });
+  const total = track[track.length-1].distKm;
+  if(!R.maiorKm || total > R.maiorKm.km){
+    if(R.maiorKm) novos.push({ rotulo:'Maior distância', km:total, anterior:R.maiorKm.km });
+    R.maiorKm = { km:Math.round(total*100)/100, data:todayISO(), runId };
+  }
+  saveRecordesCorrida();
+  return novos;
+}
+// Bloco do resumo: marcas desta corrida que são o recorde atual (e destaca se bateu um anterior).
+function renderRecordesDaCorrida(gr, melhorKm){
+  const R = state.recordesCorrida || {};
+  const linhas = RECORDE_DISTS.filter(([k])=>R[String(k)] && gr.runId && R[String(k)].runId===gr.runId)
+    .map(([k,rot])=>`<div class="gps-split"><span class="km">${rot}</span><span class="pc">${formatClock(R[String(k)].seg)}</span><span class="bar"></span></div>`);
+  if(!linhas.length) return '';
+  const novos = (gr.novosRecordes||[]).length;
+  return `<div class="mrt-card"><div class="gps-card-head"><span class="t">${novos ? 'Novo recorde' : 'Suas melhores marcas'}</span>${melhorKm?`<span class="r">Melhor km <b>${formatPace(melhorKm)}</b></span>`:''}</div>${linhas.join('')}</div>`;
+}
+// GPX 1.1 da trilha (cada retomada depois de pausa vira um trecho novo).
+function gerarGpx(gr, nome){
+  const esc = (t)=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  const segs = [[]];
+  (gr.points||[]).forEach(p=>{ if(p.seg && segs[segs.length-1].length) segs.push([]); segs[segs.length-1].push(p); });
+  const pt = (p)=>`<trkpt lat="${p.lat}" lon="${p.lng}">${p.alt!=null?`<ele>${p.alt}</ele>`:''}<time>${new Date(p.timestamp).toISOString()}</time></trkpt>`;
+  return `<?xml version="1.0" encoding="UTF-8"?>\n<gpx version="1.1" creator="Meu Ritmo" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>${esc(nome)}</name><type>running</type>${segs.filter(x=>x.length).map(sg=>`<trkseg>${sg.map(pt).join('')}</trkseg>`).join('')}</trk></gpx>`;
+}
+async function exportarGpx(gr){
+  if(!gr.points || gr.points.length<2){ showToast('Esta atividade não tem trilha GPS'); return; }
+  const data = new Date(gr.points[0].timestamp);
+  const nome = 'Corrida '+vdotISODate(data);
+  const xml = gerarGpx(gr, nome);
+  const arquivo = 'meu-ritmo-'+vdotISODate(data)+'.gpx';
+  try{
+    const file = new File([xml], arquivo, { type:'application/gpx+xml' });
+    if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], title:nome }); return; }
+  }catch(e){ if(e && e.name==='AbortError') return; }
+  const url = URL.createObjectURL(new Blob([xml], { type:'application/gpx+xml' }));
+  const a = document.createElement('a'); a.href = url; a.download = arquivo;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  setTimeout(()=>URL.revokeObjectURL(url), 2000);
+}
+const COMO_FOI_OPS = [[1,'Fácil'],[2,'Ok'],[3,'Difícil'],[4,'Muito difícil']];
+function renderComoFoi(atual, attr){
+  return `<div class="ds-section gps-comofoi"><div class="ds-label" style="margin-bottom:10px;">Como foi?</div>
+    <div class="ds-seg ds-seg4">${COMO_FOI_OPS.map(([v,l])=>`<button class="${atual===v?'on':''}" ${attr}="${v}">${l}</button>`).join('')}</div></div>`;
+}
+
 function renderGpsSummary(gr){
   const totalElapsed = Math.round(gpsTotalElapsedSec(gr));
   const paceSec = gr.totalDistKm>0.05 ? totalElapsed/gr.totalDistKm : null;
@@ -6503,8 +7683,10 @@ function renderGpsSummary(gr){
         <div class="gps-sum-sec">
           <div class="c"><div class="k">Elevação</div><div class="v">${elevGain!=null?elevGain+'<small> m</small>':'—'}</div></div>
           <div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>
-          <div class="c"><div class="k">Melhor km</div><div class="v">${melhorKm?formatPace(melhorKm)+'<small> /km</small>':'—'}</div></div>
+          <div class="c"><div class="k">Em movimento</div><div class="v">${an.track.length>=2 ? formatClock(gpsTempoEmMovimento(an.track)) : '—'}</div></div>
         </div>
+        ${gr.progressKey ? renderComoFoi(((state.corridaProgress||{})[gr.progressKey]||{}).comoFoi, 'data-comofoi') : ''}
+        ${renderRecordesDaCorrida(gr, melhorKm)}
         ${renderGpsPaceChart(an, paceSec)}
         ${renderGpsSplits(an)}
         <div class="mrt-card">
@@ -6527,6 +7709,7 @@ function renderGpsSummary(gr){
         <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
           <button class="btn-primary" id="gpsBtnCloseSummary2">Concluir</button>
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
+          ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
           ${gr.progressKey ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
       </div>
@@ -6558,13 +7741,25 @@ function wireGpsRunScreen(){
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
+  if(byId('gpsBtnGpx')) byId('gpsBtnGpx').onclick = ()=>exportarGpx(gr);
+  document.querySelectorAll('[data-comofoi]').forEach(el=>{
+    el.onclick = ()=>{
+      const k = gr.progressKey; if(!k) return;
+      const v = parseInt(el.getAttribute('data-comofoi'),10);
+      const atual = state.corridaProgress[k];
+      state.corridaProgress[k] = { ...(atual && typeof atual==='object' ? atual : { done:true }), comoFoi:v };
+      saveCorridaProgress(); hapticLeve(); render();
+    };
+  });
   if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=>{
     const distTxt = fmtKm(gr.totalDistKm), tempoTxt = formatClock(Math.round(gpsTotalElapsedSec(gr)));
-    const texto = `Acabei de correr ${distTxt} em ${tempoTxt} pelo Forza Run!`;
+    const texto = `Acabei de correr ${distTxt} em ${tempoTxt} pelo Meu Ritmo!`;
     if(navigator.share){ navigator.share({ text: texto }).catch(()=>{}); }
-    else{ navigator.clipboard && navigator.clipboard.writeText(texto).catch(()=>{}); alert('Texto copiado: '+texto); }
+    else{ navigator.clipboard && navigator.clipboard.writeText(texto).catch(()=>{}); showToast('Texto copiado'); }
   };
   if(byId('gpsBtnSkipStep')) byId('gpsBtnSkipStep').onclick = esteiraSkipStep;
+  if(byId('gpsBtnComecar')) byId('gpsBtnComecar').onclick = gpsComecarContagem;
+  if(byId('gpsBtnComecarMesmo')) byId('gpsBtnComecarMesmo').onclick = gpsComecarContagem;
   document.querySelectorAll('[data-esteirakmh]').forEach(el=>{
     el.onclick = ()=> esteiraAdjustKmh(el.getAttribute('data-esteirakmh')==='+' ? 0.1 : -0.1);
   });
@@ -6764,8 +7959,11 @@ function openMuscTemplateBuilder(templateId){
 // Entradas de criação (mesma ação, chamada tanto pelos ícones do cabeçalho quanto pelos 3 cards
 // grandes da aba Treinos — um único lugar de verdade pra cada modo).
 function openCorridaCreate(){ openTemplateBuilder(null); state.modalType='editCorrida'; state.modalOpen=true; render(); }
-function openMuscCreate(){ openMuscTemplateBuilder(null); state.modalType='editMuscTemplate'; state.modalOpen=true; render(); }
+function openMuscCreate(){ state.rotinaDraft = null; abrirRotina(null); }
 function openHybridCreate(){
+  // Motor único: criar/refazer plano híbrido passa pelo Questionário V2. O quiz antigo fica no código (planos
+  // antigos ainda são lidos), mas não é mais aberto.
+  if(QUESTIONARIO_V2_PADRAO){ qv2Abrir(); return; }
   state.hybridDraft = {
     step: 0,
     nivelCorrida:'intermediario', nivelMusc:'intermediario', objetivo:'massa',
@@ -6784,8 +7982,8 @@ function duplicateMuscTemplate(id){
   saveMuscTemplates();
   render();
 }
-function deleteMuscTemplate(id){
-  if(!confirm('Excluir essa rotina salva? Não dá pra desfazer.')) return;
+async function deleteMuscTemplate(id){
+  if(!(await confirmarApp({ titulo:'Excluir esta rotina?', texto:'Não dá para desfazer.', ok:'Excluir', perigo:true }))) return;
   state.muscTemplates = state.muscTemplates.filter(t=>t.id!==id);
   saveMuscTemplates();
   render();
@@ -7358,12 +8556,21 @@ function buildAllHybridWeeks(draft, sched, totalWeeks, checkins, checkinDetails)
 }
 // Materializa uma semana do plano híbrido em state.treinos/state.musculacao — mesmo padrão que
 // materializeVdotWeekIntoTreinos usa pro plano solo, só que cobre as duas coleções de uma vez.
-function materializeHybridWeekIntoState(week, startMondayISO){
+function materializeHybridWeekIntoState(week, startMondayISO, diasMuscAnteriores){
+  // Dias de musculação da semana anterior do plano que não existem na nova: a lista (que é por dia da
+  // semana) sairia "fantasma". Só limpa dia que veio do plano (origem null), nunca treino manual/modelo.
+  (diasMuscAnteriores||[]).forEach(d=>{
+    if(week.muscPlan && week.muscPlan[d]) return;
+    if(state.muscDayOrigin && state.muscDayOrigin[d]) return;
+    delete state.musculacao[d];
+  });
   const start = new Date(startMondayISO+'T00:00:00');
   const monday = new Date(start);
   monday.setDate(monday.getDate() + (week.weekNumber-1)*7);
-  const activeCorridaDays = week.corridaWeek.map(w=>w.day);
-  state.treinos = state.treinos.filter(t => !activeCorridaDays.includes(dayAbbrevOf(t.day)));
+  // Plano vivo: só substitui os treinos desta MESMA semana (por data). Semanas anteriores ficam como histórico
+  // (o resumo e o "feito" de cada corrida apontam pra entrada daquela data).
+  const datasDaSemana = new Set(DAY_ABBR.map((d,i)=>{ const x = new Date(monday); x.setDate(x.getDate()+i); return d+' '+vdotFormatDDMM(x); }));
+  state.treinos = state.treinos.filter(t => !datasDaSemana.has(t.day));
   week.corridaWeek.forEach(w=>{
     const idx = DAY_ABBR.indexOf(w.day);
     const dNew = new Date(monday);
@@ -7371,7 +8578,7 @@ function materializeHybridWeekIntoState(week, startMondayISO){
     state.treinos.push({ day: w.day+' '+vdotFormatDDMM(dNew), type:w.type, mainDesc:w.mainDesc, mainPace:w.mainPace,
       totalKm:w.totalKm, totalMin:w.totalMin||null, cor:w.cor, objetivo:w.objetivo, modo:w.modo, justificativa:w.justificativa, periodos:w.periodos||null,
       warmupDesc:w.warmupDesc||'', warmupPace:w.warmupPace||'', cooldownDesc:w.cooldownDesc||'', cooldownPace:w.cooldownPace||'',
-      steps:w.steps||null, gpsSteps:w.gpsSteps||null, sessao:w.sessao||null });
+      steps:w.steps||null, gpsSteps:w.gpsSteps||null, sessao:w.sessao||null, chave: !!(w.chave || ehTipoCorridaChave(w.type)) });
   });
   Object.keys(week.muscPlan).forEach(d=>{
     state.musculacao[d] = week.muscPlan[d].map(e => ({ id: Date.now().toString(36)+Math.random().toString(36).slice(2,6), done:false, ...e }));
@@ -7929,8 +9136,9 @@ function materializeVdotWeekIntoTreinos(week, startMondayISO){
       origem: 'vdotplan',
     };
   });
-  const activeDays = week.days.map(w=>w.day);
-  state.treinos = state.treinos.filter(t => !activeDays.includes(dayAbbrevOf(t.day)));
+  const datasDaSemana = new Set(DAY_ABBR.map((d,i)=>{ const x = new Date(monday); x.setDate(x.getDate()+i); return d+' '+vdotFormatDDMM(x); }));
+  state.treinos = state.treinos.filter(t => !datasDaSemana.has(t.day));
+  newEntries.forEach(e=>{ if(ehTipoCorridaChave(e.type)) e.chave = true; });
   state.treinos = state.treinos.concat(newEntries);
   state.isDemo = false;
   saveTreinos();
@@ -8122,7 +9330,22 @@ function suggestedForExercise(ex){
   }else{
     motivo = 'Quase lá — mantendo a carga por mais uma sessão.';
   }
+  // Musculação dentro do plano híbrido: perna não sobe carga quando a semana de corrida está pesada
+  // (treino forte de corrida hoje/amanhã ou carga alta nas pernas).
+  if(direction==='subir' && ex.grupo==='Pernas' && interferenciaCorridaNasPernas()){
+    direction = 'manter'; nextPeso = firstPeso;
+    motivo = 'Semana de corrida pesada: mantendo a carga das pernas por enquanto.';
+  }
   return { peso: nextPeso || ex.carga || 0, reps: ex.reps || metaReps, direction, motivo };
+}
+function interferenciaCorridaNasPernas(){
+  try{
+    return naSemanaAtual(()=>{
+      const i = hojeIdx();
+      const forte = [DAY_ABBR[i], DAY_ABBR[i+1]].filter(Boolean).some(d=>corridaIntensa(treinoEntryForDay(d)));
+      return forte || cargaReal().nivelPernas>=2;
+    });
+  }catch(e){ return false; }
 }
 function startWorkoutSession(day){
   const list = state.musculacao[day] || [];
@@ -8354,7 +9577,7 @@ function markChallengeCheckinToday(){
   state.challenge.checkins[iso] = true;
   saveChallenge();
 }
-function isoDateNDaysAgo(n){ return new Date(Date.now() - n*86400000).toISOString().slice(0,10); }
+function isoDateNDaysAgo(n){ const d = new Date(); d.setDate(d.getDate()-n); return vdotISODate(d); } // data local, como todayISO
 function challengeStreak(){
   if(!state.challenge) return 0;
   let streak = 0;
@@ -8400,9 +9623,9 @@ function finishWorkoutSession(){
   hapticForte();
   render();
 }
-function exitWorkoutSession(){
+async function exitWorkoutSession(){
   if(state.workoutSession && state.workoutSession.phase!=='summary'){
-    if(!confirm('Sair do treino agora? As séries já registradas ficam salvas, mas o cronômetro é interrompido.')) return;
+    if(!(await confirmarApp({ titulo:'Sair do treino agora?', texto:'As séries já registradas ficam salvas; o cronômetro para.', ok:'Sair' }))) return;
   }
   stopRestTicking();
   state.workoutSession = null;
@@ -8519,7 +9742,7 @@ async function compartilharResumoTreino(ws){
   const blob = await new Promise(res=>cv.toBlob(res, 'image/png'));
   const file = new File([blob], 'meu-ritmo-treino.png', { type:'image/png' });
   try{
-    if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text:'Treino concluído no Forza Run' }); return; }
+    if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text:'Treino concluído no Meu Ritmo' }); return; }
   }catch(e){ if(e && e.name==='AbortError') return; }
   const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'meu-ritmo-treino.png';
   document.body.appendChild(a); a.click(); a.remove();
@@ -8578,6 +9801,8 @@ function renderWorkoutSession(){
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div class="icon-box gold">${ICONS.trophy}</div><div class="mrt-summarytitle" style="font-size:17px;margin:0;">Recordes</div></div>
             ${recordes.map(r=>`<div class="mrt-cmprow"><span>${r.nome}</span><b class="up">${r.peso}kg × ${r.reps}</b></div>`).join('')}
           </div>` : ''}
+          ${(()=>{ const ult = (state.workoutSessionsLog||[])[state.workoutSessionsLog.length-1]; const pernas = ult ? (ult.exercicios||[]).filter(x=>x.grupo==='Pernas').reduce((t,x)=>t+(parseInt(x.series,10)||0),0) : 0;
+            return `<div style="width:100%;text-align:left;">${renderComoFoi(ult && ult.comoFoi, 'data-wexcomofoi')}${pernas ? `<div class="mrt-sub" style="margin:-12px 0 16px;">Séries de perna: ${pernas} — entram na carga das pernas para as próximas corridas.</div>` : ''}</div>`; })()}
           ${renderAvaliacaoTreinoMusc(ws)}
           <div class="mrt-card" style="width:100%;text-align:left;">
             <div class="mrt-runlabel" style="color:var(--accent);">No próximo treino</div>
@@ -8714,6 +9939,7 @@ function renderWorkoutSession(){
             </div>
           </div>
           ${ultima ? `<div class="mrt-lastline">Última vez: <b>${ultima}</b></div>` : ''}
+          ${(sug.direction && sug.peso) ? `<div class="mrt-lastline">Hoje: <b>${String(sug.peso).replace('.',',')} kg × ${sug.reps}</b> · ${sug.motivo}</div>` : ''}
           <div style="display:flex;gap:14px;margin-top:6px;flex-wrap:wrap;">
             ${ex.repdbId ? `<button class="mrt-linkbtn" style="padding-left:0;" data-wexverexec="${repdbImg(ex.repdbId)}">${ICONS.eye} Ver execução</button>` : ''}
             <button class="mrt-linkbtn" style="padding-left:0;" data-wexdescanso>${ICONS.clock} Descanso: ${ex.descanso||'90s'}</button>
@@ -8785,6 +10011,11 @@ function abrirEditorSerie(campo){
   });
 }
 function wireWorkoutSession(){
+  document.querySelectorAll('[data-wexcomofoi]').forEach(el=>{ el.onclick = ()=>{
+    const log = state.workoutSessionsLog||[]; const ult = log[log.length-1]; if(!ult) return;
+    ult.comoFoi = parseInt(el.getAttribute('data-wexcomofoi'),10);
+    saveWorkoutSessionsLog(); hapticLeve(); render();
+  }; });
   document.querySelectorAll('[data-wexexit]').forEach(el=>{ el.onclick = exitWorkoutSession; });
   const skipSerieEl = document.querySelector('[data-wexskipserie]');
   if(skipSerieEl) skipSerieEl.onclick = pularSerieAction;
@@ -8808,13 +10039,13 @@ function wireWorkoutSession(){
     if(ex) abrirSheetDescanso(ex.id, ws.day);
   };
   const finishTopEl = document.querySelector('[data-wexfinishtop]');
-  if(finishTopEl) finishTopEl.onclick = ()=>{
+  if(finishTopEl) finishTopEl.onclick = async ()=>{
     const ws = state.workoutSession; if(!ws) return;
     const list = state.musculacao[ws.day]||[];
     const ex = list[ws.exIdx];
     const seriesCount = ex ? workoutSeriesCountFor(ex, ws) : 1;
     const atEnd = ws.exIdx>=list.length-1 && ws.serieIdx>=seriesCount-1;
-    if(!atEnd && !confirm('Concluir o treino agora? Os exercícios restantes não ficam marcados como feitos.')) return;
+    if(!atEnd && !(await confirmarApp({ titulo:'Concluir o treino agora?', texto:'Os exercícios restantes não ficam marcados como feitos.', ok:'Concluir' }))) return;
     finishWorkoutSession();
   };
   const concluirEl = document.querySelector('[data-wexconcluir]');
@@ -8910,9 +10141,9 @@ function setTenisAtivo(id){
   state.equipamentos.tenis.forEach(t=>{ t.ativo = (t.id===id); });
   saveEquipamentos(); render();
 }
-function delTenis(id){
+async function delTenis(id){
   const t = state.equipamentos.tenis.find(x=>x.id===id);
-  if(t && !confirm(`Excluir "${t.nome}"? O histórico de ${t.km}km desse tênis se perde, não dá pra desfazer.`)) return;
+  if(t && !(await confirmarApp({ titulo:`Excluir "${t.nome}"?`, texto:`Os ${t.km} km desse tênis se perdem. Não dá para desfazer.`, ok:'Excluir', perigo:true }))) return;
   state.equipamentos.tenis = state.equipamentos.tenis.filter(t=>t.id!==id);
   saveEquipamentos(); render();
 }
@@ -8940,12 +10171,20 @@ function readAndResizeImage(file, size, cb){
   reader.readAsDataURL(file);
 }
 
-const BACKUP_KEYS = ['treinos','zonas','musculacao','outros','corridaProgress','perfil','historicoCarga','historicoMedidas','equipamentos','corridaVdotData','weekTrackMonday','onboardingDone','challenge','athleteProfile'];
+// Todas as chaves que o app grava (as da segunda linha ficavam de fora do backup e da migração pra nuvem).
+const BACKUP_KEYS = ['treinos','zonas','musculacao','outros','corridaProgress','perfil','historicoCarga','historicoMedidas','equipamentos','corridaVdotData','weekTrackMonday','onboardingDone','challenge','athleteProfile',
+  'hybridPlanData','treinoTemplates','muscTemplates','muscDayOrigin','muscAjuste','workoutSessionsLog','domsPernas','semanasCompletas','equipItens','favoritos','atalhos',
+  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida'];
+// Corridas GPS (IndexedDB) vão no backup num campo próprio — backups antigos, sem esse campo, continuam
+// importando normalmente.
+const BACKUP_CAMPO_CORRIDAS = '__corridasGps';
 async function exportBackup(){
   const obj = {};
   for(const k of BACKUP_KEYS){
     try{ const r = await window.storage.get(k, false); if(r && r.value!=null) obj[k] = r.value; }catch(e){}
   }
+  const corridas = (await gpsDbAll()).filter(gpsEhCorridaSalva);
+  if(corridas.length) obj[BACKUP_CAMPO_CORRIDAS] = corridas;
   const blob = new Blob([JSON.stringify(obj)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -8955,17 +10194,23 @@ async function exportBackup(){
 }
 async function importBackupFile(file){
   let obj;
-  try{ obj = JSON.parse(await file.text()); }catch(e){ alert('Arquivo inválido.'); return; }
-  if(!confirm('Isso substitui todos os dados atuais do app pelos do backup. Continuar?')) return;
+  try{ obj = JSON.parse(await file.text()); }catch(e){ showToast('Arquivo inválido'); return; }
+  if(!(await confirmarApp({ titulo:'Importar backup?', texto:'Substitui todos os dados atuais do app pelos do arquivo.', ok:'Importar', perigo:true }))) return;
   for(const k of Object.keys(obj)){
+    if(k===BACKUP_CAMPO_CORRIDAS) continue;
     try{ await window.storage.set(k, obj[k], false); }catch(e){}
   }
-  alert('Backup importado! O app vai recarregar.');
+  // Corridas: grava pelo id (idempotente — importar duas vezes não duplica).
+  if(Array.isArray(obj[BACKUP_CAMPO_CORRIDAS])){
+    for(const r of obj[BACKUP_CAMPO_CORRIDAS]){ if(gpsEhCorridaSalva(r)) await gpsDbPut(r); }
+  }
+  showToast('Backup importado — recarregando');
+  await new Promise(r=>setTimeout(r, 900));
   location.reload();
 }
-function apagarTudo(){
-  if(!confirm('Isso apaga TODOS os dados do app (treinos, histórico, perfil, tudo) e não pode ser desfeito. Continuar?')) return;
-  if(!confirm('Tem certeza mesmo? Essa ação é definitiva.')) return;
+async function apagarTudo(){
+  if(!(await confirmarApp({ titulo:'Apagar todos os dados?', texto:'Treinos, histórico, perfil — tudo neste aparelho. Não dá para desfazer.', ok:'Continuar', perigo:true }))) return;
+  if(!(await confirmarApp({ titulo:'Tem certeza mesmo?', texto:'Essa ação é definitiva.', ok:'Apagar tudo', perigo:true }))) return;
   BACKUP_KEYS.forEach(k=>{ try{ localStorage.removeItem('treinoapp:'+k); }catch(e){} });
   location.reload();
 }
@@ -9165,6 +10410,26 @@ function openSheet(html, wire){
   return sheet;
 }
 function closeSheet(){ const o = document.getElementById('sheetOverlay'); if(o) o.remove(); }
+// Confirmação do próprio app (no lugar do confirm() nativo). Resolve true/false; fechar a sheet = false.
+function confirmarApp(opts){
+  opts = opts || {};
+  return new Promise((resolve)=>{
+    let feito = false;
+    const fim = (v)=>{ if(feito) return; feito = true; closeSheet(); resolve(v); };
+    const sh = openSheet(`
+      <div class="sheet-title">${opts.titulo||'Tem certeza?'}</div>
+      ${opts.texto ? `<div class="sheet-sub">${opts.texto}</div>` : ''}
+      <div class="ds-actions">
+        <button class="${opts.perigo ? 'btn-primary ds-btn-perigo' : 'btn-primary'}" id="cfOk">${opts.ok||'Confirmar'}</button>
+        <button class="btn-ghost" id="cfCancel">${opts.cancelar||'Cancelar'}</button>
+      </div>`, (el)=>{
+      el.querySelector('#cfOk').onclick = ()=>fim(true);
+      el.querySelector('#cfCancel').onclick = ()=>fim(false);
+    });
+    const ov = document.getElementById('sheetOverlay');
+    if(ov) ov.onclick = (ev)=>{ if(ev.target===ov) fim(false); };
+  });
+}
 function showToast(msg, iconHtml){
   const old = document.getElementById('appToast'); if(old) old.remove();
   const t = document.createElement('div');
@@ -9296,7 +10561,11 @@ function dayDateLabel(d){
 // o treino da terça de outra semana, só porque as duas se chamam "Ter"). Bate pela data completa.
 function treinoEntryForDay(day){
   const expectedDate = dayDateLabel(day);
-  return state.treinos.find(t => dayAbbrevOf(t.day)===day && t.day.includes(expectedDate));
+  const e = state.treinos.find(t => dayAbbrevOf(t.day)===day && t.day.includes(expectedDate));
+  // "Descansar hoje" (escada de ajuste) tira a corrida do dia sem apagar o registro.
+  if(e) return e.descanso ? null : e;
+  // Semana futura: mostra a corrida do plano daquela semana (prévia, não gravada).
+  return entradaPreviaDoPlano(day);
 }
 // Musculação não tem data própria (é "toda Segunda", pra sempre) — diferente da corrida, que sempre
 // tem uma data real. Isso é normal pro uso comum, mas quebra quando um plano híbrido tem início
@@ -9651,6 +10920,7 @@ function render(){
   const wandCorridaBtn = document.getElementById('headerWandCorrida');
   if(wandCorridaBtn){
     wandCorridaBtn.onclick = ()=>{
+      if(QUESTIONARIO_V2_PADRAO){ qv2Abrir(); return; } // motor único (plano só de corrida = V2 sem dias de musculação)
       if(!state.corridaVdotData || !state.corridaVdotData.vdot){
         alert('Antes de gerar um plano automático, defina seu VDOT (menu "mais opções" → Ver VDOT).');
         state.tab = 'vdot';
@@ -10079,6 +11349,31 @@ function render(){
           }
           document.addEventListener('pointermove', onMove);
           document.addEventListener('pointerup', onUp);
+        };
+      });
+      document.querySelectorAll('[data-blkpreset]').forEach(el=>{
+        el.onclick = ()=>{
+          // Intervalado pronto: 5 × 800 m com 2:00 de recuperação; o ritmo de tiro (I do VDOT) entra se existir.
+          const b = newBlock('intervalado');
+          b.reps = '5';
+          Object.assign(b.steps[0], { durType:'km', km:'0.8' });
+          Object.assign(b.steps[1], { durType:'time', h:'', m:'2', s:'00' });
+          const pI = state.corridaVdotData && state.corridaVdotData.paces && state.corridaVdotData.paces.I;
+          const secI = pI ? parsePaceToSec(String(pI)) : null;
+          if(secI){ Object.assign(b.steps[0], { paceType:'pace', paceLoM:String(Math.floor(secI/60)), paceLoS:String(secI%60).padStart(2,'0'), paceHiM:String(Math.floor(secI/60)), paceHiS:String(secI%60).padStart(2,'0') }); }
+          draft.blocks.push(b);
+          render();
+        };
+      });
+      document.querySelectorAll('[data-blkdup]').forEach(el=>{
+        el.onclick = (ev)=>{
+          ev.stopPropagation();
+          const i = draft.blocks.findIndex(x=>x.id===el.getAttribute('data-blkdup'));
+          if(i<0) return;
+          const o = draft.blocks[i];
+          const copia = o.isGroup ? { ...o, id:newBlockId(), steps:o.steps.map(st=>({ ...st, id:newBlockId() })) } : { ...o, id:newBlockId() };
+          draft.blocks.splice(i+1, 0, copia);
+          render();
         };
       });
       document.querySelectorAll('[data-blkadd]').forEach(el=>{
@@ -10804,7 +12099,7 @@ function wirePerfilExtras(){
   const btnApagarTudo = document.getElementById('btnApagarTudo');
   if(btnApagarTudo) btnApagarTudo.onclick = apagarTudo;
   const btnSignOut = document.getElementById('btnSignOut');
-  if(btnSignOut) btnSignOut.onclick = ()=>{ if(confirm('Sair da conta? O app continua funcionando, mas volta a salvar só nesse aparelho (sem sincronizar/compartilhar) até você entrar de novo.')) firebase.auth().signOut(); };
+  if(btnSignOut) btnSignOut.onclick = async ()=>{ if(await confirmarApp({ titulo:'Sair da conta?', texto:'O app continua funcionando, mas salva só neste aparelho até você entrar de novo.', ok:'Sair' })) auth.signOut().catch(function(e){ state.authError = authErrorMessage(e.code, 'Não consegui sair da conta agora.'); render(); }); };
   const btnAuthEntrar = document.getElementById('btnAuthEntrar');
   const btnAuthCriarConta = document.getElementById('btnAuthCriarConta');
   const doEmailAuth = (mode)=>{
@@ -11090,58 +12385,6 @@ function mrtBarraBlocos(steps){
   if(!steps || !steps.length) return '';
   return `<div class="mrt-blockbars">${steps.map(s=>`<div class="mrt-blockbar" style="flex:${Math.max(s.km,0.3)};background:${mrtStepColor(s.name)};"></div>`).join('')}</div>`;
 }
-// Desafio da TURMA (grupo), não o desafio solo antigo — só aparece se o grupo já foi carregado (a
-// própria tela Turma que dispara esse carregamento; aqui só lê o que já estiver em memória).
-function mrtTurmaCard(){
-  const detail = state.turmaGroupDetail;
-  if(!detail || !detail.challenge) return '';
-  const challenge = detail.challenge;
-  const members = detail.members||[];
-  const sorted = [...members].sort((a,b)=>Object.keys(b.checkins||{}).length-Object.keys(a.checkins||{}).length);
-  const me = state.authUser && members.find(m=>m.uid===state.authUser.uid);
-  const meCount = me ? Object.keys(me.checkins||{}).length : 0;
-  const posicao = me ? sorted.findIndex(m=>m.uid===me.uid)+1 : null;
-  const daysElapsed = Math.max(1, Math.floor((Date.parse(todayISO())-Date.parse(challenge.startDateISO))/86400000)+1);
-  const daysRemaining = Math.max(0, challenge.totalDays-daysElapsed);
-  return `<div class="mrt-card" data-tabgo="turma">
-    <div class="hero-top"><span class="tag tag-gold">${challenge.name}</span></div>
-    <div class="mrt-metricsrow" style="margin:12px 0 0;">
-      ${mrtMetricHtml(posicao?posicao+'º':'—','Posição')}
-      ${mrtMetricHtml(meCount,'Check-ins')}
-      ${mrtMetricHtml(daysRemaining+'d','Restam')}
-    </div>
-  </div>`;
-}
-function mrtCheckinCard(){
-  const hp = state.hybridPlanData;
-  if(!(hp && hp.plan && hp.plan.length && !(hp.checkins && hp.checkins[hp.currentWeekIndex||1]))) return '';
-  return `<div class="mrt-card mrt-alertcard">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-      <div class="icon-box gold">${ICONS.clipboard}</div>
-      <div style="min-width:0;"><div class="mrt-runtitle" style="font-size:17px;font-weight:700;letter-spacing:0;">Como foi a semana ${hp.currentWeekIndex||1}?</div><div class="mrt-sub" style="margin:2px 0 0;">Ajusta a progressão sozinho</div></div>
-    </div>
-    <button class="btn-secondary" style="height:48px;font-size:15px;" data-mrthojectx="checkin">Responder</button>
-  </div>`;
-}
-// Último treino de corrida concluído (planejado × feito) — musculação não tem data por exercício
-// (é "o treino de tal dia da semana, sempre"), então só dá pra fazer esse resumo com corrida mesmo.
-function mrtLastWorkoutCard(){
-  const entries = Object.entries(state.corridaProgress||{}).filter(([k,v])=>v && v.done && v.data);
-  if(!entries.length) return '';
-  entries.sort((a,b)=> (b[1].data||'').localeCompare(a[1].data||''));
-  const [dayKey, prog] = entries[0];
-  const entry = state.treinos.find(t=>t.day===dayKey);
-  if(!entry) return '';
-  return `<div class="mrt-card mrt-last" ${prog.gpsRunId?`data-lastrun="${dayKey}"`:''} style="${prog.gpsRunId?'cursor:pointer;':''}">
-    <div class="hero-top"><span class="tag tag-run">Corrida</span><span class="hero-week">${dayKey}${prog.gpsRunId?` <span class="chev">${ICONS.chevR}</span>`:''}</span></div>
-    <div class="mrt-runtitle" style="font-size:20px;margin:10px 0 12px;">${entry.type||'Corrida'}</div>
-    <div class="mrt-metricsrow" style="margin-bottom:0;">
-      ${mrtMetricHtml(prog.km?prog.km+'km':'—','Distância')}
-      ${mrtMetricHtml(prog.tempo||'—','Tempo')}
-      ${mrtMetricHtml(prog.pace||'—','Ritmo')}
-    </div>
-  </div>`;
-}
 // Reabre o resumo pós-corrida de uma corrida já feita, a partir do que foi gravado no IndexedDB.
 async function abrirResumoCorrida(dayKey){
   const prog = (state.corridaProgress||{})[dayKey];
@@ -11170,44 +12413,6 @@ function mrtDiagnosticoCard(){
     ${qv2LinkNovo()}
   </div>`;
 }
-// Card "Sua semana": 7 bolinhas (concluído = verde com check, planejado = anel na cor da modalidade, hoje = número +
-// pontinho, descanso = vazia) e a sequência de semanas completas embaixo.
-function mrtSemanaCard(){
-  const hojeAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
-  const cols = DAY_ABBR.map(d=>{
-    const st = dayStatus(d);
-    const temC = !!treinoEntryForDay(d), temM = muscListForDay(d).length>0;
-    const cor = temC && temM ? 'var(--hib)' : temC ? 'var(--run)' : 'var(--musc)';
-    const hoje = d===hojeAbbr && (state.weekOffset||0)===0;
-    const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
-    const cls = st==='done' ? 'done' : st==='pending' ? 'plan' : 'rest';
-    const inner = st==='done' ? CHECK_SVG : (hoje ? dia : '');
-    return `<div class="mrt-wkcol ${hoje?'today':''}">
-      <div class="mrt-wkletter">${d}</div>
-      <div class="mrt-wkdot ${cls}" style="${cls==='plan'?`border-color:${cor};`:''}">${inner}</div>
-      <div class="mrt-wkmark"></div>
-    </div>`;
-  }).join('');
-  const seg = semanasSeguidas();
-  return `<div class="mrt-card">
-    <div class="mrt-summarytitle" style="font-size:17px;margin-bottom:14px;">Sua semana</div>
-    <div class="mrt-wkrow">${cols}</div>
-    <div class="mrt-divider"></div>
-    <div class="mrt-streak">${seg>0 ? `🔥 ${seg} semana${seg===1?'':'s'} seguida${seg===1?'':'s'}` : `<span style="color:var(--text-dim);font-weight:600;">Complete a semana pra iniciar sua sequência</span>`}</div>
-  </div>`;
-}
-// Dois cards lado a lado: Musculação x/y (violeta) e Corrida x/y (coral), cada um com ícone e barra na cor da modalidade.
-function renderMrtCounterRow(){
-  const muscCounts = weekCounts('musculacao');
-  const corridaCounts = weekCounts('corrida');
-  const card = (info, icon, c)=>`
-    <div class="mrt-countercard">
-      <div class="mrt-counterhead"><div class="icon-box ${info.box}" style="width:32px;height:32px;">${icon}</div><span class="mrt-counterlabel">${info.nome}</span></div>
-      <div class="mrt-countervalue">${c.done}<small>/${c.scheduled}</small></div>
-      <div class="mrt-counterbar"><div class="fill" style="width:${c.scheduled?Math.round(c.done/c.scheduled*100):0}%;background:${info.cor};"></div></div>
-    </div>`;
-  return `<div class="mrt-counterrow">${card(MODAL_INFO.musculacao, ICONS.dumbbell, muscCounts)}${card(MODAL_INFO.corrida, ICONS.run, corridaCounts)}</div>`;
-}
 const ATALHOS_DEF = {
   progresso:   { nome:'Progresso',    icon:'chart' },
   medidas:     { nome:'Medidas',      icon:'ruler' },
@@ -11217,14 +12422,6 @@ const ATALHOS_DEF = {
   turma:       { nome:'Turma',        icon:'users' },
   modelos:     { nome:'Modelos',      icon:'layers' },
 };
-function mrtAtalhosSection(){
-  const lista = (state.atalhos && state.atalhos.length===4 ? state.atalhos : ATALHOS_PADRAO).filter(k=>ATALHOS_DEF[k]);
-  return `
-    <div class="mrt-sectionhead"><div class="mrt-blocklabel" style="margin:0;">Atalhos</div><button class="mrt-pillbtn" id="mrtAtalhosEdit">Editar</button></div>
-    <div class="mrt-atalhos">${lista.map(k=>`
-      <div class="mrt-atalho" data-atalho="${k}"><div class="icon-box">${ICONS[ATALHOS_DEF[k].icon]}</div><div class="nm">${ATALHOS_DEF[k].nome}</div></div>`).join('')}
-    </div>`;
-}
 function abrirAtalho(k){
   if(k==='modelos'){ state.tab='meusTreinos'; state.modalType='treinoTemplates'; state.modalOpen=true; render(); return; }
   state.subOrigin = 'hoje';
@@ -11259,25 +12456,20 @@ const DS_CHEV = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" str
 // Semana no Início: 7 bolinhas (feito = preta com check; hoje = anel preto com o dia; planejado = anel cinza;
 // descanso = traço) + números da semana. Junta o que antes eram os dois cards contadores e o card "Sua semana".
 function mrtSemanaSecao(){
-  const hojeAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
-  const overall = weekCounts(), musc = weekCounts('musculacao'), corrida = weekCounts('corrida');
+  const hoje = hojeAbbr();
+  const overall = weekCounts();
   const cols = DAY_ABBR.map(d=>{
     const st = dayStatus(d);
-    const hoje = d===hojeAbbr && (state.weekOffset||0)===0;
+    const ehHoje = d===hoje && (state.weekOffset||0)===0;
     const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
-    const cls = st==='done' ? 'done' : hoje ? 'plan today' : st==='pending' ? 'plan' : 'rest';
-    const inner = st==='done' ? CHECK_SVG : st==='none' && !hoje ? '–' : dia;
-    return `<div class="mrt-wkcol ${hoje?'today':''}"><div class="mrt-wkletter">${d.charAt(0)}</div><div class="mrt-wkdot ${cls}">${inner}</div></div>`;
+    const cls = st==='done' ? 'done' : ehHoje ? 'plan today' : st==='pending' ? 'plan' : 'rest';
+    const inner = st==='done' ? CHECK_SVG : st==='none' && !ehHoje ? '–' : dia;
+    const chave = st!=='none' && ehSessaoChaveDiaExibido(d);
+    return `<div class="mrt-wkcol ${ehHoje?'today':''}"><div class="mrt-wkletter">${d.charAt(0)}</div><div class="mrt-wkdot ${cls}">${inner}</div><div class="ds-star">${chave?'★':''}</div></div>`;
   }).join('');
-  const seg = semanasSeguidas();
   return `<div class="ds-section">
-    <div class="ds-labelrow"><div class="ds-label">Semana</div>${overall.scheduled?`<div class="ds-aside">${overall.done} de ${overall.scheduled} treinos</div>`:''}</div>
+    <div class="ds-labelrow"><div class="ds-label">Semana</div>${overall.scheduled?`<div class="ds-aside">${overall.done}/${overall.scheduled} concluídos${semanasSeguidas()>1?' · '+semanasSeguidas()+' semanas seguidas':''}</div>`:''}</div>
     <div class="mrt-wkrow ds-wk">${cols}</div>
-    <div class="ds-stats3 ds-divtop">
-      ${mrtMetricHtml(musc.done+'/'+musc.scheduled,'Musculação')}
-      ${mrtMetricHtml(corrida.done+'/'+corrida.scheduled,'Corrida')}
-      ${mrtMetricHtml(seg+(seg===1?' semana':' semanas'),'Sequência')}
-    </div>
   </div>`;
 }
 function mrtCheckinRow(){
@@ -11285,28 +12477,154 @@ function mrtCheckinRow(){
   if(!(hp && hp.plan && hp.plan.length && !(hp.checkins && hp.checkins[hp.currentWeekIndex||1]))) return '';
   return `<button class="ds-row" data-mrthojectx="checkin">${ICONS.clipboard}<span class="nm">Check-in da semana ${hp.currentWeekIndex||1}</span><span class="aside">Pendente</span><span class="chev">${DS_CHEV}</span></button>`;
 }
-function mrtAtalhosLista(){
-  const lista = (state.atalhos && state.atalhos.length===4 ? state.atalhos : ATALHOS_PADRAO).filter(k=>ATALHOS_DEF[k]);
-  return `<div class="ds-section">
-    <div class="ds-labelrow"><div class="ds-label">Atalhos</div><button class="ds-link" id="mrtAtalhosEdit">Editar</button></div>
-    <div class="ds-list">${lista.map(k=>`<div class="ds-row" data-atalho="${k}">${ICONS[ATALHOS_DEF[k].icon]}<span class="nm">${ATALHOS_DEF[k].nome}</span><span class="chev">${DS_CHEV}</span></div>`).join('')}</div>
-  </div>`;
+/* ============ TREINADOR NA TELA (Home + Treino): check-in, por quê, ajustar, perdido, diário ============ */
+const CHECKIN_PERGUNTAS = [
+  { campo:'energia', rotulo:'Energia', ops:[[1,'Baixa'],[2,'Ok'],[3,'Alta']] },
+  { campo:'pernas', rotulo:'Pernas', ops:[[1,'Leves'],[2,'Normais'],[3,'Pesadas']] },
+  { campo:'dor', rotulo:'Dor', ops:[[1,'Nenhuma'],[2,'Leve'],[3,'Forte']] },
+];
+// Rascunho do check-in em andamento (salva sozinho quando as 3 respostas estiverem dadas).
+function checkinRascunho(){ return state.checkinRascunho || (state.checkinRascunho = {}); }
+function checkinPerguntasHtml(r){
+  return CHECKIN_PERGUNTAS.map(p=>`
+    <div class="ds-ckrow"><span class="lb">${p.rotulo}</span>
+      <div class="ds-seg">${p.ops.map(([v,l])=>`<button class="${r[p.campo]===v?'on':''}" data-ck="${p.campo}" data-ckv="${v}">${l}</button>`).join('')}</div>
+    </div>`).join('');
 }
-function mrtUltimaCorrida(){
-  const entries = Object.entries(state.corridaProgress||{}).filter(([k,v])=>v && v.done && v.data);
-  if(!entries.length) return '';
-  entries.sort((a,b)=> (b[1].data||'').localeCompare(a[1].data||''));
-  const [dayKey, prog] = entries[0];
-  const entry = state.treinos.find(t=>t.day===dayKey);
-  if(!entry) return '';
-  return `<div class="ds-section">
-    <div class="ds-labelrow"><div class="ds-label">Última corrida</div><div class="ds-aside">${dayKey}</div></div>
-    <div class="ds-card ${prog.gpsRunId?'tap':''}" ${prog.gpsRunId?`data-lastrun="${dayKey}"`:''}>
-      <div class="ds-cardhead"><div class="ds-title sm">${entry.type||'Corrida'}</div>${prog.gpsRunId?`<span class="chev">${DS_CHEV}</span>`:''}</div>
-      <div class="ds-stats3">${mrtMetricHtml(prog.km?String(prog.km).replace('.',',')+'km':'—','Distância')}${mrtMetricHtml(prog.tempo||'—','Tempo')}${mrtMetricHtml(prog.pace||'—','Ritmo')}</div>
+function renderCheckinCard(){
+  if(!checkinDiarioPendente()) return '';
+  return `<div class="ds-section"><div class="ds-labelrow"><div class="ds-label">Como você está hoje?</div></div>
+    <div class="ds-card ds-ckcard">${checkinPerguntasHtml(checkinRascunho())}</div></div>`;
+}
+async function responderCheckin(campo, valor, aoTerminar){
+  const r = checkinRascunho();
+  r[campo] = valor;
+  if(CHECKIN_PERGUNTAS.every(p=>r[p.campo])){
+    await registrarCheckinDiario({ energia:r.energia, pernas:r.pernas, dor:r.dor });
+    state.checkinRascunho = {};
+    hapticLeve();
+    showToast('Check-in registrado');
+    if(aoTerminar) aoTerminar();
+  }
+  render();
+}
+function abrirCheckinDiarioSheet(){
+  const atual = (state.checkinDiario||{})[todayISO()];
+  state.checkinRascunho = atual ? { energia:atual.energia, pernas:atual.pernas, dor:atual.dor } : {};
+  const montar = ()=>openSheet(`
+    <div class="sheet-title">Como você está hoje?</div>
+    <div class="sheet-sub">Três toques. Ajusta o treino de hoje e os próximos.</div>
+    ${checkinPerguntasHtml(checkinRascunho())}
+    <button class="btn-primary" style="margin-top:18px;" id="ckSalvar">Salvar</button>`, (sh)=>{
+    sh.querySelectorAll('[data-ck]').forEach(el=>{ el.onclick = ()=>{ checkinRascunho()[el.getAttribute('data-ck')] = parseInt(el.getAttribute('data-ckv'),10); montar(); }; });
+    sh.querySelector('#ckSalvar').onclick = async ()=>{
+      const r = checkinRascunho();
+      if(!CHECKIN_PERGUNTAS.every(p=>r[p.campo])){ showToast('Responda as três'); return; }
+      await registrarCheckinDiario({ energia:r.energia, pernas:r.pernas, dor:r.dor });
+      state.checkinRascunho = {};
+      closeSheet(); hapticLeve(); render(); showToast('Check-in registrado');
+    };
+  });
+  montar();
+}
+function rotuloCurtoDia(d){ return (DAY_FULLNAME[d]||d).split('-')[0].toLowerCase(); }
+function abrirAjuste(d){
+  const ops = opcoesAjuste(d);
+  if(!ops.length){ showToast('Nada para ajustar neste dia'); return; }
+  const porque = naSemanaAtual(()=>porQueHoje(d));
+  openSheet(`
+    <div class="sheet-title">Ajustar ${rotuloCurtoDia(d)}</div>
+    ${porque ? `<div class="sheet-sub">${porque}</div>` : ''}
+    <div class="ds-list ds-ajlist">
+      ${ops.map((o,i)=>`<button class="ds-ajop ${o.recomendado?'rec':''}" data-ajop="${i}">
+        <span class="t">${o.titulo}${o.recomendado?'<em>Recomendado</em>':''}</span><span class="s">${o.desc}</span></button>`).join('')}
     </div>
-  </div>`;
+    <button class="btn-ghost" style="width:100%;margin-top:6px;" id="ajCancelar">Cancelar</button>`, (sh)=>{
+    sh.querySelector('#ajCancelar').onclick = closeSheet;
+    sh.querySelectorAll('[data-ajop]').forEach(el=>{
+      el.onclick = async ()=>{
+        const o = ops[parseInt(el.getAttribute('data-ajop'),10)];
+        let msg = '';
+        try{ msg = await o.aplicar(); }catch(e){ console.warn('[ajuste]', e); msg = 'Não consegui ajustar agora.'; }
+        closeSheet(); hapticLeve(); render(); showToast(msg || 'Ajustado');
+      };
+    });
+  });
 }
+function abrirDiario(){
+  const lista = state.diarioTreinador || [];
+  const fmt = (iso)=>{ const p = String(iso||'').split('-'); return p.length===3 ? p[2]+'/'+p[1] : iso; };
+  openSheet(`
+    <div class="sheet-title">Diário do treinador</div>
+    <div class="sheet-sub">O que mudou no seu treino e por quê.</div>
+    ${lista.length ? `<div class="ds-list">${lista.slice(0,60).map(r=>`
+      <div class="ds-diario"><div class="dt">${fmt(r.data)}</div><div class="tx"><b>${r.alteracao}</b>${r.original ? ' · '+r.original : ''}${r.novo && r.novo!=='igual' ? ' → '+r.novo : ''}${r.motivo ? `<span>${r.motivo.charAt(0).toUpperCase()+r.motivo.slice(1)}.</span>` : ''}</div></div>`).join('')}</div>`
+      : `<div class="ds-muted" style="padding:16px 0;">Nenhuma mudança ainda.</div>`}
+    <button class="btn-secondary" style="margin-top:16px;" id="diarioFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#diarioFechar').onclick = closeSheet; });
+}
+function renderPerdidoBanner(){
+  const perdidos = treinosPerdidos();
+  if(!perdidos.length) return '';
+  const p = perdidos[0];
+  const { alvo } = propostaPerdido(p);
+  return `<div class="ds-section"><div class="ds-card ds-alerta">
+    <div class="t">Treino perdido: ${p.titulo}${p.chave?' ★':''}</div>
+    <div class="s">${rotuloCurtoDia(p.dia).charAt(0).toUpperCase()+rotuloCurtoDia(p.dia).slice(1)}${alvo ? `. Dá para remarcar para ${rotuloCurtoDia(alvo)} sem conflito.` : p.chave ? '. Não há dia livre sem conflito nesta semana.' : '. Não precisa repor: siga a semana.'}</div>
+    <div class="ds-btnrow">
+      ${alvo ? `<button class="btn-primary sm" data-perdido="remarcar">Remarcar</button>` : ''}
+      <button class="btn-secondary sm" data-perdido="seguir">${alvo ? 'Seguir sem repor' : 'Ok'}</button>
+    </div></div></div>`;
+}
+function renderCorpoLinha(){
+  const c = cargaReal();
+  const rot = { baixa:'leves', moderada:'moderadas', alta:'carregadas' };
+  const geral = { baixa:'leve', moderada:'normal', alta:'alta' };
+  return `<div class="ds-row ds-static"><span class="nm">Corpo</span><span class="aside">Pernas ${rot[c.pernas]} · Carga ${geral[c.geral]}</span></div>`;
+}
+function renderAmanhaLinha(){
+  const i = hojeIdx();
+  if(i>=6) return '';
+  const d = DAY_ABBR[i+1];
+  const txt = naSemanaAtual(()=>{
+    const e = treinoEntryForDay(d), l = muscListForDay(d);
+    const partes = [];
+    if(e) partes.push(resumoCorrida(e));
+    if(l.length) partes.push(muscTituloDoDia(d, l));
+    return partes.length ? partes.join(' + ') : 'Descanso';
+  });
+  return `<div class="ds-row ds-static"><span class="nm">Amanhã</span><span class="aside">${txt}${ehSessaoChaveDia(d)?' ★':''}</span></div>`;
+}
+// Liga os elementos do treinador em qualquer tela (Home e Treino).
+function wireTreinadorUI(){
+  document.querySelectorAll('[data-ck]').forEach(el=>{
+    el.onclick = ()=> responderCheckin(el.getAttribute('data-ck'), parseInt(el.getAttribute('data-ckv'),10));
+  });
+  document.querySelectorAll('[data-ajustar]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirAjuste(el.getAttribute('data-ajustar')); }; });
+  document.querySelectorAll('[data-abrircheckin]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirCheckinDiarioSheet(); }; });
+  document.querySelectorAll('[data-abrirdiario]').forEach(el=>{ el.onclick = abrirDiario; });
+  document.querySelectorAll('[data-perdido]').forEach(el=>{
+    el.onclick = async ()=>{
+      const p = treinosPerdidos()[0];
+      if(!p) return;
+      await resolverPerdido(p, el.getAttribute('data-perdido'));
+      render();
+      showToast(el.getAttribute('data-perdido')==='remarcar' ? 'Treino remarcado' : 'Ok, seguimos a semana');
+    };
+  });
+}
+// Bloco "por quê + ajustar + check-in" dentro do card do treino (tela Treino).
+function renderPorQueEAjuste(day, sub){
+  const txt = porQueHoje(day, sub);
+  const ehSemanaAtual = (state.weekOffset||0)===0;
+  const podeAjustar = ehSemanaAtual && DAY_ABBR.indexOf(day)>=hojeIdx() && opcoesAjuste(day).length>0;
+  const ehHoje = ehSemanaAtual && day===hojeAbbr();
+  const ci = (state.checkinDiario||{})[todayISO()];
+  const rotCk = ci ? `Hoje: energia ${['','baixa','ok','alta'][ci.energia]} · pernas ${['','leves','normais','pesadas'][ci.pernas]}` : 'Como você está hoje?';
+  return `${txt ? `<div class="ds-why">${txt}</div>` : ''}
+    ${ehHoje ? `<button class="ds-row ds-inrow" data-abrircheckin="1" style="margin:0 0 12px;"><span class="nm">${rotCk}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+    ${podeAjustar ? `<button class="btn-secondary" style="margin-bottom:10px;" data-ajustar="${day}">Ajustar</button>` : ''}`;
+}
+
 function renderHojeV2Content(){
   atualizarSemanaCompleta();
   const day = state.selectedDayHoje;
@@ -11315,43 +12633,55 @@ function renderHojeV2Content(){
   let dataStr=''; try{ dataStr = new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}); dataStr = dataStr.charAt(0).toUpperCase()+dataStr.slice(1); }catch(e){}
   const foto = state.perfil.foto;
   const nome1 = primeiroNome();
-
   const greetRow = `
     <div class="mrt-greetrow">
       <div style="min-width:0;"><div class="mrt-greetdate">${dataStr}</div><div class="mrt-greettitle">${saud}${nome1?', '+nome1:''}</div></div>
       <div class="mrt-avatar" data-tabgo="perfil" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div>
     </div>`;
-
+  const temPlanoOuTreino = DAY_ABBR.some(d=>dayStatus(d)!=='none');
   const sessions = mrtHeroSessions(day);
   const pending = sessions.filter(s=>!s.done);
   const primary = pending[0] || sessions[0];
   const secondary = sessions.find(s=>s!==primary);
-  const parts = treinoPhaseParts();
   let heroHtml;
   if(!sessions.length){
-    heroHtml = `<div class="ds-section"><div class="ds-label">Hoje</div>
+    heroHtml = `<div class="ds-section"><div class="ds-label" style="margin-bottom:12px;">Hoje</div>
       <div class="ds-card">
         <div class="ds-title">Dia de descanso</div>
         <div class="ds-kicker" style="margin-top:6px;">${treinoNextWorkoutHint(day)}</div>
       </div></div>`;
   }else{
     const info = MODAL_INFO[primary.tipo];
+    const chave = ehSessaoChaveDia(day);
+    const porque = porQueHoje(day, primary.tipo==='corrida' ? 'corrida' : 'musculacao');
+    const ajustavel = !primary.done && opcoesAjuste(day).length>0;
     heroHtml = `<div class="ds-section">
-      <div class="ds-labelrow"><div class="ds-label">Hoje</div>${parts?`<div class="ds-aside">Semana ${parts.weekNumber} de ${parts.totalWeeks}</div>`:''}</div>
+      <div class="ds-labelrow"><div class="ds-label">Hoje</div>${chave?'<div class="ds-aside">★ Treino-chave</div>':''}</div>
       <div class="ds-card">
         <div class="ds-kicker">${info.nome}</div>
         <div class="ds-title">${primary.titulo}</div>
         <div class="ds-stats3">${primary.metrics.map(m=>mrtMetricHtml(m.v, m.k)).join('')}</div>
         ${mrtBarraBlocos(primary.steps)}
-        ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<button class="btn-primary" data-v2start="${primary.tipo}">Começar</button>`}
+        ${porque ? `<div class="ds-why">${porque}</div>` : ''}
+        ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<div class="ds-btnrow">
+          <button class="btn-primary" data-v2start="${primary.tipo}">Começar</button>
+          ${ajustavel ? `<button class="btn-secondary" data-ajustar="${day}">Ajustar</button>` : ''}
+        </div>`}
         ${secondary ? `<div class="ds-row ds-inrow" data-v2go="${secondary.tipo}"><span class="nm">Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></div>` : ''}
       </div></div>`;
   }
-  const checkin = mrtCheckinRow();
-  // Ordem da prévia: saudação, treino de hoje, semana, check-in, atalhos; depois as seções que já
-  // existiam (turma, última corrida, retomada, diagnóstico) no mesmo estilo.
-  return greetRow + heroHtml + mrtSemanaSecao() + (checkin?`<div class="ds-section"><div class="ds-list">${checkin}</div></div>`:'')
-    + mrtTurmaCard() + mrtUltimaCorrida() + mrtAtalhosLista() + qv2CartaoPausa() + mrtDiagnosticoCard();
+  const checkinSemanal = mrtCheckinRow();
+  const temDiario = (state.diarioTreinador||[]).length>0;
+  const linhas = [renderCorpoLinha(), renderAmanhaLinha(), checkinSemanal, temDiario ? `<button class="ds-row" data-abrirdiario="1"><span class="nm">Diário do treinador</span><span class="chev">${DS_CHEV}</span></button>` : ''].filter(Boolean);
+  // Ordem: o que fazer hoje → por quê/ajustar (no card) → recuperação → semana → amanhã.
+  return greetRow
+    + (temPlanoOuTreino ? renderCheckinCard() : '')
+    + renderPerdidoBanner()
+    + heroHtml
+    + (temPlanoOuTreino ? `<div class="ds-section"><div class="ds-list">${linhas[0]}</div></div>` : '')
+    + mrtSemanaSecao()
+    + (linhas.length>1 ? `<div class="ds-section"><div class="ds-list">${linhas.slice(1).join('')}</div></div>` : '')
+    + qv2CartaoPausa() + mrtDiagnosticoCard();
 }
 function renderHojeV2Shell(){
   return `
@@ -11399,6 +12729,7 @@ function wireHojeV2(){
   if(state.modalType==='hybridCheckin') wireHybridCheckinModal();
   const diagBtn = document.getElementById('mrtStartDiagnostico');
   if(diagBtn) diagBtn.onclick = abrirDiagnostico;
+  wireTreinadorUI();
 }
 
 /* ============================================================================================
@@ -11464,18 +12795,20 @@ function renderTreinoV2Shell(){
     </div>`;
 }
 function mrtNavAtivo(){
+  if(state.tab==='progresso') return 'progresso';
+  if(state.tab==='turma') return 'perfil';
   if(SUB_V2_TABS.includes(state.tab)) return ['hoje','turma','meusTreinos','perfil'].includes(state.subOrigin) ? state.subOrigin : 'perfil';
   return state.tab;
 }
 function renderMrtNav(){
   const items = [
     { id:'hoje', icon:ICONS.home, label:'Início' },
-    { id:'turma', icon:ICONS.users, label:'Turma' },
     { id:'meusTreinos', icon:ICONS.calendar, label:'Treino' },
+    { id:'progresso', icon:ICONS.chart, label:'Progresso' },
     { id:'perfil', icon:ICONS.user, label:'Perfil' },
   ];
   return `<div class="mrt-nav">
-    ${items.map(it=>`<button class="mrt-navbtn ${mrtNavAtivo()===it.id?'active':''}" data-tabgo="${it.id}"><span class="pill">${it.icon}</span><span class="lbl">${it.label}</span></button>`).join('')}
+    ${items.map(it=>`<button class="mrt-navbtn ${mrtNavAtivo()===it.id?'active':''}" data-tabgo="${it.id}" data-suborigin="nav"><span class="pill">${it.icon}</span><span class="lbl">${it.label}</span></button>`).join('')}
   </div>`;
 }
 function renderTreinoV2Content(){
@@ -11533,7 +12866,7 @@ function renderTreinoV2Content(){
     const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate"><span>${d.toUpperCase()}</span><b>${dia}</b></div>
-      <div class="ds-daytxt">${nome?`<div class="nm">${nome}</div><div class="mt">${meta}</div>`:`<div class="nm rest">Descanso</div>`}</div>
+      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">Descanso</div>`}</div>
       ${status}
     </div>`;
   }).join('')}</div>`;
@@ -11619,23 +12952,12 @@ function abrirSheetDoms(){
   montar();
 }
 // Só aparece no dia de hoje (semana atual) e só quando o dia tem corrida ou perna — é onde a nota muda alguma coisa.
-function renderTreinoV2Doms(day){
-  if(state.weekOffset!==0 || day!==DAY_ABBR[(new Date().getDay()+6)%7]) return '';
-  const temPerna = (state.musculacao[day]||[]).some(e=>e.grupo==='Pernas');
-  if(!temPerna && !treinoEntryForDay(day)) return '';
-  const nota = (state.domsPernas||{})[todayISO()];
-  const cls = nota==null ? '' : nota>=7 ? 'hi' : nota>=4 ? 'mid' : 'lo';
-  return `<button class="mrt-domsline ${cls}" id="mrtDomsOpen"><span>Dor nas pernas hoje: <b>${nota==null?0:nota}</b></span>${CHEVRON_SVG}</button>`;
+// Antes: linha "Dor nas pernas hoje" com escala própria. Agora a dor faz parte do check-in diário (mesma
+// regra de DOMS por baixo) e o card mostra o porquê do treino + Ajustar.
+function renderTreinoV2Doms(day, sub){
+  return renderPorQueEAjuste(day, sub);
 }
-const GRUPO_ICONE = {
-  Peito:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c3-3 6-3 9 0 3-3 6-3 9 0v4c-3 3-6 3-9 0-3 3-6 3-9 0z"/></svg>`,
-  Costas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l8 14 8-14"/><path d="M9 5l3 5 3-5"/></svg>`,
-  Pernas: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3l-2 9 2 9"/><path d="M15 3l2 9-2 9"/><path d="M9 12h6"/></svg>`,
-  Ombro:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7" r="3"/><path d="M4 20c0-5 3-8 8-8s8 3 8 8"/></svg>`,
-  'Braço':`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19l5-5"/><path d="M10 14l3-6a3 3 0 0 1 5 1c0 3-2 5-5 6"/></svg>`,
-  Core:   `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="4"/><path d="M7 9h10"/><path d="M7 15h10"/><path d="M12 3v18"/></svg>`,
-};
-// Miniatura do exercício: a imagem, ou um ícone do grupo muscular em violeta — nunca um quadrado vazio.
+
 function exThumbHtml(ex, size){
   size = size||56;
   if(ex.repdbId) return `<img class="mrt-exthumb" width="${size}" height="${size}" loading="lazy" style="width:${size}px;height:${size}px;" src="${repdbImg(ex.repdbId)}" alt="" onerror="repdbFallback(this,'${(ex.grupo||'').replace(/'/g,'')}',${size})">`;
@@ -11653,7 +12975,7 @@ function ordenarTreinoMusc(list){
 function renderTreinoV2Musc(day, phaseParts){
   const listaTotal = muscListForDay(day);
   if(listaTotal.length===0){
-    return `<div class="empty-state"><div class="icon-box lg musc">${ICONS.dumbbell}</div><div class="t">Dia de descanso</div><div class="s">${treinoNextWorkoutHint(day)}</div></div>`;
+    return `<div class="empty-state"><div class="icon-box lg musc">${ICONS.dumbbell}</div><div class="t">Dia de descanso</div><div class="s">${treinoNextWorkoutHint(day)}</div><button class="btn-secondary" id="mrtAddEx">+ Adicionar exercício</button></div>`;
   }
   const foco = (state.muscFoco||{})[day];
   const list = foco && foco.length ? listaTotal.filter(e=>foco.includes(e.grupo)) : listaTotal;
@@ -11675,7 +12997,7 @@ function renderTreinoV2Musc(day, phaseParts){
           ${mrtMetricLine(ICONS.dumbbell, list.length, 'Exercícios')}
         </div>
       </div>
-      ${renderTreinoV2Doms(day)}
+      ${renderTreinoV2Doms(day,'musculacao')}
       <button class="btn-primary" id="mrtStartWorkout">${ICONS.play}${allDone?'Refazer treino':'Iniciar treino'}</button>
     </div>`;
   const cards = `<div class="mrt-exlist">${ordered.map(ex=>{
@@ -11692,8 +13014,214 @@ function renderTreinoV2Musc(day, phaseParts){
       <div class="mrt-excheck ${ex.done?'done':''}" data-mrtexdone="${ex.id}">${ex.done?CHECK_SVG:''}</div>
     </div>`;
   }).join('')}</div>`;
-  return summary + cards;
+  return summary + cards + `<button class="btn-secondary" style="margin:4px 0 16px;" id="mrtAddEx">+ Adicionar exercício</button>`;
 }
+/* ============ CRIADORES (Etapa 5): exercício com busca + descanso, rotina, escolha do tipo ============ */
+// Busca sem diferenciar maiúscula/acento ("supino", "SUPINO", "agachamento" = "agachaménto"). Usa o
+// catálogo que o app já carrega (data/exercicios.json via exerciciosCompletos), com os nomes alternativos.
+function normBusca(t){ return String(t||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\s+/g,' ').trim(); }
+function buscarExercicios(q, grupo){
+  const termos = normBusca(q).split(' ').filter(Boolean);
+  const lista = exerciciosCompletos().filter(e=>!grupo || e.grupo===grupo);
+  if(!termos.length) return lista.slice().sort((a,b)=>a.nome.localeCompare(b.nome,'pt-BR')).slice(0,80);
+  const pont = [];
+  lista.forEach(e=>{
+    const nomes = [e.nome, ...(e.aliases||[])].map(normBusca);
+    if(!nomes.some(n=>termos.every(t=>n.includes(t)))) return;
+    const n0 = normBusca(e.nome);
+    pont.push({ e, p: n0.startsWith(termos[0]) ? 0 : n0.split(' ').some(w=>w.startsWith(termos[0])) ? 1 : 2 });
+  });
+  return pont.sort((a,b)=>a.p-b.p || a.e.nome.localeCompare(b.e.nome,'pt-BR')).slice(0,80).map(x=>x.e);
+}
+const DESCANSO_RAPIDO = [30,45,60,90,120,180];
+const GRUPOS_BUSCA = ['Peito','Costas','Pernas','Ombro','Braço','Core'];
+// state.exEditor = { modo:'dia'|'rotina', day, exId, etapa:'buscar'|'config', q, grupo, sel:{id,nome,grupo}, series, reps, carga, descansoSeg }
+function abrirEditorExercicio(opts){
+  const ed = { modo:opts.modo, day:opts.day||state.selectedDayMusc, exId:opts.exId||null, etapa:'buscar', q:'', grupo:null, sel:null, series:'3', reps:'10', carga:'', descansoSeg:90 };
+  if(ed.exId){
+    const lista = ed.modo==='rotina' ? ((state.rotinaDraft||{}).exercicios||[]) : (state.musculacao[ed.day]||[]);
+    const ex = lista.find(e=>e.id===ed.exId);
+    if(ex){
+      ed.sel = { id:ex.repdbId||null, nome:ex.nome, grupo:ex.grupo };
+      ed.series = String(ex.series||'3'); ed.reps = String(ex.reps||'10'); ed.carga = ex.carga ? String(ex.carga) : '';
+      ed.descansoSeg = parseDescansoSec(ex.descanso); ed.etapa = 'config';
+    }
+  }
+  state.exEditor = ed;
+  renderEditorExercicio();
+}
+function itemBuscaHtml(e){
+  return `<button class="ds-exitem" data-expick="${e.id||''}" data-exnome="${String(e.nome).replace(/"/g,'&quot;')}" data-exgrupo="${e.grupo}">
+    ${exThumbHtml({ repdbId:e.id, nome:e.nome, grupo:e.grupo }, 44)}<span class="nm">${e.nome}<small>${e.grupo}</small></span></button>`;
+}
+function resultadosBuscaHtml(ed){
+  const r = buscarExercicios(ed.q, ed.grupo);
+  if(!r.length) return `<div class="ds-muted" style="padding:16px 0;">Nada encontrado${ed.q?` para "${ed.q.replace(/</g,'&lt;')}"`:''}.</div>
+    ${ed.q ? `<button class="btn-secondary" data-excustom="1">Usar "${ed.q.replace(/</g,'&lt;')}" como nome</button>` : ''}`;
+  return r.map(itemBuscaHtml).join('');
+}
+function renderEditorExercicio(){
+  const ed = state.exEditor; if(!ed) return;
+  if(ed.etapa==='buscar'){
+    openSheet(`
+      <div class="sheet-title">Adicionar exercício</div>
+      <div class="ds-search"><input type="search" id="exBusca" placeholder="Buscar exercício" value="${ed.q.replace(/"/g,'&quot;')}" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" enterkeyhint="search">
+        <button class="ds-search-x" id="exBuscaLimpar" aria-label="Limpar" ${ed.q?'':'style="display:none;"'}>×</button></div>
+      <div class="ds-chiprow">${['', ...GRUPOS_BUSCA].map(g=>`<button class="ds-chip ${ (ed.grupo||'')===g ? 'on':''}" data-exgrupofiltro="${g}">${g||'Todos'}</button>`).join('')}</div>
+      <div class="ds-exlist" id="exResultados">${resultadosBuscaHtml(ed)}</div>`, (sh)=>{
+      const inp = sh.querySelector('#exBusca'), limpar = sh.querySelector('#exBuscaLimpar'), res = sh.querySelector('#exResultados');
+      const ligarItens = ()=>{
+        res.querySelectorAll('[data-expick]').forEach(el=>{ el.onclick = ()=>{
+          ed.sel = { id:el.getAttribute('data-expick')||null, nome:el.getAttribute('data-exnome'), grupo:el.getAttribute('data-exgrupo') };
+          ed.etapa = 'config'; renderEditorExercicio();
+        }; });
+        const c = res.querySelector('[data-excustom]');
+        if(c) c.onclick = ()=>{ ed.sel = { id:null, nome:ed.q.trim(), grupo: ed.grupo || 'Core' }; ed.etapa = 'config'; renderEditorExercicio(); };
+      };
+      // Atualiza só a lista enquanto digita (o campo não perde o foco nem o teclado fecha).
+      inp.oninput = ()=>{ ed.q = inp.value; limpar.style.display = ed.q ? '' : 'none'; res.innerHTML = resultadosBuscaHtml(ed); ligarItens(); };
+      limpar.onclick = ()=>{ ed.q = ''; inp.value = ''; limpar.style.display = 'none'; res.innerHTML = resultadosBuscaHtml(ed); ligarItens(); inp.focus(); };
+      sh.querySelectorAll('[data-exgrupofiltro]').forEach(el=>{ el.onclick = ()=>{ ed.grupo = el.getAttribute('data-exgrupofiltro') || null; renderEditorExercicio(); }; });
+      ligarItens();
+    });
+    return;
+  }
+  const sel = ed.sel || { nome:'', grupo:'' };
+  const passo = (campo, rot)=>`<div class="ds-stepper"><span class="lb">${rot}</span><button data-exmenos="${campo}" aria-label="Menos">−</button><input inputmode="numeric" data-excampo="${campo}" value="${ed[campo]}"><button data-exmais="${campo}" aria-label="Mais">+</button></div>`;
+  const outro = !DESCANSO_RAPIDO.includes(ed.descansoSeg);
+  const editando = !!ed.exId;
+  openSheet(`
+    <div class="ds-exhead">${exThumbHtml({ repdbId:sel.id, nome:sel.nome, grupo:sel.grupo }, 56)}<div><div class="sheet-title" style="margin:0;">${sel.nome}</div><div class="ds-muted">${sel.grupo||''}</div></div></div>
+    ${passo('series','Séries')}
+    ${passo('reps','Repetições')}
+    <div class="ds-stepper"><span class="lb">Carga</span><input inputmode="decimal" data-excampo="carga" value="${ed.carga}" placeholder="—" style="flex:1;"><span class="un">kg</span></div>
+    <div class="ds-label" style="margin:18px 0 8px;">Descanso</div>
+    <div class="ds-chiprow wrap">${DESCANSO_RAPIDO.map(sg=>`<button class="ds-chip ${ed.descansoSeg===sg?'on':''}" data-exdesc="${sg}">${sg<60?sg+' s':(sg%60?Math.floor(sg/60)+':'+String(sg%60).padStart(2,'0'):sg/60+' min')}</button>`).join('')}
+      <button class="ds-chip ${outro?'on':''}" data-exdescoutro="1">${outro ? ed.descansoSeg+' s' : 'Outro'}</button></div>
+    <div class="ds-actions">
+      <button class="btn-primary" id="exSalvar">${editando ? 'Salvar' : 'Adicionar exercício'}</button>
+      ${!editando ? `<button class="btn-secondary" id="exSalvarOutro">Adicionar e escolher outro</button>` : ''}
+      ${editando ? `<button class="btn-secondary" id="exDuplicar">Duplicar</button>` : `<button class="btn-ghost" id="exVoltar">Escolher outro exercício</button>`}
+      ${editando ? `<button class="ds-danger" id="exRemover">Remover exercício</button>` : ''}
+    </div>`, (sh)=>{
+    const lerCampos = ()=>{ sh.querySelectorAll('[data-excampo]').forEach(el=>{ ed[el.getAttribute('data-excampo')] = el.value.trim(); }); };
+    sh.querySelectorAll('[data-excampo]').forEach(el=>{ el.onchange = lerCampos; });
+    const ajusta = (campo, d)=>{ lerCampos(); const n = Math.max(1, (parseInt(ed[campo],10)||0) + d); ed[campo] = String(n); const inp = sh.querySelector(`[data-excampo="${campo}"]`); if(inp) inp.value = ed[campo]; };
+    sh.querySelectorAll('[data-exmenos]').forEach(el=>{ el.onclick = ()=>ajusta(el.getAttribute('data-exmenos'), -1); });
+    sh.querySelectorAll('[data-exmais]').forEach(el=>{ el.onclick = ()=>ajusta(el.getAttribute('data-exmais'), 1); });
+    sh.querySelectorAll('[data-exdesc]').forEach(el=>{ el.onclick = ()=>{ lerCampos(); ed.descansoSeg = parseInt(el.getAttribute('data-exdesc'),10); renderEditorExercicio(); }; });
+    const outroBtn = sh.querySelector('[data-exdescoutro]');
+    if(outroBtn) outroBtn.onclick = ()=>{
+      lerCampos();
+      const holder = document.createElement('div'); holder.className = 'ds-stepper';
+      holder.innerHTML = `<span class="lb">Segundos</span><input inputmode="numeric" id="exDescOutro" value="${ed.descansoSeg}" style="flex:1;"><button id="exDescOk">Ok</button>`;
+      outroBtn.parentNode.insertAdjacentElement('afterend', holder);
+      outroBtn.style.display = 'none';
+      const inp = holder.querySelector('#exDescOutro'); inp.focus();
+      holder.querySelector('#exDescOk').onclick = ()=>{ const v = parseInt(inp.value,10); if(v>=10 && v<=600){ ed.descansoSeg = v; renderEditorExercicio(); } else showToast('Use entre 10 e 600 segundos'); };
+    };
+    const salvar = (continuar)=>{
+      lerCampos();
+      const series = String(parseInt(ed.series,10)||''), reps = String(ed.reps||'').trim();
+      if(!series || !reps){ showToast('Informe séries e repetições'); return; }
+      const payload = { nome:sel.nome, grupo:sel.grupo, repdbId:sel.id || guessRepdbId(sel.grupo, sel.nome), series, reps, carga:String(ed.carga||'').replace(',','.'), descanso: ed.descansoSeg+'s' };
+      if(ed.modo==='rotina'){
+        const lista = state.rotinaDraft.exercicios;
+        if(ed.exId){ const i = lista.findIndex(e=>e.id===ed.exId); if(i>-1) lista[i] = { ...lista[i], ...payload }; }
+        else lista.push({ id:'ex'+Date.now().toString(36)+Math.random().toString(36).slice(2,5), done:false, ...payload });
+      }else{
+        if(payload.carga) logCargaHistory(payload.repdbId || payload.nome, payload.carga);
+        if(ed.exId) updateExercicio(ed.day, ed.exId, payload); else addExercicio(ed.day, payload);
+      }
+      hapticLeve();
+      if(continuar){ state.exEditor = { ...ed, exId:null, etapa:'buscar', q:'', sel:null, carga:'' }; renderEditorExercicio(); showToast(sel.nome+' adicionado'); return; }
+      state.exEditor = null; closeSheet();
+      if(ed.modo==='rotina') abrirRotina(); else { render(); showToast(ed.exId ? 'Exercício atualizado' : 'Exercício adicionado'); }
+    };
+    sh.querySelector('#exSalvar').onclick = ()=>salvar(false);
+    const so = sh.querySelector('#exSalvarOutro'); if(so) so.onclick = ()=>salvar(true);
+    const vt = sh.querySelector('#exVoltar'); if(vt) vt.onclick = ()=>{ lerCampos(); ed.etapa = 'buscar'; renderEditorExercicio(); };
+    const dp = sh.querySelector('#exDuplicar');
+    if(dp) dp.onclick = ()=>{
+      lerCampos();
+      const lista = ed.modo==='rotina' ? state.rotinaDraft.exercicios : (state.musculacao[ed.day]||[]);
+      const i = lista.findIndex(e=>e.id===ed.exId);
+      if(i>-1){ lista.splice(i+1, 0, { ...lista[i], id:'ex'+Date.now().toString(36)+Math.random().toString(36).slice(2,5), done:false }); }
+      if(ed.modo!=='rotina'){ saveMusc(); render(); }
+      state.exEditor = null; closeSheet(); if(ed.modo==='rotina') abrirRotina(); showToast('Exercício duplicado');
+    };
+    const rm = sh.querySelector('#exRemover');
+    if(rm) rm.onclick = ()=>{
+      if(ed.modo==='rotina') state.rotinaDraft.exercicios = state.rotinaDraft.exercicios.filter(e=>e.id!==ed.exId);
+      else { state.musculacao[ed.day] = (state.musculacao[ed.day]||[]).filter(e=>e.id!==ed.exId); saveMusc(); render(); }
+      state.exEditor = null; closeSheet(); if(ed.modo==='rotina') abrirRotina(); showToast('Exercício removido');
+    };
+  });
+}
+// Rotina salva (modelo de musculação): nome + exercícios com ordem, editar, duplicar, remover.
+function abrirRotina(templateId){
+  if(templateId!==undefined || !state.rotinaDraft){
+    const tpl = templateId ? state.muscTemplates.find(t=>t.id===templateId) : null;
+    state.rotinaDraft = { id: tpl ? tpl.id : null, tipo: tpl ? tpl.tipo : '', exercicios: tpl ? tpl.exercicios.map(e=>({ ...e })) : [] };
+  }
+  const d = state.rotinaDraft;
+  openSheet(`
+    <div class="sheet-title">${d.id ? 'Editar rotina' : 'Nova rotina de musculação'}</div>
+    <input class="ds-input" id="rotNome" placeholder="Nome (ex.: Treino A – Peito)" value="${String(d.tipo||'').replace(/"/g,'&quot;')}">
+    <div class="ds-labelrow" style="margin-top:18px;"><div class="ds-label">Exercícios</div><div class="ds-aside">${d.exercicios.length}</div></div>
+    <div class="ds-list">${d.exercicios.length ? d.exercicios.map((e,i)=>`
+      <div class="ds-row ds-rotrow">
+        <button class="ds-rotmain" data-rotedit="${e.id}"><span class="nm">${e.nome}</span><span class="aside">${e.series}×${e.reps}${e.carga?' · '+e.carga+' kg':''}${e.descanso?' · '+e.descanso:''}</span></button>
+        <button class="ds-mini" data-rotup="${i}" ${i===0?'disabled':''} aria-label="Subir">↑</button>
+        <button class="ds-mini" data-rotdown="${i}" ${i===d.exercicios.length-1?'disabled':''} aria-label="Descer">↓</button>
+      </div>`).join('') : `<div class="ds-muted" style="padding:14px 0;">Nenhum exercício ainda.</div>`}</div>
+    <div class="ds-actions">
+      <button class="btn-secondary" id="rotAdd">+ Adicionar exercício</button>
+      <button class="btn-primary" id="rotSalvar">Salvar rotina</button>
+      <button class="btn-ghost" id="rotCancelar">Cancelar</button>
+    </div>`, (sh)=>{
+    const nome = sh.querySelector('#rotNome');
+    nome.oninput = ()=>{ d.tipo = nome.value; };
+    sh.querySelector('#rotAdd').onclick = ()=>abrirEditorExercicio({ modo:'rotina' });
+    sh.querySelectorAll('[data-rotedit]').forEach(el=>{ el.onclick = ()=>abrirEditorExercicio({ modo:'rotina', exId:el.getAttribute('data-rotedit') }); });
+    const mover = (i, j)=>{ const a = d.exercicios; [a[i], a[j]] = [a[j], a[i]]; abrirRotina(); };
+    sh.querySelectorAll('[data-rotup]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-rotup'); if(i>0) mover(i, i-1); }; });
+    sh.querySelectorAll('[data-rotdown]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-rotdown'); if(i<d.exercicios.length-1) mover(i, i+1); }; });
+    sh.querySelector('#rotCancelar').onclick = ()=>{ state.rotinaDraft = null; closeSheet(); };
+    sh.querySelector('#rotSalvar').onclick = ()=>{
+      const tipo = String(d.tipo||'').trim();
+      if(!tipo){ nome.focus(); showToast('Dê um nome para a rotina'); return; }
+      if(!d.exercicios.length){ showToast('Adicione pelo menos um exercício'); return; }
+      state.muscTemplates = state.muscTemplates || [];
+      if(d.id){ const i = state.muscTemplates.findIndex(t=>t.id===d.id); if(i>-1) state.muscTemplates[i] = { ...state.muscTemplates[i], tipo, exercicios:d.exercicios, updatedAt:Date.now() }; }
+      else state.muscTemplates.push({ id:newMuscTemplateId(), tipo, exercicios:d.exercicios, createdAt:Date.now(), updatedAt:Date.now() });
+      saveMuscTemplates(); state.rotinaDraft = null; closeSheet(); render(); hapticLeve(); showToast('Rotina salva');
+    };
+  });
+}
+// "Criar treino" (menu ⋯ da tela Treino): o que criar para o dia escolhido.
+function abrirCriarTreino(){
+  const day = state.selectedDayMusc || hojeAbbr();
+  openSheet(`
+    <div class="sheet-title">Criar treino</div>
+    <div class="sheet-sub">${DAY_FULLNAME[day]||day}</div>
+    <div class="ds-list">
+      <button class="ds-row" data-criar="corrida"><span class="nm">Corrida</span><span class="aside">blocos e intervalos</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="musc"><span class="nm">Musculação</span><span class="aside">exercícios do dia</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="rotina"><span class="nm">Rotina de musculação</span><span class="aside">modelo para reutilizar</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="plano"><span class="nm">Plano corrida + musculação</span><span class="aside">o treinador monta</span><span class="chev">${DS_CHEV}</span></button>
+    </div>`, (sh)=>{
+    sh.querySelectorAll('[data-criar]').forEach(el=>{ el.onclick = ()=>{
+      const a = el.getAttribute('data-criar');
+      closeSheet();
+      if(a==='corrida'){ state.selectedDayCorrida = day; state.treinoV2Escape = true; openCorridaBuilder(day); state.modalType='editCorrida'; state.modalOpen = true; render(); }
+      else if(a==='musc'){ state.selectedDayMusc = day; abrirEditorExercicio({ modo:'dia', day }); }
+      else if(a==='rotina'){ state.rotinaDraft = null; abrirRotina(null); }
+      else qv2Abrir();
+    }; });
+  });
+}
+
 function abrirMenuExercicio(exId){
   const day = state.selectedDayMusc;
   const ex = (state.musculacao[day]||[]).find(e=>e.id===exId);
@@ -11701,6 +13229,7 @@ function abrirMenuExercicio(exId){
   openSheet(`
     <div class="sheet-title">${ex.nome}</div>
     <div class="sheet-sub">${ex.grupo} · ${ex.series} × ${ex.reps}${ex.descanso ? ' · descanso '+ex.descanso : ''}</div>
+    <div class="mrt-menuitem" data-exmenu="editar"><div class="icon-box">${ICONS.pencil}</div><span>Editar séries, carga e descanso</span></div>
     <div class="mrt-menuitem" data-exmenu="descanso"><div class="icon-box">${ICONS.clock}</div><span>Ajustar descanso</span></div>
     <div class="mrt-menuitem" data-exmenu="trocar"><div class="icon-box">${ICONS.swap}</div><span>Trocar exercício</span></div>
     <div class="mrt-menuitem" data-exmenu="ver"><div class="icon-box">${ICONS.eye}</div><span>Ver execução</span></div>
@@ -11709,7 +13238,8 @@ function abrirMenuExercicio(exId){
     sh.querySelectorAll('[data-exmenu]').forEach(el=>{
       el.onclick = ()=>{
         const a = el.getAttribute('data-exmenu');
-        if(a==='descanso'){ closeSheet(); abrirSheetDescanso(exId); }
+        if(a==='editar'){ closeSheet(); abrirEditorExercicio({ modo:'dia', day, exId }); }
+        else if(a==='descanso'){ closeSheet(); abrirSheetDescanso(exId); }
         else if(a==='trocar') abrirTrocaExercicio(exId);
         else if(a==='ver'){ closeSheet(); if(ex.repdbId) openZoom(repdbImg(ex.repdbId)); else showToast('Este exercício ainda não tem demonstração'); }
         else if(a==='remover'){
@@ -11804,7 +13334,7 @@ function renderTreinoV2Corrida(day, phaseParts){
         ${mrtMetricHtml(entry.totalKm?fmtKm(entry.totalKm):'—','Distância')}
       </div>
       ${entry.objetivo ? `<div class="mrt-focoline">Foco: ${entry.objetivo}</div>` : ''}
-      ${renderTreinoV2Doms(day)}
+      ${renderTreinoV2Doms(day,'corrida')}
       ${gravada}
       <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
       ${(state.equipItens && state.equipItens.esteira===false) ? '' : `<button class="btn-secondary" style="margin-top:8px;" data-startesteira="${day}">${ICONS.run} Esteira</button>`}
@@ -12002,9 +13532,8 @@ function wireTreinoV2(){
   };
   const manualBtn = document.getElementById('mrtManual');
   if(manualBtn) manualBtn.onclick = ()=>{
-    state.treinoMoreMenuOpen = false; state.treinoV2Escape = true;
-    state.selectedDayHoje = state.selectedDayMusc;
-    state.modalType = 'chooser'; state.modalOpen = true; render();
+    state.treinoMoreMenuOpen = false; render();
+    abrirCriarTreino();
   };
   const templatesBtn = document.getElementById('mrtTemplates');
   if(templatesBtn) templatesBtn.onclick = ()=>{
@@ -12023,6 +13552,8 @@ function wireTreinoV2(){
   document.querySelectorAll('[data-mrtex]').forEach(el=>{
     el.onclick = ()=>{ state.treinoV2Escape = true; openQuickWeightModal(el.getAttribute('data-mrtex')); };
   });
+  const addExBtn = document.getElementById('mrtAddEx');
+  if(addExBtn) addExBtn.onclick = ()=>abrirEditorExercicio({ modo:'dia', day: state.selectedDayMusc });
   const startWorkoutBtn = document.getElementById('mrtStartWorkout');
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
 
@@ -12044,6 +13575,7 @@ function wireTreinoV2(){
     const overlayEl = document.querySelector('.modal-overlay');
     if(overlayEl) overlayEl.onclick = (ev)=>{ if(ev.target===ev.currentTarget) closeTemplates(); };
   }
+  wireTreinadorUI();
 }
 // Extraído do shell antigo (fiação dos botões Agendar/Editar/Duplicar/Excluir dos modelos salvos) pra
 // poder ser chamado tanto de lá quanto do modal "Modelos salvos" da tela nova, sem duplicar a lógica.
@@ -12071,9 +13603,8 @@ function wireTreinoTemplateActions(){
   });
   document.querySelectorAll('[data-mtpledit]').forEach(el=>{
     el.onclick = ()=>{
-      state.treinoV2Escape = true;
-      openMuscTemplateBuilder(el.getAttribute('data-mtpledit'));
-      state.modalType = 'editMuscTemplate'; state.modalOpen = true; render();
+      state.modalOpen = false; state.modalType = null; render();
+      abrirRotina(el.getAttribute('data-mtpledit'));
     };
   });
   document.querySelectorAll('[data-mtpldup]').forEach(el=>{
@@ -12752,7 +14283,6 @@ function renderPerfilV2Content(){
 
   const grid = `
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
-      ${mrtPerfilGridCard(ICONS.chart, 'Progresso', 'Sua evolução de carga e corrida', 'progresso', '')}
       ${mrtPerfilGridCard(ICONS.compare, 'Comparativo', 'Planejado x realizado', 'comparativo', 'run')}
       ${mrtPerfilGridCard(ICONS.ruler, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : 'Registre suas medidas'; })(), 'medidas', 'gold')}
       ${mrtPerfilGridCard(ICONS.shoe, 'Equipamentos', (()=>{ const t=(state.equipamentos.tenis||[]).find(x=>x.ativo); return t ? t.nome+' · '+t.km+'km' : 'Local, tênis e relógio'; })(), 'equipamentos', 'musc')}
@@ -12779,9 +14309,8 @@ function renderPerfilV2Content(){
   const relogio = state.equipamentos.relogio || '';
   const lista = `<div class="mrt-card" style="padding:4px 16px;">
     ${linha('conta', ICONS.user, 'Conta', state.authUser ? 'Conectada' : 'Entrar')}
-    ${linha('integracoes', ICONS.swap, 'Integrações', 'Garmin, Strava')}
-    ${linha('saudeRelogio', ICONS.heart, 'Saúde do relógio', relogio || '')}
-    ${linha('personal', ICONS.users, 'Personal trainer', state.perfil.souPersonal ? 'Ativo' : '')}
+    ${linha('turma', ICONS.users, 'Turma', 'grupos e desafios')}
+    ${(state.perfil.souPersonal || state.viewingClient) ? linha('personal', ICONS.users, 'Personal trainer', 'Ativo') : ''}
     ${linha('preferencias', ICONS.settings, 'Preferências', '')}
     ${linha('maisOpcoes', ICONS.dots, 'Mais opções', '')}
   </div>`;
@@ -12885,9 +14414,11 @@ function renderPreferenciasV2(){
   const linha = (icon, titulo, ctrl)=>`<div class="mrt-togglerow"><div class="icon-box">${icon}</div><div class="nm">${titulo}</div>${ctrl}</div>`;
   return `<div class="mrt-card" style="padding:6px 16px;">
     ${linha(ICONS.volumeOn, 'Voz nos treinos', `<div class="mrt-switch ${state.vozAtiva===false?'':'on'}" id="mrtPrefVoz"><i></i></div>`)}
+    ${linha(ICONS.run, 'Voz a cada km', `<div class="mrt-switch ${(state.preferencias||{}).vozKm===false?'':'on'}" data-prefsw="vozKm"><i></i></div>`)}
+    ${linha(ICONS.watch, 'Pausa automática na corrida', `<div class="mrt-switch ${(state.preferencias||{}).autoPause?'on':''}" data-prefsw="autoPause"><i></i></div>`)}
     ${linha(ICONS.ruler, 'Unidades', `<span class="mrt-sub" style="margin:0;">km · kg</span>`)}
     ${linha(ICONS.bell, 'Som', `<span class="mrt-sub" style="margin:0;">Ligado</span>`)}
-    ${linha(ICONS.eye, 'Tema', `<span class="mrt-sub" style="margin:0;">Escuro</span>`)}
+    ${linha(ICONS.eye, 'Tema', `<span class="mrt-sub" style="margin:0;">Claro</span>`)}
   </div>`;
 }
 function renderMaisOpcoesV2(){
@@ -12896,6 +14427,13 @@ function renderMaisOpcoesV2(){
     <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
     <button class="btn-secondary" id="btnImportBackup">${ICONS.fileImport} Importar backup</button>
     <button class="btn-secondary" style="color:var(--danger);" id="btnApagarTudo">${ICONS.trash} Apagar todos os dados</button>
+    <div class="ds-label" style="margin:22px 0 4px;">Avançado</div>
+    <div class="ds-list">
+      <button class="ds-row" id="advFit"><span class="nm">Importar corrida do relógio (.fit)</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" id="advFitTreino"><span class="nm">Importar treino estruturado (.fit)</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" id="advModelos"><span class="nm">Modelos salvos</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" id="advRotina"><span class="nm">Nova rotina de musculação</span><span class="chev">${DS_CHEV}</span></button>
+    </div>
   </div>`;
 }
 /* ---------- shell das telas secundárias ---------- */
@@ -12910,7 +14448,7 @@ function renderSubV2Shell(){
   return `
     <div class="mrt-root">
       <div class="mrt-scroll">
-        <div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>
+        ${(tab==='progresso' && state.subOrigin==='nav') ? `<div class="mrt-header"><div class="mrt-title">${titulo}</div></div>` : `<div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>`}
         ${corpo}
       </div>
       ${renderMrtNav()}
@@ -12939,8 +14477,19 @@ function wireSubV2(){
   });
   document.querySelectorAll('[data-perfilgo]').forEach(el=>{ el.onclick = ()=>{ state.subOrigin = 'perfil'; state.tab = el.getAttribute('data-perfilgo'); render(); }; });
   document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = ()=> showToast(`Integração com ${el.getAttribute('data-mrtintegrar')} ainda não existe no app`); });
+  const advFit = document.getElementById('advFit'); if(advFit) advFit.onclick = ()=>document.getElementById('fitInput').click();
+  const advFitT = document.getElementById('advFitTreino'); if(advFitT) advFitT.onclick = ()=>document.getElementById('fitWorkoutInput').click();
+  const advMod = document.getElementById('advModelos'); if(advMod) advMod.onclick = ()=>{ state.tab = 'meusTreinos'; state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); };
+  const advRot = document.getElementById('advRotina'); if(advRot) advRot.onclick = ()=>{ state.rotinaDraft = null; abrirRotina(null); };
   const voz = document.getElementById('mrtPrefVoz');
   if(voz) voz.onclick = ()=>{ state.vozAtiva = state.vozAtiva===false; render(); };
+  document.querySelectorAll('[data-prefsw]').forEach(el=>{ el.onclick = ()=>{
+    const k = el.getAttribute('data-prefsw');
+    state.preferencias = { autoPause:false, vozKm:true, ...(state.preferencias||{}) };
+    state.preferencias[k] = k==='vozKm' ? state.preferencias.vozKm===false : !state.preferencias[k];
+    window.storage.set('preferencias', JSON.stringify(state.preferencias), false).catch(()=>{});
+    render();
+  }; });
   if(tab==='progresso') wireProgressoV2();
   else if(tab==='medidas') wireMedidasV2();
   else if(tab==='equipamentos') wireEquipamentosV2();
@@ -12989,8 +14538,15 @@ function abrirCheckinSemanal(){
         draft.lesao = (draft.lesao ? draft.lesao+', ' : '') + d.dorRegiao;
       }
       if(d.motivos.includes('sem_tempo')) draft.tempoMaxMin = Math.max(20, Math.round((draft.tempoMaxMin||45)*0.8));
-      const plan = buildAllHybridWeeks(draft, hp.sched, hp.totalWeeks, checkins, checkinDetails);
-      state.hybridPlanData = { ...hp, draft, checkins, checkinDetails, plan };
+      // Plano do motor V2: o check-in vira ajuste da próxima semana, gerada pelo próprio V2 (não reconstrói
+      // com o motor antigo). Planos antigos continuam com a reconstrução de sempre.
+      if(hp.motorV2){
+        state.hybridPlanData = { ...aplicarCheckinSemanalV2(hp, week, d, resposta), draft, checkins, checkinDetails };
+        registrarNoDiario({ dia:hojeAbbr(), original:'Semana '+week, alteracao:'Check-in semanal', motivo: resposta==='dificil' ? 'semana pesada' : resposta==='facil' ? 'semana leve' : 'semana ok', novo: state.hybridPlanData.ajusteProximaSemana ? 'próxima semana ajustada' : 'progressão normal' });
+      }else{
+        const plan = buildAllHybridWeeks(draft, hp.sched, hp.totalWeeks, checkins, checkinDetails);
+        state.hybridPlanData = { ...hp, draft, checkins, checkinDetails, plan };
+      }
       saveHybridPlanData();
       closeSheet(); hapticLeve(); render();
       showToast('Check-in registrado — plano ajustado');
@@ -14663,6 +16219,7 @@ function renderModal(){
               <span>Repetir</span>
               <input type="text" inputmode="numeric" class="blk-reps-input" data-blkreps="${b.id}" value="${b.reps}">
               <span style="flex:1;">vezes</span>
+              <div class="blk-x" data-blkdup="${b.id}" title="Duplicar">⧉</div>
               <div class="blk-x" data-blkdel="${b.id}">×</div>
             </div>
             <div class="blk-substep" data-blkopenstep="${b.id}" data-blksub="0">
@@ -14685,11 +16242,12 @@ function renderModal(){
             <div class="blk-dot" style="background:${meta.cor};" data-blkopenstep="${b.id}"></div>
             <div class="blk-name" data-blkopenstep="${b.id}">${meta.label}</div>
             <div class="blk-sum" data-blkopenstep="${b.id}">${stepSummaryText(b)}</div>
+            <div class="blk-x" data-blkdup="${b.id}" title="Duplicar">⧉</div>
             <div class="blk-x" data-blkdel="${b.id}">×</div>
           </div>
         </div>`;
     }).join('');
-    const addMenu = ['aquec','continua','intervalado','desaq'].map(kind=>{
+    const addMenu = `<div class="blk-addopt" data-blkpreset="tiros"><span class="blk-dot" style="background:var(--text);"></span>Tiros 5 × 800 m + 2:00</div>` + ['aquec','continua','intervalado','desaq'].map(kind=>{
       const meta = kind==='intervalado' ? { label:'Intervalado', cor:'var(--danger)' } : BLOCK_KIND_META[kind];
       return `<div class="blk-addopt" data-blkadd="${kind}"><span class="blk-dot" style="background:${meta.cor};"></span>${meta.label}</div>`;
     }).join('');
@@ -14706,6 +16264,7 @@ function renderModal(){
           <div class="blk-section-label">Adicionar bloco</div>
           <div class="blk-addmenu">${addMenu}</div>
 
+          ${draft.blocks.length ? `<div class="blk-section-label">Sequência final</div><ol class="blk-seq">${draft.blocks.map(b=> b.isGroup ? `<li><b>${b.reps||1} ×</b> (${stepSummaryText(b.steps[0])} + rec. ${stepSummaryText(b.steps[1])})</li>` : `<li><b>${BLOCK_KIND_META[b.kind].label}</b> · ${stepSummaryText(b)}</li>`).join('')}</ol>` : ''}
           ${draft.blocks.length ? `<div class="blk-summary"><div class="k">Total do treino</div><div class="v">${fmtKm(Math.round(totalKm*10)/10)}${totalMin?' · ~'+formatDuration(totalMin*60):''}</div></div>` : ''}
 
           <div class="modal-actions"><button class="secondary" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Salvar</button></div>
@@ -15145,31 +16704,96 @@ function renderModal(){
 // default é local, definido lá em cima), e o login vira só um extra pra sincronizar/compartilhar.
 // Se alguém usou o app sem login e DEPOIS consegue logar, migra o que já tinha salvo local pra nuvem
 // (só preenchendo o que a nuvem ainda não tem — nunca sobrescreve dado que já existia lá).
+// Só envia uma chave local quando a leitura da nuvem CONFIRMOU que ela não existe lá. Leitura que falhou
+// = não sei o que tem na nuvem = não envia nada (fica pra próxima vez; migracaoOk=false).
 async function migrateLocalDataToCloud(uid){
-  const localStore = window.storage;
-  const cloudStore = makeFirestoreStorage(uid);
+  const localStore = makeLocalStorage(); // dados de quem usava sem login (treinoapp:{chave})
+  let completa = true;
   for(const key of BACKUP_KEYS){
     try{
-      const cloudExisting = await cloudStore.get(key, false);
-      if(cloudExisting && cloudExisting.value!=null) continue;
       const local = await localStore.get(key, false);
-      if(local && local.value!=null) await cloudStore.set(key, local.value, false);
-    }catch(e){}
+      if(!local || local.value==null) continue;
+      const r = await cloudRead(uid, key);
+      if(!r.ok){ completa = false; continue; }
+      if(r.exists && r.value!=null) continue;
+      await cloudWrite(uid, key, local.value);
+    }catch(e){ completa = false; }
   }
-  return cloudStore;
+  cloudStatus.migracaoOk = completa;
+  return completa;
 }
-init();
-auth.onAuthStateChanged(async function(user){
+
+/* ---------- Inicialização: abre local/cache primeiro, nuvem entra quando der ---------- */
+// Última conta logada neste aparelho: permite abrir já com os dados dela (cópia local) mesmo sem
+// internet ou antes do Firebase carregar.
+const ULTIMA_CONTA_KEY = 'treinoapp:ultimaConta';
+function lerUltimaConta(){ try{ const c = JSON.parse(lsGet(ULTIMA_CONTA_KEY)||'null'); return c && c.uid ? c : null; }catch(e){ return null; } }
+// init() relê tudo do storage e reconstrói o estado — nunca no meio de corrida, treino de musculação,
+// questionário ou modal aberto (ia descartar o que está em andamento). Espera ficar livre.
+let _initPendente = null, _primeiroInit = null, _ouvindoConta = false;
+function initQuandoLivre(){
+  if(_initPendente) return;
+  // Modal NÃO entra aqui: o de boas-vindas abre sozinho quando os dados ainda não carregaram, e esperar ele
+  // fechar faria a pessoa refazer o onboarding antes de os dados da nuvem chegarem.
+  const ocupado = ()=> (state.gpsRun && state.gpsRun.status!=='finished') || state.workoutSession || state.qv2;
+  const tentar = ()=>{
+    if(ocupado()){ _initPendente = setTimeout(tentar, 5000); return; }
+    _initPendente = null;
+    Promise.resolve(_primeiroInit).catch(()=>{}).then(()=>init());
+  };
+  _initPendente = setTimeout(tentar, 0);
+}
+async function aoMudarConta(user){
+  if(state.viewingClient) return; // personal dentro da aluna: troca de contexto é feita por enterClientView/exitClientView
   if(user){
-    window.storage = await migrateLocalDataToCloud(user.uid);
+    lsSet(ULTIMA_CONTA_KEY, JSON.stringify({ uid:user.uid, name:user.displayName||null, email:user.email||null, photo:user.photoURL||null }));
     state.authUser = { uid:user.uid, name:user.displayName, email:user.email, photo:user.photoURL };
     state.authError = null;
+    await migrateLocalDataToCloud(user.uid);
+    const mesmaConta = window.storage && window.storage.kind==='nuvem' && window.storage.uid===user.uid;
+    if(!mesmaConta) window.storage = makeSyncedStorage(user.uid);
+    else await window.storage.flushPendentes();
   }else{
+    lsSet(ULTIMA_CONTA_KEY, null);
+    const jaLocal = window.storage && window.storage.kind==='local' && !state.authUser;
     window.storage = makeLocalStorage();
     state.authUser = null;
+    if(jaLocal){ render(); return; } // já abriu local sem conta: nada mudou
   }
-  init();
-});
+  // Recarrega da nuvem (dados de outro aparelho entram aqui). Mudanças locais ainda não enviadas
+  // continuam valendo: chave pendente é lida da cópia local.
+  initQuandoLivre();
+  if(user) sincronizarCorridasGps();
+}
+async function iniciarNuvem(){
+  try{
+    await carregarFirebase();
+    cloudStatus.sdk = 'ok';
+  }catch(e){
+    cloudStatus.sdk = 'indisponivel';
+    marcarFalhaNuvem(e);
+    return; // tenta de novo no evento "online"
+  }
+  if(_ouvindoConta) return;
+  _ouvindoConta = true;
+  auth.onAuthStateChanged(function(user){ aoMudarConta(user); });
+}
+document.addEventListener('click', (e)=>{ const el = e.target && e.target.closest ? e.target.closest('[data-suborigin]') : null; if(el) state.subOrigin = el.getAttribute('data-suborigin'); }, true);
+(function bootstrap(){
+  const ultima = lerUltimaConta();
+  if(ultima){
+    window.storage = makeSyncedStorage(ultima.uid);
+    state.authUser = { uid:ultima.uid, name:ultima.name, email:ultima.email, photo:ultima.photo };
+  }
+  _primeiroInit = init();
+  iniciarNuvem();
+  window.addEventListener('online', ()=>{
+    cloudDownUntil = 0;
+    if(!firebasePronto){ iniciarNuvem(); return; }
+    if(window.storage && window.storage.flushPendentes) window.storage.flushPendentes();
+    sincronizarCorridasGps();
+  });
+})();
 </script>
 </body>
 </html>

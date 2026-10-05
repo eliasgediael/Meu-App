@@ -37,11 +37,11 @@ jobs:
           plutil -lint ios/App/App/Info.plist
 
       # A pasta ios/ é recriada a cada build: nome e ícone precisam ser reaplicados aqui.
-      - name: Nome e ícone do app (Forza Run)
+      - name: Nome e ícone do app (Meu Ritmo)
         run: |
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
-          "$PB" -c "Set :CFBundleDisplayName Forza Run" "$PLIST" || "$PB" -c "Add :CFBundleDisplayName string Forza Run" "$PLIST"
+          "$PB" -c "Set :CFBundleDisplayName Meu Ritmo" "$PLIST" || "$PB" -c "Add :CFBundleDisplayName string Meu Ritmo" "$PLIST"
           if [ -f brand/icone-1024.png ]; then
             cp brand/icone-1024.png ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
           fi
@@ -51,11 +51,11 @@ jobs:
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
 
-          "$PB" -c "Add :NSLocationWhenInUseUsageDescription string O Forza Run usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida." "$PLIST"
+          "$PB" -c "Add :NSLocationWhenInUseUsageDescription string O Meu Ritmo usa sua localização para medir distância, ritmo e traçar o percurso da sua corrida." "$PLIST"
 
-          "$PB" -c "Add :NSLocationAlwaysAndWhenInUseUsageDescription string O Forza Run precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
+          "$PB" -c "Add :NSLocationAlwaysAndWhenInUseUsageDescription string O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
-          "$PB" -c "Add :NSLocationAlwaysUsageDescription string O Forza Run precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
+          "$PB" -c "Add :NSLocationAlwaysUsageDescription string O Meu Ritmo precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
 

@@ -1,6 +1,6 @@
 {
-  "name": "Forza Run",
-  "short_name": "Forza Run",
+  "name": "Meu Ritmo",
+  "short_name": "Meu Ritmo",
   "start_url": "treino-app.html",
   "scope": ".",
   "display": "standalone",

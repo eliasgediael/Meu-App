@@ -15,12 +15,19 @@ const isNative = () => Capacitor.isNativePlatform();
 // BackgroundGeolocation entrega {latitude, longitude, accuracy, time, ...} (sem o wrapper .coords) — a
 // gente adapta aqui pro mesmo formato do GeolocationPosition da Web API, que é o que gpsOnPosition (em
 // treino-app.html) já espera. Assim a lógica de cálculo de distância/pace não muda nem sabe que trocou.
+// Altitude, velocidade e direção também passam quando o GPS nativo entrega (senão ficam null, como na
+// Web API) — antes a altitude era descartada aqui e a elevação nunca aparecia no app do iPhone.
 function toWebLikePosition(loc) {
+  const num = (v) => (typeof v === 'number' && isFinite(v) ? v : null);
   return {
     coords: {
       latitude: loc.latitude,
       longitude: loc.longitude,
       accuracy: loc.accuracy,
+      altitude: num(loc.altitude),
+      altitudeAccuracy: num(loc.altitudeAccuracy),
+      speed: num(loc.speed),
+      heading: num(loc.bearing),
     },
     timestamp: loc.time || Date.now(),
   };
@@ -39,7 +46,7 @@ async function watchPosition(onPosition, onError) {
   } catch (e) { /* segue e deixa o addWatcher pedir de novo se precisar */ }
   const watcherId = await BackgroundGeolocation.addWatcher(
     {
-      backgroundTitle: 'Forza Run está rastreando sua corrida',
+      backgroundTitle: 'Meu Ritmo está rastreando sua corrida',
       backgroundMessage: 'Toque para voltar ao treino.',
       requestPermissions: true,
       stale: false,
