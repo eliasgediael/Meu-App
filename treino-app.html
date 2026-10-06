@@ -41,7 +41,7 @@
   --accent-soft:#F2F2F2;
   --accent-light:#6B6B6B;
   --on-accent:#FFFFFF;
-  --data:#FF5A1F;
+  --data:#111111;
   --success:#111111;
   --success-soft:#F2F2F2;
   --done:var(--success);
@@ -773,12 +773,12 @@ input[type=file]{ display:none; }
 .mrt-muscle-figure .body{ fill:#F4F4F4; stroke:#B8B8B8; stroke-width:1.2; }
 .mrt-muscle-figure .detail{ fill:none; stroke:#D4D4D4; stroke-width:.8; stroke-linecap:round; }
 .mrt-muscle-figure .muscle{ fill:#E7E7E7; stroke:#C8C8C8; stroke-width:.55; transition:fill .18s ease,stroke .18s ease,opacity .18s ease; }
-.mrt-muscle-figure .muscle.secondary{ fill:#FFB39A; stroke:#FF8B64; }
-.mrt-muscle-figure .muscle.primary{ fill:var(--data); stroke:#E6400A; }
+.mrt-muscle-figure .muscle.secondary{ fill:#BDBDBD; stroke:#9A9A9A; }
+.mrt-muscle-figure .muscle.primary{ fill:#2B2B2B; stroke:#111111; }
 .mrt-anat{ width:100%; height:auto; max-height:178px; display:block; overflow:visible; }
 .mrt-anat path{ stroke:none; mix-blend-mode:multiply; transition:fill-opacity .18s ease; }
-.mrt-anat path.primary{ fill:var(--data); fill-opacity:.82; }
-.mrt-anat path.secondary{ fill:#FF9A73; fill-opacity:.5; }
+.mrt-anat path.primary{ fill:#1A1A1A; fill-opacity:.72; }
+.mrt-anat path.secondary{ fill:#8A8A8A; fill-opacity:.45; }
 .mrt-muscle-meta{ min-width:0; padding-left:14px; border-left:1px solid var(--border); }
 .mrt-muscle-meta .label{ font-size:12px; color:var(--text-dim); margin-bottom:3px; }
 .mrt-muscle-meta .value{ font-size:18px; font-weight:800; line-height:1.2; }
@@ -787,7 +787,7 @@ input[type=file]{ display:none; }
 .mrt-muscle-key span{ display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--text-dim); line-height:1.25; }
 .mrt-muscle-key i{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
 .mrt-muscle-key .p i{ background:var(--data); }
-.mrt-muscle-key .s i{ background:#FFB39A; }
+.mrt-muscle-key .s i{ background:#BDBDBD; }
 .mrt-current-set{ margin:0 18px 14px; padding:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-card); }
 .mrt-current-set-grid{ display:grid; grid-template-columns:.7fr 1.25fr 1fr 1fr; gap:8px; align-items:end; }
 .mrt-current-field label{ display:block; margin-bottom:8px; color:var(--text-dim); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
@@ -1177,7 +1177,7 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .gps-pin i{ display:block; width:100%; height:100%; border-radius:50%; box-sizing:border-box; }
 /* Posição atual: ponto preto com anel branco e halo; início: anel na cor da rota; fim: quadriculado. */
 .gps-pin-me i{ background:#111; border:3px solid #fff; box-shadow:0 0 0 8px rgba(17,17,17,.14), 0 2px 6px rgba(0,0,0,.35); }
-.gps-pin-start i{ background:#fff; border:4px solid #FF5A1F; box-shadow:0 1px 4px rgba(0,0,0,.3); }
+.gps-pin-start i{ background:#fff; border:4px solid #111111; box-shadow:0 1px 4px rgba(0,0,0,.3); }
 .gps-pin-end i{ border:2.5px solid #fff; background:repeating-conic-gradient(#111 0 25%, #fff 0 50%) 0 0/7px 7px; box-shadow:0 1px 4px rgba(0,0,0,.35); }
 .gps-fab{ width:44px; height:44px; border-radius:50%; border:none; padding:0; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
   background:color-mix(in srgb, var(--surface) 90%, transparent); color:var(--text); box-shadow:0 4px 14px rgba(0,0,0,.45);
@@ -1482,7 +1482,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-ckrow .lb{ width:64px; flex-shrink:0; font-size:14px; font-weight:600; color:var(--text); }
 .ds-seg{ flex:1; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:4px; background:var(--surface-2); border-radius:10px; padding:3px; }
 .ds-seg button{ height:36px; border:none; border-radius:8px; background:none; font-family:inherit; font-size:13px; font-weight:600; color:var(--text-dim); cursor:pointer; }
-.ds-seg button.on{ background:var(--surface); color:var(--text); box-shadow:0 1px 3px rgba(0,0,0,0.10); }
+.ds-seg button.on{ background:var(--accent); color:var(--on-accent); box-shadow:none; }
 .sheet .ds-ckrow{ margin-bottom:12px; }
 .ds-ajlist{ margin-top:4px; }
 .ds-ajop{ display:flex; flex-direction:column; align-items:flex-start; gap:3px; width:100%; padding:14px 0; background:none; border:none; border-top:1px solid var(--border); font-family:inherit; text-align:left; cursor:pointer; }
@@ -1608,10 +1608,14 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-hero .ds-stats3 > *{ border-left:1px solid var(--border); padding-left:12px; min-width:0; }
 .fr-hero .ds-stats3 > *:first-child{ border-left:none; padding-left:0; }
 .fr-hero .ds-btnrow .btn-primary{ width:100%; flex:1; }
+.fr-hero{ border:1px solid var(--border); border-radius:var(--r-card); padding:18px 18px 16px; }
+.fr-cardlist{ border:1px solid var(--border); border-radius:var(--r-card); padding:0 16px; }
+.fr-cardlist > .ds-row:first-child{ border-top:none; }
+.fr-cardlist .ds-row:last-child{ border-bottom:none; }
 .fr-hero .ds-title{ font-size:46px; letter-spacing:-1.6px; line-height:1.02; margin:2px 0 8px; overflow-wrap:anywhere; }
 .fr-hero .ds-why{ font-size:15px; margin-bottom:20px; }
 .fr-hero .ds-stats3{ margin-bottom:16px; }
-.fr-hero .ds-stats3 .mrt-metricv{ font-size:34px; font-weight:800; letter-spacing:-1px; color:var(--data); }
+.fr-hero .ds-stats3 .mrt-metricv{ font-size:30px; font-weight:800; letter-spacing:-1px; color:var(--data); }
 .fr-hero .ds-stats3 .mrt-metricv small{ font-size:16px; color:var(--text-dim); font-weight:700; }
 .fr-hero .ds-stats3 .mrt-metrick{ font-size:15px; color:var(--text-dim); }
 .fr-hero .mrt-blockbars{ height:8px; gap:4px; margin:4px 0 22px; }
@@ -1619,9 +1623,9 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-hero .mrt-blockbar.dim, .fr-hero .mrt-blockbar.hib{ background:#D4D4D4 !important; }
 .fr-hero .ds-btnrow .btn-primary, .fr-hero .ds-btnrow .btn-secondary{ height:60px; border-radius:16px; font-size:19px; font-weight:800; }
 .fr-hero .ds-btnrow .btn-secondary{ background:var(--surface-2); color:var(--text); }
-@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero .ds-stats3 .mrt-metricv{ font-size:27px; } .fr-hero .ds-stats3 .mrt-metricv small{ font-size:13px; } .fr-hero .ds-stats3 > *{ padding-left:8px; } }
+@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero .ds-stats3 .mrt-metricv{ font-size:24px; letter-spacing:-0.6px; } .fr-hero .ds-stats3 .mrt-metricv small{ font-size:13px; } .fr-hero .ds-stats3 > *{ padding-left:8px; } }
 .fr-weekrow .nm{ flex:0 0 38%; font-weight:500; color:var(--text-dim); }
-.fr-weekrow .aside{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15px; font-weight:700; color:var(--text); text-align:right; }
+.fr-weekrow .aside{ flex:1; min-width:0; white-space:normal; line-height:1.3; padding:10px 0; font-size:15px; font-weight:700; color:var(--text); text-align:right; }
 .fr-weekrow .aside.rest{ color:var(--text-faint); }
 .fr-dayic{ width:46px; height:46px; border-radius:50%; background:var(--surface-2); color:var(--text); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .fr-dayic svg{ width:22px; height:22px; }
@@ -1757,6 +1761,17 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .qv2-frase{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0; border-top:1px solid var(--border); font-size:16px; line-height:1.45; }
 .qv2-frase:last-of-type{ border-bottom:1px solid var(--border); }
 .qv2-frase[data-qv2ir]::after{ content:'Editar'; font-size:13px; font-weight:700; color:var(--data); flex-shrink:0; }
+.fr-artegrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
+.fr-arte{ position:relative; padding:0; border:2px solid transparent; border-radius:16px; overflow:hidden; cursor:pointer;
+  background-color:#2A2A2A; background-image:repeating-conic-gradient(#343434 0 25%, #2A2A2A 0 50%); background-size:22px 22px; }
+.fr-arte img{ display:block; width:100%; height:auto; }
+.fr-arte.on{ border-color:#111111; box-shadow:0 0 0 2px #FFFFFF inset; }
+.fr-arte .ck{ position:absolute; right:10px; bottom:10px; width:24px; height:24px; border-radius:50%; border:2px solid #FFFFFF; box-sizing:border-box; }
+.fr-arte.on .ck{ background:#FFFFFF; box-shadow:inset 0 0 0 4px #111111; }
+.fr-artacoes{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; border-top:1px solid var(--border); padding:14px 0 6px; position:sticky; bottom:0; background:var(--surface); }
+.fr-artacoes button{ display:flex; flex-direction:column; align-items:center; gap:6px; border:none; background:none; font-family:inherit; font-size:13px; font-weight:600; color:var(--text); cursor:pointer; padding:0; }
+.fr-artacoes button span{ width:52px; height:52px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; }
+.fr-artacoes button span svg{ width:24px; height:24px; }
 .ct-ex{ border-top:1px solid var(--border); padding:12px 0 4px; }
 .ct-exnome{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:2px; border:none; background:none; padding:0; font-family:inherit; text-align:left; cursor:pointer; color:var(--text); }
 .ct-exnome b{ font-size:15px; }
@@ -6463,7 +6478,7 @@ function gpsStopWatch(watchId){
 // que o controle de atribuição mostra (o texto vem do próprio estilo).
 const MAPLIBRE_VER = '5.9.0';
 const GPS_MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';
-const GPS_ROUTE_COLOR = '#FF5A1F';
+const GPS_ROUTE_COLOR = '#111111';
 let _mapLibLoadPromise = null;
 function loadMapLib(){
   if(window.maplibregl) return Promise.resolve();
@@ -8181,7 +8196,7 @@ function renderGpsSummary(gr){
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
           <button class="btn-primary" id="gpsBtnCloseSummary2">Concluir</button>
-          <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
+          <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar treino</button>
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
           ${gr.progressKey ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
@@ -8224,12 +8239,7 @@ function wireGpsRunScreen(){
       saveCorridaProgress(); hapticLeve(); render();
     };
   });
-  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=>{
-    const distTxt = fmtKm(gr.totalDistKm), tempoTxt = formatClock(Math.round(gpsTotalElapsedSec(gr)));
-    const texto = `Acabei de correr ${distTxt} em ${tempoTxt} pelo Forza Run!`;
-    if(navigator.share){ navigator.share({ text: texto }).catch(()=>{}); }
-    else{ navigator.clipboard && navigator.clipboard.writeText(texto).catch(()=>{}); showToast('Texto copiado'); }
-  };
+  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=> abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr));
   if(byId('gpsBtnSkipStep')) byId('gpsBtnSkipStep').onclick = esteiraSkipStep;
   if(byId('gpsBtnComecar')) byId('gpsBtnComecar').onclick = gpsComecarContagem;
   if(byId('gpsBtnComecarMesmo')) byId('gpsBtnComecarMesmo').onclick = gpsComecarContagem;
@@ -10274,11 +10284,10 @@ function renderAvaliacaoTreinoMusc(ws){
   const diagnostico = ws.doneSeries>=planejadas ? 'Você fez todas as séries planejadas. Excelente execução.'
     : ws.doneSeries>=planejadas*0.8 ? 'Você cumpriu a maior parte do planejado.'
     : 'Ficaram várias séries de fora — vale olhar o tempo disponível e o descanso entre as séries.';
-  const volTxt = prev && prev.volume ? `Volume ${Math.round(ws.totalVolume)>=prev.volume?'acima':'abaixo'} da última vez em ${Math.abs(Math.round(((Math.round(ws.totalVolume)-prev.volume)/prev.volume)*100))}%.` : 'Primeiro treino registrado com volume — ele vira sua referência.';
   const esforcoTxt = pseMed!=null ? `Esforço médio (PSE) ${pseMed.toFixed(1).replace('.',',')}. ${pseMed>=9?'Muito alto: segure a carga no próximo treino.':pseMed>=7?'Na faixa ideal pra ganhar força.':'Leve: há espaço pra subir a carga.'}` : 'Anote o PSE das séries pra eu ajustar as cargas com mais precisão.';
   const secoes = [
     { icon:ICONS.chart, titulo:'Diagnóstico', texto:diagnostico },
-    { icon:ICONS.trendUp, titulo:'Volume', texto:volTxt },
+    { icon:ICONS.trendUp, titulo:'Séries', texto:`${ws.doneSeries} de ${planejadas} séries planejadas.` },
     { icon:ICONS.dumbbell, titulo:'Esforço', texto:esforcoTxt },
     { icon:ICONS.heart, titulo:'Recuperação', texto:'Dê 48h de descanso pros mesmos grupos musculares antes de treiná-los de novo.' },
   ];
@@ -10350,96 +10359,286 @@ function estimarKcalMusc(min){
   const peso = parseFloat(String(state.perfil && state.perfil.peso || '').replace(',','.'));
   return peso ? Math.round(3.5 * 3.5 * peso / 200 * min) : null;
 }
-// Desenha o boneco anatômico (mesmas figuras e máscaras do app) num canvas.
-async function desenharAnatomia(c, a, x, y, h){
-  const carregar = (src)=>new Promise(ok=>{ const im = new Image(); im.onload = ()=>ok(im); im.onerror = ()=>ok(null); im.src = src; });
-  const larg = h*360/980;
+/* ============ ARTES DE COMPARTILHAMENTO ============
+   PNG com fundo transparente (texto branco) para usar por cima de uma foto no Story; a arte de mapa de rua é a
+   única com fundo. Story 9:16 ou quadrado 1:1. Musculação: músculos, halter, data e "treino concluído" — sem
+   volume/carga. Corrida: trajeto real, números, parciais e trajeto sobre o mapa (esteira: só números/parciais). */
+const ARTE_FONT = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif";
+function arteCanvas(formato){ const cv = document.createElement('canvas'); cv.width = 1080; cv.height = formato==='quadrado' ? 1080 : 1920; return cv; }
+function carregarImagemArte(src){ return new Promise(ok=>{ const im = new Image(); im.crossOrigin = 'anonymous'; im.onload = ()=>ok(im); im.onerror = ()=>ok(null); im.src = src; }); }
+function arteSombra(c, on){ c.shadowColor = on ? 'rgba(0,0,0,0.28)' : 'transparent'; c.shadowBlur = on ? 18 : 0; c.shadowOffsetY = on ? 2 : 0; }
+// Marca: "FORZA" pesado + " RUN" leve.
+function arteLogo(c, x, y, tam, alinhar){
+  c.font = `900 ${tam}px ${ARTE_FONT}`; const w1 = c.measureText('FORZA').width;
+  c.font = `400 ${tam}px ${ARTE_FONT}`; const w2 = c.measureText(' RUN').width;
+  const x0 = alinhar==='center' ? x - (w1+w2)/2 : x;
+  c.textAlign = 'left'; c.fillStyle = '#FFFFFF';
+  c.font = `900 ${tam}px ${ARTE_FONT}`; c.fillText('FORZA', x0, y);
+  c.font = `400 ${tam}px ${ARTE_FONT}`; c.fillText(' RUN', x0 + w1, y);
+}
+function arteTexto(c, txt, x, y, peso, tam, cor, alinhar){ c.font = `${peso} ${tam}px ${ARTE_FONT}`; c.fillStyle = cor || '#FFFFFF'; c.textAlign = alinhar || 'center'; c.fillText(txt, x, y); }
+function arteEspacado(c, txt, cx, y, tam, espaco){
+  c.font = `700 ${tam}px ${ARTE_FONT}`; c.textAlign = 'left'; c.fillStyle = '#FFFFFF';
+  const larg = [...txt].reduce((t,ch)=>t + c.measureText(ch).width + espaco, -espaco);
+  let x = cx - larg/2; [...txt].forEach(ch=>{ c.fillText(ch, x, y); x += c.measureText(ch).width + espaco; });
+}
+function arteHalter(c, cx, cy, w){
+  const h = w*0.42, lw = Math.max(6, w*0.045);
+  c.save(); c.strokeStyle = '#FFFFFF'; c.lineWidth = lw; c.lineCap = 'round'; c.lineJoin = 'round';
+  const rr = (x,y,ww,hh,r)=>{ c.beginPath(); c.roundRect(x,y,ww,hh,r); c.stroke(); };
+  rr(cx - w/2, cy - h*0.32, w*0.09, h*0.64, w*0.04);
+  rr(cx - w/2 + w*0.12, cy - h/2, w*0.12, h, w*0.05);
+  rr(cx + w/2 - w*0.24, cy - h/2, w*0.12, h, w*0.05);
+  rr(cx + w/2 - w*0.09, cy - h*0.32, w*0.09, h*0.64, w*0.04);
+  c.beginPath(); c.moveTo(cx - w/2 + w*0.24, cy); c.lineTo(cx + w/2 - w*0.24, cy); c.stroke();
+  c.restore();
+}
+// Figuras anatômicas sem o fundo branco (remove só o branco ligado às bordas, o corpo continua opaco).
+const _anatSemFundo = {};
+async function anatomiaSemFundo(k){
+  if(_anatSemFundo[k]) return _anatSemFundo[k];
+  const im = await carregarImagemArte('gifs/anatomia/'+k+'.webp'); if(!im) return null;
+  const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height;
+  const c = cv.getContext('2d', { willReadFrequently:true }); c.drawImage(im, 0, 0);
+  const d = c.getImageData(0, 0, cv.width, cv.height), px = d.data, W = cv.width, H = cv.height;
+  const fundo = new Uint8Array(W*H), fila = new Int32Array(W*H); let ini = 0, fim = 0;
+  const claro = (i)=>px[i*4]>228 && px[i*4+1]>228 && px[i*4+2]>228;
+  const semear = (i)=>{ if(!fundo[i] && claro(i)){ fundo[i] = 1; fila[fim++] = i; } };
+  for(let x=0;x<W;x++){ semear(x); semear((H-1)*W+x); }
+  for(let y=0;y<H;y++){ semear(y*W); semear(y*W+W-1); }
+  while(ini<fim){ const i = fila[ini++], x = i%W; if(x>0) semear(i-1); if(x<W-1) semear(i+1); if(i>=W) semear(i-W); if(i<W*(H-1)) semear(i+W); }
+  for(let i=0;i<W*H;i++) if(fundo[i]) px[i*4+3] = 0;
+  c.putImageData(d, 0, 0);
+  return (_anatSemFundo[k] = cv);
+}
+// Boneco frente/costas com os músculos do treino escurecidos (mesmas máscaras do app).
+async function desenharAnatomiaArte(c, a, x, y, h){
+  const larg = h*360/980, esc = h/980;
   for(const [k, lado] of [['frente',0],['costas',1]]){
-    const im = await carregar('gifs/anatomia/'+k+'.webp');
-    const ox = x + lado*(larg+20);
-    if(im) c.drawImage(im, 0, 30, 360, 980, ox, y, larg, h);
-    const f = ANATOMIA[k], esc = h/980;
-    const pinta = (id, pts)=>{ const base = id.replace(/-\d+$/,''); const cls = muscleClass(base, a); if(cls==='muscle') return;
-      const p = new Path2D(anatomiaCurva(pts)); c.save(); c.translate(ox, y - 30*esc); c.scale(esc, esc);
-      c.globalCompositeOperation = 'multiply'; c.fillStyle = cls.includes('primary') ? 'rgba(255,90,31,0.82)' : 'rgba(255,154,115,0.5)'; c.fill(p); c.restore(); };
+    const fig = await anatomiaSemFundo(k); if(!fig) continue;
+    const t = document.createElement('canvas'); t.width = Math.ceil(larg); t.height = Math.ceil(h);
+    const tc = t.getContext('2d');
+    tc.drawImage(fig, 0, 30, 360, 980, 0, 0, larg, h);
+    tc.globalCompositeOperation = 'source-atop';
+    const f = ANATOMIA[k];
+    const pinta = (id, pts)=>{ const cls = muscleClass(id.replace(/-\d+$/,''), a); if(cls==='muscle') return;
+      const p = new Path2D(anatomiaCurva(pts)); tc.save(); tc.translate(0, -30*esc); tc.scale(esc, esc);
+      tc.fillStyle = cls.includes('primary') ? 'rgba(17,17,17,0.72)' : 'rgba(17,17,17,0.32)'; tc.fill(p); tc.restore(); };
     Object.entries(f.lados).forEach(([id, pts])=>{ pinta(id, pts); pinta(id, pts.map(([px,py])=>[2*f.eixo-px, py])); });
     Object.entries(f.centro).forEach(([id, pts])=>pinta(id, pts));
+    c.drawImage(t, x + lado*(larg+24), y);
   }
+  return 2*larg + 24;
 }
-function escolherFoto(){
-  return new Promise(ok=>{ const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
-    i.onchange = ()=>{ const f = i.files && i.files[0]; if(!f) return ok(null); const r = new FileReader(); r.onload = ()=>{ const im = new Image(); im.onload = ()=>ok(im); im.onerror = ()=>ok(null); im.src = r.result; }; r.readAsDataURL(f); };
-    i.click(); });
+function artesMusculacao(v){
+  const min = Math.max(1, Math.round((v.duracaoSeg||0)/60));
+  const nEx = v.exercicios.length;
+  const sub = v.temDetalhe ? `${v.series} séries · ${nEx} exercício${nEx===1?'':'s'}` : `${v.series} séries`;
+  const dt = dataDoISO(v.data);
+  const artes = [];
+  if(v.temDetalhe) artes.push({ nome:'Músculos', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    const fh = story ? 1120 : 620, larg = 2*fh*360/980 + 24;
+    await desenharAnatomiaArte(c, v.anat, (W - larg)/2, story ? 250 : 60, fh);
+    arteSombra(c, true);
+    const y0 = (story ? 250 : 60) + fh;
+    arteLogo(c, W/2, y0 + (story ? 110 : 70), story ? 42 : 34, 'center');
+    arteTexto(c, min+' min', W/2, y0 + (story ? 260 : 190), 800, story ? 150 : 110);
+    arteTexto(c, sub, W/2, y0 + (story ? 340 : 250), 500, story ? 46 : 38, 'rgba(255,255,255,0.88)');
+    return cv; } });
+  artes.push({ nome:'Treino', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+    arteSombra(c, true); arteHalter(c, W/2, H/2 - 190, 300);
+    arteTexto(c, min+' min', W/2, H/2 + 90, 800, 170);
+    arteTexto(c, sub, W/2, H/2 + 175, 500, 48, 'rgba(255,255,255,0.88)');
+    return cv; } });
+  artes.push({ nome:'Data', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+    const bw = 560, bh = 520, x = (W-bw)/2, y = (H-bh)/2;
+    arteSombra(c, true); c.strokeStyle = '#FFFFFF'; c.lineWidth = 12; c.lineCap = 'round';
+    c.beginPath(); c.roundRect(x, y, bw, bh, 56); c.stroke();
+    [x + bw*0.27, x + bw*0.73].forEach(px=>{ c.beginPath(); c.moveTo(px, y - 34); c.lineTo(px, y + 34); c.stroke(); });
+    c.lineWidth = 8; c.beginPath(); c.moveTo(x, y + bh*0.47); c.lineTo(x + bw, y + bh*0.47); c.stroke();
+    arteHalter(c, W/2, y + bh*0.25, 190);
+    let dia = ''; try{ dia = dt.toLocaleDateString('pt-BR', { weekday:'long' }); }catch(e){}
+    let data = ''; try{ data = dt.toLocaleDateString('pt-BR', { day:'numeric', month:'short' }); }catch(e){ data = v.data; }
+    arteTexto(c, dia, W/2, y + bh*0.66, 500, 54);
+    arteTexto(c, data, W/2, y + bh*0.83, 800, 72);
+    return cv; } });
+  artes.push({ nome:'Concluído', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
+    arteSombra(c, true);
+    arteEspacado(c, 'TREINO CONCLUÍDO', W/2, H/2 - 150, 40, 14);
+    arteTexto(c, min+' min', W/2, H/2 + 60, 800, 200);
+    arteTexto(c, sub, W/2, H/2 + 150, 500, 50, 'rgba(255,255,255,0.88)');
+    return cv; } });
+  return artes;
 }
-// Cartão do treino: formato story (9:16) ou quadrado (1:1), foto opcional, duração, calorias estimadas, exercícios/séries,
-// recordes e o mapa muscular do treino. Volume total fica só nos detalhes do app.
-async function gerarCartaoTreino(sessao, opcoes){
-  const W = 1080, H = opcoes.formato==='quadrado' ? 1080 : 1920;
-  const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
-  const c = cv.getContext('2d');
-  const font = "-apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif";
-  const laranja = '#FF5A1F';
-  c.fillStyle = '#FFFFFF'; c.fillRect(0,0,W,H);
-  let topo = 0;
-  if(opcoes.foto){
-    const fh = opcoes.formato==='quadrado' ? 560 : 1000;
-    const im = opcoes.foto, r = Math.max(W/im.width, fh/im.height);
-    c.drawImage(im, (W-im.width*r)/2, (fh-im.height*r)/2, im.width*r, im.height*r);
-    topo = fh;
+// ---------- Corrida ----------
+function arteProjecaoTrilha(track, box){
+  const lat0 = track.reduce((t,p)=>t+p.lat,0)/track.length, k = Math.cos(lat0*Math.PI/180);
+  const xs = track.map(p=>p.lng*k), ys = track.map(p=>-p.lat);
+  const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+  const esc = Math.min(box.w/Math.max(1e-9, maxX-minX), box.h/Math.max(1e-9, maxY-minY));
+  const ox = box.x + (box.w - (maxX-minX)*esc)/2, oy = box.y + (box.h - (maxY-minY)*esc)/2;
+  return track.map((p,i)=>[ox + (xs[i]-minX)*esc, oy + (ys[i]-minY)*esc]);
+}
+function arteDesenhaTrilha(c, pts, cor, larg, contorno){
+  const linha = ()=>{ c.beginPath(); pts.forEach(([x,y],i)=> i ? c.lineTo(x,y) : c.moveTo(x,y)); c.stroke(); };
+  c.lineCap = 'round'; c.lineJoin = 'round';
+  if(contorno){ c.strokeStyle = contorno; c.lineWidth = larg + 8; linha(); }
+  c.strokeStyle = cor; c.lineWidth = larg; linha();
+  const [sx, sy] = pts[0]; c.fillStyle = cor; c.beginPath(); c.arc(sx, sy, larg*1.3, 0, Math.PI*2); c.fill();
+}
+function arteDadosCorrida(c, dados, x, y, tamV, tamK, passo){
+  dados.forEach(([k, v], i)=>{ arteTexto(c, k, x, y + i*passo, 500, tamK, 'rgba(255,255,255,0.85)', 'left'); arteTexto(c, v, x, y + i*passo + tamV*1.05, 800, tamV, '#FFFFFF', 'left'); });
+}
+// Mapa de ruas real (OpenFreeMap, o mesmo do resumo) renderizado fora da tela; null se não carregar a tempo.
+async function arteMapaRua(track, W, H){
+  try{ await loadMapLib(); }catch(e){ return null; }
+  const div = document.createElement('div');
+  div.style.cssText = `position:fixed;left:-20000px;top:0;width:${W/2}px;height:${H/2}px;`;
+  document.body.appendChild(div);
+  let map = null;
+  try{
+    map = new maplibregl.Map({ container:div, style:GPS_MAP_STYLE_URL, interactive:false, attributionControl:false,
+      preserveDrawingBuffer:true, canvasContextAttributes:{ preserveDrawingBuffer:true }, pixelRatio:2, fadeDuration:0 });
+    const pronto = new Promise(ok=>{ map.once('load', ()=>{
+      try{ gpsTuneStyle(map); }catch(e){}
+      const lngs = track.map(p=>p.lng), lats = track.map(p=>p.lat);
+      map.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding:{ top:H*0.09, bottom:H*0.22, left:W*0.12/2, right:W*0.12/2 }, duration:0 });
+      map.once('idle', ()=>ok(true));
+    }); });
+    const ok = await Promise.race([pronto, new Promise(r=>setTimeout(()=>r(false), 9000))]);
+    if(!ok) return null;
+    const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+    const c = cv.getContext('2d');
+    c.drawImage(map.getCanvas(), 0, 0, W, H);
+    const pts = track.map(p=>{ const q = map.project([p.lng, p.lat]); return [q.x*2, q.y*2]; });
+    return { cv, pts };
+  }catch(e){ return null; }
+  finally{ try{ map && map.remove(); }catch(e){} div.remove(); }
+}
+function artesCorrida(gr){
+  const an = gpsRunAnalysis(gr);
+  const total = Math.round(gpsTotalElapsedSec(gr)), dist = gr.totalDistKm||0;
+  const pace = dist>0.05 ? total/dist : null;
+  const dados = [['Distância', fmtKmMedido(dist)+' km'], ['Ritmo', pace ? formatPace(pace)+'/km' : '—'], ['Tempo', formatClock(total)]];
+  const temTrilha = an.track.length >= 2;
+  const splits = an.splits || [];
+  const artes = [];
+  if(temTrilha) artes.push({ nome:'Trajeto', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    arteSombra(c, true);
+    arteLogo(c, 90, 140, 46);
+    const box = story ? { x:170, y:280, w:740, h:900 } : { x:500, y:200, w:500, h:760 };
+    arteDesenhaTrilha(c, arteProjecaoTrilha(an.track, box), '#FFFFFF', 14);
+    arteDadosCorrida(c, dados, 90, story ? 1360 : 470, story ? 76 : 70, story ? 36 : 32, story ? 165 : 160);
+    return cv; } });
+  artes.push({ nome:'Números', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    arteSombra(c, true);
+    const y0 = story ? 560 : 190;
+    arteLogo(c, W/2, y0, 50, 'center');
+    dados.forEach(([k, v], i)=>{ const y = y0 + (story ? 220 : 170) + i*(story ? 250 : 200);
+      arteTexto(c, k, W/2, y, 500, 40, 'rgba(255,255,255,0.85)'); arteTexto(c, v, W/2, y + 100, 800, 92); });
+    return cv; } });
+  if(splits.length) artes.push({ nome:'Parciais', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    arteSombra(c, true);
+    arteLogo(c, 90, story ? 160 : 120, 46);
+    const lista = splits.slice(0, story ? 16 : 9);
+    const passo = story ? 74 : 72, topo = story ? Math.max(560, (H - lista.length*passo)/2) : 330;
+    arteTexto(c, 'Parciais por km', 90, topo - 70, 700, 50, '#FFFFFF', 'left');
+    const melhor = Math.min(...lista.map(x=>x.paceSec)), barX = 170, barW = 640;
+    lista.forEach((sp, i)=>{
+      const y = topo + i*passo;
+      arteTexto(c, sp.parcial ? fmtKmMedido(sp.distKm) : String(i+1), 90, y + 14, 700, 34, '#FFFFFF', 'left');
+      arteSombra(c, false);
+      c.fillStyle = 'rgba(255,255,255,0.22)'; c.beginPath(); c.roundRect(barX, y - 12, barW, 30, 15); c.fill();
+      c.fillStyle = '#FFFFFF'; c.beginPath(); c.roundRect(barX, y - 12, Math.max(40, barW*Math.min(1, melhor/sp.paceSec)), 30, 15); c.fill();
+      arteSombra(c, true);
+      arteTexto(c, formatPace(sp.paceSec), W - 90, y + 14, 700, 34, '#FFFFFF', 'right');
+    });
+    return cv; } });
+  if(temTrilha) artes.push({ nome:'Mapa', gerar: async (formato)=>{
+    const W = 1080, H = formato==='quadrado' ? 1080 : 1920;
+    const m = await arteMapaRua(an.track, W, H); if(!m) return null;
+    const c = m.cv.getContext('2d');
+    arteDesenhaTrilha(c, m.pts, '#111111', 12, 'rgba(255,255,255,0.9)');
+    const gh = H>W ? 620 : 470, g = c.createLinearGradient(0, H-gh, 0, H);
+    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.45, 'rgba(0,0,0,0.72)'); g.addColorStop(1, 'rgba(0,0,0,0.9)');
+    c.fillStyle = g; c.fillRect(0, H-gh, W, gh);
+    arteLogo(c, 80, H - 270, 44);
+    const colW = (W - 160)/3;
+    dados.forEach(([k, v], i)=>{ const x = 80 + i*colW;
+      if(i){ c.fillStyle = 'rgba(255,255,255,0.45)'; c.fillRect(x - 24, H - 200, 2, 120); }
+      arteTexto(c, k, x, H - 170, 500, 32, 'rgba(255,255,255,0.85)', 'left'); arteTexto(c, v, x, H - 100, 800, 58, '#FFFFFF', 'left'); });
+    arteTexto(c, '© OpenStreetMap', W - 24, H - 22, 500, 20, 'rgba(255,255,255,0.7)', 'right');
+    return m.cv; } });
+  return artes;
+}
+// ---------- Seletor: prévia das artes + Story / Salvar / Copiar / Mais ----------
+const ARTE_ICONES = {
+  story:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="0.6" fill="currentColor"/></svg>',
+  salvar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>',
+  copiar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="11" height="11" rx="2.5"/><path d="M15 9V6.5A2.5 2.5 0 0 0 12.5 4h-6A2.5 2.5 0 0 0 4 6.5v6A2.5 2.5 0 0 0 6.5 15H9"/></svg>',
+};
+function blobParaBase64(blob){ return new Promise(ok=>{ const r = new FileReader(); r.onload = ()=>ok(String(r.result).split(',')[1]||''); r.onerror = ()=>ok(''); r.readAsDataURL(blob); }); }
+async function arteAcao(acao, blob){
+  const nativo = window.NativeBridge && NativeBridge.isNative && NativeBridge.isNative() && NativeBridge.imagemArte;
+  if(nativo){
+    const r = await NativeBridge.imagemArte(acao==='salvar' ? 'salvar' : acao==='copiar' ? 'copiar' : 'compartilhar', await blobParaBase64(blob));
+    if(acao==='salvar') showToast(r.ok ? 'Imagem salva nas Fotos' : 'Não consegui salvar. Confira a permissão das Fotos.');
+    else if(acao==='copiar') showToast(r.ok ? 'Imagem copiada' : 'Não consegui copiar');
+    return;
   }
-  const min = Math.max(1, Math.round((sessao.duracaoSeg||0)/60));
-  const kcal = sessao.calorias;
-  const anat = sessao.anat;
-  const pad = 80; let y = topo + (opcoes.foto ? 90 : 150);
-  c.textAlign = 'left';
-  c.fillStyle = '#111111'; c.font = `900 40px ${font}`; c.fillText('FORZA RUN', pad, opcoes.foto ? y-20 : 110);
-  if(opcoes.foto) y += 40;
-  c.fillStyle = '#111111'; c.font = `800 ${opcoes.formato==='quadrado'?72:96}px ${font}`; c.fillText(sessao.titulo, pad, y + 60);
-  c.fillStyle = '#6B6B6B'; c.font = `500 38px ${font}`; c.fillText(dataDoISO(sessao.data).toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}), pad, y + 120);
-  y += 200;
-  const stats = [[min+' min','Duração']];
-  if(kcal) stats.push([kcal.valor+' kcal', kcal.estimativa ? 'Calorias (estimativa)' : 'Calorias']);
-  stats.push([sessao.temDetalhe ? sessao.exercicios.length+'/'+sessao.series : String(sessao.series), sessao.temDetalhe ? 'Exercícios/séries' : 'Séries']);
-  const nRec = sessao.recordes; if(nRec) stats.push([String(nRec), nRec===1?'Recorde':'Recordes']);
-  const story = opcoes.formato!=='quadrado';
-  const mostrarMapa = (!opcoes.foto || story) && sessao.temDetalhe;
-  const lateral = mostrarMapa && !story;   // quadrado sem foto: números à esquerda, boneco à direita
-  const colW = lateral ? 470 : (W-2*pad)/2;
-  stats.forEach((st,i)=>{
-    const sx = lateral ? pad : pad + (i%2)*colW, sy = lateral ? y + i*150 : y + Math.floor(i/2)*170;
-    c.fillStyle = laranja; c.font = `800 84px ${font}`; c.fillText(st[0], sx, sy + 70);
-    c.fillStyle = '#6B6B6B'; c.font = `600 32px ${font}`; c.fillText(st[1], sx, sy + 115);
-  });
-  if(lateral){ const mh = Math.min(H - y - 60, 620); await desenharAnatomia(c, anat, pad + 500, y - 20, mh); }
-  else if(mostrarMapa){
-    const yMapa = y + Math.ceil(stats.length/2)*170 + 40, mh = Math.min(H - yMapa - 120, 900);
-    if(mh > 300){ const larg = mh*360/980; await desenharAnatomia(c, anat, (W - (2*larg+20))/2, yMapa, mh); }
+  const arquivo = new File([blob], 'forza-run.png', { type:'image/png' });
+  if(acao==='copiar'){
+    try{ await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]); showToast('Imagem copiada'); }
+    catch(e){ showToast('Não consegui copiar'); }
+    return;
   }
-  return new Promise(res=>cv.toBlob(res, 'image/png'));
+  if(acao!=='salvar'){
+    try{ if(navigator.canShare && navigator.canShare({ files:[arquivo] })){ await navigator.share({ files:[arquivo] }); return; } }
+    catch(e){ if(e && e.name==='AbortError') return; }
+  }
+  const el = document.createElement('a'); el.href = URL.createObjectURL(blob); el.download = 'forza-run.png';
+  document.body.appendChild(el); el.click(); el.remove();
+  showToast('Imagem salva');
 }
-async function compartilharResumoTreino(sessao){
-  let formato = 'story', foto = null;
+async function abrirSeletorArtes(titulo, artes){
+  let formato = 'story', sel = 0, prontas = [];
+  const gerar = async ()=>{
+    prontas.forEach(x=>URL.revokeObjectURL(x.url));
+    prontas = [];
+    for(const a of artes){
+      try{ const cv = await a.gerar(formato); if(!cv) continue;
+        const blob = await new Promise(r=>cv.toBlob(r, 'image/png')); if(blob) prontas.push({ nome:a.nome, blob, url:URL.createObjectURL(blob) }); }
+      catch(e){ console.warn('[arte]', a.nome, e); }
+    }
+    if(sel >= prontas.length) sel = 0;
+  };
   const montar = ()=>openSheet(`
-    <div class="sheet-title">Compartilhar treino</div>
-    <div class="sheet-sub">Duração, calorias (estimativa) e os músculos que você treinou.</div>
-    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin-bottom:12px;"><button class="${formato==='story'?'on':''}" data-cfmt="story">Story 9:16</button><button class="${formato==='quadrado'?'on':''}" data-cfmt="quadrado">Quadrado 1:1</button></div>
-    <button class="btn-secondary" id="cfFoto" style="margin-bottom:10px;">${foto ? 'Trocar foto' : 'Adicionar foto (opcional)'}</button>
-    <button class="btn-primary" id="cfGerar">Compartilhar imagem</button>`, (sh)=>{
-    sh.querySelectorAll('[data-cfmt]').forEach(el=>{ el.onclick = ()=>{ formato = el.getAttribute('data-cfmt'); montar(); }; });
-    sh.querySelector('#cfFoto').onclick = async ()=>{ const f = await escolherFoto(); if(f){ foto = f; montar(); } };
-    sh.querySelector('#cfGerar').onclick = async ()=>{
-      const blob = await gerarCartaoTreino(sessao, { formato, foto });
-      closeSheet();
-      const file = new File([blob], 'forza-run-treino.png', { type:'image/png' });
-      try{ if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text:'Treino concluído no Forza Run' }); return; } }
-      catch(e){ if(e && e.name==='AbortError') return; }
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'forza-run-treino.png';
-      document.body.appendChild(a); a.click(); a.remove();
-      showToast('Imagem salva');
-    };
+    <div class="sheet-title" style="text-align:center;">${titulo}</div>
+    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:4px 0 14px;"><button class="${formato==='story'?'on':''}" data-arfmt="story">Story</button><button class="${formato==='quadrado'?'on':''}" data-arfmt="quadrado">Quadrada</button></div>
+    <div class="fr-artegrid ${formato}">${prontas.length ? prontas.map((x,i)=>`<button class="fr-arte ${i===sel?'on':''}" data-arte="${i}" aria-label="${x.nome}"><img src="${x.url}" alt=""><span class="ck"></span></button>`).join('') : '<div class="ds-muted" style="padding:30px 0;text-align:center;">Gerando artes…</div>'}</div>
+    <div class="fr-artacoes">
+      <button data-aracao="story"><span>${ARTE_ICONES.story}</span>Story</button>
+      <button data-aracao="salvar"><span>${ARTE_ICONES.salvar}</span>Salvar</button>
+      <button data-aracao="copiar"><span>${ARTE_ICONES.copiar}</span>Copiar</button>
+      <button data-aracao="mais"><span>${ICONS.share}</span>Mais</button>
+    </div>`, (sh)=>{
+    sh.querySelectorAll('[data-arte]').forEach(el=>{ el.onclick = ()=>{ sel = +el.getAttribute('data-arte'); sh.querySelectorAll('[data-arte]').forEach(b=>b.classList.toggle('on', b===el)); }; });
+    sh.querySelectorAll('[data-arfmt]').forEach(el=>{ el.onclick = async ()=>{ const f = el.getAttribute('data-arfmt'); if(f===formato) return; formato = f; prontas = []; montar(); await gerar(); montar(); }; });
+    sh.querySelectorAll('[data-aracao]').forEach(el=>{ el.onclick = async ()=>{ const x = prontas[sel]; if(!x) return; await arteAcao(el.getAttribute('data-aracao'), x.blob); }; });
   });
   montar();
+  await gerar();
+  montar();
 }
+// Musculação: a partir de um registro normalizado (resumo pós-treino ou histórico).
+function compartilharResumoTreino(sessao){ return abrirSeletorArtes('Compartilhar treino', artesMusculacao(sessao)); }
 function confeteHtml(){
   const cores = ['var(--accent)','var(--gold)','var(--musc)','var(--run)','var(--hib)'];
   return `<div class="mrt-confete">${Array.from({length:26},(_,i)=>`<i style="left:${Math.round((i*37)%100)}%;background:${cores[i%5]};animation-delay:${(i%9)*0.12}s;animation-duration:${1.8+(i%5)*0.3}s;"></i>`).join('')}</div>`;
@@ -10455,10 +10654,6 @@ function renderWorkoutSession(){
     let compareHtml = '';
     if(prev){
       const linhas = [];
-      if(prev.volume){
-        const diff = Math.round(ws.totalVolume) - prev.volume;
-        linhas.push({ k:'Volume', v:`${diff>=0?'+':'−'}${Math.abs(diff).toLocaleString('pt-BR')} kg`, up:diff>=0 });
-      }
       if(prev.duracaoSeg){
         const dm = minTot - Math.round(prev.duracaoSeg/60);
         linhas.push({ k:'Tempo', v:`${dm>=0?'+':'−'}${Math.abs(dm)} min`, up:dm<=0 });
@@ -10487,7 +10682,7 @@ function renderWorkoutSession(){
             <div class="mrt-card" style="margin:0;">${mrtMetricHtml(nTreino+'º','Treino',true)}</div>
             <div class="mrt-card" style="margin:0;">${mrtMetricHtml(minTot+'min','Tempo',true)}</div>
             <div class="mrt-card" style="margin:0;">${mrtMetricHtml(ws.doneSeries+'/'+totalSeriesPlanned,'Séries',true)}</div>
-            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(Math.round(ws.totalVolume).toLocaleString('pt-BR')+'kg','Volume',true)}</div>
+            <div class="mrt-card" style="margin:0;">${mrtMetricHtml(String(Object.keys(ws.records||{}).length),'Recordes',true)}</div>
           </div>
           ${compareHtml}
           ${recordes.length ? `<div class="mrt-card" style="width:100%;text-align:left;">
@@ -13189,7 +13384,7 @@ function mrtSemanaSecao(){
   if(!overall0.scheduled && !linhas) return '';
   return `<div class="ds-section">
     <div class="ds-labelrow"><div class="ds-label">Semana</div>${overall0.scheduled?`<div class="ds-aside">${overall0.done}/${overall0.scheduled} concluídos${semanasSeguidas()>1?' · '+semanasSeguidas()+' semanas seguidas':''}</div>`:''}</div>
-    ${linhas ? `<div class="ds-list">${linhas}</div>` : ''}
+    ${linhas ? `<div class="ds-list fr-cardlist">${linhas}</div>` : ''}
   </div>`;
 }
 function mrtSemanaSecaoBolinhas(){
@@ -13386,7 +13581,7 @@ function renderHojeV2Content(){
   const nome1 = primeiroNome();
   const greetRow = `
     <div class="fr-brandrow"><div class="fr-brand"><b>FORZA</b> RUN</div>
-      <button class="fr-ajuda" id="frAjudaInicio" aria-label="Ajuda">?</button></div>
+      <div class="mrt-avatar" data-tabgo="perfil" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div></div>
     <div class="mrt-greetrow"><div style="min-width:0;"><div class="mrt-greetdate">${dataStr}</div><div class="mrt-greettitle">${saud}${nome1?', '+nome1:''}</div></div></div>`;
   const temPlanoOuTreino = DAY_ABBR.some(d=>dayStatus(d)!=='none');
   const sessions = mrtHeroSessions(day);
@@ -13415,7 +13610,7 @@ function renderHojeV2Content(){
         <div class="ds-stats3">${primary.metrics.map(m=>mrtMetricHtml(String(m.v).replace(/(\d)\.(\d)/,'$1,$2'), m.k)).join('')}</div>
         ${mrtBarraBlocos(primary.steps)}
         ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<div class="ds-btnrow">
-          <button class="btn-primary" data-v2start="${primary.tipo}">Começar</button>
+          <button class="btn-primary" data-v2start="${primary.tipo}">Iniciar treino</button>
         </div>`}
         ${secondary ? `<div class="ds-row ds-inrow" data-v2go="${secondary.tipo}"><span class="nm">Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></div>` : ''}
       </div></div>`;
@@ -13945,7 +14140,7 @@ function abrirMuscHistoryV2(id){
   openSheet(`
     <div class="fr-mhhead"><div class="sheet-title">${v.titulo}</div><button class="ds-mini" id="mhMenu" aria-label="Opções">${ICONS.dots}</button></div>
     <div class="sheet-sub">${dataTxt} · ${Math.max(1, Math.round(v.duracaoSeg/60))} min</div>
-    <div class="ds-stats3 fr-mhstats">${mrtMetricHtml(Math.round(v.volume).toLocaleString('pt-BR'), 'kg de volume')}${mrtMetricHtml(String(v.series), 'séries')}${mrtMetricHtml(String(v.recordes), v.recordes===1 ? 'recorde' : 'recordes')}</div>
+    <div class="ds-stats3 fr-mhstats">${mrtMetricHtml(String(Math.max(1, Math.round(v.duracaoSeg/60))), 'min')}${mrtMetricHtml(String(v.series), 'séries')}${mrtMetricHtml(String(v.recordes), v.recordes===1 ? 'recorde' : 'recordes')}</div>
     ${v.calorias ? `<div class="ds-row ds-static"><span class="nm">Calorias</span><span class="aside">${v.calorias.valor} kcal${v.calorias.estimativa ? ' · estimativa' : ''}</span></div>` : ''}
     ${v.temDetalhe ? `
       <div class="mrt-muscle-map fr-mhmapa">${muscleFrontSvg(v.anat)}${muscleBackSvg(v.anat)}</div>
@@ -14768,11 +14963,11 @@ function renderProgressoV2(){
   const runs = corridasConcluidas().filter(p=>p.data>=inicioISO);
   const rotSemana = (iso)=> fmtDataCurta(iso);
 
-  // 1) volume semanal
-  const vol = progAgruparPorSemana(sessoes, s=>s.volume||0);
-  const volPts = vol.map(x=>({ label:rotSemana(x.semana), y:x.v, tip:`Semana de ${rotSemana(x.semana)}: ${Math.round(x.v).toLocaleString('pt-BR')} kg` }));
-  const cardVolume = chartCardHtml('musc', ICONS.dumbbell, 'Volume semanal', 'Carga × repetições somadas por semana.',
-    sessoes.length ? mrtLineChart(volPts, { color:'var(--accent)', formatY:v=>Math.round(v/100)/10+'t' }) : progVazio('Conclua um treino de musculação pra ver o volume.'));
+  // 1) séries por semana
+  const vol = progAgruparPorSemana(sessoes, s=>s.series||0);
+  const volPts = vol.map(x=>({ label:rotSemana(x.semana), y:x.v, tip:`Semana de ${rotSemana(x.semana)}: ${Math.round(x.v)} séries` }));
+  const cardVolume = chartCardHtml('musc', ICONS.dumbbell, 'Séries por semana', 'Séries concluídas de musculação por semana.',
+    sessoes.length ? mrtLineChart(volPts, { color:'var(--accent)', formatY:v=>String(Math.round(v)) }) : progVazio('Conclua um treino de musculação pra ver as séries.'));
 
   // 2) frequência
   const freqItens = sessoes.map(s=>({ data:s.data })).concat(runs.map(r=>({ data:r.data })));
@@ -14846,7 +15041,7 @@ function renderProgressoV2(){
   const porSem = (itens, fn)=> sem8.map(sm=>itens.filter(it=>semanaDe(it.data)===sm).reduce((t,it)=>t+fn(it),0));
   const todasRuns = corridasConcluidas();
   const kmS = porSem(todasRuns, r=>parseFloat(r.km)||0);
-  const volS = porSem(state.workoutSessionsLog||[], x=>x.volume||0);
+  const volS = porSem(state.workoutSessionsLog||[], x=>x.series||0);
   const media = (a)=>{ const v = a.filter(x=>x>0); return v.length ? v.reduce((t,x)=>t+x,0)/v.length : 0; };
   const delta = (novo, velho)=> velho>0 ? Math.round((novo-velho)/velho*100) : null;
   const deltaTxt = (d)=> d==null ? 'sem comparação ainda' : `<b>${d>0?'+':''}${d}%</b> vs. 4 semanas anteriores`;
@@ -14878,7 +15073,7 @@ function renderProgressoV2(){
   </div>`;
   const secMusc = `<div class="fr-progsec">
     <button class="fr-proghead" data-progdet="musc"><span class="ic">${ICONS.dumbbell}</span><span class="t">Musculação</span><span class="chev ${det==='musc'?'open':''}">${DS_CHEV}</span></button>
-    ${(state.workoutSessionsLog||[]).length ? linha('Volume semanal', `${String(Math.round(vlN/100)/10).replace('.',',')} t`, deltaTxt(delta(vlN,vlV)), spark(volS,'var(--data)',true)) : '<div class="fr-progvazio">Conclua um treino de musculação para ver o volume.</div>'}
+    ${(state.workoutSessionsLog||[]).length ? linha('Séries por semana', `${Math.round(vlN)} séries`, deltaTxt(delta(vlN,vlV)), spark(volS,'var(--data)',true)) : '<div class="fr-progvazio">Conclua um treino de musculação para ver as séries.</div>'}
     ${cargaH.length ? linha('Evolução de carga', `${String(cargaAtual).replace('.',',')} kg`, deltaTxt(cargaAntes ? delta(cargaAtual, cargaAntes.w) : null), spark(cargaH.slice(-8).map(h=>h.w),'#8A8A8A')) : ''}
     ${det==='musc' ? cardVolume + cardCarga + cardEq : ''}
     ${renderMuscHistoryV2()}
@@ -16252,7 +16447,7 @@ function renderProgresso(){
     <div class="leg-card" style="flex-direction:column;align-items:stretch;gap:6px;">
       <div style="display:flex;justify-content:space-between;gap:8px;">
         <div class="leg-tag">${h.day} · ${h.data.split('-').reverse().join('/')}</div>
-        <div class="leg-pace" style="white-space:nowrap;">${h.series} séries · ${Math.round(h.volume).toLocaleString('pt-BR')}kg</div>
+        <div class="leg-pace" style="white-space:nowrap;">${h.series} séries</div>
       </div>
       ${h.exercicios && h.exercicios.length ? `<div class="leg-desc" style="white-space:normal;font-size:12px;color:var(--text-dim);">${h.exercicios.map(e=>e.nome).join(', ')}</div>` : ''}
     </div>

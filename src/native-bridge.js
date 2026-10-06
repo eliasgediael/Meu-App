@@ -16,6 +16,13 @@ async function avisoDescanso(opcoes) {
   try { await AvisoDescanso.tocar(opcoes || {}); return true; } catch (e) { return false; }
 }
 
+// Plugin próprio (mesmo pacote): compartilhar, salvar nas Fotos ou copiar a arte PNG sem perder a transparência.
+const ImagemCompartilhar = registerPlugin('ImagemCompartilhar');
+// acao: 'compartilhar' | 'salvar' | 'copiar'. Retorna { ok, erro }.
+async function imagemArte(acao, base64) {
+  try { await ImagemCompartilhar[acao]({ base64 }); return { ok: true }; } catch (e) { return { ok: false, erro: (e && e.message) || String(e) }; }
+}
+
 const isNative = () => Capacitor.isNativePlatform();
 
 // BackgroundGeolocation entrega {latitude, longitude, accuracy, time, ...} (sem o wrapper .coords) — a
@@ -161,4 +168,4 @@ async function cancelarAvisoDescanso() {
 }
 
 window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, listarVozesPt, vibrate,
-  vibrarFimDescanso, avisoDescanso, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };
+  vibrarFimDescanso, avisoDescanso, imagemArte, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };

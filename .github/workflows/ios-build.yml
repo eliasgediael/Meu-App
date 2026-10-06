@@ -57,6 +57,8 @@ jobs:
 
           "$PB" -c "Add :NSLocationAlwaysUsageDescription string O Forza Run precisa da sua localização mesmo com a tela bloqueada para continuar registrando a corrida em segundo plano." "$PLIST"
 
+          "$PB" -c "Add :NSPhotoLibraryAddUsageDescription string O Forza Run salva nas suas Fotos a arte do treino que você escolher compartilhar." "$PLIST"
+
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
 
           "$PB" -c "Add :UIBackgroundModes array" "$PLIST"
