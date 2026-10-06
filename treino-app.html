@@ -1758,6 +1758,30 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .qv2-frase:last-of-type{ border-bottom:1px solid var(--border); }
 .qv2-frase[data-qv2ir]::after{ content:'Editar'; font-size:13px; font-weight:700; color:var(--data); flex-shrink:0; }
 .ct-ex{ border-top:1px solid var(--border); padding:12px 0 4px; }
+.ct-exnome{ flex:1; min-width:0; display:flex; flex-direction:column; align-items:flex-start; gap:2px; border:none; background:none; padding:0; font-family:inherit; text-align:left; cursor:pointer; color:var(--text); }
+.ct-exnome b{ font-size:15px; }
+.ct-exnome span{ font-size:12.5px; font-weight:600; color:var(--data); }
+.fr-histrow{ cursor:pointer; }
+.fr-histrow .nm{ display:flex; flex-direction:column; gap:2px; min-width:0; flex:1; font-weight:700; }
+.fr-histrow .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
+.fr-histrow .ds-mini svg, .fr-mhhead .ds-mini svg{ width:18px; height:18px; }
+.fr-mhhead{ display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.fr-mhhead .sheet-title{ margin:0; }
+.fr-mhstats{ margin:14px 0 6px; }
+.fr-mhstats .mrt-metricv{ color:var(--data); }
+.fr-mhmapa{ display:flex; justify-content:center; gap:8px; margin:14px 0 6px; }
+.fr-mhmapa .mrt-anat{ width:40%; max-width:150px; height:auto; }
+.fr-mhex{ border-top:1px solid var(--border); padding:12px 0; }
+.fr-mhex b{ font-size:15px; }
+.fr-mhsets{ display:flex; flex-wrap:wrap; gap:6px 14px; margin-top:6px; font-size:14px; color:var(--text-dim); }
+.fr-selbusca{ width:100%; height:44px; border:none; border-radius:12px; background:var(--surface-2); padding:0 14px; font-family:inherit; font-size:16px; color:var(--text); margin-bottom:10px; box-sizing:border-box; }
+.fr-selchips{ display:flex; gap:6px; overflow-x:auto; padding-bottom:8px; scrollbar-width:none; }
+.fr-selchips .mrt-chip{ flex-shrink:0; }
+.fr-sellista{ max-height:48vh; overflow-y:auto; }
+.fr-selsec{ font-size:12px; font-weight:800; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-dim); margin:12px 0 2px; }
+.fr-selitem{ min-height:52px; }
+.fr-selitem .t{ display:flex; flex-direction:column; gap:2px; }
+.fr-selitem small{ font-size:12.5px; font-weight:500; color:var(--text-dim); }
 .ct-exhead{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
 .ct-exhead b{ flex:1; min-width:0; font-size:15px; }
 .ct-exhead .ds-mini svg{ width:16px; height:16px; }
@@ -5628,6 +5652,9 @@ async function init(){
   try{
     const wl = await window.storage.get('workoutSessionsLog', false);
     state.workoutSessionsLog = (wl && wl.value) ? JSON.parse(wl.value) : [];
+    let semId = false;
+    state.workoutSessionsLog.forEach((x,i)=>{ if(x && !x.id){ x.id = 'musc_'+String(x.data||'').replace(/-/g,'')+'_'+i+'_'+Math.random().toString(36).slice(2,7); semId = true; } });
+    if(semId) saveWorkoutSessionsLog();
   }catch(e){ state.workoutSessionsLog = []; }
 
   // O treino em execução (e o cronômetro de descanso) precisa sobreviver a fechar/reabrir o app — se o
@@ -10152,8 +10179,26 @@ function finishWorkoutSession(){
   // Guarda a lista de exercícios de hoje junto com a data real — assim, mesmo que a rotina de
   // Segunda mude depois, dá pra olhar pra trás e ver exatamente o que era Segunda nesse dia específico.
   const list = state.musculacao[ws.day] || [];
-  const exercicios = list.map(ex=>({ nome:ex.nome, grupo:ex.grupo, series:ex.series, reps:ex.reps, carga:ex.carga }));
-  state.workoutSessionsLog.push({ day:ws.day, data:todayISO(), volume:Math.round(ws.totalVolume), series:ws.doneSeries, duracaoSeg:elapsedSec, cargaMax:ws.cargaMax||0, recordes:Object.keys(ws.records||{}).length, exercicios });
+  // Além da ficha do dia (series/reps/carga planejados, usados no cálculo de carga), guarda as séries
+  // realmente executadas (peso, repetições, PSE) — é isso que o histórico mostra e o cartão compartilha.
+  const exercicios = list.map(ex=>{
+    const reg = { nome:ex.nome, grupo:ex.grupo, series:ex.series, reps:ex.reps, carga:ex.carga };
+    const idCanon = repdbId(ex.repdbId) || ((exercicioPorNome(ex.nome)||{}).id) || null;
+    if(idCanon) reg.exerciseId = idCanon;
+    if(ex.repdbId) reg.repdbId = ex.repdbId;
+    const feitas = setsDeHoje(ex);
+    if(feitas.length) reg.seriesExecutadas = feitas.map((st,i)=>({ numero:i+1, peso:parseFloat(st.peso)||0, repeticoes:parseInt(st.reps,10)||0, ...(st.pse!=null && st.pse!=='' ? { pse:parseFloat(st.pse) } : {}), concluida:true }));
+    return reg;
+  });
+  const idLog = 'musc_'+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+  const novoLog = { id:idLog, type:'strength', day:ws.day, title:muscTituloDoDia(ws.day, list), data:todayISO(), startedAt:ws.startedAt, finishedAt:Date.now(),
+    volume:Math.round(ws.totalVolume), series:ws.doneSeries, duracaoSeg:elapsedSec, cargaMax:ws.cargaMax||0, recordes:Object.keys(ws.records||{}).length,
+    recordesLista:Object.values(ws.records||{}).map(r=>r.nome), exercicios, updatedAt:Date.now() };
+  const v0 = normalizarSessaoMuscHistorico(novoLog);
+  novoLog.muscleMap = v0.anat.primary;
+  if(v0.calorias) novoLog.calories = { value:v0.calorias.valor, source:'estimated', label:'estimativa' };
+  state.workoutSessionsLog.push(novoLog);
+  ws.logId = idLog;
   saveWorkoutSessionsLog();
   markChallengeCheckinToday();
   markGroupCheckinsToday('fez musculação · '+ws.doneSeries+' séries');
@@ -10251,17 +10296,56 @@ function renderAvaliacaoTreinoMusc(ws){
 // Calorias da musculação: estimativa MET (Compendium 2024) = MET × 3,5 × peso ÷ 200 × minutos. MET pela densidade/
 // esforço do treino (não pela carga): 3,5 leve/moderado, 5,0 com agachamento/terra ou PSE alto, 6,0 vigoroso.
 // Sem peso no perfil ou sem duração: não mostra calorias (nunca inventa número).
-function caloriasEstimadasMusc(ws, list){
+// Calorias da musculação: estimativa MET (Compendium 2024) = MET × 3,5 × peso ÷ 200 × minutos. MET pela densidade/
+// esforço do treino (não pela carga): 3,5 leve/moderado, 5,0 com agachamento/terra ou PSE alto, 6,0 vigoroso.
+// Sem peso no perfil ou sem duração: não mostra calorias (nunca inventa número).
+function kcalMuscEstimada(min, series, pses, nomes){
   const peso = parseFloat(String(state.perfil && state.perfil.peso || '').replace(',','.'));
-  const min = (ws.elapsedSec||0)/60;
   if(!peso || min < 3) return null;
-  const pses = []; (list||[]).forEach(e=>setsDeHoje(e).forEach(st=>{ const v = parseFloat(st.pse); if(!isNaN(v)) pses.push(v); }));
   const pse = pses.length ? pses.reduce((x,y)=>x+y,0)/pses.length : null;
-  const pesado = (list||[]).some(e=>/agachamento|terra|stiff/i.test(normalizeNoAccents(e.nome)));
-  const densidade = ws.doneSeries / Math.max(1, min);
+  const pesado = nomes.some(n=>/agachamento|terra|stiff/i.test(normalizeNoAccents(n)));
+  const densidade = (series||0) / Math.max(1, min);
   const met = (pse!=null && pse>=8.5) || densidade>0.45 ? 6.0 : (pesado || (pse!=null && pse>=7)) ? 5.0 : 3.5;
   return Math.round(met * 3.5 * peso / 200 * min);
 }
+// Séries registradas de um exercício numa atividade: as gravadas no próprio registro (treinos novos) ou, nos
+// antigos, as do histórico de carga daquela data. Sem nenhuma das duas: lista vazia (não inventa a partir da ficha).
+function setsRegistradosDe(sessao, e){
+  if(Array.isArray(e.seriesExecutadas)) return e.seriesExecutadas.filter(x=>x.concluida!==false).map(x=>({ peso:parseFloat(x.peso)||0, reps:parseInt(x.repeticoes,10)||0, ...(x.pse!=null ? { pse:x.pse } : {}) }));
+  const hc = state.historicoCarga || {};
+  for(const k of [e.exerciseId, e.repdbId, chaveHistDe(e), e.nome]){
+    if(!k || !hc[k]) continue;
+    const h = hc[k].find(x=>x.data===sessao.data);
+    if(h && h.sets && h.sets.length) return h.sets.map(x=>({ peso:parseFloat(x.peso)||0, reps:parseInt(x.reps,10)||0, ...(x.pse!=null ? { pse:x.pse } : {}) }));
+  }
+  return [];
+}
+// Lê um registro de musculação (formato antigo ou novo) num formato único para detalhes e cartão.
+function normalizarSessaoMuscHistorico(sessao){
+  const todos = (sessao.exercicios||[]).map(e=>({ nome:e.nome, grupo:e.grupo, exerciseId:e.exerciseId||e.repdbId||null, sets:setsRegistradosDe(sessao, e) }));
+  const feitos = todos.filter(e=>e.sets.length);
+  const prim = new Set(), sec = new Set();
+  feitos.forEach(e=>{ const m = muscleRegionsForExercise(e.nome); m.primary.forEach(r=>prim.add(r)); m.secondary.forEach(r=>sec.add(r)); });
+  const min = (sessao.duracaoSeg||0)/60;
+  let calorias = null;
+  if(sessao.calories && sessao.calories.value && sessao.calories.source==='device') calorias = { valor:sessao.calories.value, estimativa:false };
+  else {
+    const pses = feitos.flatMap(e=>e.sets.map(x=>parseFloat(x.pse))).filter(v=>!isNaN(v));
+    const v = kcalMuscEstimada(min, sessao.series, pses, feitos.map(e=>e.nome));
+    if(v) calorias = { valor:v, estimativa:true };
+  }
+  const dia = (DAY_FULLNAME[sessao.day]||sessao.day||'').split('-')[0].toLowerCase();
+  return {
+    id:sessao.id, day:sessao.day, data:sessao.data,
+    titulo: sessao.title || (dia ? 'Treino de '+dia : 'Musculação'),
+    duracaoSeg:sessao.duracaoSeg||0, volume:sessao.volume||0, series:sessao.series||0, cargaMax:sessao.cargaMax||0,
+    recordes: Array.isArray(sessao.recordes) ? sessao.recordes.length : (sessao.recordes||0),
+    exercicios:feitos, temDetalhe:feitos.length>0,
+    anat:{ primary:[...prim], secondary:[...sec].filter(r=>!prim.has(r)) },
+    calorias,
+  };
+}
+function dataDoISO(iso){ const [y,m,d] = String(iso||'').split('-').map(Number); return y ? new Date(y, m-1, d) : new Date(); }
 function estimarKcalMusc(min){
   const peso = parseFloat(String(state.perfil && state.perfil.peso || '').replace(',','.'));
   return peso ? Math.round(3.5 * 3.5 * peso / 200 * min) : null;
@@ -10289,8 +10373,7 @@ function escolherFoto(){
 }
 // Cartão do treino: formato story (9:16) ou quadrado (1:1), foto opcional, duração, calorias estimadas, exercícios/séries,
 // recordes e o mapa muscular do treino. Volume total fica só nos detalhes do app.
-async function gerarCartaoTreino(ws, opcoes){
-  const list = state.musculacao[ws.day]||[];
+async function gerarCartaoTreino(sessao, opcoes){
   const W = 1080, H = opcoes.formato==='quadrado' ? 1080 : 1920;
   const cv = document.createElement('canvas'); cv.width = W; cv.height = H;
   const c = cv.getContext('2d');
@@ -10304,24 +10387,22 @@ async function gerarCartaoTreino(ws, opcoes){
     c.drawImage(im, (W-im.width*r)/2, (fh-im.height*r)/2, im.width*r, im.height*r);
     topo = fh;
   }
-  const min = Math.max(1, Math.round((ws.elapsedSec||0)/60));
-  const kcal = caloriasEstimadasMusc(ws, list);
-  const prim = new Set(), sec = new Set();
-  list.filter(e=>setsDeHoje(e).length).forEach(e=>{ const m = muscleRegionsForExercise(e.nome); m.primary.forEach(r=>prim.add(r)); m.secondary.forEach(r=>sec.add(r)); });
-  const anat = { primary:[...prim], secondary:[...sec].filter(r=>!prim.has(r)) };
+  const min = Math.max(1, Math.round((sessao.duracaoSeg||0)/60));
+  const kcal = sessao.calorias;
+  const anat = sessao.anat;
   const pad = 80; let y = topo + (opcoes.foto ? 90 : 150);
   c.textAlign = 'left';
   c.fillStyle = '#111111'; c.font = `900 40px ${font}`; c.fillText('FORZA RUN', pad, opcoes.foto ? y-20 : 110);
   if(opcoes.foto) y += 40;
-  c.fillStyle = '#111111'; c.font = `800 ${opcoes.formato==='quadrado'?72:96}px ${font}`; c.fillText(muscTituloDoDia(ws.day, list), pad, y + 60);
-  c.fillStyle = '#6B6B6B'; c.font = `500 38px ${font}`; c.fillText(new Date().toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}), pad, y + 120);
+  c.fillStyle = '#111111'; c.font = `800 ${opcoes.formato==='quadrado'?72:96}px ${font}`; c.fillText(sessao.titulo, pad, y + 60);
+  c.fillStyle = '#6B6B6B'; c.font = `500 38px ${font}`; c.fillText(dataDoISO(sessao.data).toLocaleDateString('pt-BR',{weekday:'long',day:'numeric',month:'long'}), pad, y + 120);
   y += 200;
   const stats = [[min+' min','Duração']];
-  if(kcal) stats.push([kcal+' kcal','Calorias (estimativa)']);
-  stats.push([list.filter(e=>setsDeHoje(e).length).length+'/'+ws.doneSeries, 'Exercícios/séries']);
-  const nRec = Object.keys(ws.records||{}).length; if(nRec) stats.push([String(nRec), nRec===1?'Recorde':'Recordes']);
+  if(kcal) stats.push([kcal.valor+' kcal', kcal.estimativa ? 'Calorias (estimativa)' : 'Calorias']);
+  stats.push([sessao.temDetalhe ? sessao.exercicios.length+'/'+sessao.series : String(sessao.series), sessao.temDetalhe ? 'Exercícios/séries' : 'Séries']);
+  const nRec = sessao.recordes; if(nRec) stats.push([String(nRec), nRec===1?'Recorde':'Recordes']);
   const story = opcoes.formato!=='quadrado';
-  const mostrarMapa = !opcoes.foto || story;
+  const mostrarMapa = (!opcoes.foto || story) && sessao.temDetalhe;
   const lateral = mostrarMapa && !story;   // quadrado sem foto: números à esquerda, boneco à direita
   const colW = lateral ? 470 : (W-2*pad)/2;
   stats.forEach((st,i)=>{
@@ -10336,7 +10417,7 @@ async function gerarCartaoTreino(ws, opcoes){
   }
   return new Promise(res=>cv.toBlob(res, 'image/png'));
 }
-async function compartilharResumoTreino(ws){
+async function compartilharResumoTreino(sessao){
   let formato = 'story', foto = null;
   const montar = ()=>openSheet(`
     <div class="sheet-title">Compartilhar treino</div>
@@ -10347,7 +10428,7 @@ async function compartilharResumoTreino(ws){
     sh.querySelectorAll('[data-cfmt]').forEach(el=>{ el.onclick = ()=>{ formato = el.getAttribute('data-cfmt'); montar(); }; });
     sh.querySelector('#cfFoto').onclick = async ()=>{ const f = await escolherFoto(); if(f){ foto = f; montar(); } };
     sh.querySelector('#cfGerar').onclick = async ()=>{
-      const blob = await gerarCartaoTreino(ws, { formato, foto });
+      const blob = await gerarCartaoTreino(sessao, { formato, foto });
       closeSheet();
       const file = new File([blob], 'forza-run-treino.png', { type:'image/png' });
       try{ if(navigator.canShare && navigator.canShare({ files:[file] })){ await navigator.share({ files:[file], text:'Treino concluído no Forza Run' }); return; } }
@@ -10674,7 +10755,12 @@ function wireWorkoutSession(){
   if(finishEl) finishEl.onclick = ()=>{ state.workoutSession=null; saveWorkoutSession(); render(); };
   if(state.workoutSession && state.workoutSession.phase==='summary') contarNumeros();
   const shareEl = document.querySelector('[data-wexshare]');
-  if(shareEl) shareEl.onclick = ()=>{ const ws = state.workoutSession; if(ws) compartilharResumoTreino(ws); };
+  if(shareEl) shareEl.onclick = ()=>{
+    const ws = state.workoutSession; if(!ws) return;
+    const l = state.workoutSessionsLog||[];
+    const log = l.find(x=>x.id===ws.logId) || l[l.length-1];
+    if(log) compartilharResumoTreino(normalizarSessaoMuscHistorico(log));
+  };
 }
 
 async function saveHistoricoMedidas(){ try{ await window.storage.set('historicoMedidas', JSON.stringify(state.historicoMedidas), false); }catch(e){} }
@@ -13666,24 +13752,95 @@ function ordenarTreinoMusc(list){
 function dataDoDiaExibido(day){ const seg = displayedWeekMonday(); return vdotISODate(new Date(seg.getFullYear(), seg.getMonth(), seg.getDate()+DAY_ABBR.indexOf(day))); }
 function logDoDiaExibido(day){ const iso = dataDoDiaExibido(day); const l = state.workoutSessionsLog||[]; for(let i=l.length-1;i>=0;i--) if(l[i].data===iso && l[i].day===day) return l[i]; return null; }
 function chaveHistDe(e){ if(e.repdbId) return repdbId(e.repdbId) || e.nome; const it = exercicioPorNome(e.nome); return (it && it.id) || e.nome; }
-function abrirCorrigirTreino(day){
-  const log = logDoDiaExibido(day); if(!log) return;
+function abrirCorrigirTreino(day){ const log = logDoDiaExibido(day); if(log) abrirCorrigirAtividade(log); }
+function padraoDoExercicio(nome){ return motorPadraoChave(normalizeNoAccents(nome)) || padraoMovimento(nome) || null; }
+// Seletor para trocar o exercício de uma atividade já feita: "Sugeridos" (equivalentes) ou "Todos os exercícios"
+// (catálogo canônico inteiro, com busca e filtros). Não mexe na ficha do plano.
+function abrirSeletorExercicio(atual, aoEscolher, aoVoltar){
+  let aba = 'sug', busca = '', grupo = '', equip = '';
+  const sug = alternativasDoExercicio({ nome:atual.nome, grupo:atual.grupo, repdbId:atual.exerciseId }, '__nenhum__', 11).filter(e=>e.nome!==atual.nome).slice(0,10);
+  const todos = exerciciosCompletos().slice().sort((x,y)=>x.nome.localeCompare(y.nome,'pt'));
+  const grupos = [...new Set(todos.map(e=>e.grupo).filter(Boolean))];
+  const favs = new Set(state.favoritos||[]);
   const hc = state.historicoCarga || {};
-  const setsDe = (e)=>{ const h = (hc[chaveHistDe(e)]||hc[e.nome]||[]).find(x=>x.data===log.data); return h && h.sets ? h.sets.map(x=>({ peso:x.peso, reps:x.reps, pse:x.pse })) : Array.from({length:parseInt(e.series,10)||1}, ()=>({ peso:parseFloat(e.carga)||0, reps:parseInt(e.reps,10)||0 })); };
-  const rasc = { data:log.data, minutos:Math.round((log.duracaoSeg||0)/60), exercicios:(log.exercicios||[]).map(e=>({ ...e, chaveOrig:chaveHistDe(e), sets:setsDe(e) })) };
+  const ultimaData = (e)=>{ let u = ''; [e.id, e.nome].forEach(k=>{ (hc[k]||[]).forEach(h=>{ if(h.data>u) u = h.data; }); }); return u; };
+  const recentes = todos.map(e=>({ e, u:ultimaData(e) })).filter(x=>x.u).sort((x,y)=>y.u.localeCompare(x.u)).slice(0,6).map(x=>x.e);
+  const favoritos = todos.filter(e=>[e.nome, ...e.aliases].some(n=>favs.has(n)));
+  const item = (e, i, origem)=>`<div class="mrt-menuitem fr-selitem" data-selpick="${origem}:${i}"><span class="t">${e.nome}<small>${e.grupo||''}${e.motivo ? ' · '+e.motivo : ''}</small></span></div>`;
+  let visiveis = [];
+  const listaHtml = ()=>{
+    if(aba==='sug'){ visiveis = sug; return sug.length ? sug.map((e,i)=>item(e,i,'v')).join('') : '<div class="ds-muted" style="padding:12px 0;">Sem sugestões para este exercício.</div>'; }
+    const q = normalizeNoAccents(busca);
+    const filtrada = todos.filter(e=>{
+      if(grupo && e.grupo!==grupo) return false;
+      if(equip && equipamentoTipoDe(e)!==equip) return false;
+      if(q && !normalizeNoAccents([e.nome, ...e.aliases, ...(e.cat && e.cat.apelidos ? e.cat.apelidos : [])].join(' ')).includes(q)) return false;
+      return true;
+    });
+    let html = '';
+    visiveis = [];
+    const secao = (titulo, lista)=>{ if(!lista.length) return; html += `<div class="fr-selsec">${titulo}</div>`; lista.forEach(e=>{ html += item(e, visiveis.length, 'v'); visiveis.push(e); }); };
+    if(!q && !grupo && !equip){ secao('Favoritos', favoritos); secao('Usados recentemente', recentes); }
+    const lim = filtrada.slice(0,150);
+    secao(q||grupo||equip ? filtrada.length+' exercícios' : 'Todos (A–Z)', lim);
+    if(filtrada.length>lim.length) html += '<div class="ds-muted" style="padding:10px 0;">Use a busca para ver mais.</div>';
+    if(!filtrada.length) html += '<div class="ds-muted" style="padding:12px 0;">Nenhum exercício encontrado.</div>';
+    return html;
+  };
+  const chip = (attr, v, l, on)=>`<button class="mrt-chip ${on?'current':''}" ${attr}="${v}" style="border:none;font-family:inherit;cursor:pointer;">${l}</button>`;
+  const filtrosHtml = ()=> aba==='sug' ? '' : `
+    <div class="fr-selchips">${chip('data-selgrupo','', 'Todos', !grupo)}${grupos.map(g=>chip('data-selgrupo', g, g, grupo===g)).join('')}</div>
+    <div class="fr-selchips">${chip('data-selequip','', 'Qualquer equipamento', !equip)}${[['maquina','Máquina'],['livre','Pesos livres'],['corpo','Peso corporal']].map(([k,l])=>chip('data-selequip', k, l, equip===k)).join('')}</div>`;
+  openSheet(`
+    <div class="sheet-title">Trocar exercício</div>
+    <div class="sheet-sub">Muda só este treino feito. A ficha do plano continua igual.</div>
+    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin-bottom:12px;"><button data-selaba="sug" class="on">Sugeridos</button><button data-selaba="todos">Todos os exercícios</button></div>
+    <input id="selBusca" class="fr-selbusca" placeholder="Buscar exercício" autocomplete="off" style="display:none;">
+    <div id="selFiltros"></div>
+    <div id="selLista" class="fr-sellista"></div>
+    <button class="btn-secondary" style="margin-top:12px;" id="selVoltar">Voltar</button>`, (sh)=>{
+    const desenhar = ()=>{
+      sh.querySelectorAll('[data-selaba]').forEach(b=>b.classList.toggle('on', b.getAttribute('data-selaba')===aba));
+      sh.querySelector('#selBusca').style.display = aba==='todos' ? '' : 'none';
+      sh.querySelector('#selFiltros').innerHTML = filtrosHtml();
+      sh.querySelector('#selLista').innerHTML = listaHtml();
+      sh.querySelectorAll('[data-selgrupo]').forEach(el=>{ el.onclick = ()=>{ grupo = el.getAttribute('data-selgrupo'); desenhar(); }; });
+      sh.querySelectorAll('[data-selequip]').forEach(el=>{ el.onclick = ()=>{ equip = el.getAttribute('data-selequip'); desenhar(); }; });
+      ligarItens();
+    };
+    const ligarItens = ()=>{ sh.querySelectorAll('[data-selpick]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-selpick').split(':')[1]; const e = visiveis[i]; if(e) aoEscolher(e); }; }); };
+    sh.querySelectorAll('[data-selaba]').forEach(el=>{ el.onclick = ()=>{ aba = el.getAttribute('data-selaba'); desenhar(); }; });
+    sh.querySelector('#selBusca').oninput = (ev)=>{ busca = ev.target.value; sh.querySelector('#selLista').innerHTML = listaHtml(); ligarItens(); };
+    sh.querySelector('#selVoltar').onclick = aoVoltar;
+    desenhar();
+  });
+}
+/* ---------- Corrigir atividade concluída (musculação) ----------
+   O registro do treino (workoutSessionsLog) e as séries do dia (historicoCarga, por exercício e data) são corrigidos
+   juntos; volume, séries, carga máxima, recordes, mapa muscular e calorias são recalculados. A ficha planejada
+   (state.musculacao) não muda. Nada é gravado antes de "Salvar correção". */
+function abrirCorrigirAtividade(log, aoSalvar){
+  if(!log) return;
+  const rasc = { data:log.data, minutos:Math.round((log.duracaoSeg||0)/60), exercicios:(log.exercicios||[]).map(e=>{
+    const sets = setsRegistradosDe(log, e);
+    return { orig:e, nome:e.nome, grupo:e.grupo, exerciseId:e.exerciseId||e.repdbId||null, sets, semDetalhe:!sets.length };
+  }) };
+  const fmt = (v)=>String(v).replace('.',',');
   const montar = ()=>openSheet(`
-    <div class="sheet-title">Corrigir treino</div>
+    <div class="sheet-title">Corrigir atividade</div>
     <div class="sheet-sub">Muda só o que foi registrado. A ficha do plano continua igual.</div>
     <div class="ds-stepper"><span class="lb">Data</span><input type="date" id="ctData" value="${rasc.data}" max="${todayISO()}" style="width:160px;"></div>
     <div class="ds-stepper"><span class="lb">Duração</span><input inputmode="numeric" id="ctMin" value="${rasc.minutos}"><span class="un">min</span></div>
     ${rasc.exercicios.map((e,i)=>`<div class="ct-ex">
-      <div class="ct-exhead"><b>${e.nome}</b><button class="ds-mini" data-cttroca="${i}" aria-label="Trocar">${ICONS.swap}</button><button class="ds-mini" data-ctdelex="${i}" aria-label="Excluir exercício">×</button></div>
-      ${e.sets.map((st,j)=>`<div class="ct-set"><span>${j+1}</span><input inputmode="decimal" data-ctpeso="${i}-${j}" value="${String(st.peso).replace('.',',')}"><small>kg</small><input inputmode="numeric" data-ctreps="${i}-${j}" value="${st.reps}"><small>reps</small><button class="ds-mini" data-ctdelset="${i}-${j}" aria-label="Excluir série">−</button></div>`).join('')}
+      <div class="ct-exhead"><button class="ct-exnome" data-cttroca="${i}"><b>${e.nome}</b><span>${e.trocadoDe ? 'Trocado · era '+e.trocadoDe.nome : 'Trocar exercício'}</span></button><button class="ds-mini" data-ctdelex="${i}" aria-label="Excluir exercício">×</button></div>
+      ${e.trocadoDe ? `<button class="btn-ghost" style="padding:2px 0 8px;" data-ctdesfaz="${i}">Desfazer troca</button>` : ''}
+      ${e.semDetalhe && !e.sets.length ? '<div class="ds-muted" style="margin-bottom:6px;">Sem séries registradas.</div>' : ''}
+      ${e.sets.map((st,j)=>`<div class="ct-set"><span>${j+1}</span><input inputmode="decimal" data-ctpeso="${i}-${j}" value="${fmt(st.peso)}"><small>kg</small><input inputmode="numeric" data-ctreps="${i}-${j}" value="${st.reps}"><small>reps</small><button class="ds-mini" data-ctdelset="${i}-${j}" aria-label="Excluir série">−</button></div>`).join('')}
       <button class="btn-ghost" style="padding:6px 0;" data-ctaddset="${i}">+ Série</button>
     </div>`).join('')}
     <div class="ds-actions">
       <button class="btn-primary" id="ctSalvar">Salvar correção</button>
-      <button class="ds-danger" id="ctExcluir">Excluir treino inteiro</button>
+      <button class="ds-danger" id="ctExcluir">Excluir atividade</button>
     </div>`, (sh)=>{
     const ler = ()=>{
       rasc.data = sh.querySelector('#ctData').value || rasc.data;
@@ -13694,43 +13851,114 @@ function abrirCorrigirTreino(day){
     sh.querySelectorAll('[data-ctaddset]').forEach(el=>{ el.onclick = ()=>{ ler(); const e = rasc.exercicios[+el.getAttribute('data-ctaddset')]; const u = e.sets[e.sets.length-1] || { peso:0, reps:0 }; e.sets.push({ peso:u.peso, reps:u.reps }); montar(); }; });
     sh.querySelectorAll('[data-ctdelset]').forEach(el=>{ el.onclick = ()=>{ ler(); const [i,j] = el.getAttribute('data-ctdelset').split('-').map(Number); rasc.exercicios[i].sets.splice(j,1); montar(); }; });
     sh.querySelectorAll('[data-ctdelex]').forEach(el=>{ el.onclick = ()=>{ ler(); rasc.exercicios.splice(+el.getAttribute('data-ctdelex'),1); montar(); }; });
-    sh.querySelectorAll('[data-cttroca]').forEach(el=>{ el.onclick = ()=>{ ler(); const i = +el.getAttribute('data-cttroca'); const e = rasc.exercicios[i];
-      const alts = alternativasDoExercicio(e, '__nenhum__', 6);
-      openSheet(`<div class="sheet-title">Trocar por</div>${alts.map((a,k)=>`<div class="mrt-menuitem" data-ctalt="${k}"><span>${a.nome}</span></div>`).join('')}`, (s2)=>{
-        s2.querySelectorAll('[data-ctalt]').forEach(x=>{ x.onclick = ()=>{ const a = alts[+x.getAttribute('data-ctalt')]; e.nome = a.nome; e.grupo = a.grupo; e.repdbId = a.id; montar(); }; });
-      }); }; });
-    sh.querySelector('#ctSalvar').onclick = ()=>{ ler(); salvarCorrecaoTreino(log, rasc); closeSheet(); render(); showToast('Treino corrigido'); };
-    sh.querySelector('#ctExcluir').onclick = async ()=>{
-      if(!(await confirmarApp({ titulo:'Excluir este treino?', texto:'O registro e as séries deste dia somem. A ficha do plano continua igual.', ok:'Excluir', perigo:true }))) return;
-      excluirTreinoRegistrado(log); render(); showToast('Treino excluído');
-    };
+    sh.querySelectorAll('[data-ctdesfaz]').forEach(el=>{ el.onclick = ()=>{ ler(); const e = rasc.exercicios[+el.getAttribute('data-ctdesfaz')]; Object.assign(e, e.trocadoDe); delete e.trocadoDe; montar(); }; });
+    sh.querySelectorAll('[data-cttroca]').forEach(el=>{ el.onclick = ()=>{ ler(); const e = rasc.exercicios[+el.getAttribute('data-cttroca')];
+      abrirSeletorExercicio(e, async (novo)=>{
+        const pa = padraoDoExercicio(e.nome), pn = padraoDoExercicio(novo.nome);
+        const radical = e.grupo!==novo.grupo || (pa && pn && pa!==pn && musculoPrincipalDe(e.nome)!==musculoPrincipalDe(novo.nome));
+        if(radical && !(await confirmarApp({ titulo:'Trocar por um movimento diferente?', texto:`${novo.nome} trabalha outro movimento. As séries continuam as mesmas; confira peso e repetições.`, ok:'Trocar' }))){ montar(); return; }
+        if(!e.trocadoDe) e.trocadoDe = { nome:e.nome, grupo:e.grupo, exerciseId:e.exerciseId };
+        e.nome = novo.nome; e.grupo = novo.grupo; e.exerciseId = novo.id || null;
+        if(e.trocadoDe.nome===e.nome) delete e.trocadoDe;
+        montar();
+      }, montar); }; });
+    sh.querySelector('#ctSalvar').onclick = ()=>{ ler(); salvarCorrecaoTreino(log, rasc); closeSheet(); render(); showToast('Atividade corrigida'); if(aoSalvar) aoSalvar(); };
+    sh.querySelector('#ctExcluir').onclick = ()=> confirmarExcluirAtividade(log);
   });
   montar();
 }
+async function confirmarExcluirAtividade(log){
+  if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'O registro e as séries deste dia somem. A ficha do plano continua igual.', ok:'Excluir', perigo:true }))) return;
+  excluirTreinoRegistrado(log); closeSheet(); render(); showToast('Atividade excluída');
+}
+function chavesHistDoRegistro(e){ return [...new Set([e.exerciseId, e.repdbId, chaveHistDe(e), e.nome].filter(Boolean))]; }
 function excluirTreinoRegistrado(log){
   const hc = state.historicoCarga || {};
-  (log.exercicios||[]).forEach(e=>{ [chaveHistDe(e), e.nome].forEach(k=>{ if(hc[k]) hc[k] = hc[k].filter(h=>h.data!==log.data); if(hc[k] && !hc[k].length) delete hc[k]; }); });
+  (log.exercicios||[]).forEach(e=>{ chavesHistDoRegistro(e).forEach(k=>{ if(hc[k]) hc[k] = hc[k].filter(h=>h.data!==log.data); if(hc[k] && !hc[k].length) delete hc[k]; }); });
   state.workoutSessionsLog = (state.workoutSessionsLog||[]).filter(l=>l!==log);
   saveHistoricoCarga(); saveWorkoutSessionsLog();
 }
 function salvarCorrecaoTreino(log, rasc){
   const hc = state.historicoCarga = state.historicoCarga || {};
   // tira as séries antigas deste dia (de todos os exercícios do registro original)
-  (log.exercicios||[]).forEach(e=>{ [chaveHistDe(e), e.nome].forEach(k=>{ if(hc[k]) hc[k] = hc[k].filter(h=>h.data!==log.data); if(hc[k] && !hc[k].length) delete hc[k]; }); });
-  let volume = 0, series = 0, cargaMax = 0;
-  const exercicios = [];
+  (log.exercicios||[]).forEach(e=>{ chavesHistDoRegistro(e).forEach(k=>{ if(hc[k]) hc[k] = hc[k].filter(h=>h.data!==log.data); if(hc[k] && !hc[k].length) delete hc[k]; }); });
+  let volume = 0, series = 0, cargaMax = 0, recordes = 0;
+  const exercicios = [], trocas = [], recordesLista = [];
   rasc.exercicios.forEach(e=>{
     const sets = e.sets.filter(st=>st.reps>0 || st.peso>0);
-    if(!sets.length) return;
+    if(!sets.length){
+      // treino antigo sem séries registradas e sem troca: mantém o item como estava (não inventa séries)
+      if(e.semDetalhe && !e.trocadoDe && e.orig){ const o = { ...e.orig }; delete o.seriesExecutadas; exercicios.push(o); }
+      return;
+    }
     sets.forEach(st=>{ volume += st.peso*st.reps; series++; cargaMax = Math.max(cargaMax, st.peso); });
-    const k = chaveHistDe(e);
+    const id = e.exerciseId || null;
+    const k = chaveHistDe({ nome:e.nome, repdbId:id });
+    const anteriores = (hc[k]||[]).filter(x=>x.data < rasc.data).flatMap(x=>x.sets||[]);
+    const maxAntes = anteriores.reduce((m,x)=>Math.max(m, parseFloat(x.peso)||0), 0);
+    const maxAqui = Math.max(...sets.map(st=>st.peso));
+    if(maxAntes>0 && maxAqui>maxAntes){ recordes++; recordesLista.push(e.nome); }
     const h = hc[k] = (hc[k]||[]).filter(x=>x.data!==rasc.data);
     h.push({ data:rasc.data, sets: sets.map(st=>({ peso:st.peso, reps:st.reps, ...(st.pse!=null?{pse:st.pse}:{}) })) });
     h.sort((a,b)=>String(a.data).localeCompare(String(b.data)));
-    exercicios.push({ nome:e.nome, grupo:e.grupo, series:String(sets.length), reps:String(Math.max(...sets.map(st=>st.reps))), carga:String(Math.max(...sets.map(st=>st.peso))), ...(/^d{4}$/.test(k)?{repdbId:k}:{}) });
+    if(e.trocadoDe) trocas.push({ de:e.trocadoDe.nome, para:e.nome });
+    exercicios.push({ nome:e.nome, grupo:e.grupo, series:String(sets.length), reps:String(Math.max(...sets.map(st=>st.reps))), carga:String(maxAqui),
+      ...(id ? { exerciseId:id, repdbId:id } : {}),
+      seriesExecutadas: sets.map((st,i)=>({ numero:i+1, peso:st.peso, repeticoes:st.reps, ...(st.pse!=null?{pse:st.pse}:{}), concluida:true })) });
   });
-  Object.assign(log, { data:rasc.data, duracaoSeg:rasc.minutos*60, exercicios, volume:Math.round(volume), series, cargaMax, updatedAt:Date.now() });
+  Object.assign(log, { data:rasc.data, duracaoSeg:rasc.minutos*60, exercicios, volume:Math.round(volume), series, cargaMax, recordes, recordesLista, updatedAt:Date.now() });
+  if(trocas.length) log.editHistory = (log.editHistory||[]).concat({ em:Date.now(), trocas });
+  const v = normalizarSessaoMuscHistorico(log);
+  log.muscleMap = v.anat.primary;
+  if(v.calorias && v.calorias.estimativa) log.calories = { value:v.calorias.valor, source:'estimated', label:'estimativa' };
+  else if(!v.calorias && log.calories && log.calories.source!=='device') delete log.calories;
   saveHistoricoCarga(); saveWorkoutSessionsLog();
+}
+/* ---------- Histórico de musculação (Progresso) e detalhes da atividade ---------- */
+function muscHistoryPorId(id){ return (state.workoutSessionsLog||[]).find(x=>x.id===id) || null; }
+function rotuloDataCurtaISO(iso){ try{ return dataDoISO(iso).toLocaleDateString('pt-BR',{ weekday:'short', day:'numeric', month:'short' }).replace(/\./g,''); }catch(e){ return iso; } }
+function renderMuscHistoryV2(){
+  const l = state.workoutSessionsLog||[];
+  if(!l.length) return '';
+  const lista = [...l].reverse();
+  const linhas = lista.slice(0, state.progHistTodos ? 60 : 5).map(x=>{
+    const v = normalizarSessaoMuscHistorico(x);
+    return `<div class="ds-row fr-histrow" data-muschistopen="${x.id}" role="button"><span class="nm">${v.titulo}<small>${rotuloDataCurtaISO(v.data)} · ${Math.max(1, Math.round(v.duracaoSeg/60))} min · ${v.series} séries</small></span><button class="ds-mini fr-histmenu" data-muschistmenu="${x.id}" aria-label="Opções">${ICONS.dots}</button></div>`;
+  }).join('');
+  return `<div class="fr-proglbl" style="margin-top:16px;">Histórico</div><div class="ds-list">${linhas}</div>
+    ${lista.length>5 ? `<button class="btn-ghost" style="padding:10px 0;" data-proghisttodos="1">${state.progHistTodos ? 'Ver menos' : 'Ver todos ('+lista.length+')'}</button>` : ''}`;
+}
+function abrirOpcoesMuscHistoryV2(id){
+  const log = muscHistoryPorId(id); if(!log) return;
+  openSheet(`
+    <div class="mrt-menuitem" data-mhop="corrigir">${ICONS.edit||''}<span>Corrigir atividade</span></div>
+    <div class="mrt-menuitem" data-mhop="excluir" style="color:var(--danger);">${ICONS.trash}<span>Excluir atividade</span></div>`, (sh)=>{
+    sh.querySelector('[data-mhop=corrigir]').onclick = ()=> abrirCorrigirAtividade(log);
+    sh.querySelector('[data-mhop=excluir]').onclick = ()=> confirmarExcluirAtividade(log);
+  });
+}
+function abrirMuscHistoryV2(id){
+  const log = muscHistoryPorId(id); if(!log) return;
+  const v = normalizarSessaoMuscHistorico(log);
+  const kg = (x)=>String(Math.round(x*10)/10).replace('.',',');
+  let dataTxt = ''; try{ dataTxt = dataDoISO(v.data).toLocaleDateString('pt-BR',{ weekday:'long', day:'numeric', month:'long', year:'numeric' }); dataTxt = dataTxt.charAt(0).toUpperCase()+dataTxt.slice(1); }catch(e){ dataTxt = v.data; }
+  openSheet(`
+    <div class="fr-mhhead"><div class="sheet-title">${v.titulo}</div><button class="ds-mini" id="mhMenu" aria-label="Opções">${ICONS.dots}</button></div>
+    <div class="sheet-sub">${dataTxt} · ${Math.max(1, Math.round(v.duracaoSeg/60))} min</div>
+    <div class="ds-stats3 fr-mhstats">${mrtMetricHtml(Math.round(v.volume).toLocaleString('pt-BR'), 'kg de volume')}${mrtMetricHtml(String(v.series), 'séries')}${mrtMetricHtml(String(v.recordes), v.recordes===1 ? 'recorde' : 'recordes')}</div>
+    ${v.calorias ? `<div class="ds-row ds-static"><span class="nm">Calorias</span><span class="aside">${v.calorias.valor} kcal${v.calorias.estimativa ? ' · estimativa' : ''}</span></div>` : ''}
+    ${v.temDetalhe ? `
+      <div class="mrt-muscle-map fr-mhmapa">${muscleFrontSvg(v.anat)}${muscleBackSvg(v.anat)}</div>
+      ${v.exercicios.map(e=>`<div class="fr-mhex"><b>${e.nome}</b><div class="fr-mhsets">${e.sets.map((x,i)=>`<span>${i+1}. ${x.peso>0 ? kg(x.peso)+' kg × ' : ''}${x.reps} reps</span>`).join('')}</div></div>`).join('')}`
+    : '<div class="ds-muted" style="padding:14px 0;">Este treino antigo não possui detalhes por série.</div>'}
+    <div class="ds-actions">
+      <button class="btn-primary" id="mhShare">Compartilhar ou postar</button>
+      <button class="btn-secondary" id="mhCorrigir">Corrigir atividade</button>
+    </div>`, (sh)=>{
+    sh.querySelector('#mhMenu').onclick = ()=> abrirOpcoesMuscHistoryV2(id);
+    sh.querySelector('#mhShare').onclick = ()=> compartilharResumoTreino(v);
+    sh.querySelector('#mhCorrigir').onclick = ()=> abrirCorrigirAtividade(log);
+  });
 }
 function renderTreinoV2Musc(day, phaseParts){
   const listaTotal = muscListForDay(day);
@@ -14653,12 +14881,16 @@ function renderProgressoV2(){
     ${(state.workoutSessionsLog||[]).length ? linha('Volume semanal', `${String(Math.round(vlN/100)/10).replace('.',',')} t`, deltaTxt(delta(vlN,vlV)), spark(volS,'var(--data)',true)) : '<div class="fr-progvazio">Conclua um treino de musculação para ver o volume.</div>'}
     ${cargaH.length ? linha('Evolução de carga', `${String(cargaAtual).replace('.',',')} kg`, deltaTxt(cargaAntes ? delta(cargaAtual, cargaAntes.w) : null), spark(cargaH.slice(-8).map(h=>h.w),'#8A8A8A')) : ''}
     ${det==='musc' ? cardVolume + cardCarga + cardEq : ''}
+    ${renderMuscHistoryV2()}
   </div>`;
   const secMed = `<div class="fr-progsec"><button class="fr-proghead" data-progdet="medidas"><span class="ic">${ICONS.ruler}</span><span class="t">Medidas corporais</span><span class="chev ${det==='medidas'?'open':''}">${DS_CHEV}</span></button>${det==='medidas' ? cardMed : ''}</div>`;
   return `<div class="mrt-chips fr-progchips">${chips}</div>${topo}${secCorrida}${secMusc}${secMed}`;
 }
 function wireProgressoV2(){
   document.querySelectorAll('[data-progperiodo]').forEach(el=>{ el.onclick = ()=>{ state.progPeriodo = el.getAttribute('data-progperiodo'); render(); }; });
+  document.querySelectorAll('[data-muschistopen]').forEach(el=>{ el.onclick = ()=> abrirMuscHistoryV2(el.getAttribute('data-muschistopen')); });
+  document.querySelectorAll('[data-muschistmenu]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirOpcoesMuscHistoryV2(el.getAttribute('data-muschistmenu')); }; });
+  document.querySelectorAll('[data-proghisttodos]').forEach(el=>{ el.onclick = ()=>{ state.progHistTodos = !state.progHistTodos; render(); }; });
   document.querySelectorAll('[data-progdet]').forEach(el=>{ el.onclick = ()=>{ const k = el.getAttribute('data-progdet'); state.progDetalhe = state.progDetalhe===k ? null : k; render(); }; });
   const s1 = document.getElementById('progExSelect'); if(s1) s1.onchange = ()=>{ state.progressoExKey = s1.value; render(); };
   const s2 = document.getElementById('progMedSelect'); if(s2) s2.onchange = ()=>{ state.progressoMedidaKey = s2.value; render(); };
