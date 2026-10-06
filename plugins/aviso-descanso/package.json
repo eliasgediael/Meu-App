@@ -1,0 +1,11 @@
+{
+  "name": "aviso-descanso",
+  "version": "1.0.0",
+  "description": "Aviso do fim do descanso: abaixa a música de outros apps (ducking), toca o sinal e fala o próximo passo.",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "files": ["ios/Sources", "Package.swift", "index.js"],
+  "peerDependencies": { "@capacitor/core": ">=8.0.0" },
+  "capacitor": { "ios": { "src": "ios" } }
+}

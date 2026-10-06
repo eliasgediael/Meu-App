@@ -10,6 +10,11 @@ import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { KeepAwake } from '@capacitor-community/keep-awake';
 // Este plugin não publica um wrapper JS pronto — é registrado direto (é o padrão documentado dele).
 const BackgroundGeolocation = registerPlugin('BackgroundGeolocation');
+// Plugin próprio (plugins/aviso-descanso): abaixa a música de outros apps, toca o sinal e fala o próximo passo.
+const AvisoDescanso = registerPlugin('AvisoDescanso');
+async function avisoDescanso(opcoes) {
+  try { await AvisoDescanso.tocar(opcoes || {}); return true; } catch (e) { return false; }
+}
 
 const isNative = () => Capacitor.isNativePlatform();
 
@@ -156,4 +161,4 @@ async function cancelarAvisoDescanso() {
 }
 
 window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, listarVozesPt, vibrate,
-  vibrarFimDescanso, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };
+  vibrarFimDescanso, avisoDescanso, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };
