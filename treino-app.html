@@ -1592,21 +1592,22 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-brandrow{ display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
 .fr-brand{ font-size:17px; font-weight:500; letter-spacing:0.22em; color:var(--text); }
 .fr-brand b{ font-weight:900; }
-.fr-ck3{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); }
-.fr-ckcol{ min-width:0; padding:0 8px; border-left:1px solid var(--border); }
-.fr-ckcol:first-child{ padding-left:0; border-left:none; }
-.fr-ckcol:last-child{ padding-right:0; }
-.fr-cktit{ display:flex; align-items:center; gap:7px; font-size:14px; font-weight:700; color:var(--text); margin-bottom:10px; }
+.fr-ck3{ display:flex; flex-direction:column; gap:12px; }
+.fr-ckcol{ min-width:0; display:flex; align-items:center; gap:10px; }
+.fr-cktit{ display:flex; align-items:center; gap:7px; font-size:14px; font-weight:700; color:var(--text); width:90px; flex-shrink:0; }
 .fr-cktit svg{ width:20px; height:20px; color:var(--data); flex-shrink:0; }
-.fr-ck3 .ds-seg{ grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; padding:3px; }
-.fr-ck3 .ds-seg button{ height:34px; padding:0; font-size:11px; letter-spacing:-0.2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-@media (max-width:479px){
-  .fr-ck3{ grid-template-columns:1fr; gap:12px; }
-  .fr-ckcol{ padding:0; border-left:none; display:flex; align-items:center; gap:10px; }
-  .fr-cktit{ width:84px; margin:0; flex-shrink:0; }
-  .fr-ck3 .ds-seg{ flex:1; }
-  .fr-ck3 .ds-seg button{ font-size:12.5px; }
-}
+.fr-ck3 .ds-seg{ flex:1; grid-template-columns:repeat(3, minmax(0,1fr)); gap:2px; padding:3px; }
+.fr-ck3 .ds-seg button{ height:36px; padding:0; font-size:12.5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fr-ck3 .ds-seg button.on{ border-radius:var(--r-pill); }
+.fr-ck3 .ds-seg{ border-radius:var(--r-pill); }
+.fr-ajuda{ width:36px; height:36px; border-radius:50%; border:1.5px solid var(--text); background:none; color:var(--text); font-family:inherit; font-size:17px; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:pointer; padding:0; }
+.fr-herohead{ align-items:center; gap:8px; justify-content:flex-start; }
+.fr-pill{ background:var(--data); color:#fff; font-size:12px; font-weight:800; padding:4px 10px; border-radius:var(--r-pill); white-space:nowrap; }
+.fr-adaptar{ margin-left:auto; display:flex; align-items:center; gap:6px; border:none; background:none; padding:4px 0; font-family:inherit; font-size:14px; font-weight:700; color:var(--text); cursor:pointer; white-space:nowrap; }
+.fr-adaptar svg{ width:18px; height:18px; }
+.fr-hero .ds-stats3 > *{ border-left:1px solid var(--border); padding-left:12px; min-width:0; }
+.fr-hero .ds-stats3 > *:first-child{ border-left:none; padding-left:0; }
+.fr-hero .ds-btnrow .btn-primary{ width:100%; flex:1; }
 .fr-hero .ds-title{ font-size:46px; letter-spacing:-1.6px; line-height:1.02; margin:2px 0 8px; overflow-wrap:anywhere; }
 .fr-hero .ds-why{ font-size:15px; margin-bottom:20px; }
 .fr-hero .ds-stats3{ margin-bottom:16px; }
@@ -1618,9 +1619,9 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-hero .mrt-blockbar.dim, .fr-hero .mrt-blockbar.hib{ background:#D4D4D4 !important; }
 .fr-hero .ds-btnrow .btn-primary, .fr-hero .ds-btnrow .btn-secondary{ height:60px; border-radius:16px; font-size:19px; font-weight:800; }
 .fr-hero .ds-btnrow .btn-secondary{ background:var(--surface-2); color:var(--text); }
-@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero .ds-stats3 .mrt-metricv{ font-size:27px; } }
-.fr-weekrow .nm{ flex:0 0 42%; font-weight:700; }
-.fr-weekrow .aside{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15px; color:var(--text-dim); }
+@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero .ds-stats3 .mrt-metricv{ font-size:27px; } .fr-hero .ds-stats3 .mrt-metricv small{ font-size:13px; } .fr-hero .ds-stats3 > *{ padding-left:8px; } }
+.fr-weekrow .nm{ flex:0 0 38%; font-weight:500; color:var(--text-dim); }
+.fr-weekrow .aside{ flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:15px; font-weight:700; color:var(--text); text-align:right; }
 .fr-weekrow .aside.rest{ color:var(--text-faint); }
 .fr-dayic{ width:46px; height:46px; border-radius:50%; background:var(--surface-2); color:var(--text); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
 .fr-dayic svg{ width:22px; height:22px; }
@@ -13279,6 +13280,16 @@ function renderPorQueEAjuste(day, sub){
     ${podeAjustar ? `<button class="btn-secondary" style="margin-bottom:10px;" data-ajustar="${day}">Ajustar</button>` : ''}`;
 }
 
+function abrirAjudaInicio(){
+  openSheet(`
+    <div class="sheet-title">Como usar o Início</div>
+    <div class="ds-list">
+      <div class="ds-row ds-static"><span class="nm">Treino-chave</span><span class="aside">O treino mais importante da semana</span></div>
+      <div class="ds-row ds-static"><span class="nm">Adaptar treino</span><span class="aside">Muda o treino se precisar</span></div>
+      <div class="ds-row ds-static"><span class="nm">Como você está</span><span class="aside">Ajusta o treino de hoje</span></div>
+    </div>
+    <button class="btn-secondary" style="margin-top:16px;" id="ajFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#ajFechar').onclick = closeSheet; });
+}
 function renderHojeV2Content(){
   atualizarSemanaCompleta();
   const day = state.selectedDayHoje;
@@ -13289,7 +13300,7 @@ function renderHojeV2Content(){
   const nome1 = primeiroNome();
   const greetRow = `
     <div class="fr-brandrow"><div class="fr-brand"><b>FORZA</b> RUN</div>
-      <div class="mrt-avatar" data-tabgo="perfil" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div></div>
+      <button class="fr-ajuda" id="frAjudaInicio" aria-label="Ajuda">?</button></div>
     <div class="mrt-greetrow"><div style="min-width:0;"><div class="mrt-greetdate">${dataStr}</div><div class="mrt-greettitle">${saud}${nome1?', '+nome1:''}</div></div></div>`;
   const temPlanoOuTreino = DAY_ABBR.some(d=>dayStatus(d)!=='none');
   const sessions = mrtHeroSessions(day);
@@ -13309,7 +13320,8 @@ function renderHojeV2Content(){
     const porque = porQueHoje(day, primary.tipo==='corrida' ? 'corrida' : 'musculacao');
     const ajustavel = !primary.done && opcoesAjuste(day).length>0;
     heroHtml = `<div class="ds-section">
-      <div class="ds-labelrow"><div class="ds-label">Hoje</div>${chave?'<div class="ds-aside">★ Treino-chave</div>':''}</div>
+      <div class="ds-labelrow fr-herohead"><div class="ds-label">Hoje</div>${chave?'<span class="fr-pill">Treino-chave</span>':''}
+        ${ajustavel ? `<button class="fr-adaptar" data-ajustar="${day}">Adaptar treino ${ICONS.dots}</button>` : ''}</div>
       <div class="fr-hero">
         <div class="ds-kicker">${info.nome}</div>
         <div class="ds-title">${primary.titulo}</div>
@@ -13318,7 +13330,6 @@ function renderHojeV2Content(){
         ${mrtBarraBlocos(primary.steps)}
         ${primary.done ? `<div class="mrt-donelabel">Concluído</div>` : `<div class="ds-btnrow">
           <button class="btn-primary" data-v2start="${primary.tipo}">Começar</button>
-          ${ajustavel ? `<button class="btn-secondary" data-ajustar="${day}">Ajustar</button>` : ''}
         </div>`}
         ${secondary ? `<div class="ds-row ds-inrow" data-v2go="${secondary.tipo}"><span class="nm">Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></div>` : ''}
       </div></div>`;
@@ -13328,9 +13339,9 @@ function renderHojeV2Content(){
   const linhas = [renderCorpoLinha(), checkinSemanal, temDiario ? `<button class="ds-row" data-abrirdiario="1"><span class="nm">Diário do treinador</span><span class="chev">${DS_CHEV}</span></button>` : ''].filter(Boolean);
   // Ordem: o que fazer hoje → por quê/ajustar (no card) → recuperação → semana → amanhã.
   return greetRow
-    + (temPlanoOuTreino ? renderCheckinCard() : '')
     + renderPerdidoBanner()
     + heroHtml
+    + (temPlanoOuTreino ? renderCheckinCard() : '')
     + (temPlanoOuTreino ? `<div class="ds-section"><div class="ds-list">${linhas[0]}</div></div>` : '')
     + mrtSemanaSecao()
     + (linhas.length>1 ? `<div class="ds-section"><div class="ds-list">${linhas.slice(1).join('')}</div></div>` : '')
@@ -13383,6 +13394,8 @@ function wireHojeV2(){
   if(state.modalType==='hybridCheckin') wireHybridCheckinModal();
   const diagBtn = document.getElementById('mrtStartDiagnostico');
   if(diagBtn) diagBtn.onclick = abrirDiagnostico;
+  const ajuda = document.getElementById('frAjudaInicio');
+  if(ajuda) ajuda.onclick = abrirAjudaInicio;
   wireTreinadorUI();
 }
 
