@@ -1,0 +1,56 @@
+{
+ "sem_historico": {
+  "peso": "40",
+  "reps": "10",
+  "direction": null,
+  "motivo": null
+ },
+ "cumpriu_tudo_sem_pse": {
+  "peso": 41,
+  "reps": "10",
+  "direction": "subir",
+  "motivo": "Bateu a meta de reps na última vez."
+ },
+ "cumpriu_tudo_pse_7": {
+  "peso": 41,
+  "reps": "10",
+  "direction": "subir",
+  "motivo": "Bateu a meta com esforço controlado — hora de subir."
+ },
+ "cumpriu_tudo_pse_9_5": {
+  "peso": 36,
+  "reps": "10",
+  "direction": "reduzir",
+  "motivo": "O esforço (PSE) ficou muito alto na última vez — reduzindo a carga."
+ },
+ "abaixo_80_da_meta": {
+  "peso": 36,
+  "reps": "10",
+  "direction": "reduzir",
+  "motivo": "Ficou bem abaixo da meta de reps na última vez — reduzindo a carga."
+ },
+ "um_pouco_abaixo": {
+  "peso": 40,
+  "reps": "10",
+  "direction": "manter",
+  "motivo": "Quase lá — mantendo a carga por mais uma sessão."
+ },
+ "piramide_crescente": {
+  "peso": 30.5,
+  "reps": "10",
+  "direction": "subir",
+  "motivo": "Bateu a meta de reps na última vez."
+ },
+ "acima_da_meta": {
+  "peso": 41,
+  "reps": "10",
+  "direction": "subir",
+  "motivo": "Bateu a meta de reps na última vez."
+ },
+ "ja_registrado_hoje": {
+  "peso": 42.5,
+  "reps": 8,
+  "direction": null,
+  "motivo": null
+ }
+}

@@ -1,0 +1,98 @@
+{
+ "V1": {
+  "reduzir": 0,
+  "semQualidade": true,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V2": {
+  "reduzir": 1,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V3": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": true,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V4": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 0.9,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V5": {
+  "reduzir": 1,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V6": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": true,
+  "semProgressao": false
+ },
+ "V7": {
+  "reduzir": 1,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V8": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": false
+ },
+ "V9": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": true,
+  "semProgressao": false
+ },
+ "V10": {
+  "reduzir": 0,
+  "semQualidade": false,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": false,
+  "semProgressao": true
+ },
+ "V6_segunda_vez": {
+  "reduzir": 0,
+  "semQualidade": true,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": true,
+  "semProgressao": false
+ },
+ "V9_terceira_vez": {
+  "reduzir": 1,
+  "semQualidade": true,
+  "semDobros": false,
+  "volumeFator": 1,
+  "aliviarInferior": true,
+  "semProgressao": false
+ }
+}

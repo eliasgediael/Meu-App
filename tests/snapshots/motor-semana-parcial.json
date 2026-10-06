@@ -1,0 +1,283 @@
+{
+ "01": {
+  "dia0": {
+   "inicio": "2026-10-05",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Seg:Longão:32min",
+     "Qua:Rodagem Leve:29min"
+    ],
+    "musc": [
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia1": {
+   "inicio": "2026-10-06",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Qua:Rodagem Leve:38min"
+    ],
+    "musc": [
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia2": {
+   "inicio": "2026-10-07",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Qua:Rodagem Leve:38min"
+    ],
+    "musc": [
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia3": {
+   "inicio": "2026-10-08",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Sex:Rodagem Leve:38min"
+    ],
+    "musc": []
+   }
+  },
+  "dia4": {
+   "inicio": "2026-10-09",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Sex:Rodagem Leve:38min"
+    ],
+    "musc": []
+   }
+  },
+  "dia5": {
+   "inicio": "2026-10-10",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Seg:Longão:32min",
+     "Qua:Rodagem Leve:29min"
+    ],
+    "musc": [
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia6": {
+   "inicio": "2026-10-11",
+   "semana1": {
+    "fase": "Retomada / calibração",
+    "corrida": [
+     "Seg:Longão:32min",
+     "Qua:Rodagem Leve:29min"
+    ],
+    "musc": [
+     "Sex:5ex:15séries"
+    ]
+   }
+  }
+ },
+ "08": {
+  "dia0": {
+   "inicio": "2026-10-05",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Seg:Intervalado:39min",
+     "Ter:Rodagem Leve:33min",
+     "Qui:Rodagem Leve:33min",
+     "Sáb:Longão:63min"
+    ],
+    "musc": [
+     "Ter:4ex:12séries",
+     "Qua:3ex:9séries",
+     "Sex:4ex:12séries"
+    ]
+   }
+  },
+  "dia1": {
+   "inicio": "2026-10-06",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Ter:Intervalado:39min",
+     "Qua:Rodagem Leve:33min",
+     "Sex:Rodagem Leve:33min",
+     "Sáb:Longão:63min"
+    ],
+    "musc": [
+     "Qua:4ex:12séries",
+     "Qui:3ex:9séries",
+     "Sex:4ex:12séries"
+    ]
+   }
+  },
+  "dia2": {
+   "inicio": "2026-10-07",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Qua:Rodagem Leve:33min",
+     "Qui:Intervalado:39min",
+     "Sex:Rodagem Leve:33min",
+     "Sáb:Longão:63min"
+    ],
+    "musc": [
+     "Qua:4ex:12séries",
+     "Sex:4ex:12séries"
+    ]
+   }
+  },
+  "dia3": {
+   "inicio": "2026-10-08",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Qui:Intervalado:39min",
+     "Sex:Rodagem Leve:55min",
+     "Sáb:Longão:73min"
+    ],
+    "musc": []
+   }
+  },
+  "dia4": {
+   "inicio": "2026-10-09",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Sex:Rodagem Leve:60min",
+     "Sáb:Longão:73min"
+    ],
+    "musc": []
+   }
+  },
+  "dia5": {
+   "inicio": "2026-10-10",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Sáb:Rodagem Leve:75min"
+    ],
+    "musc": []
+   }
+  },
+  "dia6": {
+   "inicio": "2026-10-11",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Seg:Intervalado:39min",
+     "Qua:Longão:38min",
+     "Sex:Rodagem Leve:36min"
+    ],
+    "musc": []
+   }
+  }
+ },
+ "09": {
+  "dia0": {
+   "inicio": "2026-10-05",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Seg:Rodagem Leve:60min",
+     "Ter:Limiar:51min",
+     "Qua:Rodagem Leve:60min",
+     "Qui:Rodagem Leve:60min",
+     "Sáb:Longão:112min"
+    ],
+    "musc": [
+     "Seg:5ex:15séries",
+     "Qui:5ex:15séries"
+    ]
+   }
+  },
+  "dia1": {
+   "inicio": "2026-10-06",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Ter:Rodagem Leve:60min",
+     "Qua:Limiar:51min",
+     "Qui:Rodagem Leve:60min",
+     "Sex:Rodagem Leve:60min",
+     "Dom:Longão:112min"
+    ],
+    "musc": [
+     "Ter:5ex:15séries",
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia2": {
+   "inicio": "2026-10-07",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Qua:Rodagem Leve:60min",
+     "Qui:Limiar:51min",
+     "Sex:Rodagem Leve:60min",
+     "Sáb:Rodagem Leve:60min",
+     "Dom:Longão:112min"
+    ],
+    "musc": [
+     "Qua:5ex:15séries",
+     "Sex:5ex:15séries"
+    ]
+   }
+  },
+  "dia3": {
+   "inicio": "2026-10-08",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Qui:Limiar:51min",
+     "Sex:Rodagem Leve:60min",
+     "Sáb:Longão:120min",
+     "Dom:Rodagem Leve:60min"
+    ],
+    "musc": []
+   }
+  },
+  "dia4": {
+   "inicio": "2026-10-09",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Sex:Limiar:51min",
+     "Sáb:Rodagem Leve:60min",
+     "Dom:Longão:120min"
+    ],
+    "musc": []
+   }
+  },
+  "dia5": {
+   "inicio": "2026-10-10",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Sáb:Longão:120min",
+     "Dom:Rodagem Leve:60min"
+    ],
+    "musc": []
+   }
+  },
+  "dia6": {
+   "inicio": "2026-10-11",
+   "semana1": {
+    "fase": "Base",
+    "corrida": [
+     "Dom:Rodagem Leve:120min"
+    ],
+    "musc": []
+   }
+  }
+ }
+}

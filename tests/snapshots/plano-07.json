@@ -1,0 +1,2187 @@
+{
+ "perfil": "07 prova 5k intermediário",
+ "semana1": {
+  "capacidade": {
+   "corrida": "intermediario",
+   "musc": "iniciante"
+  },
+  "prioridade": {
+   "tipo": "corrida",
+   "principal": "corrida",
+   "secundaria": "musculacao",
+   "folga": true,
+   "motivo": "objetivo de corrida"
+  },
+  "confianca": "alta",
+  "calibracao": {
+   "ativa": false,
+   "corrida": false,
+   "musc": false,
+   "motivos": []
+  },
+  "resumo": {
+   "sessoesCorrida": 3,
+   "sessoesMusculacao": 2,
+   "diasDeTreino": 4,
+   "dobros": 1,
+   "corridaMin": 95,
+   "musculacaoMin": 58,
+   "volumePartidaCorrida": 95
+  },
+  "sched": {
+   "corridaDays": [
+    "Seg",
+    "Ter",
+    "Sáb"
+   ],
+   "muscDays": [
+    "Seg",
+    "Qui"
+   ],
+   "longaoDay": "Sáb"
+  },
+  "dayPicks": {
+   "Seg": "ambos",
+   "Ter": "corrida",
+   "Qua": "descanso",
+   "Qui": "musc",
+   "Sex": "descanso",
+   "Sáb": "corrida",
+   "Dom": "descanso"
+  },
+  "descanso": [
+   "Qua",
+   "Sex",
+   "Dom"
+  ],
+  "alertas": [],
+  "ajustes": {
+   "reduzir": 0,
+   "semQualidade": false,
+   "semDobros": false,
+   "volumeFator": 0.9,
+   "aliviarInferior": false,
+   "semProgressao": true
+  },
+  "validacao": {
+   "ok": true,
+   "ciclos": 2,
+   "erros": [],
+   "avisos": [],
+   "historico": [
+    {
+     "ciclo": 1,
+     "erros": [
+      "V4: volume de corrida 111 min acima de 107",
+      "V10: aumento de volume sem justificativa"
+     ]
+    },
+    {
+     "ciclo": 2,
+     "erros": []
+    }
+   ]
+  },
+  "progressoes": [],
+  "trajetoria": [
+   {
+    "semana": 1,
+    "fase": "Base",
+    "alternancia": null,
+    "corridaMinAlvo": 95,
+    "muscSeriesFator": 1,
+    "progressao": "manter",
+    "nota": "semana 1: sem aumento sobre a carga inicial"
+   },
+   {
+    "semana": 2,
+    "fase": "Base",
+    "alternancia": null,
+    "corridaMinAlvo": 103,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 3,
+    "fase": "Base",
+    "alternancia": null,
+    "corridaMinAlvo": 111,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 4,
+    "fase": "Descarga",
+    "alternancia": null,
+    "corridaMinAlvo": 83,
+    "muscSeriesFator": 1,
+    "progressao": "manter",
+    "nota": ""
+   },
+   {
+    "semana": 5,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 120,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 6,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 129,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 7,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 140,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 8,
+    "fase": "Descarga",
+    "alternancia": null,
+    "corridaMinAlvo": 105,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   }
+  ],
+  "sessoes": [
+   {
+    "dia": "Seg",
+    "modalidade": "corrida",
+    "tipo": "leve",
+    "duracaoMin": 18,
+    "combinada": true,
+    "dura": false,
+    "km": 3
+   },
+   {
+    "dia": "Seg",
+    "modalidade": "musculacao",
+    "tipo": "full",
+    "foco": "hipertrofia",
+    "duracaoMin": 29,
+    "combinada": true,
+    "dura": false,
+    "exercicios": 5
+   },
+   {
+    "dia": "Ter",
+    "modalidade": "corrida",
+    "tipo": "qualidade",
+    "duracaoMin": 42,
+    "combinada": false,
+    "dura": true,
+    "km": 7
+   },
+   {
+    "dia": "Qui",
+    "modalidade": "musculacao",
+    "tipo": "full",
+    "foco": "hipertrofia",
+    "duracaoMin": 29,
+    "combinada": false,
+    "dura": false,
+    "exercicios": 5
+   },
+   {
+    "dia": "Sáb",
+    "modalidade": "corrida",
+    "tipo": "longa",
+    "duracaoMin": 35,
+    "combinada": false,
+    "dura": true,
+    "km": 5.5
+   }
+  ],
+  "cortes": [],
+  "descartadas": [],
+  "semana": {
+   "weekNumber": 1,
+   "phaseLabel": "Base",
+   "totalWeeks": 8,
+   "pendente": false,
+   "corrida": [
+    {
+     "day": "Seg",
+     "type": "Rodagem Leve",
+     "sessao": "RUN_EASY_Z2",
+     "totalKm": 3,
+     "totalMin": 18,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z2"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      }
+     ]
+    },
+    {
+     "day": "Ter",
+     "type": "Intervalado",
+     "sessao": "RUN_INTERVALS_VO2MAX",
+     "totalKm": 7,
+     "totalMin": 42,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 2,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 4,
+       "pace": "4:42 ~ 4:45/km",
+       "zona": "Z5"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      }
+     ]
+    },
+    {
+     "day": "Sáb",
+     "type": "Longão",
+     "sessao": "RUN_LONG_RUN",
+     "totalKm": 5.5,
+     "totalMin": 35,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 3.5,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z2"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      }
+     ]
+    }
+   ],
+   "musc": {
+    "Seg": [
+     {
+      "nome": "Leg press 45 graus",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Supino na máquina Smith",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Puxada frontal na polia",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Mesa flexora (deitado)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Desenvolvimento na máquina",
+      "grupo": "Ombro",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     }
+    ],
+    "Qui": [
+     {
+      "nome": "Panturrilha no leg press",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Supino na máquina Smith",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Pulldown reto (braço estendido)",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Cadeira flexora (sentado)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Desenvolvimento na máquina",
+      "grupo": "Ombro",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     }
+    ]
+   },
+   "legEasingNotes": []
+  },
+  "decisoes": [
+   {
+    "etapa": 1,
+    "regra": "nivel_corrida",
+    "motivo": "carga recente limitada pelo histórico",
+    "dados": {
+     "nivel": "intermediario",
+     "situacao": "regular"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "nivel_musculacao",
+    "motivo": "frequência limitada pelo histórico",
+    "dados": {
+     "nivel": "iniciante",
+     "situacao": "regular"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "vdot_padrao",
+    "motivo": "sem desempenho válido: padrão do nível",
+    "dados": {
+     "nivel": "intermediario",
+     "vdot": 40
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "carga_inicial_corrida",
+    "motivo": "carga que provavelmente se sustenta agora",
+    "dados": {
+     "min": 95,
+     "fonte": "freq_x_maior_conservador",
+     "incerteza": 0,
+     "fatorVolume": 1,
+     "volumeRef": 180
+    }
+   },
+   {
+    "etapa": 2,
+    "regra": "prioridade",
+    "motivo": "objetivo de corrida",
+    "dados": {
+     "tipo": "corrida",
+     "principal": "corrida",
+     "folgaSecundaria": true
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "frequencia",
+    "motivo": "sessões, dias e combinações decididos",
+    "dados": {
+     "sessoes": {
+      "corrida": 4,
+      "musc": 2
+     },
+     "diasUteis": 4,
+     "maxDiasTreino": 4,
+     "dobrosMin": 2,
+     "dobrosPermitidos": 2,
+     "dobroProibido": null
+    }
+   },
+   {
+    "etapa": 4,
+    "regra": "distribuicao",
+    "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
+    "dados": {
+     "custo": 53,
+     "avaliadas": 36,
+     "dobros": 2,
+     "conflito": false
+    }
+   },
+   {
+    "etapa": 6,
+    "regra": "correcao",
+    "motivo": "validação encontrou erros; ajustando e revalidando",
+    "dados": {
+     "ciclo": 1,
+     "erros": [
+      {
+       "cod": "V4",
+       "detalhe": "volume de corrida 111 min acima de 107"
+      },
+      {
+       "cod": "V10",
+       "detalhe": "aumento de volume sem justificativa"
+      }
+     ]
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "frequencia",
+    "motivo": "sessões, dias e combinações decididos",
+    "dados": {
+     "sessoes": {
+      "corrida": 3,
+      "musc": 2
+     },
+     "diasUteis": 4,
+     "maxDiasTreino": 4,
+     "dobrosMin": 1,
+     "dobrosPermitidos": 1,
+     "dobroProibido": null
+    }
+   },
+   {
+    "etapa": 4,
+    "regra": "distribuicao",
+    "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
+    "dados": {
+     "custo": 51,
+     "avaliadas": 48,
+     "dobros": 1,
+     "conflito": false
+    }
+   }
+  ]
+ },
+ "bloco": {
+  "totalWeeks": 8,
+  "sched": {
+   "corridaDays": [
+    "Seg",
+    "Ter",
+    "Sáb"
+   ],
+   "muscDays": [
+    "Seg",
+    "Qui"
+   ],
+   "longaoDay": "Sáb"
+  },
+  "dayPicks": {
+   "Seg": "ambos",
+   "Ter": "corrida",
+   "Qua": "descanso",
+   "Qui": "musc",
+   "Sex": "descanso",
+   "Sáb": "corrida",
+   "Dom": "descanso"
+  },
+  "semanas": [
+   {
+    "weekNumber": 1,
+    "phaseLabel": "Base",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 5.5,
+      "totalMin": 35,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 3.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 2,
+    "phaseLabel": "Base",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 5.5,
+      "totalMin": 36,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 3.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 3,
+    "phaseLabel": "Base",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 6,
+      "totalMin": 39,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 4,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 4,
+      "totalMin": 25,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 5,
+      "totalMin": 32,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 3,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {},
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 5,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 19,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 19,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 6.5,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 6,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3.5,
+      "totalMin": 21,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3.5,
+      "totalMin": 21,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 7,
+      "totalMin": 45,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 7,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 4,
+      "totalMin": 23,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 4,
+      "totalMin": 23,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 7.5,
+      "totalMin": 49,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 5.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 8,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Seg",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Ter",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 2,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 18,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 5.5,
+      "totalMin": 37,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 3.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Pulldown reto (braço estendido)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   }
+  ]
+ }
+}

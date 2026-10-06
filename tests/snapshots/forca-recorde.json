@@ -1,0 +1,7 @@
+{
+ "mais_peso": true,
+ "mesmo_peso_mais_reps": true,
+ "mesmo_peso_menos_reps": false,
+ "menos_peso": false,
+ "sem_historico": false
+}

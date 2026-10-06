@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "node scripts/build.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node tests/run.js",
+    "test:node": "node tests/run.js --sem-navegador",
+    "comparar": "node tests/comparar.js",
+    "snapshots:atualizar": "node tests/atualizar-snapshots.js"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +28,8 @@
   "devDependencies": {
     "@capacitor/cli": "^8.5.2",
     "esbuild": "^0.28.2",
+    "fake-indexeddb": "^6.2.5",
+    "puppeteer-core": "^24.43.1",
     "sharp": "^0.35.4"
   }
 }

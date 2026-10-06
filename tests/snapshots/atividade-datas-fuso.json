@@ -1,0 +1,26 @@
+{
+ "dom_23h30": {
+  "hoje": "2026-10-11",
+  "dia": "Dom",
+  "segunda": "2026-10-05",
+  "chaveSeg": "Seg 05/10"
+ },
+ "seg_00h30": {
+  "hoje": "2026-10-12",
+  "dia": "Seg",
+  "segunda": "2026-10-12",
+  "chaveSeg": "Seg"
+ },
+ "seg_21h30": {
+  "hoje": "2026-10-05",
+  "dia": "Seg",
+  "segunda": "2026-10-05",
+  "chaveSeg": "Seg 05/10"
+ },
+ "sab_10h": {
+  "hoje": "2026-10-10",
+  "dia": "Sáb",
+  "segunda": "2026-10-05",
+  "chaveSeg": "Seg 05/10"
+ }
+}

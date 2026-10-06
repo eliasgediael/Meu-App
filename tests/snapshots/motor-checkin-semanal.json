@@ -1,0 +1,653 @@
+{
+ "fadiga1-dornao-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 1.05
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:35min",
+    "Qui:Rodagem Leve:35min",
+    "Sáb:Longão:66min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga1-dornao-normal": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga1-dornao-dificil": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga1-dorsim-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga1-dorsim-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga1-dorsim-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dornao-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 1.05
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:35min",
+    "Qui:Rodagem Leve:35min",
+    "Sáb:Longão:66min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dornao-normal": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dornao-dificil": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dorsim-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dorsim-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga2-dorsim-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dornao-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 1.05
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:35min",
+    "Qui:Rodagem Leve:35min",
+    "Sáb:Longão:66min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dornao-normal": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dornao-dificil": {
+  "ajuste": null,
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dorsim-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dorsim-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga3-dorsim-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dornao-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qui:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dornao-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qui:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dornao-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qui:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dorsim-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dorsim-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga4-dorsim-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min★",
+    "Ter:Rodagem Leve:26min",
+    "Qua:Rodagem Leve:26min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dornao-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Qui:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:3ex:9séries",
+    "Ter:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dornao-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Qui:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:3ex:9séries",
+    "Ter:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dornao-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Qui:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:3ex:9séries",
+    "Ter:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dorsim-facil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Rodagem Leve:31min",
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dorsim-normal": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Rodagem Leve:31min",
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ },
+ "fadiga5-dorsim-dificil": {
+  "ajuste": {
+   "semana": 2,
+   "ajustes": {
+    "volumeFator": 0.8,
+    "aliviarInferior": true,
+    "semQualidade": true
+   }
+  },
+  "semana2": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Rodagem Leve:31min",
+    "Ter:Rodagem Leve:31min",
+    "Qua:Rodagem Leve:31min",
+    "Sáb:Longão:50min★"
+   ],
+   "musc": [
+    "Seg:4ex:12séries",
+    "Qui:4ex:12séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ }
+}

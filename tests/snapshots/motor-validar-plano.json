@@ -1,0 +1,89 @@
+{
+ "base": {
+  "ok": true,
+  "erros": [],
+  "avisos": []
+ },
+ "V2_sessao_maior_que_o_dia": {
+  "ok": false,
+  "erros": [
+   "V2: Seg: 999 min > 75 min disponíveis"
+  ],
+  "avisos": []
+ },
+ "V3_duas_duras_no_mesmo_dia": {
+  "ok": false,
+  "erros": [
+   "V3: Seg: 78 min > 75 min disponíveis",
+   "V3: Seg: duas sessões duras no mesmo dia",
+   "V3: Seg: inferior pesado combinado com corrida"
+  ],
+  "avisos": []
+ },
+ "V4_volume_corrida_triplicado": {
+  "ok": false,
+  "erros": [
+   "V4: volume de corrida 504 min acima de 200",
+   "V4: sessão de 189 min acima da maior corrida recente (79 min)",
+   "V10: aumento de volume sem justificativa"
+  ],
+  "avisos": []
+ },
+ "V5_corrida_acima_do_teto": {
+  "ok": false,
+  "erros": [
+   "V4: volume de corrida 324 min acima de 200",
+   "V5: corrida 8x acima do teto do nível",
+   "V10: aumento de volume sem justificativa"
+  ],
+  "avisos": []
+ },
+ "V6_treino_todos_os_dias": {
+  "ok": false,
+  "erros": [
+   "V2: Dom: 63 min > 40 min disponíveis",
+   "V6: nenhum dia livre",
+   "V9: Sáb/Dom: estímulos altos em dias consecutivos",
+   "V9: Dom/Seg: estímulos altos em dias consecutivos"
+  ],
+  "avisos": []
+ },
+ "V7_sem_equipamento": {
+  "ok": false,
+  "erros": [
+   "V1: exercício não permitido: Supino reto com barra",
+   "V1: exercício não permitido: Barra fixa (pegada neutra)",
+   "V1: exercício não permitido: Desenvolvimento na máquina",
+   "V1: exercício não permitido: Remada cavalinho (T-bar)",
+   "V1: exercício não permitido: Agachamento livre com barra",
+   "V1: exercício não permitido: Leg press 45 graus",
+   "V1: exercício não permitido: Mesa flexora (deitado)",
+   "V1: exercício não permitido: Panturrilha no leg press",
+   "V7: equipamento indisponível para Supino reto com barra: barra,banco",
+   "V7: equipamento indisponível para Barra fixa (pegada neutra): barrafixa",
+   "V7: equipamento indisponível para Desenvolvimento na máquina: maquinas",
+   "V7: equipamento indisponível para Remada cavalinho (T-bar): maquinas",
+   "V7: equipamento indisponível para Agachamento livre com barra: barra",
+   "V7: equipamento indisponível para Leg press 45 graus: legpress",
+   "V7: equipamento indisponível para Mesa flexora (deitado): extensora",
+   "V7: equipamento indisponível para Panturrilha no leg press: legpress"
+  ],
+  "avisos": []
+ },
+ "V9_duras_em_dias_seguidos": {
+  "ok": false,
+  "erros": [
+   "V3: Ter: 94 min > 75 min disponíveis",
+   "V9: Seg/Ter: estímulos altos em dias consecutivos",
+   "V9: Ter/Qua: estímulos altos em dias consecutivos"
+  ],
+  "avisos": []
+ },
+ "V10_progressao_sem_justificativa": {
+  "ok": false,
+  "erros": [
+   "V10: progressão sem justificativa"
+  ],
+  "avisos": []
+ }
+}

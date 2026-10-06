@@ -1,0 +1,85 @@
+{
+ "semana": {
+  "Seg": {
+   "corrida": "Intervalado:6.5km:39min",
+   "musc": null
+  },
+  "Ter": {
+   "corrida": "Rodagem Leve:5.5km:33min",
+   "musc": [
+    "Supino reto com barra 3x8",
+    "Barra fixa (pegada neutra) 3x10",
+    "Desenvolvimento na máquina 3x10",
+    "Remada cavalinho (T-bar) 3x10"
+   ]
+  },
+  "Qua": {
+   "corrida": null,
+   "musc": [
+    "Agachamento livre com barra 3x8",
+    "Ponte de glúteo 3x10",
+    "Leg press 45 graus 3x10"
+   ]
+  },
+  "Qui": {
+   "corrida": "Rodagem Leve:5.5km:33min",
+   "musc": null
+  },
+  "Sex": {
+   "corrida": null,
+   "musc": [
+    "Agachamento livre 3x8",
+    "Mesa flexora (deitado) 3x10",
+    "Panturrilha no leg press 3x10",
+    "Prancha 3x12"
+   ]
+  },
+  "Sáb": {
+   "corrida": "Longão:10km:63min",
+   "musc": null
+  },
+  "Dom": {
+   "corrida": null,
+   "musc": null
+  }
+ },
+ "chave": {
+  "Seg": true,
+  "Ter": false,
+  "Qua": false,
+  "Qui": false,
+  "Sex": false,
+  "Sáb": true,
+  "Dom": false
+ },
+ "porque": {
+  "Seg": {
+   "corrida": "Treino forte da semana para ganhar velocidade.",
+   "musc": null
+  },
+  "Ter": {
+   "corrida": "Corrida leve para somar quilômetros sem cansar e deixar as pernas prontas para amanhã. Ontem teve intervalado.",
+   "musc": "Força de superiores, sem cansar as pernas. Ontem teve intervalado."
+  },
+  "Qua": {
+   "corrida": null,
+   "musc": "Força de pernas."
+  },
+  "Qui": {
+   "corrida": "Corrida leve para somar quilômetros sem cansar e deixar as pernas prontas para amanhã. Ontem foi dia de pernas.",
+   "musc": null
+  },
+  "Sex": {
+   "corrida": null,
+   "musc": "Força de pernas para chegar inteiro ao longão de amanhã."
+  },
+  "Sáb": {
+   "corrida": "Longão para construir resistência. Ontem foi dia de pernas.",
+   "musc": null
+  },
+  "Dom": {
+   "corrida": null,
+   "musc": null
+  }
+ }
+}

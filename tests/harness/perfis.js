@@ -1,0 +1,26 @@
+// Os 20 perfis sintéticos da matriz (respostas do Questionário V2). Usados pela matriz de invariantes e pelos planos dourados.
+const D7 = (min, dias) => { const o = {}; ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'].forEach(d => { if (dias.includes(d)) o[d] = { on: true, min }; }); return o; };
+const BASE = { cUn: 'km', cDesNao: true, comb: 'combinar_se_preciso', dor: false, alertasOk: true, alertas: [], orient: [], dorRegioes: [], sono: '7mais', mPadroes: [] };
+const PERFIS = [
+  ['01 iniciante absoluto, 3 dias, academia', { obj: 'saude', cSit: 'nunca', mSit: 'nunca', local: 'academia', dias: D7(60, ['Seg', 'Qua', 'Sex']) }],
+  ['02 iniciante absoluto, 5 dias seguidos', { obj: 'emagrecer', cSit: 'nunca', mSit: 'nunca', local: 'academia', dias: D7(60, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex']) }],
+  ['03 corrida avançada + musc iniciante, prova 21k', { obj: 'prova', dist: 21.0975, semData: true, cSit: 'regular', cExp: 'mais3a', cFreq: 5, cMaior: '18', mSit: 'nunca', local: 'academia', dias: D7(75, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']) }],
+  ['04 musc avançada + corrida iniciante, massa', { obj: 'massa', cSit: 'nunca', mSit: 'regular', mExp: 'mais3a', mFreq: 5, mPadroes: ['agachar', 'dobradica', 'empurrarH', 'puxarV', 'puxarH', 'empurrarV'], local: 'academia', dias: D7(90, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']) }],
+  ['05 retorno pausa curta (1-3m)', { obj: 'retorno', cSit: 'parado', cExp: '1-3a', cParado: '1-3m', mSit: 'parado', mExp: '1-3a', mParado: '1-3m', local: 'academia', dias: D7(60, ['Seg', 'Qua', 'Sex', 'Sáb']) }],
+  ['06 retorno pausa longa (>1a)', { obj: 'saude', cSit: 'parado', cExp: 'mais3a', cParado: 'mais1a', mSit: 'parado', mExp: 'mais3a', mParado: 'mais1a', local: 'academia', dias: D7(60, ['Seg', 'Qua', 'Sex']) }],
+  ['07 prova 5k intermediário', { obj: 'prova', dist: 5, semData: true, cSit: 'regular', cExp: '1-3a', cFreq: 3, cMaior: '8', mSit: 'regular', mExp: '1-3a', mFreq: 2, local: 'academia', dias: D7(60, ['Seg', 'Ter', 'Qui', 'Sáb']) }],
+  ['08 prova 10k intermediário', { obj: 'prova', dist: 10, semData: true, cSit: 'regular', cExp: '1-3a', cFreq: 4, cMaior: '12', mSit: 'regular', mExp: '1-3a', mFreq: 3, mPadroes: ['agachar', 'empurrarH', 'puxarV'], local: 'academia', dias: D7(75, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']) }],
+  ['09 maratona avançado', { obj: 'prova', dist: 42.195, semData: true, cSit: 'regular', cExp: 'mais3a', cFreq: 5, cMaior: '28', mSit: 'regular', mExp: '1-3a', mFreq: 2, local: 'academia', dias: D7(120, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom']) }],
+  ['10 força, 4 dias', { obj: 'forca', cSit: 'ocasional', cExp: '6-12m', cFreq: 1, cMaior: '5', cCont: '20-30', mSit: 'regular', mExp: '1-3a', mFreq: 4, mPadroes: ['agachar', 'dobradica', 'empurrarH', 'puxarH'], local: 'academia', dias: D7(75, ['Seg', 'Ter', 'Qui', 'Sex']) }],
+  ['11 apenas 2 dias', { obj: 'saude', cSit: 'regular', cExp: '1-3a', cFreq: 2, cMaior: '6', mSit: 'regular', mExp: '1-3a', mFreq: 2, local: 'academia', dias: D7(60, ['Ter', 'Qui']) }],
+  ['12 dias consecutivos só (Seg-Qua)', { obj: 'saude', cSit: 'regular', cExp: '1-3a', cFreq: 3, cMaior: '7', mSit: 'regular', mExp: '1-3a', mFreq: 3, local: 'academia', dias: D7(60, ['Seg', 'Ter', 'Qua']) }],
+  ['13 casa com halteres', { obj: 'massa', cSit: 'ocasional', cExp: '3-6m', cFreq: 1, cMaior: '4', cCont: '10-20', mSit: 'regular', mExp: '6-12m', mFreq: 3, mPadroes: ['agachar', 'empurrarH'], local: 'casa_h', dias: D7(45, ['Seg', 'Qua', 'Sex']) }],
+  ['14 peso corporal', { obj: 'saude', cSit: 'nunca', mSit: 'ocasional', mExp: '3-6m', mFreq: 2, local: 'casa_s', dias: D7(40, ['Seg', 'Qua', 'Sex']) }],
+  ['15 dor joelho moderada', { obj: 'prova', dist: 10, semData: true, cSit: 'regular', cExp: '1-3a', cFreq: 3, cMaior: '10', mSit: 'regular', mExp: '1-3a', mFreq: 2, local: 'academia', dor: true, dorRegioes: ['joelho'], dorInt: 'moderada', dorRep: false, dias: D7(60, ['Seg', 'Ter', 'Qui', 'Sáb']) }],
+  ['16 dor lombar + ombro', { obj: 'massa', cSit: 'nunca', mSit: 'regular', mExp: '1-3a', mFreq: 3, local: 'academia', dor: true, dorRegioes: ['lombar', 'ombro'], dorInt: 'moderada', dorRep: false, dias: D7(60, ['Seg', 'Qua', 'Sex']) }],
+  ['17 dor tornozelo', { obj: 'saude', cSit: 'regular', cExp: '6-12m', cFreq: 3, cMaior: '6', mSit: 'ocasional', mExp: '3-6m', mFreq: 1, local: 'academia', dor: true, dorRegioes: ['tornozelo'], dorInt: 'leve', dorRep: false, dias: D7(60, ['Seg', 'Qua', 'Sex', 'Sáb']) }],
+  ['18 baixa recuperação (sono<6h)', { obj: 'prova', dist: 10, semData: true, cSit: 'regular', cExp: '1-3a', cFreq: 4, cMaior: '12', mSit: 'regular', mExp: '1-3a', mFreq: 3, local: 'academia', sono: 'menos6', dias: D7(60, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']) }],
+  ['19 prefere combinar no mesmo dia', { obj: 'saude', cSit: 'regular', cExp: '1-3a', cFreq: 3, cMaior: '8', mSit: 'regular', mExp: '1-3a', mFreq: 3, local: 'academia', comb: 'combinar_preferencial', dias: D7(90, ['Seg', 'Qua', 'Sex']) }],
+  ['20 exige separar', { obj: 'saude', cSit: 'regular', cExp: '1-3a', cFreq: 3, cMaior: '8', mSit: 'regular', mExp: '1-3a', mFreq: 3, local: 'academia', comb: 'separar', dias: D7(60, ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']) }],
+];
+module.exports = { PERFIS, BASE, D7 };

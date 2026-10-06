@@ -1,0 +1,733 @@
+{
+ "iniciante": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento livre com barra",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento com halteres"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "iniciante-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)",
+   "Crucifixo declinado no cabo"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Panturrilha no leg press"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "iniciante-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento livre",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha"
+  ],
+  "Puxada frontal na polia": [
+   "Elevação de cotovelos (flexão invertida)",
+   "Remada invertida",
+   "Remada invertida com joelhos flexionados",
+   "Hiperextensão lombar",
+   "Superman",
+   "Ponte de glúteo"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento livre",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ },
+ "iniciante-dor_joelho": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento com halteres",
+   "Agachamento hack com barra"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "iniciante-dor_joelho-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)",
+   "Crucifixo declinado no cabo"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Panturrilha no leg press"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "iniciante-dor_joelho-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha",
+   "Flexão de pernas invertida (barra alta)"
+  ],
+  "Puxada frontal na polia": [
+   "Elevação de cotovelos (flexão invertida)",
+   "Remada invertida",
+   "Remada invertida com joelhos flexionados",
+   "Superman",
+   "Ponte de glúteo"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha",
+   "Flexão de pernas invertida (barra alta)"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ },
+ "intermediario": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Pulldown reto (braço estendido)",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa assistida na máquina"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento livre com barra",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento com halteres"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "intermediario-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)",
+   "Crucifixo declinado no cabo"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Panturrilha no leg press"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "intermediario-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento livre",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa pegada pronada (variação)",
+   "Barra fixa supinada fechada"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento livre",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ },
+ "intermediario-dor_joelho": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Pulldown reto (braço estendido)",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa assistida na máquina"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento com halteres",
+   "Agachamento hack com barra"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "intermediario-dor_joelho-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)",
+   "Crucifixo declinado no cabo"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Panturrilha no leg press"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "intermediario-dor_joelho-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha",
+   "Flexão de pernas invertida (barra alta)"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa pegada pronada (variação)",
+   "Barra fixa supinada fechada"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)",
+   "Ponte de glúteo com marcha",
+   "Flexão de pernas invertida (barra alta)"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ },
+ "avancado": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Pulldown reto (braço estendido)",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa assistida na máquina"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento livre com barra",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento com salto",
+   "Agachamento hack",
+   "Agachamento na máquina Smith"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "avancado-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Crossover no cabo",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Leg press 45° unilateral"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "avancado-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento com salto",
+   "Agachamento livre",
+   "Agachamento dividido suspenso (TRX)",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa pegada pronada (variação)",
+   "Barra fixa supinada fechada"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento com salto",
+   "Agachamento livre",
+   "Agachamento dividido suspenso (TRX)",
+   "Agachamento dividido",
+   "Passada (afundo caminhando)",
+   "Flexão com chute lateral de perna"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ },
+ "avancado-dor_joelho": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino reto com halteres",
+   "Supino reto com pegada aberta",
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com barra",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Pulldown reto (braço estendido)",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa assistida na máquina"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento frontal com barra",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento com salto",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento com halteres"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento com halteres sentado",
+   "Desenvolvimento com halteres sentado (pegada neutra)",
+   "Desenvolvimento na máquina",
+   "Desenvolvimento militar sentado com barra",
+   "Desenvolvimento Arnold",
+   "Desenvolvimento no cabo"
+  ]
+ },
+ "avancado-dor_joelho-maquina": {
+  "Supino reto com barra": [
+   "Supino reto na máquina",
+   "Supino declinado na máquina",
+   "Supino na máquina Smith",
+   "Crossover no cabo",
+   "Supino no cabo",
+   "Peck deck (voador na máquina)"
+  ],
+  "Agachamento livre com barra": [
+   "Leg press 45 graus",
+   "Agachamento hack",
+   "Agachamento hack com pés próximos na máquina",
+   "Agachamento sumô na máquina Smith",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith"
+  ],
+  "Puxada frontal na polia": [
+   "Pulldown reto (braço estendido)",
+   "Barra fixa assistida na máquina",
+   "Barra fixa assistida em pé",
+   "Puxada supinada na máquina",
+   "Puxada com pegada neutra (alça dupla)",
+   "Puxada na polia com barra profissional"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento sumô na máquina Smith",
+   "Agachamento hack",
+   "Agachamento na máquina Smith",
+   "Agachamento hack na máquina Smith",
+   "Agachamento hack com pés próximos na máquina",
+   "Leg press 45° unilateral"
+  ],
+  "Desenvolvimento com halteres": [
+   "Desenvolvimento na máquina",
+   "Desenvolvimento no cabo",
+   "Desenvolvimento alternado no cabo",
+   "Elevação lateral na máquina",
+   "Elevação lateral no cabo",
+   "Elevação frontal no cabo"
+  ]
+ },
+ "avancado-dor_joelho-corpo": {
+  "Supino reto com barra": [
+   "Flexão de braço",
+   "Flexão relógio",
+   "Flexão declinada",
+   "Flexão inclinada",
+   "Flexão com protração escapular",
+   "Flexão com toque no ombro"
+  ],
+  "Agachamento livre com barra": [
+   "Agachamento com salto",
+   "Agachamento dividido suspenso (TRX)",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)"
+  ],
+  "Puxada frontal na polia": [
+   "Barra fixa (pegada neutra)",
+   "Barra fixa supinada",
+   "Barra fixa negativa",
+   "Barra fixa em L",
+   "Barra fixa pegada pronada (variação)",
+   "Barra fixa supinada fechada"
+  ],
+  "Leg press 45 graus": [
+   "Agachamento com salto",
+   "Agachamento dividido suspenso (TRX)",
+   "Agachamento dividido",
+   "Flexão com chute lateral de perna",
+   "Flexão com chute de perna para dentro",
+   "Elevação pélvica no banco (peso do corpo)"
+  ],
+  "Desenvolvimento com halteres": [
+   "Flexão pike",
+   "Cão-prancha dinâmico"
+  ]
+ }
+}

@@ -1,0 +1,58 @@
+{
+ "antigo": {
+  "day": "Seg",
+  "data": "2026-01-05",
+  "titulo": "Treino de segunda",
+  "duracaoSeg": 2400,
+  "volume": 3000,
+  "series": 12,
+  "cargaMax": 40,
+  "recordes": 0,
+  "exercicios": [],
+  "temDetalhe": false,
+  "anat": {
+   "primary": [],
+   "secondary": []
+  },
+  "calorias": null
+ },
+ "novo": {
+  "day": "Qui",
+  "data": "2026-10-01",
+  "titulo": "Superiores",
+  "duracaoSeg": 2700,
+  "volume": 0,
+  "series": 3,
+  "cargaMax": 50,
+  "recordes": 1,
+  "exercicios": [
+   {
+    "nome": "Supino reto com barra",
+    "grupo": "Peito",
+    "exerciseId": "0025",
+    "sets": [
+     {
+      "peso": 50,
+      "reps": 8,
+      "pse": 8
+     },
+     {
+      "peso": 50,
+      "reps": 8
+     }
+    ]
+   }
+  ],
+  "temDetalhe": true,
+  "anat": {
+   "primary": [
+    "chest"
+   ],
+   "secondary": [
+    "triceps",
+    "shoulders"
+   ]
+  },
+  "calorias": null
+ }
+}

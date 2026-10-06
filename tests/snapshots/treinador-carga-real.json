@@ -1,0 +1,56 @@
+{
+ "vazio": {
+  "pernas": "baixa",
+  "geral": "baixa",
+  "nivelPernas": 0,
+  "nivelGeral": 0,
+  "tendencia": "estável",
+  "pontosPernas": 0,
+  "razao": 0
+ },
+ "intervalado_hoje": {
+  "pernas": "moderada",
+  "geral": "baixa",
+  "nivelPernas": 1,
+  "nivelGeral": 0,
+  "tendencia": "subindo",
+  "pontosPernas": 40,
+  "razao": 1
+ },
+ "intervalado_hoje_muito_dificil": {
+  "pernas": "alta",
+  "geral": "moderada",
+  "nivelPernas": 2,
+  "nivelGeral": 1,
+  "tendencia": "subindo",
+  "pontosPernas": 56,
+  "razao": 1
+ },
+ "leg_day_ontem_9_series": {
+  "pernas": "baixa",
+  "geral": "baixa",
+  "nivelPernas": 0,
+  "nivelGeral": 0,
+  "tendencia": "subindo",
+  "pontosPernas": 15,
+  "razao": 1
+ },
+ "semana_pesada_vs_mes_leve": {
+  "pernas": "baixa",
+  "geral": "alta",
+  "nivelPernas": 0,
+  "nivelGeral": 2,
+  "tendencia": "subindo",
+  "pontosPernas": 0,
+  "razao": 48
+ },
+ "checkin_pernas_pesadas_e_dor_forte": {
+  "pernas": "alta",
+  "geral": "moderada",
+  "nivelPernas": 2,
+  "nivelGeral": 1,
+  "tendencia": "estável",
+  "pontosPernas": 0,
+  "razao": 0
+ }
+}

@@ -1698,6 +1698,25 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-holdwrap span{ font-size:10.5px; font-weight:800; color:var(--danger); text-align:center; line-height:1.15; width:76px; }
 @media (max-width:359px){ .fr-steppill{ font-size:18px; } .fr-m2 b{ font-size:28px; } }
 .fr-progchips .mrt-chip{ height:44px; padding:0 20px; font-size:15px; display:inline-flex; align-items:center; }
+.fr-hybrid-summary{ margin:18px 0 22px; padding:20px; border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface); }
+.fr-hybrid-summary .eyebrow{ font-size:12px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--text-dim); }
+.fr-hybrid-grid{ display:grid; grid-template-columns:1fr 1fr; gap:0; margin-top:16px; }
+.fr-hybrid-metric{ min-width:0; padding-right:16px; }
+.fr-hybrid-metric + .fr-hybrid-metric{ padding:0 0 0 16px; border-left:1px solid var(--border); }
+.fr-hybrid-metric .head{ display:flex; align-items:center; gap:8px; font-size:15px; font-weight:800; }
+.fr-hybrid-metric.run .head, .fr-hybrid-metric.run .big{ color:var(--data); }
+.fr-hybrid-metric .head svg{ width:22px; height:22px; }
+.fr-hybrid-metric .big{ margin-top:10px; font-size:31px; font-weight:900; letter-spacing:-1px; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.fr-hybrid-metric .big small{ font-size:15px; font-weight:700; color:var(--text-dim); }
+.fr-hybrid-metric .track{ height:7px; margin-top:10px; overflow:hidden; border-radius:99px; background:var(--surface-2); }
+.fr-hybrid-metric .track i{ display:block; height:100%; border-radius:inherit; background:var(--text); }
+.fr-hybrid-metric.run .track i{ background:var(--data); }
+.fr-recovery-row{ display:flex; align-items:center; gap:12px; margin-top:18px; padding-top:16px; border-top:1px solid var(--border); }
+.fr-recovery-row .ico{ width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:var(--surface-2); color:var(--text); }
+.fr-recovery-row .ico svg{ width:20px; height:20px; }
+.fr-recovery-row .txt{ flex:1; min-width:0; }
+.fr-recovery-row .txt b{ display:block; font-size:16px; }
+.fr-recovery-row .txt span{ display:block; margin-top:2px; font-size:13px; color:var(--text-dim); }
 .fr-progtop{ margin:18px 0 22px; }
 .fr-prognum{ font-size:42px; font-weight:800; letter-spacing:-1.4px; line-height:1.05; }
 .fr-progsub{ font-size:19px; font-weight:600; color:var(--text-dim); }
@@ -3357,6 +3376,7 @@ async function sincronizarAthleteProfileComLegado(){
    sessão de corrida (hb*), o construtor de musculação, o catálogo, o VDOT e a matriz de fadiga que já existiam.
    Regra de conflito: 1 segurança/restrições > 2 disponibilidade real > 3 capacidade atual > 4 objetivo > 5 recuperação > 6 preferências.
    Os números abaixo são PROVISÓRIOS (calibráveis) e ficam todos nesta tabela. */
+const MOTOR_ENGINE_VERSION = '2.1.0';
 const MOTOR_PARAMS = {
   minSlotCorrida:25, minSlotMusc:30, minDobro:55, diaSemInfo:40,
   minSessaoCorrida:20,
@@ -4373,7 +4393,7 @@ function motorAjustar(ajustes, erros){
 }
 function motorDescricaoBloqueio(est){
   const c = est.cautela;
-  return { status: c.motivo==='avaliacao_em_andamento' ? 'avaliacao_em_andamento' : 'cautela_pendente', bloqueado:true, motivo:c.motivo, cautela:c, decisoes:est.log, semana:null };
+  return { engineVersion:MOTOR_ENGINE_VERSION, status: c.motivo==='avaliacao_em_andamento' ? 'avaliacao_em_andamento' : 'cautela_pendente', bloqueado:true, motivo:c.motivo, cautela:c, decisoes:est.log, validacao:{ ok:false, bloqueada:true, motivo:c.motivo, erros:[], avisos:[] }, semana:null };
 }
 function motorSemanasDoPlano(est){
   const s = est.objetivo.semanasAteProva;
@@ -4469,7 +4489,7 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal){
     fadiga:tipos.fadiga, periodos, motorV2:true,
   };
   return {
-    status:'ok', bloqueado:false,
+    engineVersion:MOTOR_ENGINE_VERSION, status:'ok', bloqueado:false,
     semana:week,
     sessoes:semana.sessoes, cortes:semana.cortes, descartadas:semana.descartadas,
     descanso:DAY_ABBR.filter(d=>!corridaDays.includes(d) && !muscDays.includes(d)),
@@ -4523,7 +4543,7 @@ async function gerarPrimeiroPlanoV2(opcoes){
   }
   const draft = toLegacyDraft(state.athleteProfile);
   const foco = focoFromObjetivo(draft.objetivo);
-  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
+  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, engineVersion:r.engineVersion, decisoes:r.decisoes, validacao:r.validacao, inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
   await saveHybridPlanData();
   return r;
 }
@@ -4736,9 +4756,6 @@ const DOR_PARA_DOMS = { 1:0, 2:4, 3:7 };
 async function registrarCheckinDiario(resp){
   state.checkinDiario = state.checkinDiario || {};
   state.checkinDiario[todayISO()] = { ...resp, em:Date.now() };
-  // Mantém só ~60 dias.
-  const chaves = Object.keys(state.checkinDiario).sort();
-  chaves.slice(0, Math.max(0, chaves.length-60)).forEach(k=>delete state.checkinDiario[k]);
   await saveCheckinDiario();
   // A dor nas pernas do check-in é a mesma informação da escala de DOMS: alimenta a regra existente
   // (dor ≥7 → corrida regenerativa e −25% nas séries de perna só hoje).
@@ -4776,7 +4793,6 @@ async function saveDiarioTreinador(){ try{ await window.storage.set('diarioTrein
 function registrarNoDiario(reg){
   state.diarioTreinador = state.diarioTreinador || [];
   state.diarioTreinador.unshift({ data:todayISO(), em:Date.now(), ...reg });
-  if(state.diarioTreinador.length>200) state.diarioTreinador.length = 200;
   saveDiarioTreinador();
 }
 function resumoCorrida(e){ return e ? `${e.type||'Corrida'}${e.totalKm ? ' · '+String(e.totalKm).replace('.',',')+' km' : ''}` : 'sem corrida'; }
@@ -9858,7 +9874,6 @@ async function saveWorkoutSession(){
   try{ await window.storage.set('workoutSession', state.workoutSession ? JSON.stringify(state.workoutSession) : '', false); }catch(e){}
 }
 async function saveWorkoutSessionsLog(){
-  if(state.workoutSessionsLog.length>200) state.workoutSessionsLog = state.workoutSessionsLog.slice(-200);
   try{ await window.storage.set('workoutSessionsLog', JSON.stringify(state.workoutSessionsLog), false); }catch(e){}
 }
 // Registra uma série de cada vez (não o dia inteiro de uma vez) — é assim que a execução guiada anota,
@@ -15377,6 +15392,24 @@ function renderProgressoV2(){
   const treinosSemana = freq.map(x=>x.v);
   const ult2 = treinosSemana.slice(-2).reduce((a,b)=>a+b,0), ant2 = treinosSemana.slice(-4,-2).reduce((a,b)=>a+b,0);
   const consist = !freqItens.length ? '' : ult2>ant2 ? 'Consistência em alta' : ult2<ant2 ? 'Consistência em queda' : 'Consistência estável';
+  const semanaAtualISO = vdotISODate(vdotMondayOf(new Date()));
+  const runsSemana = corridasConcluidas().filter(r=>semanaDe(r.data)===semanaAtualISO);
+  const kmAtual = runsSemana.reduce((t,r)=>t+(parseFloat(r.km)||0),0);
+  const kmMeta = DAY_ABBR.reduce((t,d)=>{ const e=treinoEntryForDay(d); return t+(e&&e.totalKm ? parseFloat(e.totalKm)||0 : 0); },0);
+  const forcaAtual = (state.workoutSessionsLog||[]).filter(s=>s.data && semanaDe(s.data)===semanaAtualISO).length;
+  const forcaMeta = DAY_ABBR.filter(d=>(muscListForDay(d)||[]).length>0).length;
+  const ciHoje = (state.checkinDiario||{})[todayISO()] || null;
+  const recuperacao = ciHoje && (ciHoje.dor===3 || ciHoje.pernas===3 || ciHoje.energia===1) ? 'Recuperação reduzida' : 'Recuperação boa';
+  const recuperacaoSub = ciHoje ? 'Com base no check-in de hoje.' : 'Faça o check-in para personalizar a leitura.';
+  const pct = (v,m)=>m>0?Math.min(100,Math.round(v/m*100)):0;
+  const resumoHibrido = `<div class="fr-hybrid-summary">
+    <div class="eyebrow">Esta semana</div>
+    <div class="fr-hybrid-grid">
+      <div class="fr-hybrid-metric run"><div class="head">${ICONS.run}<span>Corrida</span></div><div class="big">${String(Math.round(kmAtual*10)/10).replace('.',',')} <small>/ ${String(Math.round(kmMeta*10)/10).replace('.',',')} km</small></div><div class="track"><i style="width:${pct(kmAtual,kmMeta)}%"></i></div></div>
+      <div class="fr-hybrid-metric"><div class="head">${ICONS.dumbbell}<span>Força</span></div><div class="big">${forcaAtual} <small>/ ${forcaMeta} treinos</small></div><div class="track"><i style="width:${pct(forcaAtual,forcaMeta)}%"></i></div></div>
+    </div>
+    <div class="fr-recovery-row"><span class="ico">${ICONS.heart}</span><div class="txt"><b>${recuperacao}</b><span>${recuperacaoSub}</span></div><span class="chev">${DS_CHEV}</span></div>
+  </div>`;
   const topo = `<div class="fr-progtop"><div class="fr-prognum">${ult2} treino${ult2===1?'':'s'}</div><div class="fr-progsub">nas últimas 2 semanas</div>
     ${consist ? `<div class="fr-progtrend ${ult2<ant2?'down':''}">${ICONS.trendUp}<span>${consist}</span></div>` : ''}</div>
     <div class="fr-proglbl">Treinos por semana</div>
@@ -15425,7 +15458,7 @@ function renderProgressoV2(){
     ${renderMuscHistoryV2()}
   </div>`;
   const secMed = `<div class="fr-progsec"><button class="fr-proghead" data-progdet="medidas"><span class="ic">${ICONS.ruler}</span><span class="t">Medidas corporais</span><span class="chev ${det==='medidas'?'open':''}">${DS_CHEV}</span></button>${det==='medidas' ? cardMed : ''}</div>`;
-  return `<div class="mrt-chips fr-progchips">${chips}</div>${topo}${secCorrida}${secMusc}${secMed}`;
+  return `<div class="mrt-chips fr-progchips">${chips}</div>${resumoHibrido}${topo}${secCorrida}${secMusc}${secMed}`;
 }
 function wireProgressoV2(){
   document.querySelectorAll('[data-progperiodo]').forEach(el=>{ el.onclick = ()=>{ state.progPeriodo = el.getAttribute('data-progperiodo'); render(); }; });

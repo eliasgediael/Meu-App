@@ -1,0 +1,3530 @@
+{
+ "perfil": "04 musc avançada + corrida iniciante, massa",
+ "semana1": {
+  "capacidade": {
+   "corrida": "iniciante",
+   "musc": "avancado"
+  },
+  "prioridade": {
+   "tipo": "musculacao",
+   "principal": "musculacao",
+   "secundaria": "corrida",
+   "folga": false,
+   "motivo": "objetivo de musculação"
+  },
+  "confianca": "media",
+  "calibracao": {
+   "ativa": true,
+   "corrida": true,
+   "musc": false,
+   "motivos": [
+    "corrida_nunca"
+   ]
+  },
+  "resumo": {
+   "sessoesCorrida": 2,
+   "sessoesMusculacao": 4,
+   "diasDeTreino": 5,
+   "dobros": 1,
+   "corridaMin": 58,
+   "musculacaoMin": 182,
+   "volumePartidaCorrida": 60
+  },
+  "sched": {
+   "corridaDays": [
+    "Ter",
+    "Sáb"
+   ],
+   "muscDays": [
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui"
+   ],
+   "longaoDay": "Sáb"
+  },
+  "dayPicks": {
+   "Seg": "musc",
+   "Ter": "ambos",
+   "Qua": "musc",
+   "Qui": "musc",
+   "Sex": "descanso",
+   "Sáb": "corrida",
+   "Dom": "descanso"
+  },
+  "descanso": [
+   "Sex",
+   "Dom"
+  ],
+  "alertas": [
+   "calibracao"
+  ],
+  "ajustes": {
+   "reduzir": 0,
+   "semQualidade": false,
+   "semDobros": false,
+   "volumeFator": 1,
+   "aliviarInferior": false,
+   "semProgressao": false
+  },
+  "validacao": {
+   "ok": true,
+   "ciclos": 1,
+   "erros": [],
+   "avisos": [],
+   "historico": [
+    {
+     "ciclo": 1,
+     "erros": []
+    }
+   ]
+  },
+  "progressoes": [],
+  "trajetoria": [
+   {
+    "semana": 1,
+    "fase": "Retomada / calibração",
+    "alternancia": null,
+    "corridaMinAlvo": 60,
+    "muscSeriesFator": 0.85,
+    "progressao": "manter",
+    "nota": "semana 1: sem aumento sobre a carga inicial"
+   },
+   {
+    "semana": 2,
+    "fase": "Retomada / calibração",
+    "alternancia": null,
+    "corridaMinAlvo": 60,
+    "muscSeriesFator": 0.85,
+    "progressao": "manter",
+    "nota": ""
+   },
+   {
+    "semana": 3,
+    "fase": "Base",
+    "alternancia": null,
+    "corridaMinAlvo": 65,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 4,
+    "fase": "Descarga",
+    "alternancia": null,
+    "corridaMinAlvo": 49,
+    "muscSeriesFator": 1,
+    "progressao": "manter",
+    "nota": ""
+   },
+   {
+    "semana": 5,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 70,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 6,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 76,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 7,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 82,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 8,
+    "fase": "Descarga",
+    "alternancia": null,
+    "corridaMinAlvo": 61,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   }
+  ],
+  "sessoes": [
+   {
+    "dia": "Seg",
+    "modalidade": "musculacao",
+    "tipo": "lower",
+    "foco": "hipertrofia",
+    "duracaoMin": 45,
+    "combinada": false,
+    "dura": true,
+    "exercicios": 7
+   },
+   {
+    "dia": "Ter",
+    "modalidade": "corrida",
+    "tipo": "leve",
+    "duracaoMin": 26,
+    "combinada": true,
+    "dura": false,
+    "km": 2.5
+   },
+   {
+    "dia": "Ter",
+    "modalidade": "musculacao",
+    "tipo": "upper",
+    "foco": "hipertrofia",
+    "duracaoMin": 46,
+    "combinada": true,
+    "dura": false,
+    "exercicios": 7
+   },
+   {
+    "dia": "Qua",
+    "modalidade": "musculacao",
+    "tipo": "upper",
+    "foco": "hipertrofia",
+    "duracaoMin": 46,
+    "combinada": false,
+    "dura": false,
+    "exercicios": 7
+   },
+   {
+    "dia": "Qui",
+    "modalidade": "musculacao",
+    "tipo": "lower",
+    "foco": "hipertrofia",
+    "duracaoMin": 45,
+    "combinada": false,
+    "dura": true,
+    "exercicios": 7
+   },
+   {
+    "dia": "Sáb",
+    "modalidade": "corrida",
+    "tipo": "longa",
+    "duracaoMin": 32,
+    "combinada": false,
+    "dura": false,
+    "km": 3
+   }
+  ],
+  "cortes": [],
+  "descartadas": [],
+  "semana": {
+   "weekNumber": 1,
+   "phaseLabel": "Retomada / calibração",
+   "totalWeeks": 8,
+   "pendente": false,
+   "corrida": [
+    {
+     "day": "Ter",
+     "type": "Rodagem Leve",
+     "sessao": "RUN_EASY_Z2",
+     "totalKm": 2.5,
+     "totalMin": 26,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 0.5,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 1.5,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z2"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 0.5,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z1"
+      }
+     ]
+    },
+    {
+     "day": "Sáb",
+     "type": "Longão",
+     "sessao": "RUN_LONG_RUN",
+     "totalKm": 3,
+     "totalMin": 32,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 0.5,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 2,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z2"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 0.5,
+       "pace": "7:30 ~ 8:19/km",
+       "zona": "Z1"
+      }
+     ]
+    }
+   ],
+   "musc": {
+    "Seg": [
+     {
+      "nome": "Agachamento livre com barra",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "6",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Stiff com barra",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Leg press 45 graus",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Cadeira extensora",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Elevação de panturrilha em pé",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Mesa flexora (deitado)",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Cadeira adutora",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     }
+    ],
+    "Ter": [
+     {
+      "nome": "Supino reto com barra",
+      "grupo": "Peito",
+      "series": "4",
+      "reps": "6",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Barra fixa (pegada neutra)",
+      "grupo": "Costas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Desenvolvimento com halteres sentado",
+      "grupo": "Ombro",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Remada curvada com barra",
+      "grupo": "Costas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Elevação lateral com halteres",
+      "grupo": "Ombro",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Tríceps testa com barra",
+      "grupo": "Braço",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Rosca direta com barra",
+      "grupo": "Braço",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     }
+    ],
+    "Qua": [
+     {
+      "nome": "Supino reto com halteres",
+      "grupo": "Peito",
+      "series": "4",
+      "reps": "6",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Barra fixa supinada",
+      "grupo": "Costas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Desenvolvimento militar sentado com barra",
+      "grupo": "Ombro",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Remada curvada com halteres",
+      "grupo": "Costas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Elevação lateral no cabo",
+      "grupo": "Ombro",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Tríceps testa com halteres",
+      "grupo": "Braço",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Rosca direta com halteres",
+      "grupo": "Braço",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     }
+    ],
+    "Qui": [
+     {
+      "nome": "Agachamento livre",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "6",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Stiff com halteres",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Panturrilha no leg press",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Cadeira flexora (sentado)",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Elevação de panturrilha sentado",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Mesa flexora (deitado)",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Cadeira abdutora",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "10",
+      "carga": "",
+      "descanso": "60s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     }
+    ]
+   },
+   "legEasingNotes": []
+  },
+  "decisoes": [
+   {
+    "etapa": 1,
+    "regra": "nivel_corrida",
+    "motivo": "nunca correu",
+    "dados": {
+     "nivel": "iniciante",
+     "situacao": "nunca"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "nivel_musculacao",
+    "motivo": "frequência limitada pelo histórico",
+    "dados": {
+     "nivel": "avancado",
+     "situacao": "regular"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "vdot_padrao",
+    "motivo": "sem desempenho válido: padrão do nível",
+    "dados": {
+     "nivel": "iniciante",
+     "vdot": 30
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "carga_inicial_corrida",
+    "motivo": "carga que provavelmente se sustenta agora",
+    "dados": {
+     "min": 60,
+     "fonte": "nunca_corri",
+     "incerteza": 0,
+     "fatorVolume": 1,
+     "volumeRef": 90
+    }
+   },
+   {
+    "etapa": 2,
+    "regra": "prioridade",
+    "motivo": "objetivo de musculação",
+    "dados": {
+     "tipo": "musculacao",
+     "principal": "musculacao",
+     "folgaSecundaria": false
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "teto_por_nivel",
+    "motivo": "frequência declarada acima do teto do nível",
+    "dados": {
+     "modalidade": "musc",
+     "declarada": 5,
+     "teto": 4
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "frequencia",
+    "motivo": "sessões, dias e combinações decididos",
+    "dados": {
+     "sessoes": {
+      "corrida": 2,
+      "musc": 4
+     },
+     "diasUteis": 6,
+     "maxDiasTreino": 5,
+     "dobrosMin": 1,
+     "dobrosPermitidos": 1,
+     "dobroProibido": null
+    }
+   },
+   {
+    "etapa": 4,
+    "regra": "distribuicao",
+    "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
+    "dados": {
+     "custo": 55,
+     "avaliadas": 600,
+     "dobros": 1,
+     "conflito": false
+    }
+   }
+  ]
+ },
+ "bloco": {
+  "totalWeeks": 8,
+  "sched": {
+   "corridaDays": [
+    "Ter",
+    "Sáb"
+   ],
+   "muscDays": [
+    "Seg",
+    "Ter",
+    "Qua",
+    "Qui"
+   ],
+   "longaoDay": "Sáb"
+  },
+  "dayPicks": {
+   "Seg": "musc",
+   "Ter": "ambos",
+   "Qua": "musc",
+   "Qui": "musc",
+   "Sex": "descanso",
+   "Sáb": "corrida",
+   "Dom": "descanso"
+  },
+  "semanas": [
+   {
+    "weekNumber": 1,
+    "phaseLabel": "Retomada / calibração",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 2.5,
+      "totalMin": 26,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3,
+      "totalMin": 32,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 2,
+    "phaseLabel": "Retomada / calibração",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 2.5,
+      "totalMin": 26,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3,
+      "totalMin": 32,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 3,
+    "phaseLabel": "Base",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 29,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3.5,
+      "totalMin": 35,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 4,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 2,
+      "totalMin": 20,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3,
+      "totalMin": 29,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 5,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 32,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 4,
+      "totalMin": 41,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 3,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 6,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3.5,
+      "totalMin": 35,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3.5,
+      "totalMin": 38,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 7,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3.5,
+      "totalMin": 35,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3.5,
+      "totalMin": 38,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 8,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [
+     {
+      "day": "Ter",
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 2.5,
+      "totalMin": 26,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 1.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3.5,
+      "totalMin": 35,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 2.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
+        "pace": "7:30 ~ 8:19/km",
+        "zona": "Z1"
+       }
+      ]
+     }
+    ],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com barra",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha em pé",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira adutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Ter": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento com halteres sentado",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com barra",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral com halteres",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com barra",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com halteres",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Barra fixa supinada",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento militar sentado com barra",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada curvada com halteres",
+       "grupo": "Costas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Rosca direta com halteres",
+       "grupo": "Braço",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "6",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Stiff com halteres",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Panturrilha no leg press",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira flexora (sentado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Elevação de panturrilha sentado",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira abdutora",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "10",
+       "carga": "",
+       "descanso": "60s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   }
+  ]
+ }
+}

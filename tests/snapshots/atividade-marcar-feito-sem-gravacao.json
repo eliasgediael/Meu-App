@@ -1,0 +1,11 @@
+{
+ "progresso": {
+  "kmOriginal": "4.67",
+  "done": true,
+  "shoeCredit": {
+   "tenisId": "t1",
+   "km": 5.5
+  }
+ },
+ "tenis": 105.5
+}

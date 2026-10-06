@@ -1,0 +1,1831 @@
+{
+ "perfil": "13 casa com halteres",
+ "semana1": {
+  "capacidade": {
+   "corrida": "iniciante",
+   "musc": "iniciante"
+  },
+  "prioridade": {
+   "tipo": "musculacao",
+   "principal": "musculacao",
+   "secundaria": "corrida",
+   "folga": false,
+   "motivo": "objetivo de musculação"
+  },
+  "confianca": "media",
+  "calibracao": {
+   "ativa": true,
+   "corrida": true,
+   "musc": false,
+   "motivos": [
+    "corrida_ocasional"
+   ]
+  },
+  "resumo": {
+   "sessoesCorrida": 0,
+   "sessoesMusculacao": 3,
+   "diasDeTreino": 3,
+   "dobros": 0,
+   "corridaMin": 0,
+   "musculacaoMin": 87,
+   "volumePartidaCorrida": 36
+  },
+  "sched": {
+   "corridaDays": [],
+   "muscDays": [
+    "Seg",
+    "Qua",
+    "Sex"
+   ],
+   "longaoDay": null
+  },
+  "dayPicks": {
+   "Seg": "musc",
+   "Ter": "descanso",
+   "Qua": "musc",
+   "Qui": "descanso",
+   "Sex": "musc",
+   "Sáb": "descanso",
+   "Dom": "descanso"
+  },
+  "descanso": [
+   "Ter",
+   "Qui",
+   "Sáb",
+   "Dom"
+  ],
+  "alertas": [
+   "calibracao",
+   "modalidade_fora_da_semana:corrida"
+  ],
+  "ajustes": {
+   "reduzir": 0,
+   "semQualidade": false,
+   "semDobros": false,
+   "volumeFator": 1,
+   "aliviarInferior": false,
+   "semProgressao": false
+  },
+  "validacao": {
+   "ok": true,
+   "ciclos": 1,
+   "erros": [],
+   "avisos": [],
+   "historico": [
+    {
+     "ciclo": 1,
+     "erros": []
+    }
+   ]
+  },
+  "progressoes": [],
+  "trajetoria": [
+   {
+    "semana": 1,
+    "fase": "Retomada / calibração",
+    "alternancia": null,
+    "corridaMinAlvo": 36,
+    "muscSeriesFator": 0.85,
+    "progressao": "manter",
+    "nota": "semana 1: sem aumento sobre a carga inicial"
+   },
+   {
+    "semana": 2,
+    "fase": "Retomada / calibração",
+    "alternancia": {
+     "priorizar": [
+      "corrida"
+     ],
+     "motivo": "ficou fora da semana anterior por falta de espaço"
+    },
+    "corridaMinAlvo": 36,
+    "muscSeriesFator": 0.85,
+    "progressao": "manter",
+    "nota": ""
+   },
+   {
+    "semana": 3,
+    "fase": "Base",
+    "alternancia": null,
+    "corridaMinAlvo": 39,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 4,
+    "fase": "Descarga",
+    "alternancia": {
+     "priorizar": [
+      "corrida"
+     ],
+     "motivo": "ficou fora da semana anterior por falta de espaço"
+    },
+    "corridaMinAlvo": 29,
+    "muscSeriesFator": 1,
+    "progressao": "manter",
+    "nota": ""
+   },
+   {
+    "semana": 5,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 42,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 6,
+    "fase": "Construção",
+    "alternancia": {
+     "priorizar": [
+      "corrida"
+     ],
+     "motivo": "ficou fora da semana anterior por falta de espaço"
+    },
+    "corridaMinAlvo": 45,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 7,
+    "fase": "Construção",
+    "alternancia": null,
+    "corridaMinAlvo": 49,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   },
+   {
+    "semana": 8,
+    "fase": "Descarga",
+    "alternancia": {
+     "priorizar": [
+      "corrida"
+     ],
+     "motivo": "ficou fora da semana anterior por falta de espaço"
+    },
+    "corridaMinAlvo": 37,
+    "muscSeriesFator": 1,
+    "progressao": "volume_gradual",
+    "nota": ""
+   }
+  ],
+  "sessoes": [
+   {
+    "dia": "Seg",
+    "modalidade": "musculacao",
+    "tipo": "full",
+    "foco": "hipertrofia",
+    "duracaoMin": 29,
+    "combinada": false,
+    "dura": false,
+    "exercicios": 5
+   },
+   {
+    "dia": "Qua",
+    "modalidade": "musculacao",
+    "tipo": "full",
+    "foco": "hipertrofia",
+    "duracaoMin": 29,
+    "combinada": false,
+    "dura": false,
+    "exercicios": 5
+   },
+   {
+    "dia": "Sex",
+    "modalidade": "musculacao",
+    "tipo": "full",
+    "foco": "hipertrofia",
+    "duracaoMin": 29,
+    "combinada": false,
+    "dura": false,
+    "exercicios": 5
+   }
+  ],
+  "cortes": [],
+  "descartadas": [],
+  "semana": {
+   "weekNumber": 1,
+   "phaseLabel": "Retomada / calibração",
+   "totalWeeks": 8,
+   "pendente": false,
+   "corrida": [],
+   "musc": {
+    "Seg": [
+     {
+      "nome": "Agachamento livre",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Flexão de braço",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Hiperextensão lombar",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Cadeira (wall sit)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Encolhimento com halteres",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     }
+    ],
+    "Qua": [
+     {
+      "nome": "Agachamento com halteres (goblet)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Flexão de braço",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Ponte de glúteo",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Cadeira (wall sit)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Hiperextensão lombar",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     }
+    ],
+    "Sex": [
+     {
+      "nome": "Agachamento com halteres",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Flexão de braço",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Hiperextensão lombar",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Cadeira (wall sit)",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Encolhimento com halteres",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "90s",
+      "tier": 2,
+      "sessao": "FULL_BODY_LIGHT"
+     }
+    ]
+   },
+   "legEasingNotes": []
+  },
+  "decisoes": [
+   {
+    "etapa": 1,
+    "regra": "nivel_corrida",
+    "motivo": "corre de vez em quando",
+    "dados": {
+     "nivel": "iniciante",
+     "situacao": "ocasional"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "nivel_musculacao",
+    "motivo": "frequência limitada pelo histórico",
+    "dados": {
+     "nivel": "iniciante",
+     "situacao": "regular"
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "vdot_padrao",
+    "motivo": "sem desempenho válido: padrão do nível",
+    "dados": {
+     "nivel": "iniciante",
+     "vdot": 30
+    }
+   },
+   {
+    "etapa": 1,
+    "regra": "carga_inicial_corrida",
+    "motivo": "carga que provavelmente se sustenta agora",
+    "dados": {
+     "min": 36,
+     "fonte": "freq_x_maior_conservador",
+     "incerteza": 0,
+     "fatorVolume": 1,
+     "volumeRef": 90
+    }
+   },
+   {
+    "etapa": 2,
+    "regra": "prioridade",
+    "motivo": "objetivo de musculação",
+    "dados": {
+     "tipo": "musculacao",
+     "principal": "musculacao",
+     "folgaSecundaria": false
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "preserva_frequencia_por_prioridade",
+    "motivo": "mais sessões desejadas que espaço (dias + combinações seguras)",
+    "dados": {
+     "desejadas": {
+      "corrida": 1,
+      "musc": 3
+     },
+     "final": {
+      "corrida": 0,
+      "musc": 3
+     },
+     "capacidadeSessoes": 3,
+     "principal": "musculacao"
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "modalidade_fora_da_semana",
+    "motivo": "sem espaço nesta semana: alternar/adaptar na seguinte",
+    "dados": {
+     "modalidade": "corrida"
+    }
+   },
+   {
+    "etapa": 3,
+    "regra": "frequencia",
+    "motivo": "sessões, dias e combinações decididos",
+    "dados": {
+     "sessoes": {
+      "corrida": 0,
+      "musc": 3
+     },
+     "diasUteis": 3,
+     "maxDiasTreino": 3,
+     "dobrosMin": 0,
+     "dobrosPermitidos": 0,
+     "dobroProibido": null
+    }
+   },
+   {
+    "etapa": 4,
+    "regra": "distribuicao",
+    "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
+    "dados": {
+     "custo": 14,
+     "avaliadas": 1,
+     "dobros": 0,
+     "conflito": false
+    }
+   }
+  ]
+ },
+ "bloco": {
+  "totalWeeks": 8,
+  "sched": {
+   "corridaDays": [],
+   "muscDays": [
+    "Seg",
+    "Qua",
+    "Sex"
+   ],
+   "longaoDay": null
+  },
+  "dayPicks": {
+   "Seg": "musc",
+   "Ter": "descanso",
+   "Qua": "musc",
+   "Qui": "descanso",
+   "Sex": "musc",
+   "Sáb": "descanso",
+   "Dom": "descanso"
+  },
+  "semanas": [
+   {
+    "weekNumber": 1,
+    "phaseLabel": "Retomada / calibração",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 2,
+    "phaseLabel": "Retomada / calibração",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 3,
+    "phaseLabel": "Base",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 4,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 5,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 6,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 7,
+    "phaseLabel": "Construção",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   },
+   {
+    "weekNumber": 8,
+    "phaseLabel": "Descarga",
+    "totalWeeks": 8,
+    "pendente": false,
+    "corrida": [],
+    "musc": {
+     "Seg": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Agachamento com halteres (goblet)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Ponte de glúteo",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Agachamento com halteres",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Flexão de braço",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Hiperextensão lombar",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Cadeira (wall sit)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "90s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ]
+    },
+    "legEasingNotes": []
+   }
+  ]
+ }
+}

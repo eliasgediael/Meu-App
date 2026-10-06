@@ -1,0 +1,27 @@
+{
+ "salvar": {
+  "tenis": 104.7,
+  "km": "4.67",
+  "tempo": "30:00",
+  "pace": "6:25/km",
+  "done": true,
+  "temGravacao": true
+ },
+ "corrigir": {
+  "tenis": 105,
+  "km": "5",
+  "tempo": "30:00",
+  "pace": "6:00/km",
+  "data": "2026-10-06",
+  "kmOriginal": "4.67",
+  "gravacaoKm": 5,
+  "gravacaoSeg": 1800
+ },
+ "excluir": {
+  "tenis": 100,
+  "progresso": {
+   "kmOriginal": "4.67"
+  },
+  "temGravacao": false
+ }
+}

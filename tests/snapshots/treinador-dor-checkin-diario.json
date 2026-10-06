@@ -1,0 +1,18 @@
+{
+ "hoje": "2026-10-05",
+ "doms": {
+  "2026-10-05": 7
+ },
+ "mudou": {
+  "Seg": {
+   "antes": {
+    "corrida": "Intervalado:6.5km:39min",
+    "musc": null
+   },
+   "depois": {
+    "corrida": "Corrida Regenerativa:5km:33min",
+    "musc": null
+   }
+  }
+ }
+}

@@ -1,0 +1,29 @@
+{
+ "leg_hoje_intervalado_amanha": {
+  "Seg": [
+   "pernas pesadas na véspera de corrida forte"
+  ],
+  "Ter": [
+   "corrida forte no dia seguinte às pernas pesadas"
+  ]
+ },
+ "intervalado_ontem_leg_hoje": {
+  "Ter": [
+   "pernas pesadas no dia seguinte a corrida forte"
+  ]
+ },
+ "intervalado_e_leg_mesmo_dia": {
+  "Ter": [
+   "corrida forte e pernas pesadas no mesmo dia"
+  ]
+ },
+ "dois_fortes_seguidos": {
+  "Seg": [
+   "dois treinos fortes de corrida seguidos"
+  ],
+  "Ter": [
+   "dois treinos fortes de corrida seguidos"
+  ]
+ },
+ "leve_e_superiores": {}
+}

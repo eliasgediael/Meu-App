@@ -1,0 +1,48 @@
+{
+ "sintomas_esforco": {
+  "bloqueado": true,
+  "status": "cautela_pendente",
+  "motivo": "cautela_pendente"
+ },
+ "gestacao": {
+  "bloqueado": true,
+  "status": "cautela_pendente",
+  "motivo": "cautela_pendente"
+ },
+ "cirurgia": {
+  "bloqueado": true,
+  "status": "cautela_pendente",
+  "motivo": "cautela_pendente"
+ },
+ "orientacao_profissional": {
+  "bloqueado": true,
+  "status": "cautela_pendente",
+  "motivo": "cautela_pendente"
+ },
+ "nao_respondeu": {
+  "bloqueado": false,
+  "alertas": [],
+  "ajustes": {
+   "reduzir": 0,
+   "semQualidade": false,
+   "semDobros": false,
+   "volumeFator": 1,
+   "aliviarInferior": false,
+   "semProgressao": false
+  },
+  "semana": {
+   "fase": "Base",
+   "corrida": [
+    "Seg:Intervalado:39min",
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min"
+   ],
+   "musc": [
+    "Ter:4ex:12séries",
+    "Qua:3ex:9séries",
+    "Sex:4ex:12séries"
+   ]
+  }
+ }
+}

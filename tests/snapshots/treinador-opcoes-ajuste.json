@@ -1,0 +1,145 @@
+{
+ "Seg": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Deixar mais leve",
+   "desc": "Troca o treino forte por corrida leve na mesma distância.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Reduzir para 4,5 km",
+   "desc": "Mesmo tipo de treino, cerca de 30% menos volume.",
+   "recomendado": true
+  },
+  {
+   "titulo": "Trocar por regenerativo",
+   "desc": "30 min bem leves no lugar do treino forte.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "O treino-chave é descartado nesta semana.",
+   "recomendado": false
+  }
+ ],
+ "Ter": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Deixar mais leve",
+   "desc": "Mesmos exercícios com esforço moderado (~10% menos carga).",
+   "recomendado": false
+  },
+  {
+   "titulo": "Reduzir para 4 km",
+   "desc": "Mesmo tipo de treino, cerca de 30% menos volume.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Mover para quarta",
+   "desc": "Passa a sessão para outro dia livre da semana.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "Hoje fica só mobilidade leve.",
+   "recomendado": true
+  }
+ ],
+ "Qua": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Deixar mais leve",
+   "desc": "Mesmos exercícios com esforço moderado (~10% menos carga).",
+   "recomendado": true
+  },
+  {
+   "titulo": "Versão curta",
+   "desc": "Mantém os exercícios principais e tira uma série de cada.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "Hoje fica só mobilidade leve.",
+   "recomendado": false
+  }
+ ],
+ "Qui": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Reduzir para 4 km",
+   "desc": "Mesmo tipo de treino, cerca de 30% menos volume.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "Hoje fica só mobilidade leve.",
+   "recomendado": true
+  }
+ ],
+ "Sex": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Deixar mais leve",
+   "desc": "Mesmos exercícios com esforço moderado (~10% menos carga).",
+   "recomendado": true
+  },
+  {
+   "titulo": "Versão curta",
+   "desc": "Mantém os exercícios principais e tira uma série de cada.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "Hoje fica só mobilidade leve.",
+   "recomendado": false
+  }
+ ],
+ "Sáb": [
+  {
+   "titulo": "Manter como está",
+   "desc": "Aqueça bem e pare se sentir dor fora do normal.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Reduzir para 7 km",
+   "desc": "Mesmo tipo de treino, cerca de 30% menos volume.",
+   "recomendado": true
+  },
+  {
+   "titulo": "Trocar por regenerativo",
+   "desc": "30 min bem leves no lugar do treino forte.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Mover para domingo",
+   "desc": "Faz o treino importante com o corpo mais descansado.",
+   "recomendado": false
+  },
+  {
+   "titulo": "Descansar hoje",
+   "desc": "O treino-chave é descartado nesta semana.",
+   "recomendado": false
+  }
+ ],
+ "Dom": []
+}
