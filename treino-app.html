@@ -13548,17 +13548,16 @@ function wireTreinadorUI(){
     };
   });
 }
-// Bloco "por quê + ajustar + check-in" dentro do card do treino (tela Treino).
+// Bloco "por quê + check-in" dentro do card do treino (tela Treino). Sem o "Ajustar" genérico: ajustes ficam
+// nos contextos próprios (trocar exercício, editar séries, mudar o dia).
 function renderPorQueEAjuste(day, sub){
   const txt = porQueHoje(day, sub);
   const ehSemanaAtual = (state.weekOffset||0)===0;
-  const podeAjustar = ehSemanaAtual && DAY_ABBR.indexOf(day)>=hojeIdx() && opcoesAjuste(day).length>0;
   const ehHoje = ehSemanaAtual && day===hojeAbbr();
   const ci = (state.checkinDiario||{})[todayISO()];
   const rotCk = ci ? `Hoje: energia ${['','baixa','ok','alta'][ci.energia]} · pernas ${['','leves','normais','pesadas'][ci.pernas]}` : 'Como você está hoje?';
   return `${txt ? `<div class="ds-why">${txt}</div>` : ''}
-    ${ehHoje ? `<button class="ds-row ds-inrow" data-abrircheckin="1" style="margin:0 0 12px;"><span class="nm">${rotCk}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
-    ${podeAjustar ? `<button class="btn-secondary" style="margin-bottom:10px;" data-ajustar="${day}">Ajustar</button>` : ''}`;
+    ${ehHoje ? `<button class="ds-row ds-inrow" data-abrircheckin="1" style="margin:0 0 12px;"><span class="nm">${rotCk}</span><span class="chev">${DS_CHEV}</span></button>` : ''}`;
 }
 
 function abrirAjudaInicio(){
