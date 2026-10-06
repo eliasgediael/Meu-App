@@ -773,12 +773,12 @@ input[type=file]{ display:none; }
 .mrt-muscle-figure .body{ fill:#F4F4F4; stroke:#B8B8B8; stroke-width:1.2; }
 .mrt-muscle-figure .detail{ fill:none; stroke:#D4D4D4; stroke-width:.8; stroke-linecap:round; }
 .mrt-muscle-figure .muscle{ fill:#E7E7E7; stroke:#C8C8C8; stroke-width:.55; transition:fill .18s ease,stroke .18s ease,opacity .18s ease; }
-.mrt-muscle-figure .muscle.secondary{ fill:#BDBDBD; stroke:#9A9A9A; }
-.mrt-muscle-figure .muscle.primary{ fill:#2B2B2B; stroke:#111111; }
+.mrt-muscle-figure .muscle.secondary{ fill:#FFB39A; stroke:#FF8B64; }
+.mrt-muscle-figure .muscle.primary{ fill:#FF5A1F; stroke:#E6400A; }
 .mrt-anat{ width:100%; height:auto; max-height:178px; display:block; overflow:visible; }
 .mrt-anat path{ stroke:none; mix-blend-mode:multiply; transition:fill-opacity .18s ease; }
-.mrt-anat path.primary{ fill:#1A1A1A; fill-opacity:.72; }
-.mrt-anat path.secondary{ fill:#8A8A8A; fill-opacity:.45; }
+.mrt-anat path.primary{ fill:#FF5A1F; fill-opacity:.82; }
+.mrt-anat path.secondary{ fill:#FF9A73; fill-opacity:.5; }
 .mrt-muscle-meta{ min-width:0; padding-left:14px; border-left:1px solid var(--border); }
 .mrt-muscle-meta .label{ font-size:12px; color:var(--text-dim); margin-bottom:3px; }
 .mrt-muscle-meta .value{ font-size:18px; font-weight:800; line-height:1.2; }
@@ -786,8 +786,8 @@ input[type=file]{ display:none; }
 .mrt-muscle-key{ display:flex; flex-direction:column; gap:7px; margin-top:14px; }
 .mrt-muscle-key span{ display:flex; align-items:center; gap:7px; font-size:11.5px; color:var(--text-dim); line-height:1.25; }
 .mrt-muscle-key i{ width:9px; height:9px; border-radius:50%; flex-shrink:0; }
-.mrt-muscle-key .p i{ background:var(--data); }
-.mrt-muscle-key .s i{ background:#BDBDBD; }
+.mrt-muscle-key .p i{ background:#FF5A1F; }
+.mrt-muscle-key .s i{ background:#FFB39A; }
 .mrt-current-set{ margin:0 18px 14px; padding:18px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-card); }
 .mrt-current-set-grid{ display:grid; grid-template-columns:.7fr 1.25fr 1fr 1fr; gap:8px; align-items:end; }
 .mrt-current-field label{ display:block; margin-bottom:8px; color:var(--text-dim); font-size:10px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; }
@@ -4759,7 +4759,7 @@ function papelCorrida(e){
   if(/longão|longao/i.test(t)) return 'Longão para construir resistência';
   if(/regenerat/i.test(t)) return 'Corrida bem leve para recuperar';
   if(/fartlek/i.test(t)) return 'Variação leve de ritmo sem picos de cansaço';
-  return 'Corrida leve para somar volume sem cansar';
+  return 'Corrida leve para somar quilômetros sem cansar';
 }
 function papelMusc(l){
   if(muscPernasPesado(l)) return 'Força de pernas';
@@ -10423,7 +10423,7 @@ async function desenharAnatomiaArte(c, a, x, y, h){
     const f = ANATOMIA[k];
     const pinta = (id, pts)=>{ const cls = muscleClass(id.replace(/-\d+$/,''), a); if(cls==='muscle') return;
       const p = new Path2D(anatomiaCurva(pts)); tc.save(); tc.translate(0, -30*esc); tc.scale(esc, esc);
-      tc.fillStyle = cls.includes('primary') ? 'rgba(17,17,17,0.72)' : 'rgba(17,17,17,0.32)'; tc.fill(p); tc.restore(); };
+      tc.globalCompositeOperation = 'source-atop'; tc.fillStyle = cls.includes('primary') ? 'rgba(255,90,31,0.85)' : 'rgba(255,154,115,0.55)'; tc.fill(p); tc.restore(); };
     Object.entries(f.lados).forEach(([id, pts])=>{ pinta(id, pts); pinta(id, pts.map(([px,py])=>[2*f.eixo-px, py])); });
     Object.entries(f.centro).forEach(([id, pts])=>pinta(id, pts));
     c.drawImage(t, x + lado*(larg+24), y);
@@ -13599,10 +13599,8 @@ function renderHojeV2Content(){
     const info = MODAL_INFO[primary.tipo];
     const chave = ehSessaoChaveDia(day);
     const porque = porQueHoje(day, primary.tipo==='corrida' ? 'corrida' : 'musculacao');
-    const ajustavel = !primary.done && opcoesAjuste(day).length>0;
     heroHtml = `<div class="ds-section">
-      <div class="ds-labelrow fr-herohead"><div class="ds-label">Hoje</div>${chave?'<span class="fr-pill">Treino-chave</span>':''}
-        ${ajustavel ? `<button class="fr-adaptar" data-ajustar="${day}">Adaptar treino ${ICONS.dots}</button>` : ''}</div>
+      <div class="ds-labelrow fr-herohead"><div class="ds-label">Hoje</div>${chave?'<span class="fr-pill">Treino-chave</span>':''}</div>
       <div class="fr-hero">
         <div class="ds-kicker">${info.nome}</div>
         <div class="ds-title">${primary.titulo}</div>
