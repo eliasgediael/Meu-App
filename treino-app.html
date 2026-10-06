@@ -1761,6 +1761,58 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .qv2-frase{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0; border-top:1px solid var(--border); font-size:16px; line-height:1.45; }
 .qv2-frase:last-of-type{ border-bottom:1px solid var(--border); }
 .qv2-frase[data-qv2ir]::after{ content:'Editar'; font-size:13px; font-weight:700; color:var(--data); flex-shrink:0; }
+.fr-gpsintro{ padding-top:calc(18px + env(safe-area-inset-top)); display:flex; flex-direction:column; min-height:100%; }
+.fr-gpsintro-c{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:14px; }
+.fr-gpsintro-ic{ width:64px; height:64px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; margin:18px auto 4px; }
+.fr-gpsintro-ic svg{ width:28px; height:28px; }
+.fr-gpsintro-t{ font-size:17px; font-weight:600; line-height:1.4; text-align:center; }
+.fr-gpsintro-s{ font-size:13px; color:var(--text-dim); text-align:center; }
+.fr-precorrida .gps-live-map{ flex:1 1 auto; }
+.fr-prelist .ds-row .nm{ display:flex; flex-direction:column; gap:2px; font-weight:600; }
+.fr-prelist .ds-row .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
+.fr-prelist .ds-row:last-child{ border-bottom:none; }
+.fr-presinal{ font-size:12.5px; color:var(--text-dim); text-align:center; margin:8px 0 10px; }
+.fr-presinal.ok{ color:var(--text); font-weight:700; }
+.fr-livebrand{ padding:7px 14px; border-radius:var(--r-pill); background:rgba(255,255,255,0.94); box-shadow:0 1px 6px rgba(0,0,0,0.14); font-size:13px; letter-spacing:0.18em; }
+.fr-livebrand b{ font-weight:900; }
+.fr-pace.calc b{ color:var(--text-faint); font-weight:300; letter-spacing:0; }
+.fr-pausado{ position:absolute; inset:0; z-index:900; background:rgba(17,17,17,0.55); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; color:#FFFFFF; text-align:center; pointer-events:none; }
+.fr-pausado .ic{ width:72px; height:72px; border-radius:50%; border:3px solid #FFFFFF; display:flex; align-items:center; justify-content:center; }
+.fr-pausado .ic svg{ width:30px; height:30px; }
+.fr-pausado b{ font-size:26px; font-weight:800; }
+.fr-pausado span{ font-size:15px; opacity:.9; }
+.fr-holdpill{ width:auto !important; height:60px !important; flex:1; border-radius:16px !important; background:var(--danger) !important; display:flex; align-items:center; gap:10px; padding:0 14px !important; color:#FFFFFF; }
+.fr-holdpill .fr-holdcirc{ position:relative; width:40px; height:40px; border-radius:50%; background:#FFFFFF; flex-shrink:0; }
+.fr-holdpill .ring{ position:absolute; inset:-4px; width:48px; height:48px; }
+.fr-holdpill .ring circle{ stroke:#FFFFFF; }
+.fr-holdpill .sq{ width:14px; height:14px; margin:-7px 0 0 -7px; border-radius:3px; }
+.fr-holdpill .t{ font-size:14px; font-weight:700; line-height:1.15; text-align:left; }
+.fr-finbtn{ flex:1; height:60px; border-radius:16px; border:1.5px solid var(--danger); background:none; color:var(--danger); font-family:inherit; font-size:18px; font-weight:800; cursor:pointer; }
+.fr-concl{ font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
+.fr-fotobar{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
+.fr-fotobar .btn-ghost{ padding:4px 0; }
+.fr-fotoprev{ position:relative; width:58%; margin:0 auto 14px; border-radius:14px; overflow:hidden; aspect-ratio:9/16; background:#222; }
+.fr-fotoprev img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fr-fotoprev .safe{ position:absolute; left:0; right:0; top:13%; bottom:16%; border-top:1px dashed rgba(255,255,255,0.6); border-bottom:1px dashed rgba(255,255,255,0.6); pointer-events:none; }
+.fr-fotoslider{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
+.fr-fotoslider span{ width:86px; font-size:14px; font-weight:600; }
+.fr-fotoslider input{ flex:1; accent-color:#111111; }
+.fr-btnout{ background:none !important; border:1.5px solid var(--border) !important; margin-top:10px; }
+.fr-acoes{ margin-top:10px; }
+.fr-acoes .ds-row{ min-height:52px; }
+.fr-acoes .ds-row:last-child{ border-bottom:none; }
+.fr-acoes .ds-row .nm{ display:flex; flex-direction:column; gap:2px; font-weight:600; }
+.fr-acoes .ds-row .nm small{ font-size:12.5px; font-weight:500; color:var(--text-dim); }
+.fr-perigo, .fr-perigo > svg{ color:var(--danger) !important; }
+.fr-perigo .nm{ color:var(--danger); }
+.fr-runthumb{ border-radius:14px; overflow:hidden; margin:4px 0 14px; background:#F2F2F2; aspect-ratio:1080/640; }
+.fr-runthumb img{ display:block; width:100%; height:100%; object-fit:cover; }
+.fr-runfeita .btn-primary{ margin-top:2px; }
+.fr-nota{ margin:0 0 18px; }
+.fr-notafoto{ display:block; width:100%; border-radius:14px; margin-bottom:10px; }
+.fr-notatexto{ font-size:15px; line-height:1.45; margin-bottom:6px; white-space:pre-wrap; }
+.fr-notabtns{ display:flex; gap:14px; flex-wrap:wrap; }
+.fr-notabtns .btn-ghost{ padding:6px 0; }
 .fr-artegrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px; }
 .fr-arte{ position:relative; padding:0; border:2px solid transparent; border-radius:16px; overflow:hidden; cursor:pointer;
   background-color:#2A2A2A; background-image:repeating-conic-gradient(#343434 0 25%, #2A2A2A 0 50%); background-size:22px 22px; }
@@ -6478,7 +6530,7 @@ function gpsStopWatch(watchId){
 // que o controle de atribuição mostra (o texto vem do próprio estilo).
 const MAPLIBRE_VER = '5.9.0';
 const GPS_MAP_STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';
-const GPS_ROUTE_COLOR = '#111111';
+const GPS_ROUTE_COLOR = '#FF5A1F';
 let _mapLibLoadPromise = null;
 function loadMapLib(){
   if(window.maplibregl) return Promise.resolve();
@@ -6504,9 +6556,9 @@ function gpsTuneStyle(map){
   (map.getStyle().layers||[]).forEach(l=>{ if(GPS_MAP_HIDE.test(l.id)) map.setLayoutProperty(l.id, 'visibility', 'none'); });
   const pinta = (id, prop, val)=>{ if(map.getLayer(id)){ try{ map.setPaintProperty(id, prop, val); }catch(e){} } };
   pinta('background', 'background-color', '#F5F5F3');
-  pinta('park', 'fill-color', '#E4EDE0');
-  pinta('landcover_wood', 'fill-color', '#E6EEE3');
-  pinta('water', 'fill-color', '#DCE4EA');
+  pinta('park', 'fill-color', '#D6EBC9');
+  pinta('landcover_wood', 'fill-color', '#DDEFD3');
+  pinta('water', 'fill-color', '#B9D9F0');
   pinta('building', 'fill-color', '#ECECE9');
 }
 function gpsLineGeo(coords){ return { type:'Feature', properties:{}, geometry:{ type:'LineString', coordinates:coords } }; }
@@ -7334,27 +7386,11 @@ function gpsCloseSummary(){ state.gpsRun = null; render(); }
 async function gpsDeleteActivity(){
   const gr = state.gpsRun;
   if(!gr || !gr.progressKey) return;
-  if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A gravação, a distância e o tempo deste dia somem. Não dá para desfazer.', ok:'Excluir', perigo:true }))) return;
-  const key = gr.progressKey;
-  const prev = state.corridaProgress[key];
-  const p = (prev && typeof prev==='object') ? prev : {};
-  if(p.shoeCredit){
-    const t = state.equipamentos.tenis.find(x=>x.id===p.shoeCredit.tenisId);
-    if(t){ t.km = Math.max(0, Math.round((t.km-p.shoeCredit.km)*10)/10); saveEquipamentos(); }
-  }
-  const runId = gr.runId || p.gpsRunId;
-  if(runId){
-    await gpsDbDelete(runId);
-    gpsMarcarExcluidaNuvem(runId); // some também da nuvem (agora ou quando a conexão voltar)
-  }
-  const { done, pace, tempo, km, data, shoeCredit, gpsRunId, ...resto } = p;
-  if(Object.keys(resto).length) state.corridaProgress[key] = resto;
-  else delete state.corridaProgress[key];
-  saveCorridaProgress();
+  if(!(await confirmarApp({ titulo:'Excluir esta corrida?', texto:'A gravação, a distância e o tempo deste dia somem. O treino planejado continua.', ok:'Excluir', perigo:true }))) return;
+  await excluirCorridaRealizada(gr.progressKey, gr.runId);
   state.gpsRun = null;
   render();
-  showToast('Atividade excluída');
-  sincronizarCorridasGps();
+  showToast('Corrida excluída');
 }
 
 /* ---------- Corridas GPS na nuvem ---------- */
@@ -7581,14 +7617,19 @@ function corridaEtapaCard(gr, step, nextStep, heroVal, heroLabel, progressPct, e
 // Rodapé: Pausar largo + Finalizar que só vale segurando 1s (o anel enche) — pra não encerrar a corrida sem querer.
 function corridaRodape(gr, isAberta){
   const pausado = gr.status==='paused';
+  if(pausado) return `
+    <div class="mrt-runfoot">
+      <button class="btn-primary fr-pausebtn" id="gpsBtnPause">${ICONS.play} Retomar</button>
+      <button class="fr-finbtn" id="gpsBtnFinalizarPausado">Finalizar</button>
+    </div>`;
   return `
     <div class="mrt-runfoot">
       ${isAberta ? `<button class="btn-secondary" style="width:auto;padding:0 18px;" id="gpsBtnLap">Lap</button>` : ''}
-      <button class="btn-primary fr-pausebtn" id="gpsBtnPause">${pausado?ICONS.play+' Retomar':'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg> Pausar'}</button>
-      <div class="fr-holdwrap"><button class="mrt-holdbtn" id="gpsBtnFinish" aria-label="Segure para finalizar">
-        <svg class="ring" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"/></svg>
-        <span class="sq"></span>
-      </button><span>Segure para finalizar</span></div>
+      <button class="btn-primary fr-pausebtn" id="gpsBtnPause"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg> Pausar</button>
+      <button class="mrt-holdbtn fr-holdpill" id="gpsBtnFinish" aria-label="Segure para finalizar">
+        <span class="fr-holdcirc"><svg class="ring" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"/></svg><span class="sq"></span></span>
+        <span class="t">Segure para finalizar</span>
+      </button>
     </div>`;
 }
 function renderEsteiraRunning(gr){
@@ -7673,28 +7714,17 @@ function renderEsteiraRunning(gr){
     </div>`;
 }
 function renderGpsIntro(gr){
-  // App do iPhone: GPS nativo em segundo plano (BackgroundGeolocation + UIBackgroundModes location) e tela
-  // ligada pelo KeepAwake. O aviso antigo de "travar a tela para o GPS" só vale para o app aberto no navegador.
+  // App do iPhone: GPS nativo em segundo plano e tela ligada pelo KeepAwake. No navegador, a tela precisa ficar aberta.
   const nativo = !!(window.NativeBridge && window.NativeBridge.isNative && window.NativeBridge.isNative());
-  const wakeLockWarn = !nativo && !('wakeLock' in navigator);
   return `
     <div class="mrt-root">
-      <div class="mrt-scroll" style="padding-top:calc(18px + env(safe-area-inset-top));display:flex;flex-direction:column;">
-        <div style="display:flex;justify-content:flex-end;margin-bottom:8px;">
-          <button class="mrt-wex-x" id="gpsExitIntro">${ICONS.xmark}</button>
-        </div>
-        <div style="text-align:center;flex:1;display:flex;flex-direction:column;justify-content:center;">
-          <div class="mrt-summarycheck" style="background:var(--accent-soft);color:var(--mrt-bluelight);margin:0 auto 14px;">${gpsIcon()}</div>
-          <div class="mrt-runtitle" style="font-size:19px;margin-bottom:14px;">Corrida com GPS</div>
-          <div class="mrt-card" style="text-align:left;">
-            <div class="mrt-sub" style="line-height:1.5;">
-              Vamos pedir <b style="color:var(--mrt-text);">permissão de localização</b> pra acompanhar sua rota, distância e pace em tempo real.<br><br>
-              ${nativo
-                ? `Pode bloquear a tela durante a corrida. <b style="color:var(--mrt-text);">Não feche o app</b> (deslizar para cima na troca de apps): isso encerra o GPS.`
-                : `<b style="color:var(--mrt-text);">Mantenha o app aberto e a tela ligada durante a corrida</b> — no navegador, trocar de app ou travar a tela pode parar o rastreamento.`}
-            </div>
-          </div>
-          ${wakeLockWarn ? `<div class="mrt-card" style="background:var(--gold-soft);text-align:left;"><div class="mrt-sub" style="color:var(--mrt-amber);">⚠️ Seu navegador não suporta manter a tela ligada automaticamente. Ative isso manualmente nas configurações do celular antes de começar.</div></div>` : ''}
+      <div class="mrt-scroll fr-gpsintro">
+        <div style="display:flex;justify-content:flex-end;"><button class="mrt-wex-x" id="gpsExitIntro" aria-label="Fechar">${ICONS.xmark}</button></div>
+        <div class="fr-gpsintro-c">
+          <div class="mrt-title" style="font-size:34px;">Corrida com GPS</div>
+          <div class="fr-gpsintro-ic">${ICONS.pin}</div>
+          <div class="fr-gpsintro-t">Permita o acesso à localização para acompanhar distância, ritmo e rota em tempo real.</div>
+          <div class="fr-gpsintro-s">${nativo ? 'Pode bloquear a tela durante a corrida. Só não feche o app.' : 'Mantenha esta tela aberta durante a corrida.'}</div>
         </div>
         <button class="btn-primary" style="margin:12px 0 20px;" id="gpsBtnBegin">Começar</button>
       </div>
@@ -7709,17 +7739,36 @@ function renderGpsAguardando(gr){
     const falta = Math.max(1, Math.ceil(((gr.contagemAte||0) - Date.now())/1000));
     return `<div class="mrt-root"><div class="mrt-scroll gps-wait"><div class="gps-count">${falta}</div><div class="mrt-sub">Prepare-se</div></div></div>`;
   }
-  const qual = acc==null ? 'Procurando sinal…' : bom ? 'Sinal bom' : acc<=30 ? 'Sinal razoável' : 'Sinal fraco';
-  return `<div class="mrt-root"><div class="mrt-scroll gps-wait">
-    <button class="mrt-wex-x gps-wait-x" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button>
-    <div class="gps-wait-ic ${bom?'ok':''}">${gpsIcon()}</div>
-    <div class="mrt-title" style="font-size:26px;">Aguardando GPS</div>
-    <div class="mrt-sub" style="margin-top:6px;">${qual}${acc!=null?' · precisão ±'+Math.round(acc)+' m':''}</div>
-    <div class="gps-wait-btns">
-      <button class="btn-primary" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>Começar</button>
-      ${!bom ? `<button class="btn-ghost" id="gpsBtnComecarMesmo">Começar mesmo assim</button>` : ''}
+  const entry = treinoEntryForDay(gr.day);
+  const objetivo = entry ? [entry.totalKm ? fmtKm(entry.totalKm) : '', corridaAvgPaceLabel(entry) && corridaAvgPaceLabel(entry)!=='—' ? corridaAvgPaceLabel(entry) : ''].filter(Boolean).join(' · ') : '';
+  const qual = acc==null ? 'Procurando sinal de GPS…' : bom ? 'GPS pronto' : acc<=30 ? 'Sinal de GPS razoável' : 'Sinal de GPS fraco';
+  return `<div class="mrt-root gps-live fr-precorrida">
+    <div class="gps-live-map">
+      <div id="gpsMapSlot" class="gps-mapslot"></div>
+      <div class="gps-live-top"><button class="gps-fab" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button></div>
     </div>
-  </div></div>`;
+    <div class="gps-live-sheet">
+      <div class="ds-list fr-prelist">
+        <div class="ds-row ds-static">${ICONS.shoe}<span class="nm">Tipo de atividade<small>Corrida${entry && entry.type ? ' · '+entry.type : ''}</small></span></div>
+        ${objetivo ? `<div class="ds-row ds-static">${ICONS.flag}<span class="nm">Objetivo<small>${objetivo}</small></span></div>` : ''}
+        <button class="ds-row" id="mrtVozToggle">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}<span class="nm">Voz<small>${state.vozAtiva===false ? 'Desativada' : 'Ativada'}</small></span><span class="chev">${DS_CHEV}</span></button>
+      </div>
+      <div class="fr-presinal ${bom?'ok':''}">${qual}${acc!=null?' · ±'+Math.round(acc)+' m':''}</div>
+      <button class="btn-primary fr-pausebtn" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>Iniciar corrida</button>
+      ${!bom ? `<button class="btn-ghost" style="width:100%;" id="gpsBtnComecarMesmo">Iniciar mesmo assim</button>` : ''}
+    </div>
+  </div>`;
+}
+// Centraliza o mapa da pré-corrida no último sinal recebido.
+function gpsCentralizarPreCorrida(){
+  const gr = state.gpsRun;
+  if(!gr || !gr.ultimoFix || !gpsMapInstance || !gpsMapReady) return;
+  const c = [gr.ultimoFix.lng, gr.ultimoFix.lat];
+  try{
+    gpsMapInstance.jumpTo({ center:c, zoom:15.5 });
+    gpsMapMarker.setLngLat(c);
+    if(!gpsMapMarkerOn){ gpsMapMarker.addTo(gpsMapInstance); gpsMapMarkerOn = true; }
+  }catch(e){}
 }
 function renderGpsPermission(){
   return `
@@ -7787,8 +7836,8 @@ function renderGpsRunning(gr){
   // Ritmo no centro: toque alterna atual ↔ médio.
   const paceMedio = gr.paceMode==='medio';
   const paceSec = paceMedio ? paceAvgSec : paceAtualSec;
-  const paceVal = paceSec ? formatPace(paceSec) : '—';
-  const paceLbl = paceMedio ? 'Ritmo médio (/km)' : 'Ritmo atual (/km)';
+  const paceVal = paceSec ? formatPace(paceSec) : '--:--';
+  const paceLbl = !paceSec ? 'Calculando ritmo' : paceMedio ? 'Ritmo médio (/km)' : 'Ritmo atual (/km)';
   const tempoVal = formatClock(totalElapsed);
   const distVal = fmtKmMedido(gr.totalDistKm);
   const expandido = !!gr.liveExpanded;
@@ -7817,7 +7866,7 @@ function renderGpsRunning(gr){
   const topo = `
     <div class="gps-live-top">
       <button class="gps-fab" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button>
-      <div class="gps-live-pill"><div class="t">Corrida</div><div class="s" style="color:${sinalOk?'var(--accent)':'var(--text-dim)'};">${sinalLabel}${gr.lastAccuracy!=null?' · ±'+Math.round(gr.lastAccuracy)+'m':''}</div></div>
+      ${!sinalOk ? `<div class="gps-live-pill"><div class="s" style="color:var(--text-dim);">${sinalLabel}${gr.lastAccuracy!=null?' · ±'+Math.round(gr.lastAccuracy)+'m':''}</div></div>` : '<div class="fr-livebrand"><b>FORZA</b> RUN</div>'}
       <button class="gps-fab" id="mrtVozToggle" aria-label="Voz">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}</button>
     </div>`;
   if(expandido){
@@ -7844,13 +7893,14 @@ function renderGpsRunning(gr){
         <div class="gps-live-ctrls">
           <button class="gps-fab${gpsMapFollow?' on':''}" id="gpsBtnRecenter" aria-label="Centralizar">${icMira}</button>
         </div>
+        ${gr.status==='paused' ? `<div class="fr-pausado"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1.2"/><rect x="13.5" y="5" width="3.5" height="14" rx="1.2"/></svg></div><b>Treino pausado</b><span>Retome quando estiver pronto.</span></div>` : ''}
       </div>
       <div class="gps-live-sheet">
         <div class="gps-mcard fr-live">
           ${etapaHtml}
-          <div class="fr-pace" id="gpsPaceTap"><b>${paceVal}</b><span>/km</span><div class="k">${paceLbl.replace(' (/km)','')}</div></div>
+          <div class="fr-pace ${paceSec?'':'calc'}" id="gpsPaceTap"><b>${paceVal}</b>${paceSec?'<span>/km</span>':''}<div class="k">${paceLbl.replace(' (/km)','')}</div></div>
           <div class="fr-m2"><div><b>${tempoVal}</b><span>Tempo</span></div><div><b>${distVal}</b><span>Distância (km)</span></div></div>
-          <div class="gps-extra">Em movimento ${formatClock((gr.movingMs||0)/1000)}${gr.ultimoKmSeg ? ' · Último km '+formatClock(gr.ultimoKmSeg) : ''}${gr.autoPausado ? ' · Pausa automática' : ''}</div>
+          ${(gr.movingMs||0)>=1000 || gr.ultimoKmSeg || gr.autoPausado ? `<div class="gps-extra">${(gr.movingMs||0)>=1000 ? 'Em movimento '+formatClock((gr.movingMs||0)/1000) : ''}${gr.ultimoKmSeg ? ' · Último km '+formatClock(gr.ultimoKmSeg) : ''}${gr.autoPausado ? ' · Pausa automática' : ''}</div>` : ''}
           <button class="gps-mexpand" id="gpsBtnExpand" aria-label="Métricas em tela cheia">${icExpand}</button>
         </div>
         ${corridaRodape(gr, isAberta)}
@@ -8160,6 +8210,7 @@ function renderGpsSummary(gr){
           <button class="mrt-wex-x" id="gpsBtnCloseSummary">${ICONS.xmark}</button>
         </div>`}
         <div class="gps-sum-head">
+          ${!gr.somenteLeitura ? '<div class="fr-concl">Corrida concluída</div>' : ''}
           <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
           <div class="mrt-title">${entry && entry.type || 'Corrida'}</div>
         </div>
@@ -8169,11 +8220,13 @@ function renderGpsSummary(gr){
           <div class="c"><div class="k">Ritmo médio</div><div class="v">${paceSec?formatPace(paceSec):'—'}<small> /km</small></div></div>
         </div>
         <div class="gps-sum-sec">
-          <div class="c"><div class="k">Elevação</div><div class="v">${elevGain!=null?elevGain+'<small> m</small>':'—'}</div></div>
+          ${elevGain!=null ? `<div class="c"><div class="k">Elevação</div><div class="v">${elevGain}<small> m</small></div></div>` : ''}
           <div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>
-          <div class="c"><div class="k">Em movimento</div><div class="v">${an.track.length>=2 ? formatClock(gpsTempoEmMovimento(an.track)) : '—'}</div></div>
+          ${an.track.length>=2 ? `<div class="c"><div class="k">Em movimento</div><div class="v">${formatClock(gpsTempoEmMovimento(an.track))}</div></div>`
+            : `<div class="c"><div class="k">Velocidade</div><div class="v">${totalElapsed>0 && gr.totalDistKm>0 ? String(Math.round(gr.totalDistKm/(totalElapsed/3600)*10)/10).replace('.',',') : '—'}<small> km/h</small></div></div>`}
         </div>
         ${gr.progressKey ? renderComoFoi(((state.corridaProgress||{})[gr.progressKey]||{}).comoFoi, 'data-comofoi') : ''}
+        ${gr.progressKey ? renderNotaCorrida(gr) : ''}
         ${renderRecordesDaCorrida(gr, melhorKm)}
         ${renderGpsPaceChart(an, paceSec)}
         ${renderGpsSplits(an)}
@@ -8195,13 +8248,52 @@ function renderGpsSummary(gr){
           <div style="font-size:14px;line-height:1.5;margin-top:6px;">${nextWorkoutAdjustmentText(pvr)}</div>
         </div>
         <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
-          <button class="btn-primary" id="gpsBtnCloseSummary2">Concluir</button>
-          <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar treino</button>
+          <button class="btn-primary" id="gpsBtnCloseSummary2">${gr.somenteLeitura ? 'Fechar' : 'Salvar atividade'}</button>
+          <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
+          ${gr.progressKey ? `<button class="btn-secondary" id="gpsBtnCorrigirRun">${ICONS.pencil} Corrigir corrida</button>` : ''}
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
-          ${gr.progressKey ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
+          ${gr.progressKey ? (gr.somenteLeitura ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir corrida realizada</button>` : `<button class="ds-danger" id="gpsBtnDescartarRun">Descartar corrida</button>`) : ''}
         </div>
       </div>
     </div>`;
+}
+// Observação e foto da atividade gravada (a foto fica na própria gravação, no aparelho).
+function renderNotaCorrida(gr){
+  const obs = ((state.corridaProgress||{})[gr.progressKey]||{}).obs || '';
+  return `<div class="fr-nota">
+    ${gr.foto ? `<img class="fr-notafoto" src="${gr.foto}" alt="Foto da corrida">` : ''}
+    ${obs ? `<div class="fr-notatexto">${obs.replace(/</g,'&lt;')}</div>` : ''}
+    <div class="fr-notabtns">
+      <button class="btn-ghost" id="gpsNotaObs">${obs ? 'Editar observação' : '+ Observação'}</button>
+      <button class="btn-ghost" id="gpsNotaFoto">${gr.foto ? 'Trocar foto' : '+ Foto'}</button>
+      ${gr.foto ? `<button class="btn-ghost" id="gpsNotaFotoTirar">Remover foto</button>` : ''}
+    </div></div>`;
+}
+function editarObsCorrida(gr){
+  const prog = state.corridaProgress[gr.progressKey]; if(!prog || typeof prog!=='object') return;
+  openSheet(`<div class="sheet-title">Observação</div>
+    <textarea id="obsTxt" rows="4" maxlength="400" style="width:100%;box-sizing:border-box;border:none;border-radius:12px;background:var(--surface-2);padding:12px;font-family:inherit;font-size:16px;">${(prog.obs||'').replace(/</g,'&lt;')}</textarea>
+    <div class="ds-actions"><button class="btn-primary" id="obsSalvar">Salvar</button></div>`, (sh)=>{
+    sh.querySelector('#obsSalvar').onclick = ()=>{ const v = sh.querySelector('#obsTxt').value.trim(); if(v) prog.obs = v; else delete prog.obs; saveCorridaProgress(); closeSheet(); render(); };
+  });
+}
+function reduzirFoto(im, max){
+  const r = Math.min(1, max/Math.max(im.width, im.height));
+  const cv = document.createElement('canvas'); cv.width = Math.round(im.width*r); cv.height = Math.round(im.height*r);
+  cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height);
+  return cv.toDataURL('image/jpeg', 0.82);
+}
+async function adicionarFotoCorrida(gr, remover){
+  if(!gr.runId) return;
+  const rec = await gpsDbGet(gr.runId).catch(()=>null); if(!rec) return;
+  if(remover){ delete rec.foto; gr.foto = null; }
+  else{ const im = await escolherFotoArte(); if(!im) return; rec.foto = reduzirFoto(im, 1440); gr.foto = rec.foto; }
+  await gpsDbPut(rec); render();
+}
+function escolherFotoArte(){
+  return new Promise(ok=>{ const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
+    i.onchange = ()=>{ const f = i.files && i.files[0]; if(!f) return ok(null); const r = new FileReader(); r.onload = ()=>{ const im = new Image(); im.onload = ()=>ok(im); im.onerror = ()=>ok(null); im.src = r.result; }; r.readAsDataURL(f); };
+    i.click(); });
 }
 function wireGpsRunScreen(){
   const gr = state.gpsRun;
@@ -8226,9 +8318,23 @@ function wireGpsRunScreen(){
     ['pointerup','pointerleave','pointercancel'].forEach(t=>holdBtn.addEventListener(t, cancelar));
     holdBtn.addEventListener('contextmenu', (ev)=>ev.preventDefault());
   }
+  if(byId('gpsBtnFinalizarPausado')) byId('gpsBtnFinalizarPausado').onclick = async ()=>{
+    if(!(await confirmarApp({ titulo:'Finalizar a corrida?', texto:'A atividade é salva com o que foi registrado até agora.', ok:'Finalizar' }))) return;
+    finishGpsRun();
+  };
+  if(byId('gpsBtnDescartarRun')) byId('gpsBtnDescartarRun').onclick = async ()=>{
+    if(!(await confirmarApp({ titulo:'Descartar esta corrida?', texto:'A gravação é apagada. O treino planejado continua.', ok:'Descartar', perigo:true }))) return;
+    await excluirCorridaRealizada(gr.progressKey, gr.runId);
+    state.gpsRun = null; render(); showToast('Corrida descartada');
+  };
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
+  if(byId('gpsBtnCorrigirRun')) byId('gpsBtnCorrigirRun').onclick = ()=> abrirCorrigirCorrida(gr.progressKey);
+  if(byId('gpsNotaObs')) byId('gpsNotaObs').onclick = ()=> editarObsCorrida(gr);
+  if(byId('gpsNotaFoto')) byId('gpsNotaFoto').onclick = ()=> adicionarFotoCorrida(gr);
+  if(byId('gpsNotaFotoTirar')) byId('gpsNotaFotoTirar').onclick = ()=> adicionarFotoCorrida(gr, true);
+  if(gr.runId && !gr._fotoCarregada){ gr._fotoCarregada = true; gpsDbGet(gr.runId).then(r=>{ if(r && r.foto && state.gpsRun===gr){ gr.foto = r.foto; render(); } }).catch(()=>{}); }
   if(byId('gpsBtnGpx')) byId('gpsBtnGpx').onclick = ()=>exportarGpx(gr);
   document.querySelectorAll('[data-comofoi]').forEach(el=>{
     el.onclick = ()=>{
@@ -8239,7 +8345,7 @@ function wireGpsRunScreen(){
       saveCorridaProgress(); hapticLeve(); render();
     };
   });
-  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=> abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr));
+  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=> abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr), infoCorridaParaFoto(gr));
   if(byId('gpsBtnSkipStep')) byId('gpsBtnSkipStep').onclick = esteiraSkipStep;
   if(byId('gpsBtnComecar')) byId('gpsBtnComecar').onclick = gpsComecarContagem;
   if(byId('gpsBtnComecarMesmo')) byId('gpsBtnComecarMesmo').onclick = gpsComecarContagem;
@@ -8252,7 +8358,7 @@ function wireGpsRunScreen(){
   if(byId('mrtVozToggle')) byId('mrtVozToggle').onclick = ()=>{ state.vozAtiva = state.vozAtiva===false; render(); };
   if(byId('mrtTiroConfirm')) byId('mrtTiroConfirm').onclick = confirmTiroModal;
   if(gr.status==='finished') contarNumeros();
-  if(byId('gpsMapSlot')) ensureGpsMap();
+  if(byId('gpsMapSlot')){ ensureGpsMap(); if(gr.status==='aguardando') setTimeout(gpsCentralizarPreCorrida, 300); }
   else if(gr.status==='running' || gr.status==='paused') gpsMapHidden = true;
   if(byId('gpsSumMapSlot')) ensureGpsSummaryMap(gpsRunAnalysis(gr).track);
   ensureGpsTicking();
@@ -10494,7 +10600,7 @@ function arteDadosCorrida(c, dados, x, y, tamV, tamK, passo){
   dados.forEach(([k, v], i)=>{ arteTexto(c, k, x, y + i*passo, 500, tamK, 'rgba(255,255,255,0.85)', 'left'); arteTexto(c, v, x, y + i*passo + tamV*1.05, 800, tamV, '#FFFFFF', 'left'); });
 }
 // Mapa de ruas real (OpenFreeMap, o mesmo do resumo) renderizado fora da tela; null se não carregar a tempo.
-async function arteMapaRua(track, W, H){
+async function arteMapaRua(track, W, H, pad){
   try{ await loadMapLib(); }catch(e){ return null; }
   const div = document.createElement('div');
   div.style.cssText = `position:fixed;left:-20000px;top:0;width:${W/2}px;height:${H/2}px;`;
@@ -10506,7 +10612,8 @@ async function arteMapaRua(track, W, H){
     const pronto = new Promise(ok=>{ map.once('load', ()=>{
       try{ gpsTuneStyle(map); }catch(e){}
       const lngs = track.map(p=>p.lng), lats = track.map(p=>p.lat);
-      map.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding:{ top:H*0.09, bottom:H*0.22, left:W*0.12/2, right:W*0.12/2 }, duration:0 });
+      const pd = pad ? { top:pad.top/2, bottom:pad.bottom/2, left:pad.side/2, right:pad.side/2 } : { top:H*0.09/2, bottom:H*0.22/2, left:W*0.12/2, right:W*0.12/2 };
+      map.fitBounds([[Math.min(...lngs), Math.min(...lats)], [Math.max(...lngs), Math.max(...lats)]], { padding:pd, duration:0 });
       map.once('idle', ()=>ok(true));
     }); });
     const ok = await Promise.race([pronto, new Promise(r=>setTimeout(()=>r(false), 9000))]);
@@ -10565,7 +10672,7 @@ function artesCorrida(gr){
     const W = 1080, H = formato==='quadrado' ? 1080 : 1920;
     const m = await arteMapaRua(an.track, W, H); if(!m) return null;
     const c = m.cv.getContext('2d');
-    arteDesenhaTrilha(c, m.pts, '#111111', 12, 'rgba(255,255,255,0.9)');
+    arteDesenhaTrilha(c, m.pts, '#FF5A1F', 12, 'rgba(255,255,255,0.95)');
     const gh = H>W ? 620 : 470, g = c.createLinearGradient(0, H-gh, 0, H);
     g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(0.45, 'rgba(0,0,0,0.72)'); g.addColorStop(1, 'rgba(0,0,0,0.9)');
     c.fillStyle = g; c.fillRect(0, H-gh, W, gh);
@@ -10607,12 +10714,89 @@ async function arteAcao(acao, blob){
   document.body.appendChild(el); el.click(); el.remove();
   showToast('Imagem salva');
 }
-async function abrirSeletorArtes(titulo, artes){
-  let formato = 'story', sel = 0, prontas = [];
+// Composições com a foto do usuário (fundo com contraste, faixa superior, foto em card e, na corrida com GPS,
+// foto + rota). foto = { im, zoom, dx, dy } (dx/dy de -1 a 1 movem o enquadramento).
+function arteDesenhaFoto(c, foto, x, y, w, h, raio){
+  const im = foto.im, z = foto.zoom||1;
+  const esc = Math.max(w/im.width, h/im.height) * z;
+  const iw = im.width*esc, ih = im.height*esc;
+  const ox = x + (w-iw)/2 + (foto.dx||0)*(iw-w)/2, oy = y + (h-ih)/2 + (foto.dy||0)*(ih-h)/2;
+  c.save(); c.beginPath(); if(raio) c.roundRect(x, y, w, h, raio); else c.rect(x, y, w, h); c.clip();
+  c.drawImage(im, ox, oy, iw, ih); c.restore();
+}
+function artesComFoto(info, foto){
+  const artes = [];
+  const dados = info.dados;   // [[rótulo, valor], ...]
+  const blocoDados = (c, x, y, W, alinhar)=>{ const colW = (W - 2*x)/dados.length;
+    dados.forEach(([k,v],i)=>{ const cx = alinhar==='center' ? x + colW*i + colW/2 : x + colW*i;
+      arteTexto(c, k, cx, y, 500, 32, 'rgba(255,255,255,0.85)', alinhar==='center'?'center':'left'); arteTexto(c, v, cx, y + 66, 800, 58, '#FFFFFF', alinhar==='center'?'center':'left'); }); };
+  artes.push({ nome:'Foto', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    arteDesenhaFoto(c, foto, 0, 0, W, H);
+    const g = c.createLinearGradient(0, H*0.45, 0, H); g.addColorStop(0,'rgba(0,0,0,0)'); g.addColorStop(1,'rgba(0,0,0,0.78)');
+    c.fillStyle = g; c.fillRect(0, H*0.45, W, H*0.55);
+    const base = story ? H - 330 : H - 210;
+    arteSombra(c, true); arteLogo(c, 80, base - 150, 40);
+    arteTexto(c, info.titulo, 80, base - 70, 800, story ? 64 : 52, '#FFFFFF', 'left');
+    blocoDados(c, 80, base, W);
+    return cv; } });
+  artes.push({ nome:'Foto em faixa', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    const fh = Math.round(H*(story ? 0.58 : 0.55));
+    c.fillStyle = '#111111'; c.fillRect(0, 0, W, H);
+    arteDesenhaFoto(c, foto, 0, 0, W, fh);
+    arteLogo(c, 80, fh + (story ? 120 : 90), 40);
+    arteTexto(c, info.titulo, 80, fh + (story ? 210 : 165), 800, story ? 64 : 50, '#FFFFFF', 'left');
+    blocoDados(c, 80, fh + (story ? 330 : 255), W);
+    return cv; } });
+  artes.push({ nome:'Foto em card', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    const cw = story ? 760 : 560, ch = story ? 900 : 560, x = (W-cw)/2, y = story ? 300 : 70;
+    arteSombra(c, true); c.fillStyle = '#FFFFFF'; c.beginPath(); c.roundRect(x-10, y-10, cw+20, ch+20, 44); c.fill(); arteSombra(c, false);
+    arteDesenhaFoto(c, foto, x, y, cw, ch, 36);
+    arteSombra(c, true);
+    arteLogo(c, W/2, y + ch + (story ? 110 : 80), 38, 'center');
+    if(story){ arteTexto(c, info.grande, W/2, y + ch + 250, 800, 120); arteTexto(c, info.sub, W/2, y + ch + 320, 500, 44, 'rgba(255,255,255,0.88)'); }
+    else arteTexto(c, info.grande+' · '+info.sub, W/2, y + ch + 150, 700, 44);
+    return cv; } });
+  if(info.track && info.track.length>=2) artes.push({ nome:'Foto e rota', gerar: async (formato)=>{
+    const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
+    const fh = Math.round(H*0.5);
+    c.fillStyle = '#111111'; c.fillRect(0, 0, W, H);
+    arteDesenhaFoto(c, foto, 0, 0, W, fh);
+    const box = story ? { x:120, y:fh+90, w:W-240, h:H-fh-420 } : { x:560, y:fh+50, w:440, h:H-fh-100 };
+    arteDesenhaTrilha(c, arteProjecaoTrilha(info.track, box), '#FF5A1F', 10);
+    if(story){ arteLogo(c, 80, H - 300, 38); blocoDados(c, 80, H - 220, W); }
+    else{ arteLogo(c, 80, fh + 90, 36); dados.forEach(([k,v],i)=>{ arteTexto(c, k, 80, fh + 160 + i*95, 500, 28, 'rgba(255,255,255,0.85)', 'left'); arteTexto(c, v, 80, fh + 210 + i*95, 800, 46, '#FFFFFF', 'left'); }); }
+    return cv; } });
+  return artes;
+}
+function abrirAjusteFoto(foto, aoTerminar){
+  const prev = async ()=>{ const cv = arteCanvas('story'); arteDesenhaFoto(cv.getContext('2d'), foto, 0, 0, cv.width, cv.height); return cv.toDataURL('image/jpeg', 0.7); };
+  const slider = (id, rot, min, max, step, val)=>`<div class="fr-fotoslider"><span>${rot}</span><input type="range" id="${id}" min="${min}" max="${max}" step="${step}" value="${val}"></div>`;
+  openSheet(`
+    <div class="sheet-title">Ajustar foto</div>
+    <div class="fr-fotoprev"><img id="fpImg" alt=""><div class="safe"></div></div>
+    ${slider('fpZoom','Zoom',1,3,0.05,foto.zoom||1)}
+    ${slider('fpX','Horizontal',-1,1,0.02,foto.dx||0)}
+    ${slider('fpY','Vertical',-1,1,0.02,foto.dy||0)}
+    <div class="ds-actions"><button class="btn-primary" id="fpOk">Pronto</button></div>`, async (sh)=>{
+    const img = sh.querySelector('#fpImg');
+    let pend = null;
+    const atualizar = async ()=>{ img.src = await prev(); };
+    const ligar = (id, campo)=>{ sh.querySelector('#'+id).oninput = (ev)=>{ foto[campo] = parseFloat(ev.target.value); clearTimeout(pend); pend = setTimeout(atualizar, 60); }; };
+    ligar('fpZoom','zoom'); ligar('fpX','dx'); ligar('fpY','dy');
+    sh.querySelector('#fpOk').onclick = aoTerminar;
+    atualizar();
+  });
+}
+async function abrirSeletorArtes(titulo, artesBase, info){
+  let formato = 'story', sel = 0, prontas = [], foto = null;
+  const lista = ()=> foto && info ? artesComFoto(info, foto).concat(artesBase) : artesBase;
   const gerar = async ()=>{
     prontas.forEach(x=>URL.revokeObjectURL(x.url));
     prontas = [];
-    for(const a of artes){
+    for(const a of lista()){
       try{ const cv = await a.gerar(formato); if(!cv) continue;
         const blob = await new Promise(r=>cv.toBlob(r, 'image/png')); if(blob) prontas.push({ nome:a.nome, blob, url:URL.createObjectURL(blob) }); }
       catch(e){ console.warn('[arte]', a.nome, e); }
@@ -10621,7 +10805,8 @@ async function abrirSeletorArtes(titulo, artes){
   };
   const montar = ()=>openSheet(`
     <div class="sheet-title" style="text-align:center;">${titulo}</div>
-    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:4px 0 14px;"><button class="${formato==='story'?'on':''}" data-arfmt="story">Story</button><button class="${formato==='quadrado'?'on':''}" data-arfmt="quadrado">Quadrada</button></div>
+    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:4px 0 10px;"><button class="${formato==='story'?'on':''}" data-arfmt="story">Story</button><button class="${formato==='quadrado'?'on':''}" data-arfmt="quadrado">Quadrada</button></div>
+    ${info ? `<div class="fr-fotobar">${foto ? '<button class="btn-ghost" data-arfoto="ajustar">Ajustar foto</button><button class="btn-ghost" data-arfoto="trocar">Trocar foto</button><button class="btn-ghost" data-arfoto="remover">Remover foto</button>' : '<button class="btn-ghost" data-arfoto="trocar">+ Adicionar foto (opcional)</button>'}</div>` : ''}
     <div class="fr-artegrid ${formato}">${prontas.length ? prontas.map((x,i)=>`<button class="fr-arte ${i===sel?'on':''}" data-arte="${i}" aria-label="${x.nome}"><img src="${x.url}" alt=""><span class="ck"></span></button>`).join('') : '<div class="ds-muted" style="padding:30px 0;text-align:center;">Gerando artes…</div>'}</div>
     <div class="fr-artacoes">
       <button data-aracao="story"><span>${ARTE_ICONES.story}</span>Story</button>
@@ -10631,6 +10816,14 @@ async function abrirSeletorArtes(titulo, artes){
     </div>`, (sh)=>{
     sh.querySelectorAll('[data-arte]').forEach(el=>{ el.onclick = ()=>{ sel = +el.getAttribute('data-arte'); sh.querySelectorAll('[data-arte]').forEach(b=>b.classList.toggle('on', b===el)); }; });
     sh.querySelectorAll('[data-arfmt]').forEach(el=>{ el.onclick = async ()=>{ const f = el.getAttribute('data-arfmt'); if(f===formato) return; formato = f; prontas = []; montar(); await gerar(); montar(); }; });
+    sh.querySelectorAll('[data-arfoto]').forEach(el=>{ el.onclick = async ()=>{
+      const acao = el.getAttribute('data-arfoto');
+      const regerar = async ()=>{ sel = 0; prontas = []; montar(); await gerar(); montar(); };
+      if(acao==='remover'){ foto = null; await regerar(); return; }
+      if(acao==='ajustar'){ abrirAjusteFoto(foto, regerar); return; }
+      const im = await escolherFotoArte(); if(!im) return;
+      foto = { im, zoom:1, dx:0, dy:0 }; await regerar();
+    }; });
     sh.querySelectorAll('[data-aracao]').forEach(el=>{ el.onclick = async ()=>{ const x = prontas[sel]; if(!x) return; await arteAcao(el.getAttribute('data-aracao'), x.blob); }; });
   });
   montar();
@@ -10638,7 +10831,18 @@ async function abrirSeletorArtes(titulo, artes){
   montar();
 }
 // Musculação: a partir de um registro normalizado (resumo pós-treino ou histórico).
-function compartilharResumoTreino(sessao){ return abrirSeletorArtes('Compartilhar treino', artesMusculacao(sessao)); }
+function compartilharResumoTreino(sessao){
+  const min = Math.max(1, Math.round((sessao.duracaoSeg||0)/60)), nEx = sessao.exercicios.length;
+  const info = { titulo:sessao.titulo, grande:min+' min', sub: sessao.temDetalhe ? `${sessao.series} séries · ${nEx} exercício${nEx===1?'':'s'}` : `${sessao.series} séries`,
+    dados:[['Tempo', min+' min'], ['Séries', String(sessao.series)]].concat(sessao.temDetalhe ? [['Exercícios', String(nEx)]] : []) };
+  return abrirSeletorArtes('Compartilhar treino', artesMusculacao(sessao), info);
+}
+function infoCorridaParaFoto(gr){
+  const an = gpsRunAnalysis(gr), total = Math.round(gpsTotalElapsedSec(gr)), dist = gr.totalDistKm||0, pace = dist>0.05 ? total/dist : null;
+  const entry = treinoEntryForDay(gr.day);
+  return { titulo:(entry && entry.type) || 'Corrida', grande:fmtKmMedido(dist)+' km', sub:formatClock(total)+(pace ? ' · '+formatPace(pace)+'/km' : ''),
+    dados:[['Distância', fmtKmMedido(dist)+' km'], ['Ritmo', pace ? formatPace(pace)+'/km' : '—'], ['Tempo', formatClock(total)]], track:an.track };
+}
 function confeteHtml(){
   const cores = ['var(--accent)','var(--gold)','var(--musc)','var(--run)','var(--hib)'];
   return `<div class="mrt-confete">${Array.from({length:26},(_,i)=>`<i style="left:${Math.round((i*37)%100)}%;background:${cores[i%5]};animation-delay:${(i%9)*0.12}s;animation-duration:${1.8+(i%5)*0.3}s;"></i>`).join('')}</div>`;
@@ -13551,13 +13755,11 @@ function wireTreinadorUI(){
 // Bloco "por quê + check-in" dentro do card do treino (tela Treino). Sem o "Ajustar" genérico: ajustes ficam
 // nos contextos próprios (trocar exercício, editar séries, mudar o dia).
 function renderPorQueEAjuste(day, sub){
-  const txt = porQueHoje(day, sub);
   const ehSemanaAtual = (state.weekOffset||0)===0;
   const ehHoje = ehSemanaAtual && day===hojeAbbr();
   const ci = (state.checkinDiario||{})[todayISO()];
   const rotCk = ci ? `Hoje: energia ${['','baixa','ok','alta'][ci.energia]} · pernas ${['','leves','normais','pesadas'][ci.pernas]}` : 'Como você está hoje?';
-  return `${txt ? `<div class="ds-why">${txt}</div>` : ''}
-    ${ehHoje ? `<button class="ds-row ds-inrow" data-abrircheckin="1" style="margin:0 0 12px;"><span class="nm">${rotCk}</span><span class="chev">${DS_CHEV}</span></button>` : ''}`;
+  return `${ehHoje ? `<button class="ds-row ds-inrow" data-abrircheckin="1" style="margin:0 0 12px;"><span class="nm">${rotCk}</span><span class="chev">${DS_CHEV}</span></button>` : ''}`;
 }
 
 function abrirAjudaInicio(){
@@ -14059,9 +14261,12 @@ function abrirCorrigirAtividade(log, aoSalvar){
   });
   montar();
 }
-async function confirmarExcluirAtividade(log){
-  if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'O registro e as séries deste dia somem. A ficha do plano continua igual.', ok:'Excluir', perigo:true }))) return;
-  excluirTreinoRegistrado(log); closeSheet(); render(); showToast('Atividade excluída');
+async function confirmarExcluirAtividade(log, desmarcarDia){
+  if(!(await confirmarApp({ titulo:'Excluir este treino realizado?', texto:'O registro e as séries deste dia somem. A ficha do plano continua igual.', ok:'Excluir', perigo:true }))) return;
+  const dia = log.day;
+  excluirTreinoRegistrado(log);
+  if(desmarcarDia && dia && state.musculacao[dia]){ state.musculacao[dia].forEach(e=>{ e.done = false; }); saveMusc(); }
+  closeSheet(); render(); showToast('Treino excluído');
 }
 function chavesHistDoRegistro(e){ return [...new Set([e.exerciseId, e.repdbId, chaveHistDe(e), e.nome].filter(Boolean))]; }
 function excluirTreinoRegistrado(log){
@@ -14178,8 +14383,14 @@ function renderTreinoV2Musc(day, phaseParts){
         </div>
       </div>
       ${renderTreinoV2Doms(day,'musculacao')}
-      <button class="btn-primary" id="mrtStartWorkout">${ICONS.play}${allDone?'Refazer treino':'Iniciar treino'}</button>
-      ${logDoDiaExibido(day) ? `<button class="ds-row ds-inrow" data-corrigirtreino="${day}" style="margin-top:6px;"><span class="nm">Corrigir treino feito</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+      ${(()=>{ const log = logDoDiaExibido(day);
+        if(!log) return `<button class="btn-primary" id="mrtStartWorkout">${ICONS.play}${allDone?'Refazer treino':'Iniciar treino'}</button>`;
+        return `<button class="btn-primary" data-sharemusc="${log.id}">${ICONS.share} Compartilhar treino</button>
+          <button class="btn-secondary fr-btnout" id="mrtStartWorkout">${ICONS.play} Refazer treino</button>
+          <div class="ds-list fr-acoes">
+            <button class="ds-row" data-corrigirtreino="${day}">${ICONS.pencil}<span class="nm">Corrigir treino feito</span><span class="chev">${DS_CHEV}</span></button>
+            <button class="ds-row fr-perigo" data-excluirmusc="${log.id}">${ICONS.trash}<span class="nm">Excluir treino realizado<small>Remove apenas o registro deste dia</small></span><span class="chev">${DS_CHEV}</span></button>
+          </div>`; })()}
     </div>`;
   const cards = `<div class="mrt-exlist">${ordered.map(ex=>{
     const pr = exercisePR(ex);
@@ -14485,6 +14696,7 @@ function renderTreinoV2Corrida(day, phaseParts){
     return `<div class="empty-state"><div class="icon-box lg run">${ICONS.run}</div><div class="t">Dia de descanso</div><div class="s">${treinoNextWorkoutHint(day)}</div></div>`;
   }
   const done = isCorridaDone(day);
+  if(done) return renderCorridaConcluidaCard(day, entry, phaseParts);
   const avgPace = corridaAvgPaceLabel(entry);
   // Corrida gravada (GPS/esteira) do dia, marcada ou não: dá pra reabrir o resumo (e excluir por lá).
   const progDia = corridaEntryProgress(day);
@@ -14517,13 +14729,144 @@ function renderTreinoV2Corrida(day, phaseParts){
         ${mrtMetricHtml(avgPace,'Ritmo')}
         ${mrtMetricHtml(entry.totalKm?fmtKm(entry.totalKm):'—','Distância')}
       </div>
-      ${entry.objetivo ? `<div class="mrt-focoline">Foco: ${entry.objetivo}</div>` : ''}
       ${renderTreinoV2Doms(day,'corrida')}
       ${gravada}
       <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
       ${(state.equipItens && state.equipItens.esteira===false) ? '' : `<button class="btn-secondary" style="margin-top:8px;" data-startesteira="${day}">${ICONS.run} Esteira</button>`}
       ${stepsHtml}
     </div>`;
+}
+/* ---------- Corrida concluída (aba Treino) ----------
+   O mesmo card vira o registro do dia: distância/tempo/ritmo reais, miniatura do mapa real e as ações
+   Compartilhar, Ver atividade gravada, Corrigir e Excluir (só o registro; o treino planejado continua). */
+function renderCorridaConcluidaCard(day, entry, phaseParts){
+  const key = corridaProgressKey(day);
+  const prog = corridaEntryProgress(day) || {};
+  const tAtual = phaseParts ? treinoProgressaoChips(phaseParts).find(c=>c.current) : null;
+  const rotulo = 'CORRIDA' + (tAtual ? ` · ${tAtual.label}` : '');
+  const km = parseFloat(prog.km);
+  const tempoSeg = parseClockInput(prog.tempo);
+  const pace = km>0.05 && tempoSeg ? formatPace(tempoSeg/km) : (prog.pace ? String(prog.pace).replace('/km','') : null);
+  const dist = km>0 ? fmtKmMedido(km) : (entry.totalKm ? String(entry.totalKm).replace('.',',') : '—');
+  return `
+    <div class="mrt-card fr-runfeita">
+      <div class="mrt-runrow" style="margin-bottom:12px;">
+        <div>
+          <div class="hero-top" style="gap:12px;justify-content:flex-start;"><span class="tag tag-run">${rotulo}</span><button class="mrt-linkbtn" id="mrtPlanDetails2">Detalhes ${ICONS.chevR}</button></div>
+          <div class="mrt-runtitle" style="margin-top:10px;">${entry.type||'Corrida'}</div>
+        </div>
+        <button class="mrt-donebtn done" data-mrtdonecorrida="${day}" title="Marcar como não feito">${CHECK_SVG}</button>
+      </div>
+      <div class="mrt-metricsrow">
+        ${mrtMetricHtml(dist+' km','Distância')}
+        ${mrtMetricHtml(prog.tempo || '—','Tempo')}
+        ${mrtMetricHtml(pace ? pace+' /km' : '—','Ritmo')}
+      </div>
+      ${prog.gpsRunId ? `<div class="fr-runthumb" data-runthumb="${prog.gpsRunId}"></div>` : ''}
+      <button class="btn-primary" data-sharerun="${key}">${ICONS.share} Compartilhar corrida</button>
+      <div class="ds-list fr-acoes">
+        ${prog.gpsRunId ? `<button class="ds-row" data-lastrun="${key}">${ICONS.play}<span class="nm">Ver atividade gravada</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+        <button class="ds-row" data-corrigirrun="${key}">${ICONS.pencil}<span class="nm">Corrigir corrida</span><span class="chev">${DS_CHEV}</span></button>
+        <button class="ds-row fr-perigo" data-excluirrun="${key}">${ICONS.trash}<span class="nm">Excluir corrida realizada<small>Remove apenas o registro deste dia</small></span><span class="chev">${DS_CHEV}</span></button>
+      </div>
+    </div>`;
+}
+// Miniatura do mapa real com a rota (gerada uma vez por corrida); sem mapa, a rota real sobre fundo neutro.
+const _runThumbCache = {}, _runThumbPend = {};
+async function preencherMiniaturasCorrida(){
+  for(const el of document.querySelectorAll('[data-runthumb]')){
+    const id = el.getAttribute('data-runthumb');
+    if(!_runThumbCache[id] && _runThumbPend[id]) continue;
+    if(!_runThumbCache[id]){ _runThumbPend[id] = true;
+      const rec = await gpsDbGet(id).catch(()=>null);
+      const track = rec ? gpsCleanTrack(rec.pontos_gps||[]) : [];
+      if(track.length<2){ el.remove(); continue; }
+      const W = 1080, H = 640;
+      let cv = null;
+      const m = await arteMapaRua(track, W, H, { top:70, bottom:70, side:70 });
+      if(m){ cv = m.cv; arteDesenhaTrilha(cv.getContext('2d'), m.pts, '#FF5A1F', 10, 'rgba(255,255,255,0.95)'); }
+      else{
+        cv = document.createElement('canvas'); cv.width = W; cv.height = H;
+        const c = cv.getContext('2d'); c.fillStyle = '#F2F2F2'; c.fillRect(0,0,W,H);
+        arteDesenhaTrilha(c, arteProjecaoTrilha(track, { x:80, y:60, w:W-160, h:H-120 }), '#FF5A1F', 10);
+      }
+      _runThumbCache[id] = cv.toDataURL('image/jpeg', 0.85); delete _runThumbPend[id];
+      document.querySelectorAll('[data-runthumb="'+id+'"]').forEach(x=>{ x.innerHTML = `<img src="${_runThumbCache[id]}" alt="Mapa da corrida">`; });
+    }
+    if(document.body.contains(el)) el.innerHTML = `<img src="${_runThumbCache[id]}" alt="Mapa da corrida">`;
+  }
+}
+// Monta o "gr" (mesmo formato do resumo) a partir do registro salvo, para compartilhar fora do resumo.
+async function corridaGravadaParaArte(key){
+  const prog = (state.corridaProgress||{})[key] || {};
+  const rec = prog.gpsRunId ? await gpsDbGet(prog.gpsRunId).catch(()=>null) : null;
+  if(rec) return { status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:rec.day || dayAbbrevOf(key), points:(rec.pontos_gps||[]), totalDistKm:rec.distancia_total_km||0, finalElapsedSec:rec.tempo_total_seg||0 };
+  return { status:'finished', mode:'manual', day:dayAbbrevOf(key), points:[], totalDistKm:parseFloat(prog.km)||0, finalElapsedSec:parseClockInput(prog.tempo)||0 };
+}
+async function compartilharCorridaDoDia(key){ const gr = await corridaGravadaParaArte(key); abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr), infoCorridaParaFoto(gr)); }
+// Exclui só o registro feito (gravação, distância, tempo, ritmo, data e o "feito"); devolve os km ao tênis.
+async function excluirCorridaRealizada(key, runIdForcado){
+  const prev = state.corridaProgress[key];
+  const p = (prev && typeof prev==='object') ? prev : {};
+  if(p.shoeCredit){
+    const t = state.equipamentos.tenis.find(x=>x.id===p.shoeCredit.tenisId);
+    if(t){ t.km = Math.max(0, Math.round((t.km-p.shoeCredit.km)*10)/10); saveEquipamentos(); }
+  }
+  const runId = runIdForcado || p.gpsRunId;
+  if(runId){ await gpsDbDelete(runId); gpsMarcarExcluidaNuvem(runId); delete _runThumbCache[runId]; }
+  const { done, pace, tempo, km, data, shoeCredit, gpsRunId, obs, ...resto } = p;
+  if(Object.keys(resto).length) state.corridaProgress[key] = resto;
+  else delete state.corridaProgress[key];
+  saveCorridaProgress();
+  sincronizarCorridasGps();
+}
+async function confirmarExcluirCorrida(key){
+  if(!(await confirmarApp({ titulo:'Excluir esta corrida?', texto:'A gravação, a distância e o tempo deste dia somem. O treino planejado continua.', ok:'Excluir', perigo:true }))) return;
+  await excluirCorridaRealizada(key);
+  if(state.gpsRun && state.gpsRun.progressKey===key) state.gpsRun = null;
+  closeSheet(); render(); showToast('Corrida excluída');
+}
+// Corrigir corrida: distância, tempo e data. O valor corrigido passa a ser o dado da corrida (plano,
+// histórico, recordes do resumo e artes); o traçado GPS não muda.
+function abrirCorrigirCorrida(key){
+  const prog = (state.corridaProgress||{})[key]; if(!prog || typeof prog!=='object') return;
+  openSheet(`
+    <div class="sheet-title">Corrigir corrida</div>
+    <div class="sheet-sub">O ritmo é recalculado. O treino planejado continua igual.</div>
+    <div class="ds-stepper"><span class="lb">Data</span><input type="date" id="crData" value="${prog.data||todayISO()}" max="${todayISO()}" style="width:160px;"></div>
+    <div class="ds-stepper"><span class="lb">Distância</span><input inputmode="decimal" id="crKm" value="${prog.km ? String(Math.round(parseFloat(prog.km)*100)/100).replace('.',',') : ''}"><span class="un">km</span></div>
+    <div class="ds-stepper"><span class="lb">Tempo</span><input inputmode="numeric" id="crTempo" value="${prog.tempo||''}" placeholder="mm:ss" style="width:110px;"></div>
+    <div class="ds-actions"><button class="btn-primary" id="crSalvar">Salvar correção</button></div>`, (sh)=>{
+    sh.querySelector('#crSalvar').onclick = async ()=>{
+      const km = parseFloat(String(sh.querySelector('#crKm').value).replace(',','.'));
+      const seg = parseClockInput(sh.querySelector('#crTempo').value);
+      if(!(km>0) || !(seg>0)){ showToast('Confira distância e tempo (ex.: 30:49)'); return; }
+      await salvarCorrecaoCorrida(key, { km, seg, data: sh.querySelector('#crData').value || prog.data });
+      closeSheet(); render(); showToast('Corrida corrigida');
+    };
+  });
+}
+async function salvarCorrecaoCorrida(key, { km, seg, data }){
+  const prog = state.corridaProgress[key];
+  const kmAntes = parseFloat(prog.km)||0;
+  if(prog.shoeCredit){
+    const t = state.equipamentos.tenis.find(x=>x.id===prog.shoeCredit.tenisId);
+    if(t){ t.km = Math.max(0, Math.round((t.km - prog.shoeCredit.km + km)*10)/10); prog.shoeCredit = { ...prog.shoeCredit, km }; saveEquipamentos(); }
+  }
+  Object.assign(prog, { km:String(Math.round(km*1000)/1000), tempo:formatClock(seg), pace:formatPace(seg/km)+'/km', data, corrigidaEm:Date.now(), ...(kmAntes && Math.abs(kmAntes-km)>0.001 ? { kmOriginal: prog.kmOriginal || String(kmAntes) } : {}) });
+  saveCorridaProgress();
+  if(prog.gpsRunId){
+    const rec = await gpsDbGet(prog.gpsRunId).catch(()=>null);
+    if(rec){
+      const novo = { ...rec, distancia_total_km:Math.round(km*1000)/1000, tempo_total_seg:seg, corrigidaEm:Date.now() };
+      await gpsDbPut(novo);
+      delete _runThumbCache[prog.gpsRunId];
+      // a nuvem já tinha a versão antiga: regrava (se houver conta logada)
+      try{ if(state.authUser && !state.viewingClient && nuvemAcessivel()) await comTimeout(db.collection('users').doc(state.authUser.uid).collection('data').doc('gpsRun__'+novo.id).set(gpsParaNuvem(novo)), CLOUD_TIMEOUT_MS); }catch(e){}
+    }
+  }
+  const gr = state.gpsRun;
+  if(gr && gr.progressKey===key){ gr.totalDistKm = km; gr.finalElapsedSec = seg; _gpsAnalysisCache.key = null; }
 }
 // Detalhes do plano (semana, fase, T1–T4, zona, foco, por que o treino está assim e a sugestão de períodos do dia duplo).
 function abrirDetalhesPlano(){
@@ -14748,6 +15091,12 @@ function wireTreinoV2(){
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
 
   document.querySelectorAll('[data-lastrun]').forEach(el=>{ el.onclick = ()=> abrirResumoCorrida(el.getAttribute('data-lastrun')); });
+  document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
+  document.querySelectorAll('[data-corrigirrun]').forEach(el=>{ el.onclick = ()=> abrirCorrigirCorrida(el.getAttribute('data-corrigirrun')); });
+  document.querySelectorAll('[data-excluirrun]').forEach(el=>{ el.onclick = ()=> confirmarExcluirCorrida(el.getAttribute('data-excluirrun')); });
+  document.querySelectorAll('[data-sharemusc]').forEach(el=>{ el.onclick = ()=>{ const log = muscHistoryPorId(el.getAttribute('data-sharemusc')); if(log) compartilharResumoTreino(normalizarSessaoMuscHistorico(log)); }; });
+  document.querySelectorAll('[data-excluirmusc]').forEach(el=>{ el.onclick = async ()=>{ const log = muscHistoryPorId(el.getAttribute('data-excluirmusc')); if(log) await confirmarExcluirAtividade(log, true); }; });
+  if(document.querySelector('[data-runthumb]')) preencherMiniaturasCorrida();
   document.querySelectorAll('[data-mrtdonecorrida]').forEach(el=>{
     el.onclick = (ev)=>{ ev.stopPropagation(); hapticLeve(); toggleCorridaDone(el.getAttribute('data-mrtdonecorrida')); };
   });

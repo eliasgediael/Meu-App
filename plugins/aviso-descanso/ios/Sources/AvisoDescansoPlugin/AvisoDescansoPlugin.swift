@@ -69,7 +69,10 @@ public class AvisoDescansoPlugin: CAPPlugin, CAPBridgedPlugin, AVSpeechSynthesiz
         if let nome = nomeVoz, let v = vozes.first(where: { $0.name == nome }) {
             fala.voice = v
         } else {
-            fala.voice = vozes.first(where: { $0.language == "pt-BR" }) ?? AVSpeechSynthesisVoice(language: "pt-BR")
+            // Sem voz escolhida: voz feminina em português quando o aparelho tiver uma.
+            let femininas = ["luciana", "francisca", "fernanda", "joana", "catarina", "helena", "camila", "maria"]
+            let feminina = vozes.first(where: { v in v.gender == .female || femininas.contains(where: { v.name.lowercased().contains($0) }) })
+            fala.voice = feminina ?? vozes.first(where: { $0.language == "pt-BR" }) ?? AVSpeechSynthesisVoice(language: "pt-BR")
         }
         fala.rate = AVSpeechUtteranceDefaultSpeechRate * 0.96
         sintetizador.speak(fala)
