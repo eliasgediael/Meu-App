@@ -1820,6 +1820,81 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-colrow .nm{ display:flex; flex-direction:column; gap:2px; flex:0 0 auto; }
 .fr-colrow .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
 .fr-colrow .aside{ white-space:normal; text-align:right; line-height:1.3; }
+/* Início (arte 2) */
+.fr-plano{ display:flex; align-items:stretch; gap:8px; border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface-2); padding:18px 12px 12px 18px; overflow:hidden; }
+.fr-plano-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-plano-tit{ font-size:22px; font-weight:900; letter-spacing:-0.5px; line-height:1.15; color:var(--text); margin-top:8px; }
+.fr-plano-sub{ font-size:15px; color:var(--text-dim); margin-top:6px; }
+.fr-plano-bar{ height:6px; border-radius:var(--r-pill); background:#DDDDDD; margin:14px 0 4px; overflow:hidden; }
+.fr-plano-bar i{ display:block; height:100%; background:var(--data); border-radius:var(--r-pill); }
+.fr-plano-fig{ width:92px; flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.fr-plano-fig .mrt-anat{ max-height:150px; mix-blend-mode:multiply; }
+.fr-plano-fig{ flex-direction:column; gap:4px; }
+.fr-plano-figlbl{ font-size:10px; font-weight:700; letter-spacing:.02em; text-transform:uppercase; color:var(--text-dim); white-space:nowrap; }
+.fr-atalhos.um{ grid-template-columns:1fr; }
+.fr-atalho-feito{ cursor:default; color:var(--text-dim); }
+.fr-atalho-feito .fr-acao-ic svg{ width:16px; height:16px; }
+.fr-semplano-tit{ font-size:22px; font-weight:900; letter-spacing:-0.4px; line-height:1.2; color:var(--text); margin:4px 0 18px; }
+.fr-nw{ white-space:nowrap; }
+.fr-ultima .nm{ flex:none; }
+.fr-ultima .aside{ flex:1; min-width:0; text-align:right; line-height:1.3; }
+.fr-link{ display:inline-flex; align-items:center; gap:4px; align-self:flex-start; min-height:44px; padding:0; background:none; border:none; font-family:inherit; font-size:14.5px; font-weight:600; color:var(--text); text-decoration:underline; text-underline-offset:4px; text-decoration-color:#BBBBBB; cursor:pointer; }
+.fr-lbl{ margin-bottom:10px; }
+.fr-acao{ display:grid; grid-template-columns:52px minmax(0,1fr) auto; align-items:center; column-gap:12px; border:1px solid var(--border); border-radius:var(--r-card); padding:14px; }
+.fr-acao-ic{ width:52px; height:52px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; color:var(--text); flex-shrink:0; }
+.fr-acao-ic svg{ width:24px; height:24px; }
+.fr-acao-txt{ min-width:0; }
+.fr-acao-txt .t{ font-size:19px; font-weight:800; color:var(--text); line-height:1.2; }
+.fr-acao-txt .s{ font-size:14px; color:var(--text-dim); margin-top:2px; }
+.fr-acao-txt .m{ font-size:13.5px; color:var(--text-dim); margin-top:2px; }
+.fr-acao-cta{ display:flex; flex-direction:column; align-items:flex-end; }
+.fr-acao-cta .btn-primary.sm{ width:auto; padding:0 22px; height:48px; font-size:16px; font-weight:800; }
+.fr-acao-cta .fr-link{ align-self:flex-end; font-size:13.5px; }
+.fr-feito{ display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:700; color:var(--text); min-height:44px; }
+.fr-depois{ grid-column:1 / -1; display:flex; align-items:center; justify-content:space-between; gap:8px; min-height:44px; margin-top:10px; padding:4px 0 0; border:none; border-top:1px solid var(--border); background:none; font-family:inherit; font-size:14px; color:var(--text-dim); text-align:left; cursor:pointer; }
+.fr-depois .chev{ color:#BBBBBB; display:flex; }
+.fr-wkicons{ display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); }
+.fr-wkcol{ display:flex; flex-direction:column; align-items:center; gap:2px; padding:4px 0; background:none; border:none; border-left:1px solid var(--border); font-family:inherit; cursor:pointer; min-width:0; }
+.fr-wkcol:first-child{ border-left:none; }
+.fr-wkcol .dd{ font-size:11.5px; font-weight:600; color:var(--text-faint); letter-spacing:.02em; }
+.fr-wkcol .dn{ font-size:14px; color:var(--text-dim); }
+.fr-wkcol.hoje .dd, .fr-wkcol.hoje .dn{ color:var(--text); font-weight:700; }
+.fr-wkic{ width:40px; height:40px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; color:var(--text); margin-top:6px; }
+.fr-wkic svg{ width:19px; height:19px; }
+.fr-wkic.today{ background:none; box-shadow:inset 0 0 0 2px var(--text); }
+.fr-wkic.done{ background:var(--data); color:#fff; }
+.fr-wkic.rest{ color:var(--text-dim); }
+.fr-status{ display:flex; align-items:center; gap:14px; width:100%; min-height:56px; margin-top:14px; padding:10px 14px; border:none; border-radius:var(--r-card); background:var(--surface-2); font-family:inherit; font-size:16px; font-weight:700; color:var(--text); text-align:left; cursor:pointer; }
+.fr-status .nm{ flex:1; min-width:0; }
+.fr-status .chev{ color:#999999; display:flex; }
+.fr-status-ic{ width:34px; height:34px; border-radius:50%; background:#FFFFFF; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-weight:900; color:var(--text); }
+.fr-status-ic svg{ width:15px; height:15px; }
+.fr-treinador{ display:flex; gap:14px; align-items:flex-start; border:1px solid var(--border); border-radius:var(--r-card); padding:14px; }
+.fr-treinador > .fr-acao-ic{ width:44px; height:44px; }
+.fr-treinador > .fr-acao-ic svg{ width:20px; height:20px; }
+.fr-treinador-txt{ flex:1; min-width:0; font-size:15px; line-height:1.45; color:var(--text); padding-top:2px; }
+.fr-treinador-txt .fr-link{ font-size:14px; }
+.fr-atalhos{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.fr-atalho{ display:flex; align-items:center; gap:10px; min-height:72px; padding:12px; border:1px solid var(--border); border-radius:var(--r-card); background:none; font-family:inherit; font-size:15px; font-weight:700; color:var(--text); text-align:left; cursor:pointer; min-width:0; }
+.fr-atalho .fr-acao-ic{ width:44px; height:44px; }
+.fr-atalho .fr-acao-ic svg{ width:20px; height:20px; }
+.fr-atalho .nm{ flex:1; min-width:0; line-height:1.25; }
+.fr-atalho .chev{ color:#BBBBBB; display:flex; flex-shrink:0; }
+@media (max-width:359px){
+  .fr-plano{ padding:16px 8px 10px 14px; }
+  .fr-plano-tit{ font-size:20px; }
+  .fr-plano-sub{ font-size:14px; }
+  .fr-plano-fig{ width:76px; }
+  .fr-acao{ grid-template-columns:44px minmax(0,1fr); column-gap:10px; padding:12px; }
+  .fr-acao > .fr-acao-ic{ width:44px; height:44px; }
+  .fr-acao-cta{ grid-column:1 / -1; flex-direction:row-reverse; align-items:center; justify-content:space-between; gap:10px; margin-top:10px; }
+  .fr-acao-cta .btn-primary.sm{ flex:1; }
+  .fr-wkic{ width:34px; height:34px; }
+  .fr-wkic svg{ width:16px; height:16px; }
+  .fr-wkcol .dd{ font-size:10px; }
+  .fr-atalhos{ grid-template-columns:1fr; }
+  .fr-status{ font-size:15px; }
+}
 .fr-livrelink{ display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:12px 0 4px; font-size:14px; color:var(--text-dim); }
 .fr-livrelink svg{ width:16px; height:16px; }
 .fr-vinculo{ margin:4px 0 12px; padding:14px 16px; }
@@ -11938,11 +12013,8 @@ function mrtDiagnosticoCard(){
     <button class="btn-primary" id="mrtRegistrarLivre">Começar</button>
     <button class="btn-ghost" style="width:100%;margin-top:4px;" id="mrtQueroPlano">Quero um plano</button>
   </div>`;
-  return `<div class="mrt-card">
-    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
-      <div class="icon-box">${ICONS.wand}</div>
-      <div><div class="mrt-runtitle" style="font-size:17px;font-weight:700;letter-spacing:0;">Monte seu plano automático</div><div class="mrt-sub" style="margin:2px 0 0;">Leva cerca de 2 minutos</div></div>
-    </div>
+  return `<div class="mrt-card fr-semplano">
+    <div class="fr-semplano-tit">Você ainda não tem um plano</div>
     <button class="btn-primary" id="mrtStartDiagnostico">Criar meu plano</button>
     <button class="btn-ghost" style="width:100%;margin-top:4px;" id="mrtSoRegistrar">Só quero registrar</button>
     ${qv2LinkNovo()}
@@ -12186,6 +12258,149 @@ function abrirAjudaInicio(){
     </div>
     <button class="btn-secondary" style="margin-top:16px;" id="ajFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#ajFechar').onclick = closeSheet; });
 }
+/* ---------- Início (pacote visual, arte 2) ----------
+   Seu plano (fase, semana, progresso e boneco com os músculos do dia) → como você está hoje → próxima ação →
+   semana com ícones → situação do plano → treinador → atalhos → linhas curtas (proposta, zonas, corpo, última
+   atividade). Só usa dados e funções que já existem. */
+const FR_ARROW = '<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+const FR_CHAT = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 15a2 2 0 0 1-2 2H8l-4 4V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>';
+const FR_REGIOES_FRENTE = ['chest','quads','abs','biceps','shoulders','obliques','adductors','hip-flexors','forearms'];
+// Boneco do cartão do plano: só em dia com musculação, com os músculos dos exercícios do dia (dados do catálogo).
+// Corrida, descanso e sem plano não têm boneco (nunca estimar músculos da corrida). Em dia duplo, o rótulo
+// "Musculação" deixa claro que o boneco é só do treino de força. Mostra a vista com mais músculos acesos.
+function frBonecoDoDia(day){
+  const list = muscListForDay(day);
+  if(!list.length) return '';
+  const prim = new Set(), sec = new Set();
+  list.forEach(e=>{ const r = muscleRegionsForExercise(e.nome); r.primary.forEach(x=>prim.add(x)); r.secondary.forEach(x=>sec.add(x)); });
+  const a = { primary:[...prim], secondary:[...sec].filter(x=>!prim.has(x)) };
+  const nFrente = a.primary.filter(r=>FR_REGIOES_FRENTE.includes(r)).length;
+  const svg = nFrente > a.primary.length - nFrente ? muscleFrontSvg(a) : muscleBackSvg(a);
+  const duplo = !!treinoEntryForDay(day);
+  return `<div class="fr-plano-fig">${svg}${duplo ? '<span class="fr-plano-figlbl">Musculação</span>' : ''}</div>`;
+}
+function frCartaoPlano(day){
+  const parts = treinoPhaseParts();
+  const c = weekCounts();
+  if(!parts && !c.scheduled) return '';
+  const titulo = parts ? `${parts.phaseName ? parts.phaseName+' · ' : ''}<span class="fr-nw">Semana ${parts.weekNumber} de ${parts.totalWeeks}</span>` : 'Esta semana';
+  const pct = c.scheduled ? Math.round(c.done/c.scheduled*100) : 0;
+  return `<div class="ds-section"><div class="fr-plano">
+    <div class="fr-plano-txt">
+      <div class="ds-label">Seu plano</div>
+      <div class="fr-plano-tit">${titulo}</div>
+      <div class="fr-plano-sub">${c.done} de ${c.scheduled} treino${c.scheduled===1?'':'s'} concluído${c.scheduled===1?'':'s'}</div>
+      <div class="fr-plano-bar"><i style="width:${pct}%"></i></div>
+      <button class="fr-link" data-tabgo="meusTreinos">Ver plano ${FR_ARROW}</button>
+    </div>
+    ${frBonecoDoDia(day)}
+  </div></div>`;
+}
+// Próximo treino depois de hoje (texto curto), para o dia de descanso.
+function frProximoTreinoTexto(){
+  const i = hojeIdx();
+  for(let k=i+1; k<7; k++){
+    const d = DAY_ABBR[k];
+    const txt = naSemanaAtual(()=>{ const e = treinoEntryForDay(d), l = muscListForDay(d); const partes = [];
+      if(e) partes.push(e.type||'Corrida'); if(l.length) partes.push(muscTituloDoDia(d, l)); return partes.join(' + '); });
+    if(txt) return { d, txt };
+  }
+  return null;
+}
+function frProximaAcao(day){
+  const sessions = mrtHeroSessions(day);
+  const pending = sessions.filter(s=>!s.done);
+  const primary = pending[0] || sessions[0];
+  if(!primary){
+    const prox = frProximoTreinoTexto();
+    return `<div class="ds-section"><div class="ds-label fr-lbl">Próxima ação</div>
+      <div class="fr-acao">
+        <div class="fr-acao-ic">${ICONS.bed}</div>
+        <div class="fr-acao-txt"><div class="t">Descanso hoje</div><div class="s">${prox ? `Depois: ${prox.txt}` : treinoNextWorkoutHint(day)}</div></div>
+        ${prox ? `<div class="fr-acao-cta"><button class="fr-link" data-hojedia="${prox.d}">Ver no Treino ${FR_ARROW}</button></div>` : ''}
+      </div></div>`;
+  }
+  const secondary = sessions.find(s=>s!==primary);
+  const chave = ehSessaoChaveDia(day);
+  // Corrida: valores já têm unidade (min, /km, km). Musculação: contagens precisam do nome (4 exercícios · 12 séries).
+  const metricas = primary.metrics.filter(m=>m.v && m.v!=='—')
+    .map(m=>{ const v = String(m.v).replace(/(\d)\.(\d)/,'$1,$2'); return /^\d+$/.test(v) ? `${v} ${m.k.toLowerCase()}` : v; }).join(' · ');
+  return `<div class="ds-section"><div class="ds-label fr-lbl">Próxima ação</div>
+    <div class="fr-acao">
+      <div class="fr-acao-ic">${primary.tipo==='corrida' ? ICONS.run : ICONS.dumbbell}</div>
+      <div class="fr-acao-txt">
+        <div class="t">${primary.titulo}</div>
+        <div class="s">${chave ? 'Treino-chave · ' : ''}Hoje</div>
+        ${metricas ? `<div class="m">${metricas}</div>` : ''}
+      </div>
+      <div class="fr-acao-cta">
+        ${primary.done ? `<span class="fr-feito">${CHECK_SVG} Concluído</span>` : `<button class="btn-primary sm" data-v2start="${primary.tipo}">Começar</button>`}
+        <button class="fr-link" data-v2go="${primary.tipo}">Ver no Treino ${FR_ARROW}</button>
+      </div>
+      ${secondary ? `<button class="fr-depois" data-v2go="${secondary.tipo}"><span>Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+    </div></div>`;
+}
+function frSemanaIcones(){
+  const hoje = hojeAbbr();
+  const c = weekCounts();
+  const cols = DAY_ABBR.map(d=>{
+    const st = dayStatus(d);
+    const ehHoje = d===hoje && (state.weekOffset||0)===0;
+    const ic = st==='none' ? ICONS.bed : treinoEntryForDay(d) ? ICONS.run : ICONS.dumbbell;
+    const cls = st==='done' ? 'done' : ehHoje ? 'today' : st==='none' ? 'rest' : '';
+    return `<button class="fr-wkcol ${ehHoje?'hoje':''}" data-hojedia="${d}" aria-label="${DAY_FULLNAME[d]||d}"><span class="dd">${d.toUpperCase()}</span><span class="dn">${dayDateLabel(d).slice(0,2).replace(/^0/,'')}</span><span class="fr-wkic ${cls}">${st==='done' ? CHECK_SVG : ic}</span></button>`;
+  }).join('');
+  return `<div class="ds-section">
+    <div class="ds-labelrow"><div class="ds-label">Semana</div>${c.scheduled ? `<div class="ds-aside">${c.done} de ${c.scheduled} concluídos</div>` : ''}</div>
+    <div class="fr-wkicons">${cols}</div>
+    ${frStatusPlano()}
+  </div>`;
+}
+function frStatusPlano(){
+  let n = 0; try{ n = treinosPerdidos().length; }catch(e){ n = 0; }
+  return `<button class="fr-status" data-tabgo="meusTreinos"><span class="fr-status-ic">${n ? '!' : CHECK_SVG}</span><span class="nm">${n ? `${n} treino${n===1?'':'s'} para repor` : 'Você está em dia com o plano'}</span><span class="chev">${DS_CHEV}</span></button>`;
+}
+function frTreinador(day){
+  const sessions = mrtHeroSessions(day);
+  const p = sessions.find(s=>!s.done) || sessions[0];
+  let porque = '';
+  try{ porque = p ? porQueHoje(day, p.tipo==='corrida' ? 'corrida' : 'musculacao') : ''; }catch(e){ porque = ''; }
+  if(!porque) return '';
+  const temDiario = (state.diarioTreinador||[]).length>0;
+  return `<div class="ds-section"><div class="ds-label fr-lbl">Treinador</div>
+    <div class="fr-treinador">
+      <div class="fr-acao-ic">${FR_CHAT}</div>
+      <div class="fr-treinador-txt"><div>${porque}</div>${temDiario ? `<button class="fr-link" data-abrirdiario="1">Ver diário ${FR_ARROW}</button>` : ''}</div>
+    </div></div>`;
+}
+function frAtalhos(){
+  const hp = state.hybridPlanData;
+  const temPlanoHibrido = !!(hp && hp.plan && hp.plan.length);
+  const semana = (hp && hp.currentWeekIndex) || 1;
+  const semanalPendente = temPlanoHibrido && !(hp.checkins && hp.checkins[semana]);
+  // Check-in semanal feito: abre o ajuste da semana quando houve um (mesma regra de mostrarResultadoCheckin);
+  // sem ajuste, só informa que foi concluído. O check-in diário fica no "Como você está hoje?" acima.
+  const dec = temPlanoHibrido ? (hp.decisoesSemanais || {})[semana] : null;
+  const temAjuste = !!(hp && hp.motorV2 && dec && dec.acoes && dec.acoes[0]!=='manter' && dec.semanaAlvo <= (hp.plan || []).length);
+  const semanal = !temPlanoHibrido ? ''
+    : semanalPendente ? `<button class="fr-atalho" data-mrthojectx="checkin"><span class="fr-acao-ic">${ICONS.calendar}</span><span class="nm">Check-in semanal</span><span class="chev">${DS_CHEV}</span></button>`
+    : temAjuste ? `<button class="fr-atalho" data-propostasemana="1"><span class="fr-acao-ic">${ICONS.calendar}</span><span class="nm">Ver ajuste da semana</span><span class="chev">${DS_CHEV}</span></button>`
+    : `<div class="fr-atalho fr-atalho-feito"><span class="fr-acao-ic">${CHECK_SVG}</span><span class="nm">Check-in concluído</span></div>`;
+  return `<div class="ds-section fr-atalhos ${semanal ? '' : 'um'}">
+    <button class="fr-atalho" data-registrarlivre="1"><span class="fr-acao-ic">${ICONS.plus}</span><span class="nm">Registrar atividade</span><span class="chev">${DS_CHEV}</span></button>
+    ${semanal}
+  </div>`;
+}
+function frUltimaAtividade(){
+  let a = null; try{ a = listarAtividades()[0]; }catch(e){ a = null; }
+  if(!a) return '';
+  const hoje = todayISO();
+  const ontem = (()=>{ const d = new Date(hoje+'T12:00:00'); d.setDate(d.getDate()-1); return vdotISODate(d); })();
+  const quando = a.data===hoje ? 'hoje' : a.data===ontem ? 'ontem' : a.data ? a.data.slice(8,10)+'/'+a.data.slice(5,7) : '';
+  const nome = a.livre ? (TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade') : (a.titulo || 'Atividade');
+  const medida = a.distKm ? fmtKmMedido(a.distKm)+' km' : a.tempoSeg ? formatClock(a.tempoSeg) : '';
+  return `<button class="ds-row fr-ultima" data-ultimaativ="${a.id}"><span class="nm">Última atividade</span><span class="aside">${[nome, medida, quando].filter(Boolean).join(' · ')}</span><span class="chev">${DS_CHEV}</span></button>`;
+}
 function renderHojeV2Content(){
   atualizarSemanaCompleta();
   const day = state.selectedDayHoje;
@@ -12233,20 +12448,25 @@ function renderHojeV2Content(){
     : mrtCheckinRow();
   const temDiario = (state.diarioTreinador||[]).length>0;
   const linhas = [renderCorpoLinha(), checkinSemanal, temDiario ? `<button class="ds-row" data-abrirdiario="1"><span class="nm">Diário do treinador</span><span class="chev">${DS_CHEV}</span></button>` : ''].filter(Boolean);
-  // Ordem (Bloco 9): recuperação/prontidão → treino de hoje (e o segundo, se for dia duplo) com o botão de começar →
-  // resumo curto da semana → próximo treino → registrar atividade livre (discreto). Sem plano: criar plano / só registrar.
+  // Ordem (pacote visual, arte 2): seu plano → como você está hoje → próxima ação (e o segundo treino do dia) →
+  // semana e situação do plano → treinador → atalhos → proposta/zonas/corpo/última atividade. Sem plano: criar plano.
   const zonaRow = state.corridaVdotData && state.corridaVdotData.propostaZona ? `<button class="ds-row" data-propostazona="1">${ICONS.run}<span class="nm">Novas zonas de ritmo</span><span class="chev">${DS_CHEV}</span></button>` : '';
-  const prontidao = temPlanoOuTreino ? (checkinDiarioPendente() ? renderCheckinCard() : '') + `<div class="ds-section"><div class="ds-list">${linhas[0]}</div></div>` : '';
-  const proximo = temPlanoOuTreino ? renderProximoTreinoLinha() : '';
-  const extras = [proximo, zonaRow, ...linhas.slice(1)].filter(Boolean);
+  const propostaRow = (state.hybridPlanData && state.hybridPlanData.decisaoPendente)
+    ? `<button class="ds-row" data-propostasemana="1">${ICONS.trendUp}<span class="nm">Proposta para a semana ${state.hybridPlanData.decisaoPendente.semana}</span><span class="chev">${DS_CHEV}</span></button>` : '';
+  const finais = temPlanoOuTreino ? [propostaRow, zonaRow, frUltimaAtividade()].filter(Boolean) : [];
+  // Sem plano: só o convite (sem "Dia de descanso", que daria a entender que existe um plano). Com plano e semana
+  // vazia, continua o cartão de descanso.
+  const temPlanoGerado = !!((state.hybridPlanData && state.hybridPlanData.plan && state.hybridPlanData.plan.length) || (state.corridaVdotData && state.corridaVdotData.plan && state.corridaVdotData.plan.length));
   return greetRow
     + renderPerdidoBanner()
     + (temPlanoOuTreino ? renderAvisoAgenda() : '')
-    + prontidao
-    + heroHtml
-    + (temPlanoOuTreino ? mrtSemanaSecaoBolinhas() : '')
-    + (extras.length ? `<div class="ds-section"><div class="ds-list">${extras.join('')}</div></div>` : '')
-    + (temPlanoOuTreino ? `<button class="btn-ghost fr-livrelink" data-registrarlivre="1">${ICONS.plus} Registrar atividade livre</button>` : '')
+    + (temPlanoOuTreino ? frCartaoPlano(day) : '')
+    + (temPlanoOuTreino ? renderCheckinCard() : '')
+    + (temPlanoOuTreino ? frProximaAcao(day) : temPlanoGerado ? heroHtml : '')
+    + (temPlanoOuTreino ? frSemanaIcones() : '')
+    + (temPlanoOuTreino ? frTreinador(day) : '')
+    + (temPlanoOuTreino ? frAtalhos() : '')
+    + (finais.length ? `<div class="ds-section"><div class="ds-list">${finais.join('')}</div></div>` : '')
     + qv2CartaoPausa() + mrtDiagnosticoCard();
 }
 function renderHojeV2Shell(){
@@ -12300,6 +12520,7 @@ function wireHojeV2(){
   wireAvisoAgenda();
   document.querySelectorAll('[data-propostazona]').forEach(el=>{ el.onclick = abrirPropostaZonas; });
   document.querySelectorAll('[data-registrarlivre]').forEach(el=>{ el.onclick = escolherAtividadeLivre; });
+  document.querySelectorAll('[data-ultimaativ]').forEach(el=>{ el.onclick = ()=> abrirAtividadeDaLista(el.getAttribute('data-ultimaativ')); });
   const soReg = document.getElementById('mrtSoRegistrar');
   if(soReg) soReg.onclick = ()=>{ state.preferencias = { ...(state.preferencias||{}), soRegistrar:true }; try{ window.storage.set('preferencias', JSON.stringify(state.preferencias), false); }catch(e){} render(); };
   const regLivre = document.getElementById('mrtRegistrarLivre');

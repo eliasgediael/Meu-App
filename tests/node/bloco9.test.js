@@ -64,11 +64,17 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   S.checkinDiario = {}; S.corridaProgress = {};
   const h = T.renderHojeV2Content();
   const pos = (re) => { const m = re.exec(h); return m ? m.index : -1; };
-  const ordem = [pos(/Como você está hoje/), pos(/fr-hero/), pos(/mrt-wkrow/), pos(/>Próximo</), pos(/Registrar atividade livre/)];
-  ok(ordem.every(x => x >= 0) && ordem.every((x, i) => i === 0 || x > ordem[i - 1]), 'Início: prontidão → treino de hoje → semana → próximo → registrar livre (' + ordem.join(',') + ')');
+  const ordem = [pos(/fr-plano/), pos(/Como você está hoje/), pos(/fr-acao/), pos(/fr-wkicons/), pos(/fr-treinador/), pos(/data-registrarlivre/)];
+  ok(ordem.every(x => x >= 0) && ordem.every((x, i) => i === 0 || x > ordem[i - 1]), 'Início (arte 2): plano → prontidão → próxima ação → semana → treinador → registrar (' + ordem.join(',') + ')');
+  // boneco: só com musculação no dia (dados reais dos exercícios); corrida sozinha não tem boneco
+  const hojeD = T.DAY_ABBR[(new Date().getDay()+6)%7];
+  const comMusc = T.muscListForDay(hojeD).length > 0, comCorrida = !!T.treinoEntryForDay(hojeD);
+  ok(/mrt-anat/.test(h) === comMusc && (!/fr-plano-figlbl/.test(h) || (comMusc && comCorrida)), 'boneco só em dia com musculação (hoje: corrida=' + comCorrida + ', musculação=' + comMusc + ')');
+  ok(!/>Corpo</.test(h), 'Início sem a linha Corpo');
   S.hybridPlanData = null; S.corridaVdotData = null; S.treinos = []; S.musculacao = {}; S.preferencias = {};
   const h2 = T.renderHojeV2Content();
-  ok(/Criar meu plano/.test(h2) && /Só quero registrar/.test(h2), 'sem plano: "Criar meu plano" e "Só quero registrar"');
+  ok(/Criar meu plano/.test(h2) && /Só quero registrar/.test(h2) && /Você ainda não tem um plano/.test(h2), 'sem plano: "Você ainda não tem um plano", "Criar meu plano" e "Só quero registrar"');
+  ok(!/Dia de descanso/.test(h2) && !/mrt-anat/.test(h2), 'sem plano: sem "Dia de descanso" e sem boneco');
 
   semErro();
   process.exit(process.exitCode || 0);
