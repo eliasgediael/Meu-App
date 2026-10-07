@@ -100,6 +100,7 @@ async function atualizarSemanaDoPlano(){
       hp.currentWeekIndex = n;
       hp.estados = estadosDaSemana(n, week.phaseLabel); // força e corrida com estado próprio (hoje juntos)
       hp.materializadaSeg = segISO;
+      try{ registrarAuditoriaDaSemana(); }catch(e){} // agenda em modo auditoria: só registra conflitos
       await saveHybridPlanData();
     }
     return;

@@ -6,3 +6,4 @@ import './plano-vivo.js';
 import './forca.js';
 import './atividades.js';
 import './contratos.js';
+import './agenda.js';

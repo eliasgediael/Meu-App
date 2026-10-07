@@ -1,0 +1,26 @@
+{
+ "perna_vespera_intervalado": [
+  "pernas_fortes_seguidas",
+  "perna_pesada_e_corrida_forte"
+ ],
+ "intervalado_vespera_perna": [
+  "pernas_fortes_seguidas",
+  "perna_pesada_e_corrida_forte"
+ ],
+ "tres_dias_fortes": [
+  "perna_pesada_e_corrida_forte",
+  "dias_fortes_seguidos",
+  "pernas_fortes_seguidas",
+  "perna_pesada_e_corrida_forte"
+ ],
+ "duas_fortes_mesmo_dia": [
+  "duas_fortes_mesmo_dia"
+ ],
+ "sem_conflito": [],
+ "tempo": [
+  "tempo_acima_do_disponivel"
+ ],
+ "dor": [
+  "pernas_com_dor_ativa"
+ ]
+}
