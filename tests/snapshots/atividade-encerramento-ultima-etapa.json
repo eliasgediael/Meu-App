@@ -1,5 +1,12 @@
 {
  "nEtapas": 9,
  "aposPenultima": "running",
- "aposUltima": "finished"
+ "aposUltima": "running",
+ "etapaLivre": {
+  "nome": "Livre",
+  "tipo": "aberta",
+  "posTreinoLivre": true
+ },
+ "etapasDepois": 10,
+ "etapasAposNovaTentativa": 10
 }

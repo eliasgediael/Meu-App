@@ -67,7 +67,7 @@ async function abrirApp(opts = {}) {
     for (const r of fx.corridas) await gpsDbPut(r);
   }, fx);
   await page.reload({ waitUntil: 'domcontentloaded' });
-  await page.waitForFunction(() => window.state && typeof window.render === 'function');
+  await page.waitForFunction(() => typeof state !== 'undefined' && state && typeof render === 'function');
   await espera(1500);
   // Erros da inicialização (antes do teste começar) ficam separados: hoje há uma corrida conhecida na abertura
   // (render antes de state.treinos carregar, ver VALIDACAO-PLANO-MESTRE). O teste decide como tratá-los.

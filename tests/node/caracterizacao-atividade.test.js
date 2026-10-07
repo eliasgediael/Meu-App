@@ -7,14 +7,14 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
 
 (async () => {
   const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'treinoEntryForDay', 'corridaProgressKey', 'gpsNewRunState',
-    'gpsAdvanceStep', 'finishGpsRun', 'salvarCorrecaoCorrida', 'excluirCorridaRealizada', 'gpsDbGet', 'gpsDbAll', 'normalizarSessaoMuscHistorico', 'saveWorkoutSessionsLog',
+    'gpsAdvanceStep', 'finishGpsRun', 'salvarCorrecaoCorrida', 'excluirCorridaRealizada', 'gpsDbGet', 'gpsDbPut', 'gpsDbAll', 'normalizarSessaoMuscHistorico', 'saveWorkoutSessionsLog',
     'exportBackup', 'importBackupFile', 'BACKUP_KEYS', 'todayISO', 'hojeAbbr', 'segundaAtual', 'vdotISODate', 'normalizarAthleteProfile', 'migrarDoLegado', 'toggleCorridaDone',
     'registrarCheckinDiario', 'registrarNoDiario']);
   const S = T.state;
   S.athleteProfile = T.criarAthleteProfile(); await T.qv2Aplicar(perfil('08')); await T.gerarPrimeiroPlanoV2();
   const plano = JSON.stringify(S.treinos.map(t => ({ day: t.day, type: t.type, totalKm: t.totalKm })));
 
-  // ---------- encerramento automático na última etapa (comportamento atual; o Passo 3 vai mudar) ----------
+  // ---------- a última etapa entra em modo livre; só a pessoa encerra a atividade ----------
   {
     const entry = T.treinoEntryForDay('Seg');
     S.gpsRun = T.gpsNewRunState('Seg', entry);
@@ -26,8 +26,14 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
     T.gpsAdvanceStep();
     await espera(300);
     const aposUltima = S.gpsRun && S.gpsRun.status;
-    conferir('atividade-encerramento-ultima-etapa', { nEtapas, aposPenultima, aposUltima });
-    ok(aposUltima === 'finished', 'CARACTERIZAÇÃO (comportamento atual, será corrigido no Passo 3): terminar a última etapa encerra a corrida sozinha');
+    const etapaLivre = S.gpsRun && S.gpsRun.steps[S.gpsRun.stepIndex];
+    const etapasDepois = S.gpsRun && S.gpsRun.steps.length;
+    T.gpsAdvanceStep();
+    const etapasAposNovaTentativa = S.gpsRun && S.gpsRun.steps.length;
+    conferir('atividade-encerramento-ultima-etapa', { nEtapas, aposPenultima, aposUltima, etapaLivre: etapaLivre && { nome:etapaLivre.name, tipo:etapaLivre.tipo, posTreinoLivre:etapaLivre.posTreinoLivre }, etapasDepois, etapasAposNovaTentativa });
+    ok(aposUltima === 'running', 'terminar a última etapa mantém a corrida gravando');
+    ok(etapaLivre && etapaLivre.posTreinoLivre && etapasDepois === nEtapas + 1, 'depois do treino prescrito começa uma única etapa livre');
+    ok(etapasAposNovaTentativa === etapasDepois, 'a etapa livre não é duplicada');
     S.gpsRun = null;
   }
 
@@ -83,6 +89,9 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   {
     S.perfil = Object.assign(S.perfil || {}, { nome: 'Teste Backup', peso: '70' });
     await window.storage.set('perfil', JSON.stringify(S.perfil), false);
+    // O teste anterior nao encerra mais a corrida automaticamente. Mantemos uma
+    // atividade explicita para continuar validando a ida e volta das corridas no backup.
+    await T.gpsDbPut({ id:'run_backup_corrida_teste', tipo:'corrida', data:'2026-10-06', distancia_total_km:1 });
     const corridasAntes = (await T.gpsDbAll()).length;
     await T.exportBackup();
     const backup = global.__ultimoBlob;

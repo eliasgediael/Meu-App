@@ -7177,7 +7177,25 @@ function gpsAdvanceStep(){
   const gr = state.gpsRun;
   if(!gr) return;
   gpsFinalizeCurrentStep();
-  if(gr.stepIndex >= gr.steps.length-1){ finishGpsRun(); return; }
+  if(gr.stepIndex >= gr.steps.length-1){
+    // O fim do treino prescrito nao encerra a gravacao. A pessoa pode continuar
+    // correndo/caminhando e finaliza explicitamente pelo botao de segurar.
+    // A etapa livre e criada uma unica vez para preservar o restante da atividade.
+    if(!gr.steps.some(s=>s && s.posTreinoLivre)){
+      gr.steps.push({ name:'Livre', tipo:'aberta', posTreinoLivre:true });
+    }
+    gr.stepIndex = gr.steps.findIndex(s=>s && s.posTreinoLivre);
+    gr.stepDistKm = 0;
+    gr.stepStartedAt = Date.now();
+    gr.stepPausedMs = 0;
+    gr.tiroModalKmh = null;
+    gr.tiroModalUntil = null;
+    hapticForte();
+    speak('Treino concluído. Continue livremente ou finalize quando quiser.');
+    gpsPersist(true);
+    render();
+    return;
+  }
   gr.stepIndex++;
   gr.stepDistKm = 0;
   gr.stepStartedAt = Date.now();
@@ -7214,6 +7232,7 @@ function gpsLapStep(){
   const gr = state.gpsRun;
   const step = gpsCurrentStep();
   if(!gr || !step || step.tipo!=='aberta') return;
+  if(step.posTreinoLivre) return;
   gpsAdvanceStep();
   render();
 }
@@ -7840,7 +7859,7 @@ function renderGpsRunning(gr){
     gr.paceSuaveEm = Date.now();
   }
   const paceAtualSec = gr.status==='running' && paceBruto ? gr.paceSuave : null;
-  const isAberta = step && step.tipo==='aberta';
+  const isAberta = step && step.tipo==='aberta' && !step.posTreinoLivre;
   const progressPct = !step ? 0
     : step.tipo==='distancia' && step.km ? Math.min(100, (gr.stepDistKm/step.km)*100)
     : step.tipo==='tempo' && step.metaSeg ? Math.min(100, (stepElapsed/step.metaSeg)*100)
