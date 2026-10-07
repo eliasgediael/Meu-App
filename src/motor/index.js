@@ -7,3 +7,4 @@ import './forca.js';
 import './atividades.js';
 import './contratos.js';
 import './agenda.js';
+import './adaptacao.js';

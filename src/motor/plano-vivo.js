@@ -494,16 +494,10 @@ async function resolverPerdido(p, acao){
 /* ---------- check-in semanal pelo motor V2 ---------- */
 // Não reconstrói o plano com o motor antigo: guarda a resposta e transforma em ajuste da próxima
 // semana (gerada pelo V2 quando ela começar). Semanas futuras já geradas voltam a "pendente".
+// Desde o Bloco 7 passa pelos contratos WeeklyCheckin → WeekDecision → WeekOverlay (src/motor/adaptacao.js):
+// mesmas reduções de antes; o aumento (+5% em semana fácil) vira proposta que a pessoa confirma.
 function aplicarCheckinSemanalV2(hp, week, d, resposta){
-  const severo = (d.fadiga && d.fadiga>=4) || !!d.dor;
-  const ajustes = {};
-  if(severo) ajustes.volumeFator = 0.8;
-  if(d.dor) ajustes.aliviarInferior = true;
-  if(d.fadiga && d.fadiga>=5) ajustes.semQualidade = true;
-  if(resposta==='facil' && !severo) ajustes.volumeFator = 1.05;
-  const plan = hp.plan.map(w=> (w.weekNumber>week && !w.pendente && w.motorV2) ? { ...w, corridaWeek:[], muscPlan:{}, pendente:true, alvo:(hp.trajetoria||[])[w.weekNumber-1]||null } : w);
-  Object.keys(_previaSemanas).forEach(k=>delete _previaSemanas[k]);
-  return { ...hp, plan, ajusteProximaSemana: Object.keys(ajustes).length ? { semana: week+1, ajustes } : null };
+  return aplicarCheckinContratos(hp, week, d, resposta);
 }
 /* ===== fim PLANO VIVO + TREINADOR ===== */
 

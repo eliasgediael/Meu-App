@@ -4675,6 +4675,7 @@ function wireHybridCheckinModal(){
       state.hybridPlanData = { ...hp, draft, checkins, checkinDetails, plan };
     }
     saveHybridPlanData();
+    if(hp.motorV2) setTimeout(mostrarResultadoCheckin, 60);
     state.hybridCheckinDraft = null;
     state.modalOpen = false;
     state.modalType = null;
@@ -12205,7 +12206,9 @@ function renderHojeV2Content(){
         ${secondary ? `<div class="ds-row ds-inrow" data-v2go="${secondary.tipo}"><span class="nm">Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></div>` : ''}
       </div></div>`;
   }
-  const checkinSemanal = mrtCheckinRow();
+  const checkinSemanal = (state.hybridPlanData && state.hybridPlanData.decisaoPendente)
+    ? `<button class="ds-row" data-propostasemana="1">${ICONS.trendUp}<span class="nm">Proposta para a semana ${state.hybridPlanData.decisaoPendente.semana}</span><span class="chev">${DS_CHEV}</span></button>`
+    : mrtCheckinRow();
   const temDiario = (state.diarioTreinador||[]).length>0;
   const linhas = [renderCorpoLinha(), checkinSemanal, temDiario ? `<button class="ds-row" data-abrirdiario="1"><span class="nm">Diário do treinador</span><span class="chev">${DS_CHEV}</span></button>` : ''].filter(Boolean);
   // Ordem: o que fazer hoje → por quê/ajustar (no card) → recuperação → semana → amanhã.
@@ -12259,6 +12262,7 @@ function wireHojeV2(){
   const edAt = document.getElementById('mrtAtalhosEdit');
   if(edAt) edAt.onclick = abrirEditorAtalhos;
   document.querySelectorAll('[data-lastrun]').forEach(el=>{ el.onclick = ()=> abrirResumoCorrida(el.getAttribute('data-lastrun')); });
+  document.querySelectorAll('[data-propostasemana]').forEach(el=>{ el.onclick = mostrarResultadoCheckin; });
   document.querySelectorAll('[data-mrthojectx="checkin"]').forEach(el=>{
     el.onclick = abrirCheckinSemanal;
   });
@@ -14614,6 +14618,35 @@ function wireSubV2(){
   wirePerfilExtras();
 }
 /* ---------- Check-in semanal (sheet) ---------- */
+// Depois do check-in semanal: mostra o que muda na próxima semana (antes → depois) e por quê. Redução por dor/
+// fadiga já está aplicada; aumento só entra se a pessoa confirmar (decisão do usuário, Bloco 7).
+function mostrarResultadoCheckin(){
+  const hp = state.hybridPlanData;
+  if(!hp || !hp.motorV2) return;
+  const pend = hp.decisaoPendente;
+  const semana = pend ? pend.semana - 1 : (hp.currentWeekIndex || 1);
+  const dec = (hp.decisoesSemanais || {})[semana];
+  if(!dec){ return; }
+  const alvo = dec.semanaAlvo;
+  if(alvo > (hp.plan || []).length || dec.acoes[0]==='manter'){ showToast('Check-in registrado'); return; }
+  const ad = antesDepoisDoAjuste(hp, alvo, dec.ajustes);
+  const linha = (rot, a, b, un)=> a!=null && b!=null && a!==b ? `<div class="ds-row ds-static"><span class="nm">${rot}</span><span class="aside">${a}${un} → <b>${b}${un}</b></span></div>` : '';
+  const motivoTxt = { dor_relatada:'Você relatou dor', fadiga_alta:'Fadiga alta', fadiga_maxima:'Fadiga muito alta', semana_facil:'A semana foi fácil' };
+  const porque = dec.reasonCodes.map(c=>motivoTxt[c]).filter(Boolean).join(' · ');
+  const corpo = ad && ad.antes && ad.depois ? linha('Corrida', ad.antes.corridaMin, ad.depois.corridaMin, ' min') + linha('Treinos fortes de corrida', ad.antes.qualidade, ad.depois.qualidade, '') + linha('Séries de perna', ad.antes.seriesPerna, ad.depois.seriesPerna, '') : '';
+  if(dec.requerConfirmacao && pend){
+    openSheet(`<div class="sheet-title">Aumentar a semana ${alvo}?</div>
+      <div class="sheet-sub">${porque}.</div><div class="ds-list">${corpo}</div>
+      <div class="ds-actions"><button class="btn-primary" id="ckAceitar">Aplicar</button><button class="btn-ghost" id="ckRecusar">Manter como está</button></div>`, (sh)=>{
+      sh.querySelector('#ckAceitar').onclick = async ()=>{ state.hybridPlanData = responderDecisaoPendente(state.hybridPlanData, true); await saveHybridPlanData(); closeSheet(); render(); showToast('Semana '+alvo+' ajustada'); };
+      sh.querySelector('#ckRecusar').onclick = async ()=>{ state.hybridPlanData = responderDecisaoPendente(state.hybridPlanData, false); await saveHybridPlanData(); closeSheet(); render(); };
+    });
+    return;
+  }
+  openSheet(`<div class="sheet-title">Semana ${alvo} ajustada</div>
+    <div class="sheet-sub">${porque}.</div><div class="ds-list">${corpo}</div>
+    <div class="ds-actions"><button class="btn-primary" id="ckOk">Ok</button></div>`, (sh)=>{ sh.querySelector('#ckOk').onclick = closeSheet; });
+}
 function abrirCheckinSemanal(){
   const hp = state.hybridPlanData;
   if(!hp || !hp.plan) return;
@@ -14666,7 +14699,7 @@ function abrirCheckinSemanal(){
       }
       saveHybridPlanData();
       closeSheet(); hapticLeve(); render();
-      showToast('Check-in registrado — plano ajustado');
+      if(hp.motorV2) setTimeout(mostrarResultadoCheckin, 60); else showToast('Check-in registrado — plano ajustado');
     };
   });
   montar();

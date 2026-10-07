@@ -1,18 +1,13 @@
 {
  "fadiga1-dornao-facil": {
-  "ajuste": {
-   "semana": 2,
-   "ajustes": {
-    "volumeFator": 1.05
-   }
-  },
+  "ajuste": null,
   "semana2": {
    "fase": "Base",
    "corrida": [
     "Seg:Intervalado:39min★",
-    "Ter:Rodagem Leve:35min",
-    "Qui:Rodagem Leve:35min",
-    "Sáb:Longão:66min★"
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
    ],
    "musc": [
     "Ter:4ex:12séries",
@@ -125,19 +120,14 @@
   }
  },
  "fadiga2-dornao-facil": {
-  "ajuste": {
-   "semana": 2,
-   "ajustes": {
-    "volumeFator": 1.05
-   }
-  },
+  "ajuste": null,
   "semana2": {
    "fase": "Base",
    "corrida": [
     "Seg:Intervalado:39min★",
-    "Ter:Rodagem Leve:35min",
-    "Qui:Rodagem Leve:35min",
-    "Sáb:Longão:66min★"
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
    ],
    "musc": [
     "Ter:4ex:12séries",
@@ -250,19 +240,14 @@
   }
  },
  "fadiga3-dornao-facil": {
-  "ajuste": {
-   "semana": 2,
-   "ajustes": {
-    "volumeFator": 1.05
-   }
-  },
+  "ajuste": null,
   "semana2": {
    "fase": "Base",
    "corrida": [
     "Seg:Intervalado:39min★",
-    "Ter:Rodagem Leve:35min",
-    "Qui:Rodagem Leve:35min",
-    "Sáb:Longão:66min★"
+    "Ter:Rodagem Leve:33min",
+    "Qui:Rodagem Leve:33min",
+    "Sáb:Longão:63min★"
    ],
    "musc": [
     "Ter:4ex:12séries",
