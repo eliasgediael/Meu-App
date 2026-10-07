@@ -1817,6 +1817,9 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-fotoslider{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
 .fr-fotoslider span{ width:86px; font-size:14px; font-weight:600; }
 .fr-fotoslider input{ flex:1; accent-color:#111111; }
+.fr-semregistro{ font-size:16px; font-weight:700; color:var(--text-dim); padding:6px 0 14px; }
+.fr-outras .ds-row .nm, .fr-ativsec .ds-row .nm{ display:flex; flex-direction:column; gap:2px; font-weight:600; }
+.fr-outras .ds-row .nm small, .fr-ativsec .ds-row .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
 .fr-btnout{ background:none !important; border:1.5px solid var(--border) !important; margin-top:10px; }
 .fr-acoes{ margin-top:10px; }
 .fr-acoes .ds-row{ min-height:52px; }
@@ -4058,6 +4061,7 @@ async function init(){
   state.perdidosTratados = await lerJson('perdidosTratados', {});
   state.preferencias = { autoPause:false, vozKm:true, ...(await lerJson('preferencias', {})) };
   state.recordesCorrida = await lerJson('recordesCorrida', {});
+  await carregarAtividades();
   // Auditoria da biblioteca: exercícios salvos que apontavam para a animação de outro movimento.
   try{ migrarMidiasExercicios(); }catch(e){ console.warn('[biblioteca] migração de mídia falhou', e); }
   // Plano vivo: coloca na agenda a semana do plano que corresponde à data de hoje.
@@ -5677,6 +5681,41 @@ async function gpsResumeRun(){
   }
   render();
 }
+// Atividade livre (sem sessão planejada): corrida, caminhada ou esteira. Grava igual a uma corrida do plano,
+// mas não conclui nenhuma sessão; entra no histórico, na carga real, nos recordes (corrida) e no Progresso.
+function abrirAtividadeLivre(tipo){
+  const esteira = tipo==='esteira';
+  if(!esteira && !navigator.geolocation){ showToast('Este aparelho não oferece localização por GPS.'); return; }
+  const gr = gpsNewRunState(hojeAbbr(), { steps:[] }, esteira ? 'esteira' : 'gps');
+  gr.livre = true; gr.tipoAtividade = tipo;
+  gr.steps = [{ name:'Livre', tipo:'aberta', posTreinoLivre:true }];
+  if(esteira){ gr.stepKmh = 9; gr.inclinePct = 0; }
+  closeSheet();
+  state.gpsRun = gr;
+  resetGpsMap();
+  render();
+}
+function escolherAtividadeLivre(){
+  openSheet(`<div class="sheet-title">Registrar atividade</div>
+    <div class="ds-list">
+      <button class="ds-row" data-livre="corrida">${ICONS.run}<span class="nm">Corrida</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-livre="caminhada">${ICONS.shoe}<span class="nm">Caminhada</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-livre="esteira">${ICONS.run}<span class="nm">Esteira</span><span class="chev">${DS_CHEV}</span></button>
+    </div>`, (sh)=>{ sh.querySelectorAll('[data-livre]').forEach(el=>{ el.onclick = ()=> abrirAtividadeLivre(el.getAttribute('data-livre')); }); });
+}
+async function abrirResumoAtividade(id){
+  const a = atividadesLivres().find(x=>x.id===id);
+  const rec = a && a.gpsRunId ? await gpsDbGet(a.gpsRunId) : null;
+  if(!rec){ showToast('Esta atividade não tem detalhes salvos'); return; }
+  const d = new Date(a.data+'T12:00:00');
+  state.gpsRun = {
+    status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:DAY_ABBR[(d.getDay()+6)%7], steps:[], stepIndex:0,
+    etapasExecutadas: rec.etapas_executadas||[], points:(rec.pontos_gps||[]).map(p=>({ lat:p.lat, lng:p.lng, timestamp:p.timestamp, alt:p.alt!=null?p.alt:null, ...(p.seg?{seg:1}:{}) })),
+    totalDistKm: rec.distancia_total_km||0, finalElapsedSec: rec.tempo_total_seg||0, somenteLeitura:true,
+    livre:true, tipoAtividade:a.tipo, atividadeId:a.id, runId:a.gpsRunId,
+  };
+  closeSheet(); render();
+}
 async function finishGpsRun(){
   const gr = state.gpsRun;
   if(!gr || gr.status==='finished') return;
@@ -5700,13 +5739,32 @@ async function finishGpsRun(){
   };
   const runId = 'run_'+Date.now();
   // ownerUid: de quem é a corrida neste aparelho (a sincronização só envia corridas da conta logada).
-  const salvouCorrida = await gpsDbPut({ id: runId, day: gr.day, finishedAt: Date.now(), ownerUid: (state.authUser && !state.viewingClient) ? state.authUser.uid : null, ...resultado });
+  const salvouCorrida = await gpsDbPut({ id: runId, day: gr.day, finishedAt: Date.now(), ownerUid: (state.authUser && !state.viewingClient) ? state.authUser.uid : null, ...(gr.livre ? { livre:true, tipoAtividade:gr.tipoAtividade||'corrida' } : {}), ...resultado });
   // Só apaga o checkpoint da corrida em andamento se a corrida concluída foi gravada de verdade; espera
   // antes o checkpoint que estiver em curso (senão ele recriaria o "activeRun" depois de apagado).
   if(_gpsPersist.timer){ clearTimeout(_gpsPersist.timer); _gpsPersist.timer = null; }
   await _gpsPersist.fila;
   if(salvouCorrida) await gpsDbLimparAtiva();
   else console.warn('[gps] não consegui gravar a corrida concluída; o checkpoint foi mantido');
+
+  if(gr.livre){
+    let shoeCredit = null;
+    const ativoLivre = gr.tipoAtividade!=='caminhada' && (state.equipamentos.tenis||[]).find(t=>t.ativo);
+    if(ativoLivre && resultado.distancia_total_km){
+      ativoLivre.km = Math.round((ativoLivre.km+resultado.distancia_total_km)*10)/10;
+      shoeCredit = { tenisId:ativoLivre.id, km:resultado.distancia_total_km };
+      saveEquipamentos();
+    }
+    const a = await registrarAtividadeLivre({ id:'run:'+runId, tipo:gr.tipoAtividade||'corrida', origem: gr.mode==='esteira' ? 'esteira' : 'gps', data:todayISO(),
+      inicio:gr.startedAt||null, fim:Date.now(), distKm:resultado.distancia_total_km, tempoSeg:totalElapsedSec,
+      paceSeg: resultado.distancia_total_km>0 ? totalElapsedSec/resultado.distancia_total_km : null, gpsRunId:runId, shoeCredit });
+    gr.atividadeId = a.id; gr.runId = runId;
+    gr.novosRecordes = gr.tipoAtividade==='corrida' ? atualizarRecordesCorrida(gr, runId) : [];
+    if(isTodayDayAbbrev(gr.day)) markChallengeCheckinToday();
+    render();
+    sincronizarCorridasGps();
+    return;
+  }
 
   // Alimenta o mesmo registro que o log manual (pace/tempo/km) usa, pra aparecer no histórico normal.
   const paceSecPerKm = resultado.distancia_total_km>0 ? totalElapsedSec/resultado.distancia_total_km : null;
@@ -5751,6 +5809,12 @@ function gpsCloseSummary(){ state.gpsRun = null; render(); }
 // check-in de desafio/turma já enviado não é desfeito.
 async function gpsDeleteActivity(){
   const gr = state.gpsRun;
+  if(gr && gr.atividadeId){
+    if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A gravação, a distância e o tempo somem. O plano não muda.', ok:'Excluir', perigo:true }))) return;
+    await excluirAtividadeLivre(gr.atividadeId);
+    state.gpsRun = null; render(); showToast('Atividade excluída');
+    return;
+  }
   if(!gr || !gr.progressKey) return;
   if(!(await confirmarApp({ titulo:'Excluir esta corrida?', texto:'A gravação, a distância e o tempo deste dia somem. O treino planejado continua.', ok:'Excluir', perigo:true }))) return;
   await excluirCorridaRealizada(gr.progressKey, gr.runId);
@@ -6105,7 +6169,7 @@ function renderGpsAguardando(gr){
     const falta = Math.max(1, Math.ceil(((gr.contagemAte||0) - Date.now())/1000));
     return `<div class="mrt-root"><div class="mrt-scroll gps-wait"><div class="gps-count">${falta}</div><div class="mrt-sub">Prepare-se</div></div></div>`;
   }
-  const entry = treinoEntryForDay(gr.day);
+  const entry = gr.livre ? null : treinoEntryForDay(gr.day);
   const objetivo = entry ? [entry.totalKm ? fmtKm(entry.totalKm) : '', corridaAvgPaceLabel(entry) && corridaAvgPaceLabel(entry)!=='—' ? corridaAvgPaceLabel(entry) : ''].filter(Boolean).join(' · ') : '';
   const qual = acc==null ? 'Procurando sinal de GPS…' : bom ? 'GPS pronto' : acc<=30 ? 'Sinal de GPS razoável' : 'Sinal de GPS fraco';
   return `<div class="mrt-root gps-live fr-precorrida">
@@ -6115,12 +6179,12 @@ function renderGpsAguardando(gr){
     </div>
     <div class="gps-live-sheet">
       <div class="ds-list fr-prelist">
-        <div class="ds-row ds-static">${ICONS.shoe}<span class="nm">Tipo de atividade<small>Corrida${entry && entry.type ? ' · '+entry.type : ''}</small></span></div>
+        <div class="ds-row ds-static">${ICONS.shoe}<span class="nm">Tipo de atividade<small>${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : 'Corrida'+(entry && entry.type ? ' · '+entry.type : '')}</small></span></div>
         ${objetivo ? `<div class="ds-row ds-static">${ICONS.flag}<span class="nm">Objetivo<small>${objetivo}</small></span></div>` : ''}
         <button class="ds-row" id="mrtVozToggle">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}<span class="nm">Voz<small>${state.vozAtiva===false ? 'Desativada' : 'Ativada'}</small></span><span class="chev">${DS_CHEV}</span></button>
       </div>
       <div class="fr-presinal ${bom?'ok':''}">${qual}${acc!=null?' · ±'+Math.round(acc)+' m':''}</div>
-      <button class="btn-primary fr-pausebtn" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>Iniciar corrida</button>
+      <button class="btn-primary fr-pausebtn" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>${gr.livre && gr.tipoAtividade==='caminhada' ? 'Iniciar caminhada' : 'Iniciar corrida'}</button>
       ${!bom ? `<button class="btn-ghost" style="width:100%;" id="gpsBtnComecarMesmo">Iniciar mesmo assim</button>` : ''}
     </div>
   </div>`;
@@ -6285,7 +6349,7 @@ function elevationGainM(points){
 // Compara o treino planejado (o que tava agendado pro dia) com o que foi realmente feito nesta corrida.
 // "Certo" = dentro de ~10% do planejado; fora disso é "Acima" ou "Abaixo" do número planejado.
 function corridaPlanVsReal(gr){
-  const entry = treinoEntryForDay(gr.day) || null;
+  const entry = gr.livre ? null : (treinoEntryForDay(gr.day) || null);
   const totalElapsedSec = Math.round(gpsTotalElapsedSec(gr));
   const distReal = gr.totalDistKm, durReal = totalElapsedSec;
   const paceReal = distReal>0.05 ? totalElapsedSec/distReal : null;
@@ -6576,9 +6640,9 @@ function renderGpsSummary(gr){
           <button class="mrt-wex-x" id="gpsBtnCloseSummary">${ICONS.xmark}</button>
         </div>`}
         <div class="gps-sum-head">
-          ${!gr.somenteLeitura ? '<div class="fr-concl">Corrida concluída</div>' : ''}
+          ${!gr.somenteLeitura ? `<div class="fr-concl">${gr.livre ? 'Atividade concluída' : 'Corrida concluída'}</div>` : ''}
           <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
-          <div class="mrt-title">${entry && entry.type || 'Corrida'}</div>
+          <div class="mrt-title">${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : (entry && entry.type || 'Corrida')}</div>
         </div>
         <div class="gps-sum-main">
           <div class="c"><div class="k">Distância</div><div class="v">${fmtKmMedido(gr.totalDistKm)}<small> km</small></div></div>
@@ -6596,7 +6660,7 @@ function renderGpsSummary(gr){
         ${renderRecordesDaCorrida(gr, melhorKm)}
         ${renderGpsPaceChart(an, paceSec)}
         ${renderGpsSplits(an)}
-        <div class="mrt-card">
+        ${gr.livre ? '' : `        <div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
             <div class="mrt-summarytitle" style="font-size:17px;margin:0;">Planejado × Realizado</div>
             ${pvr.geral ? `<span class="ds-strong">${pvr.geral}</span>` : ''}
@@ -6606,19 +6670,19 @@ function renderGpsSummary(gr){
             <div class="mrt-pvrrow">
               <span class="l">${r.label}</span><span class="p">${r.plan}</span><span class="r">${r.real}</span><span class="s">${statusTag(r.label, r.cmp)}</span>
             </div>`).join('')}
-        </div>
+        </div>`}
         ${renderPaceBlockChart(gr)}
         ${renderAvaliacaoTreino(gr, pvr, elevGain, kcal)}
-        <div class="mrt-card">
+        ${gr.livre ? '' : `<div class="mrt-card">
           <div class="mrt-runlabel" style="color:var(--accent);">No próximo treino</div>
           <div style="font-size:14px;line-height:1.5;margin-top:6px;">${nextWorkoutAdjustmentText(pvr)}</div>
-        </div>
+        </div>`}
         <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
           <button class="btn-primary" id="gpsBtnCloseSummary2">${gr.somenteLeitura ? 'Fechar' : 'Salvar atividade'}</button>
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
           ${gr.progressKey ? `<button class="btn-secondary" id="gpsBtnCorrigirRun">${ICONS.pencil} Corrigir corrida</button>` : ''}
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
-          ${gr.progressKey ? (gr.somenteLeitura ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir corrida realizada</button>` : `<button class="ds-danger" id="gpsBtnDescartarRun">Descartar corrida</button>`) : ''}
+          ${(gr.progressKey || gr.atividadeId) ? (gr.somenteLeitura ? `<button class="ds-danger" id="gpsBtnDeleteRun">${gr.atividadeId ? 'Excluir atividade' : 'Excluir corrida realizada'}</button>` : `<button class="ds-danger" id="gpsBtnDescartarRun">${gr.atividadeId ? 'Descartar atividade' : 'Descartar corrida'}</button>`) : ''}
         </div>
       </div>
     </div>`;
@@ -6690,7 +6754,8 @@ function wireGpsRunScreen(){
   };
   if(byId('gpsBtnDescartarRun')) byId('gpsBtnDescartarRun').onclick = async ()=>{
     if(!(await confirmarApp({ titulo:'Descartar esta corrida?', texto:'A gravação é apagada. O treino planejado continua.', ok:'Descartar', perigo:true }))) return;
-    await excluirCorridaRealizada(gr.progressKey, gr.runId);
+    if(gr.atividadeId) await excluirAtividadeLivre(gr.atividadeId);
+    else await excluirCorridaRealizada(gr.progressKey, gr.runId);
     state.gpsRun = null; render(); showToast('Corrida descartada');
   };
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
@@ -9590,7 +9655,7 @@ function readAndResizeImage(file, size, cb){
 // Todas as chaves que o app grava (as da segunda linha ficavam de fora do backup e da migração pra nuvem).
 const BACKUP_KEYS = ['treinos','zonas','musculacao','outros','corridaProgress','perfil','historicoCarga','historicoMedidas','equipamentos','corridaVdotData','weekTrackMonday','onboardingDone','challenge','athleteProfile',
   'hybridPlanData','treinoTemplates','muscTemplates','muscDayOrigin','muscAjuste','workoutSessionsLog','domsPernas','semanasCompletas','equipItens','favoritos','atalhos',
-  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida'];
+  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida','atividades'];
 // Corridas GPS (IndexedDB) vão no backup num campo próprio — backups antigos, sem esse campo, continuam
 // importando normalmente.
 const BACKUP_CAMPO_CORRIDAS = '__corridasGps';
@@ -9635,15 +9700,10 @@ function toggleCorridaDone(day){
   const prev = corridaEntryProgress(day) || {};
   const willBeDone = !isCorridaDone(day);
   if(willBeDone){
-    const entry = treinoEntryForDay(day);
-    const km = entry && entry.totalKm ? parseFloat(entry.totalKm) : 0;
-    const ativo = state.equipamentos.tenis.find(t=>t.ativo);
-    if(ativo && km){
-      ativo.km = Math.round((ativo.km+km)*10)/10;
-      saveEquipamentos();
-    }
-    state.corridaProgress[key] = { ...prev, done:true, shoeCredit: (ativo && km) ? {tenisId:ativo.id, km} : null };
-    if(isTodayDayAbbrev(day)){ markChallengeCheckinToday(); markGroupCheckinsToday('fez corrida'+(km?' · '+fmtKm(km):'')); }
+    // Marcar como feito sem gravação = "concluído sem registro": conta para a aderência ao plano, mas não gera
+    // distância, ritmo, carga, recorde nem km de tênis (decisão do usuário, Bloco 3).
+    state.corridaProgress[key] = { ...prev, done:true, shoeCredit: prev.shoeCredit || null };
+    if(isTodayDayAbbrev(day)){ markChallengeCheckinToday(); markGroupCheckinsToday('fez corrida'); }
   }else{
     const credit = prev.shoeCredit;
     if(credit){
@@ -11844,12 +11904,19 @@ async function abrirResumoCorrida(dayKey){
 function mrtDiagnosticoCard(){
   const hasPlan = (state.hybridPlanData && state.hybridPlanData.plan && state.hybridPlanData.plan.length) || (state.corridaVdotData && state.corridaVdotData.plan && state.corridaVdotData.plan.length);
   if(hasPlan) return '';
+  // "Só quero registrar": sem plano, o Início oferece registrar corrida, caminhada ou esteira.
+  if((state.preferencias||{}).soRegistrar) return `<div class="mrt-card">
+    <div class="mrt-runtitle" style="font-size:17px;font-weight:700;letter-spacing:0;margin-bottom:12px;">Registrar atividade</div>
+    <button class="btn-primary" id="mrtRegistrarLivre">Começar</button>
+    <button class="btn-ghost" style="width:100%;margin-top:4px;" id="mrtQueroPlano">Quero um plano</button>
+  </div>`;
   return `<div class="mrt-card">
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
       <div class="icon-box">${ICONS.wand}</div>
       <div><div class="mrt-runtitle" style="font-size:17px;font-weight:700;letter-spacing:0;">Monte seu plano automático</div><div class="mrt-sub" style="margin:2px 0 0;">Leva cerca de 2 minutos</div></div>
     </div>
     <button class="btn-primary" id="mrtStartDiagnostico">Fazer diagnóstico</button>
+    <button class="btn-ghost" style="width:100%;margin-top:4px;" id="mrtSoRegistrar">Só quero registrar</button>
     ${qv2LinkNovo()}
   </div>`;
 }
@@ -12193,6 +12260,12 @@ function wireHojeV2(){
   if(state.modalType==='hybridCheckin') wireHybridCheckinModal();
   const diagBtn = document.getElementById('mrtStartDiagnostico');
   if(diagBtn) diagBtn.onclick = abrirDiagnostico;
+  const soReg = document.getElementById('mrtSoRegistrar');
+  if(soReg) soReg.onclick = ()=>{ state.preferencias = { ...(state.preferencias||{}), soRegistrar:true }; try{ window.storage.set('preferencias', JSON.stringify(state.preferencias), false); }catch(e){} render(); };
+  const regLivre = document.getElementById('mrtRegistrarLivre');
+  if(regLivre) regLivre.onclick = escolherAtividadeLivre;
+  const queroPlano = document.getElementById('mrtQueroPlano');
+  if(queroPlano) queroPlano.onclick = ()=>{ state.preferencias = { ...(state.preferencias||{}), soRegistrar:false }; try{ window.storage.set('preferencias', JSON.stringify(state.preferencias), false); }catch(e){} abrirDiagnostico(); };
   const ajuda = document.getElementById('frAjudaInicio');
   if(ajuda) ajuda.onclick = abrirAjudaInicio;
   wireTreinadorUI();
@@ -12355,7 +12428,7 @@ function renderTreinoV2Content(){
 
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
-  return header + planoBar + weekNav + daylist + nomeDia + toggle + chips + dayContent;
+  return header + planoBar + weekNav + daylist + nomeDia + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
@@ -13055,6 +13128,27 @@ function renderTreinoV2Corrida(day, phaseParts){
       ${stepsHtml}
     </div>`;
 }
+/* ---------- Outras atividades do dia (aba Treino) ----------
+   Atividades livres do dia exibido. Não concluem a sessão planejada. No dia de hoje, permite registrar uma nova. */
+function rotuloAtividade(a){
+  const partes = [];
+  if(a.distKm) partes.push(fmtKmMedido(a.distKm)+' km');
+  if(a.tempoSeg) partes.push(formatClock(a.tempoSeg));
+  if(a.tipo==='musculacao' && a.series) partes.push(a.series+' séries');
+  return partes.join(' · ');
+}
+function renderOutrasAtividadesDoDia(day){
+  const iso = dataDoDiaExibido(day);
+  const lista = atividadesLivresDoDia(iso);
+  const hoje = (state.weekOffset||0)===0 && day===hojeAbbr();
+  if(!lista.length && !hoje) return '';
+  return `<div class="ds-section fr-outras">
+    <div class="ds-label" style="margin-bottom:6px;">Outras atividades do dia</div>
+    <div class="ds-list">
+      ${lista.map(a=>`<button class="ds-row" data-abriratividade="${a.id}">${a.tipo==='caminhada' ? ICONS.shoe : ICONS.run}<span class="nm">${TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade'}<small>${rotuloAtividade(a)}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}
+      ${hoje ? `<button class="ds-row" data-registrarlivre="1">${ICONS.plus}<span class="nm">Registrar atividade livre</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+    </div></div>`;
+}
 /* ---------- Corrida concluída (aba Treino) ----------
    O mesmo card vira o registro do dia: distância/tempo/ritmo reais, miniatura do mapa real e as ações
    Compartilhar, Ver atividade gravada, Corrigir e Excluir (só o registro; o treino planejado continua). */
@@ -13067,6 +13161,7 @@ function renderCorridaConcluidaCard(day, entry, phaseParts){
   const tempoSeg = parseClockInput(prog.tempo);
   const pace = km>0.05 && tempoSeg ? formatPace(tempoSeg/km) : (prog.pace ? String(prog.pace).replace('/km','') : null);
   const dist = km>0 ? fmtKmMedido(km) : (entry.totalKm ? String(entry.totalKm).replace('.',',') : '—');
+  const semRegistro = !progressoTemRegistro(prog);
   return `
     <div class="mrt-card fr-runfeita">
       <div class="mrt-runrow" style="margin-bottom:12px;">
@@ -13076,16 +13171,16 @@ function renderCorridaConcluidaCard(day, entry, phaseParts){
         </div>
         <button class="mrt-donebtn done" data-mrtdonecorrida="${day}" title="Marcar como não feito">${CHECK_SVG}</button>
       </div>
-      <div class="mrt-metricsrow">
+      ${semRegistro ? `<div class="fr-semregistro">Concluído sem registro</div>` : `<div class="mrt-metricsrow">
         ${mrtMetricHtml(dist+' km','Distância')}
         ${mrtMetricHtml(prog.tempo || '—','Tempo')}
         ${mrtMetricHtml(pace ? pace+' /km' : '—','Ritmo')}
-      </div>
+      </div>`}
       ${prog.gpsRunId ? `<div class="fr-runthumb" data-runthumb="${prog.gpsRunId}"></div>` : ''}
-      <button class="btn-primary" data-sharerun="${key}">${ICONS.share} Compartilhar corrida</button>
+      ${semRegistro ? '' : `<button class="btn-primary" data-sharerun="${key}">${ICONS.share} Compartilhar corrida</button>`}
       <div class="ds-list fr-acoes">
         ${prog.gpsRunId ? `<button class="ds-row" data-lastrun="${key}">${ICONS.play}<span class="nm">Ver atividade gravada</span><span class="chev">${DS_CHEV}</span></button>` : ''}
-        <button class="ds-row" data-corrigirrun="${key}">${ICONS.pencil}<span class="nm">Corrigir corrida</span><span class="chev">${DS_CHEV}</span></button>
+        <button class="ds-row" data-corrigirrun="${key}">${ICONS.pencil}<span class="nm">${semRegistro ? 'Informar distância e tempo' : 'Corrigir corrida'}</span><span class="chev">${DS_CHEV}</span></button>
         <button class="ds-row fr-perigo" data-excluirrun="${key}">${ICONS.trash}<span class="nm">Excluir corrida realizada<small>Remove apenas o registro deste dia</small></span><span class="chev">${DS_CHEV}</span></button>
       </div>
     </div>`;
@@ -13410,6 +13505,8 @@ function wireTreinoV2(){
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
 
   document.querySelectorAll('[data-lastrun]').forEach(el=>{ el.onclick = ()=> abrirResumoCorrida(el.getAttribute('data-lastrun')); });
+  document.querySelectorAll('[data-abriratividade]').forEach(el=>{ el.onclick = ()=> abrirResumoAtividade(el.getAttribute('data-abriratividade')); });
+  document.querySelectorAll('[data-registrarlivre]').forEach(el=>{ el.onclick = escolherAtividadeLivre; });
   document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
   document.querySelectorAll('[data-corrigirrun]').forEach(el=>{ el.onclick = ()=> abrirCorrigirCorrida(el.getAttribute('data-corrigirrun')); });
   document.querySelectorAll('[data-excluirrun]').forEach(el=>{ el.onclick = ()=> confirmarExcluirCorrida(el.getAttribute('data-excluirrun')); });
@@ -13594,7 +13691,9 @@ function progAgruparPorSemana(itens, valFn){
   return semanas.map(s=>({ semana:s, v:mapa[s] }));
 }
 function corridasConcluidas(){
-  return Object.values(state.corridaProgress||{}).filter(p=>p && p.done && p.data);
+  const livres = atividadesLivres().filter(a=>a.tipo!=='caminhada' && a.data && a.distKm).map(a=>({ done:true, data:a.data, km:String(a.distKm),
+    tempo:a.tempoSeg ? formatClock(a.tempoSeg) : '', pace:a.paceSeg ? formatPace(a.paceSeg)+'/km' : '', gpsRunId:a.gpsRunId || null, livre:true }));
+  return Object.values(state.corridaProgress||{}).filter(p=>p && p.done && p.data).concat(livres);
 }
 const EIXOS_MUSC = ['Empurrar','Puxar','Pernas','Core'];
 function eixoDoExercicio(nome, grupo){
@@ -13761,11 +13860,34 @@ function renderProgressoV2(){
     ${det==='musc' ? cardVolume + cardCarga + cardEq : ''}
     ${renderMuscHistoryV2()}
   </div>`;
+  const secAtividades = renderAtividadesProgresso();
   const secMed = `<div class="fr-progsec"><button class="fr-proghead" data-progdet="medidas"><span class="ic">${ICONS.ruler}</span><span class="t">Medidas corporais</span><span class="chev ${det==='medidas'?'open':''}">${DS_CHEV}</span></button>${det==='medidas' ? cardMed : ''}</div>`;
-  return `<div class="mrt-chips fr-progchips">${chips}</div>${resumoHibrido}${topo}${secCorrida}${secMusc}${secMed}`;
+  return `<div class="mrt-chips fr-progchips">${chips}</div>${resumoHibrido}${topo}${secAtividades}${secCorrida}${secMusc}${secMed}`;
+}
+// Todas as atividades (plano e livres, corrida e musculação), uma por linha, da mais recente para a mais antiga.
+function renderAtividadesProgresso(){
+  const todas = listarAtividades();
+  if(!todas.length) return '';
+  const n = state.progAtivTodas ? 60 : 6;
+  const icone = (a)=> a.tipo==='musculacao' ? ICONS.dumbbell : a.tipo==='caminhada' ? ICONS.shoe : ICONS.run;
+  const nome = (a)=> a.livre ? (TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade') : (a.titulo || (a.tipo==='musculacao' ? 'Musculação' : 'Corrida'));
+  return `<div class="fr-progsec fr-ativsec">
+    <div class="fr-proglbl" style="margin-top:4px;">Atividades</div>
+    <div class="ds-list">${todas.slice(0, n).map(a=>`<button class="ds-row fr-histrow" data-ativ="${a.id}">${icone(a)}<span class="nm">${nome(a)}<small>${rotuloDataCurtaISO(a.data)}${rotuloAtividade(a) ? ' · '+rotuloAtividade(a) : ''}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}</div>
+    ${todas.length>6 ? `<button class="btn-ghost" style="padding:10px 0;" data-progativtodas="1">${state.progAtivTodas ? 'Ver menos' : 'Ver todas ('+todas.length+')'}</button>` : ''}
+  </div>`;
+}
+function abrirAtividadeDaLista(id){
+  const a = listarAtividades().find(x=>x.id===id); if(!a) return;
+  if(a.livre) return abrirResumoAtividade(a.id);
+  if(a.tipo==='musculacao') return a.muscLogId ? abrirMuscHistoryV2(a.muscLogId) : null;
+  if(a.gpsRunId && a.sessao) return abrirResumoCorrida(a.sessao.chave);
+  showToast('Corrida registrada sem gravação');
 }
 function wireProgressoV2(){
   document.querySelectorAll('[data-progperiodo]').forEach(el=>{ el.onclick = ()=>{ state.progPeriodo = el.getAttribute('data-progperiodo'); render(); }; });
+  document.querySelectorAll('[data-ativ]').forEach(el=>{ el.onclick = ()=> abrirAtividadeDaLista(el.getAttribute('data-ativ')); });
+  document.querySelectorAll('[data-progativtodas]').forEach(el=>{ el.onclick = ()=>{ state.progAtivTodas = !state.progAtivTodas; render(); }; });
   document.querySelectorAll('[data-muschistopen]').forEach(el=>{ el.onclick = ()=> abrirMuscHistoryV2(el.getAttribute('data-muschistopen')); });
   document.querySelectorAll('[data-muschistmenu]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirOpcoesMuscHistoryV2(el.getAttribute('data-muschistmenu')); }; });
   document.querySelectorAll('[data-proghisttodos]').forEach(el=>{ el.onclick = ()=>{ state.progHistTodos = !state.progHistTodos; render(); }; });

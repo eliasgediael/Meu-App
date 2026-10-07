@@ -161,12 +161,21 @@ function eventosDeCarga(){
   const ev = [];
   Object.entries(state.corridaProgress||{}).forEach(([k,v])=>{
     if(!v || typeof v!=='object' || !v.done || !v.data) return;
+    // concluído sem registro não gera carga (Bloco 3)
+    if(!progressoTemRegistro(v)) return;
     const e = (state.treinos||[]).find(t=>t.day===k);
     const tipo = e ? e.type : '';
     const min = minutosDeTempo(v.tempo) || (e && e.totalMin) || ((parseFloat(v.km)||0)*6.5);
     const f = COMO_FOI_FATOR[v.comoFoi] || 1;
     const intens = ehTipoCorridaChave(tipo) ? 1.5 : 1;
     ev.push({ data:v.data, pernas: pontosPernasCorrida(tipo)*f, geral: min*intens*f, tipo:'corrida' });
+  });
+  // Atividades livres também contam na carga real (Bloco 3): corrida/esteira como corrida leve, caminhada como regenerativo.
+  (state.atividadesLivres||[]).forEach(a=>{
+    if(!a || !a.data) return;
+    const min = (a.tempoSeg||0)/60 || (a.distKm||0)*6.5;
+    const caminhada = a.tipo==='caminhada';
+    ev.push({ data:a.data, pernas: pontosPernasCorrida(caminhada ? 'regenerativo' : ''), geral: min*(caminhada ? 0.5 : 1), tipo:'corrida' });
   });
   (state.workoutSessionsLog||[]).forEach(s=>{
     if(!s || !s.data) return;

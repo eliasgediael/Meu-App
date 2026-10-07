@@ -22,6 +22,7 @@ const testes = [
   { nome: 'caracterização: treinador', arq: 'node/caracterizacao-treinador.test.js' },
   { nome: 'caracterização: musculação', arq: 'node/caracterizacao-forca.test.js' },
   { nome: 'caracterização: atividade e dados', arq: 'node/caracterizacao-atividade.test.js' },
+  { nome: 'atividades separadas do plano (Bloco 3)', arq: 'node/atividades.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));
