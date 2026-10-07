@@ -1,0 +1,204 @@
+{
+ "15": {
+  "versao": 1,
+  "engineVersion": "2.1.0",
+  "measuredAt": "2026-10-05",
+  "strengthLevel": "iniciante",
+  "runLevel": "intermediario",
+  "strengthConfidence": "alta",
+  "runConfidence": "alta",
+  "calibracao": {
+   "ativa": false,
+   "corrida": false,
+   "musc": false,
+   "motivos": []
+  },
+  "returnAfterBreak": false,
+  "corrida": {
+   "situacao": "regular",
+   "regime": "continuo",
+   "vdot": 40,
+   "vdotFonte": "padrao",
+   "volumeMinSemana": 95,
+   "maiorMin": 66.23613986650274
+  },
+  "musculacao": {
+   "situacao": "regular",
+   "freq": 2
+  },
+  "availableDays": [
+   "Seg",
+   "Ter",
+   "Qui",
+   "Sáb"
+  ],
+  "minutesByDay": {
+   "Seg": 60,
+   "Ter": 60,
+   "Qui": 60,
+   "Sáb": 60
+  },
+  "equipment": [
+   "halteres",
+   "banco",
+   "barra",
+   "smith",
+   "legpress",
+   "extensora",
+   "maquinas",
+   "cabos",
+   "barrafixa",
+   "paralelas",
+   "corpo"
+  ],
+  "currentPain": [
+   "joelho"
+  ],
+  "restricoes": [
+   "dor_joelho_moderada"
+  ],
+  "primaryGoal": "prova",
+  "includedModalities": [
+   "corrida",
+   "musculacao"
+  ],
+  "alertas": [
+   "restricao:dor_joelho_moderada"
+  ]
+ },
+ "01": {
+  "versao": 1,
+  "engineVersion": "2.1.0",
+  "measuredAt": "2026-10-05",
+  "strengthLevel": "iniciante",
+  "runLevel": "iniciante",
+  "strengthConfidence": "media",
+  "runConfidence": "media",
+  "calibracao": {
+   "ativa": true,
+   "corrida": true,
+   "musc": true,
+   "motivos": [
+    "corrida_nunca",
+    "musculacao_nunca"
+   ]
+  },
+  "returnAfterBreak": false,
+  "corrida": {
+   "situacao": "nunca",
+   "regime": "run_walk",
+   "vdot": 30,
+   "vdotFonte": "padrao",
+   "volumeMinSemana": 60,
+   "maiorMin": null
+  },
+  "musculacao": {
+   "situacao": "nunca",
+   "freq": null
+  },
+  "availableDays": [
+   "Seg",
+   "Qua",
+   "Sex"
+  ],
+  "minutesByDay": {
+   "Seg": 60,
+   "Qua": 60,
+   "Sex": 60
+  },
+  "equipment": [
+   "halteres",
+   "banco",
+   "barra",
+   "smith",
+   "legpress",
+   "extensora",
+   "maquinas",
+   "cabos",
+   "barrafixa",
+   "paralelas",
+   "corpo"
+  ],
+  "currentPain": [],
+  "restricoes": [],
+  "primaryGoal": "saude",
+  "includedModalities": [
+   "corrida",
+   "musculacao"
+  ],
+  "alertas": [
+   "calibracao",
+   "musculacao_reduzida_por_espaco"
+  ]
+ },
+ "03": {
+  "versao": 1,
+  "engineVersion": "2.1.0",
+  "measuredAt": "2026-10-05",
+  "strengthLevel": "iniciante",
+  "runLevel": "avancado",
+  "strengthConfidence": "media",
+  "runConfidence": "media",
+  "calibracao": {
+   "ativa": true,
+   "corrida": false,
+   "musc": true,
+   "motivos": [
+    "musculacao_nunca"
+   ]
+  },
+  "returnAfterBreak": false,
+  "corrida": {
+   "situacao": "regular",
+   "regime": "continuo",
+   "vdot": 50,
+   "vdotFonte": "padrao",
+   "volumeMinSemana": 300,
+   "maiorMin": 99.90431005268884
+  },
+  "musculacao": {
+   "situacao": "nunca",
+   "freq": null
+  },
+  "availableDays": [
+   "Seg",
+   "Ter",
+   "Qua",
+   "Qui",
+   "Sex",
+   "Sáb"
+  ],
+  "minutesByDay": {
+   "Seg": 75,
+   "Ter": 75,
+   "Qua": 75,
+   "Qui": 75,
+   "Sex": 75,
+   "Sáb": 75
+  },
+  "equipment": [
+   "halteres",
+   "banco",
+   "barra",
+   "smith",
+   "legpress",
+   "extensora",
+   "maquinas",
+   "cabos",
+   "barrafixa",
+   "paralelas",
+   "corpo"
+  ],
+  "currentPain": [],
+  "restricoes": [],
+  "primaryGoal": "prova",
+  "includedModalities": [
+   "corrida",
+   "musculacao"
+  ],
+  "alertas": [
+   "calibracao",
+   "V4:volume de corrida 264 min abaixo do de partida (300 min): limite de disponibilidade/sessões"
+  ]
+ }
+}

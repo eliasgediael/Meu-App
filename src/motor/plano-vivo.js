@@ -98,6 +98,7 @@ async function atualizarSemanaDoPlano(){
       // A semana 1 já foi materializada na criação do plano; as outras entram aqui.
       if(!(n===1 && !hp.materializadaSeg)) materializeHybridWeekIntoState(week, hp.startMonday, diasMuscAnteriores);
       hp.currentWeekIndex = n;
+      hp.estados = estadosDaSemana(n, week.phaseLabel); // força e corrida com estado próprio (hoje juntos)
       hp.materializadaSeg = segISO;
       await saveHybridPlanData();
     }

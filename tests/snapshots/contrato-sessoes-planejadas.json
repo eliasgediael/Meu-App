@@ -1,0 +1,93 @@
+[
+ {
+  "data": "2026-10-05",
+  "dia": "Seg",
+  "modalidade": "corrida",
+  "papel": "RUN_INTERVALS_VO2MAX",
+  "titulo": "Intervalado",
+  "chave": "Seg 05/10",
+  "chaveSessao": true,
+  "prescricao": {
+   "totalKm": 6.5,
+   "totalMin": 39
+  }
+ },
+ {
+  "data": "2026-10-06",
+  "dia": "Ter",
+  "modalidade": "corrida",
+  "papel": "RUN_EASY_Z2",
+  "titulo": "Rodagem Leve",
+  "chave": "Ter 06/10",
+  "chaveSessao": false,
+  "prescricao": {
+   "totalKm": 5.5,
+   "totalMin": 33
+  }
+ },
+ {
+  "data": "2026-10-06",
+  "dia": "Ter",
+  "modalidade": "musculacao",
+  "papel": "UPPER_BODY",
+  "titulo": "Superiores",
+  "chave": "Ter",
+  "chaveSessao": false,
+  "prescricao": {
+   "exercicios": 4,
+   "series": 12
+  }
+ },
+ {
+  "data": "2026-10-07",
+  "dia": "Qua",
+  "modalidade": "musculacao",
+  "papel": "LEG_DAY_HEAVY",
+  "titulo": "Leg Day",
+  "chave": "Qua",
+  "chaveSessao": false,
+  "prescricao": {
+   "exercicios": 3,
+   "series": 9
+  }
+ },
+ {
+  "data": "2026-10-08",
+  "dia": "Qui",
+  "modalidade": "corrida",
+  "papel": "RUN_EASY_Z2",
+  "titulo": "Rodagem Leve",
+  "chave": "Qui 08/10",
+  "chaveSessao": false,
+  "prescricao": {
+   "totalKm": 5.5,
+   "totalMin": 33
+  }
+ },
+ {
+  "data": "2026-10-09",
+  "dia": "Sex",
+  "modalidade": "musculacao",
+  "papel": "FULL_BODY_LIGHT",
+  "titulo": "Full body",
+  "chave": "Sex",
+  "chaveSessao": false,
+  "prescricao": {
+   "exercicios": 4,
+   "series": 12
+  }
+ },
+ {
+  "data": "2026-10-10",
+  "dia": "Sáb",
+  "modalidade": "corrida",
+  "papel": "RUN_LONG_RUN",
+  "titulo": "Longão",
+  "chave": "Sáb 10/10",
+  "chaveSessao": true,
+  "prescricao": {
+   "totalKm": 10,
+   "totalMin": 63
+  }
+ }
+]

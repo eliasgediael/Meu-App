@@ -1174,7 +1174,7 @@ async function gerarPrimeiroPlanoV2(opcoes){
   }
   const draft = toLegacyDraft(state.athleteProfile);
   const foco = focoFromObjetivo(draft.objetivo);
-  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, engineVersion:r.engineVersion, decisoes:r.decisoes, validacao:r.validacao, inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
+  state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, engineVersion:r.engineVersion, decisoes:r.decisoes, validacao:r.validacao, assessment:montarAssessment(r), estados:estadosDaSemana(1, r.semana.phaseLabel), inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
   await saveHybridPlanData();
   return r;
 }
