@@ -1581,7 +1581,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-dayrow.today .ds-daydate span, .ds-dayrow.sel .ds-daydate span{ color:var(--text); font-weight:700; }
 .ds-dayrow.today .ds-daydate b, .ds-dayrow.sel .ds-daydate b{ color:var(--text); font-weight:800; }
 .ds-daytxt{ flex:1; min-width:0; }
-.ds-daytxt .nm{ font-size:16px; font-weight:600; color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.ds-daytxt .nm{ font-size:16px; font-weight:600; color:var(--text); line-height:1.25; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
 .ds-daytxt .nm.rest{ font-weight:500; color:var(--text-faint); }
 .ds-daytxt .mt{ font-size:14px; color:var(--text-dim); margin-top:2px; }
 .ds-done{ width:24px; height:24px; border-radius:50%; background:var(--text); color:#FFFFFF; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
@@ -1894,6 +1894,87 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
   .fr-wkcol .dd{ font-size:10px; }
   .fr-atalhos{ grid-template-columns:1fr; }
   .fr-status{ font-size:15px; }
+}
+/* Aba Treino (pacote visual) */
+.fr-trhead{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin:4px 0 14px; }
+.fr-morebtn{ width:48px; height:48px; border-radius:50%; border:none; background:var(--surface-2); color:var(--text); display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; }
+.fr-morebtn svg{ width:20px; height:20px; }
+.fr-trfase{ display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.fr-trfase-txt{ flex-shrink:0; }
+.fr-trfase-txt .nm{ font-size:22px; font-weight:900; letter-spacing:-0.4px; line-height:1.1; color:var(--text); }
+.fr-trfase-txt .s{ font-size:14.5px; color:var(--text-dim); margin-top:2px; }
+.fr-trbar{ flex:1; min-width:40px; height:6px; border-radius:var(--r-pill); background:#DDDDDD; overflow:hidden; }
+.fr-trbar i{ display:block; height:100%; background:var(--data); border-radius:var(--r-pill); }
+.fr-trpct{ font-size:14px; font-weight:600; color:var(--text-dim); font-variant-numeric:tabular-nums; }
+.fr-weeknav{ display:flex; align-items:center; justify-content:space-between; gap:4px; border:1px solid var(--border); border-radius:14px; padding:2px; margin-bottom:12px; }
+.fr-weektitle{ flex:1; min-width:0; min-height:44px; display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:2px 8px; background:none; border:none; font-family:inherit; cursor:default; }
+#frWeekHoje{ cursor:pointer; }
+.fr-weektitle b{ font-size:15.5px; font-weight:700; color:var(--text); }
+.fr-weektitle span{ font-size:14px; color:var(--text-dim); font-variant-numeric:tabular-nums; }
+.fr-offline{ font-size:13px; color:var(--text-dim); text-align:center; padding:8px 12px; border-radius:12px; background:var(--surface-2); margin-bottom:12px; }
+.fr-daydate{ width:44px; }
+.fr-daydate b{ font-size:15px !important; font-variant-numeric:tabular-nums; }
+.fr-runcard{ padding:18px; }
+.fr-runcard-top{ display:flex; align-items:center; gap:12px; }
+.fr-runcard-top .mrt-donebtn{ margin-left:auto; }
+.fr-kicker{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); }
+.fr-runcard-tit{ font-size:28px; font-weight:900; letter-spacing:-0.6px; line-height:1.15; color:var(--text); margin-top:4px; }
+.fr-runcard-obj{ font-size:14.5px; color:var(--text-dim); line-height:1.4; margin-top:4px; }
+.fr-mets{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin:16px 0 14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+.fr-met{ display:flex; align-items:center; gap:8px; min-width:0; }
+.fr-met + .fr-met{ border-left:1px solid var(--border); padding-left:10px; }
+.fr-met .ic{ display:flex; color:var(--text); flex-shrink:0; }
+.fr-met .ic svg{ width:22px; height:22px; }
+.fr-met b{ display:block; font-size:15.5px; font-weight:800; color:var(--text); white-space:nowrap; }
+.fr-met small{ display:block; font-size:12.5px; color:var(--text-dim); white-space:nowrap; }
+.fr-runbtns{ display:grid; grid-template-columns:1.6fr 1fr; gap:10px; }
+.fr-runbtns.um{ grid-template-columns:1fr; }
+.fr-runbtns .btn-primary, .fr-runbtns .btn-secondary{ margin:0; height:52px; }
+.fr-etapas-lbl{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); margin:18px 0 10px; }
+.fr-etapas{ display:flex; flex-direction:column; gap:8px; }
+.fr-etapa{ display:flex; align-items:center; gap:12px; width:100%; min-height:60px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:none; font-family:inherit; text-align:left; cursor:pointer; color:var(--text); }
+.fr-etapa.aberta{ border-color:var(--text); border-bottom-left-radius:0; border-bottom-right-radius:0; }
+.fr-etapa .n{ width:30px; height:30px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
+.fr-etapa .tx{ flex:1; min-width:0; }
+.fr-etapa .tx b{ display:block; font-size:15px; font-weight:700; }
+.fr-etapa .tx small{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; font-size:13px; line-height:1.35; color:var(--text-dim); overflow:hidden; }
+.fr-etapa .mt{ text-align:right; flex-shrink:0; }
+.fr-etapa .mt b{ display:block; font-size:14.5px; font-weight:700; }
+.fr-etapa .mt small{ display:block; font-size:13px; color:var(--text-dim); }
+.fr-etapa .chev{ color:#BBBBBB; display:flex; flex-shrink:0; }
+.fr-etapa.aberta .chev{ transform:rotate(90deg); }
+.fr-etapa-det{ margin-top:-8px; padding:10px 14px 12px; border:1px solid var(--text); border-top:none; border-radius:0 0 14px 14px; font-size:13.5px; line-height:1.45; color:var(--text-dim); }
+.fr-exult{ font-size:12.5px; color:var(--text-dim); margin-top:3px; }
+.fr-gplbl{ margin:18px 0 4px; }
+.fr-gpitem{ min-height:60px; }
+.fr-gpitem .nm{ display:flex; flex-direction:column; white-space:normal; }
+.fr-gpitem .nm small{ font-size:13px; font-weight:400; color:var(--text-dim); margin-top:2px; }
+.fr-gpic{ width:36px; height:36px; display:flex; align-items:center; justify-content:center; color:var(--text); flex-shrink:0; }
+.fr-gpic svg{ width:22px; height:22px; }
+.fr-gpfim{ margin-top:22px; }
+.fr-pcrow .nm{ display:flex; flex-direction:column; white-space:normal; }
+.fr-pcrow .nm small{ font-size:13px; font-weight:400; color:var(--text-dim); margin-top:2px; }
+.fr-pcst{ font-size:12px; font-weight:700; padding:4px 10px; border-radius:var(--r-pill); background:var(--surface-2); color:var(--text-dim); white-space:nowrap; flex-shrink:0; }
+.fr-pcst.atual{ background:var(--data); color:#FFFFFF; }
+.fr-pcst.concluida{ background:none; border:1px solid var(--border); }
+.fr-pcst.prevista{ background:none; color:var(--text-faint); border:1px dashed var(--border); }
+.fr-antdep .nm{ flex:none; }
+.fr-antdep .aside{ flex:1; text-align:right; white-space:normal; line-height:1.35; }
+.fr-carregando{ padding:48px 0; text-align:center; color:var(--text-dim); font-size:15px; }
+@media (max-width:359px){
+  .fr-trfase-txt .nm{ font-size:19px; }
+  .fr-runcard{ padding:16px 14px; }
+  .fr-runcard-tit{ font-size:24px; }
+  .fr-mets{ gap:6px; }
+  .fr-met{ flex-direction:column; align-items:flex-start; gap:4px; }
+  .fr-met + .fr-met{ padding-left:8px; }
+  .fr-met .ic svg{ width:18px; height:18px; }
+  .fr-met b{ font-size:14px; }
+  .fr-met small{ font-size:11.5px; }
+  .fr-runbtns{ grid-template-columns:1fr; }
+  .fr-etapa{ gap:10px; padding:10px; }
+  .fr-weektitle b{ font-size:14.5px; }
+  .fr-weektitle span{ font-size:13px; }
 }
 .fr-livrelink{ display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:12px 0 4px; font-size:14px; color:var(--text-dim); }
 .fr-livrelink svg{ width:16px; height:16px; }
@@ -3955,6 +4036,8 @@ function qv2Wire(){
       if(i<telas.length-1){ q.idx = i+1; qv2Refresh(); }
       else await qv2Concluir();
     }else if(q.fase==='entendi'){
+      // Revisão do questionário com plano em andamento: gerar de novo substitui o plano, então confirma antes.
+      if(q.revisao && !(await confirmarRefazerPlano())) return;
       const cau = qv2CautelaAtual();
       if(cau && cau.temAlerta && !(cau.modo==='liberado' || cau.modo==='conservador')){ qv2IrParaCautela(); qv2Refresh(); }
       else await qv2Gerar();
@@ -12611,41 +12694,299 @@ function renderMrtNav(){
     ${items.map(it=>`<button class="mrt-navbtn ${mrtNavAtivo()===it.id?'active':''}" data-tabgo="${it.id}" data-suborigin="nav"><span class="pill">${it.icon}</span><span class="lbl">${it.label}</span></button>`).join('')}
   </div>`;
 }
+/* ---------- Aba Treino (pacote visual): cabeçalho, Gerenciar plano, plano completo, reorganizar semana,
+   histórico de mudanças e revisão do questionário. Tudo reaproveita funções e dados que já existem; nada aqui muda
+   regra do motor. ---------- */
+const FR_ICON_RITMO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 17a8 8 0 1 1 15 0"/><path d="M12 15.5l3.5-4.5"/></svg>';
+const FR_ICON_HIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>';
+function frTreinoCabecalho(phaseParts){
+  const pct = phaseParts ? Math.round(phaseParts.weekNumber/phaseParts.totalWeeks*100) : 0;
+  return `<div class="fr-trhead"><div class="mrt-title">Treino</div><button class="fr-morebtn" id="frGerenciar" aria-label="Gerenciar plano">${ICONS.dots}</button></div>
+    ${phaseParts ? `<div class="fr-trfase"><div class="fr-trfase-txt"><div class="nm">${phaseParts.phaseName||'Plano'}</div><div class="s">Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div></div><div class="fr-trbar"><i style="width:${pct}%"></i></div><span class="fr-trpct">${pct}%</span></div>` : ''}`;
+}
+function frDiaMes(d){ const p = String(dayDateLabel(d)||'').split('/'); return p.length>=2 ? `${parseInt(p[0],10)}/${parseInt(p[1],10)}` : ''; }
+// Última execução registrada do exercício (maior carga da última sessão), para mostrar "Última vez".
+function frUltimaVez(ex){
+  const hist = cargaHistFor(ex);
+  if(!hist || !hist.length) return '';
+  const h = hist[hist.length-1];
+  const fmt = (v)=>String(v).replace('.',',');
+  if(h.sets && h.sets.length){
+    const top = h.sets.slice().sort((a,b)=>(parseFloat(b.peso)||0)-(parseFloat(a.peso)||0))[0];
+    const peso = parseFloat(top.peso)||0;
+    return peso ? `${fmt(peso)} kg${top.reps ? ' × '+top.reps : ''}` : (top.reps ? `${top.reps} reps` : '');
+  }
+  return parseFloat(h.carga) ? `${fmt(parseFloat(h.carga))} kg` : '';
+}
+// Etapa da corrida: minutos quando a descrição já informa ("10 min em Z1 · …") e o resto da descrição.
+function frEtapaInfo(s){
+  const desc = String(s.desc||'');
+  const partes = desc.split(' · ');
+  const m = /(\d+)\s*min/.exec(partes[0]);
+  return { min: m ? m[1]+' min' : '', sub: partes.length>1 ? partes.slice(1).join(' · ') : desc };
+}
+function frRenderEtapas(day, steps){
+  if(!steps || !steps.length) return '';
+  const aberta = state.frEtapaAberta && state.frEtapaAberta.day===day ? state.frEtapaAberta.i : -1;
+  return `<div class="fr-etapas-lbl">Estrutura do treino</div>
+    <div class="fr-etapas">${steps.map((s,i)=>{ const inf = frEtapaInfo(s); const ab = i===aberta;
+      return `<button class="fr-etapa ${ab?'aberta':''}" data-etapa="${i}" aria-expanded="${ab}">
+        <span class="n">${i+1}</span>
+        <span class="tx"><b>${s.name}</b><small>${inf.sub}</small></span>
+        <span class="mt">${inf.min ? `<b>${inf.min}</b>` : (s.zona ? `<b>${s.zona}</b>` : '')}<small>${s.km ? '~'+fmtKm(s.km) : ''}</small></span>
+        <span class="chev">${DS_CHEV}</span>
+      </button>${ab ? `<div class="fr-etapa-det">${s.desc ? `<div>${s.desc}</div>` : ''}${s.pace ? `<div>Ritmo ${s.pace}${s.zona ? ' · '+s.zona : ''}</div>` : ''}</div>` : ''}`; }).join('')}</div>`;
+}
+
+/* Gerenciar plano (menu de três pontos): só ações que já funcionam. */
+function frItemGP(id, icon, t, s){
+  return `<button class="ds-row fr-gpitem" data-gp="${id}"><span class="fr-gpic">${icon}</span><span class="nm">${t}${s ? `<small>${s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
+}
+function frTemRespostasDoQuestionario(){
+  const p = state.athleteProfile;
+  try{ const d = p && athleteGetPath(p, 'objetivos.principal.tipo'); return !!(d && d.valor); }catch(e){ return false; }
+}
+function frAbrirGerenciarPlano(){
+  const hp = state.hybridPlanData;
+  const temPlano = !!treinoPhaseParts();
+  const temHibrido = !!(hp && hp.plan && hp.plan.length);
+  openSheet(`<div class="sheet-title">Gerenciar plano</div>
+    ${temPlano ? `<div class="ds-label fr-gplbl">Meu plano</div><div class="ds-list">
+      ${frItemGP('completo', ICONS.clipboard, 'Ver plano completo', 'Fases, semanas e sessões')}
+      ${temHibrido ? frItemGP('reorganizar', ICONS.calendar, 'Reorganizar semana', 'Mova sessões sem criar conflito') : ''}
+      ${frItemGP('historico', FR_ICON_HIST, 'Histórico de mudanças', '')}
+      ${frTemRespostasDoQuestionario() ? frItemGP('revisar', ICONS.pencil, 'Revisar questionário do plano', 'Veja e corrija suas respostas') : ''}
+    </div>` : ''}
+    <div class="ds-label fr-gplbl">Treino</div><div class="ds-list">
+      ${frItemGP('editar', ICONS.pencil, 'Editar treino do dia', '')}
+      ${frItemGP('manual', ICONS.plus, 'Criar treino manual', '')}
+      ${frItemGP('modelos', ICONS.layers, 'Modelos salvos', '')}
+    </div>
+    <div class="ds-list fr-gpfim">${frItemGP('refazer', ICONS.wand, temPlano ? 'Refazer meu plano' : 'Criar meu plano', temPlano ? 'Começa um plano novo; o histórico continua' : '')}</div>`, (sh)=>{
+    sh.querySelectorAll('[data-gp]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-gp'); closeSheet(); setTimeout(()=>frAcaoGerenciar(a), 0); }; });
+  });
+}
+async function frAcaoGerenciar(a){
+  if(a==='completo') return frAbrirPlanoCompleto();
+  if(a==='reorganizar') return frAbrirReorganizar();
+  if(a==='historico') return frAbrirHistorico();
+  if(a==='revisar') return frRevisarQuestionario();
+  if(a==='manual'){ abrirCriarTreino(); return; }
+  if(a==='modelos'){ state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); return; }
+  if(a==='editar'){
+    state.treinoV2Escape = true;
+    // Mesma regra do seletor Musculação | Corrida: dia com um tipo só abre o editor desse tipo.
+    const dEd = state.selectedDayCorrida || state.selectedDayMusc;
+    const temC = !!treinoEntryForDay(dEd), temM = muscListForDay(dEd).length>0;
+    const ehCorrida = (temC && !temM) || (!(temM && !temC) && state.treinosSubTab==='corrida');
+    if(ehCorrida){ openCorridaBuilder(state.selectedDayCorrida); state.modalType='editCorrida'; }
+    else{ state.modalType='musc'; state.editingExId=null; }
+    state.modalOpen = true; render(); return;
+  }
+  if(a==='refazer'){ if(!(await confirmarRefazerPlano())) return; abrirDiagnostico(); }
+}
+
+/* Plano completo: semanas concluídas, atual, calculadas (já geradas) e previstas (ainda não geradas). */
+function frResumoSemanaPlano(w){
+  const corr = w.corridaWeek || [];
+  const musc = Object.values(w.muscPlan || {}).filter(l=>l && l.length).length;
+  if(w.pendente || (!corr.length && !musc)){
+    const a = w.alvo;
+    return a && a.corridaMinAlvo ? `Corrida ~${a.corridaMinAlvo} min` : '';
+  }
+  const km = corr.reduce((s,e)=>s+(parseFloat(e.totalKm)||0), 0);
+  const p = [];
+  if(corr.length) p.push(`${corr.length} corrida${corr.length===1?'':'s'}${km ? ' · '+fmtKm(km) : ''}`);
+  if(musc) p.push(`${musc} musculação`);
+  return p.join(' · ');
+}
+function frAbrirPlanoCompleto(){
+  const parts = treinoPhaseParts();
+  if(!parts){ showToast('Você ainda não tem um plano'); return; }
+  const cur = parts.weekNumber;
+  let faseAnt = null, html = '';
+  parts.plan.forEach(w=>{
+    const n = w.weekNumber, fase = w.phaseLabel || w.phaseName || '';
+    const st = n<cur ? ['concluida','Concluída'] : n===cur ? ['atual','Atual'] : w.pendente ? ['prevista','Prevista'] : ['calculada','Calculada'];
+    if(fase!==faseAnt){ html += `${faseAnt!==null ? '</div>' : ''}<div class="ds-label fr-gplbl">${fase}</div><div class="ds-list">`; faseAnt = fase; }
+    const resumo = frResumoSemanaPlano(w);
+    html += `<button class="ds-row fr-pcrow ${st[0]}" data-irsemana="${n-cur}"><span class="nm">Semana ${n}${resumo ? `<small>${resumo}</small>` : ''}</span><span class="fr-pcst ${st[0]}">${st[1]}</span><span class="chev">${DS_CHEV}</span></button>`;
+  });
+  if(faseAnt!==null) html += '</div>';
+  openSheet(`<div class="sheet-title">Plano completo</div>
+    <div class="sheet-sub">${parts.totalWeeks} semanas · você está na semana ${cur}</div>${html}`, (sh)=>{
+    sh.querySelectorAll('[data-irsemana]').forEach(el=>{ el.onclick = ()=>{ state.weekOffset = parseInt(el.getAttribute('data-irsemana'),10)||0; closeSheet(); render(); }; });
+  });
+}
+
+/* Reorganizar semana: escolhe a sessão, o dia (só dias sem conflito, pela validação que já existe) e confirma
+   vendo antes e depois. A mudança vai para o diário do treinador. */
+function frSessoesMoviveis(){
+  const out = [];
+  if((state.weekOffset||0)!==0) return out;
+  for(let i=hojeIdx(); i<7; i++){
+    const d = DAY_ABBR[i];
+    const e = treinoEntryForDay(d), l = muscListForDay(d);
+    if(e && !isCorridaDone(d)) out.push({ d, mod:'corrida', titulo:e.type||'Corrida' });
+    if(l.length && !l.every(x=>x.done)) out.push({ d, mod:'musc', titulo:muscTituloDoDia(d, l) });
+  }
+  return out;
+}
+function frConteudoDia(d, sem){
+  const e = treinoEntryForDay(d), l = muscListForDay(d);
+  const p = [];
+  if(e && sem!=='corrida') p.push(e.type||'Corrida');
+  if(l.length && sem!=='musc') p.push(muscTituloDoDia(d, l));
+  return p;
+}
+function frAbrirReorganizar(){
+  const sessoes = frSessoesMoviveis();
+  openSheet(`<div class="sheet-title">Reorganizar semana</div>
+    <div class="sheet-sub">Escolha o treino que vai mudar de dia.</div>
+    ${sessoes.length ? `<div class="ds-list">${sessoes.map((s,i)=>`<button class="ds-row" data-movsess="${i}">${s.mod==='corrida' ? ICONS.run : ICONS.dumbbell}<span class="nm">${s.titulo}<small>${DAY_FULLNAME[s.d]||s.d}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}</div>`
+      : `<div class="ds-muted" style="padding:16px 0;">Nenhum treino a mover nesta semana.</div>`}`, (sh)=>{
+    sh.querySelectorAll('[data-movsess]').forEach(el=>{ el.onclick = ()=>{ const s = sessoes[parseInt(el.getAttribute('data-movsess'),10)]; frEscolherDestino(s); }; });
+  });
+}
+function frEscolherDestino(s){
+  const disp = (state.hybridPlanData && state.hybridPlanData.assessment && state.hybridPlanData.assessment.availableDays) || null;
+  const destinos = destinosParaMover(s.d, s.mod, hojeIdx()).filter(x=>!disp || !disp.length || disp.includes(x));
+  openSheet(`<div class="sheet-title">Mover ${s.titulo}</div>
+    <div class="sheet-sub">${DAY_FULLNAME[s.d]||s.d} para:</div>
+    ${destinos.length ? `<div class="ds-list">${destinos.map(x=>{ const c = frConteudoDia(x); return `<button class="ds-row" data-movpara="${x}"><span class="nm">${DAY_FULLNAME[x]||x}<small>${c.length ? 'Já tem '+c.join(' + ') : 'Livre'}</small></span><span class="chev">${DS_CHEV}</span></button>`; }).join('')}</div>`
+      : `<div class="ds-muted" style="padding:16px 0;">Nenhum dia disponível sem conflito nesta semana.</div>`}
+    <button class="btn-ghost" style="width:100%;margin-top:6px;" id="movVoltar">Voltar</button>`, (sh)=>{
+    sh.querySelector('#movVoltar').onclick = frAbrirReorganizar;
+    sh.querySelectorAll('[data-movpara]').forEach(el=>{ el.onclick = ()=> frConfirmarMover(s, el.getAttribute('data-movpara')); });
+  });
+}
+function frConfirmarMover(s, alvo){
+  const rot = (arr)=>arr.length ? arr.join(' + ') : 'Descanso';
+  const antesOrig = frConteudoDia(s.d), antesAlvo = frConteudoDia(alvo);
+  const depoisOrig = frConteudoDia(s.d, s.mod), depoisAlvo = s.mod==='corrida' ? [s.titulo, ...antesAlvo] : [...antesAlvo, s.titulo];
+  const linha = (d, a, b)=>`<div class="ds-row ds-static fr-antdep"><span class="nm">${DAY_FULLNAME[d]||d}</span><span class="aside">${rot(a)} → <b>${rot(b)}</b></span></div>`;
+  openSheet(`<div class="sheet-title">Confirmar mudança</div>
+    <div class="ds-list">${linha(s.d, antesOrig, depoisOrig)}${linha(alvo, antesAlvo, depoisAlvo)}</div>
+    <div class="ds-actions"><button class="btn-primary" id="movOk">Mover</button><button class="btn-ghost" id="movCancelar">Cancelar</button></div>`, (sh)=>{
+    sh.querySelector('#movCancelar').onclick = ()=> frEscolherDestino(s);
+    sh.querySelector('#movOk').onclick = async ()=>{
+      await moverSessao(s.d, alvo, s.mod, 'reorganização da semana');
+      closeSheet(); hapticLeve(); render(); showToast('Treino movido');
+    };
+  });
+}
+
+/* Histórico de mudanças do plano: junta só registros que já existem (criação do plano, diário do treinador,
+   check-ins semanais e suas decisões, zonas de ritmo e avisos da agenda mantidos). */
+const FR_ACAO_SEMANA = { manter:'Semana seguinte mantida', reduzir_volume:'Volume reduzido', reduzir_acessorios_perna:'Menos séries de perna',
+  converter_qualidade_em_facil:'Treinos fortes viram leves', aumentar_volume:'Aumento de volume' };
+const FR_ORIGEM_ZONA = { teste:'teste de ritmo', manual:'valor informado', desempenho:'desempenho recente', padrao:'estimativa inicial', motor:'plano' };
+function frItensHistorico(){
+  const hp = state.hybridPlanData || {};
+  const itens = [];
+  const criado = (hp.assessment && hp.assessment.measuredAt) || null;
+  if(criado) itens.push({ data:String(criado).slice(0,10), em:0, t:'Plano criado', s: hp.plan ? `${hp.plan.length} semanas` : '' });
+  (state.diarioTreinador||[]).forEach(r=>{
+    itens.push({ data:r.data, em:r.em||0, t:`${r.alteracao||'Mudança'}${r.dia ? ' · '+(DAY_FULLNAME[r.dia]||r.dia).split('-')[0] : ''}`,
+      s:[r.original, r.novo && r.novo!=='igual' ? '→ '+r.novo : '', r.motivo ? '('+r.motivo+')' : ''].filter(Boolean).join(' ') });
+  });
+  Object.values(hp.checkinsSemanais||{}).forEach(chk=>{
+    const dec = (hp.decisoesSemanais||{})[chk.semana];
+    const ovl = dec ? (hp.overlaysSemana||{})[dec.semanaAlvo] : null;
+    const acoes = dec ? dec.acoes.map(a=>{
+      if(a!=='aumentar_volume') return FR_ACAO_SEMANA[a] || a;
+      return ovl && ovl.estado==='aplicado' ? 'Aumento aceito' : ovl && ovl.estado==='recusado' ? 'Aumento recusado' : 'Aumento proposto';
+    }) : [];
+    itens.push({ data:chk.data, em:1, t:`Check-in da semana ${chk.semana}`, s: acoes.length ? `Semana ${dec.semanaAlvo}: ${acoes.join(', ').toLowerCase()}` : '' });
+  });
+  (state.zonasHistorico||[]).forEach(z=>{
+    itens.push({ data:z.data, em:0, t:'Zonas de ritmo', s:`Calculadas por ${FR_ORIGEM_ZONA[z.origem] || 'novo cálculo'}` });
+  });
+  Object.entries(hp.conflitosMantidos||{}).forEach(([seg, lista])=>{
+    (lista||[]).forEach(()=> itens.push({ data:seg, em:0, t:'Aviso da agenda mantido', s:'Você preferiu manter a semana como estava' }));
+  });
+  return itens.filter(x=>x.data).sort((a,b)=> String(b.data).localeCompare(String(a.data)) || (b.em - a.em));
+}
+function frAbrirHistorico(){
+  const itens = frItensHistorico();
+  const fmt = (iso)=>{ const p = String(iso||'').split('-'); return p.length===3 ? p[2]+'/'+p[1] : iso; };
+  openSheet(`<div class="sheet-title">Histórico de mudanças</div>
+    ${itens.length ? `<div class="ds-list">${itens.slice(0,120).map(x=>`<div class="ds-diario"><div class="dt">${fmt(x.data)}</div><div class="tx"><b>${x.t}</b>${x.s ? `<span>${x.s}</span>` : ''}</div></div>`).join('')}</div>`
+      : `<div class="ds-muted" style="padding:16px 0;">Nenhuma mudança ainda.</div>`}
+    <button class="btn-secondary" style="margin-top:16px;" id="histFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#histFechar').onclick = closeSheet; });
+}
+
+/* Revisar questionário: abre o questionário já preenchido com as respostas salvas no perfil, começando por
+   "O que entendi". Gerar de novo substitui o plano, então pede a mesma confirmação de "Refazer meu plano". */
+function qv2RespostasDoPerfil(p){
+  if(!p) return null;
+  const raw = (c)=>{ try{ return athleteGetPath(p, c); }catch(e){ return undefined; } };
+  const val = (c)=>{ const d = raw(c); if(d==null) return undefined;
+    if(typeof d==='object' && !Array.isArray(d)){ if(d.naoSei) return 'ns'; if('valor' in d) return d.valor==null ? undefined : d.valor; }
+    return d; };
+  const R = { dias:{}, alertas:[], orient:[], mPadroes:[], dorRegioes:[], cUn:'km', alertasOk:true };
+  const set = (k, v)=>{ if(v!==undefined) R[k] = v; };
+  set('obj', val('objetivos.principal.tipo'));
+  set('dist', val('objetivos.distanciaAlvoKm'));
+  if(R.obj==='prova'){ const dt = val('objetivos.prova.data'); if(dt) R.data = dt; else R.semData = true; }
+  set('cSit', val('estadoAtual.corrida.situacao'));
+  set('cExp', val('historico.corrida.experienciaFaixa'));
+  set('cFreq', val('estadoAtual.corrida.carga.declarada.frequenciaSemana'));
+  const km = val('estadoAtual.corrida.carga.declarada.maiorSessaoRecenteKm'), min = val('estadoAtual.corrida.carga.declarada.maiorSessaoRecenteMin');
+  if(km==='ns') R.cMaior = 'ns'; else if(min!=null){ R.cMaior = String(min); R.cUn = 'min'; } else if(km!=null) R.cMaior = String(km);
+  set('cCont', val('estadoAtual.corrida.corridaContinuaFaixa'));
+  set('cParado', val('estadoAtual.corrida.semanasSemTreinoFaixa'));
+  const ud = raw('estadoAtual.corrida.ultimoDesempenho');
+  if(ud && ud.distKey){ R.cDesDist = ud.distKey; R.cDesTempo = ud.tempo; R.cDesData = ud.data; R.cDesCtx = ud.contexto; } else R.cDesNao = true;
+  set('mSit', val('estadoAtual.musculacao.situacao'));
+  set('mExp', val('historico.musculacao.experienciaFaixa'));
+  set('mFreq', val('estadoAtual.musculacao.carga.declarada.frequenciaSemana'));
+  set('mParado', val('estadoAtual.musculacao.semanasSemTreinoFaixa'));
+  const pad = val('historico.musculacao.padroesDominados'); if(Array.isArray(pad)) R.mPadroes = pad.filter(x=>x!=='nenhum');
+  const local = val('equipamentos.local');
+  if(local==='casa'){ const it = val('equipamentos.itens'); R.local = it && it.halteres ? 'casa_h' : 'casa_s'; } else if(local) R.local = local;
+  DAY_ABBR.forEach(d=>{ const on = val('disponibilidade.dias.'+d+'.disponivel'); const m = val('disponibilidade.dias.'+d+'.minutos');
+    if(on===true) R.dias[d] = { on:true, min: typeof m==='number' ? m : (m==='ns' ? 'ns' : null) }; });
+  set('comb', val('disponibilidade.combinacao.preferencia'));
+  const dor = raw('restricoesTreino.dorAtual') || [];
+  R.dor = dor.length>0;
+  if(dor.length){ R.dorRegioes = dor.map(x=>x.regiao); R.dorInt = dor[0].intensidade; R.dorRep = !!dor[0].emRepouso; }
+  R.alertas = (raw('sinaisDeAlerta.itens') || []).slice();
+  R.orient = (raw('restricoesTreino.vindasDeOrientacao') || []).slice();
+  set('sono', val('recuperacaoHabitual.sono'));
+  return R;
+}
+function frRevisarQuestionario(){
+  const p = state.athleteProfile;
+  const R = qv2RespostasDoPerfil(p);
+  if(!R){ showToast('Não encontrei as respostas do questionário'); return; }
+  qv2Abrir();
+  state.qv2.R = R;
+  state.qv2.fase = 'entendi';
+  state.qv2.resumo = qv2Frases(R, p);
+  state.qv2.revisao = true;
+  render();
+}
 function renderTreinoV2Content(){
+  // Dados ainda carregando na abertura do app: mostra o estado de carregamento em vez de quebrar.
+  if(!Array.isArray(state.treinos)) return frTreinoCabecalho(null) + `<div class="fr-carregando">Carregando seus treinos…</div>`;
   const day = state.selectedDayMusc || DAY_ABBR[(new Date().getDay()+6)%7];
   const phaseParts = treinoPhaseParts();
   const weekLabel = phaseParts ? `Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks} · ${phaseParts.phaseName}` :
     ((state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas'));
 
-  const header = `
-    <div class="mrt-header">
-      <div class="mrt-title">Treino</div>
-      <div class="mrt-morewrap">
-        <button class="mrt-morebtn" id="mrtMoreBtn" aria-label="Opções do plano">${ICONS.dots}</button>
-        <div class="mrt-moremenu ${state.treinoMoreMenuOpen?'open':''}" id="mrtMoreMenu">
-          <button id="mrtPlanDetails">${ICONS.clipboard} Detalhes do plano</button>
-          <button id="mrtEditDay">${ICONS.pencil} Editar treino do dia</button>
-          <button id="mrtManual">${ICONS.plus} Criar treino manual</button>
-          <button id="mrtTemplates">${ICONS.layers} Modelos salvos</button>
-          <button id="mrtRedoPlan">${ICONS.wand} Refazer meu plano</button>
-        </div>
-      </div>
-    </div>`;
-
-  // Progresso do plano (quando existe): "Semana X de Y" + fase, barra fina preta.
-  const planoBar = phaseParts ? `
-    <div class="ds-section ds-plan">
-      <div class="ds-labelrow"><div class="ds-planname">${phaseParts.phaseName||'Plano'}</div><div class="ds-aside">Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div></div>
-      <div class="ds-bar"><i style="width:${Math.round(phaseParts.weekNumber/phaseParts.totalWeeks*100)}%;"></i></div>
-    </div>` : '';
+  // Cabeçalho (pacote visual): título, menu "Gerenciar plano" e fase com progresso do plano.
+  const header = frTreinoCabecalho(phaseParts);
+  const planoBar = '';
 
   const relLabel = (state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas');
   const weekNav = `
-    <div class="ds-weeknav">
+    <div class="fr-weeknav">
       <button class="mrt-weeknavbtn" id="mrtWeekPrev" aria-label="Semana anterior">${ICONS.back}</button>
-      <div class="ds-weektitle"><b>${relLabel}</b><span>${dayDateLabel('Seg')} – ${dayDateLabel('Dom')}</span></div>
+      <button class="fr-weektitle" ${(state.weekOffset||0)!==0 ? 'id="frWeekHoje" aria-label="Voltar para esta semana"' : 'tabindex="-1"'}><b>${relLabel}</b><span>${dayDateLabel('Seg')} — ${dayDateLabel('Dom')}</span></button>
       <button class="mrt-weeknavbtn" id="mrtWeekNext" aria-label="Próxima semana">${ICONS.chevR}</button>
-    </div>`;
+    </div>
+    ${typeof navigator!=='undefined' && navigator.onLine===false ? `<div class="fr-offline">Sem internet · tudo fica salvo no aparelho</div>` : ''}`;
 
   // Lista da semana: uma linha por dia (toque seleciona o dia; o detalhe aparece embaixo).
   const hojeAbbr = DAY_ABBR[(new Date().getDay()+6)%7];
@@ -12657,7 +12998,7 @@ function renderTreinoV2Content(){
     const passado = (state.weekOffset||0)<0 || ((state.weekOffset||0)===0 && i<hojeIdx);
     const sel = d===day;
     let nome, meta;
-    if(ce && ml.length){ nome = ce.type||'Corrida'; meta = 'Corrida + musculação'; }
+    if(ce && ml.length){ nome = `${ce.type||'Corrida'} + ${muscTituloDoDia(d, ml)}`; meta = 'Corrida + musculação'; }
     else if(ce){ nome = ce.type||'Corrida'; meta = 'Corrida'+(ce.totalKm?' · '+String(fmtKm(ce.totalKm)).replace('.',','):''); }
     else if(ml.length){ nome = muscTituloDoDia(d, ml); meta = 'Musculação · '+ml.length+' exercício'+(ml.length===1?'':'s'); }
     if(antesDoInicioDoPlano(d)){ nome = null; }
@@ -12666,9 +13007,8 @@ function renderTreinoV2Content(){
       : `<span class="fr-ring" aria-hidden="true"></span>`;
     const status = (hoje ? `<span class="ds-pill">Hoje</span>` : '') + marca;
     const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length) ? ICONS.bed : ce ? ICONS.run : ICONS.dumbbell;
-    const dia = dayDateLabel(d).slice(0,2).replace(/^0/,'');
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
-      <div class="ds-daydate"><span>${d.toUpperCase()}</span><b>${dia}</b></div>
+      <div class="ds-daydate fr-daydate"><span>${d.toUpperCase()}</span><b>${frDiaMes(d)}</b></div>
       <div class="fr-dayic">${icone}</div>
       <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">${antesDoInicioDoPlano(d) ? 'Antes do início do plano' : 'Descanso'}</div>`}</div>
       ${status}
@@ -13049,12 +13389,15 @@ function renderTreinoV2Musc(day, phaseParts){
   const cards = `<div class="mrt-exlist">${ordered.map(ex=>{
     const pr = exercisePR(ex);
     const reps = String(ex.reps||'');
+    const desc = ex.descanso ? parseDescansoSec(ex.descanso) : 0;
+    const ult = frUltimaVez(ex);
     return `
     <div class="mrt-excard" data-mrtex="${ex.id}">
       ${exThumbHtml(ex, 56)}
       <div style="flex:1;min-width:0;">
         <div class="mrt-exname ${ex.done?'done':''}">${ex.nome}</div>
-        <div class="mrt-exrow"><span class="tag tag-musc">${ex.grupo}</span><span class="mrt-exmeta">${ex.series} × ${reps}${pr?' · PR '+pr+'kg':''}</span></div>
+        <div class="mrt-exrow"><span class="tag tag-musc">${ex.grupo}</span><span class="mrt-exmeta">${ex.series} × ${reps}${desc?' · '+desc+' s':''}${pr?' · PR '+String(pr).replace('.',',')+' kg':''}</span></div>
+        ${ult ? `<div class="fr-exult">Última vez: ${ult}</div>` : ''}
       </div>
       <button class="mrt-exmenu" data-mrtexmenu="${ex.id}" aria-label="Opções">${ICONS.dots}</button>
       <div class="mrt-excheck ${ex.done?'done':''}" data-mrtexdone="${ex.id}">${ex.done?CHECK_SVG:''}</div>
@@ -13357,36 +13700,30 @@ function renderTreinoV2Corrida(day, phaseParts){
   const gravada = progDia && progDia.gpsRunId ? `<div class="ds-row ds-inrow" data-lastrun="${corridaProgressKey(day)}" style="margin:0 0 16px;"><span class="nm">Ver atividade gravada</span><span class="chev">${DS_CHEV}</span></div>` : '';
   const tAtual = phaseParts ? treinoProgressaoChips(phaseParts).find(c=>c.current) : null;
   const rotulo = 'CORRIDA' + (tAtual ? ` · ${tAtual.label}` : '');
-  const stepsHtml = (entry.steps && entry.steps.length) ? `
-    <div class="mrt-blocklabel">Estrutura do treino</div>
-    ${entry.steps.map(s=>`
-      <div class="mrt-blockrow">
-        <div class="mrt-blockchip" style="${mrtStepChipStyle(s.name)}">${s.name}</div>
-        <div style="flex:1;min-width:0;">
-          <div class="mrt-blockname">${fmtKm(s.km)}${s.zona ? ' · '+s.zona : ''}</div>
-          ${s.desc ? `<div class="mrt-blockmeta">${s.desc}</div>` : ''}
-          ${s.pace ? `<div class="mrt-blockmeta">Ritmo ${s.pace}</div>` : ''}
-        </div>
-      </div>`).join('')}
-  ` : '';
+  // Estrutura em etapas numeradas; tocar abre a descrição completa e o ritmo (nada é escondido).
+  const stepsHtml = frRenderEtapas(day, entry.steps);
+  const objetivo = String(entry.objetivo||'').split(' — ')[0];
+  const temEsteira = !(state.equipItens && state.equipItens.esteira===false);
+  const met = (ic, v, k)=>`<div class="fr-met"><span class="ic">${ic}</span><span><b>${v}</b><small>${k}</small></span></div>`;
   return `
-    <div class="mrt-card">
-      <div class="mrt-runrow" style="margin-bottom:12px;">
-        <div>
-          <div class="hero-top" style="gap:12px;justify-content:flex-start;"><span class="tag tag-run">${rotulo}</span><button class="mrt-linkbtn" id="mrtPlanDetails2">Detalhes ${ICONS.chevR}</button></div>
-          <div class="mrt-runtitle" style="margin-top:10px;">${entry.type||'Treino'}</div>
-        </div>
-        <button class="mrt-donebtn ${done?'done':''}" data-mrtdonecorrida="${day}" title="Marcar treino como concluído">${done?CHECK_SVG:''}</button>
+    <div class="mrt-card fr-runcard">
+      <div class="fr-runcard-top">
+        <span class="fr-kicker">${rotulo}</span><button class="mrt-linkbtn" id="mrtPlanDetails2">Detalhes ${ICONS.chevR}</button>
+        <button class="mrt-donebtn ${done?'done':''}" data-mrtdonecorrida="${day}" title="Marcar treino como concluído" aria-label="Marcar como concluído">${done?CHECK_SVG:''}</button>
       </div>
-      <div class="mrt-metricsrow">
-        ${mrtMetricHtml(entry.totalMin?formatDuration(entry.totalMin*60):'—','Duração')}
-        ${mrtMetricHtml(avgPace,'Ritmo')}
-        ${mrtMetricHtml(entry.totalKm?fmtKm(entry.totalKm):'—','Distância')}
+      <div class="fr-runcard-tit">${entry.type||'Treino'}</div>
+      ${objetivo ? `<div class="fr-runcard-obj">${objetivo}</div>` : ''}
+      <div class="fr-mets">
+        ${met(ICONS.clock, entry.totalMin?formatDuration(entry.totalMin*60):'—', 'Duração')}
+        ${met(FR_ICON_RITMO, avgPace, 'Ritmo alvo')}
+        ${met(ICONS.pin, entry.totalKm?fmtKm(entry.totalKm):'—', 'Distância')}
       </div>
       ${renderTreinoV2Doms(day,'corrida')}
       ${gravada}
-      <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
-      ${(state.equipItens && state.equipItens.esteira===false) ? '' : `<button class="btn-secondary" style="margin-top:8px;" data-startesteira="${day}">${ICONS.run} Esteira</button>`}
+      <div class="fr-runbtns ${temEsteira?'':'um'}">
+        <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
+        ${temEsteira ? `<button class="btn-secondary" data-startesteira="${day}">${ICONS.run} Esteira</button>` : ''}
+      </div>
       ${stepsHtml}
     </div>`;
 }
@@ -13714,6 +14051,16 @@ function wireTreinoV2(){
 
   const moreBtn = document.getElementById('mrtMoreBtn');
   if(moreBtn) moreBtn.onclick = (ev)=>{ ev.stopPropagation(); state.treinoMoreMenuOpen = !state.treinoMoreMenuOpen; render(); };
+  const gerenciar = document.getElementById('frGerenciar');
+  if(gerenciar) gerenciar.onclick = frAbrirGerenciarPlano;
+  const weekHoje = document.getElementById('frWeekHoje');
+  if(weekHoje) weekHoje.onclick = ()=>{ state.weekOffset = 0; const h = hojeAbbr(); state.selectedDayMusc = state.selectedDayCorrida = h; render(); };
+  document.querySelectorAll('[data-etapa]').forEach(el=>{
+    el.onclick = ()=>{ const i = parseInt(el.getAttribute('data-etapa'),10), d = state.selectedDayMusc || hojeAbbr();
+      const ab = state.frEtapaAberta;
+      state.frEtapaAberta = ab && ab.day===d && ab.i===i ? null : { day:d, i };
+      render(); };
+  });
   ['mrtPlanDetails','mrtPlanDetails2'].forEach(id=>{
     const el = document.getElementById(id);
     if(el) el.onclick = (ev)=>{ ev.stopPropagation(); if(state.treinoMoreMenuOpen){ state.treinoMoreMenuOpen = false; render(); } abrirDetalhesPlano(); };

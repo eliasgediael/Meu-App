@@ -50,6 +50,9 @@ async function abrirApp(opts = {}) {
     return { indisponivel: `Chrome encontrado, mas não pôde iniciar: ${e.message}` };
   }
   const page = await browser.newPage();
+  // Só o servidor local: recursos externos (Firebase, mapas) não carregam no teste e só atrasavam a abertura.
+  await page.setRequestInterception(true);
+  page.on('request', (rq) => { const u = rq.url(); if (/^https?:\/\/(localhost|127\.0\.0\.1)[:/]/.test(u) || u.startsWith('data:') || u.startsWith('blob:')) rq.continue(); else rq.abort(); });
   page.setDefaultTimeout(60000);
   page.setDefaultNavigationTimeout(60000);
   await page.setViewport({ width: 390, height: 844, deviceScaleFactor: 2, isMobile: true, hasTouch: true });

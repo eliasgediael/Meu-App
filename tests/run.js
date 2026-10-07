@@ -28,6 +28,7 @@ const testes = [
   { nome: 'agenda em modo auditoria (Bloco 6)', arq: 'node/agenda-auditoria.test.js' },
   { nome: 'check-in semanal em contratos (Bloco 7)', arq: 'node/adaptacao.test.js' },
   { nome: 'telas: Início, agenda, zonas, vínculo (Bloco 9)', arq: 'node/bloco9.test.js' },
+  { nome: 'aba Treino e Gerenciar plano', arq: 'node/treino-menu.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));
