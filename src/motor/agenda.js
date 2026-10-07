@@ -84,3 +84,76 @@ function registrarAuditoriaDaSemana(){
 Object.assign(globalThis, {
   AGENDA_MODO, CONFLITOS_AGENDA, auditarSemana, auditarSemanaAtual, sessoesDaSemanaGerada, registrarAuditoriaDaSemana,
 });
+
+// ---------- Sugestões da agenda (Bloco 9, aprovado pelo usuário) ----------
+// Quando uma mudança MANUAL cria conflito (o gerador não cria: 0 conflitos em 160 semanas), o app mostra um aviso
+// curto com uma sugestão objetiva. Nada muda sozinho: "Aceitar" move a sessão; "Manter assim" esconde o aviso.
+const NOME_DIA_CURTO = { Seg:'segunda', Ter:'terça', Qua:'quarta', Qui:'quinta', Sex:'sexta', 'Sáb':'sábado', Dom:'domingo' };
+function chaveConflito(c){ return c.codigo + ':' + c.dias.join('-'); }
+function diaDaSessaoId(id){
+  const m = /^ps:(\d{4}-\d{2}-\d{2}):(corrida|musculacao)$/.exec(id || '');
+  if(!m) return null;
+  const d = new Date(m[1] + 'T12:00:00');
+  return { dia:DAY_ABBR[(d.getDay()+6)%7], mod:m[2] };
+}
+// Dias (de hoje em diante, sem sessão da mesma modalidade) para onde mover a sessão deixa a semana com MENOS
+// conflitos na auditoria. Simulação pura: não muda nada.
+function opcoesAuditoriaAtual(){ const hp = state.hybridPlanData; const ass = hp && hp.assessment; return { minutosPorDia:ass ? ass.minutesByDay : {}, dor:ass ? ass.currentPain : [] }; }
+function destinosQueReduzemConflitos(sessao, antes){
+  const base = sessoesPlanejadasDaSemana(), opc = opcoesAuditoriaAtual(), out = [];
+  const chavesAntes = new Set(auditarSemana(base, opc).conflictsFound.map(c=>c.codigo + ':' + c.dias.join('-')));
+  for(let i=hojeIdx(); i<7; i++){
+    const alvo = DAY_ABBR[i];
+    if(alvo===sessao.dia || base.some(x=>x.dia===alvo && x.modalidade===sessao.mod)) continue;
+    const disp = (state.hybridPlanData && state.hybridPlanData.assessment || {}).availableDays;
+    if(disp && disp.length && !disp.includes(alvo)) continue; // só dias que a pessoa marcou como disponíveis
+    const sim = base.map(x=> x.dia===sessao.dia && x.modalidade===sessao.mod ? { ...x, dia:alvo, id:idSessaoPlanejada(isoDoDiaAtual(alvo), x.modalidade) } : x);
+    const depois = auditarSemana(sim, opc).conflictsFound;
+    // não pode criar conflito novo (nem trocar um por outro), só remover
+    const novos = depois.filter(c=>!chavesAntes.has(c.codigo + ':' + c.dias.join('-')));
+    if(depois.length < antes && !novos.length) out.push({ alvo, n:depois.length });
+  }
+  return out.sort((x, y)=>x.n - y.n).map(x=>x.alvo);
+}
+function conflitosMantidosDaSemana(){
+  const hp = state.hybridPlanData; const seg = vdotISODate(segundaAtual());
+  return ((hp && hp.conflitosMantidos) || {})[seg] || [];
+}
+// Primeiro conflito ainda não respondido, de hoje em diante, com a proposta de mudança (ou sem, se não houver dia livre).
+function sugestaoDaAgenda(){
+  const hp = state.hybridPlanData;
+  if(!hp || !hp.plan) return null;
+  const a = auditarSemanaAtual();
+  const mantidos = conflitosMantidosDaSemana();
+  const hoje = hojeIdx();
+  for(const c of a.conflictsFound){
+    if(mantidos.includes(chaveConflito(c))) continue;
+    if(!c.dias.some(d=>DAY_ABBR.indexOf(d) >= hoje)) continue;
+    // prefere mover a musculação; corrida-chave não é movida
+    const candidatos = (c.sessoes || []).map(diaDaSessaoId).filter(Boolean)
+      .sort((x, y)=>(x.mod==='musculacao' ? 0 : 1) - (y.mod==='musculacao' ? 0 : 1))
+      .filter(x=>DAY_ABBR.indexOf(x.dia) >= hoje && !(x.mod==='corrida' && ehSessaoChaveDia(x.dia)));
+    let proposta = null;
+    for(const s of candidatos){
+      const destinos = destinosQueReduzemConflitos(s, a.conflictsFound.length);
+      if(destinos.length){ proposta = { de:s.dia, para:destinos[0], mod: s.mod==='musculacao' ? 'musc' : 'corrida' }; break; }
+    }
+    const texto = proposta ? `Mudar ${proposta.mod==='musc' ? 'a musculação' : 'a corrida'} de ${NOME_DIA_CURTO[proposta.de]} para ${NOME_DIA_CURTO[proposta.para]}` : c.sugestao;
+    return { chave:chaveConflito(c), codigo:c.codigo, dias:c.dias, mensagem:c.mensagem, sugestao:texto, proposta };
+  }
+  return null;
+}
+async function aceitarSugestaoAgenda(){
+  const s = sugestaoDaAgenda();
+  if(!s || !s.proposta) return false;
+  await moverSessao(s.proposta.de, s.proposta.para, s.proposta.mod, 'sugestão da agenda');
+  return true;
+}
+async function manterConflitoAgenda(chave){
+  const hp = state.hybridPlanData; if(!hp) return;
+  const seg = vdotISODate(segundaAtual());
+  hp.conflitosMantidos = hp.conflitosMantidos || {};
+  hp.conflitosMantidos[seg] = [...new Set([...(hp.conflitosMantidos[seg] || []), chave])];
+  await saveHybridPlanData();
+}
+Object.assign(globalThis, { opcoesAuditoriaAtual, destinosQueReduzemConflitos, NOME_DIA_CURTO, chaveConflito, diaDaSessaoId, sugestaoDaAgenda, aceitarSugestaoAgenda, manterConflitoAgenda });

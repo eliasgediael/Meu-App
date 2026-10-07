@@ -1817,6 +1817,13 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-fotoslider{ display:flex; align-items:center; gap:12px; margin-bottom:10px; }
 .fr-fotoslider span{ width:86px; font-size:14px; font-weight:600; }
 .fr-fotoslider input{ flex:1; accent-color:#111111; }
+.fr-colrow .nm{ display:flex; flex-direction:column; gap:2px; flex:0 0 auto; }
+.fr-colrow .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
+.fr-colrow .aside{ white-space:normal; text-align:right; line-height:1.3; }
+.fr-livrelink{ display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:12px 0 4px; font-size:14px; color:var(--text-dim); }
+.fr-livrelink svg{ width:16px; height:16px; }
+.fr-vinculo{ margin:4px 0 12px; padding:14px 16px; }
+.fr-vinculo .t{ font-size:14.5px; font-weight:700; margin-bottom:10px; }
 .fr-semregistro{ font-size:16px; font-weight:700; color:var(--text-dim); padding:6px 0 14px; }
 .fr-outras .ds-row .nm, .fr-ativsec .ds-row .nm{ display:flex; flex-direction:column; gap:2px; font-weight:600; }
 .fr-outras .ds-row .nm small, .fr-ativsec .ds-row .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
@@ -6660,6 +6667,7 @@ function renderGpsSummary(gr){
         </div>
         ${gr.progressKey ? renderComoFoi(((state.corridaProgress||{})[gr.progressKey]||{}).comoFoi, 'data-comofoi') : ''}
         ${gr.progressKey ? renderNotaCorrida(gr) : ''}
+        ${gr.livre && gr.atividadeId ? (()=>{ const a = atividadesLivres().find(x=>x.id===gr.atividadeId); return a ? renderSugestaoVinculo(a) : ''; })() : ''}
         ${renderRecordesDaCorrida(gr, melhorKm)}
         ${renderGpsPaceChart(an, paceSec)}
         ${renderGpsSplits(an)}
@@ -6765,6 +6773,7 @@ function wireGpsRunScreen(){
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
   if(byId('gpsBtnCorrigirRun')) byId('gpsBtnCorrigirRun').onclick = ()=> abrirCorrigirCorrida(gr.progressKey);
+  wireSugestaoVinculo();
   if(byId('gpsNotaObs')) byId('gpsNotaObs').onclick = ()=> editarObsCorrida(gr);
   if(byId('gpsNotaFoto')) byId('gpsNotaFoto').onclick = ()=> adicionarFotoCorrida(gr);
   if(byId('gpsNotaFotoTirar')) byId('gpsNotaFotoTirar').onclick = ()=> adicionarFotoCorrida(gr, true);
@@ -10470,9 +10479,8 @@ function render(){
       if(!timeSec){ alert('Digita o tempo no formato mm:ss (ex: 24:30)'); return; }
       const vdot = vdotFromTest(distKey, timeSec);
       const paces = computeVdotPaces(vdot);
-      state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim(), vdot, paces };
-      saveCorridaVdotData();
-      registrarZona(vdot, 'teste', 'alta');
+      state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim() };
+      if(proporZonas(vdot, 'teste', 'alta')==='proposta') setTimeout(abrirPropostaZonas, 60);
       state.vdotStep = 2;
       render();
     };
@@ -10482,9 +10490,8 @@ function render(){
       const vdot = parseFloat(document.getElementById('vdotManualInput').value);
       if(!vdot || vdot<=0){ alert('Digita um VDOT válido (ex: 45).'); return; }
       const paces = computeVdotPaces(vdot);
-      state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:null, testTime:null, vdot, paces };
-      saveCorridaVdotData();
-      registrarZona(vdot, 'manual', 'media');
+      state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:null, testTime:null };
+      if(proporZonas(vdot, 'manual', 'media')==='proposta') setTimeout(abrirPropostaZonas, 60);
       state.vdotStep = 2;
       render();
     };
@@ -11921,7 +11928,7 @@ function mrtDiagnosticoCard(){
       <div class="icon-box">${ICONS.wand}</div>
       <div><div class="mrt-runtitle" style="font-size:17px;font-weight:700;letter-spacing:0;">Monte seu plano automático</div><div class="mrt-sub" style="margin:2px 0 0;">Leva cerca de 2 minutos</div></div>
     </div>
-    <button class="btn-primary" id="mrtStartDiagnostico">Fazer diagnóstico</button>
+    <button class="btn-primary" id="mrtStartDiagnostico">Criar meu plano</button>
     <button class="btn-ghost" style="width:100%;margin-top:4px;" id="mrtSoRegistrar">Só quero registrar</button>
     ${qv2LinkNovo()}
   </div>`;
@@ -12211,14 +12218,20 @@ function renderHojeV2Content(){
     : mrtCheckinRow();
   const temDiario = (state.diarioTreinador||[]).length>0;
   const linhas = [renderCorpoLinha(), checkinSemanal, temDiario ? `<button class="ds-row" data-abrirdiario="1"><span class="nm">Diário do treinador</span><span class="chev">${DS_CHEV}</span></button>` : ''].filter(Boolean);
-  // Ordem: o que fazer hoje → por quê/ajustar (no card) → recuperação → semana → amanhã.
+  // Ordem (Bloco 9): recuperação/prontidão → treino de hoje (e o segundo, se for dia duplo) com o botão de começar →
+  // resumo curto da semana → próximo treino → registrar atividade livre (discreto). Sem plano: criar plano / só registrar.
+  const zonaRow = state.corridaVdotData && state.corridaVdotData.propostaZona ? `<button class="ds-row" data-propostazona="1">${ICONS.run}<span class="nm">Novas zonas de ritmo</span><span class="chev">${DS_CHEV}</span></button>` : '';
+  const prontidao = temPlanoOuTreino ? (checkinDiarioPendente() ? renderCheckinCard() : '') + `<div class="ds-section"><div class="ds-list">${linhas[0]}</div></div>` : '';
+  const proximo = temPlanoOuTreino ? renderProximoTreinoLinha() : '';
+  const extras = [proximo, zonaRow, ...linhas.slice(1)].filter(Boolean);
   return greetRow
     + renderPerdidoBanner()
+    + (temPlanoOuTreino ? renderAvisoAgenda() : '')
+    + prontidao
     + heroHtml
-    + (temPlanoOuTreino ? renderCheckinCard() : '')
-    + (temPlanoOuTreino ? `<div class="ds-section"><div class="ds-list">${linhas[0]}</div></div>` : '')
-    + mrtSemanaSecao()
-    + (linhas.length>1 ? `<div class="ds-section"><div class="ds-list">${linhas.slice(1).join('')}</div></div>` : '')
+    + (temPlanoOuTreino ? mrtSemanaSecaoBolinhas() : '')
+    + (extras.length ? `<div class="ds-section"><div class="ds-list">${extras.join('')}</div></div>` : '')
+    + (temPlanoOuTreino ? `<button class="btn-ghost fr-livrelink" data-registrarlivre="1">${ICONS.plus} Registrar atividade livre</button>` : '')
     + qv2CartaoPausa() + mrtDiagnosticoCard();
 }
 function renderHojeV2Shell(){
@@ -12269,6 +12282,9 @@ function wireHojeV2(){
   if(state.modalType==='hybridCheckin') wireHybridCheckinModal();
   const diagBtn = document.getElementById('mrtStartDiagnostico');
   if(diagBtn) diagBtn.onclick = abrirDiagnostico;
+  wireAvisoAgenda();
+  document.querySelectorAll('[data-propostazona]').forEach(el=>{ el.onclick = abrirPropostaZonas; });
+  document.querySelectorAll('[data-registrarlivre]').forEach(el=>{ el.onclick = escolherAtividadeLivre; });
   const soReg = document.getElementById('mrtSoRegistrar');
   if(soReg) soReg.onclick = ()=>{ state.preferencias = { ...(state.preferencias||{}), soRegistrar:true }; try{ window.storage.set('preferencias', JSON.stringify(state.preferencias), false); }catch(e){} render(); };
   const regLivre = document.getElementById('mrtRegistrarLivre');
@@ -12437,7 +12453,8 @@ function renderTreinoV2Content(){
 
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
-  return header + planoBar + weekNav + daylist + nomeDia + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
+  const avisoAgenda = (state.weekOffset||0)===0 ? renderAvisoAgenda() : '';
+  return header + planoBar + weekNav + daylist + avisoAgenda + nomeDia + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
@@ -13154,7 +13171,7 @@ function renderOutrasAtividadesDoDia(day){
   return `<div class="ds-section fr-outras">
     <div class="ds-label" style="margin-bottom:6px;">Outras atividades do dia</div>
     <div class="ds-list">
-      ${lista.map(a=>`<button class="ds-row" data-abriratividade="${a.id}">${a.tipo==='caminhada' ? ICONS.shoe : ICONS.run}<span class="nm">${TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade'}<small>${rotuloAtividade(a)}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}
+      ${lista.map(a=>`<button class="ds-row" data-abriratividade="${a.id}">${a.tipo==='caminhada' ? ICONS.shoe : ICONS.run}<span class="nm">${TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade'}<small>${rotuloAtividade(a)}</small></span><span class="chev">${DS_CHEV}</span></button>${hoje ? renderSugestaoVinculo(a) : ''}`).join('')}
       ${hoje ? `<button class="ds-row" data-registrarlivre="1">${ICONS.plus}<span class="nm">Registrar atividade livre</span><span class="chev">${DS_CHEV}</span></button>` : ''}
     </div></div>`;
 }
@@ -13514,6 +13531,8 @@ function wireTreinoV2(){
   if(startWorkoutBtn) startWorkoutBtn.onclick = ()=> startWorkoutSession(state.selectedDayMusc);
 
   document.querySelectorAll('[data-lastrun]').forEach(el=>{ el.onclick = ()=> abrirResumoCorrida(el.getAttribute('data-lastrun')); });
+  wireAvisoAgenda();
+  wireSugestaoVinculo();
   document.querySelectorAll('[data-abriratividade]').forEach(el=>{ el.onclick = ()=> abrirResumoAtividade(el.getAttribute('data-abriratividade')); });
   document.querySelectorAll('[data-registrarlivre]').forEach(el=>{ el.onclick = escolherAtividadeLivre; });
   document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
@@ -14646,6 +14665,61 @@ function mostrarResultadoCheckin(){
   openSheet(`<div class="sheet-title">Semana ${alvo} ajustada</div>
     <div class="sheet-sub">${porque}.</div><div class="ds-list">${corpo}</div>
     <div class="ds-actions"><button class="btn-primary" id="ckOk">Ok</button></div>`, (sh)=>{ sh.querySelector('#ckOk').onclick = closeSheet; });
+}
+// Aviso curto da agenda quando uma mudança manual criou conflito (Aceitar / Manter assim). Nada muda sozinho.
+function renderAvisoAgenda(){
+  let sug = null; try{ sug = sugestaoDaAgenda(); }catch(e){ sug = null; }
+  if(!sug) return '';
+  return `<div class="ds-section"><div class="ds-card ds-alerta">
+    <div class="t">${sug.mensagem}</div>
+    <div class="s">${sug.sugestao}.</div>
+    <div class="ds-btnrow">
+      ${sug.proposta ? `<button class="btn-primary sm" data-agendaaceitar="1">Aceitar</button>` : ''}
+      <button class="btn-secondary sm" data-agendamanter="${sug.chave}">Manter assim</button>
+    </div></div></div>`;
+}
+function wireAvisoAgenda(){
+  document.querySelectorAll('[data-agendaaceitar]').forEach(el=>{ el.onclick = async ()=>{ const ok = await aceitarSugestaoAgenda(); hapticLeve(); render(); if(ok) showToast('Treino mudado de dia'); }; });
+  document.querySelectorAll('[data-agendamanter]').forEach(el=>{ el.onclick = async ()=>{ await manterConflitoAgenda(el.getAttribute('data-agendamanter')); render(); }; });
+}
+// Proposta de novas zonas de ritmo: comparação simples e confirmação.
+function abrirPropostaZonas(){
+  const cv = state.corridaVdotData; const pz = cv && cv.propostaZona;
+  if(!pz) return;
+  const origemTxt = { teste:'teste de ritmo', manual:'valor informado', desempenho:'seu desempenho recente', padrao:'estimativa inicial', motor:'plano' }[pz.origem] || 'novo cálculo';
+  openSheet(`<div class="sheet-title">Novas zonas de ritmo</div>
+    <div class="sheet-sub">Calculadas a partir de ${origemTxt}.</div>
+    <div class="ds-list">${compararZonas(cv.vdot, pz.vdot).map(z=>`<div class="ds-row ds-static"><span class="nm">${z.rotulo}</span><span class="aside">${z.atual} → <b>${z.novo}</b> /km</span></div>`).join('')}</div>
+    <div class="ds-actions"><button class="btn-primary" id="zonaAtualizar">Atualizar zonas</button><button class="btn-ghost" id="zonaManter">Manter atuais</button></div>`, (sh)=>{
+    sh.querySelector('#zonaAtualizar').onclick = ()=>{ responderPropostaZonas(true); closeSheet(); render(); showToast('Zonas atualizadas'); };
+    sh.querySelector('#zonaManter').onclick = ()=>{ responderPropostaZonas(false); closeSheet(); render(); };
+  });
+}
+// Próximo treino depois de hoje (semana atual).
+function renderProximoTreinoLinha(){
+  const i = hojeIdx();
+  for(let k=i+1; k<7; k++){
+    const d = DAY_ABBR[k];
+    const txt = naSemanaAtual(()=>{ const e = treinoEntryForDay(d), l = muscListForDay(d); const partes = [];
+      if(e) partes.push(resumoCorrida(e)); if(l.length) partes.push(muscTituloDoDia(d, l)); return partes.join(' + '); });
+    if(txt) return `<button class="ds-row fr-colrow" data-hojedia="${d}"><span class="nm">Próximo<small>${DAY_FULLNAME[d]||d}</small></span><span class="aside">${txt}${ehSessaoChaveDia(d)?' ★':''}</span><span class="chev">${DS_CHEV}</span></button>`;
+  }
+  return '';
+}
+// Sugestão de vínculo de uma atividade livre com o treino do dia.
+function renderSugestaoVinculo(a){
+  let sug = null; try{ sug = sugerirVinculo({ ...a, livre:true }); }catch(e){ sug = null; }
+  if(!sug) return '';
+  return `<div class="ds-card fr-vinculo">
+    <div class="t">Parece o treino de ${(DAY_FULLNAME[sug.sessao.dia]||sug.sessao.dia).split('-')[0].toLowerCase()}: ${sug.sessao.titulo}</div>
+    <div class="ds-btnrow"><button class="btn-primary sm" data-vincular="${a.id}">Vincular ao treino</button><button class="btn-secondary sm" data-manterlivre="${a.id}">Manter como atividade livre</button></div>
+  </div>`;
+}
+function wireSugestaoVinculo(){
+  document.querySelectorAll('[data-vincular]').forEach(el=>{ el.onclick = async (ev)=>{ ev.stopPropagation(); const s = await vincularAtividadeLivre(el.getAttribute('data-vincular'));
+    if(state.gpsRun && state.gpsRun.atividadeId===el.getAttribute('data-vincular')){ state.gpsRun.livre = false; state.gpsRun.atividadeId = null; state.gpsRun.progressKey = s ? s.chave : null; }
+    render(); if(s) showToast('Vinculada ao treino'); }; });
+  document.querySelectorAll('[data-manterlivre]').forEach(el=>{ el.onclick = async (ev)=>{ ev.stopPropagation(); await recusarVinculo(el.getAttribute('data-manterlivre')); render(); }; });
 }
 function abrirCheckinSemanal(){
   const hp = state.hybridPlanData;
@@ -15971,9 +16045,8 @@ function wireHybridQuizModal(){
     if(!timeSec){ alert('Digita o tempo no formato mm:ss (ex: 24:30)'); return; }
     const vdot = vdotFromTest(distKey, timeSec);
     const paces = computeVdotPaces(vdot);
-    state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim(), vdot, paces };
-    saveCorridaVdotData();
-    registrarZona(vdot, 'teste', 'alta');
+    state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim() };
+    if(proporZonas(vdot, 'teste', 'alta')==='proposta') setTimeout(abrirPropostaZonas, 60);
     render();
   };
   const vdotNaoSeiBtn = document.getElementById('hybVdotNaoSei');

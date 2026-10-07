@@ -83,3 +83,36 @@ Object.assign(globalThis, {
   ATIVIDADES_VERSAO, TIPOS_ATIVIDADE_LIVRE, saveAtividades, carregarAtividades, atividadesLivres, progressoTemRegistro,
   listarAtividades, atividadesDoDia, atividadesLivresDoDia, conclusaoCorrida, registrarAtividadeLivre, excluirAtividadeLivre,
 });
+
+// ---------- Vínculo de atividade livre com o treino do dia (Bloco 9, só por escolha do usuário) ----------
+async function vincularAtividadeLivre(id){
+  const a = atividadesLivres().find(x=>x.id===id);
+  if(!a) return null;
+  const sug = sugerirVinculo({ ...a, livre:true });
+  if(!sug) return null;
+  const chave = sug.sessao.chave;
+  state.corridaProgress[chave] = { ...(state.corridaProgress[chave] || {}), done:true, data:a.data, km:a.distKm ? String(a.distKm) : '',
+    tempo:a.tempoSeg ? formatClock(a.tempoSeg) : '', pace:a.paceSeg ? formatPace(a.paceSeg)+'/km' : '', gpsRunId:a.gpsRunId || null,
+    shoeCredit:a.shoeCredit || null, vinculadaDe:a.id };
+  saveCorridaProgress();
+  if(a.gpsRunId){
+    try{
+      const rec = await gpsDbGet(a.gpsRunId);
+      if(rec){
+        const novo = { ...rec, livre:false, day:sug.sessao.dia };
+        await gpsDbPut(novo);
+        try{ if(state.authUser && !state.viewingClient && nuvemAcessivel()) await comTimeout(db.collection('users').doc(state.authUser.uid).collection('data').doc('gpsRun__'+novo.id).set(gpsParaNuvem(novo)), CLOUD_TIMEOUT_MS); }catch(e){}
+      }
+    }catch(e){}
+  }
+  state.atividadesLivres = atividadesLivres().filter(x=>x.id!==id);
+  await saveAtividades();
+  return sug.sessao;
+}
+async function recusarVinculo(id){
+  const a = atividadesLivres().find(x=>x.id===id);
+  if(!a) return;
+  a.vinculoRecusado = true;
+  await saveAtividades();
+}
+Object.assign(globalThis, { vincularAtividadeLivre, recusarVinculo });

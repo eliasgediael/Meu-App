@@ -80,7 +80,13 @@ function sugerirVinculo(a){
   const s = sessoesPlanejadasDaSemana().find(x=>x.data===a.data && x.modalidade===mod);
   if(!s) return null;
   if(mod==='corrida' && conclusaoCorrida(s.chave).status!=='pending') return null;
-  return { sessaoId:s.id, confianca:'media', origem:'mesmo_dia_mesma_modalidade' };
+  if(a.vinculoRecusado) return null;
+  // dados muito diferentes do planejado (mais de 35% em distância ou duração): não sugere
+  const p = s.prescricao || {}, km = a.distKm || 0, min = (a.tempoSeg || 0)/60;
+  if(!km && !min) return null;
+  if(p.totalKm && km && Math.abs(km - p.totalKm)/p.totalKm > 0.35) return null;
+  if(p.totalMin && min && Math.abs(min - p.totalMin)/p.totalMin > 0.35) return null;
+  return { sessaoId:s.id, confianca:'media', origem:'mesmo_dia_mesma_modalidade', sessao:{ chave:s.chave, dia:s.dia, titulo:s.titulo } };
 }
 
 // Estados por modalidade (semana e fase). Hoje avançam juntos; planos antigos sem o campo usam a semana única.
@@ -135,3 +141,36 @@ Object.assign(globalThis, {
   CONTRATOS_VERSAO, montarAssessment, idSessaoPlanejada, isoDaChaveDia, sessoesPlanejadasDaSemana, vinculoDaAtividade, sugerirVinculo,
   estadosDaSemana, estadoModalidade,
 });
+
+// ---------- Zonas: proposta com comparação e confirmação (Bloco 9, aprovado pelo usuário) ----------
+// Mudança de zona nunca entra sozinha: fica como proposta até "Atualizar zonas" ou "Manter atuais".
+// A primeira zona (quando ainda não há nenhuma) entra direto, porque não substitui nada.
+const ZONAS_ROTULO = [['Es','Fácil'], ['M','Ritmo de maratona'], ['T','Limiar'], ['I','Intervalado'], ['R','Repetição']];
+function paceDaZona(diaPorKm){ return diaPorKm ? formatPace(diaPorKm * 86400) : '—'; }
+function compararZonas(vdotAtual, vdotNovo){
+  const a = computeVdotPaces(vdotAtual), n = computeVdotPaces(vdotNovo);
+  return ZONAS_ROTULO.map(([k, rot])=>({ zona:k, rotulo:rot, atual:paceDaZona(a[k]), novo:paceDaZona(n[k]) }));
+}
+function proporZonas(vdot, origem, confianca){
+  if(!vdot) return 'ignorada';
+  const cv = state.corridaVdotData;
+  if(!cv || !cv.vdot){
+    state.corridaVdotData = { ...(cv || {}), vdot, paces:computeVdotPaces(vdot) };
+    saveCorridaVdotData(); registrarZona(vdot, origem, confianca);
+    return 'aplicada';
+  }
+  if(Math.abs(cv.vdot - vdot) < 0.05) return 'igual';
+  state.corridaVdotData = { ...cv, propostaZona:{ vdot:Math.round(vdot*10)/10, origem:origem || null, confianca:confianca || null, data:todayISO() } };
+  saveCorridaVdotData();
+  return 'proposta';
+}
+function responderPropostaZonas(aceitar){
+  const cv = state.corridaVdotData; const p = cv && cv.propostaZona;
+  if(!p) return false;
+  const { propostaZona, ...resto } = cv;
+  state.corridaVdotData = aceitar ? { ...resto, vdot:p.vdot, paces:computeVdotPaces(p.vdot) } : resto;
+  saveCorridaVdotData();
+  if(aceitar) registrarZona(p.vdot, p.origem, p.confianca);
+  return true;
+}
+Object.assign(globalThis, { ZONAS_ROTULO, paceDaZona, compararZonas, proporZonas, responderPropostaZonas });

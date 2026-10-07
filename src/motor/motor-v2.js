@@ -1142,10 +1142,9 @@ async function gerarPrimeiroPlanoV2(opcoes){
   const r = gerarPlanoSemanal(state.athleteProfile, opcoes);
   if(r.bloqueado) return r;
   const vd = r.estado.corrida.vdot;
+  // Zonas: a primeira entra direto; mudança de zona existente vira proposta com confirmação (Bloco 9).
   if(!state.corridaVdotData || !state.corridaVdotData.vdot || r.estado.corrida.vdotFonte==='desempenho'){
-    state.corridaVdotData = { ...(state.corridaVdotData || {}), vdot:vd, paces:computeVdotPaces(vd) };
-    await saveCorridaVdotData();
-    registrarZona(vd, r.estado.corrida.vdotFonte || 'motor', r.confianca);
+    proporZonas(vd, r.estado.corrida.vdotFonte || 'motor', r.confianca);
   }
   // Plano começa NESTA semana (estrutura por dia da semana, agenda por data real): a semana 1 é a semana
   // atual e só os dias de hoje em diante entram na agenda. Na segunda seguinte começa a semana 2.
