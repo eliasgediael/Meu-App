@@ -66,6 +66,14 @@ const { abrirApp, ok, CHROME } = require('../harness/navegador.js');
       out.correcao = { km: prog.km, tempo: prog.tempo, pace: prog.pace, recKm: (await gpsDbGet(runId)).distancia_total_km };
       const gr = await corridaGravadaParaArte(key);
       out.artesCorrida = artesCorrida(gr).map(a => a.nome);
+      const gal = artesGaleriaCorrida(gr, { ocultarInicioFim: false });
+      out.galeriaCorrida = [];
+      for (const a of gal) { const cv = await a.gerar('story'); out.galeriaCorrida.push(a.nome + ':' + (cv ? cv.width + 'x' + cv.height : 'null')); }
+      ARTE_TINTA = '#111111'; const cvq = await gal[0].gerar('quadrado'); ARTE_TINTA = '#FFFFFF';
+      out.galeriaEscuraQuadrada = cvq.width + 'x' + cvq.height;
+      const px = cvq.getContext('2d').getImageData(0, 0, 1, 1).data; out.alfaReal = px[3] === 0;
+      const tr = gpsRunAnalysis(gr).track; out.privado = { antes: tr.length, depois: arteTrilhaPrivada(tr, true).length, ok: arteTrilhaPrivada(tr, true).every(p => p.distKm >= 0.2 && p.distKm <= tr[tr.length - 1].distKm - 0.2) };
+      out.dadosReais = arteDadosCompletos(gr, gpsRunAnalysis(gr)).map(d => d[0]);
       await excluirCorridaRealizada(key);
       out.excluiu = !(state.corridaProgress[key] && state.corridaProgress[key].done) && !(await gpsDbGet(runId));
       out.planoIntacto = JSON.stringify(state.treinos) === planoCorrida;
@@ -75,6 +83,10 @@ const { abrirApp, ok, CHROME } = require('../harness/navegador.js');
     const v = normalizarSessaoMuscHistorico(L.find(x => normalizarSessaoMuscHistorico(x).temDetalhe) || L[0]);
     out.artesMusc = [];
     for (const a of artesMusculacao(v)) { const cv = await a.gerar('story'); out.artesMusc.push(a.nome + ':' + (cv ? cv.width + 'x' + cv.height : 'null')); }
+    const marca = await arteMarca('#FFFFFF'); out.marca = !!(marca && marca.width > 0);
+    out.galeriaMusc = [];
+    for (const a of artesGaleriaMusculacao(v)) { const cv = await a.gerar('quadrado'); out.galeriaMusc.push(a.nome + ':' + (cv ? cv.width + 'x' + cv.height : 'null')); }
+    out.semAntigasNoEscuro = artesCompartilharMusculacao(v)({ tinta: 'escuro' }).length === artesGaleriaMusculacao(v).length;
     const im = document.createElement('canvas'); im.width = 800; im.height = 600; im.getContext('2d').fillRect(0, 0, 800, 600);
     out.artesFoto = [];
     for (const a of artesComFoto({ titulo: 'Teste', grande: '42 min', sub: '16 séries', dados: [['Tempo', '42 min']] }, { im, zoom: 1.2, dx: 0.3, dy: -0.2 })) { const cv = await a.gerar('quadrado'); out.artesFoto.push(a.nome + ':' + (cv ? cv.width + 'x' + cv.height : 'null')); }
@@ -102,8 +114,14 @@ const { abrirApp, ok, CHROME } = require('../harness/navegador.js');
   ok(r.semAjustar, 'aba Treino sem botão "Ajustar"');
   ok(r.correcao && r.correcao.km === '5.03' && r.correcao.tempo === '30:49' && r.correcao.recKm === 5.03, 'corrigir corrida grava distância e tempo no registro e na gravação');
   ok(r.artesCorrida && r.artesCorrida.join() === 'Trajeto,Números,Parciais,Mapa', 'corrida gravada gera as 4 artes');
+  ok(r.galeriaCorrida && r.galeriaCorrida.length >= 5 && r.galeriaCorrida.every(x => /1080x1920/.test(x)), 'galeria da corrida gera todas as famílias (' + (r.galeriaCorrida || []).join(', ') + ')');
+  ok(r.galeriaEscuraQuadrada === '1080x1080' && r.alfaReal, 'galeria: texto escuro, formato quadrado e fundo transparente de verdade');
+  ok(r.privado && r.privado.ok && r.privado.depois < r.privado.antes, `ocultar início e fim remove coordenadas (${r.privado && r.privado.antes} → ${r.privado && r.privado.depois})`);
+  ok(r.dadosReais && r.dadosReais.slice(0, 3).join() === 'Distância,Ritmo,Tempo' && !r.dadosReais.some(d => /Calorias/.test(d)), 'galeria usa só dados reais (' + (r.dadosReais || []).join(', ') + ')');
   ok(r.excluiu && r.planoIntacto, 'excluir corrida apaga o registro e mantém o treino planejado');
   ok(r.artesMusc.length === 4 && r.artesMusc.every(x => /1080x1920/.test(x)), 'artes de musculação 1080×1920 (' + r.artesMusc.join(', ') + ')');
+  ok(r.marca, 'marca oficial carrega para as artes');
+  ok(r.galeriaMusc.join() === 'Recibo:1080x1080,Tempo:1080x1080,Etiquetas:1080x1080' && r.semAntigasNoEscuro, 'galeria de musculação: Recibo, Tempo e Etiquetas; no texto escuro só as novas');
   ok(r.artesFoto.length === 3 && r.artesFoto.every(x => /1080x1080/.test(x)), 'artes com foto no formato quadrado');
   ok(r.legPressUnico === 1, 'catálogo: um só Leg press 45°');
   ok(r.bibMaquinas > 50 && r.bibCorpo > 100, `biblioteca: Máquinas (${r.bibMaquinas}) e Peso corporal (${r.bibCorpo})`);

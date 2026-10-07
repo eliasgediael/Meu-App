@@ -1764,6 +1764,9 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-perfilrow .fr-ic svg{ width:24px; height:24px; }
 .fr-perfilrow .nm{ white-space:normal; font-weight:700; }
 .fr-perfilrow .nm small{ display:block; font-size:13.5px; font-weight:500; color:var(--text-dim); margin-top:2px; }
+.fr-config-voice{width:100%;background:none;text-align:left;color:inherit;font:inherit;border-left:0;border-right:0;border-top:0;}
+.mrt-togglerow button.mrt-switch{padding:0;border:0;flex-shrink:0;}
+.fr-config-voice:focus-visible,.mrt-togglerow button:focus-visible{outline:2px solid var(--data);outline-offset:4px;}
 .fr-flat .mrt-perfilhead .tag{ height:30px; }
 .fr-sumtela .mrt-summarycheck{ background:color-mix(in srgb, var(--data) 14%, var(--surface)); color:var(--data); }
 .fr-sumtela .mrt-summarygrid{ gap:0; border-top:1px solid var(--border); }
@@ -1778,6 +1781,8 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .mrt-quiz-opt.active + .mrt-quiz-opt{ border-top-color:transparent; }
 .mrt-quiz-opt svg{ color:var(--data); }
 .qv2-chips .mrt-adjchip.on{ border-color:var(--data); background:color-mix(in srgb, var(--data) 8%, var(--surface)); }
+.mrt-adjchip.qv2-diabtn{ min-height:52px; border-radius:14px; font-weight:800; }
+.mrt-adjchip.qv2-diabtn.on{ border-color:var(--data); background:var(--data); color:#FFFFFF; }
 .qv2-frase{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 0; border-top:1px solid var(--border); font-size:16px; line-height:1.45; }
 .qv2-frase:last-of-type{ border-bottom:1px solid var(--border); }
 .qv2-frase[data-qv2ir]::after{ content:'Editar'; font-size:13px; font-weight:700; color:var(--data); flex-shrink:0; }
@@ -1809,6 +1814,8 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-holdpill .t{ font-size:14px; font-weight:700; line-height:1.15; text-align:left; }
 .fr-finbtn{ flex:1; height:60px; border-radius:16px; border:1.5px solid var(--danger); background:none; color:var(--danger); font-family:inherit; font-size:18px; font-weight:800; cursor:pointer; }
 .fr-concl{ font-size:13px; font-weight:800; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-dim); margin-bottom:4px; }
+.fr-arteops{ display:flex; flex-direction:column; gap:8px; margin:0 0 10px; }
+.fr-arteprivo{ display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; min-height:48px; padding:0 4px; border:none; background:none; font-family:inherit; font-size:15.5px; font-weight:600; color:var(--text); cursor:pointer; }
 .fr-fotobar{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; margin-bottom:10px; }
 .fr-fotobar .btn-ghost{ padding:4px 0; }
 .fr-fotoprev{ position:relative; width:58%; margin:0 auto 14px; border-radius:14px; overflow:hidden; aspect-ratio:9/16; background:#222; }
@@ -1976,6 +1983,119 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
   .fr-weektitle b{ font-size:14.5px; }
   .fr-weektitle span{ font-size:13px; }
 }
+/* Boas-vindas e plano pronto (pacote visual) */
+.fr-bv{ background:var(--bg); }
+.fr-bv-scroll{ display:flex; flex-direction:column; padding-top:calc(48px + env(safe-area-inset-top)); overflow-x:hidden; }
+.fr-bv-marca{ font-size:clamp(64px, 22vw, 96px); font-weight:900; line-height:0.88; letter-spacing:-3px; color:var(--text); font-style:italic; transform:skewX(-4deg); }
+.fr-bv-frase{ font-size:18px; font-weight:500; color:var(--text); margin-top:14px; }
+.fr-bvarte{ width:calc(100% + 36px); margin:28px -18px 0; height:auto; display:block; }
+.fr-bv-acoes{ padding:14px 18px calc(14px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; align-items:center; }
+.fr-btnseta{ display:flex; align-items:center; justify-content:center; gap:10px; }
+.fr-bv-link{ margin-top:10px; min-height:44px; border:none; background:none; font-family:inherit; font-size:15px; font-weight:600; color:var(--text); text-decoration:underline; text-underline-offset:3px; cursor:pointer; }
+.fr-prresumo{ display:flex; align-items:center; gap:14px; padding:16px; border-radius:var(--r-card); background:var(--surface-2); margin:14px 0 16px; }
+.fr-prresumo .tot{ display:flex; flex-direction:column; padding-right:14px; border-right:1px solid var(--border); }
+.fr-prresumo .tot b{ font-size:22px; font-weight:900; color:var(--text); }
+.fr-prresumo .tot span{ font-size:14px; color:var(--text-dim); }
+.fr-prresumo .tipos{ display:flex; flex-direction:column; gap:10px; min-width:0; }
+.fr-prresumo .tipos div{ display:flex; align-items:center; gap:10px; font-size:15px; color:var(--text); }
+.fr-prresumo .tipos svg{ width:20px; height:20px; flex-shrink:0; }
+.fr-prsemana{ display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); gap:4px; margin-bottom:18px; }
+.fr-prdia{ display:flex; flex-direction:column; align-items:center; gap:6px; }
+.fr-prdia small{ font-size:11px; font-weight:700; color:var(--text-dim); }
+.fr-prdia span{ width:40px; height:40px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; gap:1px; color:var(--text); font-size:14px; }
+.fr-prdia span.vazio{ color:var(--text-faint); }
+.fr-prdia svg{ width:17px; height:17px; }
+.fr-prdia span svg + svg{ width:13px; height:13px; }
+.fr-prloc{ display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-dim); margin:16px 0 12px; }
+.fr-prloc svg{ width:16px; height:16px; flex-shrink:0; }
+@media (max-width:359px){
+  .fr-prdia span{ width:34px; height:34px; }
+  .fr-prresumo .tot b{ font-size:19px; }
+}
+/* Progresso (pacote visual) */
+.fr-seg3{ display:flex; gap:4px; padding:4px; border-radius:var(--r-pill); background:var(--surface-2); margin:4px 0 16px; }
+.fr-seg3 button{ flex:1; min-height:44px; border:none; border-radius:var(--r-pill); background:none; font-family:inherit; font-size:15.5px; font-weight:700; color:var(--text-dim); cursor:pointer; }
+.fr-seg3 button.on{ background:var(--data); color:#FFFFFF; }
+.fr-resumo{ border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface-2); padding:16px 14px 14px; margin-bottom:14px; }
+.fr-rcols{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); margin-top:12px; }
+.fr-rcol{ min-width:0; padding:0 10px; }
+.fr-rcol:first-child{ padding-left:2px; }
+.fr-rcol + .fr-rcol{ border-left:1px solid var(--border); }
+.fr-rcol-ic{ width:40px; height:40px; border-radius:50%; background:#FFFFFF; display:flex; align-items:center; justify-content:center; color:var(--text); margin-bottom:8px; }
+.fr-rcol-ic svg{ width:20px; height:20px; }
+.fr-rcol .v{ font-size:21px; font-weight:900; letter-spacing:-0.4px; color:var(--text); line-height:1.15; }
+.fr-rcol .k{ font-size:14px; color:var(--text-dim); margin-top:2px; }
+.fr-dl{ font-size:12.5px; color:var(--text-dim); margin-top:8px; }
+.fr-dl b{ color:var(--text); font-weight:700; }
+.fr-rnota{ font-size:12.5px; color:var(--text-faint); margin-top:12px; }
+.fr-evol{ border:1px solid var(--border); border-radius:var(--r-card); padding:14px; margin-bottom:14px; }
+.fr-evol-head{ display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap; margin-bottom:8px; }
+.fr-leg{ display:flex; gap:12px; font-size:12.5px; color:var(--text-dim); }
+.fr-leg span{ display:inline-flex; align-items:center; gap:6px; }
+.fr-leg i{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+.fr-leg i.a{ background:var(--data); }
+.fr-leg i.b{ background:#CFCFCF; }
+.fr-evol-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+.fr-evol-t{ font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; }
+.fr-evol-t small{ font-weight:400; color:var(--text-dim); }
+.fr-recup{ display:flex; align-items:center; gap:14px; border:1px solid var(--border); border-radius:var(--r-card); padding:14px; margin-bottom:18px; }
+.fr-recup .txt{ flex:1; min-width:0; }
+.fr-recup .txt b{ display:block; font-size:18px; font-weight:900; color:var(--text); margin-top:4px; }
+.fr-recup .txt span{ display:block; font-size:14px; color:var(--text-dim); margin-top:2px; }
+.fr-ativhead{ margin-bottom:8px; }
+.fr-filtros{ display:flex; gap:8px; overflow-x:auto; padding-bottom:2px; margin-bottom:12px; scrollbar-width:none; }
+.fr-filtros::-webkit-scrollbar{ display:none; }
+.fr-filtros button{ flex-shrink:0; min-height:40px; padding:0 16px; border:none; border-radius:var(--r-pill); background:var(--surface-2); font-family:inherit; font-size:15px; font-weight:600; color:var(--text); cursor:pointer; }
+.fr-filtros button.on{ background:var(--data); color:#FFFFFF; }
+.fr-ativlist{ display:flex; flex-direction:column; gap:10px; }
+.fr-ativcard{ display:flex; align-items:center; gap:12px; width:100%; padding:12px; border:1px solid var(--border); border-radius:var(--r-card); background:none; font-family:inherit; text-align:left; color:var(--text); cursor:pointer; }
+.fr-ativic{ width:52px; height:52px; border-radius:14px; background:var(--surface-2); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.fr-ativic svg{ width:24px; height:24px; }
+.fr-ativtx{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-ativtx small{ font-size:12.5px; color:var(--text-dim); }
+.fr-ativtx b{ font-size:17px; font-weight:800; line-height:1.2; }
+.fr-ativtx .dt{ font-size:13px; color:var(--text-dim); margin-top:1px; }
+.fr-ativmets{ display:flex; flex-wrap:wrap; gap:4px 14px; margin-top:6px; }
+.fr-ativmets span{ display:flex; flex-direction:column; }
+.fr-ativmets b{ font-size:15px; font-weight:800; }
+.fr-ativmets em{ font-style:normal; font-size:11.5px; color:var(--text-dim); }
+.fr-ativcard .chev{ color:#BBBBBB; display:flex; flex-shrink:0; }
+.fr-vertodas{ margin-top:6px; }
+.fr-histhead{ display:flex; align-items:center; gap:10px; margin:0 0 14px; }
+.fr-hmes{ font-size:22px; font-weight:900; color:var(--text); margin:6px 0 10px; }
+.fr-hsemana{ display:flex; align-items:center; gap:2px; margin-bottom:12px; }
+.fr-hdias{ flex:1; display:grid; grid-template-columns:repeat(7, minmax(0,1fr)); }
+.fr-hdia{ display:flex; flex-direction:column; align-items:center; gap:2px; min-height:56px; padding:4px 0; border:none; background:none; font-family:inherit; cursor:pointer; color:var(--text); }
+.fr-hdia small{ font-size:11px; color:var(--text-faint); font-weight:600; }
+.fr-hdia b{ width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:700; }
+.fr-hdia.on b{ background:var(--data); color:#FFFFFF; }
+.fr-hdia.hoje:not(.on) b{ box-shadow:inset 0 0 0 1.5px var(--text); }
+.fr-hdia i{ width:5px; height:5px; border-radius:50%; background:transparent; }
+.fr-hdia i.tem{ background:var(--text-dim); }
+.fr-hgrupo{ margin-bottom:16px; }
+.fr-hdata{ font-size:15px; font-weight:600; color:var(--text-dim); margin:4px 0 8px; }
+@media (max-width:359px){
+  .fr-rcol{ padding:0 6px; }
+  .fr-rcol .v{ font-size:17px; }
+  .fr-rcol .k{ font-size:12.5px; }
+  .fr-evol-grid{ grid-template-columns:1fr; }
+  .fr-seg3 button{ font-size:14.5px; }
+  .fr-hdia b{ width:30px; height:30px; font-size:14.5px; }
+}
+/* Pré-corrida (pacote visual) */
+.fr-presinal-card{ display:flex; align-items:center; gap:14px; padding:12px 14px; border:1px solid var(--border); border-radius:var(--r-card); margin-bottom:12px; color:var(--text-dim); }
+.fr-presinal-card.ok{ color:var(--text); }
+.fr-presinal-card .tx b{ display:block; font-size:18px; font-weight:900; color:var(--text); }
+.fr-presinal-card .tx small{ display:block; font-size:13.5px; color:var(--text-dim); }
+.fr-pretreino{ border:1px solid var(--border); border-radius:var(--r-card); padding:12px 14px; margin-bottom:10px; }
+.fr-pretreino-t{ font-size:18px; font-weight:800; color:var(--text); margin-top:4px; }
+.fr-pretreino-t span{ font-weight:600; color:var(--text-dim); font-size:15px; }
+.fr-preetapas{ display:grid; grid-auto-flow:column; grid-auto-columns:minmax(0,1fr); gap:8px; margin-top:10px; }
+.fr-preetapa{ display:flex; flex-direction:column; align-items:center; text-align:center; gap:2px; min-width:0; }
+.fr-preetapa .n{ width:28px; height:28px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800; }
+.fr-preetapa b{ font-size:13px; color:var(--text); }
+.fr-preetapa small{ font-size:12px; color:var(--text-dim); }
+.fr-preoff{ font-size:12.5px; color:var(--text-faint); text-align:center; margin:8px 0 4px; }
 .fr-livrelink{ display:flex; align-items:center; justify-content:center; gap:6px; width:100%; padding:12px 0 4px; font-size:14px; color:var(--text-dim); }
 .fr-livrelink svg{ width:16px; height:16px; }
 .fr-vinculo{ margin:4px 0 12px; padding:14px 16px; }
@@ -3906,12 +4026,26 @@ function qv2Render(){
       return `<div class="ds-dayrow" style="cursor:default;"><div class="ds-daydate"><span>${d.toUpperCase()}</span></div>
         <div class="ds-daytxt">${partes.length ? `<div class="nm">${partes.join(' + ')}${chave?' <span class="ds-star-in">★</span>':''}</div>${duplo?`<div class="mt">${duplo}</div>`:''}` : '<div class="nm rest">Descanso</div>'}</div></div>`;
     }).join('');
+    // Resumo (NOVA-04): treinos por semana, corridas e força, e a semana em ícones.
+    const nCorr = (sem.corridaWeek||[]).length;
+    const nForca = DAY_ABBR.filter(d=>((sem.muscPlan||{})[d]||[]).length).length;
+    const nTreinos = DAY_ABBR.filter(d=>(sem.corridaWeek||[]).some(x=>x.day===d) || ((sem.muscPlan||{})[d]||[]).length).length;
+    const icones = DAY_ABBR.map(d=>{
+      const c = (sem.corridaWeek||[]).some(x=>x.day===d), m = ((sem.muscPlan||{})[d]||[]).length;
+      return `<div class="fr-prdia"><small>${d.toUpperCase()}</small><span class="${c||m?'':'vazio'}">${c && m ? ICONS.shoe+ICONS.dumbbell : c ? ICONS.shoe : m ? ICONS.dumbbell : '—'}</span></div>`;
+    }).join('');
     return `<div class="mrt-root"><div class="mrt-scroll">
-      <div class="mrt-title" style="margin-bottom:4px;">Sua semana está pronta</div>
-      ${inicio || '<div class="mrt-sub" style="margin-bottom:14px;">Confira os dias antes de começar</div>'}
+      <div class="mrt-title" style="margin-bottom:4px;">Seu plano está pronto</div>
+      ${inicio}
+      <div class="fr-prresumo">
+        <div class="tot"><b>${nTreinos} treino${nTreinos===1?'':'s'}</b><span>por semana</span></div>
+        <div class="tipos">${nCorr ? `<div>${ICONS.shoe}<span>${nCorr} corrida${nCorr===1?'':'s'}</span></div>` : ''}${nForca ? `<div>${ICONS.dumbbell}<span>${nForca} treino${nForca===1?'':'s'} de força</span></div>` : ''}</div>
+      </div>
+      <div class="fr-prsemana">${icones}</div>
       <div class="ds-daylist">${linhas}</div>
-      <div class="ds-why" style="margin-top:14px;">★ = treino-chave: o plano protege esses dias. Pernas pesadas nunca ficam na véspera de um treino forte de corrida, e o treino se ajusta quando você marcar cansaço no check-in.</div>
-      <button class="btn-primary" id="qv2VerTreino">Ver meu treino</button><button class="btn-ghost" style="width:100%;margin-top:4px;" id="qv2VerInicio">Ir para o início</button>
+      ${/ds-star-in/.test(linhas) ? '<div class="ds-why" style="margin-top:14px;">★ treino-chave da semana</div>' : ''}
+      ${nCorr ? `<div class="fr-prloc">${ICONS.pin}<span>A localização só é usada durante a gravação.</span></div>` : ''}
+      <button class="btn-primary fr-btnseta" id="qv2VerTreino">Ver meu plano ${FR_ARROW}</button><button class="btn-ghost" style="width:100%;margin-top:4px;" id="qv2VerInicio">Ir para o início</button>
     </div></div>`;
   }
   return '';
@@ -5744,7 +5878,8 @@ function confirmTiroModal(){
 // Estimativa simples (não é medição real, o app não tem sensor de FC/potência): ~1 kcal por kg de peso
 // corporal por km percorrido, aproximação padrão usada por apps de corrida quando falta um sensor.
 function estimateCaloriesKcal(distKm, pesoKg){
-  return Math.round((distKm||0) * (parseFloat(pesoKg)||70));
+  const p = parseFloat(pesoKg); if(!(p>0)) return null;
+  return Math.round((distKm||0) * p);
 }
 function gpsLapStep(){
   const gr = state.gpsRun;
@@ -6267,7 +6402,8 @@ function renderEsteiraRunning(gr){
   heroVal = String(heroVal).replace('.',',');
   const kmhRange = esteiraTargetKmhRange(step);
   const noAlvo = kmhRange && gr.stepKmh >= kmhRange.lo-0.15 && gr.stepKmh <= kmhRange.hi+0.15;
-  const kcal = estimateCaloriesKcal(gr.totalDistKm, state.perfil && state.perfil.peso);
+  const totSeg = gpsTotalElapsedSec(gr);
+  const kmhMedio = totSeg>0 && gr.totalDistKm>0 ? gr.totalDistKm/(totSeg/3600) : null;
 
   // Ajuste automático da velocidade no início do tiro: sheet com a contagem regressiva visível.
   const tiroModal = gr.tiroModalUntil ? (()=>{
@@ -6299,8 +6435,8 @@ function renderEsteiraRunning(gr){
         <div class="mrt-wex-grid2x2">
           <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(formatClock(stepElapsed),'Tempo')}</div>
           <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(fmtKm(gr.stepDistKm),'Distância')}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(paceSec ? formatPace(paceSec) : '—','Pace médio')}</div>
-          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(kcal+'kcal','Calorias')}</div>
+          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(paceSec ? formatPace(paceSec) : '—','Ritmo médio')}</div>
+          <div class="mrt-card" style="padding:14px 16px;margin:0;">${mrtMetricHtml(kmhMedio ? String(Math.round(kmhMedio*10)/10).replace('.',',')+' km/h' : '—','Velocidade média')}</div>
         </div>
         <div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;">
@@ -6354,21 +6490,33 @@ function renderGpsAguardando(gr){
   }
   const entry = gr.livre ? null : treinoEntryForDay(gr.day);
   const objetivo = entry ? [entry.totalKm ? fmtKm(entry.totalKm) : '', corridaAvgPaceLabel(entry) && corridaAvgPaceLabel(entry)!=='—' ? corridaAvgPaceLabel(entry) : ''].filter(Boolean).join(' · ') : '';
-  const qual = acc==null ? 'Procurando sinal de GPS…' : bom ? 'GPS pronto' : acc<=30 ? 'Sinal de GPS razoável' : 'Sinal de GPS fraco';
+  // Sinal em quatro níveis (buscando, fraco, bom, excelente). Sinal fraco não bloqueia: "Iniciar mesmo assim".
+  const nivel = acc==null ? 0 : acc>20 ? 1 : acc>10 ? 3 : 4;
+  const qual = ['Buscando GPS','GPS fraco','','GPS bom','GPS excelente'][nivel];
+  const subQual = acc==null ? 'Procurando sinal…' : bom ? `Pronto para começar · ±${Math.round(acc)} m` : `A distância pode variar · ±${Math.round(acc)} m`;
+  const barras = `<svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true">${[0,1,2,3].map(i=>`<rect x="${3+i*5.2}" y="${17-i*4}" width="3.4" height="${4+i*4}" rx="1" fill="${i<nivel?'currentColor':'#CCCCCC'}"/>`).join('')}</svg>`;
+  const etapas = entry && entry.steps && entry.steps.length ? `<div class="fr-preetapas">${entry.steps.map((s,i)=>{ const inf = frEtapaInfo(s); return `<div class="fr-preetapa"><span class="n">${i+1}</span><b>${s.name}</b><small>${[inf.min, s.km ? '~'+fmtKm(s.km) : ''].filter(Boolean).join(' · ')}</small></div>`; }).join('')}</div>` : '';
+  const tenis = (state.equipamentos && state.equipamentos.tenis || []).find(x=>x.ativo);
+  const autoPause = !!(state.preferencias||{}).autoPause;
   return `<div class="mrt-root gps-live fr-precorrida">
     <div class="gps-live-map">
       <div id="gpsMapSlot" class="gps-mapslot"></div>
       <div class="gps-live-top"><button class="gps-fab" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button></div>
     </div>
     <div class="gps-live-sheet">
-      <div class="ds-list fr-prelist">
-        <div class="ds-row ds-static">${ICONS.shoe}<span class="nm">Tipo de atividade<small>${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : 'Corrida'+(entry && entry.type ? ' · '+entry.type : '')}</small></span></div>
-        ${objetivo ? `<div class="ds-row ds-static">${ICONS.flag}<span class="nm">Objetivo<small>${objetivo}</small></span></div>` : ''}
-        <button class="ds-row" id="mrtVozToggle">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}<span class="nm">Voz<small>${state.vozAtiva===false ? 'Desativada' : 'Ativada'}</small></span><span class="chev">${DS_CHEV}</span></button>
+      <div class="fr-presinal-card ${bom?'ok':''}"><span class="fr-acao-ic">${barras}</span><span class="tx"><b>${qual}</b><small>${subQual}</small></span></div>
+      <div class="fr-pretreino"><div class="ds-label">${gr.livre ? 'Atividade' : 'Seu treino'}</div>
+        <div class="fr-pretreino-t">${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : (entry && entry.type ? entry.type : 'Corrida')}${objetivo ? ` <span>· ${objetivo}</span>` : ''}</div>
+        ${etapas}
       </div>
-      <div class="fr-presinal ${bom?'ok':''}">${qual}${acc!=null?' · ±'+Math.round(acc)+' m':''}</div>
+      <div class="ds-list fr-prelist">
+        ${tenis ? `<div class="ds-row ds-static">${ICONS.shoe}<span class="nm">Tênis<small>${tenis.nome}</small></span></div>` : ''}
+        <button class="ds-row" id="mrtVozToggle">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}<span class="nm">Avisos por voz<small>${state.vozAtiva===false ? 'Desligados' : 'Ligados'}</small></span><span class="chev">${DS_CHEV}</span></button>
+        <button class="ds-row" id="gpsPrefAutoPause">${ICONS.watch}<span class="nm">Pausa automática<small>${autoPause ? 'Ligada' : 'Desligada'}</small></span><span class="chev">${DS_CHEV}</span></button>
+      </div>
       <button class="btn-primary fr-pausebtn" id="gpsBtnComecar" ${bom?'':'disabled style="opacity:.4;"'}>${gr.livre && gr.tipoAtividade==='caminhada' ? 'Iniciar caminhada' : 'Iniciar corrida'}</button>
       ${!bom ? `<button class="btn-ghost" style="width:100%;" id="gpsBtnComecarMesmo">Iniciar mesmo assim</button>` : ''}
+      <div class="fr-preoff">A atividade é salva no aparelho mesmo sem internet.</div>
     </div>
   </div>`;
 }
@@ -6622,7 +6770,7 @@ function renderAvaliacaoTreino(gr, pvr, elevGain, kcal){
     : 'Esforço dentro do esperado — segue a recuperação normal entre treinos.';
   const secoes = [
     { icon:ICONS.chart, titulo:'Diagnóstico', texto:diagnostico },
-    { icon:ICONS.trendUp, titulo:'Métricas', texto:`Elevação: ${elevGain!=null?elevGain+'m':'—'} · Calorias: ${kcal}kcal · Etapas: ${gr.etapasExecutadas.length}` },
+    { icon:ICONS.trendUp, titulo:'Métricas', texto:`Elevação: ${elevGain!=null?elevGain+'m':'—'} ${kcal!=null ? '· Calorias: '+kcal+'kcal ' : ''}· Etapas: ${gr.etapasExecutadas.length}` },
     { icon:ICONS.run, titulo:'Ritmo por bloco', texto:ritmoTxt },
     { icon:ICONS.watch, titulo:'Recuperação', texto:recuperacao },
   ];
@@ -6834,7 +6982,7 @@ function renderGpsSummary(gr){
         </div>
         <div class="gps-sum-sec">
           ${elevGain!=null ? `<div class="c"><div class="k">Elevação</div><div class="v">${elevGain}<small> m</small></div></div>` : ''}
-          <div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>
+          ${kcal!=null ? `<div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>` : ''}
           ${an.track.length>=2 ? `<div class="c"><div class="k">Em movimento</div><div class="v">${formatClock(gpsTempoEmMovimento(an.track))}</div></div>`
             : `<div class="c"><div class="k">Velocidade</div><div class="v">${totalElapsed>0 && gr.totalDistKm>0 ? String(Math.round(gr.totalDistKm/(totalElapsed/3600)*10)/10).replace('.',',') : '—'}<small> km/h</small></div></div>`}
         </div>
@@ -6961,10 +7109,16 @@ function wireGpsRunScreen(){
       saveCorridaProgress(); hapticLeve(); render();
     };
   });
-  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=> abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr), infoCorridaParaFoto(gr));
+  if(byId('mrtShareRun')) byId('mrtShareRun').onclick = ()=> abrirSeletorArtes('Compartilhar corrida', artesCompartilharCorrida(gr), infoCorridaParaFoto(gr));
   if(byId('gpsBtnSkipStep')) byId('gpsBtnSkipStep').onclick = esteiraSkipStep;
   if(byId('gpsBtnComecar')) byId('gpsBtnComecar').onclick = gpsComecarContagem;
   if(byId('gpsBtnComecarMesmo')) byId('gpsBtnComecarMesmo').onclick = gpsComecarContagem;
+  if(byId('gpsPrefAutoPause')) byId('gpsPrefAutoPause').onclick = ()=>{
+    state.preferencias = { autoPause:false, vozKm:true, ...(state.preferencias||{}) };
+    state.preferencias.autoPause = !state.preferencias.autoPause;
+    try{ window.storage.set('preferencias', JSON.stringify(state.preferencias), false); }catch(e){}
+    hapticLeve(); render();
+  };
   document.querySelectorAll('[data-esteirakmh]').forEach(el=>{
     el.onclick = ()=> esteiraAdjustKmh(el.getAttribute('data-esteirakmh')==='+' ? 0.1 : -0.1);
   });
@@ -9196,8 +9350,9 @@ async function arteMapaRua(track, W, H, pad){
   }catch(e){ return null; }
   finally{ try{ map && map.remove(); }catch(e){} div.remove(); }
 }
-function artesCorrida(gr){
-  const an = gpsRunAnalysis(gr);
+function artesCorrida(gr, opcoes){
+  const an0 = gpsRunAnalysis(gr);
+  const an = { ...an0, track:arteTrilhaPrivada(an0.track, opcoes && opcoes.ocultarInicioFim) };
   const total = Math.round(gpsTotalElapsedSec(gr)), dist = gr.totalDistKm||0;
   const pace = dist>0.05 ? total/dist : null;
   const dados = [['Distância', fmtKmMedido(dist)+' km'], ['Ritmo', pace ? formatPace(pace)+'/km' : '—'], ['Tempo', formatClock(total)]];
@@ -9254,6 +9409,201 @@ function artesCorrida(gr){
     arteTexto(c, '© OpenStreetMap', W - 24, H - 22, 500, 20, 'rgba(255,255,255,0.7)', 'right');
     return m.cv; } });
   return artes;
+}
+/* ---------- Galeria de compartilhamento (pacote visual): famílias no estilo das referências aprovadas, com a marca
+   oficial (LOGO-OFICIAL.svg sem o fundo), dados reais e PNG com transparência de verdade. Campos sem dado são
+   omitidos; sem GPS não há rota. Texto claro ou escuro (ARTE_TINTA). "Ocultar início e fim" remove os primeiros e
+   últimos 200 m das coordenadas antes de desenhar (não é só um círculo por cima). ---------- */
+let ARTE_TINTA = '#FFFFFF';
+const ARTE_LARANJA = '#FF5A1F';
+const ARTE_MARCA_SVG = (cor)=>`<svg xmlns="http://www.w3.org/2000/svg" viewBox="150 220 700 600"><g transform="translate(512 520) scale(.9) translate(-512 -512) translate(50 0) skewX(-12) translate(100 0)"><g fill="${cor}"><rect x="300" y="240" width="120" height="560" rx="60"/><rect x="300" y="240" width="440" height="116" rx="58"/><path d="M300 470 H600 V420 L730 520 L600 620 V570 H300 Z" stroke="${cor}" stroke-width="16" stroke-linejoin="round"/></g><g fill="${cor}" opacity=".55"><rect x="130" y="660" width="130" height="36" rx="18"/><rect x="180" y="730" width="80" height="36" rx="18"/></g></g></svg>`;
+const _arteMarcaCache = {};
+async function arteMarca(cor){
+  if(_arteMarcaCache[cor]) return _arteMarcaCache[cor];
+  const im = await carregarImagemArte('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(ARTE_MARCA_SVG(cor)));
+  return (_arteMarcaCache[cor] = im);
+}
+// Desenha a marca com altura h; (x, y) = canto superior esquerdo (ou centro horizontal com alinhar 'center').
+async function arteDesenhaMarca(c, x, y, h, alinhar){
+  const im = await arteMarca(ARTE_TINTA); if(!im) return 0;
+  const w = h*700/600;
+  c.drawImage(im, alinhar==='center' ? x - w/2 : alinhar==='right' ? x - w : x, y, w, h);
+  return w;
+}
+const arteTinta2 = ()=> ARTE_TINTA==='#FFFFFF' ? 'rgba(255,255,255,0.82)' : 'rgba(17,17,17,0.72)';
+function arteTx(c, txt, x, y, peso, tam, alinhar, cor){ arteTexto(c, txt, x, y, peso, tam, cor || ARTE_TINTA, alinhar || 'left'); }
+function arteTenis(c, cx, cy, w, cor){
+  const s = w/24; c.save(); c.translate(cx - w/2, cy - w/2); c.scale(s, s);
+  c.strokeStyle = cor; c.lineWidth = 1.9; c.lineCap = 'round'; c.lineJoin = 'round';
+  c.stroke(new Path2D('M3 16.5c0-1.8 1.2-3 3-3.4l3.6-.8 2.2-3.8c.4-.7 1.3-.9 2-.5l1 .6-1.2 2.4 2.6 1.6 1.3-1 1.3 1.1c1.2 1 1.9 2.5 1.9 4v.8H4a1 1 0 0 1-1-1z'));
+  c.stroke(new Path2D('M3.5 19.5h17')); c.stroke(new Path2D('M10.5 12.5l1.4 1.2M12.5 11l1.4 1.2'));
+  c.restore();
+}
+function arteDataLonga(iso){ const d = dataDoISO(iso); try{ return { dia:d.toLocaleDateString('pt-BR',{ weekday:'long' }), data:d.toLocaleDateString('pt-BR',{ day:'numeric', month:'short' }), curta:d.toLocaleDateString('pt-BR',{ day:'2-digit', month:'short', year:'numeric' }).replace(/\./g,'').replace(/ de /g,' ').toUpperCase() }; }catch(e){ return { dia:'', data:iso, curta:iso }; } }
+// Dados reais da corrida, na ordem das referências. Só entram os que existem.
+function arteDadosCompletos(gr, an){
+  const total = Math.round(gpsTotalElapsedSec(gr)), dist = gr.totalDistKm||0;
+  const pace = dist>0.05 ? total/dist : null;
+  const d = [['Distância', fmtKmMedido(dist)+' km']];
+  if(pace) d.push(['Ritmo', formatPace(pace)+' /km']);
+  d.push(['Tempo', formatClock(total)]);
+  const alt = (an.altSeries||[]).map(p=>p.alt).filter(v=>typeof v==='number');
+  if(alt.length>=4){
+    let ganho = 0; for(let i=1;i<alt.length;i++){ const df = alt[i]-alt[i-1]; if(df>0.5) ganho += df; }
+    if(ganho>=1) d.push(['Ganho de elev.', Math.round(ganho)+' m']);
+    d.push(['Elev. máx.', Math.round(Math.max(...alt))+' m']);
+  }
+  return d;
+}
+// Privacidade: remove os primeiros e últimos 200 m do trajeto exportado.
+function arteTrilhaPrivada(track, ocultar){
+  if(!ocultar || !track.length) return track;
+  const tot = track[track.length-1].distKm || 0;
+  if(tot < 0.6) return [];
+  return track.filter(p=>(p.distKm||0)>=0.2 && (p.distKm||0)<=tot-0.2);
+}
+function arteRecibo(c, W, H, iconeFn, dia, data){
+  const bw = 380, bh = 470, x = (W-bw)/2, y = (H-bh)/2 - 20;
+  c.strokeStyle = ARTE_TINTA; c.lineWidth = 3;
+  c.beginPath(); c.moveTo(x, y + bh); c.lineTo(x, y); c.lineTo(x + bw, y); c.lineTo(x + bw, y + bh);
+  const dentes = 12, dw = bw/dentes;
+  for(let i=0;i<dentes;i++){ c.lineTo(x + bw - (i+0.5)*dw, y + bh + 22); c.lineTo(x + bw - (i+1)*dw, y + bh); }
+  c.stroke();
+  return { x, y, bw, bh };
+}
+function artesGaleriaCorrida(gr, opcoes){
+  const an = gpsRunAnalysis(gr);
+  const dados = arteDadosCompletos(gr, an);
+  const track = arteTrilhaPrivada(an.track, opcoes && opcoes.ocultarInicioFim);
+  const temRota = track.length >= 2;
+  const iso = gr.data || (gr.points && gr.points[0] && gr.points[0].timestamp ? vdotISODate(new Date(gr.points[0].timestamp)) : todayISO());
+  const dt = arteDataLonga(iso);
+  const tres = dados.slice(0, 3);
+  const A = [];
+  const nova = (nome, fn)=>A.push({ nome, gerar: async (formato)=>{ const cv = arteCanvas(formato); const c = cv.getContext('2d'); await fn(c, cv.width, cv.height, cv.height>cv.width); return cv; } });
+  nova('Recibo', async (c, W, H)=>{
+    const r = arteRecibo(c, W, H);
+    await arteDesenhaMarca(c, W/2, r.y + 60, 70, 'center');
+    arteTenis(c, W/2, r.y + 200, 90, ARTE_LARANJA);
+    arteTx(c, dt.dia, W/2, r.y + 330, 800, 60, 'center');
+    arteTx(c, dt.data, W/2, r.y + 385, 500, 30, 'center', arteTinta2());
+  });
+  const colunaLateral = (c, W, H, story)=>{
+    const passo = (story ? 1300 : 860)/Math.max(1, Math.ceil(dados.length/2));
+    const pares = []; for(let i=0;i<dados.length;i+=2) pares.push(dados.slice(i, i+2));
+    pares.forEach((p, i)=>{ p.forEach(([k, v], j)=>{ c.save(); c.translate(W - 130 + j*58, (story ? 1640 : 1000) - i*passo); c.rotate(-Math.PI/2);
+      arteTx(c, k, 0, 0, 500, 26, 'left', arteTinta2()); c.font = `500 26px ${ARTE_FONT}`; const wk = c.measureText(k).width; arteTx(c, v, wk + 18, 0, 800, 30, 'left'); c.restore(); }); });
+  };
+  nova('Métricas laterais', async (c, W, H, story)=>{ await arteDesenhaMarca(c, 90, 110, 70); colunaLateral(c, W, H, story); });
+  if(temRota) nova('Rota e métricas laterais', async (c, W, H, story)=>{
+    await arteDesenhaMarca(c, 90, 110, 70);
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:140, y:330, w:620, h:1200 } : { x:120, y:220, w:620, h:700 }), ARTE_LARANJA, 10);
+    colunaLateral(c, W, H, story);
+  });
+  const tabela = (c, x, y, w, linhas)=>{
+    linhas.forEach(([k, v], i)=>{ const yy = y + i*56;
+      arteTx(c, k, x, yy, 500, 30); arteTx(c, v, x + w, yy, 700, 30, 'right');
+      c.font = `500 30px ${ARTE_FONT}`; const a = c.measureText(k).width; c.font = `700 30px ${ARTE_FONT}`; const b = c.measureText(v).width;
+      c.fillStyle = ARTE_TINTA; for(let px = x + a + 14; px < x + w - b - 14; px += 12){ c.beginPath(); c.arc(px, yy - 9, 2.2, 0, Math.PI*2); c.fill(); } });
+  };
+  nova('Tabela', async (c, W, H, story)=>{
+    const y0 = story ? H - 300 - dados.length*56 : H - 160 - dados.length*56;
+    await arteDesenhaMarca(c, 90, y0 - 150, 80);
+    tabela(c, 90, y0, W - 180, dados);
+  });
+  if(temRota) nova('Rota e tabela', async (c, W, H, story)=>{
+    const y0 = story ? H - 260 - dados.length*56 : H - 120 - dados.length*56;
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:240, y:220, w:600, h:y0 - 420 } : { x:300, y:60, w:480, h:y0 - 240 }), ARTE_LARANJA, 10);
+    await arteDesenhaMarca(c, 90, y0 - 140, 76);
+    tabela(c, 90, y0, W - 180, dados);
+  });
+  const empilhadas = async (c, W, H, story, y0)=>{
+    await arteDesenhaMarca(c, W/2, y0, 80, 'center');
+    const passo = story ? 150 : 120;
+    dados.forEach(([k, v], i)=>{ const y = y0 + 160 + i*passo; arteTx(c, k, W/2, y, 600, story ? 34 : 30, 'center'); arteTx(c, v, W/2, y + (story ? 66 : 56), 800, story ? 64 : 54, 'center'); });
+  };
+  nova('Métricas', async (c, W, H, story)=>{ await empilhadas(c, W, H, story, story ? 360 : 70); });
+  if(temRota) nova('Métricas e rota', async (c, W, H, story)=>{
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, { x:W*0.15, y:H*0.2, w:W*0.7, h:H*0.6 }), ARTE_LARANJA, 10);
+    await empilhadas(c, W, H, story, story ? 360 : 70);
+  });
+  nova('Etiquetas', async (c, W, H)=>{
+    const pills = [];
+    pills.push({ marca:true }); pills.push({ t:dt.curta }); pills.push({ tenis:true });
+    tres.concat(dados.slice(3, 4)).forEach(([k, v])=>pills.push({ t:`${k.toUpperCase()} ${v.toUpperCase()}` }));
+    c.font = `600 30px ${ARTE_FONT}`;
+    const larg = (p)=> p.marca ? 140 : p.tenis ? 110 : c.measureText(p.t).width + 56;
+    const linhas = []; let atual = [], lw = 0, maxW = W - 160;
+    pills.forEach(p=>{ const w = larg(p); if(lw + w > maxW && atual.length){ linhas.push(atual); atual = []; lw = 0; } atual.push(p); lw += w + 14; });
+    if(atual.length) linhas.push(atual);
+    let y = H - 140 - linhas.length*92;
+    for(const ln of linhas){
+      const tot = ln.reduce((t,p)=>t + larg(p) + 14, -14); let x = (W - tot)/2;
+      for(const p of ln){ const w = larg(p);
+        c.strokeStyle = ARTE_TINTA; c.lineWidth = 3; c.beginPath(); c.roundRect(x, y, w, 72, 36); c.stroke();
+        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + 12, 48, 'center');
+        else if(p.tenis) arteTenis(c, x + w/2, y + 36, 44, ARTE_LARANJA);
+        else arteTx(c, p.t, x + w/2, y + 47, 600, 30, 'center');
+        x += w + 14; }
+      y += 92;
+    }
+  });
+  if(temRota) nova('Rota e métricas', async (c, W, H, story)=>{
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:260, y:260, w:560, h:820 } : { x:300, y:80, w:480, h:520 }), ARTE_LARANJA, 10);
+    const yb = story ? 1300 : 760;
+    await arteDesenhaMarca(c, W/2, yb - 40, 84, 'center');
+    const colW = (W - 160)/tres.length;
+    tres.forEach(([k, v], i)=>{ const cx = 80 + colW*i + colW/2; arteTx(c, k, cx, yb + 120, 600, 30, 'center'); arteTx(c, v, cx, yb + 178, 800, 46, 'center'); });
+    arteTenis(c, W/2, yb + 270, 64, ARTE_TINTA);
+  });
+  return A;
+}
+// Listas que o seletor recalcula quando muda a tinta ou a privacidade. As artes antigas são só brancas: no modo
+// escuro ficam de fora.
+function artesCompartilharCorrida(gr){ return (o)=>artesGaleriaCorrida(gr, o).concat(o.tinta==='escuro' ? [] : artesCorrida(gr, o)); }
+function artesCompartilharMusculacao(v){ return (o)=>artesGaleriaMusculacao(v).concat(o.tinta==='escuro' ? [] : artesMusculacao(v)); }
+function artesGaleriaMusculacao(v){
+  const min = Math.max(1, Math.round((v.duracaoSeg||0)/60));
+  const dt = arteDataLonga(v.data);
+  const A = [];
+  const nova = (nome, fn)=>A.push({ nome, gerar: async (formato)=>{ const cv = arteCanvas(formato); const c = cv.getContext('2d'); await fn(c, cv.width, cv.height, cv.height>cv.width); return cv; } });
+  const halter = (c, cx, cy, w)=>{ c.save(); const t = document.createElement('canvas'); t.width = w+40; t.height = w+40; const tc = t.getContext('2d');
+    arteHalter(tc, t.width/2, t.height/2, w); tc.globalCompositeOperation = 'source-in'; tc.fillStyle = ARTE_LARANJA; tc.fillRect(0, 0, t.width, t.height);
+    tc.setTransform(1,0,0,1,0,0); c.translate(cx, cy); c.rotate(-0.5); c.drawImage(t, -t.width/2, -t.height/2); c.restore(); };
+  nova('Recibo', async (c, W, H)=>{
+    const r = arteRecibo(c, W, H);
+    await arteDesenhaMarca(c, W/2, r.y + 60, 70, 'center');
+    halter(c, W/2, r.y + 200, 110);
+    arteTx(c, dt.dia, W/2, r.y + 330, 800, 60, 'center');
+    arteTx(c, dt.data, W/2, r.y + 385, 500, 30, 'center', arteTinta2());
+  });
+  nova('Tempo', async (c, W, H)=>{
+    arteTx(c, 'Tempo', W/2, H/2 - 170, 600, 40, 'center');
+    arteTx(c, min+'min', W/2, H/2 - 80, 800, 96, 'center');
+    halter(c, W/2, H/2 + 60, 180);
+    await arteDesenhaMarca(c, W/2, H/2 + 180, 96, 'center');
+  });
+  nova('Etiquetas', async (c, W, H)=>{
+    const pills = [{ marca:true }, { t:dt.curta }, { halter:true }, { t:`TEMPO ${min}MIN` }];
+    if(v.series) pills.push({ t:`${v.series} SÉRIES` });
+    c.font = `600 30px ${ARTE_FONT}`;
+    const larg = (p)=> p.marca ? 140 : p.halter ? 110 : c.measureText(p.t).width + 56;
+    const tot = pills.reduce((t,p)=>t + larg(p) + 14, -14);
+    const duasLinhas = tot > W - 160;
+    const linhas = duasLinhas ? [pills.slice(0, 3), pills.slice(3)] : [pills];
+    let y = H/2 - linhas.length*46;
+    for(const ln of linhas){
+      const t2 = ln.reduce((t,p)=>t + larg(p) + 14, -14); let x = (W - t2)/2;
+      for(const p of ln){ const w = larg(p);
+        c.strokeStyle = ARTE_TINTA; c.lineWidth = 3; c.beginPath(); c.roundRect(x, y, w, 72, 36); c.stroke();
+        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + 12, 48, 'center');
+        else if(p.halter) halter(c, x + w/2, y + 36, 50);
+        else arteTx(c, p.t, x + w/2, y + 47, 600, 30, 'center');
+        x += w + 14; }
+      y += 92;
+    }
+  });
+  return A;
 }
 // ---------- Seletor: prévia das artes + Story / Salvar / Copiar / Mais ----------
 const ARTE_ICONES = {
@@ -9362,10 +9712,18 @@ function abrirAjusteFoto(foto, aoTerminar){
 }
 async function abrirSeletorArtes(titulo, artesBase, info){
   let formato = 'story', sel = 0, prontas = [], foto = null;
-  const lista = ()=> foto && info ? artesComFoto(info, foto).concat(artesBase) : artesBase;
+  const op = { tinta:'claro', ocultarInicioFim:false };
+  const temRota = !!(info && info.track && info.track.length>=2);
+  const lista = ()=>{
+    const base = typeof artesBase==='function' ? artesBase(op) : artesBase;
+    if(!(foto && info)) return base;
+    const inf = temRota ? { ...info, track:arteTrilhaPrivada(info.track, op.ocultarInicioFim) } : info;
+    return artesComFoto(inf, foto).concat(base);
+  };
   const gerar = async ()=>{
     prontas.forEach(x=>URL.revokeObjectURL(x.url));
     prontas = [];
+    ARTE_TINTA = op.tinta==='escuro' ? '#111111' : '#FFFFFF';
     for(const a of lista()){
       try{ const cv = await a.gerar(formato); if(!cv) continue;
         const blob = await new Promise(r=>cv.toBlob(r, 'image/png')); if(blob) prontas.push({ nome:a.nome, blob, url:URL.createObjectURL(blob) }); }
@@ -9376,6 +9734,10 @@ async function abrirSeletorArtes(titulo, artesBase, info){
   const montar = ()=>openSheet(`
     <div class="sheet-title" style="text-align:center;">${titulo}</div>
     <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:4px 0 10px;"><button class="${formato==='story'?'on':''}" data-arfmt="story">Story</button><button class="${formato==='quadrado'?'on':''}" data-arfmt="quadrado">Quadrada</button></div>
+    ${typeof artesBase==='function' ? `<div class="fr-arteops">
+      <div class="ds-seg" style="grid-template-columns:1fr 1fr;"><button class="${op.tinta==='claro'?'on':''}" data-artinta="claro">Texto claro</button><button class="${op.tinta==='escuro'?'on':''}" data-artinta="escuro">Texto escuro</button></div>
+      ${temRota ? `<button class="fr-arteprivo" data-arpriv role="switch" aria-checked="${op.ocultarInicioFim}"><span>Ocultar início e fim</span><span class="mrt-switch ${op.ocultarInicioFim?'on':''}"><i></i></span></button>` : ''}
+    </div>` : ''}
     ${info ? `<div class="fr-fotobar">${foto ? '<button class="btn-ghost" data-arfoto="ajustar">Ajustar foto</button><button class="btn-ghost" data-arfoto="trocar">Trocar foto</button><button class="btn-ghost" data-arfoto="remover">Remover foto</button>' : '<button class="btn-ghost" data-arfoto="trocar">+ Adicionar foto (opcional)</button>'}</div>` : ''}
     <div class="fr-artegrid ${formato}">${prontas.length ? prontas.map((x,i)=>`<button class="fr-arte ${i===sel?'on':''}" data-arte="${i}" aria-label="${x.nome}"><img src="${x.url}" alt=""><span class="ck"></span></button>`).join('') : '<div class="ds-muted" style="padding:30px 0;text-align:center;">Gerando artes…</div>'}</div>
     <div class="fr-artacoes">
@@ -9386,6 +9748,10 @@ async function abrirSeletorArtes(titulo, artesBase, info){
     </div>`, (sh)=>{
     sh.querySelectorAll('[data-arte]').forEach(el=>{ el.onclick = ()=>{ sel = +el.getAttribute('data-arte'); sh.querySelectorAll('[data-arte]').forEach(b=>b.classList.toggle('on', b===el)); }; });
     sh.querySelectorAll('[data-arfmt]').forEach(el=>{ el.onclick = async ()=>{ const f = el.getAttribute('data-arfmt'); if(f===formato) return; formato = f; prontas = []; montar(); await gerar(); montar(); }; });
+    const regerarOp = async ()=>{ sel = 0; prontas = []; montar(); await gerar(); montar(); };
+    sh.querySelectorAll('[data-artinta]').forEach(el=>{ el.onclick = async ()=>{ const t = el.getAttribute('data-artinta'); if(t===op.tinta) return; op.tinta = t; await regerarOp(); }; });
+    const priv = sh.querySelector('[data-arpriv]');
+    if(priv) priv.onclick = async ()=>{ op.ocultarInicioFim = !op.ocultarInicioFim; await regerarOp(); };
     sh.querySelectorAll('[data-arfoto]').forEach(el=>{ el.onclick = async ()=>{
       const acao = el.getAttribute('data-arfoto');
       const regerar = async ()=>{ sel = 0; prontas = []; montar(); await gerar(); montar(); };
@@ -9405,7 +9771,7 @@ function compartilharResumoTreino(sessao){
   const min = Math.max(1, Math.round((sessao.duracaoSeg||0)/60)), nEx = sessao.exercicios.length;
   const info = { titulo:sessao.titulo, grande:min+' min', sub: sessao.temDetalhe ? `${sessao.series} séries · ${nEx} exercício${nEx===1?'':'s'}` : `${sessao.series} séries`,
     dados:[['Tempo', min+' min'], ['Séries', String(sessao.series)]].concat(sessao.temDetalhe ? [['Exercícios', String(nEx)]] : []) };
-  return abrirSeletorArtes('Compartilhar treino', artesMusculacao(sessao), info);
+  return abrirSeletorArtes('Compartilhar treino', artesCompartilharMusculacao(sessao), info);
 }
 function infoCorridaParaFoto(gr){
   const an = gpsRunAnalysis(gr), total = Math.round(gpsTotalElapsedSec(gr)), dist = gr.totalDistKm||0, pace = dist>0.05 ? total/dist : null;
@@ -13813,10 +14179,10 @@ async function preencherMiniaturasCorrida(){
 async function corridaGravadaParaArte(key){
   const prog = (state.corridaProgress||{})[key] || {};
   const rec = prog.gpsRunId ? await gpsDbGet(prog.gpsRunId).catch(()=>null) : null;
-  if(rec) return { status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:rec.day || dayAbbrevOf(key), points:(rec.pontos_gps||[]), totalDistKm:rec.distancia_total_km||0, finalElapsedSec:rec.tempo_total_seg||0 };
-  return { status:'finished', mode:'manual', day:dayAbbrevOf(key), points:[], totalDistKm:parseFloat(prog.km)||0, finalElapsedSec:parseClockInput(prog.tempo)||0 };
+  if(rec) return { data:prog.data || null, status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:rec.day || dayAbbrevOf(key), points:(rec.pontos_gps||[]), totalDistKm:rec.distancia_total_km||0, finalElapsedSec:rec.tempo_total_seg||0 };
+  return { data:prog.data || null, status:'finished', mode:'manual', day:dayAbbrevOf(key), points:[], totalDistKm:parseFloat(prog.km)||0, finalElapsedSec:parseClockInput(prog.tempo)||0 };
 }
-async function compartilharCorridaDoDia(key){ const gr = await corridaGravadaParaArte(key); abrirSeletorArtes('Compartilhar corrida', artesCorrida(gr), infoCorridaParaFoto(gr)); }
+async function compartilharCorridaDoDia(key){ const gr = await corridaGravadaParaArte(key); abrirSeletorArtes('Compartilhar corrida', artesCompartilharCorrida(gr), infoCorridaParaFoto(gr)); }
 // Exclui só o registro feito (gravação, distância, tempo, ritmo, data e o "feito"); devolve os km ao tênis.
 async function excluirCorridaRealizada(key, runIdForcado){
   const prev = state.corridaProgress[key];
@@ -14193,7 +14559,7 @@ function wireTreinoTemplateActions(){
 const SUB_V2_TABS = ['progresso','comparativo','medidas','equipamentos','biblioteca','conta','integracoes','saudeRelogio','personal','preferencias','maisOpcoes'];
 const SUB_V2_TITULOS = {
   progresso:'Progresso', comparativo:'Comparativo', medidas:'Medidas corporais', equipamentos:'Equipamentos', biblioteca:'Biblioteca',
-  conta:'Conta', integracoes:'Integrações', saudeRelogio:'Saúde do relógio', personal:'Personal trainer', preferencias:'Preferências', maisOpcoes:'Mais opções',
+  conta:'Conta', integracoes:'Integrações', saudeRelogio:'Saúde do relógio', personal:'Personal trainer', preferencias:'Configurações', maisOpcoes:'Dados e backup',
 };
 function subV2Voltar(){
   const dest = state.subOrigin || 'perfil';
@@ -14330,8 +14696,198 @@ function chartCardHtml(iconCls, icon, titulo, sub, corpo){
   </div>`;
 }
 function progVazio(txt){ return `<div class="mrt-chartempty">${txt}</div>`; }
+/* ---------- Progresso (pacote visual): período Semana/Mês/Ciclo, resumo com comparação, evolução, recuperação,
+   atividades com filtro e histórico completo. Só dados registrados; sem tonelagem. ---------- */
+const FR_PROG_MODOS = [['semana','Semana'],['mes','Mês'],['ciclo','Ciclo']];
+const FR_PROG_PERIODO_GRAF = { semana:'4s', mes:'3m', ciclo:'1a' };
+const FR_MESES = ['janeiro','fevereiro','março','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
+function frIsoMais(iso, dias){ const d = new Date(iso+'T12:00:00'); d.setDate(d.getDate()+dias); return vdotISODate(d); }
+// Período atual (até hoje) e o período anterior com o mesmo número de dias, para a comparação ser justa.
+function frPeriodoProg(modo){
+  const hoje = todayISO(), d0 = new Date(hoje+'T12:00:00');
+  if(modo==='mes'){
+    const ini = vdotISODate(new Date(d0.getFullYear(), d0.getMonth(), 1, 12));
+    const iniAnt = vdotISODate(new Date(d0.getFullYear(), d0.getMonth()-1, 1, 12));
+    const fimMesAnt = vdotISODate(new Date(d0.getFullYear(), d0.getMonth(), 0, 12));
+    let fimAnt = frIsoMais(iniAnt, d0.getDate()-1); if(fimAnt>fimMesAnt) fimAnt = fimMesAnt;
+    return { ini, fim:hoje, iniAnt, fimAnt, rotulo:'Este mês', rotAnt:'mês anterior' };
+  }
+  if(modo==='ciclo'){
+    const hp = state.hybridPlanData;
+    const ini = hp && hp.startMonday ? hp.startMonday : vdotISODate(vdotMondayOf(d0));
+    return { ini, fim:hoje, iniAnt:null, fimAnt:null, rotulo:'Este ciclo', rotAnt:null };
+  }
+  const ini = vdotISODate(vdotMondayOf(d0));
+  const dias = Math.round((new Date(hoje+'T12:00:00') - new Date(ini+'T12:00:00'))/864e5);
+  const iniAnt = frIsoMais(ini, -7);
+  return { ini, fim:hoje, iniAnt, fimAnt:frIsoMais(iniAnt, dias), rotulo:'Esta semana', rotAnt:'semana anterior' };
+}
+function frKmEntre(a, b){ return corridasConcluidas().filter(r=>r.data>=a && r.data<=b).reduce((t,r)=>t+(parseFloat(r.km)||0), 0); }
+function frForcaEntre(a, b){ return (state.workoutSessionsLog||[]).filter(s=>s.data && s.data>=a && s.data<=b).length; }
+function frTreinosEntre(a, b){ return listarAtividades().filter(x=>x.data && x.data>=a && x.data<=b && x.tipo!=='caminhada').length; }
+function frDeltaHtml(novo, velho, unid, pct){
+  if(velho==null) return '';
+  const d = pct ? (velho>0 ? Math.round((novo-velho)/velho*100) : null) : Math.round((novo-velho)*10)/10;
+  if(d==null) return `<div class="fr-dl">sem comparação ainda</div>`;
+  const seta = d>0 ? '↑' : d<0 ? '↓' : '→';
+  const txt = pct ? `${d>0?'+':''}${d}%` : `${d>0?'+':''}${String(d).replace('.',',')}${unid ? ' '+unid : ''}`;
+  return `<div class="fr-dl"><b>${seta} ${txt}</b></div>`;
+}
+function frResumoPeriodo(modo){
+  const P = frPeriodoProg(modo);
+  const km = frKmEntre(P.ini, P.fim), kmA = P.iniAnt ? frKmEntre(P.iniAnt, P.fimAnt) : null;
+  const fc = frForcaEntre(P.ini, P.fim), fcA = P.iniAnt ? frForcaEntre(P.iniAnt, P.fimAnt) : null;
+  let terceira;
+  if(modo==='semana'){
+    const c = weekCounts();
+    const tr = frTreinosEntre(P.ini, P.fim), trA = frTreinosEntre(P.iniAnt, P.fimAnt);
+    terceira = { ic:ICONS.calendar, v:`${c.done} de ${c.scheduled}`, k:'Aderência', d:frDeltaHtml(tr, trA, tr-trA===1||tr-trA===-1 ? 'sessão' : 'sessões', false) };
+  }else{
+    const tr = frTreinosEntre(P.ini, P.fim), trA = P.iniAnt ? frTreinosEntre(P.iniAnt, P.fimAnt) : null;
+    terceira = { ic:ICONS.calendar, v:`${tr}`, k:tr===1 ? 'Treino' : 'Treinos', d:frDeltaHtml(tr, trA, '', false) };
+  }
+  const col = (ic, v, k, d)=>`<div class="fr-rcol"><span class="fr-rcol-ic">${ic}</span><div class="v">${v}</div><div class="k">${k}</div>${d || ''}</div>`;
+  return `<div class="fr-resumo">
+    <div class="ds-label">${P.rotulo}</div>
+    <div class="fr-rcols">
+      ${col(ICONS.run, `${String(Math.round(km*10)/10).replace('.',',')} km`, 'Corrida', frDeltaHtml(km, kmA, '', true))}
+      ${col(ICONS.dumbbell, `${fc} ${fc===1?'sessão':'sessões'}`, 'Força', frDeltaHtml(fc, fcA, '', false))}
+      ${col(terceira.ic, terceira.v, terceira.k, terceira.d)}
+    </div>
+    ${P.rotAnt ? `<div class="fr-rnota">Comparado com o mesmo trecho da ${P.rotAnt}.</div>` : ''}
+  </div>`;
+}
+// Evolução: km e treinos acumulados por dia (semana) ou por semana (mês/ciclo), período atual × anterior.
+function frBaldesEvolucao(modo){
+  const P = frPeriodoProg(modo);
+  if(modo==='semana'){
+    return DAY_ABBR.map((d,i)=>({ rot:d.toUpperCase().slice(0,3), a:frIsoMais(P.ini, i), b:frIsoMais(P.ini, i), aAnt:frIsoMais(P.ini, i-7), bAnt:frIsoMais(P.ini, i-7) }));
+  }
+  const fimMes = modo==='mes' ? vdotISODate(new Date(new Date(P.ini+'T12:00:00').getFullYear(), new Date(P.ini+'T12:00:00').getMonth()+1, 0, 12)) : null;
+  const out = [];
+  let a = P.ini, k = 1;
+  const limite = modo==='mes' ? fimMes : frIsoMais(P.ini, 7*Math.max(1, ((state.hybridPlanData||{}).plan||[]).length || 8)-1);
+  while(a<=limite && k<=16){
+    const b = frIsoMais(a, 6) > limite ? limite : frIsoMais(a, 6);
+    let aAnt = null, bAnt = null;
+    if(modo==='mes'){ aAnt = frIsoMais(P.iniAnt, (k-1)*7); bAnt = frIsoMais(aAnt, 6); }
+    out.push({ rot: modo==='mes' ? 'S'+k : String(k), a, b, aAnt, bAnt });
+    a = frIsoMais(a, 7); k++;
+  }
+  return out;
+}
+function frGraficoDuplo(vals, ant, rots, tipo, unid){
+  const W = 300, H = 120, pl = 26, pr = 6, pt = 8, pb = 20;
+  const temAnt = ant && ant.some(v=>v!=null);
+  const max = Math.max(1, ...vals.filter(v=>v!=null), ...(temAnt ? ant.filter(v=>v!=null) : []));
+  const n = rots.length, slot = (W-pl-pr)/n;
+  const y = (v)=> H-pb-(v/max)*(H-pt-pb);
+  const grade = [0, 0.5, 1].map(t=>{ const yy = (pt+(1-t)*(H-pt-pb)).toFixed(1); return `<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="var(--border)"/><text x="${pl-4}" y="${(+yy+3).toFixed(1)}" font-size="9" fill="var(--text-faint)" text-anchor="end">${Math.round(max*t)}</text>`; }).join('');
+  const eixo = rots.map((r,i)=>`<text x="${(pl+slot*i+slot/2).toFixed(1)}" y="${H-5}" font-size="9" fill="var(--text-faint)" text-anchor="middle">${r}</text>`).join('');
+  let corpo = '';
+  if(tipo==='barra'){
+    const bw = Math.min(12, slot*0.32);
+    corpo = vals.map((v,i)=>{ const cx = pl+slot*i+slot/2; let s = '';
+      if(temAnt && ant[i]!=null){ const h = (H-pb)-y(ant[i]); s += `<rect x="${(cx+1).toFixed(1)}" y="${y(ant[i]).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0,h).toFixed(1)}" rx="2" fill="#CFCFCF"/>`; }
+      if(v!=null){ const h = (H-pb)-y(v); s += `<rect x="${(cx-bw-1).toFixed(1)}" y="${y(v).toFixed(1)}" width="${bw.toFixed(1)}" height="${Math.max(0,h).toFixed(1)}" rx="2" fill="var(--data)"/>`; }
+      return s; }).join('');
+  }else{
+    const linha = (arr, cor, tracejado)=>{ const pts = arr.map((v,i)=>v==null ? null : [pl+slot*i+slot/2, y(v)]).filter(Boolean); if(!pts.length) return '';
+      return `<polyline points="${pts.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ')}" fill="none" stroke="${cor}" stroke-width="2" ${tracejado?'stroke-dasharray="4 3"':''} stroke-linejoin="round"/>${pts.map(p=>`<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="3" fill="${tracejado?'#FFFFFF':cor}" stroke="${cor}" stroke-width="1.5"/>`).join('')}`; };
+    corpo = (temAnt ? linha(ant, '#9A9A9A', true) : '') + linha(vals, 'var(--data)', false);
+  }
+  return `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="${unid}" style="display:block;">${grade}${corpo}${eixo}</svg>`;
+}
+function frEvolucao(modo){
+  const B = frBaldesEvolucao(modo), hoje = todayISO();
+  const runs = corridasConcluidas();
+  const km = (a, b)=> runs.filter(r=>r.data>=a && r.data<=b).reduce((t,r)=>t+(parseFloat(r.km)||0), 0);
+  const kmAtual = B.map(x=> x.a>hoje ? null : Math.round(km(x.a, x.b)*10)/10);
+  const kmAnt = B.map(x=> x.aAnt ? Math.round(km(x.aAnt, x.bAnt)*10)/10 : null);
+  let acc = 0, accA = 0;
+  const trAtual = B.map(x=>{ if(x.a>hoje) return null; acc += frTreinosEntre(x.a, x.b); return acc; });
+  const trAnt = B.map(x=>{ if(!x.aAnt) return null; accA += frTreinosEntre(x.aAnt, x.bAnt); return accA; });
+  if(!kmAtual.some(v=>v) && !trAtual.some(v=>v) && !kmAnt.some(v=>v)) return '';
+  const rots = B.map(x=>x.rot);
+  const temAnt = modo!=='ciclo';
+  const P = frPeriodoProg(modo);
+  return `<div class="fr-evol">
+    <div class="fr-evol-head"><div class="ds-label">Evolução</div>
+      ${temAnt ? `<div class="fr-leg"><span><i class="a"></i>Atual</span><span><i class="b"></i>${P.rotAnt.charAt(0).toUpperCase()+P.rotAnt.slice(1)}</span></div>` : ''}</div>
+    <div class="fr-evol-grid">
+      <div><div class="fr-evol-t">Distância <small>(km)</small></div>${frGraficoDuplo(kmAtual, temAnt ? kmAnt : null, rots, 'barra', 'Distância por período')}</div>
+      <div><div class="fr-evol-t">Consistência <small>(treinos)</small></div>${frGraficoDuplo(trAtual, temAnt ? trAnt : null, rots, 'linha', 'Treinos acumulados')}</div>
+    </div>
+  </div>`;
+}
+// Atividades: filtro Todas / Corrida / Força / Livres.
+function frFiltrarAtividades(lista, f){
+  if(f==='corrida') return lista.filter(a=>a.tipo!=='musculacao' && !a.livre);
+  if(f==='forca') return lista.filter(a=>a.tipo==='musculacao');
+  if(f==='livres') return lista.filter(a=>a.livre);
+  return lista;
+}
+function frNomeAtividade(a){ return a.livre ? (TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade') : (a.titulo || (a.tipo==='musculacao' ? 'Musculação' : 'Corrida')); }
+function frIconeAtividade(a){ return a.tipo==='musculacao' ? ICONS.dumbbell : a.tipo==='caminhada' ? ICONS.shoe : ICONS.run; }
+function frCartaoAtividade(a){
+  const kicker = a.livre ? 'Livre' : a.tipo==='musculacao' ? 'Força' : 'Corrida';
+  const mets = [];
+  if(a.distKm) mets.push([fmtKmMedido(a.distKm)+' km', 'Distância']);
+  if(a.tempoSeg) mets.push([formatClock(a.tempoSeg), a.tipo==='musculacao' ? 'Duração' : 'Tempo']);
+  if(a.distKm && a.tempoSeg) mets.push([formatPace(a.tempoSeg/a.distKm)+'/km', 'Ritmo']);
+  if(a.tipo==='musculacao' && a.series) mets.push([String(a.series), 'Séries']);
+  return `<button class="fr-ativcard" data-ativ="${a.id}">
+    <span class="fr-ativic">${frIconeAtividade(a)}</span>
+    <span class="fr-ativtx"><small>${kicker}</small><b>${frNomeAtividade(a)}</b><span class="dt">${rotuloDataCurtaISO(a.data)}</span>
+      ${mets.length ? `<span class="fr-ativmets">${mets.map(m=>`<span><b>${m[0]}</b><em>${m[1]}</em></span>`).join('')}</span>` : ''}</span>
+    <span class="chev">${DS_CHEV}</span>
+  </button>`;
+}
+function frChipsFiltro(atual, attr){
+  return `<div class="fr-filtros" role="tablist">${[['todas','Todas'],['corrida','Corrida'],['forca','Força'],['livres','Livres']].map(([k,l])=>`<button class="${atual===k?'on':''}" ${attr}="${k}" role="tab" aria-selected="${atual===k}">${l}</button>`).join('')}</div>`;
+}
+function frAtividadesProgresso(){
+  const todas = listarAtividades();
+  const f = state.progFiltro || 'todas';
+  const lista = frFiltrarAtividades(todas, f);
+  return `<div class="fr-progsec">
+    <div class="fr-ativhead"><div class="ds-label">Atividades</div></div>
+    ${frChipsFiltro(f, 'data-progfiltro')}
+    ${lista.length ? `<div class="fr-ativlist">${lista.slice(0,3).map(frCartaoAtividade).join('')}</div>` : `<div class="fr-progvazio">${todas.length ? 'Nenhuma atividade neste filtro.' : 'Nenhuma atividade ainda. Seu primeiro treino aparece aqui.'}</div>`}
+    ${todas.length ? `<button class="ds-row fr-vertodas" data-proghistorico="1"><span class="nm">Ver histórico completo</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+  </div>`;
+}
+// Histórico completo: filtro, semana com marcação dos dias que têm atividade, lista agrupada por data.
+function frHistoricoAtividades(){
+  const todas = listarAtividades();
+  const f = state.histFiltro || 'todas';
+  const filtradas = frFiltrarAtividades(todas, f);
+  const ref = state.histSemana || vdotISODate(vdotMondayOf(new Date()));
+  const dRef = new Date(ref+'T12:00:00');
+  const mesTit = `${FR_MESES[dRef.getMonth()].charAt(0).toUpperCase()+FR_MESES[dRef.getMonth()].slice(1)} ${dRef.getFullYear()}`;
+  const comAtiv = new Set(filtradas.map(a=>a.data));
+  const sel = state.histDia || null;
+  const dias = DAY_ABBR.map((d,i)=>{ const iso = frIsoMais(ref, i); return `<button class="fr-hdia ${sel===iso?'on':''} ${iso===todayISO()?'hoje':''}" data-histdia="${iso}"><small>${d.toUpperCase()}</small><b>${parseInt(iso.slice(8,10),10)}</b><i class="${comAtiv.has(iso)?'tem':''}"></i></button>`; }).join('');
+  const lista = sel ? filtradas.filter(a=>a.data===sel) : filtradas;
+  const n = state.histMostrar || 30;
+  const grupos = []; let atual = null;
+  lista.slice(0, n).forEach(a=>{ if(!atual || atual.data!==a.data){ atual = { data:a.data, itens:[] }; grupos.push(atual); } atual.itens.push(a); });
+  const tituloData = (iso)=>{ try{ const s = dataDoISO(iso).toLocaleDateString('pt-BR',{ weekday:'long', day:'numeric', month:'long' }); return s.charAt(0).toUpperCase()+s.slice(1); }catch(e){ return iso; } };
+  return `<div class="fr-histhead"><button class="mrt-wex-x" data-histvoltar="1" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">Histórico</div></div>
+    ${frChipsFiltro(f, 'data-histfiltro')}
+    <div class="fr-hmes"><b>${mesTit}</b></div>
+    <div class="fr-hsemana"><button class="mrt-weeknavbtn" data-histsem="-7" aria-label="Semana anterior">${ICONS.back}</button><div class="fr-hdias">${dias}</div><button class="mrt-weeknavbtn" data-histsem="7" aria-label="Próxima semana">${ICONS.chevR}</button></div>
+    ${grupos.length ? grupos.map(g=>`<div class="fr-hgrupo"><div class="fr-hdata">${tituloData(g.data)}</div><div class="fr-ativlist">${g.itens.map(frCartaoAtividade).join('')}</div></div>`).join('')
+      : `<div class="fr-progvazio">${sel ? 'Nenhuma atividade neste dia.' : todas.length ? 'Nenhuma atividade neste filtro.' : 'Histórico vazio. Conclua um treino para acompanhar sua evolução.'}</div>`}
+    ${lista.length>n ? `<button class="btn-secondary" style="margin:8px 0 16px;" data-histmais="1">Carregar mais atividades</button>` : ''}`;
+}
 function renderProgressoV2(){
-  const periodo = state.progPeriodo || '3m';
+  if(state.progHistorico) return frHistoricoAtividades();
+  const temCiclo = !!treinoPhaseParts();
+  let modo = state.progModo || 'semana'; if(modo==='ciclo' && !temCiclo) modo = 'semana';
+  // Os gráficos detalhados seguem o período escolhido (Semana → 4 semanas, Mês → 3 meses, Ciclo → 1 ano).
+  state.progPeriodo = FR_PROG_PERIODO_GRAF[modo];
+  const periodo = state.progPeriodo;
   const chips = [['4s','4 semanas'],['3m','3 meses'],['1a','1 ano']].map(([k,l])=>`<button class="mrt-chip ${periodo===k?'current':''}" data-progperiodo="${k}" style="border:none;font-family:inherit;cursor:pointer;">${l}</button>`).join('');
   const inicio = new Date(); inicio.setDate(inicio.getDate()-progPeriodoDias()); const inicioISO = vdotISODate(inicio);
   const sessoes = (state.workoutSessionsLog||[]).filter(s=>s.data>=inicioISO);
@@ -14473,7 +15029,10 @@ function renderProgressoV2(){
   </div>`;
   const secAtividades = renderAtividadesProgresso();
   const secMed = `<div class="fr-progsec"><button class="fr-proghead" data-progdet="medidas"><span class="ic">${ICONS.ruler}</span><span class="t">Medidas corporais</span><span class="chev ${det==='medidas'?'open':''}">${DS_CHEV}</span></button>${det==='medidas' ? cardMed : ''}</div>`;
-  return `<div class="mrt-chips fr-progchips">${chips}</div>${resumoHibrido}${topo}${secAtividades}${secCorrida}${secMusc}${secMed}`;
+  void topo; void resumoHibrido; void secAtividades;
+  const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
+  const recup = `<div class="fr-recup"><span class="fr-acao-ic">${ICONS.heart}</span><div class="txt"><div class="ds-label">Recuperação</div><b>${recuperacao}</b><span>${recuperacaoSub}</span></div></div>`;
+  return `${seg}${frResumoPeriodo(modo)}${frEvolucao(modo)}${recup}${frAtividadesProgresso()}${secCorrida}${secMusc}${secMed}`;
 }
 // Todas as atividades (plano e livres, corrida e musculação), uma por linha, da mais recente para a mais antiga.
 function renderAtividadesProgresso(){
@@ -14497,6 +15056,14 @@ function abrirAtividadeDaLista(id){
 }
 function wireProgressoV2(){
   document.querySelectorAll('[data-progperiodo]').forEach(el=>{ el.onclick = ()=>{ state.progPeriodo = el.getAttribute('data-progperiodo'); render(); }; });
+  document.querySelectorAll('[data-progmodo]').forEach(el=>{ el.onclick = ()=>{ state.progModo = el.getAttribute('data-progmodo'); render(); }; });
+  document.querySelectorAll('[data-progfiltro]').forEach(el=>{ el.onclick = ()=>{ state.progFiltro = el.getAttribute('data-progfiltro'); render(); }; });
+  document.querySelectorAll('[data-proghistorico]').forEach(el=>{ el.onclick = ()=>{ state.progHistorico = true; state.histFiltro = state.progFiltro || 'todas'; state.histDia = null; state.histMostrar = 30; render(); }; });
+  document.querySelectorAll('[data-histvoltar]').forEach(el=>{ el.onclick = ()=>{ state.progHistorico = false; render(); }; });
+  document.querySelectorAll('[data-histfiltro]').forEach(el=>{ el.onclick = ()=>{ state.histFiltro = el.getAttribute('data-histfiltro'); render(); }; });
+  document.querySelectorAll('[data-histdia]').forEach(el=>{ el.onclick = ()=>{ const d = el.getAttribute('data-histdia'); state.histDia = state.histDia===d ? null : d; render(); }; });
+  document.querySelectorAll('[data-histsem]').forEach(el=>{ el.onclick = ()=>{ state.histSemana = frIsoMais(state.histSemana || vdotISODate(vdotMondayOf(new Date())), parseInt(el.getAttribute('data-histsem'),10)); state.histDia = null; render(); }; });
+  document.querySelectorAll('[data-histmais]').forEach(el=>{ el.onclick = ()=>{ state.histMostrar = (state.histMostrar||30) + 30; render(); }; });
   document.querySelectorAll('[data-ativ]').forEach(el=>{ el.onclick = ()=> abrirAtividadeDaLista(el.getAttribute('data-ativ')); });
   document.querySelectorAll('[data-progativtodas]').forEach(el=>{ el.onclick = ()=>{ state.progAtivTodas = !state.progAtivTodas; render(); }; });
   document.querySelectorAll('[data-muschistopen]').forEach(el=>{ el.onclick = ()=> abrirMuscHistoryV2(el.getAttribute('data-muschistopen')); });
@@ -14943,62 +15510,53 @@ function renderDadosPessoaisModal(){
     </div>`;
 }
 const NIVEL_TXT = { iniciante:'Iniciante', intermediario:'Intermediário', avancado:'Avançado' };
+// Perfil (pacote visual): identidade, plano e níveis separados de corrida e força, Meu treino, Equipamentos e Minha
+// conta. Todas as linhas abrem telas ou folhas que já existem.
+function frNivelTxt(n){ return NIVEL_TXT[n] || (n ? String(n).charAt(0).toUpperCase()+String(n).slice(1) : '—'); }
 function renderPerfilV2Content(){
   const nome = state.perfil.nome || '';
   const foto = state.perfil.foto;
   const hp = state.hybridPlanData;
-  const vdot = state.corridaVdotData && state.corridaVdotData.vdot;
-  const tags = [];
-  if(hp && hp.draft){
-    tags.push(`<span class="tag tag-musc">Musculação · ${NIVEL_TXT[hp.draft.nivelMusc]||'—'}</span>`);
-    tags.push(`<span class="tag tag-run">Corrida${vdot?' · VDOT '+vdot.toFixed(0):' · '+(NIVEL_TXT[hp.draft.nivelCorrida]||'—')}</span>`);
-  }else if(vdot){ tags.push(`<span class="tag tag-run">Corrida · VDOT ${vdot.toFixed(0)}</span>`); }
-  else tags.push(`<span class="tag">Sem diagnóstico</span>`);
-  const header = `
-    <div class="mrt-perfilhead">
-      <div class="mrt-avatar" style="width:64px;height:64px;font-size:21px;${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div>
-      <div style="flex:1;min-width:0;">
-        <div style="font-size:22px;font-weight:800;letter-spacing:-0.3px;">${nome||'Sem nome'}</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;">${tags.join('')}</div>
-      </div>
-    </div>
-    <button class="btn-secondary" style="height:48px;font-size:15px;margin-bottom:16px;" id="mrtEditDadosBtn">Editar dados</button>`;
-
-  const atalho = (icon, titulo, sub, tab)=>`<button class="ds-row fr-perfilrow" data-perfilgo="${tab}"><span class="fr-ic">${icon}</span><span class="nm">${titulo}<small>${sub}</small></span><span class="chev">${DS_CHEV}</span></button>`;
-  const grid = `<div class="ds-section"><div class="ds-list">
-      ${atalho(ICONS.compare, 'Comparativo', 'Planejado x realizado', 'comparativo')}
-      ${atalho(ICONS.ruler, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : 'Registre suas medidas'; })(), 'medidas')}
-      ${atalho(ICONS.shoe, 'Equipamentos', (()=>{ const t=(state.equipamentos.tenis||[]).find(x=>x.ativo); return t ? t.nome+' · '+t.km+'km' : 'Local, tênis e relógio'; })(), 'equipamentos')}
-      ${atalho(ICONS.book, 'Biblioteca', 'Exercícios, músculos e execução', 'biblioteca')}
-    </div></div>`;
-
   const phaseParts = treinoPhaseParts();
-  const planoCard = phaseParts ? `
-    <div class="mrt-card">
-      <div class="hero-top"><div class="mrt-runlabel" style="color:var(--text-dim);margin:0;">Meu plano</div><span class="hero-week">Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</span></div>
-      <div class="mrt-runtitle" style="font-size:20px;margin:8px 0 12px;">${phaseParts.phaseName}</div>
-      <div class="mrt-progress" style="margin-bottom:12px;"><div class="fill" style="width:${Math.round(phaseParts.weekNumber/phaseParts.totalWeeks*100)}%;background:var(--data);"></div></div>
-      <button class="mrt-linkbtn" style="padding-left:0;color:var(--accent);" id="mrtRedoDiagBtn">Refazer diagnóstico ${ICONS.chevR}</button>
-      ${qv2LinkNovo('padding-left:0;display:block;')}
-    </div>` : `
-    <div class="mrt-card">
-      <div class="mrt-runlabel" style="color:var(--text-dim);">Meu plano</div>
-      <div class="mrt-runtitle" style="font-size:18px;margin:6px 0 14px;">Você ainda não tem um plano gerado</div>
-      <button class="btn-secondary" style="height:48px;" id="mrtRedoDiagBtn">Fazer diagnóstico</button>
-      ${qv2LinkNovo()}
-    </div>`;
-
-  const linha = (tab, icon, titulo, valor)=>`
-    <div class="mrt-listrow" data-perfilgo="${tab}"><div class="icon-box">${icon}</div><div class="t">${titulo}</div><div class="v">${valor||''}</div><span class="chev">${ICONS.chevR}</span></div>`;
-  const relogio = state.equipamentos.relogio || '';
-  const lista = `<div class="mrt-card" style="padding:4px 16px;">
-    ${linha('conta', ICONS.user, 'Conta', state.authUser ? 'Conectada' : 'Entrar')}
-    ${linha('turma', ICONS.users, 'Turma', 'grupos e desafios')}
-    ${(state.perfil.souPersonal || state.viewingClient) ? linha('personal', ICONS.users, 'Personal trainer', 'Ativo') : ''}
-    ${linha('preferencias', ICONS.settings, 'Preferências', '')}
-    ${linha('maisOpcoes', ICONS.dots, 'Mais opções', '')}
+  const ass = hp && hp.assessment;
+  const nivelCorrida = (ass && ass.runLevel) || (hp && hp.draft && hp.draft.nivelCorrida) || null;
+  const nivelForca = (ass && ass.strengthLevel) || (hp && hp.draft && hp.draft.nivelMusc) || null;
+  const tipoPlano = !phaseParts ? 'Sem plano' : (hp && hp.plan && hp.plan.length) ? 'Plano híbrido' : 'Plano de corrida';
+  const card = `<div class="fr-pcard">
+    <div class="fr-pcard-top">
+      <div class="mrt-avatar fr-pavatar" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div>
+      <div class="fr-pcard-txt"><div class="nm">${nome||'Sem nome'}</div><div class="s1">${tipoPlano}</div>${phaseParts ? `<div class="s2">${phaseParts.phaseName} · Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div>` : ''}</div>
+    </div>
+    ${(nivelCorrida || nivelForca) ? `<div class="fr-pniveis">
+      <div class="fr-pnivel"><span class="fr-acao-ic">${ICONS.run}</span><span><b>Corrida</b><small>${frNivelTxt(nivelCorrida)}</small></span></div>
+      <div class="fr-pnivel"><span class="fr-acao-ic">${ICONS.dumbbell}</span><span><b>Força</b><small>${frNivelTxt(nivelForca)}</small></span></div>
+    </div>` : ''}
   </div>`;
-  return header + grid + planoCard + lista;
+  const row = (attrs, icon, titulo, sub, valor)=>`<button class="ds-row fr-perfilrow" ${attrs}><span class="fr-ic">${icon}</span><span class="nm">${titulo}${sub ? `<small>${sub}</small>` : ''}</span>${valor ? `<span class="aside">${valor}</span>` : ''}<span class="chev">${DS_CHEV}</span></button>`;
+  const meuTreino = `<div class="ds-label fr-plbl">Meu treino</div><div class="ds-list">
+    ${phaseParts ? row('data-pfacao="plano"', ICONS.clipboard, 'Plano e objetivo', 'Fases, semanas e sessões', '') : ''}
+    ${phaseParts ? row('data-pfacao="historico"', FR_ICON_HIST, 'Histórico de mudanças', '', '') : ''}
+    ${row('id="mrtRedoDiagBtn"', ICONS.wand, phaseParts ? 'Refazer meu plano' : 'Criar meu plano', '', '')}
+    ${row('data-perfilgo="comparativo"', ICONS.compare, 'Comparativo', 'Planejado x realizado', '')}
+    ${row('data-perfilgo="medidas"', ICONS.ruler, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : ''; })(), '')}
+    ${row('data-perfilgo="biblioteca"', ICONS.book, 'Biblioteca', 'Exercícios, músculos e execução', '')}
+  </div>`;
+  const tenis = (state.equipamentos.tenis||[]).find(x=>x.ativo);
+  const relogio = state.equipamentos.relogio || '';
+  const equip = `<div class="ds-label fr-plbl">Equipamentos</div><div class="fr-pequip">
+    <button class="fr-pequip-card" data-perfilgo="equipamentos"><span class="fr-acao-ic">${ICONS.shoe}</span><span class="tx"><b>Tênis</b><small>${tenis ? tenis.nome : 'Cadastre seu tênis'}</small>${tenis ? `<small>${String(tenis.km).replace('.',',')} km</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>
+    <button class="fr-pequip-card" data-perfilgo="saudeRelogio"><span class="fr-acao-ic">${ICONS.watch}</span><span class="tx"><b>Relógio</b><small>${relogio || 'Não conectado'}</small></span><span class="chev">${DS_CHEV}</span></button>
+  </div>`;
+  const conta = `<div class="ds-label fr-plbl">Minha conta</div><div class="ds-list">
+    ${row('id="mrtEditDadosBtn"', ICONS.user, 'Dados pessoais', '', '')}
+    ${row('data-perfilgo="conta"', ICONS.users, 'Conta', '', state.authUser ? 'Conectada' : 'Entrar')}
+    ${(state.perfil.souPersonal || state.viewingClient) ? row('data-perfilgo="personal"', ICONS.users, 'Personal trainer', '', 'Ativo') : ''}
+    ${row('data-perfilgo="preferencias"', ICONS.settings, 'Configurações', 'Voz, corrida e descanso', '')}
+    ${row('data-perfilgo="maisOpcoes"', ICONS.dots, 'Dados e backup', 'Exportar, importar e apagar', '')}
+  </div>`;
+  const head = `<div class="fr-phead"><div class="fr-brand"><b>FORZA</b> RUN</div><button class="fr-morebtn" data-perfilgo="preferencias" aria-label="Configurações">${ICONS.settings}</button></div>
+    <div class="mrt-title fr-ptitle">Perfil</div>`;
+  return head + card + meuTreino + equip + conta + qv2LinkNovo('padding-left:0;display:block;margin-top:8px;');
 }
 function renderPerfilV2Shell(){
   return `
@@ -15031,6 +15589,7 @@ function wirePerfilV2(){
   if(closeDadosBtn) closeDadosBtn.onclick = ()=>{ state.modalOpen=false; state.modalType=null; render(); };
   const dadosOverlay = document.getElementById('mrtDadosOverlay');
   if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
+  document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); }; });
   const redoDiagBtn = document.getElementById('mrtRedoDiagBtn');
   if(redoDiagBtn) redoDiagBtn.onclick = async ()=>{ if(await confirmarRefazerPlano()) abrirDiagnostico(); };
   wirePerfilExtras();
@@ -15045,7 +15604,7 @@ function renderContaV2(){
     </div>`;
   }
   return `
-    <div class="mrt-sub" style="margin:-4px 0 18px;">Entre pra sincronizar seus treinos e participar da Turma. O app funciona sem conta.</div>
+    <div class="mrt-sub" style="margin:-4px 0 18px;">Entre para sincronizar seus treinos entre aparelhos. O app também funciona sem conta.</div>
     <label class="mrt-medlabel" for="inAuthEmail">E-mail</label>
     <input class="mrt-input mrt-input52" type="email" id="inAuthEmail" placeholder="seu@email.com" autocomplete="email">
     <label class="mrt-medlabel" for="inAuthSenha" style="margin-top:14px;display:block;">Senha</label>
@@ -15121,20 +15680,29 @@ async function abrirEscolhaDeVoz(){
 }
 function renderPreferenciasV2(){
   const linha = (icon, titulo, ctrl)=>`<div class="mrt-togglerow"><div class="icon-box">${icon}</div><div class="nm">${titulo}</div>${ctrl}</div>`;
-  return `<div class="mrt-card" style="padding:6px 16px;">
-    ${linha(ICONS.volumeOn, 'Voz nos treinos', `<div class="mrt-switch ${state.vozAtiva===false?'':'on'}" id="mrtPrefVoz"><i></i></div>`)}
-    <div class="mrt-togglerow" data-escolhervoz style="cursor:pointer;"><div class="icon-box">${ICONS.user}</div><div class="nm">Voz do treino</div><span class="mrt-sub" style="margin:0;max-width:45%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${(state.preferencias||{}).vozNome || 'Automática'}</span></div>
+  const ir = (tab, icon, t, s)=>`<button class="ds-row fr-perfilrow" data-perfilgo="${tab}"><span class="fr-ic">${icon}</span><span class="nm">${t}${s ? `<small>${s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
+  return `<div class="ds-label fr-plbl">Conta</div><div class="ds-list">
+    ${ir('conta', ICONS.user, 'Conta e sincronização', state.authUser ? 'Conectada' : 'Entre para sincronizar')}
+  </div><div class="ds-label fr-plbl">Treino</div><div class="ds-list">
+    ${ir('equipamentos', ICONS.shoe, 'Equipamentos', 'Local, tênis e relógio')}
+    ${ir('saudeRelogio', ICONS.watch, 'Saúde do relógio', '')}  </div><div class="ds-label fr-plbl">Voz e corrida</div><div class="mrt-card" style="padding:6px 16px;">
+    ${linha(ICONS.volumeOn, 'Voz nos treinos', `<button type="button" role="switch" aria-label="Voz nos treinos" aria-checked="${state.vozAtiva!==false}" class="mrt-switch ${state.vozAtiva===false?'':'on'}" id="mrtPrefVoz"><i></i></button>`)}
+    <button type="button" class="mrt-togglerow fr-config-voice" data-escolhervoz><span class="icon-box">${ICONS.user}</span><span class="nm">Voz do treino</span><span class="mrt-sub" style="margin:0;max-width:45%;overflow-wrap:anywhere;">${(state.preferencias||{}).vozNome || 'Automática'}</span></button>
+    ${linha(ICONS.run, 'Voz a cada km', `<button type="button" role="switch" aria-label="Voz a cada km" aria-checked="${(state.preferencias||{}).vozKm!==false}" class="mrt-switch ${(state.preferencias||{}).vozKm===false?'':'on'}" data-prefsw="vozKm"><i></i></button>`)}
+    ${linha(ICONS.watch, 'Pausa automática na corrida', `<button type="button" role="switch" aria-label="Pausa automática na corrida" aria-checked="${!!(state.preferencias||{}).autoPause}" class="mrt-switch ${(state.preferencias||{}).autoPause?'on':''}" data-prefsw="autoPause"><i></i></button>`)}
+  </div><div class="ds-label fr-plbl">Descanso da musculação</div><div class="mrt-card" style="padding:6px 16px;">
     <div class="mrt-togglerow" style="flex-wrap:wrap;"><div class="icon-box">${ICONS.bell}</div><div class="nm">Aviso do fim do descanso</div>
       <div class="ds-seg" style="width:100%;margin:8px 0 4px;">${[['bipevoz','Bipe + voz'],['bipe','Só bipe'],['vibracao','Só vibração']].map(([k,l])=>`<button class="${prefsAviso().modo===k?'on':''}" data-avisomodo="${k}">${l}</button>`).join('')}</div>
-      ${prefsAviso().modo!=='vibracao' ? `<div style="display:flex;align-items:center;gap:10px;width:100%;margin:6px 0;"><span class="mrt-sub" style="margin:0;">Volume</span><input type="range" min="0.2" max="1" step="0.1" value="${prefsAviso().volume}" id="avisoVolume" style="flex:1;accent-color:var(--data);"></div>` : ''}
+      ${prefsAviso().modo!=='vibracao' ? `<div style="display:flex;align-items:center;gap:10px;width:100%;margin:6px 0;"><label for="avisoVolume" class="mrt-sub" style="margin:0;">Volume</label><input type="range" min="0.2" max="1" step="0.1" value="${prefsAviso().volume}" id="avisoVolume" style="flex:1;min-width:0;accent-color:var(--data);"></div>` : ''}
       <button class="btn-secondary" style="height:44px;margin:4px 0 6px;" id="avisoTestar">Testar aviso</button>
       <div class="mrt-sub" style="margin:0 0 6px;font-size:12px;">No iPhone a música de outros apps abaixa durante o aviso.</div>
     </div>
-    ${linha(ICONS.run, 'Voz a cada km', `<div class="mrt-switch ${(state.preferencias||{}).vozKm===false?'':'on'}" data-prefsw="vozKm"><i></i></div>`)}
-    ${linha(ICONS.watch, 'Pausa automática na corrida', `<div class="mrt-switch ${(state.preferencias||{}).autoPause?'on':''}" data-prefsw="autoPause"><i></i></div>`)}
+  </div><div class="ds-label fr-plbl">Exibição</div><div class="mrt-card" style="padding:6px 16px;">
     ${linha(ICONS.ruler, 'Unidades', `<span class="mrt-sub" style="margin:0;">km · kg</span>`)}
-    ${linha(ICONS.bell, 'Som', `<span class="mrt-sub" style="margin:0;">Ligado</span>`)}
     ${linha(ICONS.eye, 'Tema', `<span class="mrt-sub" style="margin:0;">Claro</span>`)}
+  </div><div class="ds-label fr-plbl">Conta e dados</div><div class="ds-list">
+    <button class="ds-row" data-perfilgo="conta"><span class="nm">Conta e sincronização</span><span class="chev">${DS_CHEV}</span></button>
+    <button class="ds-row" data-perfilgo="maisOpcoes"><span class="nm">Dados e backup</span><span class="chev">${DS_CHEV}</span></button>
   </div>`;
 }
 function renderMaisOpcoesV2(){
@@ -16468,28 +17036,26 @@ function focoFromObjetivo(objetivo){
 // modal antigo — a fiação dele só existia no shell clássico, e por isso os botões ficavam mortos na tela nova.
 // Primeiro contato: tela cheia de boas-vindas (gradiente + frase de valor + 3 benefícios). "Começar" leva ao quiz, que já
 // abre pelos dados pessoais (uma pergunta por tela); "Já tenho conta" leva direto pra tela de entrar.
+// Boas-vindas (pacote visual, NOVA-04): marca grande, uma frase e a ilustração de linhas (sem laranja: o laranja
+// fica só na anatomia e na rota do GPS).
+const FR_BOASVINDAS_ARTE = `<svg class="fr-bvarte" viewBox="0 0 340 300" fill="none" aria-hidden="true">
+  <g stroke="#D9D9D9" stroke-width="1.2">${[0,1,2,3,4,5].map(i=>`<path d="M${-20+i*6} ${300-i*22}c40-${70+i*8} 70-${120+i*10} 120-${150+i*6}s40 10 60 ${40+i*4}"/>`).join('')}</g>
+  <path d="M10 180c50-30 70-90 110-60s50 60 90 10 60-80 110-90" stroke="#111111" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="10" cy="180" r="7" fill="#FFFFFF" stroke="#111111" stroke-width="3"/><circle cx="320" cy="40" r="7" fill="#FFFFFF" stroke="#111111" stroke-width="3"/>
+  <g fill="#2B2B2B"><rect x="140" y="215" width="40" height="16" rx="8"/><rect x="178" y="180" width="26" height="86" rx="10"/><rect x="210" y="160" width="30" height="126" rx="12"/><rect x="246" y="130" width="30" height="186" rx="12"/><rect x="282" y="215" width="70" height="16" rx="4"/></g>
+</svg>`;
 function renderOnboardingScreen(){
-  const beneficios = [
-    [ICONS.calendar, 'Plano semanal pronto', 'Dias, exercícios e ritmos calculados pra você.'],
-    [ICONS.trendUp, 'Ajuste toda semana', 'O check-in adapta o volume ao seu cansaço.'],
-    [ICONS.run, 'Corrida guiada', 'GPS ou esteira com o ritmo de cada bloco.'],
-  ];
   return `
-    <div class="mrt-root mrt-welcome">
-      <div class="mrt-scroll" style="display:flex;flex-direction:column;">
-        <div style="padding-top:calc(36px + env(safe-area-inset-top));margin-bottom:28px;">
-          ${LOGO_SVG ? `<div class="mrt-logo">${LOGO_SVG}</div>` : ''}
-          <div class="mrt-runlabel" style="color:var(--accent);margin-bottom:12px;">FORZA RUN</div>
-          <div class="mrt-welcometitle">Musculação e corrida num plano só, ajustado toda semana</div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:18px;">
-          ${beneficios.map(([ic,t,s])=>`<div style="display:flex;gap:14px;align-items:center;"><div class="icon-box lg">${ic}</div><div><div style="font-size:16px;font-weight:700;">${t}</div><div style="font-size:13.5px;color:var(--text-dim);margin-top:2px;line-height:1.4;">${s}</div></div></div>`).join('')}
-        </div>
+    <div class="mrt-root mrt-welcome fr-bv">
+      <div class="mrt-scroll fr-bv-scroll">
+        <div class="fr-bv-marca">FORZA<br>RUN</div>
+        <div class="fr-bv-frase">Corrida e força no mesmo plano.</div>
+        ${FR_BOASVINDAS_ARTE}
       </div>
-      <div style="padding:14px 18px calc(14px + env(safe-area-inset-bottom));">
-        <button class="btn-primary" id="obStart">Começar</button>
+      <div class="fr-bv-acoes">
+        <button class="btn-primary fr-btnseta" id="obStart">Começar ${FR_ARROW}</button>
         ${qv2LinkNovo()}
-        <button class="btn-ghost" style="width:100%;margin-top:4px;" id="obLogin">Já tenho conta</button>
+        <button class="fr-bv-link" id="obLogin">Já tenho uma conta</button>
       </div>
     </div>`;
 }

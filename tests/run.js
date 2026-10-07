@@ -29,6 +29,7 @@ const testes = [
   { nome: 'check-in semanal em contratos (Bloco 7)', arq: 'node/adaptacao.test.js' },
   { nome: 'telas: Início, agenda, zonas, vínculo (Bloco 9)', arq: 'node/bloco9.test.js' },
   { nome: 'aba Treino e Gerenciar plano', arq: 'node/treino-menu.test.js' },
+  { nome: 'Progresso e histórico', arq: 'node/progresso.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));
@@ -44,6 +45,8 @@ for (const t of testes) {
   totalPass += pass; totalFail += fail + (falhou && !fail ? 1 : 0);
   console.log(`${falhou ? '✗' : pulou ? '–' : '✓'} ${t.nome}: ${pass} ok${fail ? ', ' + fail + ' falha(s)' : ''}${pulou ? ' (pulado)' : ''}${r.error ? ' (' + r.error.code + ')' : ''}`);
   saida.split('\n').filter(l => /^(FAIL|SKIP|AVISO) /.test(l)).forEach(l => console.log('    ' + l));
+  // Falhas de inicialização/compilação também precisam aparecer, mesmo antes do primeiro PASS/FAIL.
+  if (falhou && !fail) saida.trim().split('\n').slice(0, 14).forEach(l => console.log('    ' + l));
   if (falhou) arquivosComFalha.push(t.nome);
 }
 console.log(`\n${totalPass} verificações ok · ${totalFail} falha(s) · ${((Date.now() - t0) / 1000).toFixed(0)} s`);

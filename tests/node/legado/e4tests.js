@@ -19,7 +19,7 @@ let erro = null; process.on('unhandledRejection', e => { erro = e; });
   ok(gr.status === 'aguardando' && !gr.startedAt, 'primeiro sinal não começa a corrida (aguardando)');
   ok(/Iniciar mesmo assim/.test(T.renderGpsRunScreen()), 'sinal fraco: oferece "começar mesmo assim"');
   T.gpsOnPosition(pos(-20, -54, t + 1000, 6));
-  ok(/GPS pronto/.test(T.renderGpsRunScreen()), 'sinal bom mostrado');
+  ok(/Pronto para começar/.test(T.renderGpsRunScreen()) && /GPS excelente|GPS bom/.test(T.renderGpsRunScreen()), 'sinal bom mostrado (níveis de GPS)');
   T.gpsComecarContagem();
   ok(gr.status === 'contagem' && /gps-count/.test(T.renderGpsRunScreen()), 'contagem regressiva');
   T.gpsIniciarDeVerdade();
