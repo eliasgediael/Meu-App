@@ -13,7 +13,8 @@
   "treinos",
   "weekTrackMonday",
   "workoutSessionsLog",
-  "zonas"
+  "zonas",
+  "zonasHistorico"
  ],
  "backupKeys": [
   "treinos",
@@ -47,6 +48,8 @@
   "perdidosTratados",
   "preferencias",
   "recordesCorrida",
-  "atividades"
+  "atividades",
+  "progressaoExercicios",
+  "zonasHistorico"
  ]
 }

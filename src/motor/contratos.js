@@ -94,7 +94,44 @@ function estadoModalidade(mod){
   return { semana:hp.currentWeekIndex || 1, fase:w ? w.phaseLabel : null };
 }
 
+// SessionLoad: classificação normalizada da carga de cada sessão, derivada das tabelas que o motor já usa
+// (pontos de fadiga de pernas por código de sessão, regra de 24 h entre perna pesada e corrida forte).
+// É descritiva: nenhuma decisão do motor passa a depender dela neste bloco.
+const NIVEL_POR_PONTOS = (p)=> p>=35 ? 'high' : p>=15 ? 'medium' : 'low';
+function cargaDaSessao(s){
+  const papel = s.papel || null;
+  const corrida = s.modalidade==='corrida';
+  const pontosPerna = papel && HYBRID_FADIGA_PERNA[papel]!=null ? HYBRID_FADIGA_PERNA[papel] : (corrida ? pontosPernasCorrida(s.titulo) : 15);
+  const intensa = corrida ? (HYBRID_RUN_INTENSA.includes(papel) || papel==='RUN_LONG_RUN' || ehTipoCorridaChave(s.titulo)) : papel==='LEG_DAY_HEAVY';
+  const sistemico = intensa ? 'high' : (corrida ? 'low' : (papel==='UPPER_BODY' || papel==='FULL_BODY_LIGHT' ? 'medium' : 'medium'));
+  const impacto = corrida ? (papel==='RUN_INTERVALS_VO2MAX' || papel==='RUN_LONG_RUN' ? 'high' : 'medium') : 'low';
+  return {
+    sessaoId:s.id, modality:s.modalidade, papel,
+    systemicStress:sistemico, lowerBodyStress:NIVEL_POR_PONTOS(pontosPerna), impactStress:impacto,
+    technicalDemand: corrida ? (papel==='RUN_INTERVALS_VO2MAX' ? 'medium' : 'low') : (papel==='LEG_DAY_HEAVY' ? 'high' : 'medium'),
+    durationEstimate: corrida ? ((s.prescricao||{}).totalMin || null) : null,
+    hardSession: !!intensa,
+    // regra vigente de 24 h: sessão forte não fica colada em outra forte de pernas
+    recoveryHoursMin: intensa ? 24 : 0,
+    movable: !s.chaveSessao, priority: s.chaveSessao ? 'alta' : 'normal', pontosPerna,
+  };
+}
+
+// Zonas de ritmo: histórico de cada mudança de VDOT (origem, confiança, data). Atividades antigas nunca são
+// recalculadas; a mudança só vale daqui para frente.
+async function saveZonasHistorico(){ try{ await window.storage.set('zonasHistorico', JSON.stringify(state.zonasHistorico||[]), false); }catch(e){} }
+function registrarZona(vdot, origem, confianca){
+  if(!vdot) return;
+  state.zonasHistorico = state.zonasHistorico || [];
+  const ult = state.zonasHistorico[state.zonasHistorico.length-1];
+  if(ult && Math.abs(ult.vdot - vdot) < 0.05 && ult.origem===origem) return;
+  state.zonasHistorico.push({ vdot:Math.round(vdot*10)/10, origem:origem || 'desconhecida', confianca:confianca || null, data:todayISO(),
+    engineVersion:(typeof MOTOR_ENGINE_VERSION!=='undefined' ? MOTOR_ENGINE_VERSION : null) });
+  saveZonasHistorico();
+}
+
 Object.assign(globalThis, {
+  NIVEL_POR_PONTOS, cargaDaSessao, saveZonasHistorico, registrarZona,
   CONTRATOS_VERSAO, montarAssessment, idSessaoPlanejada, isoDaChaveDia, sessoesPlanejadasDaSemana, vinculoDaAtividade, sugerirVinculo,
   estadosDaSemana, estadoModalidade,
 });

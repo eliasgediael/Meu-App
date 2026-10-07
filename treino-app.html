@@ -4062,6 +4062,8 @@ async function init(){
   state.preferencias = { autoPause:false, vozKm:true, ...(await lerJson('preferencias', {})) };
   state.recordesCorrida = await lerJson('recordesCorrida', {});
   await carregarAtividades();
+  state.progressaoExercicios = await lerJson('progressaoExercicios', {});
+  state.zonasHistorico = await lerJson('zonasHistorico', []);
   // Auditoria da biblioteca: exercícios salvos que apontavam para a animação de outro movimento.
   try{ migrarMidiasExercicios(); }catch(e){ console.warn('[biblioteca] migração de mídia falhou', e); }
   // Plano vivo: coloca na agenda a semana do plano que corresponde à data de hoje.
@@ -8331,6 +8333,7 @@ function startWorkoutSession(day){
     startedAt: Date.now(), doneSeries:0, totalVolume:0,
   };
   saveWorkoutSession();
+  registrarDecisoesDaSessao(list); // estado de progressão de cada exercício desta sessão (Bloco 5)
   render();
   getAudioCtx(); // toque de "Começar" destrava o áudio e já carrega o som do fim do descanso
   // No iPhone, pede (uma vez) a permissão de notificação usada para o aviso de fim do descanso com a tela bloqueada.
@@ -9655,7 +9658,7 @@ function readAndResizeImage(file, size, cb){
 // Todas as chaves que o app grava (as da segunda linha ficavam de fora do backup e da migração pra nuvem).
 const BACKUP_KEYS = ['treinos','zonas','musculacao','outros','corridaProgress','perfil','historicoCarga','historicoMedidas','equipamentos','corridaVdotData','weekTrackMonday','onboardingDone','challenge','athleteProfile',
   'hybridPlanData','treinoTemplates','muscTemplates','muscDayOrigin','muscAjuste','workoutSessionsLog','domsPernas','semanasCompletas','equipItens','favoritos','atalhos',
-  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida','atividades'];
+  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida','atividades','progressaoExercicios','zonasHistorico'];
 // Corridas GPS (IndexedDB) vão no backup num campo próprio — backups antigos, sem esse campo, continuam
 // importando normalmente.
 const BACKUP_CAMPO_CORRIDAS = '__corridasGps';
@@ -10468,6 +10471,7 @@ function render(){
       const paces = computeVdotPaces(vdot);
       state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim(), vdot, paces };
       saveCorridaVdotData();
+      registrarZona(vdot, 'teste', 'alta');
       state.vdotStep = 2;
       render();
     };
@@ -10479,6 +10483,7 @@ function render(){
       const paces = computeVdotPaces(vdot);
       state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:null, testTime:null, vdot, paces };
       saveCorridaVdotData();
+      registrarZona(vdot, 'manual', 'media');
       state.vdotStep = 2;
       render();
     };
@@ -15935,6 +15940,7 @@ function wireHybridQuizModal(){
     const paces = computeVdotPaces(vdot);
     state.corridaVdotData = { ...(state.corridaVdotData||{}), testDist:distKey, testTime:timeStr.trim(), vdot, paces };
     saveCorridaVdotData();
+    registrarZona(vdot, 'teste', 'alta');
     render();
   };
   const vdotNaoSeiBtn = document.getElementById('hybVdotNaoSei');
