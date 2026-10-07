@@ -1624,7 +1624,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-hero .mrt-blockbar.dim, .fr-hero .mrt-blockbar.hib{ background:#D4D4D4 !important; }
 .fr-hero .ds-btnrow .btn-primary, .fr-hero .ds-btnrow .btn-secondary{ height:60px; border-radius:16px; font-size:19px; font-weight:800; }
 .fr-hero .ds-btnrow .btn-secondary{ background:var(--surface-2); color:var(--text); }
-@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero .ds-stats3 .mrt-metricv{ font-size:24px; letter-spacing:-0.6px; } .fr-hero .ds-stats3 .mrt-metricv small{ font-size:13px; } .fr-hero .ds-stats3 > *{ padding-left:8px; } }
+@media (max-width:359px){ .fr-hero .ds-title{ font-size:38px; } .fr-hero{ padding:18px 16px 16px; } .fr-hero .ds-stats3{ gap:10px; grid-template-columns:minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr); } .fr-hero .ds-stats3 .mrt-metricv{ font-size:20px; letter-spacing:-0.5px; white-space:nowrap; } .fr-hero .ds-stats3 .mrt-metricv small{ font-size:11px; } .fr-hero .ds-stats3 .mrt-metrick{ font-size:13px; white-space:nowrap; } .fr-hero .ds-stats3 > *{ padding-left:10px; } }
 .fr-weekrow .nm{ flex:0 0 38%; font-weight:500; color:var(--text-dim); }
 .fr-weekrow .aside{ flex:1; min-width:0; white-space:normal; line-height:1.3; padding:10px 0; font-size:15px; font-weight:700; color:var(--text); text-align:right; }
 .fr-weekrow .aside.rest{ color:var(--text-faint); }
@@ -1824,6 +1824,21 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-livrelink svg{ width:16px; height:16px; }
 .fr-vinculo{ margin:4px 0 12px; padding:14px 16px; }
 .fr-vinculo .t{ font-size:14.5px; font-weight:700; margin-bottom:10px; }
+/* Telas estreitas (iPhone SE, 320 px): botões empilhados, textos inteiros e estrutura do treino em coluna.
+   Nada aqui vale de 360 px para cima. */
+@media (max-width:359px){
+  .ds-alerta .ds-btnrow, .fr-vinculo .ds-btnrow{ flex-direction:column; gap:8px; }
+  .ds-alerta .ds-btnrow .btn-primary.sm, .ds-alerta .ds-btnrow .btn-secondary.sm,
+  .fr-vinculo .ds-btnrow .btn-primary.sm, .fr-vinculo .ds-btnrow .btn-secondary.sm{ flex:none; width:100%; height:48px; white-space:nowrap; }
+  .fr-cktit{ width:80px; gap:6px; }
+  .fr-ckcol{ gap:8px; }
+  .fr-ck3 .ds-seg button{ font-size:12px; text-overflow:clip; }
+  [data-mrthojectx="checkin"] .nm{ white-space:normal; line-height:1.3; }
+  .mrt-blockrow{ flex-direction:column; align-items:flex-start; gap:6px; padding:12px 0; }
+  .mrt-blockchip{ width:auto; }
+  .mrt-blockrow > div:last-child{ width:100%; }
+  .mrt-blockmeta{ font-size:12px; line-height:1.4; }
+}
 .fr-semregistro{ font-size:16px; font-weight:700; color:var(--text-dim); padding:6px 0 14px; }
 .fr-outras .ds-row .nm, .fr-ativsec .ds-row .nm{ display:flex; flex-direction:column; gap:2px; font-weight:600; }
 .fr-outras .ds-row .nm small, .fr-ativsec .ds-row .nm small{ font-size:13px; font-weight:500; color:var(--text-dim); }
