@@ -1,5 +1,5 @@
 // Build "estático": copia o app (arquivo único) e os assets para www/, que é o webDir do Capacitor,
-// e empacota src/native-bridge.js (única parte do projeto que usa import) num bundle IIFE.
+// e empacota src/native-bridge.js e o motor (src/motor/) em bundles IIFE.
 const fs = require('fs');
 const path = require('path');
 const esbuild = require('esbuild');
@@ -25,5 +25,8 @@ esbuild.buildSync({
   format: 'iife',
   outfile: path.join(out, 'native-bridge.js'),
 });
+
+// Motor (src/motor/) empacotado em motor.js, carregado antes do script principal.
+require('./motor-bundle.js').gravarMotor(path.join(out, 'motor.js'));
 
 console.log('Build concluído em', out);

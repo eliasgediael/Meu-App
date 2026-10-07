@@ -8,7 +8,11 @@ const fs = require('fs');
 // Raiz do projeto: argumento opcional (compatível com os scripts antigos) ou a pasta acima de tests/.
 const ROOT = (process.argv[2] && fs.existsSync(path.join(process.argv[2], 'treino-app.html'))) ? process.argv[2] : path.resolve(__dirname, '..', '..');
 const html = fs.readFileSync(path.join(ROOT, 'treino-app.html'), 'utf8');
-const js = html.match(/<script(?![^>]*src)[^>]*>([\s\S]*?)<\/script>/)[1];
+// Script principal do app + motor (src/motor/, empacotado como no build) num único trecho avaliado, na ordem do HTML:
+// assim as funções do motor enxergam os globais do script principal (state, DAY_ABBR...) como no navegador.
+const principal = html.match(/<script(?![^>]*src)[^>]*>([\s\S]*?)<\/script>/)[1];
+const motor = /<script src="motor\.js"><\/script>/.test(html) ? require(path.join(ROOT, 'scripts', 'motor-bundle.js')).codigoMotor() : '';
+const js = motor + '\n;\n' + principal;
 
 const noop = () => {};
 const el = () => new Proxy(function(){}, { get:(t,k)=> k==='style'?{}:k==='classList'?{add:noop,remove:noop,toggle:noop,contains:()=>false}:k==='querySelectorAll'?()=>[]:k==='getAttribute'?()=>null:k==='children'?[]:k==='dataset'?{}:typeof k==='symbol'?undefined:el(), set:()=>true, apply:()=>el() });

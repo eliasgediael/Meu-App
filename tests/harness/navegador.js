@@ -20,6 +20,7 @@ function servidor() {
       let u = decodeURIComponent(req.url.split('?')[0]);
       if (u === '/') u = '/treino-app.html';
       if (u === '/native-bridge.js') { res.writeHead(404); return res.end(); }
+      if (u === '/motor.js') { res.writeHead(200, { 'Content-Type': 'text/javascript; charset=utf-8' }); return res.end(require(path.join(ROOT, 'scripts', 'motor-bundle.js')).codigoMotor()); }
       if (u.startsWith('/sons/') || u === '/fim-descanso.wav') u = '/sons/fim-descanso.wav';
       const f = path.join(ROOT, u);
       fs.readFile(f, (e, d) => { if (e) { res.writeHead(404); return res.end(); } res.writeHead(200, { 'Content-Type': TIPOS[path.extname(f)] || 'application/octet-stream' }); res.end(d); });
