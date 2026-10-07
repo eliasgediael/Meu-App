@@ -1,6 +1,6 @@
 # Validação global do motor — Forza Run
 
-Gerado por `npm run validacao` em 05/10/2026 · motor 2.1.0 · 20 perfis sintéticos.
+Gerado por `npm run validacao` · data de referência dos testes: segunda 05/10/2026 · motor 2.1.0 · 20 perfis sintéticos.
 
 ## Resumo
 

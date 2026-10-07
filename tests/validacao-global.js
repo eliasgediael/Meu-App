@@ -58,7 +58,7 @@ const copia = (x) => JSON.parse(JSON.stringify(x));
   const fmt = (r) => r ? `${r.corridaMin} min · ${r.qualidade} forte(s) · ${r.seriesPerna} séries perna` : '—';
   const md = `# Validação global do motor — Forza Run
 
-Gerado por \`npm run validacao\` em ${new Date().toLocaleDateString('pt-BR')} · motor ${T.MOTOR_ENGINE_VERSION} · 20 perfis sintéticos.
+Gerado por \`npm run validacao\` · data de referência dos testes: segunda 05/10/2026 · motor ${T.MOTOR_ENGINE_VERSION} · 20 perfis sintéticos.
 
 ## Resumo
 
