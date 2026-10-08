@@ -56,5 +56,21 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(C.registroDoResultado({ resultId: 'x', workoutId: 'free', durationSec: 60, distanceMeters: 0 }).livre, 'corrida livre');
   ok(C.registroDoResultado({ resultId: 'x', workoutId: 'free', durationSec: 0 }) === null, 'resultado sem tempo é ignorado');
   ok(C.registroDoResultado(null) === null && C.registroDoResultado({}) === null, 'resultado inválido é ignorado');
+  // Musculação.
+  const fc = C.forcaCompacta({ day: 'Seg', k: 'Seg 05/10', n: 'Peito + Tríceps', exercicios: [
+    { id: 'd1', nome: 'Supino reto com barra', series: '4', reps: '10', carga: '40', descanso: '60–90s' },
+    { id: 'd2', nome: 'Tríceps coice no cabo', series: '3', reps: '8-12', carga: '', descanso: '' }] });
+  ok(fc.y === 'f' && fc.id === 'musc_Seg' && fc.e.length === 2, 'musculação compacta com tipo e id estável do dia');
+  ok(JSON.stringify(fc.e[0][2][0]) === JSON.stringify([10, 40, 75]) && fc.e[0][2].length === 4 && fc.e[0][0] === 'd1', 'série: repetições, carga e descanso; exercício com id do app');
+  ok(JSON.stringify(fc.e[1][2][2]) === JSON.stringify([8, 0, 90]), 'faixa de reps usa o início; sem carga = 0; descanso padrão 90 s');
+  ok(C.forcaCompacta({ day: 'Ter', exercicios: [] }) === null, 'dia sem exercício não vai');
+  const m2 = C.mensagemTreinos([{ id: 'x' }], [fc]);
+  ok(m2.v === 2 && m2.w.length === 2 && C.mensagemTreinos([{ id: 'x' }]).v === undefined, 'mensagem v2 só quando há musculação');
+  const rf = C.registroForcaDoResultado({ kind: 'strength', resultId: 'musc_Seg_1791250000', workoutId: 'musc_Seg', startedAt: 1791250000,
+    durationSec: 2555, avgHeartRate: 126.4, exercises: [{ id: 'd1', name: 'Supino', sets: [{ id: 'd1#1', reps: 10, kg: 42.5 }] }, { id: 'd2', name: 'X', sets: [] }] });
+  ok(rf && rf.logId === 'musc_garmin_musc_Seg_1791250000' && rf.day === 'Seg' && rf.series === 1 && rf.exercicios.length === 1 && rf.fcMedia === 126,
+    'resultado de musculação vira sessão do app');
+  ok(C.registroDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', durationSec: 10 }) === null, 'resultado de força não vira corrida');
+  ok(C.registroForcaDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', exercises: [] }) === null, 'musculação sem série é ignorada');
   semErro();
 })();

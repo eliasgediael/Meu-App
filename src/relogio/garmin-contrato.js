@@ -102,12 +102,71 @@ function treinosParaRelogio(treinos, opcoes) {
   return lista.slice(0, MAX_TREINOS).map((x) => x.c);
 }
 
-function mensagemTreinos(lista) { return { t: 'w', w: lista }; }
+// forca (opcional): treinos de musculação já compactados. Com ela a mensagem leva "v":2 e o relógio
+// substitui também a lista de musculação; sem ela o formato é o de corrida de sempre.
+function mensagemTreinos(lista, forca) {
+  return forca ? { t: 'w', v: 2, w: lista.concat(forca) } : { t: 'w', w: lista };
+}
+
+// ---------- Musculação ----------
+const MAX_EXERCICIOS = 12, MAX_SERIES = 10;
+
+function primeiroNumero(v, padrao) {
+  const m = String(v == null ? '' : v).replace(',', '.').match(/\d+(\.\d+)?/);
+  return m ? parseFloat(m[0]) : padrao;
+}
+// "60–90s" -> 75; "90s" -> 90; vazio -> 90 (mesma regra de parseDescansoSec do app).
+function descansoSeg(descanso) {
+  const nums = String(descanso || '').match(/\d+/g);
+  if (!nums || !nums.length) return 90;
+  return Math.round(nums.map(Number).reduce((a, b) => a + b, 0) / nums.length);
+}
+
+// Dia de musculação do app -> treino compacto do relógio ("y":"f").
+// dia: { day:'Seg', k:'Seg 05/10', n:'Peito + Tríceps', exercicios:[{ id, nome, series, reps, carga, descanso }] }
+// carga já pode vir com a sugestão de progressão do app.
+function forcaCompacta(dia) {
+  const ex = (dia.exercicios || []).filter(Boolean).slice(0, MAX_EXERCICIOS);
+  if (!ex.length) return null;
+  const e = ex.map((x, i) => {
+    const id = String(x.id || x.repdbId || ('ex' + (i + 1)));
+    const n = Math.max(1, Math.min(MAX_SERIES, Math.round(primeiroNumero(x.series, 3))));
+    const reps = Math.max(1, Math.round(primeiroNumero(x.reps, 10)));
+    const kg = Math.max(0, Math.round(primeiroNumero(x.carga, 0) * 10) / 10);
+    const rest = descansoSeg(x.descanso);
+    const series = [];
+    // Série: [repetições, carga, descanso]. O id da série é "<id do exercício>#<n>" (estável, derivado).
+    for (let k = 1; k <= n; k++) series.push([reps, kg, rest]);
+    return [id, String(x.nome || 'Exercício').slice(0, 24), series];
+  });
+  return { y: 'f', id: 'musc_' + dia.day, k: dia.k, n: String(dia.n || 'Musculação').slice(0, 24), e };
+}
+
+// Resultado de musculação do relógio -> dados para a sessão do histórico do app. null se inválido.
+function registroForcaDoResultado(r) {
+  if (!r || r.kind !== 'strength' || !r.resultId || !r.workoutId) return null;
+  const seg = Math.max(0, Math.round(Number(r.durationSec) || 0));
+  const exercicios = (Array.isArray(r.exercises) ? r.exercises : []).map((e) => ({
+    id: String(e.id), nome: String(e.name || ''),
+    sets: (Array.isArray(e.sets) ? e.sets : []).map((st) => ({ id: String(st.id || ''), peso: Math.max(0, Number(st.kg) || 0), reps: Math.max(0, Math.round(Number(st.reps) || 0)) })),
+  })).filter((e) => e.sets.length);
+  if (!exercicios.length) return null;
+  const inicio = r.startedAt > 0 ? r.startedAt * 1000 : null;
+  return {
+    logId: 'musc_garmin_' + String(r.resultId).replace(/[^A-Za-z0-9_-]/g, '_'),
+    resultId: String(r.resultId),
+    day: String(r.workoutId).replace(/^musc_/, ''),
+    inicio, fim: inicio != null ? inicio + seg * 1000 : null, seg,
+    fcMedia: r.avgHeartRate > 0 ? Math.round(r.avgHeartRate) : null,
+    series: exercicios.reduce((n, e) => n + e.sets.length, 0),
+    exercicios,
+  };
+}
 function mensagemAck(ids) { return { t: 'ack', ids }; }
 
 // Resultado vindo do relógio -> dados para gravar como corrida do app. null se inválido.
 function registroDoResultado(r) {
-  if (!r || typeof r !== 'object' || !r.resultId || !r.workoutId) return null;
+  if (!r || typeof r !== 'object' || !r.resultId || !r.workoutId || r.kind === 'strength') return null;
   const seg = Math.max(0, Math.round(Number(r.durationSec) || 0));
   const km = Math.max(0, Math.round(Number(r.distanceMeters) || 0)) / 1000;
   if (seg <= 0) return null;
@@ -131,4 +190,5 @@ function registroDoResultado(r) {
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
   treinosParaRelogio, mensagemTreinos, mensagemAck, registroDoResultado,
+  MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
 };

@@ -5162,7 +5162,7 @@ async function saveCorridaProgress(){
   try{ await window.storage.set('corridaProgress', JSON.stringify(state.corridaProgress), false); }catch(e){}
   relogioAgendarEnvio();
 }
-async function saveMusc(){ try{ await window.storage.set('musculacao', JSON.stringify(state.musculacao), false); }catch(e){} }
+async function saveMusc(){ try{ await window.storage.set('musculacao', JSON.stringify(state.musculacao), false); }catch(e){} relogioAgendarEnvio(); }
 async function saveOutros(){ try{ await window.storage.set('outros', JSON.stringify(state.outros), false); }catch(e){} }
 async function savePerfil(){ try{ await window.storage.set('perfil', JSON.stringify(state.perfil), false); }catch(e){} sincronizarAthleteProfileComLegado(); }
 async function saveOnboardingDone(){ try{ await window.storage.set('onboardingDone', todayISO()+'|pending', false); }catch(e){} }
@@ -6439,7 +6439,7 @@ function relogioAgendarEnvio(){
 function relogioMensagemTreinos(){
   const R = relogioApi();
   const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
-  return R.mensagemTreinos(R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito }));
+  return R.mensagemTreinos(R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito }), relogioDiasDeForca());
 }
 // Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
 async function relogioEnviarTreinos(op){
@@ -6460,7 +6460,7 @@ async function relogioReceber(d){
   if(!R || !d || typeof d!=='object') return;
   if(_primeiroInit) await _primeiroInit;
   if(d.t==='r'){
-    const ok = await relogioImportarResultado(d.r);
+    const ok = d.r && d.r.kind==='strength' ? await relogioImportarForca(d.r) : await relogioImportarResultado(d.r);
     // Só confirma depois de gravar: sem "ack" o relógio mantém o resultado na fila e reenvia.
     if(ok) await R.enviar(R.mensagemAck([String(d.r && d.r.resultId)]));
   }
@@ -6500,6 +6500,83 @@ async function relogioImportarResultado(r){
   sincronizarCorridasGps();
   render();
   showToast('Corrida do relógio salva');
+  return true;
+}
+// Musculação para o relógio: um treino por dia com exercícios nos próximos 7 dias (hoje incluso).
+// Dias desta semana já feitos (algum exercício marcado) não vão. A carga sai da sugestão de progressão.
+function relogioDiasDeForca(){
+  const R = relogioApi();
+  const hoje = new Date(todayISO()+'T00:00:00');
+  const segundaAtual = vdotISODate(vdotMondayOf(hoje));
+  const inicioHibrido = state.hybridPlanData && state.hybridPlanData.startMonday ? state.hybridPlanData.startMonday : null;
+  const out = [];
+  for(let i=0; i<7; i++){
+    const d = new Date(hoje); d.setDate(d.getDate()+i);
+    const day = DAY_ABBR[(d.getDay()+6)%7];
+    let lista = state.musculacao[day] || [];
+    if(inicioHibrido && vdotISODate(d) < inicioHibrido) lista = lista.filter(e=>e.modo!=='hibrido');
+    if(!lista.length) continue;
+    if(vdotISODate(vdotMondayOf(d))===segundaAtual && lista.some(e=>e.done)) continue;
+    const exercicios = lista.map(ex=>{
+      let carga = ex.carga;
+      try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
+      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso };
+    });
+    const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
+    if(c) out.push(c);
+  }
+  return out;
+}
+// Sessão de musculação feita no relógio -> sessão do histórico do app (mesmo formato de finishWorkoutSession),
+// histórico de carga por exercício e "feito" da semana. Retorna true quando o relógio já pode tirar da fila.
+async function relogioImportarForca(r){
+  const R = relogioApi();
+  const reg = R.registroForcaDoResultado(r);
+  if(!reg) return true;
+  if(state.viewingClient) return false;
+  if((state.workoutSessionsLog||[]).some(l=>l.id===reg.logId)) return true; // já importado
+  const fim = reg.fim || Date.now();
+  const inicio = reg.inicio || (fim - reg.seg*1000);
+  const dataISO = vdotISODate(new Date(inicio));
+  const lista = state.musculacao[reg.day] || [];
+  let volume = 0, cargaMax = 0;
+  const exercicios = reg.exercicios.map(e=>{
+    const ex = lista.find(x=>String(x.id)===e.id) || lista.find(x=>x.nome===e.nome) || null;
+    const base = ex || { nome:e.nome };
+    const item = { nome:base.nome, grupo:base.grupo, series:base.series, reps:base.reps, carga:base.carga };
+    const idCanon = (base.repdbId && repdbId(base.repdbId)) || ((exercicioPorNome(base.nome)||{}).id) || null;
+    if(idCanon) item.exerciseId = idCanon;
+    if(base.repdbId) item.repdbId = base.repdbId;
+    item.seriesExecutadas = e.sets.map((st,i)=>({ numero:i+1, peso:st.peso, repeticoes:st.reps, concluida:true }));
+    e.sets.forEach(st=>{ volume += st.peso*st.reps; cargaMax = Math.max(cargaMax, st.peso); });
+    // Histórico de carga do exercício, na data em que a sessão foi feita (como logSetsHistory faz para hoje).
+    const chave = base.repdbId || base.nome;
+    if(!state.historicoCarga) state.historicoCarga = {};
+    const hist = state.historicoCarga[chave] || (state.historicoCarga[chave] = []);
+    const sets = e.sets.map(st=>({ peso:String(st.peso), reps:String(st.reps) }));
+    const mesmoDia = hist.find(h=>h.data===dataISO);
+    if(mesmoDia){ mesmoDia.sets = sets; delete mesmoDia.carga; } else { hist.push({ data:dataISO, sets }); hist.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0); }
+    if(hist.length>200) hist.shift();
+    if(ex && vdotISODate(vdotMondayOf(new Date(inicio)))===vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')))) ex.done = true;
+    return item;
+  });
+  const log = { id:reg.logId, type:'strength', day:reg.day, title:muscTituloDoDia(reg.day, lista), data:dataISO, startedAt:inicio, finishedAt:fim,
+    volume:Math.round(volume), series:reg.series, duracaoSeg:reg.seg, cargaMax, recordes:0, recordesLista:[], exercicios,
+    origem:'garmin', garminResultId:reg.resultId, fcMedia:reg.fcMedia, updatedAt:Date.now() };
+  try{
+    const v0 = normalizarSessaoMuscHistorico(log);
+    log.muscleMap = v0.anat.primary;
+    if(v0.calorias) log.calories = { value:v0.calorias.valor, source:'estimated', label:'estimativa' };
+  }catch(e){}
+  if(!state.workoutSessionsLog) state.workoutSessionsLog = [];
+  state.workoutSessionsLog.push(log);
+  await saveWorkoutSessionsLog();
+  await saveHistoricoCarga();
+  await saveMusc();
+  if(dataISO===todayISO()){ markChallengeCheckinToday(); markGroupCheckinsToday('fez musculação · '+reg.series+' séries'); }
+  relogioAgendarEnvio();
+  render();
+  showToast('Musculação do relógio salva');
   return true;
 }
 // Cartão em Perfil › Equipamentos (só no app nativo).
