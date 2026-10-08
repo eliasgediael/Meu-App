@@ -47,7 +47,7 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
     @objc func escolher(_ call: CAPPluginCall) {
         DispatchQueue.main.async {
             self.precisaGarminConnect = false
-            ConnectIQ.sharedInstance().showConnectIQDeviceSelection()
+            ConnectIQ.sharedInstance().showDeviceSelection()
             call.resolve(["abriuGarminConnect": !self.precisaGarminConnect])
         }
     }
@@ -79,7 +79,7 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
             let grupo = DispatchGroup()
             for aparelho in alvos {
                 grupo.enter()
-                let app = IQApp(uuid: Self.appUUID, storeUuid: Self.appUUID, device: aparelho)
+                let app = IQApp(uuid: Self.appUUID, store: Self.appUUID, device: aparelho)
                 ConnectIQ.sharedInstance().sendMessage(mensagem, to: app, progress: nil) { resultado in
                     if resultado == .success { enviados += 1 }
                     resultados.append(["relogio": aparelho.friendlyName ?? "", "resultado": NSStringFromSendMessageResult(resultado) ?? ""])
@@ -142,7 +142,7 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
     }
 
     private func registrarMensagens(_ aparelho: IQDevice) {
-        let app = IQApp(uuid: Self.appUUID, storeUuid: Self.appUUID, device: aparelho)
+        let app = IQApp(uuid: Self.appUUID, store: Self.appUUID, device: aparelho)
         ConnectIQ.sharedInstance().register(forAppMessages: app, delegate: self)
     }
 
