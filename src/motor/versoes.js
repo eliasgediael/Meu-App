@@ -66,7 +66,7 @@ function rotuloVersao(m){ const p = String(m.data || '').split('-'); return (p.l
 
 // Coloca na agenda a semana atual do plano restaurado, só de hoje em diante. Dias passados, sessões já feitas
 // (corrida concluída ou musculação com exercício marcado) e treinos manuais ficam como estavam.
-function rematerializarSemanaAtual(){
+function rematerializarSemanaAtual(semanaPronta){
   const hp = state.hybridPlanData;
   const hoje = todayISO(), hi = hojeIdx();
   const seg = segundaAtual(), segISO = vdotISODate(seg);
@@ -77,7 +77,7 @@ function rematerializarSemanaAtual(){
   const preservarTreinos = (state.treinos || []).filter(t=>datasSemana.has(t.day) && ((isoDe(t) || hoje) < hoje || feitoCorrida(t)));
   const preservarMusc = {};
   DAY_ABBR.forEach((d, i)=>{ const l = (state.musculacao || {})[d]; if(l && (i < hi || l.some(e=>e.done) || (state.muscDayOrigin || {})[d])) preservarMusc[d] = l; });
-  let week = (n>=1 && n<=hp.plan.length) ? hp.plan[n-1] : null;
+  let week = semanaPronta || ((n>=1 && n<=hp.plan.length) ? hp.plan[n-1] : null);
   if(week && week.pendente){ const g = gerarSemanaV2(n); if(g) week = hp.plan[n-1] = g; }
   if(week && !week.pendente){
     const diasAntes = Object.keys(state.musculacao || {}).filter(d=>!preservarMusc[d]);
@@ -103,7 +103,8 @@ async function restaurarVersaoDoPlano(id){
   const atual = state.hybridPlanData || {};
   const hp = clonarJson(snap.hp);
   VERSOES_CAMPOS_HISTORICO.forEach(k=>{ if(atual[k]!==undefined) hp[k] = clonarJson(atual[k]); else delete hp[k]; });
-  delete hp.pausa;   // pausa ativa é estado de agora, não da versão
+  // Pausa ativa é estado de agora, não da versão: continua valendo depois de restaurar.
+  if(atual.pausa) hp.pausa = clonarJson(atual.pausa); else delete hp.pausa;
   if(snap.perfil){
     const ident = state.athleteProfile && state.athleteProfile.identidade;
     state.athleteProfile = { ...clonarJson(snap.perfil), identidade: clonarJson(ident) || (state.athleteProfile && state.athleteProfile.identidade) };
@@ -113,7 +114,7 @@ async function restaurarVersaoDoPlano(id){
   }
   state.hybridPlanData = hp;
   try{ Object.keys(_previaSemanas).forEach(k=>delete _previaSemanas[k]); }catch(e){}
-  rematerializarSemanaAtual();
+  if(hp.pausa) limparPlanejadoDesdeHoje(); else rematerializarSemanaAtual();
   await saveHybridPlanData();
   registrarNoDiario({ alteracao:'Versão anterior restaurada', original:'', novo:resumoDoPlano(hp), motivo:'versão de ' + rotuloVersao(snap) + ' · ' + snap.motivo });
   return true;

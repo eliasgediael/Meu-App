@@ -82,6 +82,7 @@ async function atualizarSemanaDoPlano(){
   restaurarAjustesMuscAntigos(segISO);
   const hp = state.hybridPlanData;
   if(hp && hp.plan && hp.plan.length && hp.startMonday){
+    if(hp.pausa){ await semanaDuranteAPausa(segISO); return; }   // pausa: a semana não avança
     const n = semanaDoPlanoPara(hp.startMonday, seg);
     if(n<1 || n>hp.plan.length) return;
     if(hp.currentWeekIndex===n && hp.materializadaSeg===segISO) return;
@@ -214,7 +215,7 @@ function cargaReal(){
 
 /* ---------- check-in diário (3 toques) — unifica com a dor nas pernas (DOMS) ---------- */
 async function saveCheckinDiario(){ try{ await window.storage.set('checkinDiario', JSON.stringify(state.checkinDiario||{}), false); }catch(e){} }
-function checkinDiarioPendente(){ return !(state.checkinDiario||{})[todayISO()]; }
+function checkinDiarioPendente(){ if(planoPausado()) return false; return !(state.checkinDiario||{})[todayISO()]; }
 // energia: 1 baixa · 2 ok · 3 alta | pernas: 1 leves · 2 normais · 3 pesadas | dor: 1 nenhuma · 2 leve · 3 forte
 const DOR_PARA_DOMS = { 1:0, 2:4, 3:7 };
 async function registrarCheckinDiario(resp){
@@ -460,6 +461,7 @@ function opcoesAjuste(d){
 /* ---------- treino perdido ---------- */
 async function savePerdidosTratados(){ try{ await window.storage.set('perdidosTratados', JSON.stringify(state.perdidosTratados||{}), false); }catch(e){} }
 function treinosPerdidos(){
+  if(planoPausado()) return [];
   return naSemanaAtual(()=>{
     const out = [];
     const tratados = state.perdidosTratados || {};

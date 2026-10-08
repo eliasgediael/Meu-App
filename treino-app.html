@@ -1499,6 +1499,16 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-diario .dt{ width:44px; flex-shrink:0; font-size:13px; font-weight:700; color:var(--text-faint); font-variant-numeric:tabular-nums; }
 .ds-diario .tx{ font-size:14px; color:var(--text); line-height:1.4; }
 .ds-diario .tx span{ display:block; font-size:13px; color:var(--text-dim); margin-top:2px; }
+.fr-pausa{ display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface-2); }
+.fr-pausa-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-pausa-txt b{ font-size:17px; font-weight:800; color:var(--text); }
+.fr-pausa-txt span{ font-size:13.5px; color:var(--text-dim); margin-top:2px; }
+.fr-pausa-btn{ width:auto; min-height:44px; padding:0 18px; flex-shrink:0; }
+.fr-cmp{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.fr-cmpcol{ min-width:0; display:flex; flex-direction:column; gap:8px; }
+.fr-cmpdia{ display:flex; flex-direction:column; font-size:13.5px; color:var(--text); line-height:1.35; }
+.fr-cmpdia b{ font-size:12px; color:var(--text-dim); font-weight:700; }
+@media (max-width:359px){ .fr-cmp{ grid-template-columns:1fr; } }
 .fr-versao{ align-items:center; }
 .fr-versao .dt{ width:64px; }
 .fr-versao .tx{ flex:1; min-width:0; }
@@ -12556,7 +12566,7 @@ function mrtSemanaSecaoBolinhas(){
 }
 function mrtCheckinRow(){
   const hp = state.hybridPlanData;
-  if(!(hp && hp.plan && hp.plan.length && !(hp.checkins && hp.checkins[hp.currentWeekIndex||1]))) return '';
+  if(planoPausado() || !(hp && hp.plan && hp.plan.length && !(hp.checkins && hp.checkins[hp.currentWeekIndex||1]))) return '';
   return `<button class="ds-row" data-mrthojectx="checkin">${ICONS.clipboard}<span class="nm">Check-in da semana ${hp.currentWeekIndex||1}</span><span class="aside">Pendente</span><span class="chev">${DS_CHEV}</span></button>`;
 }
 /* ============ TREINADOR NA TELA (Home + Treino): check-in, por quê, ajustar, perdido, diário ============ */
@@ -12842,7 +12852,7 @@ function frAtalhos(){
   // sem ajuste, só informa que foi concluído. O check-in diário fica no "Como você está hoje?" acima.
   const dec = temPlanoHibrido ? (hp.decisoesSemanais || {})[semana] : null;
   const temAjuste = !!(hp && hp.motorV2 && dec && dec.acoes && dec.acoes[0]!=='manter' && dec.semanaAlvo <= (hp.plan || []).length);
-  const semanal = !temPlanoHibrido ? ''
+  const semanal = (!temPlanoHibrido || planoPausado()) ? ''
     : semanalPendente ? `<button class="fr-atalho" data-mrthojectx="checkin"><span class="fr-acao-ic">${ICONS.calendar}</span><span class="nm">Check-in semanal</span><span class="chev">${DS_CHEV}</span></button>`
     : temAjuste ? `<button class="fr-atalho" data-propostasemana="1"><span class="fr-acao-ic">${ICONS.calendar}</span><span class="nm">Ver ajuste da semana</span><span class="chev">${DS_CHEV}</span></button>`
     : `<div class="fr-atalho fr-atalho-feito"><span class="fr-acao-ic">${CHECK_SVG}</span><span class="nm">Check-in concluído</span></div>`;
@@ -12917,6 +12927,10 @@ function renderHojeV2Content(){
   // Sem plano: só o convite (sem "Dia de descanso", que daria a entender que existe um plano). Com plano e semana
   // vazia, continua o cartão de descanso.
   const temPlanoGerado = !!((state.hybridPlanData && state.hybridPlanData.plan && state.hybridPlanData.plan.length) || (state.corridaVdotData && state.corridaVdotData.plan && state.corridaVdotData.plan.length));
+  if(planoPausado()){
+    const ult = frUltimaAtividade();
+    return greetRow + frCartaoPausado() + frAtalhos() + (ult ? `<div class="ds-section"><div class="ds-list">${ult}</div></div>` : '');
+  }
   return greetRow
     + renderPerdidoBanner()
     + (temPlanoOuTreino ? renderAvisoAgenda() : '')
@@ -13123,6 +13137,65 @@ function frTemRespostasDoQuestionario(){
   const p = state.athleteProfile;
   try{ const d = p && athleteGetPath(p, 'objetivos.principal.tipo'); return !!(d && d.valor); }catch(e){ return false; }
 }
+/* Pausar e retomar o plano (regras em src/motor/pausa.js). */
+const FR_ICON_PAUSA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></svg>';
+function frDiaMesISO(iso){ const p = String(iso||'').split('-'); return p.length===3 ? p[2]+'/'+p[1] : ''; }
+function frCartaoPausado(){
+  const hp = state.hybridPlanData, dias = diasDePausa();
+  return `<div class="ds-section"><div class="fr-pausa">
+    <span class="fr-acao-ic">${FR_ICON_PAUSA}</span>
+    <div class="fr-pausa-txt"><b>Plano pausado</b><span>Desde ${frDiaMesISO(hp.pausa.inicio)} · ${dias} dia${dias===1?'':'s'}</span></div>
+    <button class="btn-primary fr-pausa-btn" data-retomarplano="1">Retomar</button>
+  </div></div>`;
+}
+function frAbrirPausar(){
+  let motivo = null;
+  const montar = ()=>openSheet(`<div class="sheet-title">Pausar plano</div>
+    <div class="ds-label" style="margin-bottom:10px;">Motivo (opcional)</div>
+    <div class="qv2-chips">${Object.entries(PAUSA_MOTIVOS).map(([k,l])=>`<button class="mrt-adjchip ${motivo===k?'on':''}" data-pausamotivo="${k}">${l}</button>`).join('')}</div>
+    <div class="ds-actions" style="margin-top:20px;"><button class="btn-primary" id="pausaOk">Pausar a partir de hoje</button><button class="btn-ghost" id="pausaCancelar">Cancelar</button></div>`, (sh)=>{
+      sh.querySelectorAll('[data-pausamotivo]').forEach(b=>{ b.onclick = ()=>{ const k = b.getAttribute('data-pausamotivo'); motivo = motivo===k ? null : k; montar(); }; });
+      sh.querySelector('#pausaCancelar').onclick = closeSheet;
+      sh.querySelector('#pausaOk').onclick = async ()=>{ await pausarPlano(motivo); closeSheet(); render(); showToast('Plano pausado'); };
+    });
+  montar();
+}
+// Sessões de uma semana em linhas curtas (para comparar plano atual × semana de retorno).
+function frLinhasSemana(w){
+  if(!w) return [];
+  return DAY_ABBR.map(d=>{
+    const c = (w.corridaWeek||[]).find(x=>x.day===d), m = (w.muscPlan||{})[d];
+    const partes = [];
+    if(c) partes.push(resumoCorrida(c));
+    if(m && m.length) partes.push(`${muscTituloDoDia(d, m)} · ${m.reduce((t,e)=>t+(parseInt(e.series,10)||0),0)} séries`);
+    return partes.length ? { d, txt:partes.join(' + ') } : null;
+  }).filter(Boolean);
+}
+async function frAbrirRetomar(){
+  const p = propostaRetomada();
+  if(!p) return;
+  const concluir = async (leve)=>{ await retomarPlano(leve, p); closeSheet(); render(); showToast('Plano retomado'); };
+  if(!p.retorno || !p.leve){
+    const ok = await confirmarApp({ titulo:'Retomar o plano?', texto:`Você volta na semana ${p.semana}.`, ok:'Retomar' });
+    if(ok) await concluir(false);
+    return;
+  }
+  const lista = (w)=>{ const l = frLinhasSemana(w); return l.length ? l.map(x=>`<div class="fr-cmpdia"><b>${x.d}</b><span>${x.txt}</span></div>`).join('') : '<div class="ds-muted">Sem sessões nos dias que restam</div>'; };
+  openSheet(`<div class="sheet-title">Retomar o plano</div>
+    <div class="ds-muted" style="margin-bottom:14px;">Pausa de ${p.dias} dias. Semana ${p.semana} com retorno mais leve:</div>
+    <div class="fr-cmp"><div class="fr-cmpcol"><div class="ds-label">Plano atual</div>${lista(p.normal)}</div>
+      <div class="fr-cmpcol"><div class="ds-label">Retorno</div>${lista(p.leve)}</div></div>
+    <div class="ds-actions" style="margin-top:18px;"><button class="btn-primary" id="retLeve">Usar semana mais leve</button><button class="btn-secondary" id="retNormal">Voltar ao plano normal</button>
+    ${p.sugerirQuestionario ? '<button class="btn-ghost" id="retQuest">Revisar questionário</button>' : ''}</div>`, (sh)=>{
+      sh.querySelector('#retLeve').onclick = ()=>concluir(true);
+      sh.querySelector('#retNormal').onclick = ()=>concluir(false);
+      const q = sh.querySelector('#retQuest'); if(q) q.onclick = async ()=>{ await concluir(true); frRevisarQuestionario(); };
+    });
+}
+document.addEventListener('click', (ev)=>{
+  const b = ev.target.closest && ev.target.closest('[data-retomarplano]');
+  if(b){ ev.preventDefault(); frAbrirRetomar(); }
+});
 function frAbrirGerenciarPlano(){
   const hp = state.hybridPlanData;
   const temPlano = !!treinoPhaseParts();
@@ -13133,6 +13206,7 @@ function frAbrirGerenciarPlano(){
       ${temHibrido ? frItemGP('reorganizar', ICONS.calendar, 'Reorganizar semana', 'Mova sessões sem criar conflito') : ''}
       ${frItemGP('historico', FR_ICON_HIST, 'Histórico de mudanças', '')}
       ${frTemRespostasDoQuestionario() ? frItemGP('revisar', ICONS.pencil, 'Revisar questionário do plano', 'Veja e corrija suas respostas') : ''}
+      ${temHibrido ? (planoPausado() ? frItemGP('retomar', ICONS.play, 'Retomar plano', 'Pausado desde '+frDiaMesISO(hp.pausa.inicio)) : frItemGP('pausar', FR_ICON_PAUSA, 'Pausar plano', '')) : ''}
     </div>` : ''}
     <div class="ds-label fr-gplbl">Treino</div><div class="ds-list">
       ${frItemGP('editar', ICONS.pencil, 'Editar treino do dia', '')}
@@ -13148,6 +13222,8 @@ async function frAcaoGerenciar(a){
   if(a==='reorganizar') return frAbrirReorganizar();
   if(a==='historico') return frAbrirHistorico();
   if(a==='revisar') return frRevisarQuestionario();
+  if(a==='pausar') return frAbrirPausar();
+  if(a==='retomar') return frAbrirRetomar();
   if(a==='manual'){ abrirCriarTreino(); return; }
   if(a==='modelos'){ state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); return; }
   if(a==='editar'){
@@ -13375,7 +13451,7 @@ function renderTreinoV2Content(){
     ((state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas'));
 
   // Cabeçalho (pacote visual): título, menu "Gerenciar plano" e fase com progresso do plano.
-  const header = frTreinoCabecalho(phaseParts);
+  const header = frTreinoCabecalho(phaseParts) + (planoPausado() ? frCartaoPausado() : '');
   const planoBar = '';
 
   const relLabel = (state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas');
@@ -13409,7 +13485,7 @@ function renderTreinoV2Content(){
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate fr-daydate"><span>${d.toUpperCase()}</span><b>${frDiaMes(d)}</b></div>
       <div class="fr-dayic">${icone}</div>
-      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">${antesDoInicioDoPlano(d) ? 'Antes do início do plano' : 'Descanso'}</div>`}</div>
+      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">${diaPausado(d) ? 'Pausado' : antesDoInicioDoPlano(d) ? 'Antes do início do plano' : 'Descanso'}</div>`}</div>
       ${status}
     </div>`;
   }).join('')}</div>`;
@@ -13753,6 +13829,7 @@ function abrirMuscHistoryV2(id){
 function renderTreinoV2Musc(day, phaseParts){
   const listaTotal = muscListForDay(day);
   if(listaTotal.length===0){
+    if(diaPausado(day)) return `<div class="empty-state"><div class="icon-box lg musc">${FR_ICON_PAUSA}</div><div class="t">Plano pausado</div></div>`;
     return `<div class="empty-state"><div class="icon-box lg musc">${ICONS.dumbbell}</div><div class="t">Dia de descanso</div><div class="s">${treinoNextWorkoutHint(day)}</div><button class="btn-secondary" id="mrtAddEx">+ Adicionar exercício</button></div>`;
   }
   const foco = (state.muscFoco||{})[day];
@@ -14089,6 +14166,7 @@ function abrirTrocaExercicio(exId){
 function renderTreinoV2Corrida(day, phaseParts){
   const entry = treinoEntryForDay(day);
   if(!entry){
+    if(diaPausado(day)) return `<div class="empty-state"><div class="icon-box lg run">${FR_ICON_PAUSA}</div><div class="t">Plano pausado</div></div>`;
     return `<div class="empty-state"><div class="icon-box lg run">${ICONS.run}</div><div class="t">Dia de descanso</div><div class="s">${treinoNextWorkoutHint(day)}</div></div>`;
   }
   const done = isCorridaDone(day);
