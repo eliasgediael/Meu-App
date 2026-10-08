@@ -33,7 +33,9 @@ let erro = null; process.on('unhandledRejection', e => { erro = e; });
   S.selectedDayMusc = hoje;
   const t = T.renderTreinoV2Content();
   ok(!/data-ajustar/.test(t) && !/>Ajustar</.test(t), 'tela Treino sem Ajustar');
-  ok(/data-abrircheckin/.test(t), 'tela Treino tem o check-in no lugar da linha de dor');
+  // Arte 02: o card da corrida não tem a linha do check-in; o check-in do dia fica no Início.
+  // (o check-in do Início já foi conferido acima, em "Home mostra check-in diário pendente")
+  ok(!/data-abrircheckin/.test(t), 'card da corrida sem a linha de check-in (como a arte)');
   S.weekOffset = 1;
   const t2 = T.renderTreinoV2Content();
   ok(/prévia/.test(t2), 'semana futura marcada como prévia');

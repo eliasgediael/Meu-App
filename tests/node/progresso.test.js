@@ -47,7 +47,8 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   ok(/Nenhuma atividade neste dia/.test(T.renderProgressoV2()), 'dia sem atividade mostra estado vazio');
 
   const pf = T.renderPerfilV2Content();
-  ok(/Plano híbrido/.test(pf) && (pf.match(/fr-pnivel"/g) || []).length === 2 && /Histórico de mudanças/.test(pf) && /Dados e backup/.test(pf), 'Perfil: plano, níveis separados, Meu treino e Minha conta');
+  ok(/Plano híbrido/.test(pf) && (pf.match(/class="fr-pnivel"/g) || []).length === 2 && /Histórico de mudanças/.test(pf) && /Privacidade e dados/.test(pf), 'Perfil: plano, níveis separados, Meu treino e Minha conta');
+  ok(['Plano e objetivo', 'Disponibilidade', 'Lesões e limitações', 'Dados pessoais', 'Preferências', 'Ajuda e suporte', 'Versão do app'].every(x => pf.includes(x)), 'Perfil com os itens da arte 04');
   ok(!/data-perfilgo="turma"/.test(pf) && /Configurações/.test(pf), 'Perfil não oferece grupos como a nova rede social');
   ok(!/Turma/.test(T.renderContaV2()), 'Conta não promete a antiga Turma');
   S.preferencias = { vozKm: false, autoPause: true, aviso: { modo: 'vibracao', volume: 0.7 } };

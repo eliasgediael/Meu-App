@@ -59,6 +59,11 @@ jobs:
 
           "$PB" -c "Add :NSPhotoLibraryAddUsageDescription string O Forza Run salva nas suas Fotos a arte do treino que você escolher compartilhar." "$PLIST"
 
+          # Câmera e fotos: sem estas chaves o iOS encerra o app quando o seletor de foto abre a câmera.
+          "$PB" -c "Add :NSCameraUsageDescription string O Forza Run usa a câmera para você tirar a foto da atividade e da arte de compartilhamento." "$PLIST"
+
+          "$PB" -c "Add :NSPhotoLibraryUsageDescription string O Forza Run abre suas fotos para você escolher a imagem da atividade e da arte de compartilhamento." "$PLIST"
+
           "$PB" -c "Delete :UIBackgroundModes" "$PLIST" 2>/dev/null || true
 
           "$PB" -c "Add :UIBackgroundModes array" "$PLIST"

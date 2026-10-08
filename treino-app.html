@@ -1943,24 +1943,36 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-weektitle b{ font-size:15.5px; font-weight:700; color:var(--text); }
 .fr-weektitle span{ font-size:14px; color:var(--text-dim); font-variant-numeric:tabular-nums; }
 .fr-offline{ font-size:13px; color:var(--text-dim); text-align:center; padding:8px 12px; border-radius:12px; background:var(--surface-2); margin-bottom:12px; }
-.fr-daydate{ width:44px; }
-.fr-daydate b{ font-size:15px !important; font-variant-numeric:tabular-nums; }
+/* Aba Treino como a arte 02: dia em negrito, data normal em cinza, linha separando a data do ícone. */
+.fr-daydate{ width:54px; text-align:left; padding:4px 0 4px 2px; border-right:1px solid var(--border); align-self:stretch; display:flex; flex-direction:column; justify-content:center; }
+.ds-dayrow .fr-daydate span{ font-size:13px; font-weight:700; color:var(--text); letter-spacing:.02em; }
+.ds-dayrow .fr-daydate b{ font-size:14.5px !important; font-weight:400 !important; color:var(--text-dim) !important; font-variant-numeric:tabular-nums; margin-top:2px; }
+.ds-dayrow.sel:has(.fr-daydate){ box-shadow:inset 0 0 0 1px var(--border); }
+.fr-ringbtn{ background:none; padding:0; cursor:pointer; position:relative; }
+.fr-ringbtn::after{ content:''; position:absolute; left:50%; top:50%; width:44px; height:44px; transform:translate(-50%,-50%); }
+.fr-mets.n2{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+.fr-mets.n1{ grid-template-columns:1fr; }
+.fr-met b.longo{ font-size:14px; letter-spacing:-0.2px; }
+.fr-met > span:last-child{ min-width:0; }
+.fr-met b i{ font-style:normal; font-size:.72em; font-weight:600; color:var(--text-dim); margin-left:1px; }
+#mrtPlanDetails2.fr-runcard-tit{ cursor:pointer; }
 .fr-runcard{ padding:18px; }
 .fr-runcard-top{ display:flex; align-items:center; gap:12px; }
 .fr-runcard-top .mrt-donebtn{ margin-left:auto; }
 .fr-kicker{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); }
-.fr-runcard-tit{ font-size:28px; font-weight:900; letter-spacing:-0.6px; line-height:1.15; color:var(--text); margin-top:4px; }
-.fr-runcard-obj{ font-size:14.5px; color:var(--text-dim); line-height:1.4; margin-top:4px; }
+.fr-runcard-tit{ font-size:32px; font-weight:900; letter-spacing:-0.8px; line-height:1.12; color:var(--text); margin-top:6px; }
+.fr-runcard-obj{ font-size:15.5px; color:var(--text-dim); line-height:1.4; margin-top:6px; }
 .fr-mets{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:8px; margin:16px 0 14px; padding-bottom:14px; border-bottom:1px solid var(--border); }
 .fr-met{ display:flex; align-items:center; gap:8px; min-width:0; }
 .fr-met + .fr-met{ border-left:1px solid var(--border); padding-left:10px; }
 .fr-met .ic{ display:flex; color:var(--text); flex-shrink:0; }
-.fr-met .ic svg{ width:22px; height:22px; }
-.fr-met b{ display:block; font-size:15.5px; font-weight:800; color:var(--text); white-space:nowrap; }
-.fr-met small{ display:block; font-size:12.5px; color:var(--text-dim); white-space:nowrap; }
+.fr-met .ic svg{ width:28px; height:28px; stroke-width:1.8; }
+.fr-met b{ display:block; font-size:17px; font-weight:800; color:var(--text); white-space:nowrap; }
+.fr-met small{ display:block; font-size:13.5px; color:var(--text-dim); white-space:nowrap; }
 .fr-runbtns{ display:grid; grid-template-columns:1.6fr 1fr; gap:10px; }
 .fr-runbtns.um{ grid-template-columns:1fr; }
-.fr-runbtns .btn-primary, .fr-runbtns .btn-secondary{ margin:0; height:52px; }
+.fr-runbtns .btn-primary, .fr-runbtns .btn-secondary{ margin:0; height:54px; border-radius:12px; display:flex; align-items:center; justify-content:center; gap:10px; }
+.fr-runbtns svg{ width:22px; height:22px; }
 .fr-etapas-lbl{ font-size:12px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); margin:18px 0 10px; }
 .fr-etapas{ display:flex; flex-direction:column; gap:8px; }
 .fr-etapa{ display:flex; align-items:center; gap:12px; width:100%; min-height:60px; padding:10px 12px; border:1px solid var(--border); border-radius:14px; background:none; font-family:inherit; text-align:left; cursor:pointer; color:var(--text); }
@@ -1968,9 +1980,11 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-etapa .n{ width:30px; height:30px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:14px; font-weight:800; flex-shrink:0; }
 .fr-etapa .tx{ flex:1; min-width:0; }
 .fr-etapa .tx b{ display:block; font-size:15px; font-weight:700; }
-.fr-etapa .tx small{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; font-size:13px; line-height:1.35; color:var(--text-dim); overflow:hidden; }
+.fr-etapa .tx small{ display:block; white-space:nowrap; text-overflow:ellipsis; font-size:13.5px; line-height:1.35; color:var(--text-dim); overflow:hidden; }
 .fr-etapa .mt{ text-align:right; flex-shrink:0; }
-.fr-etapa .mt b{ display:block; font-size:14.5px; font-weight:700; }
+.fr-etapa .mt b{ display:block; font-size:15px; font-weight:600; }
+.fr-etapa .tx b{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fr-etapa .mt{ padding-left:4px; }
 .fr-etapa .mt small{ display:block; font-size:13px; color:var(--text-dim); }
 .fr-etapa .chev{ color:#BBBBBB; display:flex; flex-shrink:0; }
 .fr-etapa.aberta .chev{ transform:rotate(90deg); }
@@ -2004,6 +2018,13 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
   .fr-met small{ font-size:11.5px; }
   .fr-runbtns{ grid-template-columns:1fr; }
   .fr-etapa{ gap:10px; padding:10px; }
+  .fr-daydate{ width:42px; }
+  .ds-dayrow .fr-daydate span{ font-size:12px; }
+  .ds-dayrow .fr-daydate b{ font-size:13px !important; }
+  .fr-dayic{ width:38px; height:38px; }
+  .fr-dayic svg{ width:19px; height:19px; }
+  .ds-dayrow:has(.fr-daydate){ gap:9px; }
+  .ds-dayrow:has(.fr-daydate) .ds-pill{ display:none; }
   .fr-weektitle b{ font-size:14.5px; }
   .fr-weektitle span{ font-size:13px; }
 }
@@ -2035,6 +2056,63 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 @media (max-width:359px){
   .fr-prdia span{ width:34px; height:34px; }
   .fr-prresumo .tot b{ font-size:19px; }
+}
+/* Perfil (pacote visual, arte 04) */
+.fr-perfil{ padding-bottom:12px; }
+.fr-phead{ display:flex; align-items:center; justify-content:space-between; padding-top:6px; }
+.fr-pbrand{ font-size:17px; letter-spacing:.24em; color:var(--text); font-weight:400; }
+.fr-pbrand b{ font-weight:900; }
+.fr-pgear{ width:44px; height:44px; border:none; background:none; color:var(--text); display:flex; align-items:center; justify-content:flex-end; padding:0; cursor:pointer; }
+.fr-pgear svg{ width:28px; height:28px; }
+.fr-ptitle{ font-size:40px; font-weight:900; letter-spacing:-1px; line-height:1.05; color:var(--text); margin:6px 0 16px; }
+.fr-pcard{ border:1px solid var(--border); border-radius:20px; background:var(--surface-2); padding:14px 10px 10px; }
+.fr-pcard-top{ display:flex; align-items:center; gap:16px; padding:0 4px 14px; }
+.fr-pavatar{ width:68px; height:68px; border-radius:50%; background:#E6E6E6; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:900; color:var(--text); flex-shrink:0; }
+.fr-pcard-txt{ min-width:0; }
+.fr-pcard-txt .nm{ font-size:23px; font-weight:900; letter-spacing:-0.4px; color:var(--text); line-height:1.15; }
+.fr-pcard-txt .s1{ font-size:16px; color:var(--text-dim); margin-top:2px; }
+.fr-pcard-txt .s2{ font-size:14.5px; color:var(--text-dim); margin-top:2px; }
+.fr-pniveis{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.fr-pnivel{ display:flex; align-items:center; gap:10px; min-width:0; min-height:52px; padding:8px 10px; border:1px solid var(--border); border-radius:14px; background:var(--surface); font-family:inherit; text-align:left; color:var(--text); cursor:pointer; }
+.fr-pnivel .tx{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-pnivel .tx b{ font-size:15px; font-weight:700; }
+.fr-pnivel .tx small{ font-size:13.5px; color:var(--text-dim); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.fr-pic{ width:38px; height:38px; border-radius:50%; background:var(--surface-2); color:var(--text); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.fr-pnivel .fr-pic{ background:#F0F0F0; }
+.fr-pic svg{ width:20px; height:20px; }
+.fr-pic.lg{ width:46px; height:46px; }
+.fr-pic.lg svg{ width:24px; height:24px; }
+.fr-pic.sem{ background:none; width:28px; justify-content:flex-start; }
+.fr-pchev{ color:var(--text); display:flex; flex-shrink:0; margin-left:auto; }
+.fr-pchev svg{ width:16px; height:16px; }
+.fr-plbl{ font-size:13px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--text-dim); margin:22px 4px 10px; }
+.fr-plist{ border:1px solid var(--border); border-radius:16px; background:var(--surface); padding:0 12px; }
+.fr-prow{ display:flex; align-items:center; gap:14px; width:100%; min-height:54px; padding:6px 0; border:none; border-top:1px solid var(--border); background:none; font-family:inherit; text-align:left; color:var(--text); cursor:pointer; }
+.fr-plist .fr-prow:first-child{ border-top:none; }
+.fr-prow .nm{ flex:1; min-width:0; font-size:16.5px; font-weight:500; }
+.fr-prow .vl{ font-size:15px; color:var(--text-dim); }
+.fr-pequip{ display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.fr-pequip-card{ display:flex; align-items:center; gap:8px; min-width:0; min-height:66px; padding:10px; border:1px solid var(--border); border-radius:16px; background:var(--surface); font-family:inherit; text-align:left; color:var(--text); cursor:pointer; }
+.fr-pequip-card .tx{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-pequip-card .tx b{ font-size:15.5px; font-weight:700; }
+.fr-pequip-card .tx small{ font-size:13.5px; color:var(--text-dim); line-height:1.3; }
+.fr-prodape{ margin-top:14px; }
+.fr-prow-plana{ padding:0 4px; min-height:50px; }
+.fr-prow-plana .nm{ font-size:15.5px; font-weight:400; color:var(--text-dim); }
+.fr-prow-plana .fr-pic{ color:var(--text); }
+.fr-ajuda .it{ padding:12px 0; border-top:1px solid var(--border); }
+.fr-ajuda .it b{ display:block; font-size:15.5px; color:var(--text); }
+.fr-ajuda .it span{ display:block; font-size:14px; color:var(--text-dim); margin-top:3px; line-height:1.45; }
+@media (max-width:359px){
+  .fr-ptitle{ font-size:34px; }
+  .fr-pavatar{ width:58px; height:58px; font-size:27px; }
+  .fr-pcard-txt .nm{ font-size:20px; }
+  .fr-pniveis, .fr-pequip{ grid-template-columns:1fr; }
+  .fr-pnivel, .fr-pequip-card{ padding:8px 10px; gap:10px; }
+  .fr-pnivel .fr-pic{ width:32px; height:32px; }
+  .fr-pic.lg{ width:38px; height:38px; }
+  .fr-pequip-card .tx b, .fr-pnivel .tx b{ font-size:14px; }
+  .fr-pequip-card .tx small, .fr-pnivel .tx small{ font-size:12.5px; }
 }
 /* Progresso (pacote visual) */
 .fr-seg3{ display:flex; gap:4px; padding:4px; border-radius:var(--r-pill); background:var(--surface-2); margin:4px 0 16px; }
@@ -7079,7 +7157,15 @@ async function adicionarFotoCorrida(gr, remover){
 }
 function escolherFotoArte(){
   return new Promise(ok=>{ const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
-    i.onchange = ()=>{ const f = i.files && i.files[0]; if(!f) return ok(null); const r = new FileReader(); r.onload = ()=>{ const im = new Image(); im.onload = ()=>ok(im); im.onerror = ()=>ok(null); im.src = r.result; }; r.readAsDataURL(f); };
+    // Foto da câmera tem 12 MP ou mais: reduz para no máximo 2400 px antes de usar (memória do iPhone).
+    const reduzir = (im)=>{ const lado = Math.max(im.naturalWidth||im.width, im.naturalHeight||im.height), f = Math.min(1, 2400/lado);
+      if(f>=1) return im; const cv = document.createElement('canvas'); cv.width = Math.round((im.naturalWidth||im.width)*f); cv.height = Math.round((im.naturalHeight||im.height)*f);
+      cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); return cv; };
+    i.onchange = ()=>{ const f = i.files && i.files[0]; if(!f) return ok(null);
+      const url = URL.createObjectURL(f); const im = new Image();
+      im.onload = ()=>{ let r = null; try{ r = reduzir(im); }catch(e){ r = im; } URL.revokeObjectURL(url); ok(r); };
+      im.onerror = ()=>{ URL.revokeObjectURL(url); ok(null); };
+      im.src = url; };
     i.click(); });
 }
 function wireGpsRunScreen(){
@@ -13102,6 +13188,7 @@ function renderMrtNav(){
    histórico de mudanças e revisão do questionário. Tudo reaproveita funções e dados que já existem; nada aqui muda
    regra do motor. ---------- */
 const FR_ICON_RITMO = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 17a8 8 0 1 1 15 0"/><path d="M12 15.5l3.5-4.5"/></svg>';
+const FR_ICON_ESTEIRA = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19h14l3-3"/><path d="M6 19l9-11h3"/><circle cx="12" cy="4.5" r="1.6"/><path d="M10.5 9.5l-2 3.5h3.5l1.5 3"/></svg>';
 const FR_ICON_HIST = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v4h4"/><path d="M12 8v4l3 2"/></svg>';
 function frTreinoCabecalho(phaseParts){
   const pct = phaseParts ? Math.round(phaseParts.weekNumber/phaseParts.totalWeeks*100) : 0;
@@ -13319,6 +13406,8 @@ function frAbrirGerenciarPlano(){
       ${frItemGP('editar', ICONS.pencil, 'Editar treino do dia', '')}
       ${frItemGP('manual', ICONS.plus, 'Criar treino manual', '')}
       ${frItemGP('modelos', ICONS.layers, 'Modelos salvos', '')}
+      ${frItemGP('biblioteca', ICONS.book, 'Biblioteca de exercícios', '')}
+      ${frItemGP('comparativo', ICONS.compare, 'Planejado x realizado', '')}
     </div>
     <div class="ds-list fr-gpfim">${frItemGP('refazer', ICONS.wand, temPlano ? 'Refazer meu plano' : 'Criar meu plano', temPlano ? 'Começa um plano novo; o histórico continua' : '')}</div>`, (sh)=>{
     sh.querySelectorAll('[data-gp]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-gp'); closeSheet(); setTimeout(()=>frAcaoGerenciar(a), 0); }; });
@@ -13331,6 +13420,7 @@ async function frAcaoGerenciar(a){
   if(a==='revisar') return frRevisarQuestionario();
   if(a==='pausar') return frAbrirPausar();
   if(a==='lesoes') return frAbrirLesoes();
+  if(a==='biblioteca' || a==='comparativo'){ state.subOrigin = 'meusTreinos'; state.tab = a; render(); return; }
   if(a==='encerrar'){
     if(!(await confirmarApp({ titulo:'Encerrar o plano?', texto:'Sai o que estava planejado de hoje em diante. Atividades e histórico ficam.', ok:'Encerrar', perigo:true }))) return;
     await encerrarPlano(); render(); showToast('Plano encerrado'); return;
@@ -13591,13 +13681,14 @@ function renderTreinoV2Content(){
     if(antesDoInicioDoPlano(d)){ nome = null; }
     const marca = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
       : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>`
+      : (ce && !passado) ? `<button class="fr-ring fr-ringbtn" data-mrtdonecorrida="${d}" aria-label="Marcar corrida como feita"></button>`
       : `<span class="fr-ring" aria-hidden="true"></span>`;
     const status = (hoje ? `<span class="ds-pill">Hoje</span>` : '') + marca;
     const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length) ? ICONS.bed : ce ? ICONS.run : ICONS.dumbbell;
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate fr-daydate"><span>${d.toUpperCase()}</span><b>${frDiaMes(d)}</b></div>
       <div class="fr-dayic">${icone}</div>
-      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:`<div class="nm rest">${diaPausado(d) ? 'Pausado' : antesDoInicioDoPlano(d) ? 'Antes do início do plano' : 'Descanso'}</div>`}</div>
+      <div class="ds-daytxt">${nome?`<div class="nm">${nome}${ehSessaoChaveDiaExibido(d)?' <span class="ds-star-in">★</span>':''}</div><div class="mt">${meta}${(ce && ce.previa)?' · prévia':''}</div>`:(diaPausado(d) || antesDoInicioDoPlano(d)) ? `<div class="nm rest">${diaPausado(d) ? 'Pausado' : 'Antes do início do plano'}</div>` : `<div class="nm">Descanso</div><div class="mt">Recuperação</div>`}</div>
       ${status}
     </div>`;
   }).join('')}</div>`;
@@ -13617,7 +13708,8 @@ function renderTreinoV2Content(){
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
   const avisoAgenda = (state.weekOffset||0)===0 ? renderAvisoAgenda() : '';
-  return header + planoBar + weekNav + daylist + avisoAgenda + nomeDia + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
+  void nomeDia;
+  return header + planoBar + weekNav + daylist + avisoAgenda + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
@@ -14293,25 +14385,21 @@ function renderTreinoV2Corrida(day, phaseParts){
   const stepsHtml = frRenderEtapas(day, entry.steps);
   const objetivo = String(entry.objetivo||'').split(' — ')[0];
   const temEsteira = !(state.equipItens && state.equipItens.esteira===false);
-  const met = (ic, v, k)=>`<div class="fr-met"><span class="ic">${ic}</span><span><b>${v}</b><small>${k}</small></span></div>`;
+  const met = (ic, v, k)=>`<div class="fr-met"><span class="ic">${ic}</span><span><b class="${String(v).replace(/<[^>]+>/g,'').length>8?'longo':''}">${v}</b><small>${k}</small></span></div>`;
   return `
     <div class="mrt-card fr-runcard">
-      <div class="fr-runcard-top">
-        <span class="fr-kicker">${rotulo}</span><button class="mrt-linkbtn" id="mrtPlanDetails2">Detalhes ${ICONS.chevR}</button>
-        <button class="mrt-donebtn ${done?'done':''}" data-mrtdonecorrida="${day}" title="Marcar treino como concluído" aria-label="Marcar como concluído">${done?CHECK_SVG:''}</button>
-      </div>
-      <div class="fr-runcard-tit">${entry.type||'Treino'}</div>
+      <div class="fr-runcard-top"><span class="fr-kicker">${rotulo}</span></div>
+      <div class="fr-runcard-tit" id="mrtPlanDetails2" role="button" aria-label="Detalhes do treino">${entry.type||'Treino'}</div>
       ${objetivo ? `<div class="fr-runcard-obj">${objetivo}</div>` : ''}
-      <div class="fr-mets">
-        ${met(ICONS.clock, entry.totalMin?formatDuration(entry.totalMin*60):'—', 'Duração')}
-        ${met(FR_ICON_RITMO, avgPace, 'Ritmo alvo')}
-        ${met(ICONS.pin, entry.totalKm?fmtKm(entry.totalKm):'—', 'Distância')}
+      <div class="fr-mets n${[entry.totalMin, avgPace && avgPace!=='—', entry.totalKm].filter(Boolean).length}">
+        ${entry.totalMin ? met(ICONS.clock, formatDuration(entry.totalMin*60).replace(/(\d)min/,'$1 min'), 'Duração') : ''}
+        ${avgPace && avgPace!=='—' ? met(FR_ICON_RITMO, String(avgPace).replace(/\s*~\s*/,'–').replace('/km','<i>/km</i>'), 'Ritmo alvo') : ''}
+        ${entry.totalKm ? met(ICONS.pin, fmtKm(entry.totalKm), 'Distância') : ''}
       </div>
-      ${renderTreinoV2Doms(day,'corrida')}
       ${gravada}
       <div class="fr-runbtns ${temEsteira?'':'um'}">
-        <button class="btn-primary" data-startgps="${day}">${ICONS.play} Iniciar corrida</button>
-        ${temEsteira ? `<button class="btn-secondary" data-startesteira="${day}">${ICONS.run} Esteira</button>` : ''}
+        <button class="btn-primary" data-startgps="${day}">${ICONS.run} Iniciar corrida</button>
+        ${temEsteira ? `<button class="btn-secondary" data-startesteira="${day}">${FR_ICON_ESTEIRA} Esteira</button>` : ''}
       </div>
       ${stepsHtml}
     </div>`;
@@ -15736,6 +15824,20 @@ const NIVEL_TXT = { iniciante:'Iniciante', intermediario:'Intermediário', avanc
 // Perfil (pacote visual): identidade, plano e níveis separados de corrida e força, Meu treino, Equipamentos e Minha
 // conta. Todas as linhas abrem telas ou folhas que já existem.
 function frNivelTxt(n){ return NIVEL_TXT[n] || (n ? String(n).charAt(0).toUpperCase()+String(n).slice(1) : '—'); }
+// Ícones da arte 04 (Perfil).
+const FR_PI = {
+  alvo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/><path d="M15.5 8.5L20 4M17 4h3v3"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg>',
+  ajustes:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/><path d="M4 12h2M10 12h10"/><circle cx="8" cy="12" r="2"/></svg>',
+  escudo:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.8-7 9-4-1.2-7-4.5-7-9V6z"/><path d="M12 7v10" opacity=".9"/></svg>',
+  ajuda:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .9-1 1.7"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>',
+  info:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.5" r=".6" fill="currentColor"/></svg>',
+  sair:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4H5v16h5"/><path d="M14 8l4 4-4 4M18 12H9"/></svg>',
+  engrenagem:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>',
+};
+const FR_VERSAO_APP = '1.0';
+// Perfil (pacote visual, arte 04): marca + engrenagem, título, cartão com nome/plano/fase e níveis de Corrida e Força,
+// Meu treino, Equipamentos, Minha conta, versão e sair. Todas as linhas abrem telas ou folhas que existem.
 function renderPerfilV2Content(){
   const nome = state.perfil.nome || '';
   const foto = state.perfil.foto;
@@ -15745,41 +15847,68 @@ function renderPerfilV2Content(){
   const nivelCorrida = (ass && ass.runLevel) || (hp && hp.draft && hp.draft.nivelCorrida) || null;
   const nivelForca = (ass && ass.strengthLevel) || (hp && hp.draft && hp.draft.nivelMusc) || null;
   const tipoPlano = !phaseParts ? 'Sem plano' : (hp && hp.plan && hp.plan.length) ? 'Plano híbrido' : 'Plano de corrida';
+  const chev = `<span class="fr-pchev">${DS_CHEV}</span>`;
+  const nivel = (acao, icon, titulo, valor)=>`<button class="fr-pnivel" data-pfacao="${acao}"><span class="fr-pic">${icon}</span><span class="tx"><b>${titulo}</b><small>${valor}</small></span>${chev}</button>`;
   const card = `<div class="fr-pcard">
     <div class="fr-pcard-top">
-      <div class="mrt-avatar fr-pavatar" style="${foto?`background-image:url('${foto}');background-size:cover;background-position:center;`:''}">${foto?'':iniciaisNome()}</div>
+      <div class="fr-pavatar" style="${foto?`background-image:url('${foto}');`:''}">${foto?'':iniciaisNome()}</div>
       <div class="fr-pcard-txt"><div class="nm">${nome||'Sem nome'}</div><div class="s1">${tipoPlano}</div>${phaseParts ? `<div class="s2">${phaseParts.phaseName} · Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div>` : ''}</div>
     </div>
     ${(nivelCorrida || nivelForca) ? `<div class="fr-pniveis">
-      <div class="fr-pnivel"><span class="fr-acao-ic">${ICONS.run}</span><span><b>Corrida</b><small>${frNivelTxt(nivelCorrida)}</small></span></div>
-      <div class="fr-pnivel"><span class="fr-acao-ic">${ICONS.dumbbell}</span><span><b>Força</b><small>${frNivelTxt(nivelForca)}</small></span></div>
+      ${nivel('nivelcorrida', ICONS.run, 'Corrida', frNivelTxt(nivelCorrida))}
+      ${nivel('nivelforca', ICONS.dumbbell, 'Força', frNivelTxt(nivelForca))}
     </div>` : ''}
   </div>`;
-  const row = (attrs, icon, titulo, sub, valor)=>`<button class="ds-row fr-perfilrow" ${attrs}><span class="fr-ic">${icon}</span><span class="nm">${titulo}${sub ? `<small>${sub}</small>` : ''}</span>${valor ? `<span class="aside">${valor}</span>` : ''}<span class="chev">${DS_CHEV}</span></button>`;
-  const meuTreino = `<div class="ds-label fr-plbl">Meu treino</div><div class="ds-list">
-    ${phaseParts ? row('data-pfacao="plano"', ICONS.clipboard, 'Plano e objetivo', 'Fases, semanas e sessões', '') : ''}
-    ${phaseParts ? row('data-pfacao="historico"', FR_ICON_HIST, 'Histórico de mudanças', '', '') : versoesDoPlano().length ? row('data-pfacao="versoes"', FR_ICON_HIST, 'Versões do plano', 'Planos anteriores', '') : ''}
-    ${row('id="mrtRedoDiagBtn"', ICONS.wand, phaseParts ? 'Refazer meu plano' : 'Criar meu plano', '', '')}
-    ${row('data-perfilgo="comparativo"', ICONS.compare, 'Comparativo', 'Planejado x realizado', '')}
-    ${row('data-perfilgo="medidas"', ICONS.ruler, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : ''; })(), '')}
-    ${row('data-perfilgo="biblioteca"', ICONS.book, 'Biblioteca', 'Exercícios, músculos e execução', '')}
+  const row = (attrs, icon, titulo, valor)=>`<button class="fr-prow" ${attrs}><span class="fr-pic">${icon}</span><span class="nm">${titulo}</span>${valor ? `<span class="vl">${valor}</span>` : ''}${chev}</button>`;
+  const meuTreino = `<div class="fr-plbl">Meu treino</div><div class="fr-plist">
+    ${phaseParts ? row('data-pfacao="plano"', FR_PI.alvo, 'Plano e objetivo', '') : row('id="mrtRedoDiagBtn"', FR_PI.alvo, 'Criar meu plano', '')}
+    ${frTemRespostasDoQuestionario() ? row('data-pfacao="disponibilidade"', ICONS.calendar, 'Disponibilidade', '') : ''}
+    ${state.athleteProfile ? row('data-pfacao="lesoes"', ICONS.heart, 'Lesões e limitações', '') : ''}
+    ${phaseParts ? row('data-pfacao="historico"', FR_PI.doc, 'Histórico de mudanças', '') : versoesDoPlano().length ? row('data-pfacao="versoes"', FR_PI.doc, 'Versões do plano', '') : ''}
   </div>`;
   const tenis = (state.equipamentos.tenis||[]).find(x=>x.ativo);
   const relogio = state.equipamentos.relogio || '';
-  const equip = `<div class="ds-label fr-plbl">Equipamentos</div><div class="fr-pequip">
-    <button class="fr-pequip-card" data-perfilgo="equipamentos"><span class="fr-acao-ic">${ICONS.shoe}</span><span class="tx"><b>Tênis</b><small>${tenis ? tenis.nome : 'Cadastre seu tênis'}</small>${tenis ? `<small>${String(tenis.km).replace('.',',')} km</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>
-    <button class="fr-pequip-card" data-perfilgo="saudeRelogio"><span class="fr-acao-ic">${ICONS.watch}</span><span class="tx"><b>Relógio</b><small>${relogio || 'Não conectado'}</small></span><span class="chev">${DS_CHEV}</span></button>
+  const equip = `<div class="fr-plbl">Equipamentos</div><div class="fr-pequip">
+    <button class="fr-pequip-card" data-perfilgo="equipamentos"><span class="fr-pic lg">${ICONS.shoe}</span><span class="tx"><b>Tênis</b><small>${tenis ? tenis.nome : 'Cadastrar'}</small>${tenis ? `<small>${String(Math.round(tenis.km||0))} km</small>` : ''}</span>${chev}</button>
+    <button class="fr-pequip-card" data-perfilgo="saudeRelogio"><span class="fr-pic lg">${ICONS.watch}</span><span class="tx"><b>Relógio</b><small>${relogio || 'Não conectado'}</small></span>${chev}</button>
   </div>`;
-  const conta = `<div class="ds-label fr-plbl">Minha conta</div><div class="ds-list">
-    ${row('id="mrtEditDadosBtn"', ICONS.user, 'Dados pessoais', '', '')}
-    ${row('data-perfilgo="conta"', ICONS.users, 'Conta', '', state.authUser ? 'Conectada' : 'Entrar')}
-    ${(state.perfil.souPersonal || state.viewingClient) ? row('data-perfilgo="personal"', ICONS.users, 'Personal trainer', '', 'Ativo') : ''}
-    ${row('data-perfilgo="preferencias"', ICONS.settings, 'Configurações', 'Voz, corrida e descanso', '')}
-    ${row('data-perfilgo="maisOpcoes"', ICONS.dots, 'Dados e backup', 'Exportar, importar e apagar', '')}
+  const conta = `<div class="fr-plbl">Minha conta</div><div class="fr-plist">
+    ${row('id="mrtEditDadosBtn"', ICONS.user, 'Dados pessoais', '')}
+    ${row('data-perfilgo="preferencias"', FR_PI.ajustes, 'Preferências', '')}
+    ${row('data-perfilgo="maisOpcoes"', FR_PI.escudo, 'Privacidade e dados', '')}
+    ${(state.perfil.souPersonal || state.viewingClient) ? row('data-perfilgo="personal"', ICONS.users, 'Personal trainer', '') : ''}
+    ${row('data-pfacao="ajuda"', FR_PI.ajuda, 'Ajuda e suporte', '')}
   </div>`;
-  const head = `<div class="fr-phead"><div class="fr-brand"><b>FORZA</b> RUN</div><button class="fr-morebtn" data-perfilgo="preferencias" aria-label="Configurações">${ICONS.settings}</button></div>
-    <div class="mrt-title fr-ptitle">Perfil</div>`;
-  return head + card + meuTreino + equip + conta + qv2LinkNovo('padding-left:0;display:block;margin-top:8px;');
+  const rodape = `<div class="fr-prodape">
+    <div class="fr-prow fr-prow-plana"><span class="fr-pic sem">${FR_PI.info}</span><span class="nm">Versão do app</span><span class="vl">${FR_VERSAO_APP}</span></div>
+    ${state.authUser ? `<button class="fr-prow fr-prow-plana" data-pfacao="sair"><span class="fr-pic sem">${FR_PI.sair}</span><span class="nm">Sair</span>${chev}</button>`
+      : `<button class="fr-prow fr-prow-plana" data-perfilgo="conta"><span class="fr-pic sem">${ICONS.user}</span><span class="nm">Entrar na conta</span>${chev}</button>`}
+  </div>`;
+  const head = `<div class="fr-phead"><div class="fr-pbrand"><b>FORZA</b> RUN</div><button class="fr-pgear" data-perfilgo="preferencias" aria-label="Configurações">${FR_PI.engrenagem}</button></div>
+    <div class="fr-ptitle">Perfil</div>`;
+  return `<div class="fr-perfil">${head}${card}${meuTreino}${equip}${conta}${rodape}</div>`;
+}
+// Disponibilidade: abre o questionário já preenchido direto na pergunta dos dias.
+function frAbrirDisponibilidade(){
+  const p = state.athleteProfile;
+  const R = qv2RespostasDoPerfil(p);
+  if(!R){ abrirDiagnostico(); return; }
+  qv2Abrir();
+  state.qv2.R = R;
+  state.qv2.revisao = true;
+  state.qv2.idx = Math.max(0, qv2Telas(R).findIndex(t=>t.id==='dias'));
+  render();
+}
+function frAbrirAjuda(){
+  const itens = [
+    ['Como o plano se ajusta?', 'O check-in da semana e o "Como você está hoje?" ajustam o volume. Reduções entram sozinhas; aumentos pedem confirmação.'],
+    ['Vou viajar ou fiquei doente', 'Use Pausar plano no menu ⋯ da aba Treino. Os dias pausados não contam como perdidos.'],
+    ['Estou com dor', 'Registre em Lesões e limitações. O plano tira o que é arriscado e mostra o que muda antes de aplicar.'],
+    ['Meus dados', 'Ficam no aparelho e, com a conta conectada, na nuvem. Exporte um backup em Privacidade e dados.'],
+  ];
+  openSheet(`<div class="sheet-title">Ajuda e suporte</div>
+    <div class="fr-ajuda">${itens.map(([t,d])=>`<div class="it"><b>${t}</b><span>${d}</span></div>`).join('')}</div>
+    <button class="btn-secondary" style="margin-top:16px;" id="ajudaFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#ajudaFechar').onclick = closeSheet; });
 }
 function renderPerfilV2Shell(){
   return `
@@ -15812,7 +15941,11 @@ function wirePerfilV2(){
   if(closeDadosBtn) closeDadosBtn.onclick = ()=>{ state.modalOpen=false; state.modalType=null; render(); };
   const dadosOverlay = document.getElementById('mrtDadosOverlay');
   if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
-  document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); else if(a==='versoes') frAbrirVersoes(); }; });
+  document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); else if(a==='versoes') frAbrirVersoes();
+    else if(a==='disponibilidade') frAbrirDisponibilidade(); else if(a==='lesoes') frAbrirLesoes(); else if(a==='ajuda') frAbrirAjuda();
+    else if(a==='nivelcorrida' || a==='nivelforca'){ state.tab = 'progresso'; state.progHistorico = false; state.progDetalhe = a==='nivelcorrida' ? 'corrida' : 'musc'; render(); }
+    else if(a==='sair'){ confirmarApp({ titulo:'Sair da conta?', texto:'O app continua funcionando, mas salva só neste aparelho até você entrar de novo.', ok:'Sair' }).then(ok=>{ if(ok) auth.signOut().catch(()=>showToast('Não consegui sair da conta agora')); }); }
+  }; });
   const redoDiagBtn = document.getElementById('mrtRedoDiagBtn');
   if(redoDiagBtn) redoDiagBtn.onclick = async ()=>{ if(await confirmarRefazerPlano()) abrirDiagnostico(); };
   wirePerfilExtras();
