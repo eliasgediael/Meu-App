@@ -13,4 +13,7 @@ const css = (html.match(/<style[\s\S]*?<\/style>/g) || []).join('\n');
 const usadas = new Set();
 for (const m of html.matchAll(/class="([^"]*)"/g)) m[1].split(/\s+/).forEach(c => { if (/^fr-[\w-]+$/.test(c)) usadas.add(c); });
 const semEstilo = [...usadas].filter(c => !SO_GANCHO[c] && !new RegExp('\\.' + c.replace(/-/g, '\\-') + '(?![\\w-])').test(css)).sort();
+// Confirmações padronizadas (08/10/2026): nada de caixa nativa do sistema; todas usam confirmarApp.
+const nativos = html.split('\n').filter(l => !/^\s*\/\//.test(l) && /[^.\w]confirm\(/.test(l)).length;
+ok(nativos === 0, 'nenhuma confirmação usa a caixa nativa do sistema' + (nativos ? ` (${nativos} restantes)` : ''));
 ok(semEstilo.length === 0, 'toda classe fr-* das telas tem estilo' + (semEstilo.length ? ' (sem estilo: ' + semEstilo.join(', ') + ')' : ` (${usadas.size} classes)`));

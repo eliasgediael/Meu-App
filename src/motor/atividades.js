@@ -75,6 +75,8 @@ async function excluirAtividadeLivre(id){
   if(a.gpsRunId){ try{ await gpsDbDelete(a.gpsRunId); gpsMarcarExcluidaNuvem(a.gpsRunId); }catch(e){} }
   state.atividadesLivres = atividadesLivres().filter(x=>x.id!==id);
   await saveAtividades();
+  // Recordes recalculados com as corridas que restaram (decisão do usuário, 08/10/2026).
+  try{ if(typeof recalcularRecordesCorrida==='function') await recalcularRecordesCorrida(); }catch(e){}
   try{ sincronizarCorridasGps(); }catch(e){}
   return true;
 }

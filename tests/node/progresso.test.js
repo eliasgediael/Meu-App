@@ -6,7 +6,7 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
 
 (async () => {
   const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'renderProgressoV2', 'frPeriodoProg',
-    'frKmEntre', 'renderPerfilV2Content', 'renderPreferenciasV2', 'renderContaV2', 'registrarAtividadeLivre', 'frFiltrarAtividades', 'listarAtividades', 'frHistoricoAtividades', 'corridaProgressKey', 'renderOnboardingScreen', 'qv2Render']);
+    'frKmEntre', 'renderPerfilV2Content', 'renderPreferenciasV2', 'renderContaV2', 'registrarAtividadeLivre', 'frFiltrarAtividades', 'listarAtividades', 'frHistoricoAtividades', 'corridaProgressKey', 'frTreinosDoPlano', 'frNomeTreinoMusc', 'normalizarSessaoMuscHistorico', 'renderOnboardingScreen', 'qv2Render']);
   const S = T.state;
   S.athleteProfile = T.criarAthleteProfile(); S.hybridPlanData = null; S.treinos = []; S.musculacao = {};
   await T.qv2Aplicar(perfil('08')); const plano = await T.gerarPrimeiroPlanoV2();
@@ -32,11 +32,53 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   S.workoutSessionsLog = [{ id: 'm1', data: '2026-10-05', title: 'Superiores', series: 12, exercicios: [] }];
   ok(Math.round(T.frKmEntre(P.ini, P.fim)) === 5 && Math.round(T.frKmEntre(P.iniAnt, P.fimAnt)) === 4, 'km por período vem das atividades registradas');
 
-  S.progModo = 'semana';
+  // Nova arte do Progresso (08/10/2026)
+  S.progModo = 'semana'; S.progEvol = 'corrida'; S.progDetalhe = null; S.progHistorico = false;
   const h = T.renderProgressoV2();
-  ok(/Esta semana/.test(h) && /5 km/.test(h) && /\+25%/.test(h), 'resumo da semana com comparação (+25%)');
-  ok(/data-progmodo="ciclo"/.test(h) && /Evolução/.test(h) && /Recuperação/.test(h) && /Ver histórico completo/.test(h), 'Semana/Mês/Ciclo, evolução, recuperação e acesso ao histórico');
+  ok(/5 out – 11 out 2026/.test(h) && /5 <small>km<\/small>/.test(h) && /Sessão de força/.test(h), 'período com datas e resumo compacto (km e sessões de força)');
+  ok(/data-progmodo="ciclo"/.test(h) && /data-progevol="musc"/.test(h) && /Últimas atividades/.test(h) && /Ver histórico completo/.test(h) && (h.match(/data-progdet="/g) || []).length === 3, 'Semana/Mês/Ciclo, evolução, últimas atividades, histórico e 3 análises detalhadas');
+  ok(!/Recuperação/.test(h) && !/fr-progsec/.test(h) && !/data-muschistopen/.test(h), 'página principal sem recuperação, blocos e históricos repetidos');
   ok(!/kg ?×|tonelada|volume total/i.test(h.replace(/Última vez[^<]*/g, '')), 'sem tonelagem no Progresso');
+  ok(/Superiores/.test(h), 'nome do treino de força consistente nas últimas atividades');
+  // livre entra nos totais, mas não vira treino do plano concluído
+  const semLivre = T.frTreinosDoPlano('2026-10-05', '2026-10-11');
+  await T.registrarAtividadeLivre({ id: 'run:c', tipo: 'corrida', data: '2026-10-05', distKm: 2, tempoSeg: 700 });
+  const comLivre = T.frTreinosDoPlano('2026-10-05', '2026-10-11');
+  ok(semLivre.previstos > 0 && comLivre.feitos === semLivre.feitos && Math.round(T.frKmEntre('2026-10-05', '2026-10-11')) === 7, `atividade livre entra nos km (7) e não conta como treino do plano (${comLivre.feitos} de ${comLivre.previstos})`);
+  // evolução de musculação: séries realizadas no mesmo período
+  S.progEvol = 'musc';
+  ok(/Séries realizadas por dia/.test(T.renderProgressoV2()), 'evolução alterna para séries de musculação no período');
+  S.progModo = 'mes'; S.progEvol = 'corrida';
+  const hm = T.renderProgressoV2();
+  ok(/1 out – 31 out 2026/.test(hm) && /Distância por semana/.test(hm) && />S5</.test(hm), 'mês: resumo e gráfico no mesmo período (1–31 out)');
+  // planejamento parcial: semanas ainda não geradas não entram no total (sem repetir a última semana)
+  const sem1 = T.frTreinosDoPlano('2026-10-05', '2026-10-11');
+  const mes = T.frTreinosDoPlano('2026-10-01', '2026-10-31');
+  const pendentes = S.hybridPlanData.plan.filter(w => w.pendente).length;
+  ok(pendentes > 0 && mes.parcial && mes.previstos === sem1.previstos && /planejamento parcial/.test(hm), `mês: conta só a semana gerada (${mes.previstos}) e avisa "planejamento parcial"`);
+  ok(!sem1.parcial && !/planejamento parcial/.test(h), 'semana atual gerada: sem aviso de parcial');
+  // análises detalhadas preservam os recursos
+  S.progModo = 'semana'; S.progDetalhe = 'corrida'; S.checkinDiario = {};
+  const dc = T.renderProgressoV2();
+  ok(/Recuperação/.test(dc) && /Quilômetros por semana/.test(dc) && /data-progdetvoltar/.test(dc), 'análise de Corrida: recuperação, km por semana e voltar');
+  ok(/Sem avaliação/.test(dc) && !/Recuperação boa/.test(dc), 'sem check-in: recuperação "Sem avaliação", nunca "Recuperação boa"');
+  S.checkinDiario = { '2026-10-05': { energia: 2, pernas: 2, dor: 1 } };
+  ok(/Recuperação boa/.test(T.renderProgressoV2()), 'com check-in sem alertas: "Recuperação boa"');
+  S.checkinDiario = {};
+  // nomes da musculação: personalizado fica; genérico vira o grupo
+  ok(T.frNomeTreinoMusc({ title: 'Leg Day pesado', exercicios: [{ grupo: 'Peito' }] }) === 'Leg Day pesado', 'nome personalizado do treino é preservado');
+  ok(T.frNomeTreinoMusc({ title: 'Treino de sexta', exercicios: [{ grupo: 'Peito' }, { grupo: 'Costas' }] }) === 'Superiores'
+    && T.frNomeTreinoMusc({ title: 'Musculação', exercicios: [{ grupo: 'Pernas' }, { grupo: 'Pernas' }, { grupo: 'Core' }] }) === 'Inferiores', 'nome automático/genérico usa o grupo predominante');
+  const logPers = { id: 'mp', data: '2026-10-04', title: 'Meu treino A', series: 9, exercicios: [{ nome: 'Supino', grupo: 'Peito', series: '3', reps: '10' }] };
+  ok(T.normalizarSessaoMuscHistorico(logPers).titulo === 'Meu treino A' && logPers.title === 'Meu treino A', 'título histórico personalizado não é sobrescrito');
+  S.progDetalhe = 'musc';
+  ok(/Séries por semana/.test(T.renderProgressoV2()), 'análise de Musculação com séries e histórico');
+  S.progDetalhe = null;
+  // sem plano: sem "0 de 0"
+  const hpGuardado = S.hybridPlanData; S.hybridPlanData = null;
+  const sp = T.renderProgressoV2();
+  ok(!/Treinos do plano/.test(sp) && !/0 <small>de<\/small> 0/.test(sp), 'sem plano, a coluna "Treinos do plano" não aparece');
+  S.hybridPlanData = hpGuardado;
 
   const todas = T.listarAtividades();
   ok(T.frFiltrarAtividades(todas, 'forca').every(a => a.tipo === 'musculacao') && T.frFiltrarAtividades(todas, 'livres').every(a => a.livre), 'filtros Força e Livres');

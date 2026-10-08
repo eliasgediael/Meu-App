@@ -34,7 +34,8 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   ok(S.equipamentos.tenis[0].km === 105, 'corrida livre soma a distância real no tênis (' + S.equipamentos.tenis[0].km + ')');
   ok(S.recordesCorrida && S.recordesCorrida.maiorKm && S.recordesCorrida.maiorKm.runId === g1.runId, 'corrida livre entra nos recordes');
   const html = T.renderGpsSummary(Object.assign({}, g1));
-  ok(/Corrida livre/.test(html) && !/Planejado × Realizado/.test(html) && /Descartar atividade/.test(html), 'resumo da atividade livre: título certo, sem "Planejado × Realizado", com Descartar');
+  // Decisão de 08/10/2026: atividade já salva sai por "Excluir atividade" (não "Descartar").
+  ok(/Corrida livre/.test(html) && !/Planejado × Realizado/.test(html) && /Excluir atividade/.test(html) && !/Descartar/.test(html), 'resumo da atividade livre: título certo, sem "Planejado × Realizado", com Excluir atividade');
 
   const g2 = await livre('caminhada', 3, 40);
   ok(S.equipamentos.tenis[0].km === 105, 'caminhada não soma no tênis de corrida');

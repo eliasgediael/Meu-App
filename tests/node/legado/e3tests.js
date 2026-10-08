@@ -30,7 +30,7 @@ let erro = null; process.on('unhandledRejection', e => { erro = e; });
   const ops = T.opcoesAjuste(hoje);
   ok(ops.find(o => o.recomendado) && ['mover', 'reduzir', 'leve'].includes(ops.find(o => o.recomendado).id), 'cansado + treino-chave → recomenda proteger (' + ops.find(o => o.recomendado).id + ')');
   console.log('   por quê:', T.porQueHoje(hoje));
-  S.selectedDayMusc = hoje;
+  S.selectedDayMusc = hoje; S.treinosSubTab = 'corrida';   // o teste usa a data real: em dia duplo, olha o card da corrida
   const t = T.renderTreinoV2Content();
   ok(!/data-ajustar/.test(t) && !/>Ajustar</.test(t), 'tela Treino sem Ajustar');
   // Arte 02: o card da corrida não tem a linha do check-in; o check-in do dia fica no Início.

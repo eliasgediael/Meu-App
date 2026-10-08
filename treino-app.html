@@ -1499,6 +1499,84 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-diario .dt{ width:44px; flex-shrink:0; font-size:13px; font-weight:700; color:var(--text-faint); font-variant-numeric:tabular-nums; }
 .ds-diario .tx{ font-size:14px; color:var(--text); line-height:1.4; }
 .ds-diario .tx span{ display:block; font-size:13px; color:var(--text-dim); margin-top:2px; }
+/* Corrida ativa (arte 06), preto/branco/cinza */
+.fr-sinal6{ display:flex; align-items:center; gap:8px; padding:8px 14px; border-radius:var(--r-pill); background:rgba(255,255,255,0.95); box-shadow:0 1px 6px rgba(0,0,0,0.14); font-size:14px; font-weight:700; color:#111111; }
+.fr-sinal6 svg{ width:20px; height:14px; fill:#111111; }
+.fr-live6{ padding-top:2px !important; }
+.fr-kick6{ font-size:13px; font-weight:600; letter-spacing:.12em; text-transform:uppercase; color:var(--text-dim); margin:2px 2px 10px; }
+.fr-kick6 b{ color:var(--text); font-weight:800; }
+.fr-etapa6{ display:flex; align-items:center; gap:14px; padding:14px; border-radius:16px; background:var(--surface-2); margin-bottom:14px; }
+.fr-etapa6 .ic{ width:52px; height:52px; border-radius:50%; background:var(--surface); display:flex; align-items:center; justify-content:center; color:var(--text); flex-shrink:0; }
+.fr-etapa6 .ic svg{ width:26px; height:26px; }
+.fr-etapa6 .tx{ flex:1; min-width:0; }
+.fr-etapa6 .t{ display:flex; align-items:baseline; justify-content:space-between; gap:8px; }
+.fr-etapa6 .t b{ font-size:26px; font-weight:900; letter-spacing:-0.5px; color:var(--text); line-height:1.1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.fr-etapa6 .t span{ font-size:13.5px; color:var(--text-dim); white-space:nowrap; }
+.fr-etapa6 .fr-stepbar{ margin:8px 0 6px; height:8px; border-radius:4px; background:#D6D6D6; overflow:hidden; }
+.fr-etapa6 .fr-stepbar i{ display:block; height:100%; border-radius:4px; }
+.fr-etapa6 .fr-stepbar i{ background:#111111; }
+.fr-etapa6 .s{ display:flex; align-items:center; justify-content:space-between; gap:8px; width:100%; min-height:32px; padding:0; border:none; background:none; font-family:inherit; font-size:14px; color:var(--text-dim); text-align:left; cursor:pointer; }
+.fr-etapa6 .s i{ font-style:normal; display:flex; align-items:center; gap:2px; font-weight:700; color:var(--text); flex-shrink:0; }
+.fr-etapa6 .s i svg{ width:14px; height:14px; }
+.fr-m3{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); margin:4px 0 10px; }
+.fr-m3 > div{ min-width:0; padding:0 8px; }
+.fr-m3 > div:first-child{ padding-left:2px; }
+.fr-m3 > div + div{ border-left:1px solid var(--border); }
+.fr-m3 b{ display:block; font-size:34px; font-weight:900; letter-spacing:-1px; color:var(--text); line-height:1.05; white-space:nowrap; }
+.fr-m3 b small{ font-size:14px; font-weight:600; color:var(--text-dim); margin-left:2px; letter-spacing:0; }
+.fr-m3 span{ display:block; font-size:14px; color:var(--text-dim); margin-top:4px; }
+#gpsPaceTap{ cursor:pointer; }
+.fr-ritmo6{ display:flex; align-items:center; justify-content:center; gap:8px; width:max-content; max-width:100%; margin:4px auto 6px; padding:8px 16px; border-radius:var(--r-pill); border:1.5px solid var(--text); font-size:15px; font-weight:700; color:var(--text); }
+.fr-ritmo6.ok{ background:var(--surface-2); border-color:transparent; }
+.fr-ritmo6 svg{ width:18px; height:18px; }
+.fr-foot6{ display:grid; grid-template-columns:1fr auto 1fr; align-items:end; gap:10px; margin:12px 0 6px; }
+.fr-foot6-lado, .fr-foot6-pausa{ display:flex; flex-direction:column; align-items:center; gap:6px; border:none; background:none; padding:0; font-family:inherit; color:var(--text); cursor:pointer; -webkit-user-select:none; user-select:none; }
+.fr-foot6-lado.vazio{ visibility:hidden; }
+.fr-foot6-lado .c{ position:relative; width:64px; height:64px; border-radius:50%; background:var(--surface-2); display:flex; align-items:center; justify-content:center; font-size:15px; font-weight:800; }
+.fr-foot6-pausa .c{ width:92px; height:92px; border-radius:50%; background:#111111; color:#FFFFFF; display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(0,0,0,0.22); }
+.fr-foot6-pausa .c svg{ width:34px; height:34px; }
+.fr-foot6 .l{ font-size:13.5px; font-weight:700; color:var(--text); text-align:center; line-height:1.2; }
+.fr-foot6-pausa .l{ font-size:15px; }
+.fr-foot6-lado .c.fin{ background:var(--surface); box-shadow:inset 0 0 0 2px #111111; }
+.fr-foot6-lado .c.fin .sq{ position:absolute; left:50%; top:50%; width:20px; height:20px; margin:-10px 0 0 -10px; border-radius:4px; background:#111111; }
+.mrt-holdbtn.fr-hold6{ width:auto; height:auto; border-radius:0; background:none; }
+.fr-hold6 .ring{ position:absolute; inset:-5px; width:74px; height:74px; transform:rotate(-90deg); }
+.fr-hold6 .ring circle{ fill:none; stroke:#111111; stroke-width:3.5; stroke-linecap:round; stroke-dasharray:157; stroke-dashoffset:157; }
+.fr-hold6.holding .ring circle{ stroke-dashoffset:0; transition:stroke-dashoffset 1s linear; }
+.fr-hold6.holding .c.fin{ background:var(--surface-2); }
+@media (max-width:359px){
+  .fr-m3 b{ font-size:26px; }
+  .fr-etapa6 .t{ flex-direction:column; align-items:flex-start; gap:2px; }
+  .fr-etapa6 .t b{ font-size:21px; }
+  .fr-etapa6{ gap:10px; padding:12px; }
+  .fr-etapa6 .ic{ width:42px; height:42px; }
+  .fr-foot6-pausa .c{ width:78px; height:78px; }
+  .fr-foot6-lado .c{ width:56px; height:56px; }
+  .fr-hold6 .ring{ width:66px; height:66px; }
+}
+/* Resumo da corrida (arte 07): métricas uma vez no topo, resto recolhível */
+.fr-summets{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border:1px solid var(--border); border-radius:var(--r-card); padding:14px 6px; margin:4px 0 16px; }
+.fr-summets.q4{ grid-template-columns:repeat(4, minmax(0,1fr)); }
+.fr-summets .c{ text-align:center; min-width:0; padding:0 4px; }
+.fr-summets .c + .c{ border-left:1px solid var(--border); }
+.fr-summets .v{ font-size:21px; font-weight:900; letter-spacing:-0.4px; color:var(--text); white-space:nowrap; }
+.fr-summets .v small{ font-size:12px; font-weight:600; color:var(--text-dim); }
+.fr-summets .k{ font-size:13px; color:var(--text-dim); margin-top:2px; }
+.fr-det{ border:1px solid var(--border); border-radius:var(--r-card); margin:0 0 12px; }
+.fr-det > summary{ list-style:none; display:flex; align-items:center; justify-content:space-between; min-height:56px; padding:0 16px; font-size:16.5px; font-weight:700; color:var(--text); cursor:pointer; }
+.fr-det > summary::-webkit-details-marker{ display:none; }
+.fr-det > summary .chev{ display:flex; color:var(--text-dim); transform:rotate(90deg); transition:transform .15s ease; }
+.fr-det[open] > summary .chev{ transform:rotate(-90deg); }
+.fr-det-corpo{ padding:0 12px 4px; }
+@media (max-width:359px){
+  .fr-summets .v{ font-size:17px; }
+  .fr-summets.q4 .v{ font-size:15px; }
+  .fr-summets .k{ font-size:11.5px; }
+}
+.fr-esteiraalvo{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:center; gap:4px 8px; margin:8px 0 2px; padding:10px 12px; border-radius:12px; background:var(--surface-2); text-align:center; }
+.fr-esteiraalvo .k{ width:100%; font-size:12.5px; font-weight:700; letter-spacing:.04em; color:var(--text-dim); }
+.fr-esteiraalvo b{ font-size:18px; font-weight:800; color:var(--text); }
+.fr-esteiraalvo .p{ font-size:13.5px; color:var(--text-dim); }
 .fr-pausa{ display:flex; align-items:center; gap:12px; padding:14px; border:1px solid var(--border); border-radius:var(--r-card); background:var(--surface-2); }
 .fr-pausa-txt{ flex:1; min-width:0; display:flex; flex-direction:column; }
 .fr-pausa-txt b{ font-size:17px; font-weight:800; color:var(--text); }
@@ -2113,6 +2191,60 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
   .fr-pic.lg{ width:38px; height:38px; }
   .fr-pequip-card .tx b, .fr-pnivel .tx b{ font-size:14px; }
   .fr-pequip-card .tx small, .fr-pnivel .tx small{ font-size:12.5px; }
+}
+/* Progresso (nova arte aprovada 08/10/2026) */
+.fr-pbrand6{ display:flex; align-items:center; gap:8px; padding-top:6px; color:var(--text); font-size:17px; font-style:italic; letter-spacing:.06em; }
+.fr-pbrand6 b{ font-weight:900; }
+.fr-pbrand6 .mk{ display:flex; width:30px; height:26px; }
+.fr-pbrand6 .mk svg{ width:100%; height:100%; }
+.fr-ptitle6{ font-size:36px; font-weight:900; letter-spacing:-1px; line-height:1.05; color:var(--text); margin:6px 0 14px; }
+.fr-pdatas{ font-size:14px; color:var(--text-dim); margin:-8px 2px 14px; }
+.fr-presumo{ display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border:1px solid var(--border); border-radius:14px; padding:16px 4px; margin-bottom:14px; }
+.fr-presumo.dois{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+.fr-presumo .c{ text-align:center; min-width:0; padding:0 6px; }
+.fr-presumo .c + .c{ border-left:1px solid var(--border); }
+.fr-presumo b{ display:block; font-size:22px; font-weight:900; letter-spacing:-0.5px; color:var(--text); white-space:nowrap; }
+.fr-presumo b small{ font-size:14px; font-weight:700; color:var(--text); }
+.fr-presumo span{ display:block; font-size:13px; color:var(--text-dim); margin-top:2px; line-height:1.25; }
+.fr-presumo span em{ display:block; font-style:normal; font-size:11.5px; color:var(--text-faint); margin-top:2px; }
+.fr-pevol{ border:1px solid var(--border); border-radius:14px; padding:14px 14px 8px; margin-bottom:22px; }
+.fr-pevol-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; margin-bottom:8px; }
+.fr-pevol-head .t{ font-size:20px; font-weight:900; color:var(--text); }
+.fr-pevol-head .s{ font-size:13px; color:var(--text-dim); margin-top:2px; }
+.fr-pevol-seg{ display:flex; padding:3px; border-radius:10px; background:var(--surface-2); flex-shrink:0; }
+.fr-pevol-seg button{ min-height:34px; padding:0 12px; border:none; border-radius:8px; background:none; font-family:inherit; font-size:13.5px; font-weight:700; color:var(--text-dim); cursor:pointer; }
+.fr-pevol-seg button.on{ background:#111111; color:#FFFFFF; }
+.fr-pgraf{ display:block; }
+.fr-pult{ margin-bottom:20px; }
+.fr-ptit{ font-size:21px; font-weight:900; letter-spacing:-0.3px; color:var(--text); }
+.fr-psub{ font-size:13px; color:var(--text-dim); margin:2px 0 8px; }
+.fr-ult-lista{ display:flex; flex-direction:column; }
+.fr-ult{ display:flex; align-items:center; gap:14px; width:100%; padding:10px 0; border:none; border-bottom:1px solid var(--border); background:none; font-family:inherit; text-align:left; color:var(--text); cursor:pointer; }
+.fr-ult-th{ width:72px; height:56px; border-radius:10px; overflow:hidden; background:var(--surface-2); flex-shrink:0; display:flex; align-items:center; justify-content:center; }
+.fr-ult-th.musc{ background:#EDEDED; }
+.fr-ult-th.musc svg{ width:100%; height:100%; display:block; }
+.fr-ult-mapa{ width:100%; height:100%; display:flex; align-items:center; justify-content:center; }
+.fr-ult-mapa img{ width:100%; height:100%; object-fit:cover; display:block; }
+.fr-ult .neutro{ display:flex; color:var(--text-dim); }
+.fr-ult .neutro svg{ width:24px; height:24px; }
+.fr-ult .tx{ flex:1; min-width:0; display:flex; flex-direction:column; }
+.fr-ult .tx b{ font-size:16.5px; font-weight:800; line-height:1.2; }
+.fr-ult .tx .dt{ font-size:13px; color:var(--text-dim); margin-top:1px; }
+.fr-ult .tx .mt{ font-size:14.5px; color:var(--text); margin-top:3px; }
+.fr-ult .chev, .fr-plink svg{ color:var(--text-dim); display:flex; flex-shrink:0; }
+.fr-plink{ display:flex; align-items:center; gap:12px; width:100%; min-height:50px; padding:0 2px; border:none; border-bottom:1px solid var(--border); background:none; font-family:inherit; font-size:16px; color:var(--text); text-align:left; cursor:pointer; }
+.fr-plink > span:not(.ic){ flex:1; }
+.fr-plink svg{ width:16px; height:16px; }
+.fr-pan .ic{ display:flex; width:28px; color:var(--text); }
+.fr-pan .ic svg{ width:22px; height:22px; }
+.fr-pult .fr-ptit + .fr-pan{ margin-top:6px; }
+.fr-pdet-periodo{ font-size:13px; color:var(--text-dim); margin:-6px 2px 12px; }
+@media (max-width:359px){
+  .fr-ptitle6{ font-size:31px; }
+  .fr-presumo b{ font-size:18px; }
+  .fr-presumo span{ font-size:12px; }
+  .fr-pevol-head{ flex-direction:column; }
+  .fr-ult-th{ width:60px; height:48px; }
 }
 /* Progresso (pacote visual) */
 .fr-seg3{ display:flex; gap:4px; padding:4px; border-radius:var(--r-pill); background:var(--surface-2); margin:4px 0 16px; }
@@ -5641,22 +5773,40 @@ function esteiraDefaultKmhForStep(step){
   if(!range) return null;
   return paceSecToKmh((range.lo+range.hi)/2);
 }
-// Sem GPS, a distância na esteira vem do tempo decorrido × a velocidade alvo atual — que começa como
-// sugestão calculada do pace, mas a pessoa pode ajustar com +/- caso rode em outra velocidade na esteira.
+// Sem GPS, a distância na esteira vem do tempo × a velocidade em que a esteira está (stepKmh, informada pela
+// pessoa; começa igual à sugerida do ritmo da etapa, stepKmhSugerida). A distância ACUMULA por trechos: trocar a
+// velocidade fecha o trecho anterior (stepDistBaseKm) e só o tempo dali em diante usa a velocidade nova — nunca
+// reescreve o que já foi corrido (antes, 10 min a 10 km/h viravam 2 km ao trocar para 12 km/h).
+function esteiraDistanciaDoTrecho(gr){
+  const kmh = gr.stepKmh; if(!kmh) return gr.stepDistBaseKm || 0;
+  const seg = Math.max(0, gpsStepElapsedSec(gr) - (gr.stepKmhDesdeSec || 0));
+  return (gr.stepDistBaseKm || 0) + kmh*seg/3600;
+}
+// Troca a velocidade informada: fecha o trecho na velocidade anterior e começa um novo a partir de agora.
+function esteiraDefinirKmh(kmh){
+  const gr = state.gpsRun; if(!gr) return;
+  gr.stepDistBaseKm = esteiraDistanciaDoTrecho(gr);
+  gr.stepKmhDesdeSec = gpsStepElapsedSec(gr);
+  gr.stepKmh = kmh;
+}
+// Etapa nova: trechos zerados; sugerida = ritmo da etapa.
+function esteiraNovaEtapa(gr, kmhSugerida, aplicar){
+  gr.stepDistBaseKm = 0; gr.stepKmhDesdeSec = 0;
+  gr.stepKmhSugerida = kmhSugerida || null;
+  if(aplicar) gr.stepKmh = kmhSugerida;
+}
 function esteiraUpdateDistance(){
   const gr = state.gpsRun;
   if(!gr || gr.mode!=='esteira' || gr.status!=='running') return;
-  const kmh = gr.stepKmh;
-  if(!kmh) return;
-  const hours = gpsStepElapsedSec(gr)/3600;
-  gr.stepDistKm = Math.round(kmh*hours*1000)/1000;
+  if(!gr.stepKmh && !gr.stepDistBaseKm) return;
+  gr.stepDistKm = Math.round(esteiraDistanciaDoTrecho(gr)*1000)/1000;
   const doneKm = gr.etapasExecutadas.reduce((s,e)=>s+(e.distancia_real_km||0), 0);
   gr.totalDistKm = Math.round((doneKm + gr.stepDistKm)*1000)/1000;
 }
 function esteiraAdjustKmh(delta){
   const gr = state.gpsRun;
   if(!gr) return;
-  gr.stepKmh = Math.max(0.5, Math.round(((gr.stepKmh||0)+delta)*10)/10);
+  esteiraDefinirKmh(Math.max(0.5, Math.round(((gr.stepKmh||0)+delta)*10)/10));
   render();
 }
 function esteiraAdjustIncline(delta){
@@ -5675,7 +5825,7 @@ function openEsteiraIntro(day){
   const entry = treinoEntryForDay(day);
   if(!entry){ showToast('Não achei o treino de corrida desse dia.'); return; }
   state.gpsRun = gpsNewRunState(day, entry, 'esteira');
-  state.gpsRun.stepKmh = esteiraDefaultKmhForStep(gpsCurrentStep());
+  esteiraNovaEtapa(state.gpsRun, esteiraDefaultKmhForStep(gpsCurrentStep()), true);
   state.gpsRun.inclinePct = 0;
   render();
 }
@@ -5940,7 +6090,7 @@ function gpsAdvanceStep(){
       gr.steps.push({ name:'Livre', tipo:'aberta', posTreinoLivre:true });
     }
     gr.stepIndex = gr.steps.findIndex(s=>s && s.posTreinoLivre);
-    gr.stepDistKm = 0;
+    gr.stepDistKm = 0; gr.stepDistBaseKm = 0; gr.stepKmhDesdeSec = 0;
     gr.stepStartedAt = Date.now();
     gr.stepPausedMs = 0;
     gr.tiroModalKmh = null;
@@ -5952,7 +6102,7 @@ function gpsAdvanceStep(){
     return;
   }
   gr.stepIndex++;
-  gr.stepDistKm = 0;
+  gr.stepDistKm = 0; gr.stepDistBaseKm = 0; gr.stepKmhDesdeSec = 0;
   gr.stepStartedAt = Date.now();
   gr.stepPausedMs = 0;
   if(gr.mode==='esteira'){
@@ -5961,10 +6111,12 @@ function gpsAdvanceStep(){
     // Tiro na esteira: não troca a velocidade na hora — mostra o modal "coloque em X km/h" e só aplica
     // quando a pessoa confirmar (ou sozinho depois de 15s, pra não travar o treino se ninguém tocar).
     if(gpsIsTiroStep(nextStep) && suggestedKmh){
+      esteiraNovaEtapa(gr, suggestedKmh, false);   // segue na velocidade atual até confirmar
       gr.tiroModalKmh = suggestedKmh;
       gr.tiroModalUntil = Date.now()+15000;
     }else{
-      gr.stepKmh = suggestedKmh;
+      // Etapa sem ritmo (ex.: livre): mantém a velocidade em que a esteira está, em vez de zerar a distância.
+      esteiraNovaEtapa(gr, suggestedKmh, !!suggestedKmh);
     }
   }
   if(window.NativeBridge && window.NativeBridge.isNative()){ window.NativeBridge.vibrate(); }
@@ -5974,7 +6126,7 @@ function gpsAdvanceStep(){
 function confirmTiroModal(){
   const gr = state.gpsRun;
   if(!gr || !gr.tiroModalUntil) return;
-  gr.stepKmh = gr.tiroModalKmh;
+  esteiraDefinirKmh(gr.tiroModalKmh);
   gr.tiroModalUntil = null;
   render();
 }
@@ -6159,6 +6311,15 @@ async function finishGpsRun(){
     tempo_total_seg: totalElapsedSec,
   };
   const runId = 'run_'+Date.now();
+  // Cada corrida é uma atividade independente (decisão do usuário, 08/10/2026): se o treino do plano deste dia já
+  // tem uma corrida registrada, a nova NÃO substitui nem esconde a anterior — entra como atividade própria, sem
+  // contar como segundo treino planejado concluído.
+  if(!gr.livre){
+    const ant = corridaEntryProgress(gr.day);
+    if(ant && typeof ant==='object' && ant.done && progressoTemRegistro(ant)){
+      gr.livre = true; gr.tipoAtividade = gr.mode==='esteira' ? 'esteira' : 'corrida'; gr.repeticaoDoDia = true;
+    }
+  }
   // ownerUid: de quem é a corrida neste aparelho (a sincronização só envia corridas da conta logada).
   const salvouCorrida = await gpsDbPut({ id: runId, day: gr.day, finishedAt: Date.now(), ownerUid: (state.authUser && !state.viewingClient) ? state.authUser.uid : null, ...(gr.livre ? { livre:true, tipoAtividade:gr.tipoAtividade||'corrida' } : {}), ...resultado });
   // Só apaga o checkpoint da corrida em andamento se a corrida concluída foi gravada de verdade; espera
@@ -6231,13 +6392,13 @@ function gpsCloseSummary(){ state.gpsRun = null; render(); }
 async function gpsDeleteActivity(){
   const gr = state.gpsRun;
   if(gr && gr.atividadeId){
-    if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A gravação, a distância e o tempo somem. O plano não muda.', ok:'Excluir', perigo:true }))) return;
+    if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A corrida salva sai do histórico, dos totais e dos recordes, aqui e na sua conta. O plano não muda. Não dá para desfazer.', ok:'Excluir atividade', perigo:true }))) return;
     await excluirAtividadeLivre(gr.atividadeId);
     state.gpsRun = null; render(); showToast('Atividade excluída');
     return;
   }
   if(!gr || !gr.progressKey) return;
-  if(!(await confirmarApp({ titulo:'Excluir esta corrida?', texto:'A gravação, a distância e o tempo deste dia somem. O treino planejado continua.', ok:'Excluir', perigo:true }))) return;
+  if(!(await confirmarApp({ titulo:'Excluir esta atividade?', texto:'A corrida salva sai do histórico, dos totais e dos recordes, aqui e na sua conta. O treino planejado continua. Não dá para desfazer.', ok:'Excluir atividade', perigo:true }))) return;
   await excluirCorridaRealizada(gr.progressKey, gr.runId);
   state.gpsRun = null;
   render();
@@ -6468,18 +6629,22 @@ function corridaEtapaCard(gr, step, nextStep, heroVal, heroLabel, progressPct, e
 // Rodapé: Pausar largo + Finalizar que só vale segurando 1s (o anel enche) — pra não encerrar a corrida sem querer.
 function corridaRodape(gr, isAberta){
   const pausado = gr.status==='paused';
+  // Arte 06, em preto/branco/cinza (08/10/2026): Pausar grande no centro; finalizar continua por toque prolongado,
+  // com anel que enche e legenda fixa — claro sem usar vermelho.
+  const lado = isAberta ? `<button class="fr-foot6-lado" id="gpsBtnLap"><span class="c">Lap</span><span class="l">Volta</span></button>` : '<span class="fr-foot6-lado vazio"></span>';
   if(pausado) return `
-    <div class="mrt-runfoot">
-      <button class="btn-primary fr-pausebtn" id="gpsBtnPause">${ICONS.play} Retomar</button>
-      <button class="fr-finbtn" id="gpsBtnFinalizarPausado">Finalizar</button>
+    <div class="fr-foot6">
+      ${lado}
+      <button class="fr-foot6-pausa" id="gpsBtnPause"><span class="c">${ICONS.play}</span><span class="l">Retomar</span></button>
+      <button class="fr-foot6-lado" id="gpsBtnFinalizarPausado"><span class="c fin"><span class="sq"></span></span><span class="l">Finalizar</span></button>
     </div>`;
   return `
-    <div class="mrt-runfoot">
-      ${isAberta ? `<button class="btn-secondary" style="width:auto;padding:0 18px;" id="gpsBtnLap">Lap</button>` : ''}
-      <button class="btn-primary fr-pausebtn" id="gpsBtnPause"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg> Pausar</button>
-      <button class="mrt-holdbtn fr-holdpill" id="gpsBtnFinish" aria-label="Segure para finalizar">
-        <span class="fr-holdcirc"><svg class="ring" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"/></svg><span class="sq"></span></span>
-        <span class="t">Segure para finalizar</span>
+    <div class="fr-foot6">
+      ${lado}
+      <button class="fr-foot6-pausa" id="gpsBtnPause"><span class="c"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1.5"/><rect x="14" y="4" width="4" height="16" rx="1.5"/></svg></span><span class="l">Pausar</span></button>
+      <button class="mrt-holdbtn fr-foot6-lado fr-hold6" id="gpsBtnFinish" aria-label="Segure para finalizar">
+        <span class="c fin"><svg class="ring" viewBox="0 0 56 56"><circle cx="28" cy="28" r="25"/></svg><span class="sq"></span></span>
+        <span class="l">Segure para finalizar</span>
       </button>
     </div>`;
 }
@@ -6543,14 +6708,16 @@ function renderEsteiraRunning(gr){
         </div>
         <div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;">
-            <div class="mrt-metrick" style="margin:0;">Velocidade</div>
-            ${kmhRange ? `<span class="tag ${noAlvo?'tag-done':'tag-gold'}">${noAlvo?'No alvo':'Ajustar'}</span>` : ''}
+            <div class="mrt-metrick" style="margin:0;">Velocidade informada</div>
+            ${kmhRange ? `<span class="tag ${noAlvo?'tag-done':'tag-gold'}">${noAlvo?'Dentro do alvo':'Fora do alvo'}</span>` : ''}
           </div>
+          <div class="mrt-sub" style="margin:2px 0 0;font-size:12.5px;">A que você colocou na esteira; a distância usa este valor.</div>
           <div class="mrt-esteira-speedrow">
             <button class="mrt-esteira-adjbtn" data-esteirakmh="-">−</button>
             <div class="mrt-esteira-speedval">${String((gr.stepKmh||0).toFixed(1)).replace('.',',')}<span class="unit">km/h</span></div>
             <button class="mrt-esteira-adjbtn" data-esteirakmh="+">+</button>
           </div>
+          ${gr.stepKmhSugerida ? `<div class="fr-esteiraalvo"><span class="k">Alvo desta etapa · ${step ? step.name : ''}</span><b>${String(gr.stepKmhSugerida.toFixed(1)).replace('.',',')} km/h</b>${step && step.pace ? `<span class="p">${String(step.pace).replace(/\s*~\s*/,'–')}</span>` : ''}</div>` : ''}
         </div>
         <div class="mrt-card">
           <div class="mrt-metrick" style="margin:0;">Inclinação</div>
@@ -6727,10 +6894,34 @@ function renderGpsRunning(gr){
     </div>
     <div class="fr-stepbar"><i style="width:${progressPct}%;"></i></div>
     <button class="fr-nextrow" id="gpsBtnSkipStep" aria-label="Pular para o próximo bloco">${nextStep ? `<span>Próximo:</span><b>${nextStep.name}${nextStep.tipo==='tempo'&&nextStep.metaSeg?' · '+formatDuration(nextStep.metaSeg):(nextStep.km?' · '+String(fmtKm(nextStep.km)).replace('.',','):'')}</b>` : '<span>Última etapa</span><b>Encerrar etapa</b>'}<i>${DS_CHEV}</i></button>`;
+  // Arte 06 (08/10/2026): "INTERVALADO · ETAPA 3 DE 9", cartão da etapa, Tempo/Distância/Ritmo do mesmo tamanho e
+  // o aviso de ritmo. Mesmas informações de antes (restante, próximo, pular, ritmo atual↔médio).
+  const tipoTreino = gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Corrida livre') : ((treinoEntryForDay(gr.day)||{}).type || 'Corrida');
+  const etapasReais = gr.steps.filter(x=>x && !x.posTreinoLivre);
+  const kicker = `<div class="fr-kick6"><b>${tipoTreino}</b>${step && !step.posTreinoLivre && etapasReais.length>1 ? ` · Etapa ${gr.stepIndex+1} de ${etapasReais.length}` : ''}</div>`;
+  const proxTxt = nextStep ? `${nextStep.name}${nextStep.tipo==='tempo'&&nextStep.metaSeg?' · '+formatDuration(nextStep.metaSeg):(nextStep.km?' · '+String(fmtKm(nextStep.km)).replace('.',','):'')}` : '';
+  const etapa6 = !step ? '' : `
+    <div class="fr-etapa6">
+      <span class="ic">${ICONS.run}</span>
+      <div class="tx">
+        <div class="t"><b>${stepNome}</b><span>${restaVal} ${restaLbl}</span></div>
+        <div class="fr-stepbar"><i style="width:${progressPct}%;"></i></div>
+        <button class="s" id="gpsBtnSkipStep" aria-label="Pular para o próximo bloco">${nextStep ? `Depois: ${proxTxt}` : 'Última etapa'}<i>Pular ${DS_CHEV}</i></button>
+      </div>
+    </div>`;
+  const ritmoAviso = gr.status==='paused' ? '' : zone.cls==='zone-ok' ? `<div class="fr-ritmo6 ok">${CHECK_SVG}<span>Dentro do ritmo</span></div>`
+    : zone.cls==='zone-warn' ? `<div class="fr-ritmo6"><span>${zone.label==='Rápido demais' ? 'Reduza o ritmo' : 'Acelere um pouco'}</span></div>` : '';
+  const painel6 = kicker + etapa6 + `
+    <div class="fr-m3">
+      <div><b>${tempoVal}</b><span>Tempo</span></div>
+      <div><b>${distVal}<small>km</small></b><span>Distância</span></div>
+      <div id="gpsPaceTap" role="button"><b>${paceVal}${paceSec?'<small>/km</small>':''}</b><span>${!paceSec ? 'Calculando' : paceMedio ? 'Ritmo médio' : 'Ritmo atual'}</span></div>
+    </div>${ritmoAviso}`;
   const topo = `
     <div class="gps-live-top">
       <button class="gps-fab" id="gpsExitRunning" aria-label="Sair">${ICONS.xmark}</button>
-      ${!sinalOk ? `<div class="gps-live-pill"><div class="s" style="color:var(--text-dim);">${sinalLabel}${gr.lastAccuracy!=null?' · ±'+Math.round(gr.lastAccuracy)+'m':''}</div></div>` : '<div class="fr-livebrand"><b>FORZA</b> RUN</div>'}
+      ${(()=>{ const a = gr.lastAccuracy; const nv = a==null ? 0 : a<=10 ? 4 : a<=20 ? 3 : a<=30 ? 2 : 1; const txt = a==null ? 'Buscando GPS' : nv===4 ? 'GPS excelente' : nv===3 ? 'GPS bom' : 'GPS fraco';
+        return `<div class="fr-sinal6"><svg viewBox="0 0 20 14">${[0,1,2,3].map(i=>`<rect x="${i*5}" y="${10-i*3}" width="3.2" height="${4+i*3}" rx="1" opacity="${i<nv?1:.25}"/>`).join('')}</svg><span>${txt}</span></div>`; })()}
       <button class="gps-fab" id="mrtVozToggle" aria-label="Voz">${state.vozAtiva===false ? ICONS.volumeOff : ICONS.volumeOn}</button>
     </div>`;
   if(expandido){
@@ -6760,10 +6951,8 @@ function renderGpsRunning(gr){
         ${gr.status==='paused' ? `<div class="fr-pausado"><div class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="5" width="3.5" height="14" rx="1.2"/><rect x="13.5" y="5" width="3.5" height="14" rx="1.2"/></svg></div><b>Treino pausado</b><span>Retome quando estiver pronto.</span></div>` : ''}
       </div>
       <div class="gps-live-sheet">
-        <div class="gps-mcard fr-live">
-          ${etapaHtml}
-          <div class="fr-pace ${paceSec?'':'calc'}" id="gpsPaceTap"><b>${paceVal}</b>${paceSec?'<span>/km</span>':''}<div class="k">${paceLbl.replace(' (/km)','')}</div></div>
-          <div class="fr-m2"><div><b>${tempoVal}</b><span>Tempo</span></div><div><b>${distVal}</b><span>Distância (km)</span></div></div>
+        <div class="gps-mcard fr-live fr-live6">
+          ${painel6}
           ${(gr.movingMs||0)>=1000 || gr.ultimoKmSeg || gr.autoPausado ? `<div class="gps-extra">${(gr.movingMs||0)>=1000 ? 'Em movimento '+formatClock((gr.movingMs||0)/1000) : ''}${gr.ultimoKmSeg ? ' · Último km '+formatClock(gr.ultimoKmSeg) : ''}${gr.autoPausado ? ' · Pausa automática' : ''}</div>` : ''}
           <button class="gps-mexpand" id="gpsBtnExpand" aria-label="Métricas em tela cheia">${icExpand}</button>
         </div>
@@ -6873,7 +7062,7 @@ function renderAvaliacaoTreino(gr, pvr, elevGain, kcal){
     : 'Esforço dentro do esperado — segue a recuperação normal entre treinos.';
   const secoes = [
     { icon:ICONS.chart, titulo:'Diagnóstico', texto:diagnostico },
-    { icon:ICONS.trendUp, titulo:'Métricas', texto:`Elevação: ${elevGain!=null?elevGain+'m':'—'} ${kcal!=null ? '· Calorias: '+kcal+'kcal ' : ''}· Etapas: ${gr.etapasExecutadas.length}` },
+    { icon:ICONS.trendUp, titulo:'Etapas', texto:`${gr.etapasExecutadas.length} etapa${gr.etapasExecutadas.length===1?'':'s'} registrada${gr.etapasExecutadas.length===1?'':'s'}.` },
     { icon:ICONS.run, titulo:'Ritmo por bloco', texto:ritmoTxt },
     { icon:ICONS.watch, titulo:'Recuperação', texto:recuperacao },
   ];
@@ -7005,6 +7194,68 @@ function atualizarRecordesCorrida(gr, runId){
   saveRecordesCorrida();
   return novos;
 }
+// Recalcula os recordes a partir das corridas que continuam registradas (corridas do plano com gravação e corridas
+// livres). Usado depois de excluir ou recuperar corridas (decisão do usuário, 08/10/2026). Corrida registrada cuja
+// gravação ainda não está neste aparelho (só na nuvem) mantém o recorde que já tinha, para nada sumir por engano.
+async function recalcularRecordesCorrida(){
+  const ids = new Set();
+  Object.values(state.corridaProgress||{}).forEach(p=>{ if(p && typeof p==='object' && p.done && p.gpsRunId) ids.add(p.gpsRunId); });
+  atividadesLivres().forEach(a=>{ if(a && a.gpsRunId && (a.tipo||'corrida')==='corrida') ids.add(a.gpsRunId); });
+  const antigo = state.recordesCorrida || {};
+  const R = {};
+  const melhor = (k, cand, menor)=>{ if(!R[k] || (menor ? cand.v < R[k]._v : cand.v > R[k]._v)) R[k] = { ...cand.reg, _v:cand.v }; };
+  for(const id of ids){
+    let rec = null;
+    try{ rec = await gpsDbGet(id); }catch(e){ rec = null; }
+    if(!rec){
+      Object.entries(antigo).forEach(([k, r])=>{ if(r && r.runId===id) melhor(k, { v: k==='maiorKm' ? r.km : r.seg, reg:r }, k!=='maiorKm'); });
+      continue;
+    }
+    const track = gpsCleanTrack(rec.pontos_gps||[]);
+    if(track.length<2) continue;   // esteira/manual: sem trilha, não entra em recorde (mesma regra de antes)
+    const data = rec.finishedAt ? vdotISODate(new Date(rec.finishedAt)) : todayISO();
+    RECORDE_DISTS.forEach(([km])=>{ const seg = gpsMelhorEsforco(track, km); if(seg) melhor(String(km), { v:seg, reg:{ seg:Math.round(seg), data, runId:id } }, true); });
+    const total = track[track.length-1].distKm;
+    melhor('maiorKm', { v:total, reg:{ km:Math.round(total*100)/100, data, runId:id } }, false);
+  }
+  Object.values(R).forEach(r=>{ delete r._v; });
+  state.recordesCorrida = R;
+  await saveRecordesCorrida();
+  return R;
+}
+// Gravações de corrida guardadas no aparelho que não aparecem em lugar nenhum: antes de 08/10/2026, correr de novo
+// no mesmo dia substituía a corrida do plano e a gravação anterior ficava "órfã" (guardada, sem atividade).
+// Só conta gravações desta conta (ou feitas sem login).
+async function corridasOrfas(){
+  const refs = new Set();
+  Object.values(state.corridaProgress||{}).forEach(p=>{ if(p && typeof p==='object' && p.gpsRunId) refs.add(p.gpsRunId); });
+  atividadesLivres().forEach(a=>{ if(a && a.gpsRunId) refs.add(a.gpsRunId); });
+  const uid = state.authUser && !state.viewingClient ? state.authUser.uid : null;
+  let todas = [];
+  try{ todas = (await gpsDbAll()).filter(gpsEhCorridaSalva); }catch(e){ todas = []; }
+  return todas.filter(r=>!refs.has(r.id) && (!r.ownerUid || r.ownerUid===uid));
+}
+// Recupera as gravações órfãs como atividades próprias. Backup antes (chave própria, também vai para a conta);
+// id da atividade = id da gravação, então rodar de novo não duplica; nada é apagado; tênis não muda (a corrida
+// já tinha sido descontada quando foi substituída e o histórico do tênis não guarda qual era).
+async function recuperarCorridasOrfas(){
+  const orfas = await corridasOrfas();
+  if(!orfas.length) return 0;
+  const backup = { em:Date.now(), corridaProgress:state.corridaProgress||{}, atividades:atividadesLivres(), recordesCorrida:state.recordesCorrida||{}, gravacoes:orfas.map(r=>r.id) };
+  await window.storage.set('backupRecuperacaoCorridas_'+todayISO(), JSON.stringify(backup), false);
+  let n = 0;
+  for(const r of orfas){
+    const temTrilha = (r.pontos_gps||[]).length >= 2;
+    const fim = r.finishedAt || parseInt(String(r.id).replace('run_',''),10) || Date.now();
+    const km = r.distancia_total_km || 0, seg = r.tempo_total_seg || 0;
+    await registrarAtividadeLivre({ id:'run:'+r.id, tipo: r.tipoAtividade || (temTrilha ? 'corrida' : 'esteira'), origem: temTrilha ? 'gps' : 'esteira',
+      data: vdotISODate(new Date(fim)), inicio:null, fim, distKm:km, tempoSeg:seg, paceSeg: km>0 ? seg/km : null, gpsRunId:r.id, shoeCredit:null, recuperada:true });
+    n++;
+  }
+  try{ await recalcularRecordesCorrida(); }catch(e){}
+  registrarNoDiario({ alteracao:'Corridas recuperadas', original:'', novo:`${n} corrida${n===1?'':'s'}`, motivo:'gravações que não apareciam' });
+  return n;
+}
 // Bloco do resumo: marcas desta corrida que são o recorde atual (e destaca se bateu um anterior).
 function renderRecordesDaCorrida(gr, melhorKm){
   const R = state.recordesCorrida || {};
@@ -7061,41 +7312,21 @@ function renderGpsSummary(gr){
   const temMapa = an.track.length >= 2;
   const splitsInteiros = an.splits.filter(s=>!s.parcial);
   const melhorKm = splitsInteiros.length ? Math.min(...splitsInteiros.map(s=>s.paceSec)) : null;
-  // Hierarquia: mapa → distância/tempo/ritmo → métricas secundárias → gráfico → parciais → o resto.
-  return `
-    <div class="mrt-root">
-      <div class="mrt-scroll gps-sum">
-        ${temMapa ? `
-        <div class="gps-sum-map">
-          <div id="gpsSumMapSlot" class="gps-mapslot"></div>
-          <button class="gps-fab gps-sum-close" id="gpsBtnCloseSummary" aria-label="Fechar">${ICONS.xmark}</button>
-        </div>` : `
-        <div style="display:flex;justify-content:flex-end;margin:calc(4px + env(safe-area-inset-top)) 0 8px;">
-          <button class="mrt-wex-x" id="gpsBtnCloseSummary">${ICONS.xmark}</button>
-        </div>`}
-        <div class="gps-sum-head">
-          ${!gr.somenteLeitura ? `<div class="fr-concl">${gr.livre ? 'Atividade concluída' : 'Corrida concluída'}</div>` : ''}
-          <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
-          <div class="mrt-title">${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : (entry && entry.type || 'Corrida')}</div>
-        </div>
-        <div class="gps-sum-main">
-          <div class="c"><div class="k">Distância</div><div class="v">${fmtKmMedido(gr.totalDistKm)}<small> km</small></div></div>
-          <div class="c"><div class="k">Tempo</div><div class="v">${formatClock(totalElapsed)}</div></div>
-          <div class="c"><div class="k">Ritmo médio</div><div class="v">${paceSec?formatPace(paceSec):'—'}<small> /km</small></div></div>
-        </div>
-        <div class="gps-sum-sec">
-          ${elevGain!=null ? `<div class="c"><div class="k">Elevação</div><div class="v">${elevGain}<small> m</small></div></div>` : ''}
-          ${kcal!=null ? `<div class="c"><div class="k">Calorias</div><div class="v">${kcal}<small> kcal</small></div></div>` : ''}
-          ${an.track.length>=2 ? `<div class="c"><div class="k">Em movimento</div><div class="v">${formatClock(gpsTempoEmMovimento(an.track))}</div></div>`
-            : `<div class="c"><div class="k">Velocidade</div><div class="v">${totalElapsed>0 && gr.totalDistKm>0 ? String(Math.round(gr.totalDistKm/(totalElapsed/3600)*10)/10).replace('.',',') : '—'}<small> km/h</small></div></div>`}
-        </div>
-        ${gr.progressKey ? renderComoFoi(((state.corridaProgress||{})[gr.progressKey]||{}).comoFoi, 'data-comofoi') : ''}
-        ${gr.progressKey ? renderNotaCorrida(gr) : ''}
-        ${gr.livre && gr.atividadeId ? (()=>{ const a = atividadesLivres().find(x=>x.id===gr.atividadeId); return a ? renderSugestaoVinculo(a) : ''; })() : ''}
-        ${renderRecordesDaCorrida(gr, melhorKm)}
-        ${renderGpsPaceChart(an, paceSec)}
-        ${renderGpsSplits(an)}
-        ${gr.livre ? '' : `        <div class="mrt-card">
+  // Hierarquia da arte 07 (decisão do usuário, 08/10/2026): métricas principais UMA vez no topo; Como foi?, nota,
+  // tênis e recorde novo logo abaixo; parciais/etapas e análise em seções recolhíveis. Nenhum dado foi removido.
+  const tempoMov = temMapa ? Math.round(gpsTempoEmMovimento(an.track)) : null;
+  const mostrarMov = tempoMov!=null && Math.abs(tempoMov - totalElapsed) >= 30;
+  const kmh = totalElapsed>0 && gr.totalDistKm>0 ? String(Math.round(gr.totalDistKm/(totalElapsed/3600)*10)/10).replace('.',',') : null;
+  const prog = gr.progressKey ? ((state.corridaProgress||{})[gr.progressKey]||{}) : null;
+  const ativ = gr.atividadeId ? atividadesLivres().find(x=>x.id===gr.atividadeId) : null;
+  const credito = (prog && prog.shoeCredit) || (ativ && ativ.shoeCredit) || null;
+  const tenisUsado = credito ? (state.equipamentos.tenis||[]).find(t=>t.id===credito.tenisId) : null;
+  gr._det = gr._det || {};
+  const det = (id, titulo, corpo)=> corpo.trim() ? `<details class="fr-det" data-det="${id}" ${gr._det[id]?'open':''}><summary><span>${titulo}</span><span class="chev">${DS_CHEV}</span></summary><div class="fr-det-corpo">${corpo}</div></details>` : '';
+  const met = (k, v, u)=>`<div class="c"><div class="v">${v}${u?`<small> ${u}</small>`:''}</div><div class="k">${k}</div></div>`;
+  const recordesHtml = renderRecordesDaCorrida(gr, melhorKm);
+  const temRecordeNovo = (gr.novosRecordes||[]).length>0;
+  const pvrHtml = gr.livre ? '' : `<div class="mrt-card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
             <div class="mrt-summarytitle" style="font-size:17px;margin:0;">Planejado × Realizado</div>
             ${pvr.geral ? `<span class="ds-strong">${pvr.geral}</span>` : ''}
@@ -7105,19 +7336,52 @@ function renderGpsSummary(gr){
             <div class="mrt-pvrrow">
               <span class="l">${r.label}</span><span class="p">${r.plan}</span><span class="r">${r.real}</span><span class="s">${statusTag(r.label, r.cmp)}</span>
             </div>`).join('')}
+        </div>`;
+  const maisDados = [
+    elevGain!=null ? `<div class="ds-row ds-static"><span class="nm">Ganho de elevação</span><span class="aside">${elevGain} m</span></div>` : '',
+    kcal!=null ? `<div class="ds-row ds-static"><span class="nm">Calorias (estimativa)</span><span class="aside">${kcal} kcal</span></div>` : '',
+    temMapa && kmh ? `<div class="ds-row ds-static"><span class="nm">Velocidade média</span><span class="aside">${kmh} km/h</span></div>` : '',
+    temMapa && !mostrarMov && tempoMov!=null ? `<div class="ds-row ds-static"><span class="nm">Em movimento</span><span class="aside">${formatClock(tempoMov)}</span></div>` : '',
+  ].filter(Boolean).join('');
+  return `
+    <div class="mrt-root">
+      <div class="mrt-scroll gps-sum">
+        ${temMapa ? `
+        <div class="gps-sum-map">
+          <div id="gpsSumMapSlot" class="gps-mapslot"></div>
+          <button class="gps-fab gps-sum-close" id="gpsBtnCloseSummary" aria-label="Fechar">${ICONS.xmark}</button>
+        </div>` : `
+        <div style="display:flex;justify-content:flex-end;margin:calc(4px + env(safe-area-inset-top)) 0 8px;">
+          <button class="mrt-wex-x" id="gpsBtnCloseSummary" aria-label="Fechar">${ICONS.xmark}</button>
         </div>`}
-        ${renderPaceBlockChart(gr)}
-        ${renderAvaliacaoTreino(gr, pvr, elevGain, kcal)}
-        ${gr.livre ? '' : `<div class="mrt-card">
-          <div class="mrt-runlabel" style="color:var(--accent);">No próximo treino</div>
-          <div style="font-size:14px;line-height:1.5;margin-top:6px;">${nextWorkoutAdjustmentText(pvr)}</div>
-        </div>`}
-        <div style="display:flex;flex-direction:column;gap:10px;margin:6px 0 20px;">
+        <div class="gps-sum-head">
+          ${!gr.somenteLeitura ? `<div class="fr-concl">${gr.livre ? 'Atividade concluída' : 'Corrida concluída'}</div>` : ''}
+          <div class="mrt-sub">${DAY_FULLNAME[gr.day]||gr.day}</div>
+          <div class="mrt-title">${gr.livre ? (TIPOS_ATIVIDADE_LIVRE[gr.tipoAtividade] || 'Atividade livre') : (entry && entry.type || 'Corrida')}</div>
+          ${gr.repeticaoDoDia ? `<div class="mrt-sub" style="margin-top:4px;">Salva como atividade própria — o treino planejado do dia já tinha uma corrida.</div>` : ''}
+        </div>
+        <div class="fr-summets ${mostrarMov || !temMapa ? 'q4' : ''}">
+          ${met('Distância', fmtKmMedido(gr.totalDistKm), 'km')}
+          ${met('Tempo', formatClock(totalElapsed))}
+          ${met('Ritmo', paceSec ? formatPace(paceSec) : '—', '/km')}
+          ${mostrarMov ? met('Em movimento', formatClock(tempoMov)) : (!temMapa && kmh ? met('Velocidade', kmh, 'km/h') : '')}
+        </div>
+        ${gr.progressKey ? renderComoFoi(prog.comoFoi, 'data-comofoi') : ''}
+        ${tenisUsado ? `<div class="ds-list" style="margin-bottom:14px;"><div class="ds-row ds-static"><span class="fr-ic">${ICONS.shoe}</span><span class="nm">Tênis<small style="display:block;font-weight:400;color:var(--text-dim);font-size:13px;">${tenisUsado.nome}</small></span></div></div>` : ''}
+        ${gr.progressKey ? renderNotaCorrida(gr) : ''}
+        ${gr.livre && gr.atividadeId ? (ativ ? renderSugestaoVinculo(ativ) : '') : ''}
+        ${temRecordeNovo ? recordesHtml : ''}
+        ${det('parciais', 'Parciais e etapas', renderGpsPaceChart(an, paceSec) + renderGpsSplits(an) + renderPaceBlockChart(gr))}
+        ${det('analise', gr.livre ? 'Mais informações' : 'Planejado × realizado e análise',
+            pvrHtml + (maisDados ? `<div class="ds-list" style="margin-bottom:14px;">${maisDados}</div>` : '') + (temRecordeNovo ? '' : recordesHtml)
+            + renderAvaliacaoTreino(gr, pvr, elevGain, kcal)
+            + (gr.livre ? '' : `<div class="mrt-card"><div class="mrt-runlabel">No próximo treino</div><div style="font-size:14px;line-height:1.5;margin-top:6px;">${nextWorkoutAdjustmentText(pvr)}</div></div>`))}
+        <div style="display:flex;flex-direction:column;gap:10px;margin:16px 0 20px;">
           <button class="btn-primary" id="gpsBtnCloseSummary2">${gr.somenteLeitura ? 'Fechar' : 'Salvar atividade'}</button>
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
           ${gr.progressKey ? `<button class="btn-secondary" id="gpsBtnCorrigirRun">${ICONS.pencil} Corrigir corrida</button>` : ''}
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
-          ${(gr.progressKey || gr.atividadeId) ? (gr.somenteLeitura ? `<button class="ds-danger" id="gpsBtnDeleteRun">${gr.atividadeId ? 'Excluir atividade' : 'Excluir corrida realizada'}</button>` : `<button class="ds-danger" id="gpsBtnDescartarRun">${gr.atividadeId ? 'Descartar atividade' : 'Descartar corrida'}</button>`) : ''}
+          ${(gr.progressKey || gr.atividadeId) ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
       </div>
     </div>`;
@@ -7195,12 +7459,7 @@ function wireGpsRunScreen(){
     if(!(await confirmarApp({ titulo:'Finalizar a corrida?', texto:'A atividade é salva com o que foi registrado até agora.', ok:'Finalizar' }))) return;
     finishGpsRun();
   };
-  if(byId('gpsBtnDescartarRun')) byId('gpsBtnDescartarRun').onclick = async ()=>{
-    if(!(await confirmarApp({ titulo:'Descartar esta corrida?', texto:'A gravação é apagada. O treino planejado continua.', ok:'Descartar', perigo:true }))) return;
-    if(gr.atividadeId) await excluirAtividadeLivre(gr.atividadeId);
-    else await excluirCorridaRealizada(gr.progressKey, gr.runId);
-    state.gpsRun = null; render(); showToast('Corrida descartada');
-  };
+  document.querySelectorAll('details[data-det]').forEach(d=>d.addEventListener('toggle', ()=>{ gr._det = gr._det || {}; gr._det[d.getAttribute('data-det')] = d.open; }));
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
@@ -7414,8 +7673,8 @@ function duplicateTreinoTemplate(id){
   saveTreinoTemplates();
   render();
 }
-function deleteTreinoTemplate(id){
-  if(!confirm('Excluir esse treino salvo? Não dá pra desfazer.')) return;
+async function deleteTreinoTemplate(id){
+  if(!(await confirmarApp({ titulo:"Excluir este treino salvo?", texto:"O modelo é apagado. Treinos já feitos continuam no histórico. Não dá para desfazer.", ok:"Excluir", perigo:true }))) return;
   state.treinoTemplates = state.treinoTemplates.filter(t=>t.id!==id);
   saveTreinoTemplates();
   render();
@@ -8212,8 +8471,8 @@ function annotateHybridJustifications(corridaWeek, muscPlan, foco, tipos){
   });
   return periodos;
 }
-function clearAllMusculacao(){
-  if(!confirm('Isso apaga TODOS os exercícios de musculação de todos os dias da semana. Não dá pra desfazer. Continuar?')) return;
+async function clearAllMusculacao(){
+  if(!(await confirmarApp({ titulo:"Apagar a musculação de todos os dias?", texto:"Sai só o planejamento da semana. Treinos já feitos continuam no histórico. Não dá para desfazer.", ok:"Apagar", perigo:true }))) return;
   DAY_ABBR.forEach(d=>{ state.musculacao[d] = []; state.muscDayOrigin[d] = null; });
   saveMusc();
   saveMuscDayOrigin();
@@ -8618,8 +8877,8 @@ async function saveCorridaVdotData(){ try{ await window.storage.set('corridaVdot
 async function saveHybridPlanData(){ try{ await window.storage.set('hybridPlanData', JSON.stringify(state.hybridPlanData), false); }catch(e){} sincronizarAthleteProfileComLegado(); }
 // Exclui o plano de corrida solo E os treinos já agendados que vieram dele (marcados com
 // origem:'vdotplan' no momento em que foram materializados) — treinos criados na mão continuam.
-function deleteVdotPlan(){
-  if(!confirm('Excluir o plano de corrida? Isso remove o acompanhamento e os treinos já agendados que vieram dele.')) return;
+async function deleteVdotPlan(){
+  if(!(await confirmarApp({ titulo:"Excluir o plano de corrida?", texto:"Saem o acompanhamento e os treinos agendados que vieram dele. Corridas já feitas continuam no histórico.", ok:"Excluir", perigo:true }))) return;
   state.treinos = state.treinos.filter(t => t.origem !== 'vdotplan');
   state.corridaVdotData = null;
   saveTreinos();
@@ -8629,8 +8888,8 @@ function deleteVdotPlan(){
 // Mesma ideia pro híbrido: remove os treinos de corrida (modo:'hibrido') e os exercícios de
 // musculação (modo:'hibrido') que vieram do plano — dias que sobrarem sem nenhum exercício viram
 // dia livre de novo.
-function deleteHybridPlan(){
-  if(!confirm('Excluir o treino híbrido? Isso remove o acompanhamento e os treinos já agendados que vieram dele.')) return;
+async function deleteHybridPlan(){
+  if(!(await confirmarApp({ titulo:"Excluir o plano híbrido?", texto:"Saem o acompanhamento e os treinos agendados que vieram dele. Atividades já feitas continuam no histórico.", ok:"Excluir", perigo:true }))) return;
   state.treinos = state.treinos.filter(t => t.modo !== 'hibrido');
   Object.keys(state.musculacao).forEach(d=>{
     state.musculacao[d] = (state.musculacao[d]||[]).filter(e => e.modo !== 'hibrido');
@@ -8835,9 +9094,11 @@ function tocarSomFimDescanso(ctx){
     osc.start(t0); osc.stop(t1+0.02);
   });
 }
-// Aviso do fim do descanso. Modos: 'bipevoz' (padrão), 'bipe', 'vibracao'. No iPhone usa o plugin nativo, que
+// Aviso do fim do descanso. Modos: 'bipe' (padrão) e 'vibracao'. Sem voz na musculação (pedido do usuário, 08/10/2026):
+// nada de nome de exercício, próxima série ou 'descanso encerrado' falados — só o bipe, no volume escolhido. O antigo
+// 'bipevoz' salvo nas preferências vale como 'bipe'. A voz da corrida (speak) continua independente. No iPhone usa o plugin nativo, que
 // abaixa a música de outros apps durante o aviso; no navegador não dá para controlar a música de outro app.
-function prefsAviso(){ const p = (state.preferencias||{}).aviso || {}; return { modo: p.modo || 'bipevoz', volume: p.volume!=null ? p.volume : 0.9 }; }
+function prefsAviso(){ const p = (state.preferencias||{}).aviso || {}; return { modo: p.modo==='vibracao' ? 'vibracao' : 'bipe', volume: p.volume!=null ? p.volume : 0.9 }; }
 function textoProximoPasso(){
   const ws = state.workoutSession; if(!ws) return 'Descanso encerrado.';
   const list = state.musculacao[ws.day]||[]; const ex = list[ws.exIdx];
@@ -8848,7 +9109,7 @@ function textoProximoPasso(){
 }
 function avisarFimDescanso(texto){
   const { modo, volume } = prefsAviso();
-  const fala = modo==='bipevoz' ? (texto || textoProximoPasso()) : null;
+  const fala = null; void texto;   // sem voz na musculação: o plugin nativo só fala quando recebe texto
   const vibrar = ()=>{ try{ if(window.NativeBridge && NativeBridge.vibrarFimDescanso) NativeBridge.vibrarFimDescanso(); else if(navigator.vibrate) navigator.vibrate([200,100,200,100,400]); }catch(e){} };
   vibrar();
   if(modo==='vibracao') return;
@@ -8888,10 +9149,14 @@ function verificarRecorde(ex, peso, reps){
   if(maxPeso<=0) return false;
   return peso>maxPeso || (peso===maxPeso && reps>maxRepsNoMax);
 }
+let __ultimaSerieConcluidaEm = 0;
 function concluirSerieAction(peso, reps, pse){
   getAudioCtx();
   const ws = state.workoutSession;
-  if(!ws) return;
+  if(!ws || ws.phase==='summary') return;
+  // Toque duplo no botão registrava duas séries (reproduzido em 08/10/2026): ignora o segundo toque em seguida.
+  if(Date.now() - __ultimaSerieConcluidaEm < 700) return;
+  __ultimaSerieConcluidaEm = Date.now();
   const ex = currentWorkoutExercise();
   if(!ex) return;
   const pesoNum = parseFloat(peso)||0, repsNum = parseFloat(reps)||0;
@@ -9080,8 +9345,8 @@ function startChallenge(totalDays){
   saveChallenge();
   render();
 }
-function deleteChallenge(){
-  if(!confirm('Cancelar o desafio atual? O progresso é perdido.')) return;
+async function deleteChallenge(){
+  if(!(await confirmarApp({ titulo:"Cancelar o desafio?", texto:"O progresso do desafio é perdido.", ok:"Cancelar desafio", perigo:true }))) return;
   state.challenge = null;
   saveChallenge();
   render();
@@ -9124,7 +9389,7 @@ function challengePct(){
 }
 function finishWorkoutSession(){
   const ws = state.workoutSession;
-  if(!ws) return;
+  if(!ws || ws.phase==='summary') return;   // já finalizado: não grava o treino de novo no histórico
   stopRestTicking();
   const elapsedSec = Math.round((Date.now()-ws.startedAt)/1000);
   // Guarda a lista de exercícios de hoje junto com a data real — assim, mesmo que a rotina de
@@ -9284,10 +9549,9 @@ function normalizarSessaoMuscHistorico(sessao){
     const v = kcalMuscEstimada(min, sessao.series, pses, feitos.map(e=>e.nome));
     if(v) calorias = { valor:v, estimativa:true };
   }
-  const dia = (DAY_FULLNAME[sessao.day]||sessao.day||'').split('-')[0].toLowerCase();
   return {
     id:sessao.id, day:sessao.day, data:sessao.data,
-    titulo: sessao.title || (dia ? 'Treino de '+dia : 'Musculação'),
+    titulo: frNomeTreinoMusc(sessao),
     duracaoSeg:sessao.duracaoSeg||0, volume:sessao.volume||0, series:sessao.series||0, cargaMax:sessao.cargaMax||0,
     recordes: Array.isArray(sessao.recordes) ? sessao.recordes.length : (sessao.recordes||0),
     exercicios:feitos, temDetalhe:feitos.length>0,
@@ -9940,7 +10204,7 @@ function renderWorkoutSession(){
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;"><div class="icon-box gold">${ICONS.trophy}</div><div class="mrt-summarytitle" style="font-size:17px;margin:0;">Recordes</div></div>
             ${recordes.map(r=>`<div class="mrt-cmprow"><span>${r.nome}</span><b class="up">${r.peso}kg × ${r.reps}</b></div>`).join('')}
           </div>` : ''}
-          ${(()=>{ const ult = (state.workoutSessionsLog||[])[state.workoutSessionsLog.length-1]; const pernas = ult ? (ult.exercicios||[]).filter(x=>x.grupo==='Pernas').reduce((t,x)=>t+(parseInt(x.series,10)||0),0) : 0;
+          ${(()=>{ const ult = (ws.logId && (state.workoutSessionsLog||[]).find(x=>x.id===ws.logId)) || (state.workoutSessionsLog||[])[state.workoutSessionsLog.length-1]; const pernas = ult ? (ult.exercicios||[]).filter(x=>x.grupo==='Pernas').reduce((t,x)=>t+(parseInt(x.series,10)||0),0) : 0;
             return `<div style="width:100%;text-align:left;">${renderComoFoi(ult && ult.comoFoi, 'data-wexcomofoi')}${pernas ? `<div class="mrt-sub" style="margin:-12px 0 16px;">Séries de perna: ${pernas} — entram na carga das pernas para as próximas corridas.</div>` : ''}</div>`; })()}
           ${renderAvaliacaoTreinoMusc(ws)}
           <div class="mrt-card" style="width:100%;text-align:left;">
@@ -10132,7 +10396,8 @@ function abrirEditorSerie(campo){
 }
 function wireWorkoutSession(){
   document.querySelectorAll('[data-wexcomofoi]').forEach(el=>{ el.onclick = ()=>{
-    const log = state.workoutSessionsLog||[]; const ult = log[log.length-1]; if(!ult) return;
+    const log = state.workoutSessionsLog||[]; const ws = state.workoutSession;
+    const ult = (ws && ws.logId && log.find(x=>x.id===ws.logId)) || log[log.length-1]; if(!ult) return;
     ult.comoFoi = parseInt(el.getAttribute('data-wexcomofoi'),10);
     saveWorkoutSessionsLog(); hapticLeve(); render();
   }; });
@@ -10356,11 +10621,54 @@ async function importBackupFile(file){
   await new Promise(r=>setTimeout(r, 900));
   location.reload();
 }
+// Apaga de verdade (decisão do usuário, 07/10/2026): com a conta conectada, tudo da conta na nuvem (inclusive as
+// corridas GPS e as versões do plano); no aparelho, a cópia da conta, os dados sem login e as corridas gravadas.
+// Sem conexão com a conta conectada, não apaga nada (senão os dados voltariam da nuvem na próxima abertura).
+async function apagarDadosDaConta(uid){
+  const col = db.collection('users').doc(uid).collection('data');
+  try{
+    // Caminho principal: lista e apaga todos os documentos da conta, em lotes.
+    for(let volta=0; volta<50; volta++){
+      const snap = await comTimeout(col.limit(400).get(), 20000);
+      if(snap.empty) return true;
+      const lote = db.batch();
+      snap.docs.forEach(d=>lote.delete(d.ref));
+      await comTimeout(lote.commit(), 20000);
+    }
+    return true;
+  }catch(e){
+    // Se a nuvem não deixar listar, apaga chave por chave tudo o que o app grava (inclusive cada corrida GPS).
+    const chaves = new Set(BACKUP_KEYS.concat(['gpsRunsIndex']));
+    try{ const v = await comTimeout(col.doc('planoVersoes').get(), CLOUD_TIMEOUT_MS); ((v.exists && JSON.parse(v.data().value||'[]')) || []).forEach(m=>chaves.add(versaoChave(m.id))); }catch(e2){}
+    try{ const ix = await comTimeout(col.doc('gpsRunsIndex').get(), CLOUD_TIMEOUT_MS); ((ix.exists && ix.data().ids) || []).forEach(id=>chaves.add('gpsRun__'+id)); }catch(e2){}
+    try{ (await gpsDbAll()).filter(gpsEhCorridaSalva).forEach(r=>chaves.add('gpsRun__'+r.id)); }catch(e2){}
+    const lista = [...chaves];
+    for(let i=0; i<lista.length; i+=400){
+      const lote = db.batch();
+      lista.slice(i, i+400).forEach(k=>lote.delete(col.doc(k)));
+      await comTimeout(lote.commit(), 20000);
+    }
+    return true;
+  }
+}
+function apagarCorridasDoAparelho(){
+  return new Promise(ok=>{
+    try{ if(_gpsDbConn){ _gpsDbConn.close(); _gpsDbConn = null; } }catch(e){}
+    try{ const r = indexedDB.deleteDatabase(GPS_DB_NAME); r.onsuccess = r.onerror = r.onblocked = ()=>ok(); }catch(e){ ok(); }
+  });
+}
 async function apagarTudo(){
-  if(!(await confirmarApp({ titulo:'Apagar todos os dados?', texto:'Treinos, histórico, perfil — tudo neste aparelho. Não dá para desfazer.', ok:'Continuar', perigo:true }))) return;
+  const conta = state.authUser && !state.viewingClient ? state.authUser : null;
+  if(!(await confirmarApp({ titulo:'Apagar todos os dados?', texto: conta ? 'Treinos, atividades, histórico e perfil — da sua conta e deste aparelho. Não dá para desfazer.' : 'Treinos, atividades, histórico e perfil deste aparelho. Não dá para desfazer.', ok:'Continuar', perigo:true }))) return;
   if(!(await confirmarApp({ titulo:'Tem certeza mesmo?', texto:'Essa ação é definitiva.', ok:'Apagar tudo', perigo:true }))) return;
-  const chavesVersoes = await chavesVersoesNoArmazenamento(makeLocalStorage());
-  BACKUP_KEYS.concat(chavesVersoes).forEach(k=>{ try{ localStorage.removeItem('treinoapp:'+k); }catch(e){} });
+  if(conta){
+    if(!nuvemAcessivel()){ showToast('Sem conexão com a conta. Conecte à internet para apagar.'); return; }
+    showToast('Apagando…');
+    try{ await apagarDadosDaConta(conta.uid); }
+    catch(e){ showToast('Não consegui apagar da conta agora. Tente de novo.'); return; }
+  }
+  await apagarCorridasDoAparelho();
+  try{ Object.keys(localStorage).filter(k=>k.startsWith('treinoapp:')).forEach(k=>localStorage.removeItem(k)); }catch(e){}
   location.reload();
 }
 function toggleCorridaDone(day){
@@ -10382,8 +10690,8 @@ function toggleCorridaDone(day){
   }
   saveCorridaProgress(); render();
 }
-function delTreinoCorrida(day){
-  if(!confirm('Excluir esse treino de corrida? Não dá pra desfazer.')) return;
+async function delTreinoCorrida(day){
+  if(!(await confirmarApp({ titulo:"Remover esta corrida planejada?", texto:"Sai só o treino planejado deste dia. Corridas já registradas continuam no histórico.", ok:"Remover", perigo:true }))) return;
   // Só o treino dessa semana específica (a que está sendo exibida) — filtrar só pelo dia da semana
   // apagaria por engano treinos de outras semanas já agendadas que caem no mesmo dia.
   const expectedDate = dayDateLabel(day);
@@ -10393,8 +10701,8 @@ function delTreinoCorrida(day){
   saveTreinos();
   render();
 }
-function clearAllTreinosCorrida(){
-  if(!confirm('Isso apaga TODOS os treinos de corrida da semana (todos os dias). Não dá pra desfazer. Continuar?')) return;
+async function clearAllTreinosCorrida(){
+  if(!(await confirmarApp({ titulo:"Apagar as corridas planejadas da semana?", texto:"Sai só o planejamento. Corridas já registradas continuam no histórico. Não dá para desfazer.", ok:"Apagar", perigo:true }))) return;
   state.treinos = [];
   state.isDemo = false;
   state.expandedPhase = null;
@@ -10812,9 +11120,20 @@ function goBack(){
 })();
 let __ultimaAbaRenderizada = null;
 let __rolagemAntesDoRender = { chave:null, y:0 };
+// Aba que ficou "por baixo" de uma tela cheia ou de um modal antigo (ex.: tocar num exercício abre o modal de carga):
+// ao fechar e voltar para a mesma aba, a tela volta para onde estava em vez de abrir no topo.
+let __abaSuspensa = null;
 function mrtFadeDeAba(){
   const chave = state.tab + '|' + (state.bibDetalhe||'');
   const sc = document.querySelector('.mrt-scroll');
+  if(__ultimaAbaRenderizada===null && __abaSuspensa){
+    const s = __abaSuspensa; __abaSuspensa = null;
+    if(s.chave===chave){
+      if(sc && s.y>0) sc.scrollTop = s.y;
+      __ultimaAbaRenderizada = chave;
+      return;
+    }
+  }
   if(__ultimaAbaRenderizada!==null && __ultimaAbaRenderizada!==chave){
     if(sc) sc.classList.add('mrt-fadein');
   }else if(sc && __rolagemAntesDoRender.chave===chave && __rolagemAntesDoRender.y>0){
@@ -10824,11 +11143,14 @@ function mrtFadeDeAba(){
   __ultimaAbaRenderizada = chave;
 }
 function render(){
-  { const sc = document.querySelector('.mrt-scroll'); __rolagemAntesDoRender = { chave:__ultimaAbaRenderizada, y: sc ? sc.scrollTop : 0 }; }
+  { const sc = document.querySelector('.mrt-scroll'); const y = sc && typeof sc.scrollTop==='number' ? sc.scrollTop : 0; __rolagemAntesDoRender = { chave:__ultimaAbaRenderizada, y }; }
   // Telas cheias (treino, corrida, questionário, modais antigos) não são uma aba: ao voltar, a aba abre do topo.
   const telaCheia = state.workoutSession || state.gpsRun || state.qv2 || (state.modalOpen && (state.modalType==='gerarHibrido' || state.modalType==='onboarding'))
     || !(UI_V2 && !state.treinoV2Escape && (['hoje','meusTreinos','perfil','turma'].includes(state.tab) || SUB_V2_TABS.includes(state.tab)));
-  if(telaCheia) __ultimaAbaRenderizada = null;
+  if(telaCheia){
+    if(__ultimaAbaRenderizada!==null) __abaSuspensa = { chave:__ultimaAbaRenderizada, y:__rolagemAntesDoRender.y };
+    __ultimaAbaRenderizada = null;
+  }
   if(state.workoutSession){
     root.innerHTML = renderWorkoutSession();
     wireWorkoutSession();
@@ -11775,8 +12097,8 @@ function render(){
       };
 
       const btnDeletePlan = document.getElementById('vdotBtnDeletePlan');
-      if(btnDeletePlan) btnDeletePlan.onclick = ()=>{
-        if(confirm('Isso apaga o plano de treino gerado e os treinos da semana que vieram dele (seu VDOT continua salvo). Continuar?')){
+      if(btnDeletePlan) btnDeletePlan.onclick = async ()=>{
+        if((await confirmarApp({ titulo:"Apagar o plano gerado?", texto:"Saem o plano e os treinos da semana que vieram dele. Seu VDOT e as corridas já feitas continuam.", ok:"Apagar", perigo:true }))){
           const planAtual = state.corridaVdotData.plan || [];
           const diasDoPlano = [...new Set(planAtual.flatMap(w => (w.days||[]).map(d=>d.day)))];
           state.corridaVdotData = { ...state.corridaVdotData, plan:null, startMonday:null, currentWeekIndex:null };
@@ -11976,7 +12298,7 @@ function render(){
       });
 
       const btnConfirmImport = document.getElementById('btnConfirmImportTreinos');
-      if(btnConfirmImport) btnConfirmImport.onclick = ()=>{
+      if(btnConfirmImport) btnConfirmImport.onclick = async ()=>{
         const draft = state.importTreinosDraft || [];
         const valid = draft.filter(d=>!d.invalid);
         if(valid.length===0){ alert('Nenhum arquivo válido pra importar.'); return; }
@@ -11988,7 +12310,7 @@ function render(){
           seen.add(key);
         }
         if(state.corridaVdotData && state.corridaVdotData.plan){
-          if(!confirm('Isso substitui o plano de corrida atual pelos treinos importados. Continuar?')) return;
+          if(!(await confirmarApp({ titulo:"Substituir o plano de corrida?", texto:"Os treinos importados ocupam o lugar do plano atual. Corridas já feitas continuam no histórico.", ok:"Substituir", perigo:true }))) return;
         }
         const weekNumbers = [...new Set(valid.map(d=>d.weekNumber))].sort((a,b)=>a-b);
         const plan = weekNumbers.map(wn => ({
@@ -12012,7 +12334,7 @@ function render(){
     }
 
     const saveBtn = document.getElementById('modalSave');
-    if(saveBtn) saveBtn.onclick = ()=>{
+    if(saveBtn) saveBtn.onclick = async ()=>{
       if(state.modalType === 'quickSets'){
         const day = state.selectedDayMusc;
         const ex = (state.musculacao[day]||[]).find(e=>e.id===state.quickWeightExId);
@@ -12084,7 +12406,7 @@ function render(){
         const plan = buildPlan(nivel, diasArr, equip, objetivo);
         const hasExisting = DAY_ABBR.some(d => (state.musculacao[d]||[]).length > 0);
         if(hasExisting){
-          const ok = confirm('Isso substitui a semana inteira de musculação (todos os dias) pelo novo treino gerado. Continuar?');
+          const ok = (await confirmarApp({ titulo:"Substituir a musculação da semana?", texto:"O treino gerado ocupa todos os dias. Treinos já feitos continuam no histórico.", ok:"Substituir", perigo:true }));
           if(!ok) return;
         }
         DAY_ABBR.forEach(d=>{ state.musculacao[d] = []; state.muscDayOrigin[d] = null; });
@@ -12266,6 +12588,14 @@ function wirePerfilExtras(){
   }
   const btnApagarTudo = document.getElementById('btnApagarTudo');
   if(btnApagarTudo) btnApagarTudo.onclick = apagarTudo;
+  const btnRecuperar = document.getElementById('btnRecuperarCorridas');
+  if(btnRecuperar) btnRecuperar.onclick = async ()=>{
+    const n = typeof state.corridasOrfasN==='number' ? state.corridasOrfasN : 0;
+    if(!(await confirmarApp({ titulo:`Recuperar ${n} corrida${n===1?'':'s'}?`, texto:'Cada gravação volta como uma atividade própria no histórico. Nada é apagado e um backup é feito antes.', ok:'Recuperar' }))) return;
+    const feitas = await recuperarCorridasOrfas();
+    state.corridasOrfasN = null; render();
+    showToast(feitas ? `${feitas} corrida${feitas===1?'':'s'} recuperada${feitas===1?'':'s'}` : 'Nada para recuperar');
+  };
   const btnSignOut = document.getElementById('btnSignOut');
   if(btnSignOut) btnSignOut.onclick = async ()=>{ if(await confirmarApp({ titulo:'Sair da conta?', texto:'O app continua funcionando, mas salva só neste aparelho até você entrar de novo.', ok:'Sair' })) auth.signOut().catch(function(e){ state.authError = authErrorMessage(e.code, 'Não consegui sair da conta agora.'); render(); }); };
   const btnAuthEntrar = document.getElementById('btnAuthEntrar');
@@ -12335,7 +12665,7 @@ function wirePerfilExtras(){
   };
   document.querySelectorAll('[data-revokeaccess]').forEach(el=>{
     el.onclick = async ()=>{
-      if(!confirm('Remover o acesso desse personal ao seu treino?')) return;
+      if(!(await confirmarApp({ titulo:"Remover o acesso do personal?", texto:"O personal deixa de ver e editar o seu treino.", ok:"Remover", perigo:true }))) return;
       await revokeAccess(el.getAttribute('data-revokeaccess'));
       state.clientTrainers = await listWhoHasAccessToMe();
       render();
@@ -12513,7 +12843,8 @@ function muscTituloDoDia(day, list){
   if(s==='FULL_BODY_LIGHT') return 'Full body';
   const o = state.muscDayOrigin && state.muscDayOrigin[day];
   if(o && o.tipo) return o.tipo;
-  return 'Treino de ' + (DAY_FULLNAME[day]||day).split('-')[0].toLowerCase();
+  // Sem código de sessão: o grupo predominante dos exercícios (mesmo nome no Treino, no Progresso e no histórico).
+  return frNomeTreinoMuscPorGrupos((list||[]).map(e=>e.grupo));
 }
 // Uma sessão por modalidade agendada hoje (corrida e/ou musculação), com as mesmas 3 métricas que os
 // cards da tela Treino já usam — o card grande do Início é o mesmo resumo, só que do dia de hoje.
@@ -14302,20 +14633,27 @@ function abrirMenuExercicio(exId){
     <div class="mrt-menuitem" data-exmenu="descanso"><div class="icon-box">${ICONS.clock}</div><span>Ajustar descanso</span></div>
     <div class="mrt-menuitem" data-exmenu="trocar"><div class="icon-box">${ICONS.swap}</div><span>Trocar exercício</span></div>
     <div class="mrt-menuitem" data-exmenu="ver"><div class="icon-box">${ICONS.eye}</div><span>Ver execução</span></div>
-    <div class="mrt-menuitem" data-exmenu="remover"><div class="icon-box" style="background:color-mix(in srgb, var(--danger) 16%, transparent);color:var(--danger);">${ICONS.trash}</div><span style="color:var(--danger);">Remover hoje</span></div>
+    <div class="mrt-menuitem" data-exmenu="remover"><div class="icon-box" style="background:color-mix(in srgb, var(--danger) 16%, transparent);color:var(--danger);">${ICONS.trash}</div><span style="color:var(--danger);">Remover deste dia</span></div>
   `, (sh)=>{
     sh.querySelectorAll('[data-exmenu]').forEach(el=>{
-      el.onclick = ()=>{
+      el.onclick = async ()=>{
         const a = el.getAttribute('data-exmenu');
+        if(a==='remover'){
+          // Confirma e diz o que sai: só o exercício planejado; séries já registradas ficam no histórico.
+          const doPlano = !(state.muscDayOrigin && state.muscDayOrigin[day]);
+          const nomeDia = (DAY_FULLNAME[day]||day).split('-')[0].toLowerCase();
+          const ok = await confirmarApp({ titulo:`Remover ${ex.nome}?`, perigo:true, ok:'Remover',
+            texto: doPlano ? `Sai só do treino planejado de ${nomeDia} desta semana. Séries já registradas continuam no histórico.`
+                           : `Sai do treino de ${nomeDia}. Séries já registradas continuam no histórico.` });
+          if(!ok) return;
+          state.musculacao[day] = (state.musculacao[day]||[]).filter(e=>e.id!==exId);
+          saveMusc(); render(); showToast('Exercício removido');
+          return;
+        }
         if(a==='editar'){ closeSheet(); abrirEditorExercicio({ modo:'dia', day, exId }); }
         else if(a==='descanso'){ closeSheet(); abrirSheetDescanso(exId); }
         else if(a==='trocar') abrirTrocaExercicio(exId);
         else if(a==='ver'){ closeSheet(); if(ex.repdbId) openZoom(repdbImg(ex.repdbId)); else showToast('Este exercício ainda não tem demonstração'); }
-        else if(a==='remover'){
-          closeSheet();
-          state.musculacao[day] = (state.musculacao[day]||[]).filter(e=>e.id!==exId);
-          saveMusc(); render(); showToast('Exercício removido');
-        }
       };
     });
   });
@@ -14470,7 +14808,7 @@ async function preencherMiniaturasCorrida(){
     if(!_runThumbCache[id]){ _runThumbPend[id] = true;
       const rec = await gpsDbGet(id).catch(()=>null);
       const track = rec ? gpsCleanTrack(rec.pontos_gps||[]) : [];
-      if(track.length<2){ el.remove(); continue; }
+      if(track.length<2){ delete _runThumbPend[id]; if(!el.hasAttribute('data-keep')) el.remove(); continue; }
       const W = 1080, H = 640;
       let cv = null;
       const m = await arteMapaRua(track, W, H, { top:70, bottom:70, side:70 });
@@ -14508,6 +14846,7 @@ async function excluirCorridaRealizada(key, runIdForcado){
   if(Object.keys(resto).length) state.corridaProgress[key] = resto;
   else delete state.corridaProgress[key];
   saveCorridaProgress();
+  try{ await recalcularRecordesCorrida(); }catch(e){ console.warn('[recordes] recálculo falhou', e); }
   sincronizarCorridasGps();
 }
 async function confirmarExcluirCorrida(key){
@@ -15138,13 +15477,17 @@ function frFiltrarAtividades(lista, f){
   if(f==='livres') return lista.filter(a=>a.livre);
   return lista;
 }
-function frNomeAtividade(a){ return a.livre ? (TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade') : (a.titulo || (a.tipo==='musculacao' ? 'Musculação' : 'Corrida')); }
+function frNomeAtividade(a){
+  if(a.livre) return TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade';
+  if(a.tipo==='musculacao') return frNomeTreinoMusc((state.workoutSessionsLog||[]).find(l=>'musc:'+(l.id||l.data)===a.id) || { title:a.titulo });
+  return a.titulo || 'Corrida';
+}
 function frIconeAtividade(a){ return a.tipo==='musculacao' ? ICONS.dumbbell : a.tipo==='caminhada' ? ICONS.shoe : ICONS.run; }
 function frCartaoAtividade(a){
   const kicker = a.livre ? 'Livre' : a.tipo==='musculacao' ? 'Força' : 'Corrida';
   const mets = [];
   if(a.distKm) mets.push([fmtKmMedido(a.distKm)+' km', 'Distância']);
-  if(a.tempoSeg) mets.push([formatClock(a.tempoSeg), a.tipo==='musculacao' ? 'Duração' : 'Tempo']);
+  if(a.tempoSeg) mets.push(a.tipo==='musculacao' ? [Math.max(1, Math.round(a.tempoSeg/60))+' min', 'Duração'] : [formatClock(a.tempoSeg), 'Tempo']);
   if(a.distKm && a.tempoSeg) mets.push([formatPace(a.tempoSeg/a.distKm)+'/km', 'Ritmo']);
   if(a.tipo==='musculacao' && a.series) mets.push([String(a.series), 'Séries']);
   return `<button class="fr-ativcard" data-ativ="${a.id}">
@@ -15191,6 +15534,165 @@ function frHistoricoAtividades(){
     ${grupos.length ? grupos.map(g=>`<div class="fr-hgrupo"><div class="fr-hdata">${tituloData(g.data)}</div><div class="fr-ativlist">${g.itens.map(frCartaoAtividade).join('')}</div></div>`).join('')
       : `<div class="fr-progvazio">${sel ? 'Nenhuma atividade neste dia.' : todas.length ? 'Nenhuma atividade neste filtro.' : 'Histórico vazio. Conclua um treino para acompanhar sua evolução.'}</div>`}
     ${lista.length>n ? `<button class="btn-secondary" style="margin:8px 0 16px;" data-histmais="1">Carregar mais atividades</button>` : ''}`;
+}
+/* ---------- Progresso (nova arte aprovada em 08/10/2026) ----------
+   Período (Semana/Mês/Ciclo) com as datas; resumo compacto; Evolução com um gráfico por vez (Corrida ou Musculação);
+   três últimas atividades; histórico completo; Análises detalhadas (Corrida, Musculação, Medidas) com os gráficos e
+   recursos que já existiam. Resumo e gráfico usam o MESMO período. Atividade livre entra nos totais, mas não conta
+   como treino do plano concluído. Sem plano, a coluna "Treinos do plano" não aparece. */
+const FR_MES3 = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
+const FR_DIA3 = ['dom','seg','ter','qua','qui','sex','sáb'];
+// Nome do treino de força igual em todo lugar: título salvo (se não for o genérico "Treino de <dia>") ou o grupo
+// predominante dos exercícios.
+function frNomeTreinoMuscPorGrupos(grupos){
+  const g = (grupos||[]).filter(Boolean);
+  if(!g.length) return 'Musculação';
+  const pernas = g.filter(x=>x==='Pernas').length;
+  if(pernas===0) return 'Superiores';
+  if(pernas/g.length >= 0.6) return 'Inferiores';
+  return 'Corpo inteiro';
+}
+function frNomeTreinoMusc(log){
+  if(log && log.title && !/^Treino de /.test(log.title) && log.title!=='Musculação') return log.title;
+  return frNomeTreinoMuscPorGrupos(((log && log.exercicios)||[]).map(e=>e.grupo));
+}
+// Intervalo completo do período (para as datas e o gráfico) e os "baldes" do gráfico.
+function frIntervaloProg(modo){
+  const hoje = todayISO(), d0 = new Date(hoje+'T12:00:00');
+  if(modo==='mes'){
+    const ini = vdotISODate(new Date(d0.getFullYear(), d0.getMonth(), 1, 12));
+    const fim = vdotISODate(new Date(d0.getFullYear(), d0.getMonth()+1, 0, 12));
+    const baldes = []; for(let a = ini, k = 1; a<=fim; a = frIsoMais(a, 7), k++){ const b = frIsoMais(a, 6) > fim ? fim : frIsoMais(a, 6); baldes.push({ rot:'S'+k, a, b }); }
+    return { ini, fim, baldes, unidadeBalde:'por semana' };
+  }
+  const hp = state.hybridPlanData;
+  if(modo==='ciclo' && hp && hp.startMonday && hp.plan && hp.plan.length){
+    const ini = hp.startMonday, fim = frIsoMais(ini, hp.plan.length*7-1);
+    const baldes = hp.plan.map((w,i)=>({ rot:'S'+(i+1), a:frIsoMais(ini, i*7), b:frIsoMais(ini, i*7+6) }));
+    return { ini, fim, baldes, unidadeBalde:'por semana' };
+  }
+  const ini = vdotISODate(vdotMondayOf(d0)), fim = frIsoMais(ini, 6);
+  return { ini, fim, baldes: DAY_ABBR.map((d,i)=>({ rot:d.toUpperCase().slice(0,3), a:frIsoMais(ini, i), b:frIsoMais(ini, i) })), unidadeBalde:'por dia' };
+}
+function frRotuloIntervalo(a, b){
+  const A = new Date(a+'T12:00:00'), B = new Date(b+'T12:00:00');
+  const f = (d, ano)=>`${d.getDate()} ${FR_MES3[d.getMonth()]}${ano ? ' '+d.getFullYear() : ''}`;
+  return `${f(A, A.getFullYear()!==B.getFullYear())} – ${f(B, true)}`;
+}
+// Treinos do plano no período: previstos (sessões de corrida e de musculação do plano) e concluídos. Conta SÓ as
+// sessões efetivamente geradas (semanas já montadas usam a agenda real, com as mudanças de dia); semana ainda não
+// gerada pelo motor não entra no total e o resultado vem marcado como parcial. Atividade livre não vira treino
+// concluído sozinha.
+function frTreinosDoPlano(ini, fim){
+  const hp = state.hybridPlanData;
+  if(!hp || !hp.plan || !hp.plan.length || !hp.startMonday) return null;
+  const hoje = todayISO(), segAtual = vdotISODate(vdotMondayOf(new Date(hoje+'T12:00:00')));
+  const muscFeita = new Set((state.workoutSessionsLog||[]).map(l=>l && l.data).filter(Boolean));
+  let previstos = 0, feitos = 0, parcial = false;
+  hp.plan.forEach((w, i)=>{
+    const seg = frIsoMais(hp.startMonday, i*7);
+    const gerada = !!(w && !w.pendente);
+    if(!gerada && seg>segAtual){ if(frIsoMais(seg, 6)>=ini && seg<=fim) parcial = true; return; }
+    const semana = w;
+    DAY_ABBR.forEach((d, j)=>{
+      const iso = frIsoMais(seg, j);
+      if(iso<ini || iso>fim || (hp.inicioPlano && iso<hp.inicioPlano)) return;
+      const chave = d+' '+vdotFormatDDMM(new Date(iso+'T12:00:00'));
+      const temCorrida = seg<=segAtual ? (state.treinos||[]).some(t=>t.day===chave) : !!(semana && (semana.corridaWeek||[]).some(c=>c.day===d));
+      const listaM = seg===segAtual ? ((state.muscDayOrigin||{})[d] ? [] : (state.musculacao||{})[d]) : (semana && (semana.muscPlan||{})[d]);
+      const temMusc = !!(listaM && listaM.length);
+      if(temCorrida){ previstos++; const p = (state.corridaProgress||{})[chave]; if(p && (p===true || p.done)) feitos++; }
+      if(temMusc){ previstos++; if(muscFeita.has(iso)) feitos++; }
+    });
+  });
+  return { previstos, feitos, parcial };
+}
+function frGraficoBarrasProg(vals, rots, fmt){
+  const W = 320, H = 170, pl = 22, pr = 6, pt = 22, pb = 24;
+  const max = Math.max(1, ...vals.filter(v=>v!=null));
+  const topo = Math.ceil(max);
+  const n = rots.length, slot = (W-pl-pr)/n, bw = Math.min(30, slot*0.62);
+  const y = (v)=> H-pb-(v/topo)*(H-pt-pb);
+  const grade = [0, 0.5, 1].map(t=>{ const yy = (pt+(1-t)*(H-pt-pb)).toFixed(1); const v = topo*t; return `<line x1="${pl}" x2="${W-pr}" y1="${yy}" y2="${yy}" stroke="var(--border)"/><text x="${pl-5}" y="${(+yy+3).toFixed(1)}" font-size="9" fill="var(--text-faint)" text-anchor="end">${Number.isInteger(v) ? v : String(Math.round(v*10)/10).replace('.',',')}</text>`; }).join('');
+  const barras = vals.map((v,i)=>{
+    const cx = pl+slot*i+slot/2;
+    let s = `<text x="${cx.toFixed(1)}" y="${H-7}" font-size="9.5" fill="var(--text-dim)" text-anchor="middle">${rots[i]}</text>`;
+    if(v==null) return s;
+    const h = Math.max(0, (H-pb)-y(v));
+    if(v>0) s += `<rect x="${(cx-bw/2).toFixed(1)}" y="${y(v).toFixed(1)}" width="${bw.toFixed(1)}" height="${h.toFixed(1)}" rx="3" fill="#111111"/>`;
+    s += `<text x="${cx.toFixed(1)}" y="${(y(v)-5).toFixed(1)}" font-size="10" font-weight="700" fill="var(--text)" text-anchor="middle">${fmt(v)}</text>`;
+    return s;
+  }).join('');
+  return `<svg class="fr-pgraf" viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Evolução">${grade}${barras}</svg>`;
+}
+function frDataCartao(iso){ if(!iso) return ''; const d = new Date(iso+'T12:00:00'); const w = FR_DIA3[d.getDay()]; return `${w.charAt(0).toUpperCase()+w.slice(1)}, ${d.getDate()} ${FR_MES3[d.getMonth()]}`; }
+function frUltimaAtividadeCartao(a){
+  const log = a.tipo==='musculacao' ? (state.workoutSessionsLog||[]).find(l=>'musc:'+(l.id||l.data)===a.id) : null;
+  const nome = a.tipo==='musculacao' ? frNomeTreinoMusc(log) : frNomeAtividade(a);
+  const mets = [];
+  if(a.tipo==='musculacao'){
+    if(a.tempoSeg) mets.push(Math.max(1, Math.round(a.tempoSeg/60))+' min');
+    if(a.series) mets.push(a.series+' séries');
+  }else{
+    if(a.distKm) mets.push(fmtKmMedido(a.distKm)+' km');
+    if(a.tempoSeg) mets.push(formatClock(a.tempoSeg));
+    if(a.distKm && a.tempoSeg) mets.push(formatPace(a.tempoSeg/a.distKm)+'/km');
+  }
+  let thumb;
+  if(a.tipo==='musculacao' && log){
+    // Boneco existente recortado no grupo do treino (laranja só nos músculos trabalhados).
+    const v = normalizarSessaoMuscHistorico(log);
+    const lado = nome==='Corpo inteiro' ? 'frente' : 'costas';
+    const recorte = nome==='Inferiores' ? '20 440 320 250' : '20 150 320 250';
+    thumb = `<span class="fr-ult-th musc">${anatomiaFiguraHtml(lado, v.anat, 'Músculos do treino').replace('viewBox="0 30 360 980"', `viewBox="${recorte}" preserveAspectRatio="xMidYMid slice"`)}</span>`;
+  }else if(a.gpsRunId){
+    thumb = `<span class="fr-ult-th"><span class="fr-ult-mapa" data-runthumb="${a.gpsRunId}" data-keep="1"><span class="neutro">${ICONS.run}</span></span></span>`;
+  }else{
+    thumb = `<span class="fr-ult-th"><span class="neutro">${a.tipo==='musculacao' ? ICONS.dumbbell : ICONS.run}</span></span>`;
+  }
+  return `<button class="fr-ult" data-ativ="${a.id}">${thumb}<span class="tx"><b>${nome}</b><span class="dt">${frDataCartao(a.data)}</span>${mets.length ? `<span class="mt">${mets.join(' · ')}</span>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
+}
+function frProgressoPrincipal(modo, temCiclo){
+  const I = frIntervaloProg(modo), hoje = todayISO();
+  const km = frKmEntre(I.ini, I.fim);
+  const forca = frForcaEntre(I.ini, I.fim);
+  const plano = frTreinosDoPlano(I.ini, I.fim);
+  const col = (v, k)=>`<div class="c"><b>${v}</b><span>${k}</span></div>`;
+  const resumo = `<div class="fr-presumo ${plano ? '' : 'dois'}">
+    ${col(`${String(Math.round(km*10)/10).replace('.',',')} <small>km</small>`, 'Corrida')}
+    ${col(String(forca), forca===1 ? 'Sessão de força' : 'Sessões de força')}
+    ${plano ? col(`${plano.feitos} <small>de</small> ${plano.previstos}`, 'Treinos do plano' + (plano.parcial ? '<em>planejamento parcial</em>' : '')) : ''}
+  </div>`;
+  const ev = state.progEvol==='musc' ? 'musc' : 'corrida';
+  const vals = I.baldes.map(x=> x.a>hoje ? null : ev==='corrida' ? Math.round(frKmEntre(x.a, x.b)*10)/10
+    : (state.workoutSessionsLog||[]).filter(s=>s.data && s.data>=x.a && s.data<=x.b).reduce((t,s)=>t+(s.series||0), 0));
+  const fmt = ev==='corrida' ? (v=> v===0 ? '0' : String(Number.isInteger(v) ? v.toFixed(1) : v).replace('.',',')) : (v=>String(v));
+  const evolucao = `<div class="fr-pevol">
+    <div class="fr-pevol-head"><div><div class="t">Evolução</div><div class="s">${ev==='corrida' ? 'Distância '+I.unidadeBalde+' · km' : 'Séries realizadas '+I.unidadeBalde}</div></div>
+      <div class="fr-pevol-seg"><button class="${ev==='corrida'?'on':''}" data-progevol="corrida">Corrida</button><button class="${ev==='musc'?'on':''}" data-progevol="musc">Musculação</button></div></div>
+    ${frGraficoBarrasProg(vals, I.baldes.map(x=>x.rot), fmt)}
+  </div>`;
+  const ultimas = listarAtividades().slice(0, 3);
+  const atividades = `<div class="fr-pult">
+    <div class="fr-ptit">Últimas atividades</div>
+    ${ultimas.length ? `<div class="fr-psub">${ultimas.length===1 ? 'Registro mais recente' : ultimas.length+' registros mais recentes'}</div><div class="fr-ult-lista">${ultimas.map(frUltimaAtividadeCartao).join('')}</div>`
+      : `<div class="fr-progvazio">Nenhuma atividade ainda. Seu primeiro treino aparece aqui.</div>`}
+    ${ultimas.length ? `<button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>` : ''}
+  </div>`;
+  const linhaAn = (k, ic, t)=>`<button class="fr-plink fr-pan" data-progdet="${k}"><span class="ic">${ic}</span><span>${t}</span>${DS_CHEV}</button>`;
+  const analises = `<div class="fr-pult"><div class="fr-ptit">Análises detalhadas</div>
+    ${linhaAn('corrida', ICONS.run, 'Corrida')}${linhaAn('musc', ICONS.dumbbell, 'Musculação')}${linhaAn('medidas', ICONS.ruler, 'Medidas corporais')}</div>`;
+  const marca = `<div class="fr-pbrand6"><span class="mk">${ARTE_MARCA_SVG('currentColor')}</span><span><b>FORZA</b> RUN</span></div>`;
+  const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
+  return `${marca}<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${resumo}${evolucao}${atividades}${analises}`;
+}
+function frProgressoDetalhe(det, partes){
+  const titulo = det==='corrida' ? 'Corrida' : det==='musc' ? 'Musculação' : 'Medidas corporais';
+  const corpo = det==='corrida' ? partes.recup + partes.linhasCorrida + partes.cardKm + partes.cardPace
+    : det==='musc' ? partes.linhasMusc + partes.cardVolume + partes.cardCarga + partes.cardEq + partes.historicoMusc
+    : partes.cardMed;
+  return `<div class="fr-histhead"><button class="mrt-wex-x" data-progdetvoltar="1" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>
+    <div class="fr-pdet-periodo">${partes.chipsPeriodo}</div>${corpo}`;
 }
 function renderProgressoV2(){
   if(state.progHistorico) return frHistoricoAtividades();
@@ -15280,7 +15782,8 @@ function renderProgressoV2(){
   const forcaAtual = (state.workoutSessionsLog||[]).filter(s=>s.data && semanaDe(s.data)===semanaAtualISO).length;
   const forcaMeta = DAY_ABBR.filter(d=>(muscListForDay(d)||[]).length>0).length;
   const ciHoje = (state.checkinDiario||{})[todayISO()] || null;
-  const recuperacao = ciHoje && (ciHoje.dor===3 || ciHoje.pernas===3 || ciHoje.energia===1) ? 'Recuperação reduzida' : 'Recuperação boa';
+  // Sem check-in de hoje não há leitura: "Sem avaliação" (nunca "Recuperação boa" por padrão).
+  const recuperacao = !ciHoje ? 'Sem avaliação' : (ciHoje.dor===3 || ciHoje.pernas===3 || ciHoje.energia===1) ? 'Recuperação reduzida' : 'Recuperação boa';
   const recuperacaoSub = ciHoje ? 'Com base no check-in de hoje.' : 'Faça o check-in para personalizar a leitura.';
   const pct = (v,m)=>m>0?Math.min(100,Math.round(v/m*100)):0;
   const resumoHibrido = `<div class="fr-hybrid-summary">
@@ -15325,25 +15828,18 @@ function renderProgressoV2(){
   };
   const datasSpark = `<div class="fr-sparkx"><span>${fmtDataCurta(sem8[0])}</span><span>${fmtDataCurta(sem8[7])}</span></div>`;
   const linha = (rot, valor, sub, grafico)=>`<div class="fr-progrow"><div class="txt"><div class="rot">${rot}</div><div class="val">${valor}</div><div class="sub">${sub}</div></div><div class="gr">${grafico}${datasSpark}</div></div>`;
-  const secCorrida = `<div class="fr-progsec">
-    <button class="fr-proghead" data-progdet="corrida"><span class="ic">${ICONS.shoe}</span><span class="t">Corrida</span><span class="chev ${det==='corrida'?'open':''}">${DS_CHEV}</span></button>
-    ${todasRuns.length ? linha('Quilômetros por semana', `${String(Math.round(kmN*10)/10).replace('.',',')} km`, deltaTxt(delta(kmN,kmV)), spark(kmS,'var(--data)'))
-      + linha('Ritmo médio', pcN ? `${formatPace(pcN)} /km` : '—', deltaTxt(pcN&&pcV ? delta(pcN,pcV) : null), spark(paceS,'#8A8A8A')) : '<div class="fr-progvazio">Conclua uma corrida para ver distância e ritmo.</div>'}
-    ${det==='corrida' ? cardKm + cardPace : ''}
-  </div>`;
-  const secMusc = `<div class="fr-progsec">
-    <button class="fr-proghead" data-progdet="musc"><span class="ic">${ICONS.dumbbell}</span><span class="t">Musculação</span><span class="chev ${det==='musc'?'open':''}">${DS_CHEV}</span></button>
-    ${(state.workoutSessionsLog||[]).length ? linha('Séries por semana', `${Math.round(vlN)} séries`, deltaTxt(delta(vlN,vlV)), spark(volS,'var(--data)',true)) : '<div class="fr-progvazio">Conclua um treino de musculação para ver as séries.</div>'}
-    ${cargaH.length ? linha('Evolução de carga', `${String(cargaAtual).replace('.',',')} kg`, deltaTxt(cargaAntes ? delta(cargaAtual, cargaAntes.w) : null), spark(cargaH.slice(-8).map(h=>h.w),'#8A8A8A')) : ''}
-    ${det==='musc' ? cardVolume + cardCarga + cardEq : ''}
-    ${renderMuscHistoryV2()}
-  </div>`;
-  const secAtividades = renderAtividadesProgresso();
-  const secMed = `<div class="fr-progsec"><button class="fr-proghead" data-progdet="medidas"><span class="ic">${ICONS.ruler}</span><span class="t">Medidas corporais</span><span class="chev ${det==='medidas'?'open':''}">${DS_CHEV}</span></button>${det==='medidas' ? cardMed : ''}</div>`;
-  void topo; void resumoHibrido; void secAtividades;
-  const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
+  // Nova arte (08/10/2026): estes blocos saíram da página principal e ficam nas Análises detalhadas.
+  const linhasCorrida = todasRuns.length ? `<div class="fr-progsec">${linha('Quilômetros por semana', `${String(Math.round(kmN*10)/10).replace('.',',')} km`, deltaTxt(delta(kmN,kmV)), spark(kmS,'var(--data)'))
+      + linha('Ritmo médio', pcN ? `${formatPace(pcN)} /km` : '—', deltaTxt(pcN&&pcV ? delta(pcN,pcV) : null), spark(paceS,'#8A8A8A'))}</div>` : '<div class="fr-progvazio">Conclua uma corrida para ver distância e ritmo.</div>';
+  const linhasMusc = `<div class="fr-progsec">${(state.workoutSessionsLog||[]).length ? linha('Séries por semana', `${Math.round(vlN)} séries`, deltaTxt(delta(vlN,vlV)), spark(volS,'var(--data)',true)) : '<div class="fr-progvazio">Conclua um treino de musculação para ver as séries.</div>'}
+    ${cargaH.length ? linha('Evolução de carga', `${String(cargaAtual).replace('.',',')} kg`, deltaTxt(cargaAntes ? delta(cargaAtual, cargaAntes.w) : null), spark(cargaH.slice(-8).map(h=>h.w),'#8A8A8A')) : ''}</div>`;
+  void topo; void resumoHibrido; void chips;
   const recup = `<div class="fr-recup"><span class="fr-acao-ic">${ICONS.heart}</span><div class="txt"><div class="ds-label">Recuperação</div><b>${recuperacao}</b><span>${recuperacaoSub}</span></div></div>`;
-  return `${seg}${frResumoPeriodo(modo)}${frEvolucao(modo)}${recup}${frAtividadesProgresso()}${secCorrida}${secMusc}${secMed}`;
+  if(det){
+    const rotPer = { '4s':'Gráficos: últimas 4 semanas', '3m':'Gráficos: últimos 3 meses', '1a':'Gráficos: último ano' }[periodo] || '';
+    return frProgressoDetalhe(det, { recup, linhasCorrida, cardKm, cardPace, linhasMusc, cardVolume, cardCarga, cardEq, historicoMusc: renderMuscHistoryV2(), cardMed, chipsPeriodo: rotPer });
+  }
+  return frProgressoPrincipal(modo, temCiclo);
 }
 // Todas as atividades (plano e livres, corrida e musculação), uma por linha, da mais recente para a mais antiga.
 function renderAtividadesProgresso(){
@@ -15381,6 +15877,9 @@ function wireProgressoV2(){
   document.querySelectorAll('[data-muschistmenu]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirOpcoesMuscHistoryV2(el.getAttribute('data-muschistmenu')); }; });
   document.querySelectorAll('[data-proghisttodos]').forEach(el=>{ el.onclick = ()=>{ state.progHistTodos = !state.progHistTodos; render(); }; });
   document.querySelectorAll('[data-progdet]').forEach(el=>{ el.onclick = ()=>{ const k = el.getAttribute('data-progdet'); state.progDetalhe = state.progDetalhe===k ? null : k; render(); }; });
+  document.querySelectorAll('[data-progdetvoltar]').forEach(el=>{ el.onclick = ()=>{ state.progDetalhe = null; render(); }; });
+  document.querySelectorAll('[data-progevol]').forEach(el=>{ el.onclick = ()=>{ state.progEvol = el.getAttribute('data-progevol'); render(); }; });
+  if(document.querySelector('[data-runthumb]')) preencherMiniaturasCorrida();
   const s1 = document.getElementById('progExSelect'); if(s1) s1.onchange = ()=>{ state.progressoExKey = s1.value; render(); };
   const s2 = document.getElementById('progMedSelect'); if(s2) s2.onchange = ()=>{ state.progressoMedidaKey = s2.value; render(); };
   wireChartTips();
@@ -16048,7 +16547,7 @@ function renderPreferenciasV2(){
     ${linha(ICONS.watch, 'Pausa automática na corrida', `<button type="button" role="switch" aria-label="Pausa automática na corrida" aria-checked="${!!(state.preferencias||{}).autoPause}" class="mrt-switch ${(state.preferencias||{}).autoPause?'on':''}" data-prefsw="autoPause"><i></i></button>`)}
   </div><div class="ds-label fr-plbl">Descanso da musculação</div><div class="mrt-card" style="padding:6px 16px;">
     <div class="mrt-togglerow" style="flex-wrap:wrap;"><div class="icon-box">${ICONS.bell}</div><div class="nm">Aviso do fim do descanso</div>
-      <div class="ds-seg" style="width:100%;margin:8px 0 4px;">${[['bipevoz','Bipe + voz'],['bipe','Só bipe'],['vibracao','Só vibração']].map(([k,l])=>`<button class="${prefsAviso().modo===k?'on':''}" data-avisomodo="${k}">${l}</button>`).join('')}</div>
+      <div class="ds-seg" style="width:100%;margin:8px 0 4px;">${[['bipe','Bipe'],['vibracao','Só vibração']].map(([k,l])=>`<button class="${prefsAviso().modo===k?'on':''}" data-avisomodo="${k}">${l}</button>`).join('')}</div>
       ${prefsAviso().modo!=='vibracao' ? `<div style="display:flex;align-items:center;gap:10px;width:100%;margin:6px 0;"><label for="avisoVolume" class="mrt-sub" style="margin:0;">Volume</label><input type="range" min="0.2" max="1" step="0.1" value="${prefsAviso().volume}" id="avisoVolume" style="flex:1;min-width:0;accent-color:var(--data);"></div>` : ''}
       <button class="btn-secondary" style="height:44px;margin:4px 0 6px;" id="avisoTestar">Testar aviso</button>
       <div class="mrt-sub" style="margin:0 0 6px;font-size:12px;">No iPhone a música de outros apps abaixa durante o aviso.</div>
@@ -16062,7 +16561,11 @@ function renderPreferenciasV2(){
   </div>`;
 }
 function renderMaisOpcoesV2(){
+  // Conta as gravações que não aparecem (uma vez por abertura da tela) e mostra a recuperação só se houver.
+  if(state.corridasOrfasN==null){ state.corridasOrfasN = 'contando'; corridasOrfas().then(l=>{ state.corridasOrfasN = l.length; if(state.tab==='maisOpcoes') render(); }).catch(()=>{ state.corridasOrfasN = 0; }); }
+  const nOrf = typeof state.corridasOrfasN==='number' ? state.corridasOrfasN : 0;
   return `<div style="display:flex;flex-direction:column;gap:10px;">
+    ${nOrf ? `<button class="ds-row" id="btnRecuperarCorridas"><span class="nm">Recuperar corridas que não aparecem<small style="display:block;font-weight:400;color:var(--text-dim);font-size:13px;">${nOrf} gravaç${nOrf===1?'ão':'ões'} sem atividade</small></span><span class="chev">${DS_CHEV}</span></button>` : ''}
     <button class="btn-secondary" id="btnExportBackup">${ICONS.upload} Exportar backup</button>
     <input type="file" id="importBackupInput" accept="application/json" style="display:none;">
     <button class="btn-secondary" id="btnImportBackup">${ICONS.fileImport} Importar backup</button>
@@ -16089,7 +16592,7 @@ function renderSubV2ShellBase(){
   return `
     <div class="mrt-root">
       <div class="mrt-scroll">
-        ${(tab==='progresso' && state.subOrigin==='nav') ? `<div class="mrt-header"><div class="mrt-title">${titulo}</div></div>` : `<div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>`}
+        ${tab==='progresso' ? '' : `<div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>`}
         ${corpo}
       </div>
       ${renderMrtNav()}
@@ -17558,8 +18061,8 @@ function wireHybridQuizModal(){
   if(vdotNaoSeiBtn) vdotNaoSeiBtn.onclick = ()=>{ hd.step = (hd.step||0)+1; render(); };
 
   const exitBtnHyb = document.getElementById('hybQuizExit');
-  if(exitBtnHyb) exitBtnHyb.onclick = ()=>{
-    if(!confirm('Sair do diagnóstico? As respostas não ficam salvas.')) return;
+  if(exitBtnHyb) exitBtnHyb.onclick = async ()=>{
+    if(!(await confirmarApp({ titulo:"Sair do diagnóstico?", texto:"As respostas não ficam salvas.", ok:"Sair", perigo:true }))) return;
     state.modalOpen = false; state.modalType = null; state.hybridDraft = null; render();
   };
   const backBtnHyb = document.getElementById('hybQuizBack');
