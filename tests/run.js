@@ -36,6 +36,8 @@ const testes = [
   { nome: 'encerrar e plano concluído', arq: 'node/encerrar.test.js' },
   { nome: 'estilos das telas', arq: 'node/estilos.test.js' },
   { nome: 'esteira (distância por trechos) e voz da musculação', arq: 'node/esteira-voz.test.js' },
+  { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
+  { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));

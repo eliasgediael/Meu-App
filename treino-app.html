@@ -5151,7 +5151,7 @@ function exercisesForGroup(grupo){
   return exerciciosCompletos().filter(e=>e.grupo===grupo).map(e=>({ id:e.id, nome:e.nome }))
     .sort((a,b)=>a.nome.localeCompare(b.nome, 'pt-BR'));
 }
-async function saveTreinos(){ try{ await window.storage.set('treinos', JSON.stringify(state.treinos), false); await window.storage.set('zonas', JSON.stringify(state.zonas), false); }catch(e){} }
+async function saveTreinos(){ try{ await window.storage.set('treinos', JSON.stringify(state.treinos), false); await window.storage.set('zonas', JSON.stringify(state.zonas), false); }catch(e){} relogioAgendarEnvio(); }
 // Antes cabia em 7 chaves fixas (uma por dia da semana); agora que guarda por data específica, cresce
 // pra sempre se não podar — mantém só os registros mais recentes.
 async function saveCorridaProgress(){
@@ -5160,6 +5160,7 @@ async function saveCorridaProgress(){
     keys.slice(0, keys.length-500).forEach(k=>delete state.corridaProgress[k]);
   }
   try{ await window.storage.set('corridaProgress', JSON.stringify(state.corridaProgress), false); }catch(e){}
+  relogioAgendarEnvio();
 }
 async function saveMusc(){ try{ await window.storage.set('musculacao', JSON.stringify(state.musculacao), false); }catch(e){} }
 async function saveOutros(){ try{ await window.storage.set('outros', JSON.stringify(state.outros), false); }catch(e){} }
@@ -6403,6 +6404,136 @@ async function gpsDeleteActivity(){
   state.gpsRun = null;
   render();
   showToast('Corrida excluída');
+}
+
+/* ---------- Relógio Garmin (app FORZA RUN Connect IQ) ---------- */
+// O celular é a ponte: manda ao relógio os próximos treinos de corrida (formato compacto de
+// src/relogio/garmin-contrato.js) e recebe as corridas feitas lá. Cada corrida do relógio vira uma corrida
+// do app (IndexedDB) e sobe para o Firestore pela sincronização normal (sincronizarCorridasGps), com a conta
+// já logada neste celular. O relógio não recebe credencial nenhuma do Firebase.
+// Só no app nativo do iPhone (plugins/relogio-garmin); no navegador tudo aqui fica inativo.
+const RELOGIO_ENVIO_KEY = 'relogioGarminUltimoEnvio';
+const RELOGIO_REENVIO_MS = 6*3600*1000; // mesma lista é reenviada no máximo a cada 6 h
+let _relogioOuvindo = false, _relogioFila = Promise.resolve(), _relogioEstado = null, _relogioTimer = null;
+function relogioApi(){ return (window.NativeBridge && NativeBridge.relogio && NativeBridge.relogio.disponivel()) ? NativeBridge.relogio : null; }
+function relogioIniciar(){
+  const R = relogioApi();
+  if(!R || _relogioOuvindo) return;
+  _relogioOuvindo = true;
+  R.ouvir(ev=>{
+    // Uma mensagem por vez, e só depois do init (os treinos e o progresso precisam estar carregados).
+    _relogioFila = _relogioFila.then(()=>relogioReceber(ev && ev.dados)).catch(e=>console.warn('[relogio]', e));
+  }, est=>{
+    _relogioEstado = est;
+    if(est && (est.relogios||[]).some(r=>r.status==='conectado')) relogioEnviarTreinos({ forcar:true });
+    if(document.getElementById('relogioGarminCard')) render();
+  });
+  R.estado().then(est=>{ _relogioEstado = est; });
+}
+// Mudou treino ou progresso: reenvia a lista em alguns segundos (várias gravações seguidas viram um envio só).
+function relogioAgendarEnvio(){
+  if(!relogioApi()) return;
+  clearTimeout(_relogioTimer);
+  _relogioTimer = setTimeout(()=>relogioEnviarTreinos(), 3000);
+}
+function relogioMensagemTreinos(){
+  const R = relogioApi();
+  const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
+  return R.mensagemTreinos(R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito }));
+}
+// Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
+async function relogioEnviarTreinos(op){
+  const R = relogioApi();
+  if(!R) return null;
+  if(_primeiroInit) await _primeiroInit;
+  if(state.viewingClient) return null; // personal vendo a conta de uma aluna: o relógio é dele, não dela
+  const msg = relogioMensagemTreinos();
+  const json = JSON.stringify(msg);
+  let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
+  if(!(op && op.forcar) && ultimo && ultimo.json===json && Date.now()-ultimo.em < RELOGIO_REENVIO_MS) return { enviados:0, motivo:'sem_mudanca' };
+  const r = await R.enviar(msg);
+  if(r && r.enviados>0) lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:msg.w.length }));
+  return r;
+}
+async function relogioReceber(d){
+  const R = relogioApi();
+  if(!R || !d || typeof d!=='object') return;
+  if(_primeiroInit) await _primeiroInit;
+  if(d.t==='r'){
+    const ok = await relogioImportarResultado(d.r);
+    // Só confirma depois de gravar: sem "ack" o relógio mantém o resultado na fila e reenvia.
+    if(ok) await R.enviar(R.mensagemAck([String(d.r && d.r.resultId)]));
+  }
+}
+// Corrida feita no relógio -> corrida do app. Retorna true quando o relógio já pode tirar da fila.
+async function relogioImportarResultado(r){
+  const R = relogioApi();
+  const reg = R.registroDoResultado(r);
+  if(!reg) return true;                    // inválido: não há o que gravar; confirma para não travar a fila
+  if(state.viewingClient) return false;    // nunca grava na conta de outra pessoa
+  if(await gpsDbGet(reg.runId)) return true; // já importado (o relógio reenviou antes de receber o "ack")
+  const fim = reg.fim || Date.now();
+  const dataISO = vdotISODate(new Date(reg.inicio || fim));
+  const entry = reg.day ? (state.treinos||[]).find(t=>t.day===reg.day) : null;
+  const prev = entry ? state.corridaProgress[entry.day] : null;
+  // Como no GPS do app: se o treino do dia já tem corrida registrada, esta entra como atividade própria.
+  const livre = !entry || !!(prev && typeof prev==='object' && prev.done && progressoTemRegistro(prev));
+  const salvou = await gpsDbPut({ id:reg.runId, day: entry ? dayAbbrevOf(entry.day) : DAY_ABBR[(new Date(fim).getDay()+6)%7],
+    finishedAt:fim, ownerUid: state.authUser ? state.authUser.uid : null, origem:'garmin', garminResultId:reg.resultId,
+    fcMedia:reg.fcMedia, ...(livre ? { livre:true, tipoAtividade:'corrida' } : {}),
+    etapas_executadas:reg.etapas, pontos_gps:[], distancia_total_km:reg.km, tempo_total_seg:reg.seg });
+  if(!salvou) return false;
+  let shoeCredit = null;
+  const tenis = (state.equipamentos.tenis||[]).find(t=>t.ativo);
+  if(tenis && reg.km){ tenis.km = Math.round((tenis.km+reg.km)*10)/10; shoeCredit = { tenisId:tenis.id, km:reg.km }; saveEquipamentos(); }
+  const paceSeg = reg.km>0 ? reg.seg/reg.km : null;
+  if(livre){
+    await registrarAtividadeLivre({ id:'run:'+reg.runId, tipo:'corrida', origem:'garmin', data:dataISO, inicio:reg.inicio, fim,
+      distKm:reg.km, tempoSeg:reg.seg, paceSeg, gpsRunId:reg.runId, shoeCredit });
+  }else{
+    state.corridaProgress[entry.day] = { ...(prev && typeof prev==='object' ? prev : {}), done:true,
+      pace: paceSeg!=null ? formatPace(paceSeg)+'/km' : '', tempo: formatClock(reg.seg), km: String(reg.km),
+      data: dataISO, shoeCredit, gpsRunId: reg.runId, origem:'garmin' };
+    await saveCorridaProgress();
+  }
+  try{ await recalcularRecordesCorrida(); }catch(e){}
+  sincronizarCorridasGps();
+  render();
+  showToast('Corrida do relógio salva');
+  return true;
+}
+// Cartão em Perfil › Equipamentos (só no app nativo).
+function relogioGarminCardHtml(){
+  if(!relogioApi()) return '';
+  const est = _relogioEstado || {};
+  const lista = est.relogios || [];
+  const TXT = { conectado:'conectado', desconectado:'fora de alcance', bluetooth_desligado:'Bluetooth desligado', nao_encontrado:'não encontrado' };
+  let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
+  return `
+    <div id="relogioGarminCard" style="margin-top:12px;">
+      <div class="mrt-medlabel">Relógio Garmin (app FORZA RUN)</div>
+      ${lista.length ? lista.map(r=>`<div class="mrt-sub" style="margin:4px 0;">${escHtmlRelogio(r.nome||r.modelo||'Relógio')} · ${TXT[r.status]||r.status}</div>`).join('')
+        : `<div class="mrt-sub" style="margin:4px 0;">${est.precisaGarminConnect ? 'Instale o app Garmin Connect para ligar o relógio.' : 'Nenhum relógio escolhido.'}</div>`}
+      ${ultimo ? `<div class="mrt-sub" style="margin:4px 0;">Último envio: ${ultimo.qtd} treino${ultimo.qtd===1?'':'s'} em ${new Date(ultimo.em).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</div>` : ''}
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="mrt-pillbtn" id="btnRelogioEscolher">${lista.length ? 'Trocar relógio' : 'Escolher relógio'}</button>
+        ${lista.length ? `<button class="mrt-pillbtn" id="btnRelogioEnviar">Enviar treinos agora</button>` : ''}
+      </div>
+    </div>`;
+}
+function escHtmlRelogio(s){ return String(s).replace(/[&<>"]/g, c=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c])); }
+function wireRelogioGarmin(){
+  const R = relogioApi();
+  if(!R) return;
+  const esc = document.getElementById('btnRelogioEscolher');
+  if(esc) esc.onclick = async ()=>{ const r = await R.escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); };
+  const env = document.getElementById('btnRelogioEnviar');
+  if(env) env.onclick = async ()=>{
+    const r = await relogioEnviarTreinos({ forcar:true });
+    if(r && r.enviados>0) showToast('Treinos enviados ao relógio');
+    else showToast(r && r.motivo==='desconectado' ? 'Relógio fora de alcance — abra o Garmin Connect' : 'Não consegui enviar ao relógio');
+    render();
+  };
 }
 
 /* ---------- Corridas GPS na nuvem ---------- */
@@ -16003,6 +16134,7 @@ function renderEquipamentosV2(){
       <label class="mrt-medlabel" for="inRelogio" style="margin-top:12px;">Relógio</label>
       <input class="mrt-input" id="inRelogio" list="relogioModelosList" value="${state.equipamentos.relogio||''}" placeholder="ex: Garmin Forerunner 255">
       <datalist id="relogioModelosList">${RELOGIO_MODELOS.map(m=>`<option value="${m}">`).join('')}</datalist>
+      ${relogioGarminCardHtml()}
       <datalist id="tenisModelosList">${TENIS_MODELOS.map(m=>`<option value="${m}">`).join('')}</datalist>
       <div class="mrt-medlabel" style="margin-top:16px;">Tênis</div>
       ${tenis.length ? tenis.map(t=>{
@@ -16053,6 +16185,7 @@ function wireEquipamentosV2(){
   });
   const inRelogio = document.getElementById('inRelogio');
   if(inRelogio) inRelogio.onchange = ()=>{ state.equipamentos.relogio = inRelogio.value.trim(); saveEquipamentos(); };
+  wireRelogioGarmin();
   const add = document.getElementById('btnAddTenis');
   if(add) add.onclick = ()=>{ const v = document.getElementById('inNovoTenis').value.trim(); if(!v){ document.getElementById('inNovoTenis').focus(); return; } addTenis(v); };
   document.querySelectorAll('[data-usetenis]').forEach(el=>{ el.onclick = ()=> setTenisAtivo(el.getAttribute('data-usetenis')); });
@@ -19019,6 +19152,9 @@ document.addEventListener('click', (e)=>{ const el = e.target && e.target.closes
   }
   _primeiroInit = init();
   iniciarNuvem();
+  relogioIniciar();
+  _primeiroInit.then(()=>relogioEnviarTreinos()).catch(()=>{});
+  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') relogioEnviarTreinos(); });
   window.addEventListener('online', ()=>{
     cloudDownUntil = 0;
     if(!firebasePronto){ iniciarNuvem(); return; }

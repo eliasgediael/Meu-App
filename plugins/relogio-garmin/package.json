@@ -1,0 +1,11 @@
+{
+  "name": "relogio-garmin",
+  "version": "1.0.0",
+  "description": "Ponte Forza Run <-> relógio Garmin (app FORZA RUN Connect IQ) pelo Connect IQ Mobile SDK.",
+  "main": "index.js",
+  "license": "UNLICENSED",
+  "private": true,
+  "files": ["ios/Sources", "Package.swift", "index.js"],
+  "peerDependencies": { "@capacitor/core": ">=8.0.0" },
+  "capacitor": { "ios": { "src": "ios" } }
+}
