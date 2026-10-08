@@ -8,3 +8,4 @@ import './atividades.js';
 import './contratos.js';
 import './agenda.js';
 import './adaptacao.js';
+import './versoes.js';

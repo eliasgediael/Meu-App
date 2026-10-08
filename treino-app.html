@@ -1499,6 +1499,11 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-diario .dt{ width:44px; flex-shrink:0; font-size:13px; font-weight:700; color:var(--text-faint); font-variant-numeric:tabular-nums; }
 .ds-diario .tx{ font-size:14px; color:var(--text); line-height:1.4; }
 .ds-diario .tx span{ display:block; font-size:13px; color:var(--text-dim); margin-top:2px; }
+.fr-versao{ align-items:center; }
+.fr-versao .dt{ width:64px; }
+.fr-versao .tx{ flex:1; min-width:0; }
+.fr-versaobtn{ flex-shrink:0; width:auto; min-height:44px; padding:0 12px; }
+.fr-versoesrow{ margin-bottom:8px; }
 .ds-star{ height:12px; font-size:11px; line-height:12px; color:var(--text); }
 .ds-star-in{ font-size:13px; color:var(--text); }
 .ds-seg4{ grid-template-columns:repeat(4, minmax(0,1fr)); }
@@ -4081,7 +4086,7 @@ async function qv2Gerar(){
   const q = state.qv2;
   q.fase = 'gerando'; qv2Refresh();
   let r = null;
-  try{ r = await gerarPrimeiroPlanoV2(); }catch(e){ r = null; }
+  try{ r = await gerarPrimeiroPlanoV2(q.revisao ? { motivoVersao:'Questionário revisado', origemVersao:'revisao' } : undefined); }catch(e){ r = null; }
   if(!r){ q.fase = 'entendi'; q.erro = 'Não consegui montar o plano agora. Tente de novo.'; qv2Refresh(); return; }
   if(r.bloqueado){
     if(r.status==='avaliacao_em_andamento'){ q.fase = 'pausa'; } else { qv2IrParaCautela(); }
@@ -4376,6 +4381,7 @@ async function init(){
   state.preferencias = { autoPause:false, vozKm:true, ...(await lerJson('preferencias', {})) };
   state.recordesCorrida = await lerJson('recordesCorrida', {});
   await carregarAtividades();
+  await carregarVersoesPlano();
   state.progressaoExercicios = await lerJson('progressaoExercicios', {});
   state.zonasHistorico = await lerJson('zonasHistorico', []);
   // Auditoria da biblioteca: exercícios salvos que apontavam para a animação de outro movimento.
@@ -10207,13 +10213,17 @@ function readAndResizeImage(file, size, cb){
 // Todas as chaves que o app grava (as da segunda linha ficavam de fora do backup e da migração pra nuvem).
 const BACKUP_KEYS = ['treinos','zonas','musculacao','outros','corridaProgress','perfil','historicoCarga','historicoMedidas','equipamentos','corridaVdotData','weekTrackMonday','onboardingDone','challenge','athleteProfile',
   'hybridPlanData','treinoTemplates','muscTemplates','muscDayOrigin','muscAjuste','workoutSessionsLog','domsPernas','semanasCompletas','equipItens','favoritos','atalhos',
-  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida','atividades','progressaoExercicios','zonasHistorico'];
+  'diarioTreinador','checkinDiario','muscAjusteOrig','perdidosTratados','preferencias','recordesCorrida','atividades','progressaoExercicios','zonasHistorico','planoVersoes'];
+// Cada versão do plano mora na própria chave (planoVersao_<id>), listada no índice planoVersoes.
+async function chavesVersoesNoArmazenamento(store){
+  try{ const r = await (store || window.storage).get('planoVersoes', false); const v = r && r.value ? JSON.parse(r.value) : []; return (Array.isArray(v) ? v : []).map(m=>versaoChave(m.id)); }catch(e){ return []; }
+}
 // Corridas GPS (IndexedDB) vão no backup num campo próprio — backups antigos, sem esse campo, continuam
 // importando normalmente.
 const BACKUP_CAMPO_CORRIDAS = '__corridasGps';
 async function exportBackup(){
   const obj = {};
-  for(const k of BACKUP_KEYS){
+  for(const k of BACKUP_KEYS.concat(await chavesVersoesNoArmazenamento())){
     try{ const r = await window.storage.get(k, false); if(r && r.value!=null) obj[k] = r.value; }catch(e){}
   }
   const corridas = (await gpsDbAll()).filter(gpsEhCorridaSalva);
@@ -10244,7 +10254,8 @@ async function importBackupFile(file){
 async function apagarTudo(){
   if(!(await confirmarApp({ titulo:'Apagar todos os dados?', texto:'Treinos, histórico, perfil — tudo neste aparelho. Não dá para desfazer.', ok:'Continuar', perigo:true }))) return;
   if(!(await confirmarApp({ titulo:'Tem certeza mesmo?', texto:'Essa ação é definitiva.', ok:'Apagar tudo', perigo:true }))) return;
-  BACKUP_KEYS.forEach(k=>{ try{ localStorage.removeItem('treinoapp:'+k); }catch(e){} });
+  const chavesVersoes = await chavesVersoesNoArmazenamento(makeLocalStorage());
+  BACKUP_KEYS.concat(chavesVersoes).forEach(k=>{ try{ localStorage.removeItem('treinoapp:'+k); }catch(e){} });
   location.reload();
 }
 function toggleCorridaDone(day){
@@ -13276,10 +13287,32 @@ function frItensHistorico(){
 function frAbrirHistorico(){
   const itens = frItensHistorico();
   const fmt = (iso)=>{ const p = String(iso||'').split('-'); return p.length===3 ? p[2]+'/'+p[1] : iso; };
+  const nVers = versoesDoPlano().length;
   openSheet(`<div class="sheet-title">Histórico de mudanças</div>
+    ${nVers ? `<button class="ds-row fr-versoesrow" id="histVersoes"><span class="fr-ic">${FR_ICON_HIST}</span><span class="nm">Versões do plano</span><span class="aside">${nVers}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
     ${itens.length ? `<div class="ds-list">${itens.slice(0,120).map(x=>`<div class="ds-diario"><div class="dt">${fmt(x.data)}</div><div class="tx"><b>${x.t}</b>${x.s ? `<span>${x.s}</span>` : ''}</div></div>`).join('')}</div>`
       : `<div class="ds-muted" style="padding:16px 0;">Nenhuma mudança ainda.</div>`}
-    <button class="btn-secondary" style="margin-top:16px;" id="histFechar">Fechar</button>`, (sh)=>{ sh.querySelector('#histFechar').onclick = closeSheet; });
+    <button class="btn-secondary" style="margin-top:16px;" id="histFechar">Fechar</button>`, (sh)=>{
+      sh.querySelector('#histFechar').onclick = closeSheet;
+      const v = sh.querySelector('#histVersoes'); if(v) v.onclick = frAbrirVersoes;
+    });
+}
+// Versões do plano: cada uma é o plano como estava antes de uma mudança. Restaurar troca só o planejamento.
+function frAbrirVersoes(){
+  const lista = versoesDoPlano();
+  openSheet(`<div class="sheet-title">Versões do plano</div>
+    <div class="ds-list">${lista.map(m=>`<div class="ds-diario fr-versao"><div class="dt">${rotuloVersao(m)}</div><div class="tx"><b>${m.motivo}</b><span>${m.resumo}</span></div><button class="btn-ghost fr-versaobtn" data-restaurar="${m.id}">Restaurar</button></div>`).join('')}</div>
+    <button class="btn-secondary" style="margin-top:16px;" id="versVoltar">Voltar</button>`, (sh)=>{
+      sh.querySelector('#versVoltar').onclick = frAbrirHistorico;
+      sh.querySelectorAll('[data-restaurar]').forEach(b=>{ b.onclick = async ()=>{
+        const m = lista.find(x=>x.id===b.getAttribute('data-restaurar')); if(!m) return;
+        const ok = await confirmarApp({ titulo:'Restaurar esta versão?', texto:'Muda só o plano de hoje em diante. Atividades e histórico continuam iguais.', ok:'Restaurar' });
+        if(!ok) return;
+        const feito = await restaurarVersaoDoPlano(m.id);
+        closeSheet(); render();
+        showToast(feito ? 'Versão restaurada' : 'Não consegui restaurar esta versão');
+      }; });
+    });
 }
 
 /* Revisar questionário: abre o questionário já preenchido com as respostas salvas no perfil, começando por
@@ -18082,7 +18115,7 @@ function renderModal(){
 async function migrateLocalDataToCloud(uid){
   const localStore = makeLocalStorage(); // dados de quem usava sem login (treinoapp:{chave})
   let completa = true;
-  for(const key of BACKUP_KEYS){
+  for(const key of BACKUP_KEYS.concat(await chavesVersoesNoArmazenamento(localStore))){
     try{
       const local = await localStore.get(key, false);
       if(!local || local.value==null) continue;

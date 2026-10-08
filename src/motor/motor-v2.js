@@ -1141,6 +1141,8 @@ async function gerarPrimeiroPlanoV2(opcoes){
   if(!state.athleteProfile) await carregarAthleteProfile();
   const r = gerarPlanoSemanal(state.athleteProfile, opcoes);
   if(r.bloqueado) return r;
+  // Versões do plano: o plano em uso é guardado antes de ser substituído.
+  await guardarVersaoDoPlano((opcoes && opcoes.motivoVersao) || 'Plano refeito', (opcoes && opcoes.origemVersao) || 'refazer');
   const vd = r.estado.corrida.vdot;
   // Zonas: a primeira entra direto; mudança de zona existente vira proposta com confirmação (Bloco 9).
   if(!state.corridaVdotData || !state.corridaVdotData.vdot || r.estado.corrida.vdotFonte==='desempenho'){

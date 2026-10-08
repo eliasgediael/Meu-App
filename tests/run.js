@@ -30,6 +30,7 @@ const testes = [
   { nome: 'telas: Início, agenda, zonas, vínculo (Bloco 9)', arq: 'node/bloco9.test.js' },
   { nome: 'aba Treino e Gerenciar plano', arq: 'node/treino-menu.test.js' },
   { nome: 'Progresso e histórico', arq: 'node/progresso.test.js' },
+  { nome: 'versões do plano', arq: 'node/versoes.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));

@@ -360,6 +360,7 @@ function destinosParaMover(d, mod, aPartir){
   return out;
 }
 async function moverSessao(d, alvo, mod, motivo){
+  guardarVersaoDoPlano('Sessão movida de ' + (DAY_FULLNAME[d]||d).split('-')[0] + ' para ' + (DAY_FULLNAME[alvo]||alvo).split('-')[0] + (motivo ? ' (' + motivo + ')' : ''), 'reorganizacao');
   if(mod==='corrida'){
     const e = naSemanaAtual(()=>treinoEntryForDay(d));
     if(!e) return false;
@@ -497,6 +498,7 @@ async function resolverPerdido(p, acao){
 // Desde o Bloco 7 passa pelos contratos WeeklyCheckin → WeekDecision → WeekOverlay (src/motor/adaptacao.js):
 // mesmas reduções de antes; o aumento (+5% em semana fácil) vira proposta que a pessoa confirma.
 function aplicarCheckinSemanalV2(hp, week, d, resposta){
+  guardarVersaoDoPlano('Check-in da semana ' + week, 'checkin');
   return aplicarCheckinContratos(hp, week, d, resposta);
 }
 /* ===== fim PLANO VIVO + TREINADOR ===== */
