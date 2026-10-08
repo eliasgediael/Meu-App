@@ -11,3 +11,4 @@ import './adaptacao.js';
 import './versoes.js';
 import './pausa.js';
 import './lesoes.js';
+import './encerrar.js';

@@ -1509,6 +1509,9 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-cmpdia{ display:flex; flex-direction:column; font-size:13.5px; color:var(--text); line-height:1.35; }
 .fr-cmpdia b{ font-size:12px; color:var(--text-dim); font-weight:700; }
 @media (max-width:359px){ .fr-cmp{ grid-template-columns:1fr; } }
+.fr-concluido{ padding:18px 16px; border:1px solid var(--border); border-radius:var(--r-card); }
+.fr-concluido .t{ font-size:22px; font-weight:900; color:var(--text); }
+.fr-concluido .s{ font-size:14px; color:var(--text-dim); margin:4px 0 14px; }
 .fr-lesao .nm small{ display:block; font-size:12.5px; color:var(--text-dim); font-weight:400; }
 .fr-mudancas{ display:flex; flex-direction:column; }
 .fr-mudanca{ display:flex; flex-direction:column; gap:2px; padding:10px 0; border-top:1px solid var(--border); font-size:14px; }
@@ -12933,6 +12936,10 @@ function renderHojeV2Content(){
   // Sem plano: só o convite (sem "Dia de descanso", que daria a entender que existe um plano). Com plano e semana
   // vazia, continua o cartão de descanso.
   const temPlanoGerado = !!((state.hybridPlanData && state.hybridPlanData.plan && state.hybridPlanData.plan.length) || (state.corridaVdotData && state.corridaVdotData.plan && state.corridaVdotData.plan.length));
+  if(planoConcluido()){
+    const ult = frUltimaAtividade();
+    return greetRow + frCartaoConcluido() + (ult ? `<div class="ds-section"><div class="ds-list">${ult}</div></div>` : '');
+  }
   if(planoPausado()){
     const ult = frUltimaAtividade();
     return greetRow + frCartaoPausado() + frAtalhos() + (ult ? `<div class="ds-section"><div class="ds-list">${ult}</div></div>` : '');
@@ -13198,6 +13205,24 @@ async function frAbrirRetomar(){
       const q = sh.querySelector('#retQuest'); if(q) q.onclick = async ()=>{ await concluir(true); frRevisarQuestionario(); };
     });
 }
+/* Fim natural do plano (regras em src/motor/encerrar.js). */
+function frCartaoConcluido(){
+  const r = resumoPlanoConcluido();
+  const partes = [r.semanas+' semanas'];
+  if(r.corridas) partes.push(r.corridas+' corrida'+(r.corridas===1?'':'s')+(r.km ? ' · '+fmtKmMedido(r.km)+' km' : ''));
+  if(r.forca) partes.push(r.forca+' treino'+(r.forca===1?'':'s')+' de força');
+  return `<div class="ds-section"><div class="fr-concluido">
+    <div class="t">Plano concluído</div><div class="s">${partes.join(' · ')}</div>
+    <button class="btn-primary fr-btnseta" data-proximoplano="1">Criar próximo plano ${FR_ARROW}</button>
+    <button class="btn-ghost" style="width:100%;margin-top:4px;" data-agoranao="1">Agora não</button>
+  </div></div>`;
+}
+document.addEventListener('click', async (ev)=>{
+  const p = ev.target.closest && ev.target.closest('[data-proximoplano]');
+  if(p){ ev.preventDefault(); frRevisarQuestionario(); return; }
+  const n = ev.target.closest && ev.target.closest('[data-agoranao]');
+  if(n){ ev.preventDefault(); await dispensarPlanoConcluido(); render(); }
+});
 /* Lesões e limitações (regras em src/motor/lesoes.js). */
 function frAbrirLesoes(){
   const lista = lesoesAtivas();
@@ -13287,6 +13312,7 @@ function frAbrirGerenciarPlano(){
       ${frItemGP('historico', FR_ICON_HIST, 'Histórico de mudanças', '')}
       ${frTemRespostasDoQuestionario() ? frItemGP('revisar', ICONS.pencil, 'Revisar questionário do plano', 'Veja e corrija suas respostas') : ''}
       ${temHibrido ? frItemGP('lesoes', ICONS.heart, 'Lesões e limitações', (()=>{ const n = lesoesAtivas().length; return n ? n+' ativa'+(n===1?'':'s') : ''; })()) : ''}
+      ${temHibrido ? frItemGP('encerrar', ICONS.xmark, 'Encerrar plano', 'Fica guardado nas versões') : ''}
       ${temHibrido ? (planoPausado() ? frItemGP('retomar', ICONS.play, 'Retomar plano', 'Pausado desde '+frDiaMesISO(hp.pausa.inicio)) : frItemGP('pausar', FR_ICON_PAUSA, 'Pausar plano', '')) : ''}
     </div>` : ''}
     <div class="ds-label fr-gplbl">Treino</div><div class="ds-list">
@@ -13305,6 +13331,10 @@ async function frAcaoGerenciar(a){
   if(a==='revisar') return frRevisarQuestionario();
   if(a==='pausar') return frAbrirPausar();
   if(a==='lesoes') return frAbrirLesoes();
+  if(a==='encerrar'){
+    if(!(await confirmarApp({ titulo:'Encerrar o plano?', texto:'Sai o que estava planejado de hoje em diante. Atividades e histórico ficam.', ok:'Encerrar', perigo:true }))) return;
+    await encerrarPlano(); render(); showToast('Plano encerrado'); return;
+  }
   if(a==='retomar') return frAbrirRetomar();
   if(a==='manual'){ abrirCriarTreino(); return; }
   if(a==='modelos'){ state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); return; }
@@ -15728,7 +15758,7 @@ function renderPerfilV2Content(){
   const row = (attrs, icon, titulo, sub, valor)=>`<button class="ds-row fr-perfilrow" ${attrs}><span class="fr-ic">${icon}</span><span class="nm">${titulo}${sub ? `<small>${sub}</small>` : ''}</span>${valor ? `<span class="aside">${valor}</span>` : ''}<span class="chev">${DS_CHEV}</span></button>`;
   const meuTreino = `<div class="ds-label fr-plbl">Meu treino</div><div class="ds-list">
     ${phaseParts ? row('data-pfacao="plano"', ICONS.clipboard, 'Plano e objetivo', 'Fases, semanas e sessões', '') : ''}
-    ${phaseParts ? row('data-pfacao="historico"', FR_ICON_HIST, 'Histórico de mudanças', '', '') : ''}
+    ${phaseParts ? row('data-pfacao="historico"', FR_ICON_HIST, 'Histórico de mudanças', '', '') : versoesDoPlano().length ? row('data-pfacao="versoes"', FR_ICON_HIST, 'Versões do plano', 'Planos anteriores', '') : ''}
     ${row('id="mrtRedoDiagBtn"', ICONS.wand, phaseParts ? 'Refazer meu plano' : 'Criar meu plano', '', '')}
     ${row('data-perfilgo="comparativo"', ICONS.compare, 'Comparativo', 'Planejado x realizado', '')}
     ${row('data-perfilgo="medidas"', ICONS.ruler, 'Medidas corporais', (()=>{ const h=bodyFatHistory(); return h.length ? h[h.length-1].pct+'% de gordura' : ''; })(), '')}
@@ -15782,7 +15812,7 @@ function wirePerfilV2(){
   if(closeDadosBtn) closeDadosBtn.onclick = ()=>{ state.modalOpen=false; state.modalType=null; render(); };
   const dadosOverlay = document.getElementById('mrtDadosOverlay');
   if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
-  document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); }; });
+  document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); else if(a==='versoes') frAbrirVersoes(); }; });
   const redoDiagBtn = document.getElementById('mrtRedoDiagBtn');
   if(redoDiagBtn) redoDiagBtn.onclick = async ()=>{ if(await confirmarRefazerPlano()) abrirDiagnostico(); };
   wirePerfilExtras();

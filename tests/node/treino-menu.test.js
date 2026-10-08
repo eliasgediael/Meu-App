@@ -39,7 +39,8 @@ const limpo = (v) => JSON.stringify(v, (k, x) => (VOLATEIS.has(k) ? undefined : 
   T.frAbrirGerenciarPlano();
   ok(/Ver plano completo/.test(sheet) && /Reorganizar semana/.test(sheet) && /Histórico de mudanças/.test(sheet) && /Revisar questionário do plano/.test(sheet) && /Refazer meu plano/.test(sheet), 'menu Gerenciar plano tem as ações do plano');
   ok(/Editar treino do dia/.test(sheet) && /Criar treino manual/.test(sheet) && /Modelos salvos/.test(sheet), 'menu mantém o grupo Treino');
-  ok(!/em breve|Encerrar|Alterar disponibilidade/i.test(sheet), 'menu sem botões falsos nem funções ainda não liberadas');
+  ok(!/em breve|Alterar disponibilidade/i.test(sheet), 'menu sem botões falsos');
+  ok(/data-gp="encerrar"/.test(sheet), 'menu tem Encerrar plano (função real desde 07/10)');
   ok(/data-gp="lesoes"/.test(sheet), 'menu tem Lesões e limitações (função real desde 07/10)');
   ok(/data-gp="pausar"/.test(sheet), 'menu tem Pausar plano (função real desde 07/10)');
 

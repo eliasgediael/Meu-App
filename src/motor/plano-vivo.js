@@ -84,7 +84,8 @@ async function atualizarSemanaDoPlano(){
   if(hp && hp.plan && hp.plan.length && hp.startMonday){
     if(hp.pausa){ await semanaDuranteAPausa(segISO); return; }   // pausa: a semana não avança
     const n = semanaDoPlanoPara(hp.startMonday, seg);
-    if(n<1 || n>hp.plan.length) return;
+    if(n>hp.plan.length){ await marcarPlanoConcluido(segISO); return; }   // fim natural do plano
+    if(n<1) return;
     if(hp.currentWeekIndex===n && hp.materializadaSeg===segISO) return;
     const anterior = hp.plan[(hp.currentWeekIndex||1)-1];
     const diasMuscAnteriores = anterior && anterior.muscPlan ? Object.keys(anterior.muscPlan) : [];

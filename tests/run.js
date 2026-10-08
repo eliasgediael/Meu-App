@@ -33,6 +33,7 @@ const testes = [
   { nome: 'versões do plano', arq: 'node/versoes.test.js' },
   { nome: 'pausar e retomar o plano', arq: 'node/pausa.test.js' },
   { nome: 'lesões e limitações', arq: 'node/lesoes.test.js' },
+  { nome: 'encerrar e plano concluído', arq: 'node/encerrar.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));
