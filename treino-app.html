@@ -1509,6 +1509,12 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-cmpdia{ display:flex; flex-direction:column; font-size:13.5px; color:var(--text); line-height:1.35; }
 .fr-cmpdia b{ font-size:12px; color:var(--text-dim); font-weight:700; }
 @media (max-width:359px){ .fr-cmp{ grid-template-columns:1fr; } }
+.fr-lesao .nm small{ display:block; font-size:12.5px; color:var(--text-dim); font-weight:400; }
+.fr-mudancas{ display:flex; flex-direction:column; }
+.fr-mudanca{ display:flex; flex-direction:column; gap:2px; padding:10px 0; border-top:1px solid var(--border); font-size:14px; }
+.fr-mudanca b{ font-size:13px; color:var(--text-dim); }
+.fr-mudanca .a{ color:var(--text-faint); text-decoration:line-through; }
+.fr-mudanca .d{ color:var(--text); font-weight:600; }
 .fr-versao{ align-items:center; }
 .fr-versao .dt{ width:64px; }
 .fr-versao .tx{ flex:1; min-width:0; }
@@ -13192,6 +13198,80 @@ async function frAbrirRetomar(){
       const q = sh.querySelector('#retQuest'); if(q) q.onclick = async ()=>{ await concluir(true); frRevisarQuestionario(); };
     });
 }
+/* Lesões e limitações (regras em src/motor/lesoes.js). */
+function frAbrirLesoes(){
+  const lista = lesoesAtivas();
+  openSheet(`<div class="sheet-title">Lesões e limitações</div>
+    ${lista.length ? `<div class="ds-list">${lista.map(l=>`<div class="ds-row ds-static fr-lesao"><span class="nm">${rotuloLesao(l)}${l.desde ? `<small>Desde ${frDiaMesISO(l.desde)}</small>` : ''}</span><button class="btn-ghost fr-versaobtn" data-melhorou="${l.regiao}">Melhorou</button></div>`).join('')}</div>`
+      : '<div class="ds-muted" style="padding:6px 0 4px;">Nenhuma limitação ativa</div>'}
+    <div class="ds-actions" style="margin-top:16px;"><button class="btn-primary" id="lesAdd">${ICONS.plus} Adicionar</button><button class="btn-ghost" id="lesFechar">Fechar</button></div>`, (sh)=>{
+      sh.querySelector('#lesFechar').onclick = closeSheet;
+      sh.querySelector('#lesAdd').onclick = ()=>frFormLesao();
+      sh.querySelectorAll('[data-melhorou]').forEach(b=>{ b.onclick = ()=>frMelhorou(b.getAttribute('data-melhorou')); });
+    });
+}
+function frFormLesao(){
+  const f = { regiao:null, intensidade:null, emRepouso:null };
+  const chips = (campo, ops)=>`<div class="qv2-chips">${Object.entries(ops).map(([k,l])=>`<button class="mrt-adjchip ${String(f[campo])===String(k)?'on':''}" data-les="${campo}" data-v="${k}">${l}</button>`).join('')}</div>`;
+  const montar = ()=>openSheet(`<div class="sheet-title">Adicionar limitação</div>
+    <div class="qv2-sec">Onde?</div>${chips('regiao', LESAO_REGIOES)}
+    <div class="qv2-sec">Intensidade</div>${chips('intensidade', LESAO_INTENSIDADES)}
+    <div class="qv2-sec">Dói em repouso?</div>${chips('emRepouso', { true:'Sim', false:'Não' })}
+    <div class="ds-actions" style="margin-top:20px;"><button class="btn-primary" id="lesSalvar" ${f.regiao && f.intensidade && f.emRepouso!==null ? '' : 'disabled style="opacity:.45"'}>Salvar</button><button class="btn-ghost" id="lesVoltar">Voltar</button></div>`, (sh)=>{
+      sh.querySelectorAll('[data-les]').forEach(b=>{ b.onclick = ()=>{ const c = b.getAttribute('data-les'), v = b.getAttribute('data-v'); f[c] = c==='emRepouso' ? v==='true' : v; montar(); }; });
+      sh.querySelector('#lesVoltar').onclick = frAbrirLesoes;
+      sh.querySelector('#lesSalvar').onclick = async ()=>{
+        if(!(f.regiao && f.intensidade && f.emRepouso!==null)) return;
+        const r = await registrarLesao(f);
+        render();
+        if(r.seguranca) return frSegurancaLesao(r);
+        frMostrarAjusteLesao(r.proposta, r.motivo, r.arriscadas);
+      };
+    });
+  montar();
+}
+function frSegurancaLesao(r){
+  openSheet(`<div class="sheet-title">Antes de continuar</div>
+    <div class="ds-muted" style="margin-bottom:14px;line-height:1.5;">Dor forte ou em repouso: converse com um profissional de saúde antes de treinar com intensidade. O app não avalia saúde.</div>
+    <div class="ds-list">
+      <button class="ds-row" data-seglesao="liberado"><span class="nm">Já fui liberado(a)</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-seglesao="avaliacao"><span class="nm">Vou procurar avaliação</span><span class="aside">Pausa o plano</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-seglesao="conta_propria"><span class="nm">Continuar por conta própria</span><span class="aside">Plano conservador</span><span class="chev">${DS_CHEV}</span></button>
+    </div>`, (sh)=>{
+      sh.querySelectorAll('[data-seglesao]').forEach(b=>{ b.onclick = async ()=>{
+        const esc = b.getAttribute('data-seglesao');
+        if(esc==='conta_propria' && !(await confirmarApp({ titulo:'Continuar por conta própria?', texto:'Isso não é uma liberação médica. O plano fica conservador.', ok:'Entendo' }))) return;
+        const prop = await responderSegurancaLesao(esc);
+        render();
+        if(esc==='avaliacao'){ closeSheet(); showToast('Plano pausado'); return; }
+        frMostrarAjusteLesao(prop, r.motivo, r.arriscadas);
+      }; });
+    });
+}
+function frListaMudancas(prop){
+  return prop.mudancas.map(m=>`<div class="fr-mudanca"><b>${DAY_FULLNAME[m.dia] ? DAY_FULLNAME[m.dia].split('-')[0] : m.dia}</b><span class="a">${m.antes}</span><span class="d">${m.depois}</span></div>`).join('');
+}
+function frMostrarAjusteLesao(prop, motivo, arriscadas){
+  const bloq = (arriscadas||[]).length ? `<div class="ds-muted" style="margin-bottom:12px;">Bloqueado agora: ${arriscadas.map(s=>s.titulo).join(', ')}</div>` : '';
+  if(!prop || !prop.mudancas.length){ closeSheet(); showToast(bloq ? 'Sessões arriscadas bloqueadas' : 'Limitação salva'); return; }
+  openSheet(`<div class="sheet-title">Ajustes da semana</div>
+    ${bloq}<div class="ds-muted" style="margin-bottom:10px;">${motivo.charAt(0).toUpperCase()+motivo.slice(1)}</div>
+    <div class="fr-mudancas">${frListaMudancas(prop)}</div>
+    <div class="ds-actions" style="margin-top:18px;"><button class="btn-primary" id="lesAplicar">Aplicar</button><button class="btn-ghost" id="lesDepois">Agora não</button></div>`, (sh)=>{
+      sh.querySelector('#lesAplicar').onclick = async ()=>{ await confirmarAjusteLesao(prop, motivo); closeSheet(); render(); showToast('Semana ajustada'); };
+      sh.querySelector('#lesDepois').onclick = closeSheet;
+    });
+}
+function frMelhorou(regiao){
+  const pm = propostaMelhorou(regiao);
+  const corpo = pm.proposta && pm.proposta.mudancas.length ? `<div class="ds-muted" style="margin-bottom:10px;">Volta gradual: esta semana mais leve e sem qualidade.</div><div class="fr-mudancas">${frListaMudancas(pm.proposta)}</div>`
+    : '<div class="ds-muted" style="margin-bottom:10px;">A limitação sai do plano.</div>';
+  openSheet(`<div class="sheet-title">Melhorou</div>${corpo}
+    <div class="ds-actions" style="margin-top:18px;"><button class="btn-primary" id="melOk">Confirmar</button><button class="btn-ghost" id="melNao">Agora não</button></div>`, (sh)=>{
+      sh.querySelector('#melOk').onclick = async ()=>{ await confirmarMelhorou(regiao, pm); closeSheet(); render(); showToast('Plano atualizado'); };
+      sh.querySelector('#melNao').onclick = frAbrirLesoes;
+    });
+}
 document.addEventListener('click', (ev)=>{
   const b = ev.target.closest && ev.target.closest('[data-retomarplano]');
   if(b){ ev.preventDefault(); frAbrirRetomar(); }
@@ -13206,6 +13286,7 @@ function frAbrirGerenciarPlano(){
       ${temHibrido ? frItemGP('reorganizar', ICONS.calendar, 'Reorganizar semana', 'Mova sessões sem criar conflito') : ''}
       ${frItemGP('historico', FR_ICON_HIST, 'Histórico de mudanças', '')}
       ${frTemRespostasDoQuestionario() ? frItemGP('revisar', ICONS.pencil, 'Revisar questionário do plano', 'Veja e corrija suas respostas') : ''}
+      ${temHibrido ? frItemGP('lesoes', ICONS.heart, 'Lesões e limitações', (()=>{ const n = lesoesAtivas().length; return n ? n+' ativa'+(n===1?'':'s') : ''; })()) : ''}
       ${temHibrido ? (planoPausado() ? frItemGP('retomar', ICONS.play, 'Retomar plano', 'Pausado desde '+frDiaMesISO(hp.pausa.inicio)) : frItemGP('pausar', FR_ICON_PAUSA, 'Pausar plano', '')) : ''}
     </div>` : ''}
     <div class="ds-label fr-gplbl">Treino</div><div class="ds-list">
@@ -13223,6 +13304,7 @@ async function frAcaoGerenciar(a){
   if(a==='historico') return frAbrirHistorico();
   if(a==='revisar') return frRevisarQuestionario();
   if(a==='pausar') return frAbrirPausar();
+  if(a==='lesoes') return frAbrirLesoes();
   if(a==='retomar') return frAbrirRetomar();
   if(a==='manual'){ abrirCriarTreino(); return; }
   if(a==='modelos'){ state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); return; }

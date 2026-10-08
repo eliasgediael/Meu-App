@@ -55,12 +55,12 @@ async function pausarPlano(motivo){
 }
 
 // Semana N do plano gerada só nos dias que restam desta semana (como a semana 1 criada no meio da semana).
-function gerarSemanaRetomada(n, ajustes){
+function gerarSemanaRetomada(n, ajustes, perfilBase){
   const hp = state.hybridPlanData;
-  if(!state.athleteProfile) return null;
+  if(!(perfilBase || state.athleteProfile)) return null;
   const alvo = (hp.trajetoria || [])[n-1] || null;
   const hi = hojeIdx();
-  let perfil = state.athleteProfile;
+  let perfil = perfilBase || state.athleteProfile;
   if(hi > 0){
     perfil = JSON.parse(JSON.stringify(perfil));
     const porDia = {};
