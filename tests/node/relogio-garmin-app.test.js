@@ -6,6 +6,7 @@ const { PERFIS, BASE } = require('../harness/perfis.js');
 const Contrato = require('../../src/relogio/garmin-contrato.js');
 
 const enviados = [];
+let escolhas = 0;
 let aoReceber = null;
 const ponte = {
   isNative: () => true,
@@ -13,7 +14,7 @@ const ponte = {
     ...Contrato,
     disponivel: () => true,
     estado: async () => ({ relogios: [{ id: 'x', nome: 'Forerunner 55', status: 'conectado' }] }),
-    escolher: async () => ({ abriuGarminConnect: true }),
+    escolher: async () => { escolhas++; return { abriuGarminConnect: true }; },
     enviar: async (m) => { enviados.push(JSON.parse(JSON.stringify(m))); return { enviados: 1, resultados: [] }; },
     ouvir: (cb) => { aoReceber = cb; },
   },
@@ -21,7 +22,7 @@ const ponte = {
 
 (async () => {
   const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'saveTreinos', 'gpsDbGet',
-    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO'],
+    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO', 'renderIntegracoesV2'],
     { antes: () => { globalThis.NativeBridge = ponte; if (globalThis.window) globalThis.window.NativeBridge = ponte; } });
   const S = T.state;
   ok(typeof aoReceber === 'function', 'app começa a ouvir o relógio ao abrir');
@@ -94,6 +95,11 @@ const ponte = {
   await espera(400);
   ok(T.atividadesLivres().some(a => a.id === 'run:run_garmin_free_1791300000' && a.origem === 'garmin' && a.distKm === 6.123),
     'corrida livre do relógio vira atividade livre');
+
+  // Tela Integrações: o cartão Garmin é a ponte real (não mais "ainda não existe no app").
+  const integ = T.renderIntegracoesV2();
+  ok(integ.includes('btnRelogioEscolher') && !integ.includes('data-mrtintegrar="Garmin"') && integ.includes('data-mrtintegrar="Strava"'),
+    'Integrações mostra o Garmin real (Strava continua por fazer)');
 
   // Personal vendo a conta de uma aluna: não grava nem confirma.
   S.viewingClient = { uid: 'aluna', name: 'A' };

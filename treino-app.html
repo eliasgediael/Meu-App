@@ -16698,7 +16698,11 @@ function renderContaV2(){
     <button class="btn-ghost" style="width:100%;margin-top:6px;text-decoration:underline;" id="btnAuthEsqueciSenha" ${state.authBusy?'disabled':''}>${state.authBusy==='reset'?'Enviando...':'Esqueci minha senha'}</button>`;
 }
 function renderIntegracoesV2(){
-  return ['Garmin','Strava'].map(svc=>`
+  // Garmin: ponte real com o app FORZA RUN do relógio (só no app do iPhone). Strava continua por fazer.
+  const garmin = relogioApi() ? `<div class="mrt-card"><div style="display:flex;align-items:center;gap:12px;">
+      <div class="icon-box run">${ICONS.watch}</div><div style="font-size:16px;font-weight:700;">Garmin</div></div>
+      ${relogioGarminCardHtml()}</div>` : '';
+  return garmin + (relogioApi() ? ['Strava'] : ['Garmin','Strava']).map(svc=>`
     <div class="mrt-card" style="display:flex;align-items:center;gap:12px;">
       <div class="icon-box run">${ICONS.watch}</div>
       <div style="flex:1;min-width:0;"><div style="font-size:16px;font-weight:700;">${svc}</div><div class="mrt-sub" style="margin:2px 0 0;">Não conectado</div></div>
@@ -16845,7 +16849,13 @@ function wireSubV2(){
     };
   });
   document.querySelectorAll('[data-perfilgo]').forEach(el=>{ el.onclick = ()=>{ state.subOrigin = 'perfil'; state.tab = el.getAttribute('data-perfilgo'); render(); }; });
-  document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = ()=> showToast(`Integração com ${el.getAttribute('data-mrtintegrar')} ainda não existe no app`); });
+  wireRelogioGarmin();
+  document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = async ()=>{
+    const svc = el.getAttribute('data-mrtintegrar');
+    // "Conectar relógio": abre o Garmin Connect para escolher o relógio (app do iPhone).
+    if((svc==='relógio' || svc==='Garmin') && relogioApi()){ const r = await relogioApi().escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); return; }
+    showToast(`Integração com ${svc} ainda não existe no app`);
+  }; });
   const advFit = document.getElementById('advFit'); if(advFit) advFit.onclick = ()=>document.getElementById('fitInput').click();
   const advFitT = document.getElementById('advFitTreino'); if(advFitT) advFitT.onclick = ()=>document.getElementById('fitWorkoutInput').click();
   const advMod = document.getElementById('advModelos'); if(advMod) advMod.onclick = ()=>{ state.tab = 'meusTreinos'; state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); };
