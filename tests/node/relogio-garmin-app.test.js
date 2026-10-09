@@ -22,7 +22,7 @@ const ponte = {
 
 (async () => {
   const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'saveTreinos', 'gpsDbGet',
-    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO', 'renderIntegracoesV2', 'relogioEnviarRota'],
+    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO', 'renderIntegracoesV2', 'relogioEnviarRota', 'renderSaudeRelogioV2', 'diagRegistrar', 'diagLer'],
     { antes: () => { globalThis.NativeBridge = ponte; if (globalThis.window) globalThis.window.NativeBridge = ponte; } });
   const S = T.state;
   ok(typeof aoReceber === 'function', 'app começa a ouvir o relógio ao abrir');
@@ -126,5 +126,13 @@ const ponte = {
   await espera(400);
   ok(!enviados.length && !T.atividadesLivres().some(a => a.id === 'run:run_garmin_free_1791400000'), 'não grava na conta de outra pessoa');
   S.viewingClient = null;
+  // Saúde do relógio: dados reais da ponte, sem prometer sono/HRV como se viessem do relógio.
+  const saude = T.renderSaudeRelogioV2();
+  ok(saude.includes('Treinos para o relógio') && saude.includes('relogioGarminCard') && /Corrida: \d+ até domingo/.test(saude), 'Saúde do relógio mostra o relógio e os treinos enviados');
+  ok(saude.includes('não libera') && !saude.includes('Sem dados do relógio'), 'Saúde do relógio explica que sono e HRV não vêm do relógio');
+  // Diagnóstico guarda os últimos 20 registros.
+  for (let i = 0; i < 25; i++) T.diagRegistrar('erro', 'teste ' + i);
+  const diag = T.diagLer();
+  ok(diag.length === 20 && diag[19].msg === 'teste 24', 'diagnóstico guarda os últimos 20 erros');
   semErro();
 })();

@@ -6421,6 +6421,8 @@ async function gpsDeleteActivity(){
 const RELOGIO_ENVIO_KEY = 'relogioGarminUltimoEnvio';
 const RELOGIO_REENVIO_MS = 6*3600*1000; // mesma lista é reenviada no máximo a cada 6 h
 let _relogioOuvindo = false, _relogioFila = Promise.resolve(), _relogioEstado = null, _relogioTimer = null;
+let _relogioEstadoTimer = null, _relogioUltimoForcado = 0;
+const RELOGIO_RECEBIDO_KEY = 'relogioGarminUltimoRecebido';
 function relogioApi(){ return (window.NativeBridge && NativeBridge.relogio && NativeBridge.relogio.disponivel()) ? NativeBridge.relogio : null; }
 function relogioIniciar(){
   const R = relogioApi();
@@ -6430,10 +6432,18 @@ function relogioIniciar(){
     // Uma mensagem por vez, e só depois do init (os treinos e o progresso precisam estar carregados).
     _relogioFila = _relogioFila.then(()=>relogioReceber(ev && ev.dados)).catch(e=>console.warn('[relogio]', e));
   }, est=>{
+    // O Bluetooth oscila (conectado/fora de alcance várias vezes seguidas): só age quando o estado muda de
+    // verdade, agrupa as mudanças em 1,5 s e não força reenvio mais de uma vez por minuto.
+    const antes = JSON.stringify((_relogioEstado && _relogioEstado.relogios) || []);
     _relogioEstado = est;
+    if(JSON.stringify((est && est.relogios) || []) === antes) return;
     relogioAtualizarModelo(est);
-    if(est && (est.relogios||[]).some(r=>r.status==='conectado')) relogioEnviarTreinos({ forcar:true });
-    if(document.getElementById('relogioGarminCard')) render();
+    clearTimeout(_relogioEstadoTimer);
+    _relogioEstadoTimer = setTimeout(()=>{
+      const conectado = est && (est.relogios||[]).some(r=>r.status==='conectado');
+      if(conectado && Date.now() - _relogioUltimoForcado > 60000){ _relogioUltimoForcado = Date.now(); relogioEnviarTreinos({ forcar:true }); }
+      if(document.getElementById('relogioGarminCard') && !state.modalOpen) render();
+    }, 1500);
   });
   R.estado().then(est=>{ _relogioEstado = est; relogioAtualizarModelo(est); });
 }
@@ -6472,7 +6482,8 @@ async function relogioEnviarTreinos(op){
   let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
   if(!(op && op.forcar) && ultimo && ultimo.json===json && Date.now()-ultimo.em < RELOGIO_REENVIO_MS) return { enviados:0, motivo:'sem_mudanca' };
   const r = await R.enviar(msg);
-  if(r && r.enviados>0) lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:msg.w.length }));
+  if(r && r.enviados>0) lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:msg.w.length,
+    corridas:msg.w.filter(w=>!w.y).length, forca:msg.w.filter(w=>w.y==='f').length }));
   return r;
 }
 async function relogioReceber(d){
@@ -6484,7 +6495,10 @@ async function relogioReceber(d){
   if(d.t==='r'){
     const ok = d.r && d.r.kind==='strength' ? await relogioImportarForca(d.r) : await relogioImportarResultado(d.r);
     // Só confirma depois de gravar: sem "ack" o relógio mantém o resultado na fila e reenvia.
-    if(ok) await R.enviar(R.mensagemAck([String(d.r && d.r.resultId)]));
+    if(ok){
+      try{ lsSet(RELOGIO_RECEBIDO_KEY, JSON.stringify({ em:Date.now(), forca: !!(d.r && d.r.kind==='strength'), titulo: String((d.r && d.r.title) || '').slice(0,40) })); }catch(e){}
+      await R.enviar(R.mensagemAck([String(d.r && d.r.resultId)]));
+    }
   }
 }
 // Corrida feita no relógio -> corrida do app. Retorna true quando o relógio já pode tirar da fila.
@@ -16759,10 +16773,29 @@ function renderIntegracoesV2(){
     </div>`).join('') + `<div class="mrt-sub" style="text-align:center;margin-top:6px;">A sincronização automática ainda está em desenvolvimento.</div>`;
 }
 function renderSaudeRelogioV2(){
-  return `<div class="empty-state"><div class="icon-box lg">${ICONS.heart}</div>
-    <div class="t">Sem dados do relógio</div>
-    <div class="s">Sono, estresse, frequência cardíaca em repouso e HRV aparecem aqui quando você conectar um relógio.</div>
-    <button class="btn-secondary" data-mrtintegrar="relógio">Conectar relógio</button></div>`;
+  const R = relogioApi();
+  if(!R){
+    return `<div class="empty-state"><div class="icon-box lg">${ICONS.watch}</div>
+      <div class="t">Relógio Garmin</div>
+      <div class="s">O relógio Garmin com o app FORZA RUN se conecta pelo app do iPhone.</div></div>`;
+  }
+  let nCorr = 0, nForca = 0;
+  try{ const m = relogioMensagemTreinos(); nCorr = m.w.filter(w=>!w.y).length; nForca = m.w.filter(w=>w.y==='f').length; }catch(e){}
+  let rec = null; try{ rec = JSON.parse(lsGet(RELOGIO_RECEBIDO_KEY) || 'null'); }catch(e){}
+  const quando = (t)=> new Date(t).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+  return `
+    <div class="mrt-card">${relogioGarminCardHtml()}</div>
+    <div class="mrt-card">
+      <div class="mrt-medlabel">Treinos para o relógio</div>
+      <div class="mrt-sub" style="margin:4px 0;">Corrida: ${nCorr} até domingo · Musculação: ${nForca} nos próximos 7 dias</div>
+      ${nCorr ? '' : `<div class="mrt-sub" style="margin:4px 0;">Não há mais corridas planejadas nesta semana. A semana seguinte do plano é gerada na segunda-feira e vai para o relógio sozinha.</div>`}
+      ${rec ? `<div class="mrt-sub" style="margin:4px 0;">Última atividade recebida do relógio: ${rec.forca ? 'musculação' : 'corrida'}${rec.titulo ? ' (' + escHtmlRelogio(rec.titulo) + ')' : ''} em ${quando(rec.em)}</div>` : ''}
+    </div>
+    <div class="mrt-card">
+      <div class="mrt-medlabel">Dados de saúde</div>
+      <div class="mrt-sub" style="margin:4px 0;">Estresse, Body Battery e frequência cardíaca do relógio ainda não chegam ao app: dependem de uma atualização do app FORZA RUN no relógio.</div>
+      <div class="mrt-sub" style="margin:4px 0;">Sono e HRV não aparecem aqui: a Garmin não libera esses dados para apps de relógio.</div>
+    </div>`;
 }
 function renderPersonalV2(){
   if(!(state.authUser && !state.viewingClient)){
@@ -16850,6 +16883,8 @@ function renderMaisOpcoesV2(){
     <button class="btn-secondary" style="color:var(--danger);" id="btnApagarTudo">${ICONS.trash} Apagar todos os dados</button>
     <div class="ds-label" style="margin:22px 0 4px;">Avançado</div>
     <div class="ds-list">
+      <button class="ds-row" id="btnDiagnostico"><span class="nm">Diagnóstico<small style="display:block;font-weight:400;color:var(--text-dim);font-size:13px;">${diagLer().length} registro${diagLer().length===1?'':'s'} de erro ou recarga</small></span><span class="chev">${DS_CHEV}</span></button>
+      ${state.diagAberto ? renderDiagnosticoHtml() : ''}
       <button class="ds-row" id="advFit"><span class="nm">Importar corrida do relógio (.fit)</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" id="advFitTreino"><span class="nm">Importar treino estruturado (.fit)</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" id="advModelos"><span class="nm">Modelos salvos</span><span class="chev">${DS_CHEV}</span></button>
@@ -19295,6 +19330,54 @@ async function iniciarNuvem(){
   auth.onAuthStateChanged(function(user){ aoMudarConta(user); });
 }
 document.addEventListener('click', (e)=>{ const el = e.target && e.target.closest ? e.target.closest('[data-suborigin]') : null; if(el) state.subOrigin = el.getAttribute('data-suborigin'); }, true);
+// Diagnóstico: o iOS às vezes derruba a página do app (memória ou falha interna do WebView) e o app
+// recarrega na tela inicial. Guarda os últimos erros e essas recargas para mostrar em Dados e backup.
+const DIAG_KEY = 'treinoapp:diag', SESSAO_KEY = 'treinoapp:sessaoViva';
+function diagLer(){ try{ return JSON.parse(localStorage.getItem(DIAG_KEY) || '[]'); }catch(e){ return []; } }
+function diagRegistrar(tipo, msg){
+  try{
+    const l = diagLer();
+    l.push({ em:Date.now(), tipo, msg:String(msg == null ? '' : msg).slice(0, 300), tela:(typeof state!=='undefined' && state) ? state.tab : '' });
+    localStorage.setItem(DIAG_KEY, JSON.stringify(l.slice(-20)));
+  }catch(e){}
+}
+window.addEventListener('error', e=>diagRegistrar('erro', (e.message || 'erro') + (e.filename ? ' @' + String(e.filename).split('/').pop() + ':' + e.lineno : '')));
+window.addEventListener('unhandledrejection', e=>{ const r = e.reason; diagRegistrar('promessa', (r && (r.stack || r.message)) || r); });
+function sessaoMarcar(viva){ try{ const ant = JSON.parse(localStorage.getItem(SESSAO_KEY) || 'null') || {}; localStorage.setItem(SESSAO_KEY, JSON.stringify({ viva, em:Date.now(), tab:state.tab, restauradoEm:ant.restauradoEm || 0 })); }catch(e){} }
+// Recarga sem a pessoa fechar o app (a página estava visível há menos de 3 min): registra e reabre na mesma aba.
+// Só uma vez a cada 3 min, para não prender o app numa tela que derruba de novo.
+function sessaoRestaurar(){
+  let ant = null; try{ ant = JSON.parse(localStorage.getItem(SESSAO_KEY) || 'null'); }catch(e){}
+  if(!ant || !ant.viva || Date.now() - ant.em > 180000) return;
+  diagRegistrar('recarga', 'O app recarregou sozinho (tela: ' + (ant.tab || '?') + ')');
+  const abas = ['hoje','meusTreinos','perfil','turma'].concat(SUB_V2_TABS);
+  if(Date.now() - (ant.restauradoEm || 0) < 180000 || !abas.includes(ant.tab) || state.gpsRun || state.workoutSession) return;
+  try{ localStorage.setItem(SESSAO_KEY, JSON.stringify({ ...ant, restauradoEm:Date.now() })); }catch(e){}
+  if(SUB_V2_TABS.includes(ant.tab)) state.subOrigin = 'perfil';
+  state.tab = ant.tab;
+  render();
+}
+function renderDiagnosticoHtml(){
+  const l = diagLer().slice().reverse();
+  const quando = (t)=> new Date(t).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  const esc = (x)=> String(x).replace(/[&<>"]/g, c=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+  return `<div class="mrt-card" id="diagCard">
+    ${l.length ? l.map(x=>`<div class="mrt-sub" style="margin:6px 0;word-break:break-word;"><b>${quando(x.em)}</b> · ${esc(x.tipo)}${x.tela ? ' · ' + esc(x.tela) : ''}<br>${esc(x.msg)}</div>`).join('') : '<div class="mrt-sub">Nenhum erro registrado.</div>'}
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+      <button class="mrt-pillbtn" id="btnDiagCopiar">Copiar</button>
+      <button class="mrt-pillbtn" id="btnDiagLimpar">Limpar</button>
+    </div></div>`;
+}
+document.addEventListener('click', (e)=>{
+  const el = e.target && e.target.closest ? e.target.closest('#btnDiagnostico,#btnDiagCopiar,#btnDiagLimpar') : null;
+  if(!el) return;
+  if(el.id==='btnDiagnostico'){ state.diagAberto = !state.diagAberto; render(); }
+  else if(el.id==='btnDiagLimpar'){ try{ localStorage.removeItem(DIAG_KEY); }catch(err){} render(); }
+  else if(el.id==='btnDiagCopiar'){
+    const txt = diagLer().map(x=>new Date(x.em).toISOString() + ' ' + x.tipo + ' ' + (x.tela||'') + ' ' + x.msg).join('\n') || 'sem registros';
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(()=>showToast('Diagnóstico copiado')).catch(()=>showToast('Não consegui copiar'));
+  }
+});
 (function bootstrap(){
   const ultima = lerUltimaConta();
   if(ultima){
@@ -19304,8 +19387,15 @@ document.addEventListener('click', (e)=>{ const el = e.target && e.target.closes
   _primeiroInit = init();
   iniciarNuvem();
   relogioIniciar();
+  _primeiroInit.then(()=>{ sessaoRestaurar(); sessaoMarcar(true); }).catch(()=>{});
   _primeiroInit.then(()=>relogioEnviarTreinos()).catch(()=>{});
-  document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible') relogioEnviarTreinos(); });
+  { const t = setInterval(()=>{ if(document.visibilityState==='visible') sessaoMarcar(true); }, 15000); if(t && t.unref) t.unref(); } // unref: não prende o Node nos testes
+  document.addEventListener('click', ()=>sessaoMarcar(true), true);
+  window.addEventListener('pagehide', ()=>sessaoMarcar(false));
+  document.addEventListener('visibilitychange', ()=>{
+    sessaoMarcar(document.visibilityState==='visible');
+    if(document.visibilityState==='visible') relogioEnviarTreinos();
+  });
   window.addEventListener('online', ()=>{
     cloudDownUntil = 0;
     if(!firebasePronto){ iniciarNuvem(); return; }
