@@ -4,6 +4,9 @@
 
 const MAX_TREINOS = 8;   // o relógio guarda no máximo 8 treinos
 const MAX_ETAPAS = 40;   // e no máximo 40 etapas por treino
+// O FR55 tem 128 KB para o app inteiro: uma mensagem de ~1,5 KB ocupa ~7 KB depois de guardada e
+// mensagens acima de ~5 KB esgotam a memória no simulador. 3000 bytes deixam folga para as telas.
+const MAX_BYTES = 3000;
 
 function semAcento(s) {
   return String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -104,8 +107,22 @@ function treinosParaRelogio(treinos, opcoes) {
 
 // forca (opcional): treinos de musculação já compactados. Com ela a mensagem leva "v":2 e o relógio
 // substitui também a lista de musculação; sem ela o formato é o de corrida de sempre.
-function mensagemTreinos(lista, forca) {
-  return forca ? { t: 'w', v: 2, w: lista.concat(forca) } : { t: 'w', w: lista };
+// Os dois tipos entram alternados (os mais próximos primeiro) até o limite de bytes; o resto fica
+// para a próxima sincronização.
+function mensagemTreinos(lista, forca, maxBytes) {
+  const limite = maxBytes || MAX_BYTES;
+  const msg = forca ? { t: 'w', v: 2, w: [] } : { t: 'w', w: [] };
+  const filas = forca ? [lista.slice(), forca.slice()] : [lista.slice()];
+  let tam = JSON.stringify(msg).length, vez = 0;
+  while (filas.some((f) => f.length)) {
+    const fila = filas[vez % filas.length]; vez++;
+    if (!fila.length) continue;
+    const item = fila.shift();
+    const custo = JSON.stringify(item).length + 1;
+    if (tam + custo > limite) break;
+    msg.w.push(item); tam += custo;
+  }
+  return msg;
 }
 
 // ---------- Musculação ----------
@@ -189,6 +206,6 @@ function registroDoResultado(r) {
 
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
-  treinosParaRelogio, mensagemTreinos, mensagemAck, registroDoResultado,
+  treinosParaRelogio, mensagemTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
   MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
 };

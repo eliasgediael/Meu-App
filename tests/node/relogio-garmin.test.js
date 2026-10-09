@@ -64,6 +64,12 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(JSON.stringify(fc.e[0][2][0]) === JSON.stringify([10, 40, 75]) && fc.e[0][2].length === 4 && fc.e[0][0] === 'd1', 'série: repetições, carga e descanso; exercício com id do app');
   ok(JSON.stringify(fc.e[1][2][2]) === JSON.stringify([8, 0, 90]), 'faixa de reps usa o início; sem carga = 0; descanso padrão 90 s');
   ok(C.forcaCompacta({ day: 'Ter', exercicios: [] }) === null, 'dia sem exercício não vai');
+  // Limite de tamanho: nunca passa de MAX_BYTES e mantém os mais próximos, alternando corrida e força.
+  const runs = Array.from({ length: 8 }, (_, i) => ({ id: 'r' + i, s: Array.from({ length: 15 }, () => ['i', 'd', 400, 250, 270]) }));
+  const forcas = Array.from({ length: 7 }, (_, i) => ({ y: 'f', id: 'musc_' + i, e: fc.e }));
+  const grande = C.mensagemTreinos(runs, forcas);
+  ok(JSON.stringify(grande).length <= C.MAX_BYTES, 'mensagem limitada a ' + C.MAX_BYTES + ' bytes (' + JSON.stringify(grande).length + ')');
+  ok(grande.w[0].id === 'r0' && grande.w[1].id === 'musc_0' && grande.w.length < 15, 'mantém os mais próximos, alternando corrida e musculação (' + grande.w.length + ' itens)');
   const m2 = C.mensagemTreinos([{ id: 'x' }], [fc]);
   ok(m2.v === 2 && m2.w.length === 2 && C.mensagemTreinos([{ id: 'x' }]).v === undefined, 'mensagem v2 só quando há musculação');
   const rf = C.registroForcaDoResultado({ kind: 'strength', resultId: 'musc_Seg_1791250000', workoutId: 'musc_Seg', startedAt: 1791250000,
