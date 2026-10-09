@@ -2,7 +2,7 @@
 // Contrato: docs/CONTRATO-SYNC.md do projeto garmin-connectiq (v2). Sem dependências do app nem do
 // Capacitor, para poder ser testado em Node e empacotado em www/native-bridge.js.
 
-const MAX_TREINOS = 8;   // o relógio guarda no máximo 8 treinos
+const MAX_TREINOS = 30;  // o relógio guarda até 30 corridas e 14 musculações (um treino por chave)
 const MAX_ETAPAS = 40;   // e no máximo 40 etapas por treino
 // O FR55 tem 128 KB para o app inteiro: uma mensagem de ~1,5 KB ocupa ~7 KB depois de guardada e
 // mensagens acima de ~5 KB esgotam a memória no simulador. 3000 bytes deixam folga para as telas.
@@ -87,19 +87,23 @@ function treinoCompacto(entry) {
   return { id: entry.day, k: entry.day, n: String(entry.type || 'Corrida').slice(0, 24), s };
 }
 
-// Próximos treinos de corrida (hoje em diante, não feitos, sem "descansar hoje"), em ordem de data.
-// opcoes: { hojeISO: 'AAAA-MM-DD', feito: (entry) => bool }
+// Treinos de corrida (sem "descansar hoje"), em ordem de data.
+// opcoes: { hojeISO: 'AAAA-MM-DD', feito: (entry) => bool, desdeISO?: 'AAAA-MM-DD', incluirFeitos?: bool }
+// Padrão: de hoje em diante e sem os feitos. Com desdeISO (ex.: segunda desta semana) e incluirFeitos,
+// vai o plano inteiro a partir dessa data; os feitos levam "ok":1 e o relógio mostra "FEITO".
 function treinosParaRelogio(treinos, opcoes) {
   const hojeISO = opcoes.hojeISO;
-  const hoje = new Date(hojeISO + 'T00:00:00');
+  const desde = new Date((opcoes.desdeISO || hojeISO) + 'T00:00:00');
   const feito = opcoes.feito || (() => false);
   const lista = [];
   for (const entry of treinos || []) {
-    if (!entry || entry.descanso || feito(entry)) continue;
+    if (!entry || entry.descanso) continue;
+    const ok = feito(entry);
+    if (ok && !opcoes.incluirFeitos) continue;
     const d = dataDoDia(entry.day, hojeISO);
-    if (!d || d < hoje) continue;
+    if (!d || d < desde) continue;
     const c = treinoCompacto(entry);
-    if (c) lista.push({ d, c });
+    if (c) { if (ok) c.ok = 1; lista.push({ d, c }); }
   }
   lista.sort((a, b) => a.d - b.d);
   return lista.slice(0, MAX_TREINOS).map((x) => x.c);
@@ -123,6 +127,24 @@ function mensagemTreinos(lista, forca, maxBytes) {
     msg.w.push(item); tam += custo;
   }
   return msg;
+}
+
+// Lista completa em páginas de até maxBytes (o relógio junta as páginas e só troca a lista quando todas
+// chegam). Corridas primeiro, depois musculação; cada página: {t:'w', v:3, b, pg, pgs, w:[...]}.
+function mensagensTreinos(lista, forca, maxBytes, idEnvio) {
+  const limite = maxBytes || MAX_BYTES;
+  const b = String(idEnvio || Date.now().toString(36)).slice(-8);
+  const base = JSON.stringify({ t: 'w', v: 3, b, pg: 99, pgs: 99, w: [] }).length;
+  const paginas = [];
+  let atual = [], tam = base;
+  for (const item of [...(lista || []), ...(forca || [])]) {
+    const custo = JSON.stringify(item).length + 1;
+    if (base + custo > limite) continue;               // item maior que uma página: não cabe no relógio
+    if (tam + custo > limite) { paginas.push(atual); atual = []; tam = base; }
+    atual.push(item); tam += custo;
+  }
+  paginas.push(atual);
+  return paginas.map((w, pg) => ({ t: 'w', v: 3, b, pg, pgs: paginas.length, w }));
 }
 
 // ---------- Musculação ----------
@@ -266,7 +288,7 @@ function mensagemRemoverRota() { return { t: 'route', clear: true }; }
 
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
-  treinosParaRelogio, mensagemTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
+  treinosParaRelogio, mensagemTreinos, mensagensTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
   MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
   MAX_PONTOS_ROTA, MAX_BYTES_ROTA, rotaCompacta, mensagemRemoverRota,
 };

@@ -33,13 +33,16 @@ const ponte = {
   await T.saveTreinos();
   enviados.length = 0;
   const r1 = await T.relogioEnviarTreinos({ forcar: true });
-  const lista = enviados[0];
-  ok(r1 && r1.enviados === 1 && lista && lista.t === 'w' && lista.w.length > 0, 'envia os treinos do plano (' + (lista ? lista.w.length : 0) + ')');
+  const paginas = enviados.filter(m => m.t === 'w');
+  const lista = { w: [].concat(...paginas.map(m => m.w)) };
+  ok(r1 && r1.enviados === 1 && paginas.length > 0 && lista.w.length > 0, 'envia os treinos do plano (' + lista.w.length + ' em ' + paginas.length + ' página(s))');
   const corridas = lista.w.filter(w => !w.y), forca = lista.w.filter(w => w.y === 'f');
-  ok(lista.v === 2 && corridas.length > 0, 'mensagem v2 com os treinos de corrida');
+  ok(paginas.every(m => m.v === 3 && m.pgs === paginas.length && m.b === paginas[0].b && JSON.stringify(m).length <= 3000) && corridas.length > 0,
+    'lista completa em páginas v3 de até 3000 bytes, com os treinos de corrida');
   ok(corridas.every(w => !!S.treinos.find(t => t.day === w.id)), 'cada treino de corrida enviado existe no plano');
   ok(forca.length > 0 && forca.every(f => /^musc_/.test(f.id) && (S.musculacao[f.id.slice(5)] || []).length === f.e.length),
-    'musculação dos próximos dias enviada com os exercícios do app (' + forca.length + ')');
+    'musculação de cada dia da semana enviada com os exercícios do app (' + forca.length + ')');
+  ok(forca.length === Object.keys(S.musculacao).filter(d => (S.musculacao[d] || []).length).length, 'todos os dias de musculação vão para o relógio');
   ok(forca.every(f => f.e.every(x => !x[3] || /^\d{4}$/.test(x[3]))) && forca.some(f => f.e.some(x => x[3])),
     'exercícios levam o id da imagem do app (gifs/<id>.webp)');
 
@@ -60,8 +63,8 @@ const ponte = {
   const ack = enviados.find(m => m.t === 'ack');
   ok(ack && ack.ids[0] === resultado.resultId, 'confirma ao relógio depois de gravar');
   await espera(3500);
-  const novaLista = enviados.filter(m => m.t === 'w').pop();
-  ok(novaLista && !novaLista.w.some(w => w.id === alvo.id), 'lista reenviada sem o treino que foi feito');
+  const novaLista = [].concat(...enviados.filter(m => m.t === 'w').map(m => m.w));
+  ok(novaLista.some(w => w.id === alvo.id && w.ok === 1), 'lista reenviada com o treino feito marcado como feito');
 
   // Musculação feita no relógio (primeiro dia de força da lista).
   const fz = forca[0], diaF = fz.id.slice(5);
@@ -128,7 +131,7 @@ const ponte = {
   S.viewingClient = null;
   // Saúde do relógio: dados reais da ponte, sem prometer sono/HRV como se viessem do relógio.
   const saude = T.renderSaudeRelogioV2();
-  ok(saude.includes('Treinos para o relógio') && saude.includes('relogioGarminCard') && /Corrida: \d+ até domingo/.test(saude), 'Saúde do relógio mostra o relógio e os treinos enviados');
+  ok(saude.includes('Treinos para o relógio') && saude.includes('relogioGarminCard') && /Corrida: \d+ treino/.test(saude), 'Saúde do relógio mostra o relógio e os treinos enviados');
   ok(saude.includes('não libera') && !saude.includes('Sem dados do relógio'), 'Saúde do relógio explica que sono e HRV não vêm do relógio');
   // Diagnóstico guarda os últimos 20 registros.
   for (let i = 0; i < 25; i++) T.diagRegistrar('erro', 'teste ' + i);

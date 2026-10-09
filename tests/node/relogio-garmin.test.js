@@ -42,6 +42,11 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(C.treinosParaRelogio([e], { hojeISO: hoje }).length === 1, 'treino de amanhã vai');
   ok(C.treinosParaRelogio([{ ...e, descanso: true }], { hojeISO: hoje }).length === 0, 'descansar hoje não vai');
   ok(C.treinosParaRelogio([e], { hojeISO: hoje, feito: () => true }).length === 0, 'treino feito não vai');
+  const comFeito = C.treinosParaRelogio([e], { hojeISO: hoje, feito: () => true, incluirFeitos: true });
+  ok(comFeito.length === 1 && comFeito[0].ok === 1, 'com incluirFeitos o treino feito vai marcado');
+  const pags = C.mensagensTreinos(Array.from({ length: 30 }, (_, i) => ({ id: 'Seg ' + i, k: 'Seg', n: 'Rodagem', s: [['s', 'd', 5000, 300, 330, 'Rodagem leve contínua']] })), [], 600, 'abc');
+  ok(pags.length > 1 && pags.every((m, i) => m.pg === i && m.pgs === pags.length && m.b === 'abc' && m.v === 3 && JSON.stringify(m).length <= 600)
+    && [].concat(...pags.map(m => m.w)).length === 30, 'lista grande vai em páginas sem perder treino (' + pags.length + ' páginas)');
   ok(JSON.stringify(C.treinoCompacto(e).s[0]) === JSON.stringify(['s', 'd', 5000, 330, 360, 'Rodagem']), 'contínuo leva nome e faixa');
 
   // Virada de ano: 02/01 visto em 30/12 é do ano seguinte.

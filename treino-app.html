@@ -6419,7 +6419,7 @@ async function gpsDeleteActivity(){
 // já logada neste celular. O relógio não recebe credencial nenhuma do Firebase.
 // Só no app nativo do iPhone (plugins/relogio-garmin); no navegador tudo aqui fica inativo.
 const RELOGIO_ENVIO_KEY = 'relogioGarminUltimoEnvio';
-const RELOGIO_REENVIO_MS = 6*3600*1000; // mesma lista é reenviada no máximo a cada 6 h
+const RELOGIO_REENVIO_MS = 10*60*1000; // mesma lista: reenvia ao abrir o app se a última foi há mais de 10 min
 let _relogioOuvindo = false, _relogioFila = Promise.resolve(), _relogioEstado = null, _relogioTimer = null;
 let _relogioEstadoTimer = null, _relogioUltimoForcado = 0;
 const RELOGIO_RECEBIDO_KEY = 'relogioGarminUltimoRecebido';
@@ -6466,24 +6466,35 @@ function relogioAgendarEnvio(){
   clearTimeout(_relogioTimer);
   _relogioTimer = setTimeout(()=>relogioEnviarTreinos(), 3000);
 }
+// Todos os treinos para o relógio: corridas do plano desde a segunda desta semana (as feitas vão marcadas)
+// e a musculação de cada dia da semana. Volta as páginas da mensagem (cada uma com até 3000 bytes).
 function relogioMensagemTreinos(){
   const R = relogioApi();
   const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
-  return R.mensagemTreinos(R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito }), relogioDiasDeForca());
+  const segunda = vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')));
+  const corridas = R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito, desdeISO: segunda, incluirFeitos: true });
+  return R.mensagensTreinos(corridas, relogioDiasDeForca());
 }
+function relogioItensEnviados(paginas){ return [].concat(...(paginas||[]).map(p=>p.w||[])); }
 // Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
 async function relogioEnviarTreinos(op){
   const R = relogioApi();
   if(!R) return null;
   if(_primeiroInit) await _primeiroInit;
   if(state.viewingClient) return null; // personal vendo a conta de uma aluna: o relógio é dele, não dela
-  const msg = relogioMensagemTreinos();
-  const json = JSON.stringify(msg);
+  const paginas = relogioMensagemTreinos();
+  const itens = relogioItensEnviados(paginas);
+  const json = JSON.stringify(itens);
   let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
   if(!(op && op.forcar) && ultimo && ultimo.json===json && Date.now()-ultimo.em < RELOGIO_REENVIO_MS) return { enviados:0, motivo:'sem_mudanca' };
-  const r = await R.enviar(msg);
-  if(r && r.enviados>0) lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:msg.w.length,
-    corridas:msg.w.filter(w=>!w.y).length, forca:msg.w.filter(w=>w.y==='f').length }));
+  // Uma página por vez: o relógio só troca a lista quando recebe todas.
+  let r = null;
+  for(const pg of paginas){
+    r = await R.enviar(pg);
+    if(!(r && r.enviados>0)) return r;
+  }
+  lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:itens.length, paginas:paginas.length,
+    corridas:itens.filter(w=>!w.y).length, forca:itens.filter(w=>w.y==='f').length }));
   return r;
 }
 async function relogioReceber(d){
@@ -6546,13 +6557,20 @@ function relogioDiasDeForca(){
   const segundaAtual = vdotISODate(vdotMondayOf(hoje));
   const inicioHibrido = state.hybridPlanData && state.hybridPlanData.startMonday ? state.hybridPlanData.startMonday : null;
   const out = [];
+  // Todos os dias de musculação da semana, um treino por dia. Dia que já passou e foi feito vai com a data
+  // da semana que vem; dia que já passou sem treino continua nesta semana (dá para fazer atrasado);
+  // feito hoje vai marcado como feito.
+  const seg = new Date(segundaAtual+'T00:00:00');
   for(let i=0; i<7; i++){
-    const d = new Date(hoje); d.setDate(d.getDate()+i);
-    const day = DAY_ABBR[(d.getDay()+6)%7];
+    const d = new Date(seg); d.setDate(d.getDate()+i);
+    const day = DAY_ABBR[i];
     let lista = state.musculacao[day] || [];
+    if(!lista.length) continue;
+    const feitoNaSemana = lista.some(e=>e.done);
+    if(feitoNaSemana && d < hoje) d.setDate(d.getDate()+7);
     if(inicioHibrido && vdotISODate(d) < inicioHibrido) lista = lista.filter(e=>e.modo!=='hibrido');
     if(!lista.length) continue;
-    if(vdotISODate(vdotMondayOf(d))===segundaAtual && lista.some(e=>e.done)) continue;
+    const okHoje = feitoNaSemana && vdotISODate(d)===vdotISODate(hoje);
     const exercicios = lista.map(ex=>{
       let carga = ex.carga;
       try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
@@ -6562,9 +6580,9 @@ function relogioDiasDeForca(){
         img: im ? im.replace(/^gifs\//, '').replace(/\.webp$/, '') : null };
     });
     const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
-    if(c) out.push(c);
+    if(c){ if(okHoje) c.ok = 1; out.push({ d:+d, c }); }
   }
-  return out;
+  return out.sort((a,b)=>a.d-b.d).map(x=>x.c);
 }
 // Sessão de musculação feita no relógio -> sessão do histórico do app (mesmo formato de finishWorkoutSession),
 // histórico de carga por exercício e "feito" da semana. Retorna true quando o relógio já pode tirar da fila.
@@ -16780,15 +16798,15 @@ function renderSaudeRelogioV2(){
       <div class="s">O relógio Garmin com o app FORZA RUN se conecta pelo app do iPhone.</div></div>`;
   }
   let nCorr = 0, nForca = 0;
-  try{ const m = relogioMensagemTreinos(); nCorr = m.w.filter(w=>!w.y).length; nForca = m.w.filter(w=>w.y==='f').length; }catch(e){}
+  try{ const it = relogioItensEnviados(relogioMensagemTreinos()); nCorr = it.filter(w=>!w.y).length; nForca = it.filter(w=>w.y==='f').length; }catch(e){}
   let rec = null; try{ rec = JSON.parse(lsGet(RELOGIO_RECEBIDO_KEY) || 'null'); }catch(e){}
   const quando = (t)=> new Date(t).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
   return `
     <div class="mrt-card">${relogioGarminCardHtml()}</div>
     <div class="mrt-card">
       <div class="mrt-medlabel">Treinos para o relógio</div>
-      <div class="mrt-sub" style="margin:4px 0;">Corrida: ${nCorr} até domingo · Musculação: ${nForca} nos próximos 7 dias</div>
-      ${nCorr ? '' : `<div class="mrt-sub" style="margin:4px 0;">Não há mais corridas planejadas nesta semana. A semana seguinte do plano é gerada na segunda-feira e vai para o relógio sozinha.</div>`}
+      <div class="mrt-sub" style="margin:4px 0;">Corrida: ${nCorr} treino${nCorr===1?'':'s'} · Musculação: ${nForca} dia${nForca===1?'':'s'}</div>
+      <div class="mrt-sub" style="margin:4px 0;">Vão todas as corridas do plano desde segunda (as feitas aparecem como feitas) e a musculação de cada dia da semana. As semanas seguintes entram quando o plano gerar cada uma.</div>
       ${rec ? `<div class="mrt-sub" style="margin:4px 0;">Última atividade recebida do relógio: ${rec.forca ? 'musculação' : 'corrida'}${rec.titulo ? ' (' + escHtmlRelogio(rec.titulo) + ')' : ''} em ${quando(rec.em)}</div>` : ''}
     </div>
     <div class="mrt-card">
