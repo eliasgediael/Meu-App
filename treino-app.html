@@ -6479,6 +6479,8 @@ async function relogioReceber(d){
   const R = relogioApi();
   if(!R || !d || typeof d!=='object') return;
   if(_primeiroInit) await _primeiroInit;
+  // "Sincronizar agora" no relógio: reenvia a lista de treinos na hora.
+  if(d.t==='pedir'){ await relogioEnviarTreinos({ forcar:true }); return; }
   if(d.t==='r'){
     const ok = d.r && d.r.kind==='strength' ? await relogioImportarForca(d.r) : await relogioImportarResultado(d.r);
     // Só confirma depois de gravar: sem "ack" o relógio mantém o resultado na fila e reenvia.
@@ -6603,6 +6605,28 @@ async function relogioImportarForca(r){
   showToast('Musculação do relógio salva');
   return true;
 }
+// Percurso no relógio: uma corrida gravada (pontos reais do GPS) vira rota compacta no relógio.
+const RELOGIO_ROTA_KEY = 'relogioGarminRota';
+async function relogioEnviarRota(gr){
+  const R = relogioApi();
+  if(!R || !gr || !(gr.points||[]).length) return null;
+  const d = new Date(gr.points[0].timestamp || Date.now());
+  const nome = 'Percurso ' + String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0');
+  const msg = R.rotaCompacta(gr.points.map(p=>[p.lat, p.lng]), { id: gr.runId || ('rota_'+Date.now()), nome });
+  if(!msg){ showToast('Percurso curto ou longo demais para o relógio'); return null; }
+  const r = await R.enviar(msg);
+  if(r && r.enviados>0){ lsSet(RELOGIO_ROTA_KEY, JSON.stringify({ id:msg.id, nome, pontos:msg.p.length/2, em:Date.now() })); showToast('Percurso enviado ao relógio'); }
+  else showToast('Relógio fora de alcance — abra o Garmin Connect');
+  return r;
+}
+async function relogioRemoverRota(){
+  const R = relogioApi(); if(!R) return null;
+  const r = await R.enviar(R.mensagemRemoverRota());
+  if(r && r.enviados>0){ lsSet(RELOGIO_ROTA_KEY, null); showToast('Percurso removido do relógio'); }
+  else showToast('Relógio fora de alcance — abra o Garmin Connect');
+  render();
+  return r;
+}
 // Cartão em Perfil › Equipamentos (só no app nativo).
 function relogioGarminCardHtml(){
   if(!relogioApi()) return '';
@@ -6610,15 +6634,18 @@ function relogioGarminCardHtml(){
   const lista = est.relogios || [];
   const TXT = { conectado:'conectado', desconectado:'fora de alcance', bluetooth_desligado:'Bluetooth desligado', nao_encontrado:'não encontrado' };
   let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
+  let rota = null; try{ rota = JSON.parse(lsGet(RELOGIO_ROTA_KEY) || 'null'); }catch(e){}
   return `
     <div id="relogioGarminCard" style="margin-top:12px;">
       <div class="mrt-medlabel">Relógio Garmin (app FORZA RUN)</div>
       ${lista.length ? lista.map(r=>`<div class="mrt-sub" style="margin:4px 0;">${escHtmlRelogio(r.nome||r.modelo||'Relógio')} · ${TXT[r.status]||r.status}</div>`).join('')
         : `<div class="mrt-sub" style="margin:4px 0;">${est.precisaGarminConnect ? 'Instale o app Garmin Connect para ligar o relógio.' : 'Nenhum relógio escolhido.'}</div>`}
+      ${rota ? `<div class="mrt-sub" style="margin:4px 0;">Percurso no relógio: ${escHtmlRelogio(rota.nome)} (${rota.pontos} pontos)</div>` : ''}
       ${ultimo ? `<div class="mrt-sub" style="margin:4px 0;">Último envio: ${ultimo.qtd} treino${ultimo.qtd===1?'':'s'} em ${new Date(ultimo.em).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</div>` : ''}
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
         <button class="mrt-pillbtn" id="btnRelogioEscolher">${lista.length ? 'Trocar relógio' : 'Escolher relógio'}</button>
         ${lista.length ? `<button class="mrt-pillbtn" id="btnRelogioEnviar">Enviar treinos agora</button>` : ''}
+        ${rota ? `<button class="mrt-pillbtn" id="btnRelogioRemoverRota">Remover percurso</button>` : ''}
       </div>
     </div>`;
 }
@@ -6628,6 +6655,8 @@ function wireRelogioGarmin(){
   if(!R) return;
   const esc = document.getElementById('btnRelogioEscolher');
   if(esc) esc.onclick = async ()=>{ const r = await R.escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); };
+  const rem = document.getElementById('btnRelogioRemoverRota');
+  if(rem) rem.onclick = ()=> relogioRemoverRota();
   const env = document.getElementById('btnRelogioEnviar');
   if(env) env.onclick = async ()=>{
     const r = await relogioEnviarTreinos({ forcar:true });
@@ -7613,6 +7642,7 @@ function renderGpsSummary(gr){
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
           ${gr.progressKey ? `<button class="btn-secondary" id="gpsBtnCorrigirRun">${ICONS.pencil} Corrigir corrida</button>` : ''}
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
+          ${temMapa && relogioApi() ? `<button class="btn-ghost" id="gpsBtnRotaRelogio">Usar como percurso no relógio</button>` : ''}
           ${(gr.progressKey || gr.atividadeId) ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
       </div>
@@ -7695,6 +7725,7 @@ function wireGpsRunScreen(){
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
+  if(byId('gpsBtnRotaRelogio')) byId('gpsBtnRotaRelogio').onclick = ()=> relogioEnviarRota(gr);
   if(byId('gpsBtnCorrigirRun')) byId('gpsBtnCorrigirRun').onclick = ()=> abrirCorrigirCorrida(gr.progressKey);
   wireSugestaoVinculo();
   if(byId('gpsNotaObs')) byId('gpsNotaObs').onclick = ()=> editarObsCorrida(gr);

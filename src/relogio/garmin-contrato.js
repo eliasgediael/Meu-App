@@ -155,7 +155,7 @@ function forcaCompacta(dia) {
     // Série: [repetições, carga, descanso]. O id da série é "<id do exercício>#<n>" (estável, derivado).
     for (let k = 1; k <= n; k++) series.push([reps, kg, rest]);
     // 4º item (opcional): id da imagem do exercício no app (gifs/<id>.webp), para a página Execução.
-    const item = [id, String(x.nome || 'Exercício').slice(0, 40), series];
+    const item = [id, String(x.nome || 'Exercício').slice(0, 60), series];
     if (x.img) item.push(String(x.img));
     return item;
   });
@@ -214,8 +214,59 @@ function registroDoResultado(r) {
   };
 }
 
+// ---------- Percurso ----------
+// Corrida gravada (pontos [lat, lon]) -> rota compacta do relógio: origem no 1º ponto, pontos em metros
+// (x leste, y norte, inteiros) num array plano, simplificados (Douglas-Peucker) até no máximo
+// MAX_PONTOS_ROTA pontos e MAX_BYTES_ROTA bytes. Sem instruções de curva: só o traçado real.
+const MAX_PONTOS_ROTA = 150, MAX_BYTES_ROTA = 2500;
+
+function simplificar(pts, tol) {
+  if (pts.length <= 2) return pts.slice();
+  const manter = new Array(pts.length).fill(false);
+  manter[0] = manter[pts.length - 1] = true;
+  const pilha = [[0, pts.length - 1]];
+  while (pilha.length) {
+    const [a, b] = pilha.pop();
+    let maxD = -1, idx = -1;
+    const [ax, ay] = pts[a], [bx, by] = pts[b];
+    const dx = bx - ax, dy = by - ay, l2 = dx * dx + dy * dy;
+    for (let i = a + 1; i < b; i++) {
+      const [px, py] = pts[i];
+      let t = l2 ? ((px - ax) * dx + (py - ay) * dy) / l2 : 0;
+      t = Math.max(0, Math.min(1, t));
+      const d = Math.hypot(ax + t * dx - px, ay + t * dy - py);
+      if (d > maxD) { maxD = d; idx = i; }
+    }
+    if (maxD > tol && idx > 0) { manter[idx] = true; pilha.push([a, idx], [idx, b]); }
+  }
+  return pts.filter((_, i) => manter[i]);
+}
+
+function rotaCompacta(pontos, opcoes) {
+  const ok = (pontos || []).filter((p) => p && isFinite(p[0]) && isFinite(p[1]) && Math.abs(p[0]) <= 90 && Math.abs(p[1]) <= 180);
+  if (ok.length < 2) return null;
+  const [lat0, lon0] = ok[0];
+  const k = Math.cos(lat0 * Math.PI / 180);
+  const xy = ok.map(([la, lo]) => [(lo - lon0) * 111320 * k, (la - lat0) * 110540]);
+  const ext = Math.max(...xy.map(([x, y]) => Math.max(Math.abs(x), Math.abs(y))));
+  if (ext < 20 || ext > 50000) return null;   // percurso curto demais ou longo demais (> 50 km do início)
+  const o = opcoes || {};
+  for (let tol = 3; tol < 2000; tol *= 1.5) {
+    const s = simplificar(xy, tol);
+    if (s.length > MAX_PONTOS_ROTA) continue;
+    const p = [];
+    s.forEach(([x, y]) => p.push(Math.round(x), Math.round(y)));
+    const msg = { t: 'route', id: String(o.id || 'rota'), n: String(o.nome || 'Rota planejada').slice(0, 24),
+      o: [Math.round(lat0 * 1e6) / 1e6, Math.round(lon0 * 1e6) / 1e6], p };
+    if (JSON.stringify(msg).length <= MAX_BYTES_ROTA) return msg;
+  }
+  return null;
+}
+function mensagemRemoverRota() { return { t: 'route', clear: true }; }
+
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
   treinosParaRelogio, mensagemTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
   MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
+  MAX_PONTOS_ROTA, MAX_BYTES_ROTA, rotaCompacta, mensagemRemoverRota,
 };

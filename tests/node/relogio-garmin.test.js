@@ -65,7 +65,7 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(JSON.stringify(fc.e[1][2][2]) === JSON.stringify([8, 0, 90]), 'faixa de reps usa o início; sem carga = 0; descanso padrão 90 s');
   ok(fc.e[0][3] === '0025' && fc.e[1].length === 3, 'imagem do exercício vai como 4º item, só quando existe');
   const longo = C.forcaCompacta({ day: 'Qua', exercicios: [{ id: 'x', nome: 'Elevação lateral unilateral com halteres no banco', series: '3', reps: '12' }] });
-  ok(longo.e[0][1] === 'Elevação lateral unilateral com halteres no banco'.slice(0, 40) && longo.e[0][1].length === 40, 'nome do exercício até 40 letras');
+  ok(longo.e[0][1] === 'Elevação lateral unilateral com halteres no banco', 'nome do exercício inteiro (até 60 letras; o maior do catálogo tem 52)');
   ok(C.forcaCompacta({ day: 'Ter', exercicios: [] }) === null, 'dia sem exercício não vai');
   // Limite de tamanho: nunca passa de MAX_BYTES e mantém os mais próximos, alternando corrida e força.
   const runs = Array.from({ length: 8 }, (_, i) => ({ id: 'r' + i, s: Array.from({ length: 15 }, () => ['i', 'd', 400, 250, 270]) }));
@@ -87,5 +87,16 @@ const C = require('../../src/relogio/garmin-contrato.js');
     'séries compactas do relógio ([reps, kg, reps plan., kg plan.]) aceitas');
   ok(C.registroDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', durationSec: 10 }) === null, 'resultado de força não vira corrida');
   ok(C.registroForcaDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', exercises: [] }) === null, 'musculação sem série é ignorada');
+  // Percurso: corrida gravada -> rota compacta (origem, metros, simplificada, sem curvas inventadas).
+  const trilha = [];
+  for (let i = 0; i < 2000; i++) trilha.push([-23.55 + i * 0.00002 + Math.sin(i / 30) * 0.0002, -46.63 + i * 0.00003]);
+  const rota = C.rotaCompacta(trilha, { id: 'run_1', nome: 'Percurso 05/10' });
+  ok(rota && rota.t === 'route' && rota.p.length % 2 === 0 && rota.p.length / 2 <= C.MAX_PONTOS_ROTA && rota.p.length / 2 >= 10,
+    'rota simplificada a no máximo ' + C.MAX_PONTOS_ROTA + ' pontos (' + (rota ? rota.p.length / 2 : 0) + ')');
+  ok(rota && JSON.stringify(rota).length <= C.MAX_BYTES_ROTA && rota.p.every(Number.isInteger), 'rota cabe em ' + C.MAX_BYTES_ROTA + ' bytes, metros inteiros');
+  ok(rota && rota.p[0] === 0 && rota.p[1] === 0 && rota.o[0] === -23.55, 'origem no 1º ponto real');
+  ok(rota && rota.instrucoes === undefined && !('curvas' in rota), 'sem instruções de curva');
+  ok(C.rotaCompacta([[-23.55, -46.63]]) === null && C.rotaCompacta([[-23.55, -46.63], [-23.55, -46.63]]) === null, 'trilha curta não vira rota');
+  ok(JSON.stringify(C.mensagemRemoverRota()) === '{"t":"route","clear":true}', 'mensagem para remover a rota');
   semErro();
 })();

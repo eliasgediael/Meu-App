@@ -22,7 +22,7 @@ const ponte = {
 
 (async () => {
   const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'saveTreinos', 'gpsDbGet',
-    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO', 'renderIntegracoesV2'],
+    'atividadesLivres', 'relogioEnviarTreinos', 'relogioMensagemTreinos', 'todayISO', 'renderIntegracoesV2', 'relogioEnviarRota'],
     { antes: () => { globalThis.NativeBridge = ponte; if (globalThis.window) globalThis.window.NativeBridge = ponte; } });
   const S = T.state;
   ok(typeof aoReceber === 'function', 'app começa a ouvir o relógio ao abrir');
@@ -100,6 +100,19 @@ const ponte = {
   await espera(400);
   ok(T.atividadesLivres().some(a => a.id === 'run:run_garmin_free_1791300000' && a.origem === 'garmin' && a.distKm === 6.123),
     'corrida livre do relógio vira atividade livre');
+
+  // "Sincronizar agora" no relógio pede a lista: o app reenvia na hora.
+  enviados.length = 0;
+  aoReceber({ dados: { t: 'pedir' } });
+  await espera(400);
+  ok(enviados.some(m => m.t === 'w'), 'pedido do relógio reenvia a lista de treinos');
+
+  // Percurso de uma corrida gravada vai como rota compacta.
+  enviados.length = 0;
+  const pts = []; for (let i = 0; i < 300; i++) pts.push({ lat: -23.55 + i * 0.0001, lng: -46.63 + Math.sin(i / 20) * 0.0005, timestamp: 1791200000000 + i * 1000 });
+  await T.relogioEnviarRota({ runId: 'run_x', points: pts });
+  const rota = enviados.find(m => m.t === 'route');
+  ok(rota && rota.id === 'run_x' && rota.p.length >= 4 && rota.n.startsWith('Percurso'), 'corrida gravada enviada como percurso');
 
   // Tela Integrações: o cartão Garmin é a ponte real (não mais "ainda não existe no app").
   const integ = T.renderIntegracoesV2();
