@@ -6431,10 +6431,24 @@ function relogioIniciar(){
     _relogioFila = _relogioFila.then(()=>relogioReceber(ev && ev.dados)).catch(e=>console.warn('[relogio]', e));
   }, est=>{
     _relogioEstado = est;
+    relogioAtualizarModelo(est);
     if(est && (est.relogios||[]).some(r=>r.status==='conectado')) relogioEnviarTreinos({ forcar:true });
     if(document.getElementById('relogioGarminCard')) render();
   });
-  R.estado().then(est=>{ _relogioEstado = est; });
+  R.estado().then(est=>{ _relogioEstado = est; relogioAtualizarModelo(est); });
+}
+// O campo "Relógio" de Equipamentos acompanha o relógio escolhido no Garmin Connect (continua editável).
+async function relogioAtualizarModelo(est){
+  const r = est && (est.relogios||[])[0];
+  if(!r) return;
+  const base = String(r.modelo || r.nome || '').replace(/®/g, '').replace(/\s+/g, ' ').trim();
+  if(!base) return;
+  const nome = /^garmin/i.test(base) ? base : 'Garmin ' + base;
+  if(_primeiroInit) await _primeiroInit;
+  if(state.viewingClient || !state.equipamentos || state.equipamentos.relogio === nome) return;
+  state.equipamentos.relogio = nome;
+  saveEquipamentos();
+  if(document.getElementById('inRelogio')) render();
 }
 // Mudou treino ou progresso: reenvia a lista em alguns segundos (várias gravações seguidas viram um envio só).
 function relogioAgendarEnvio(){
@@ -16223,7 +16237,7 @@ function renderEquipamentosV2(){
     <div class="mrt-card" style="padding:14px 16px;">
       <div class="mrt-summarytitle" style="font-size:16px;margin-bottom:6px;">Corrida</div>
       <div class="mrt-togglerow"><div class="icon-box run">${ICONS.run}</div><div class="nm">Esteira</div><div class="mrt-switch ${esteiraLigada?'on':''}" data-equiptoggle="esteira"><i></i></div></div>
-      <label class="mrt-medlabel" for="inRelogio" style="margin-top:12px;">Relógio</label>
+      <label class="mrt-medlabel" for="inRelogio" style="margin-top:12px;">Relógio${relogioApi() ? ' <span style="font-weight:400;opacity:.7;">(preenchido pelo relógio conectado)</span>' : ''}</label>
       <input class="mrt-input" id="inRelogio" list="relogioModelosList" value="${state.equipamentos.relogio||''}" placeholder="ex: Garmin Forerunner 255">
       <datalist id="relogioModelosList">${RELOGIO_MODELOS.map(m=>`<option value="${m}">`).join('')}</datalist>
       ${relogioGarminCardHtml()}

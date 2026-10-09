@@ -13,7 +13,7 @@ const ponte = {
   relogio: {
     ...Contrato,
     disponivel: () => true,
-    estado: async () => ({ relogios: [{ id: 'x', nome: 'Forerunner 55', status: 'conectado' }] }),
+    estado: async () => ({ relogios: [{ id: 'x', nome: 'Corrida do Elias', modelo: 'Forerunner® 55', status: 'conectado' }] }),
     escolher: async () => { escolhas++; return { abriuGarminConnect: true }; },
     enviar: async (m) => { enviados.push(JSON.parse(JSON.stringify(m))); return { enviados: 1, resultados: [] }; },
     ouvir: (cb) => { aoReceber = cb; },
@@ -26,6 +26,7 @@ const ponte = {
     { antes: () => { globalThis.NativeBridge = ponte; if (globalThis.window) globalThis.window.NativeBridge = ponte; } });
   const S = T.state;
   ok(typeof aoReceber === 'function', 'app começa a ouvir o relógio ao abrir');
+  ok(S.equipamentos.relogio === 'Garmin Forerunner 55', 'campo Relógio de Equipamentos preenchido com o relógio conectado (' + S.equipamentos.relogio + ')');
 
   S.athleteProfile = T.criarAthleteProfile(); S.hybridPlanData = null; S.treinos = []; S.musculacao = {};
   await T.qv2Aplicar({ ...BASE, ...PERFIS.find(p => p[0].startsWith('07'))[1] }); await T.gerarPrimeiroPlanoV2();
