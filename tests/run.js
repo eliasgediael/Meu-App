@@ -38,6 +38,7 @@ const testes = [
   { nome: 'esteira (distância por trechos) e voz da musculação', arq: 'node/esteira-voz.test.js' },
   { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
   { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },
+  { nome: 'excluir atividade sem detalhes', arq: 'node/excluir-sem-detalhes.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));

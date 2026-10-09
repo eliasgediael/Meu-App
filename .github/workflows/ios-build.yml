@@ -42,6 +42,9 @@ jobs:
           PLIST="ios/App/App/Info.plist"
           PB=/usr/libexec/PlistBuddy
           "$PB" -c "Set :CFBundleDisplayName Forza Run" "$PLIST" || "$PB" -c "Add :CFBundleDisplayName string Forza Run" "$PLIST"
+          # Número de build único por execução: o iOS/AltStore reconhece o IPA novo como atualização
+          # e dá para conferir no aparelho qual execução está instalada (Ajustes > Geral > Armazenamento).
+          "$PB" -c "Set :CFBundleVersion ${GITHUB_RUN_NUMBER}" "$PLIST"
           if [ -f brand/icone-1024.png ]; then
             cp brand/icone-1024.png ios/App/App/Assets.xcassets/AppIcon.appiconset/AppIcon-512@2x.png
           fi

@@ -6280,7 +6280,13 @@ function escolherAtividadeLivre(){
 async function abrirResumoAtividade(id){
   const a = atividadesLivres().find(x=>x.id===id);
   const rec = a && a.gpsRunId ? await gpsDbGet(a.gpsRunId) : null;
-  if(!rec){ showToast('Esta atividade não tem detalhes salvos'); return; }
+  // Sem a gravação neste aparelho o resumo não abre (e é nele que fica "Excluir"): oferece excluir aqui.
+  if(!rec){
+    if(a && await confirmarApp({ titulo:'Atividade sem detalhes', texto:'A gravação desta atividade não está neste aparelho, então não dá para abrir o resumo. Quer excluir o registro?', ok:'Excluir atividade', perigo:true })){
+      await excluirAtividadeLivre(a.id); render(); showToast('Atividade excluída');
+    }
+    return;
+  }
   const d = new Date(a.data+'T12:00:00');
   state.gpsRun = {
     status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:DAY_ABBR[(d.getDay()+6)%7], steps:[], stepIndex:0,
@@ -13096,7 +13102,14 @@ function mrtBarraBlocos(steps){
 async function abrirResumoCorrida(dayKey){
   const prog = (state.corridaProgress||{})[dayKey];
   const rec = prog && prog.gpsRunId ? await gpsDbGet(prog.gpsRunId) : null;
-  if(!rec){ showToast('Esta corrida não tem detalhes salvos'); return; }
+  if(!rec){
+    if(prog && prog.done && await confirmarApp({ titulo:'Corrida sem detalhes', texto:'A gravação desta corrida não está neste aparelho, então não dá para abrir o resumo. Quer excluir o registro? O treino planejado continua.', ok:'Excluir corrida', perigo:true })){
+      await excluirCorridaRealizada(dayKey);
+      if(state.gpsRun && state.gpsRun.progressKey===dayKey) state.gpsRun = null;
+      render(); showToast('Corrida excluída');
+    }
+    return;
+  }
   const entry = state.treinos.find(t=>t.day===dayKey);
   const abbr = dayAbbrevOf(dayKey);
   state.gpsRun = {
@@ -16067,6 +16080,8 @@ function abrirAtividadeDaLista(id){
   if(a.livre) return abrirResumoAtividade(a.id);
   if(a.tipo==='musculacao') return a.muscLogId ? abrirMuscHistoryV2(a.muscLogId) : null;
   if(a.gpsRunId && a.sessao) return abrirResumoCorrida(a.sessao.chave);
+  // Corrida do plano registrada à mão (sem gravação): não há resumo; oferece excluir o registro.
+  if(a.sessao && a.sessao.chave) return confirmarExcluirCorrida(a.sessao.chave);
   showToast('Corrida registrada sem gravação');
 }
 function wireProgressoV2(){
