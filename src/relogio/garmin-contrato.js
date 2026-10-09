@@ -154,7 +154,10 @@ function forcaCompacta(dia) {
     const series = [];
     // Série: [repetições, carga, descanso]. O id da série é "<id do exercício>#<n>" (estável, derivado).
     for (let k = 1; k <= n; k++) series.push([reps, kg, rest]);
-    return [id, String(x.nome || 'Exercício').slice(0, 24), series];
+    // 4º item (opcional): id da imagem do exercício no app (gifs/<id>.webp), para a página Execução.
+    const item = [id, String(x.nome || 'Exercício').slice(0, 40), series];
+    if (x.img) item.push(String(x.img));
+    return item;
   });
   return { y: 'f', id: 'musc_' + dia.day, k: dia.k, n: String(dia.n || 'Musculação').slice(0, 24), e };
 }
@@ -163,9 +166,16 @@ function forcaCompacta(dia) {
 function registroForcaDoResultado(r) {
   if (!r || r.kind !== 'strength' || !r.resultId || !r.workoutId) return null;
   const seg = Math.max(0, Math.round(Number(r.durationSec) || 0));
+  // Série do relógio: [reps, kg, repsPlanejadas, kgPlanejado] (id = "<exercício>#<n>"), ou o formato
+  // anterior em objeto { id, reps, kg, plannedReps, plannedKg }.
+  const serie = (e, st, i) => Array.isArray(st)
+    ? { id: String(e.id) + '#' + (i + 1), reps: st[0], kg: st[1], plannedReps: st[2], plannedKg: st[3] } : st;
   const exercicios = (Array.isArray(r.exercises) ? r.exercises : []).map((e) => ({
     id: String(e.id), nome: String(e.name || ''),
-    sets: (Array.isArray(e.sets) ? e.sets : []).map((st) => ({ id: String(st.id || ''), peso: Math.max(0, Number(st.kg) || 0), reps: Math.max(0, Math.round(Number(st.reps) || 0)) })),
+    // Realizado (peso/reps) e planejado (pesoPlanejado/repsPlanejadas), gravados separados.
+    sets: (Array.isArray(e.sets) ? e.sets : []).map((s0, i) => serie(e, s0, i)).filter((st) => st && typeof st === 'object').map((st) => ({ id: String(st.id || ''), peso: Math.max(0, Number(st.kg) || 0), reps: Math.max(0, Math.round(Number(st.reps) || 0)),
+      pesoPlanejado: st.plannedKg != null ? Math.max(0, Number(st.plannedKg) || 0) : null,
+      repsPlanejadas: st.plannedReps != null ? Math.max(0, Math.round(Number(st.plannedReps) || 0)) : null })),
   })).filter((e) => e.sets.length);
   if (!exercicios.length) return null;
   const inicio = r.startedAt > 0 ? r.startedAt * 1000 : null;

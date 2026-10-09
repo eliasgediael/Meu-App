@@ -58,11 +58,14 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(C.registroDoResultado(null) === null && C.registroDoResultado({}) === null, 'resultado inválido é ignorado');
   // Musculação.
   const fc = C.forcaCompacta({ day: 'Seg', k: 'Seg 05/10', n: 'Peito + Tríceps', exercicios: [
-    { id: 'd1', nome: 'Supino reto com barra', series: '4', reps: '10', carga: '40', descanso: '60–90s' },
+    { id: 'd1', nome: 'Supino reto com barra', series: '4', reps: '10', carga: '40', descanso: '60–90s', img: '0025' },
     { id: 'd2', nome: 'Tríceps coice no cabo', series: '3', reps: '8-12', carga: '', descanso: '' }] });
   ok(fc.y === 'f' && fc.id === 'musc_Seg' && fc.e.length === 2, 'musculação compacta com tipo e id estável do dia');
   ok(JSON.stringify(fc.e[0][2][0]) === JSON.stringify([10, 40, 75]) && fc.e[0][2].length === 4 && fc.e[0][0] === 'd1', 'série: repetições, carga e descanso; exercício com id do app');
   ok(JSON.stringify(fc.e[1][2][2]) === JSON.stringify([8, 0, 90]), 'faixa de reps usa o início; sem carga = 0; descanso padrão 90 s');
+  ok(fc.e[0][3] === '0025' && fc.e[1].length === 3, 'imagem do exercício vai como 4º item, só quando existe');
+  const longo = C.forcaCompacta({ day: 'Qua', exercicios: [{ id: 'x', nome: 'Elevação lateral unilateral com halteres no banco', series: '3', reps: '12' }] });
+  ok(longo.e[0][1] === 'Elevação lateral unilateral com halteres no banco'.slice(0, 40) && longo.e[0][1].length === 40, 'nome do exercício até 40 letras');
   ok(C.forcaCompacta({ day: 'Ter', exercicios: [] }) === null, 'dia sem exercício não vai');
   // Limite de tamanho: nunca passa de MAX_BYTES e mantém os mais próximos, alternando corrida e força.
   const runs = Array.from({ length: 8 }, (_, i) => ({ id: 'r' + i, s: Array.from({ length: 15 }, () => ['i', 'd', 400, 250, 270]) }));
@@ -73,9 +76,15 @@ const C = require('../../src/relogio/garmin-contrato.js');
   const m2 = C.mensagemTreinos([{ id: 'x' }], [fc]);
   ok(m2.v === 2 && m2.w.length === 2 && C.mensagemTreinos([{ id: 'x' }]).v === undefined, 'mensagem v2 só quando há musculação');
   const rf = C.registroForcaDoResultado({ kind: 'strength', resultId: 'musc_Seg_1791250000', workoutId: 'musc_Seg', startedAt: 1791250000,
-    durationSec: 2555, avgHeartRate: 126.4, exercises: [{ id: 'd1', name: 'Supino', sets: [{ id: 'd1#1', reps: 10, kg: 42.5 }] }, { id: 'd2', name: 'X', sets: [] }] });
+    durationSec: 2555, avgHeartRate: 126.4, exercises: [{ id: 'd1', name: 'Supino', sets: [{ id: 'd1#1', reps: 10, kg: 42.5, plannedReps: 12, plannedKg: 40 }] }, { id: 'd2', name: 'X', sets: [] }] });
   ok(rf && rf.logId === 'musc_garmin_musc_Seg_1791250000' && rf.day === 'Seg' && rf.series === 1 && rf.exercicios.length === 1 && rf.fcMedia === 126,
     'resultado de musculação vira sessão do app');
+  ok(rf.exercicios[0].sets[0].peso === 42.5 && rf.exercicios[0].sets[0].pesoPlanejado === 40 && rf.exercicios[0].sets[0].repsPlanejadas === 12,
+    'realizado e planejado chegam separados');
+  const ra = C.registroForcaDoResultado({ kind: 'strength', resultId: 'r2', workoutId: 'musc_Seg', durationSec: 60,
+    exercises: [{ id: 'd1', name: 'Supino', sets: [[10, 42.5, 12, 40], [8, 42.5, 12, 40]] }] });
+  ok(ra && ra.series === 2 && ra.exercicios[0].sets[1].id === 'd1#2' && ra.exercicios[0].sets[1].reps === 8 && ra.exercicios[0].sets[0].pesoPlanejado === 40,
+    'séries compactas do relógio ([reps, kg, reps plan., kg plan.]) aceitas');
   ok(C.registroDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', durationSec: 10 }) === null, 'resultado de força não vira corrida');
   ok(C.registroForcaDoResultado({ kind: 'strength', resultId: 'a', workoutId: 'musc_Seg', exercises: [] }) === null, 'musculação sem série é ignorada');
   semErro();

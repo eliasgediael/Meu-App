@@ -6540,7 +6540,10 @@ function relogioDiasDeForca(){
     const exercicios = lista.map(ex=>{
       let carga = ex.carga;
       try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
-      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso };
+      // Imagem do exercício: a mesma que o app mostra (repdbImg resolve ids antigos e mídia incorreta).
+      const im = repdbImg(ex.repdbId);
+      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso,
+        img: im ? im.replace(/^gifs\//, '').replace(/\.webp$/, '') : null };
     });
     const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
     if(c) out.push(c);
@@ -6567,7 +6570,8 @@ async function relogioImportarForca(r){
     const idCanon = (base.repdbId && repdbId(base.repdbId)) || ((exercicioPorNome(base.nome)||{}).id) || null;
     if(idCanon) item.exerciseId = idCanon;
     if(base.repdbId) item.repdbId = base.repdbId;
-    item.seriesExecutadas = e.sets.map((st,i)=>({ numero:i+1, peso:st.peso, repeticoes:st.reps, concluida:true }));
+    item.seriesExecutadas = e.sets.map((st,i)=>({ numero:i+1, peso:st.peso, repeticoes:st.reps, concluida:true,
+      ...(st.pesoPlanejado!=null ? { pesoPlanejado:st.pesoPlanejado } : {}), ...(st.repsPlanejadas!=null ? { repeticoesPlanejadas:st.repsPlanejadas } : {}) }));
     e.sets.forEach(st=>{ volume += st.peso*st.reps; cargaMax = Math.max(cargaMax, st.peso); });
     // Histórico de carga do exercício, na data em que a sessão foi feita (como logSetsHistory faz para hoje).
     const chave = base.repdbId || base.nome;

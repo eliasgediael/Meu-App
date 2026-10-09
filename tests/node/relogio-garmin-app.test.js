@@ -40,6 +40,8 @@ const ponte = {
   ok(corridas.every(w => !!S.treinos.find(t => t.day === w.id)), 'cada treino de corrida enviado existe no plano');
   ok(forca.length > 0 && forca.every(f => /^musc_/.test(f.id) && (S.musculacao[f.id.slice(5)] || []).length === f.e.length),
     'musculação dos próximos dias enviada com os exercícios do app (' + forca.length + ')');
+  ok(forca.every(f => f.e.every(x => !x[3] || /^\d{4}$/.test(x[3]))) && forca.some(f => f.e.some(x => x[3])),
+    'exercícios levam o id da imagem do app (gifs/<id>.webp)');
 
   // Corrida do relógio para o primeiro treino da lista.
   const alvo = corridas[0];
@@ -66,7 +68,8 @@ const ponte = {
   const exF = fz.e[0];
   const rf = { schemaVersion: 2, kind: 'strength', resultId: fz.id + '_1791250000', workoutId: fz.id, sessionKey: fz.k, source: 'garmin',
     startedAt: Math.floor(Date.now() / 1000) - 3000, durationSec: 2555, avgHeartRate: 126, sets: 2,
-    exercises: [{ id: exF[0], name: exF[1], sets: [{ id: exF[0] + '#1', reps: 10, kg: 42.5 }, { id: exF[0] + '#2', reps: 8, kg: 42.5 }] }] };
+    // Formato atual do relógio: séries compactas [reps, kg, reps planejadas, kg planejados].
+    exercises: [{ id: exF[0], name: exF[1], sets: [[10, 42.5, exF[2][0][0], exF[2][0][1]], [8, 42.5, exF[2][1][0], exF[2][1][1]]] }] };
   const logsAntes = S.workoutSessionsLog.length;
   enviados.length = 0;
   aoReceber({ dados: { t: 'r', r: rf } });
@@ -77,6 +80,7 @@ const ponte = {
   const exApp = S.musculacao[diaF].find(x => x.id === exF[0]);
   ok(log && log.exercicios[0].nome === exApp.nome && log.exercicios[0].seriesExecutadas.length === 2 && log.exercicios[0].seriesExecutadas[1].repeticoes === 8,
     'séries realmente feitas (repetições e carga) gravadas');
+  ok(log && log.exercicios[0].seriesExecutadas[0].repeticoesPlanejadas === exF[2][0][0], 'planejado gravado separado do realizado');
   const hist = (S.historicoCarga[exApp.repdbId || exApp.nome] || []).find(h => h.data === log.data);
   ok(hist && hist.sets.length === 2 && hist.sets[0].peso === '42.5', 'histórico de carga do exercício atualizado');
   ok(enviados.some(m => m.t === 'ack' && m.ids[0] === rf.resultId), 'confirma a musculação ao relógio');
