@@ -1308,7 +1308,7 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-searchbox svg{ width:18px; height:18px; flex-shrink:0; }
 .mrt-searchbox input{ flex:1; background:none; border:none; color:var(--text); font-family:inherit; font-size:15px; min-width:0; }
 .mrt-searchbox input:focus{ outline:none; }
-.mrt-bibgrid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.mrt-bibgrid{ display:grid; grid-template-columns:repeat(2, minmax(0, 1fr)); gap:12px; }
 .mrt-bibcard{ background:var(--surface); border-radius:var(--r-card); padding:10px; cursor:pointer; display:flex; flex-direction:column; gap:8px; align-items:flex-start; }
 .mrt-bibcard .th{ position:relative; width:100%; aspect-ratio:1; border-radius:var(--r-input); overflow:hidden; background:var(--surface-2); display:flex; align-items:center; justify-content:center; }
 .mrt-bibcard .th img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
@@ -1318,6 +1318,8 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-bibcard .fav svg, .mrt-favbig svg{ width:18px; height:18px; }
 .mrt-bibcard .fav.on, .mrt-favbig.on{ color:var(--gold); }
 .mrt-favbig{ position:static; background:var(--surface-2); flex-shrink:0; width:44px; height:44px; }
+.fr-bibmenu{ flex-shrink:0; width:44px; height:44px; border-radius:50%; border:none; background:var(--surface-2); color:var(--text); display:flex; align-items:center; justify-content:center; padding:0; cursor:pointer; }
+.fr-bibmenu svg{ width:20px; height:20px; }
 .mrt-bibhero{ margin:0 -18px 0; height:260px; background:var(--surface); display:flex; align-items:center; justify-content:center; overflow:hidden; }
 .mrt-bibhero img{ width:100%; height:100%; object-fit:contain; background:var(--text); }
 .mrt-bibhero .mrt-exthumb{ width:120px !important; height:120px !important; }
@@ -1493,6 +1495,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .ds-ajop .s{ font-size:13.5px; color:var(--text-dim); line-height:1.4; }
 .ds-ajop.rec .t{ font-weight:700; }
 .ds-alerta{ border-color:var(--text); }
+.fr-avisoqual{ font-size:14px; color:var(--text-dim); line-height:1.4; }
 .ds-alerta .t{ font-size:16px; font-weight:700; color:var(--text); margin-bottom:4px; }
 .ds-alerta .s{ font-size:14px; color:var(--text-dim); line-height:1.4; margin-bottom:14px; }
 .ds-diario{ display:flex; gap:14px; padding:12px 0; border-top:1px solid var(--border); }
@@ -2146,6 +2149,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
 .fr-pcard{ border:1px solid var(--border); border-radius:20px; background:var(--surface-2); padding:14px 10px 10px; }
 .fr-pcard-top{ display:flex; align-items:center; gap:16px; padding:0 4px 14px; }
 .fr-pavatar{ width:68px; height:68px; border-radius:50%; background:#E6E6E6; background-size:cover; background-position:center; display:flex; align-items:center; justify-content:center; font-size:32px; font-weight:900; color:var(--text); flex-shrink:0; }
+button.fr-pavatar{ border:none; padding:0; cursor:pointer; font-family:inherit; }
 .fr-pcard-txt{ min-width:0; }
 .fr-pcard-txt .nm{ font-size:23px; font-weight:900; letter-spacing:-0.4px; color:var(--text); line-height:1.15; }
 .fr-pcard-txt .s1{ font-size:16px; color:var(--text-dim); margin-top:2px; }
@@ -2373,7 +2377,7 @@ button.mrt-chip, .mrt-chip[data-hybgoal]{ min-height:44px; padding:0 18px; displ
   background-color:#2A2A2A; background-image:repeating-conic-gradient(#343434 0 25%, #2A2A2A 0 50%); background-size:22px 22px; }
 .fr-arte img{ display:block; width:100%; height:auto; }
 .fr-arte.on{ border-color:#111111; box-shadow:0 0 0 2px #FFFFFF inset; }
-.fr-arte .ck{ position:absolute; right:10px; bottom:10px; width:24px; height:24px; border-radius:50%; border:2px solid #FFFFFF; box-sizing:border-box; }
+.fr-arte .ck{ position:absolute; right:10px; top:10px; width:24px; height:24px; border-radius:50%; border:2px solid #FFFFFF; box-sizing:border-box; }
 .fr-arte.on .ck{ background:#FFFFFF; box-shadow:inset 0 0 0 4px #111111; }
 .fr-artacoes{ display:grid; grid-template-columns:repeat(4,1fr); gap:8px; border-top:1px solid var(--border); padding:14px 0 6px; position:sticky; bottom:0; background:var(--surface); }
 .fr-artacoes button{ display:flex; flex-direction:column; align-items:center; gap:6px; border:none; background:none; font-family:inherit; font-size:13px; font-weight:600; color:var(--text); cursor:pointer; padding:0; }
@@ -4669,6 +4673,8 @@ async function init(){
   // AthleteProfile (infraestrutura nova, ainda não usada pelo quiz/gerador): carrega ou cria a partir dos dados antigos.
   try{ await carregarAthleteProfile(); }catch(e){ state.athleteProfile = null; }
 
+  if(IA_CONFIG.ativa && IA_CONFIG.publicacaoAutorizada && iaRecuperarSemanaAtomica(state, localStorage)) await iaPersistirSemanaApp();
+
   state.tab = 'hoje';
   state.modalOpen = false; state.modalType = null;
   render();
@@ -5151,7 +5157,7 @@ function exercisesForGroup(grupo){
   return exerciciosCompletos().filter(e=>e.grupo===grupo).map(e=>({ id:e.id, nome:e.nome }))
     .sort((a,b)=>a.nome.localeCompare(b.nome, 'pt-BR'));
 }
-async function saveTreinos(){ try{ await window.storage.set('treinos', JSON.stringify(state.treinos), false); await window.storage.set('zonas', JSON.stringify(state.zonas), false); }catch(e){} }
+async function saveTreinos(){ try{ await window.storage.set('treinos', JSON.stringify(state.treinos), false); await window.storage.set('zonas', JSON.stringify(state.zonas), false); }catch(e){} relogioAgendarEnvio(); }
 // Antes cabia em 7 chaves fixas (uma por dia da semana); agora que guarda por data específica, cresce
 // pra sempre se não podar — mantém só os registros mais recentes.
 async function saveCorridaProgress(){
@@ -5160,8 +5166,9 @@ async function saveCorridaProgress(){
     keys.slice(0, keys.length-500).forEach(k=>delete state.corridaProgress[k]);
   }
   try{ await window.storage.set('corridaProgress', JSON.stringify(state.corridaProgress), false); }catch(e){}
+  relogioAgendarEnvio();
 }
-async function saveMusc(){ try{ await window.storage.set('musculacao', JSON.stringify(state.musculacao), false); }catch(e){} }
+async function saveMusc(){ try{ await window.storage.set('musculacao', JSON.stringify(state.musculacao), false); }catch(e){} relogioAgendarEnvio(); }
 async function saveOutros(){ try{ await window.storage.set('outros', JSON.stringify(state.outros), false); }catch(e){} }
 async function savePerfil(){ try{ await window.storage.set('perfil', JSON.stringify(state.perfil), false); }catch(e){} sincronizarAthleteProfileComLegado(); }
 async function saveOnboardingDone(){ try{ await window.storage.set('onboardingDone', todayISO()+'|pending', false); }catch(e){} }
@@ -6279,7 +6286,13 @@ function escolherAtividadeLivre(){
 async function abrirResumoAtividade(id){
   const a = atividadesLivres().find(x=>x.id===id);
   const rec = a && a.gpsRunId ? await gpsDbGet(a.gpsRunId) : null;
-  if(!rec){ showToast('Esta atividade não tem detalhes salvos'); return; }
+  // Sem a gravação neste aparelho o resumo não abre (e é nele que fica "Excluir"): oferece excluir aqui.
+  if(!rec){
+    if(a && await confirmarApp({ titulo:'Atividade sem detalhes', texto:'A gravação desta atividade não está neste aparelho, então não dá para abrir o resumo. Quer excluir o registro?', ok:'Excluir atividade', perigo:true })){
+      await excluirAtividadeLivre(a.id); render(); showToast('Atividade excluída');
+    }
+    return;
+  }
   const d = new Date(a.data+'T12:00:00');
   state.gpsRun = {
     status:'finished', mode:(rec.pontos_gps||[]).length ? 'gps' : 'esteira', day:DAY_ABBR[(d.getDay()+6)%7], steps:[], stepIndex:0,
@@ -6403,6 +6416,292 @@ async function gpsDeleteActivity(){
   state.gpsRun = null;
   render();
   showToast('Corrida excluída');
+}
+
+/* ---------- Relógio Garmin (app FORZA RUN Connect IQ) ---------- */
+// O celular é a ponte: manda ao relógio os próximos treinos de corrida (formato compacto de
+// src/relogio/garmin-contrato.js) e recebe as corridas feitas lá. Cada corrida do relógio vira uma corrida
+// do app (IndexedDB) e sobe para o Firestore pela sincronização normal (sincronizarCorridasGps), com a conta
+// já logada neste celular. O relógio não recebe credencial nenhuma do Firebase.
+// Só no app nativo do iPhone (plugins/relogio-garmin); no navegador tudo aqui fica inativo.
+const RELOGIO_ENVIO_KEY = 'relogioGarminUltimoEnvio';
+const RELOGIO_REENVIO_MS = 10*60*1000; // mesma lista: reenvia ao abrir o app se a última foi há mais de 10 min
+let _relogioOuvindo = false, _relogioFila = Promise.resolve(), _relogioEstado = null, _relogioTimer = null;
+let _relogioEstadoTimer = null, _relogioUltimoForcado = 0;
+const RELOGIO_RECEBIDO_KEY = 'relogioGarminUltimoRecebido';
+function relogioApi(){ return (window.NativeBridge && NativeBridge.relogio && NativeBridge.relogio.disponivel()) ? NativeBridge.relogio : null; }
+function relogioIniciar(){
+  const R = relogioApi();
+  if(!R || _relogioOuvindo) return;
+  _relogioOuvindo = true;
+  R.ouvir(ev=>{
+    // Uma mensagem por vez, e só depois do init (os treinos e o progresso precisam estar carregados).
+    _relogioFila = _relogioFila.then(()=>relogioReceber(ev && ev.dados)).catch(e=>console.warn('[relogio]', e));
+  }, est=>{
+    // O Bluetooth oscila (conectado/fora de alcance várias vezes seguidas): só age quando o estado muda de
+    // verdade, agrupa as mudanças em 1,5 s e não força reenvio mais de uma vez por minuto.
+    const antes = JSON.stringify((_relogioEstado && _relogioEstado.relogios) || []);
+    _relogioEstado = est;
+    if(JSON.stringify((est && est.relogios) || []) === antes) return;
+    relogioAtualizarModelo(est);
+    clearTimeout(_relogioEstadoTimer);
+    _relogioEstadoTimer = setTimeout(()=>{
+      const conectado = est && (est.relogios||[]).some(r=>r.status==='conectado');
+      if(conectado && Date.now() - _relogioUltimoForcado > 60000){ _relogioUltimoForcado = Date.now(); relogioEnviarTreinos({ forcar:true }); }
+      if(document.getElementById('relogioGarminCard') && !state.modalOpen) render();
+    }, 1500);
+  });
+  R.estado().then(est=>{ _relogioEstado = est; relogioAtualizarModelo(est); });
+}
+// O campo "Relógio" de Equipamentos acompanha o relógio escolhido no Garmin Connect (continua editável).
+async function relogioAtualizarModelo(est){
+  const r = est && (est.relogios||[])[0];
+  if(!r) return;
+  const base = String(r.modelo || r.nome || '').replace(/®/g, '').replace(/\s+/g, ' ').trim();
+  if(!base) return;
+  const nome = /^garmin/i.test(base) ? base : 'Garmin ' + base;
+  if(_primeiroInit) await _primeiroInit;
+  if(state.viewingClient || !state.equipamentos || state.equipamentos.relogio === nome) return;
+  state.equipamentos.relogio = nome;
+  saveEquipamentos();
+  if(document.getElementById('inRelogio')) render();
+}
+// Mudou treino ou progresso: reenvia a lista em alguns segundos (várias gravações seguidas viram um envio só).
+function relogioAgendarEnvio(){
+  if(!relogioApi()) return;
+  clearTimeout(_relogioTimer);
+  _relogioTimer = setTimeout(()=>relogioEnviarTreinos(), 3000);
+}
+// Todos os treinos para o relógio: corridas do plano desde a segunda desta semana (as feitas vão marcadas)
+// e a musculação de cada dia da semana. Volta as páginas da mensagem (cada uma com até 3000 bytes).
+function relogioMensagemTreinos(){
+  const R = relogioApi();
+  const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
+  const segunda = vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')));
+  const corridas = R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito, desdeISO: segunda, incluirFeitos: true });
+  return R.mensagensTreinos(corridas, relogioDiasDeForca());
+}
+function relogioItensEnviados(paginas){ return [].concat(...(paginas||[]).map(p=>p.w||[])); }
+// Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
+async function relogioEnviarTreinos(op){
+  const R = relogioApi();
+  if(!R) return null;
+  if(_primeiroInit) await _primeiroInit;
+  if(state.viewingClient) return null; // personal vendo a conta de uma aluna: o relógio é dele, não dela
+  const paginas = relogioMensagemTreinos();
+  const itens = relogioItensEnviados(paginas);
+  const json = JSON.stringify(itens);
+  let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
+  if(!(op && op.forcar) && ultimo && ultimo.json===json && Date.now()-ultimo.em < RELOGIO_REENVIO_MS) return { enviados:0, motivo:'sem_mudanca' };
+  // Uma página por vez: o relógio só troca a lista quando recebe todas.
+  let r = null;
+  for(const pg of paginas){
+    r = await R.enviar(pg);
+    if(!(r && r.enviados>0)) return r;
+  }
+  lsSet(RELOGIO_ENVIO_KEY, JSON.stringify({ json, em:Date.now(), qtd:itens.length, paginas:paginas.length,
+    corridas:itens.filter(w=>!w.y).length, forca:itens.filter(w=>w.y==='f').length }));
+  return r;
+}
+async function relogioReceber(d){
+  const R = relogioApi();
+  if(!R || !d || typeof d!=='object') return;
+  if(_primeiroInit) await _primeiroInit;
+  // "Sincronizar agora" no relógio: reenvia a lista de treinos na hora.
+  if(d.t==='pedir'){ await relogioEnviarTreinos({ forcar:true }); return; }
+  if(d.t==='r'){
+    const ok = d.r && d.r.kind==='strength' ? await relogioImportarForca(d.r) : await relogioImportarResultado(d.r);
+    // Só confirma depois de gravar: sem "ack" o relógio mantém o resultado na fila e reenvia.
+    if(ok){
+      try{ lsSet(RELOGIO_RECEBIDO_KEY, JSON.stringify({ em:Date.now(), forca: !!(d.r && d.r.kind==='strength'), titulo: String((d.r && d.r.title) || '').slice(0,40) })); }catch(e){}
+      await R.enviar(R.mensagemAck([String(d.r && d.r.resultId)]));
+    }
+  }
+}
+// Corrida feita no relógio -> corrida do app. Retorna true quando o relógio já pode tirar da fila.
+async function relogioImportarResultado(r){
+  const R = relogioApi();
+  const reg = R.registroDoResultado(r);
+  if(!reg) return true;                    // inválido: não há o que gravar; confirma para não travar a fila
+  if(state.viewingClient) return false;    // nunca grava na conta de outra pessoa
+  if(await gpsDbGet(reg.runId)) return true; // já importado (o relógio reenviou antes de receber o "ack")
+  const fim = reg.fim || Date.now();
+  const dataISO = vdotISODate(new Date(reg.inicio || fim));
+  const entry = reg.day ? (state.treinos||[]).find(t=>t.day===reg.day) : null;
+  const prev = entry ? state.corridaProgress[entry.day] : null;
+  // Como no GPS do app: se o treino do dia já tem corrida registrada, esta entra como atividade própria.
+  const livre = !entry || !!(prev && typeof prev==='object' && prev.done && progressoTemRegistro(prev));
+  const salvou = await gpsDbPut({ id:reg.runId, day: entry ? dayAbbrevOf(entry.day) : DAY_ABBR[(new Date(fim).getDay()+6)%7],
+    finishedAt:fim, ownerUid: state.authUser ? state.authUser.uid : null, origem:'garmin', garminResultId:reg.resultId,
+    fcMedia:reg.fcMedia, ...(livre ? { livre:true, tipoAtividade:'corrida' } : {}),
+    etapas_executadas:reg.etapas, pontos_gps:[], distancia_total_km:reg.km, tempo_total_seg:reg.seg });
+  if(!salvou) return false;
+  let shoeCredit = null;
+  const tenis = (state.equipamentos.tenis||[]).find(t=>t.ativo);
+  if(tenis && reg.km){ tenis.km = Math.round((tenis.km+reg.km)*10)/10; shoeCredit = { tenisId:tenis.id, km:reg.km }; saveEquipamentos(); }
+  const paceSeg = reg.km>0 ? reg.seg/reg.km : null;
+  if(livre){
+    await registrarAtividadeLivre({ id:'run:'+reg.runId, tipo:'corrida', origem:'garmin', data:dataISO, inicio:reg.inicio, fim,
+      distKm:reg.km, tempoSeg:reg.seg, paceSeg, gpsRunId:reg.runId, shoeCredit });
+  }else{
+    state.corridaProgress[entry.day] = { ...(prev && typeof prev==='object' ? prev : {}), done:true,
+      pace: paceSeg!=null ? formatPace(paceSeg)+'/km' : '', tempo: formatClock(reg.seg), km: String(reg.km),
+      data: dataISO, shoeCredit, gpsRunId: reg.runId, origem:'garmin' };
+    await saveCorridaProgress();
+  }
+  try{ await recalcularRecordesCorrida(); }catch(e){}
+  sincronizarCorridasGps();
+  render();
+  showToast('Corrida do relógio salva');
+  return true;
+}
+// Musculação para o relógio: um treino por dia com exercícios nos próximos 7 dias (hoje incluso).
+// Dias desta semana já feitos (algum exercício marcado) não vão. A carga sai da sugestão de progressão.
+function relogioDiasDeForca(){
+  const R = relogioApi();
+  const hoje = new Date(todayISO()+'T00:00:00');
+  const segundaAtual = vdotISODate(vdotMondayOf(hoje));
+  const inicioHibrido = state.hybridPlanData && state.hybridPlanData.startMonday ? state.hybridPlanData.startMonday : null;
+  const out = [];
+  // Todos os dias de musculação da semana, um treino por dia. Dia que já passou e foi feito vai com a data
+  // da semana que vem; dia que já passou sem treino continua nesta semana (dá para fazer atrasado);
+  // feito hoje vai marcado como feito.
+  const seg = new Date(segundaAtual+'T00:00:00');
+  for(let i=0; i<7; i++){
+    const d = new Date(seg); d.setDate(d.getDate()+i);
+    const day = DAY_ABBR[i];
+    let lista = state.musculacao[day] || [];
+    if(!lista.length) continue;
+    const feitoNaSemana = lista.some(e=>e.done);
+    if(feitoNaSemana && d < hoje) d.setDate(d.getDate()+7);
+    if(inicioHibrido && vdotISODate(d) < inicioHibrido) lista = lista.filter(e=>e.modo!=='hibrido');
+    if(!lista.length) continue;
+    const okHoje = feitoNaSemana && vdotISODate(d)===vdotISODate(hoje);
+    const exercicios = lista.map(ex=>{
+      let carga = ex.carga;
+      try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
+      // Imagem do exercício: a mesma que o app mostra (repdbImg resolve ids antigos e mídia incorreta).
+      const im = repdbImg(ex.repdbId);
+      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso,
+        img: im ? im.replace(/^gifs\//, '').replace(/\.webp$/, '') : null };
+    });
+    const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
+    if(c){ if(okHoje) c.ok = 1; out.push({ d:+d, c }); }
+  }
+  return out.sort((a,b)=>a.d-b.d).map(x=>x.c);
+}
+// Sessão de musculação feita no relógio -> sessão do histórico do app (mesmo formato de finishWorkoutSession),
+// histórico de carga por exercício e "feito" da semana. Retorna true quando o relógio já pode tirar da fila.
+async function relogioImportarForca(r){
+  const R = relogioApi();
+  const reg = R.registroForcaDoResultado(r);
+  if(!reg) return true;
+  if(state.viewingClient) return false;
+  if((state.workoutSessionsLog||[]).some(l=>l.id===reg.logId)) return true; // já importado
+  const fim = reg.fim || Date.now();
+  const inicio = reg.inicio || (fim - reg.seg*1000);
+  const dataISO = vdotISODate(new Date(inicio));
+  const lista = state.musculacao[reg.day] || [];
+  let volume = 0, cargaMax = 0;
+  const exercicios = reg.exercicios.map(e=>{
+    const ex = lista.find(x=>String(x.id)===e.id) || lista.find(x=>x.nome===e.nome) || null;
+    const base = ex || { nome:e.nome };
+    const item = { nome:base.nome, grupo:base.grupo, series:base.series, reps:base.reps, carga:base.carga };
+    const idCanon = (base.repdbId && repdbId(base.repdbId)) || ((exercicioPorNome(base.nome)||{}).id) || null;
+    if(idCanon) item.exerciseId = idCanon;
+    if(base.repdbId) item.repdbId = base.repdbId;
+    item.seriesExecutadas = e.sets.map((st,i)=>({ numero:i+1, peso:st.peso, repeticoes:st.reps, concluida:true,
+      ...(st.pesoPlanejado!=null ? { pesoPlanejado:st.pesoPlanejado } : {}), ...(st.repsPlanejadas!=null ? { repeticoesPlanejadas:st.repsPlanejadas } : {}) }));
+    e.sets.forEach(st=>{ volume += st.peso*st.reps; cargaMax = Math.max(cargaMax, st.peso); });
+    // Histórico de carga do exercício, na data em que a sessão foi feita (como logSetsHistory faz para hoje).
+    const chave = base.repdbId || base.nome;
+    if(!state.historicoCarga) state.historicoCarga = {};
+    const hist = state.historicoCarga[chave] || (state.historicoCarga[chave] = []);
+    const sets = e.sets.map(st=>({ peso:String(st.peso), reps:String(st.reps) }));
+    const mesmoDia = hist.find(h=>h.data===dataISO);
+    if(mesmoDia){ mesmoDia.sets = sets; delete mesmoDia.carga; } else { hist.push({ data:dataISO, sets }); hist.sort((a,b)=>a.data<b.data?-1:a.data>b.data?1:0); }
+    if(hist.length>200) hist.shift();
+    if(ex && vdotISODate(vdotMondayOf(new Date(inicio)))===vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')))) ex.done = true;
+    return item;
+  });
+  const log = { id:reg.logId, type:'strength', day:reg.day, title:muscTituloDoDia(reg.day, lista), data:dataISO, startedAt:inicio, finishedAt:fim,
+    volume:Math.round(volume), series:reg.series, duracaoSeg:reg.seg, cargaMax, recordes:0, recordesLista:[], exercicios,
+    origem:'garmin', garminResultId:reg.resultId, fcMedia:reg.fcMedia, updatedAt:Date.now() };
+  try{
+    const v0 = normalizarSessaoMuscHistorico(log);
+    log.muscleMap = v0.anat.primary;
+    if(v0.calorias) log.calories = { value:v0.calorias.valor, source:'estimated', label:'estimativa' };
+  }catch(e){}
+  if(!state.workoutSessionsLog) state.workoutSessionsLog = [];
+  state.workoutSessionsLog.push(log);
+  await saveWorkoutSessionsLog();
+  await saveHistoricoCarga();
+  await saveMusc();
+  if(dataISO===todayISO()){ markChallengeCheckinToday(); markGroupCheckinsToday('fez musculação · '+reg.series+' séries'); }
+  relogioAgendarEnvio();
+  render();
+  showToast('Musculação do relógio salva');
+  return true;
+}
+// Percurso no relógio: uma corrida gravada (pontos reais do GPS) vira rota compacta no relógio.
+const RELOGIO_ROTA_KEY = 'relogioGarminRota';
+async function relogioEnviarRota(gr){
+  const R = relogioApi();
+  if(!R || !gr || !(gr.points||[]).length) return null;
+  const d = new Date(gr.points[0].timestamp || Date.now());
+  const nome = 'Percurso ' + String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0');
+  const msg = R.rotaCompacta(gr.points.map(p=>[p.lat, p.lng]), { id: gr.runId || ('rota_'+Date.now()), nome });
+  if(!msg){ showToast('Percurso curto ou longo demais para o relógio'); return null; }
+  const r = await R.enviar(msg);
+  if(r && r.enviados>0){ lsSet(RELOGIO_ROTA_KEY, JSON.stringify({ id:msg.id, nome, pontos:msg.p.length/2, em:Date.now() })); showToast('Percurso enviado ao relógio'); }
+  else showToast('Relógio fora de alcance — abra o Garmin Connect');
+  return r;
+}
+async function relogioRemoverRota(){
+  const R = relogioApi(); if(!R) return null;
+  const r = await R.enviar(R.mensagemRemoverRota());
+  if(r && r.enviados>0){ lsSet(RELOGIO_ROTA_KEY, null); showToast('Percurso removido do relógio'); }
+  else showToast('Relógio fora de alcance — abra o Garmin Connect');
+  render();
+  return r;
+}
+// Cartão em Perfil › Equipamentos (só no app nativo).
+function relogioGarminCardHtml(){
+  if(!relogioApi()) return '';
+  const est = _relogioEstado || {};
+  const lista = est.relogios || [];
+  const TXT = { conectado:'conectado', desconectado:'fora de alcance', bluetooth_desligado:'Bluetooth desligado', nao_encontrado:'não encontrado' };
+  let ultimo = null; try{ ultimo = JSON.parse(lsGet(RELOGIO_ENVIO_KEY) || 'null'); }catch(e){}
+  let rota = null; try{ rota = JSON.parse(lsGet(RELOGIO_ROTA_KEY) || 'null'); }catch(e){}
+  return `
+    <div id="relogioGarminCard" style="margin-top:12px;">
+      <div class="mrt-medlabel">Relógio Garmin (app FORZA RUN)</div>
+      ${lista.length ? lista.map(r=>`<div class="mrt-sub" style="margin:4px 0;">${escHtmlRelogio(r.nome||r.modelo||'Relógio')} · ${TXT[r.status]||r.status}</div>`).join('')
+        : `<div class="mrt-sub" style="margin:4px 0;">${est.precisaGarminConnect ? 'Instale o app Garmin Connect para ligar o relógio.' : 'Nenhum relógio escolhido.'}</div>`}
+      ${rota ? `<div class="mrt-sub" style="margin:4px 0;">Percurso no relógio: ${escHtmlRelogio(rota.nome)} (${rota.pontos} pontos)</div>` : ''}
+      ${ultimo ? `<div class="mrt-sub" style="margin:4px 0;">Último envio: ${ultimo.qtd} treino${ultimo.qtd===1?'':'s'} em ${new Date(ultimo.em).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })}</div>` : ''}
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+        <button class="mrt-pillbtn" id="btnRelogioEscolher">${lista.length ? 'Trocar relógio' : 'Escolher relógio'}</button>
+        ${lista.length ? `<button class="mrt-pillbtn" id="btnRelogioEnviar">Enviar treinos agora</button>` : ''}
+        ${rota ? `<button class="mrt-pillbtn" id="btnRelogioRemoverRota">Remover percurso</button>` : ''}
+      </div>
+    </div>`;
+}
+function escHtmlRelogio(s){ return String(s).replace(/[&<>"]/g, c=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c])); }
+function wireRelogioGarmin(){
+  const R = relogioApi();
+  if(!R) return;
+  const esc = document.getElementById('btnRelogioEscolher');
+  if(esc) esc.onclick = async ()=>{ const r = await R.escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); };
+  const rem = document.getElementById('btnRelogioRemoverRota');
+  if(rem) rem.onclick = ()=> relogioRemoverRota();
+  const env = document.getElementById('btnRelogioEnviar');
+  if(env) env.onclick = async ()=>{
+    const r = await relogioEnviarTreinos({ forcar:true });
+    if(r && r.enviados>0) showToast('Treinos enviados ao relógio');
+    else showToast(r && r.motivo==='desconectado' ? 'Relógio fora de alcance — abra o Garmin Connect' : 'Não consegui enviar ao relógio');
+    render();
+  };
 }
 
 /* ---------- Corridas GPS na nuvem ---------- */
@@ -7381,6 +7680,7 @@ function renderGpsSummary(gr){
           <button class="btn-secondary" id="mrtShareRun">${ICONS.share} Compartilhar corrida</button>
           ${gr.progressKey ? `<button class="btn-secondary" id="gpsBtnCorrigirRun">${ICONS.pencil} Corrigir corrida</button>` : ''}
           ${temMapa ? `<button class="btn-ghost" id="gpsBtnGpx">Exportar GPX</button>` : ''}
+          ${temMapa && relogioApi() ? `<button class="btn-ghost" id="gpsBtnRotaRelogio">Usar como percurso no relógio</button>` : ''}
           ${(gr.progressKey || gr.atividadeId) ? `<button class="ds-danger" id="gpsBtnDeleteRun">Excluir atividade</button>` : ''}
         </div>
       </div>
@@ -7463,6 +7763,7 @@ function wireGpsRunScreen(){
   if(byId('gpsBtnCloseSummary')) byId('gpsBtnCloseSummary').onclick = gpsCloseSummary;
   if(byId('gpsBtnCloseSummary2')) byId('gpsBtnCloseSummary2').onclick = gpsCloseSummary;
   if(byId('gpsBtnDeleteRun')) byId('gpsBtnDeleteRun').onclick = gpsDeleteActivity;
+  if(byId('gpsBtnRotaRelogio')) byId('gpsBtnRotaRelogio').onclick = ()=> relogioEnviarRota(gr);
   if(byId('gpsBtnCorrigirRun')) byId('gpsBtnCorrigirRun').onclick = ()=> abrirCorrigirCorrida(gr.progressKey);
   wireSugestaoVinculo();
   if(byId('gpsNotaObs')) byId('gpsNotaObs').onclick = ()=> editarObsCorrida(gr);
@@ -9643,39 +9944,41 @@ function artesMusculacao(v){
   const artes = [];
   if(v.temDetalhe) artes.push({ nome:'Músculos', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
-    const fh = story ? 1120 : 620, larg = 2*fh*360/980 + 24;
-    await desenharAnatomiaArte(c, v.anat, (W - larg)/2, story ? 250 : 60, fh);
+    const fh = story ? 1230 : 620, larg = 2*fh*360/980 + 24;
+    await desenharAnatomiaArte(c, v.anat, (W - larg)/2, story ? 190 : 60, fh);
     arteSombra(c, true);
-    const y0 = (story ? 250 : 60) + fh;
-    arteLogo(c, W/2, y0 + (story ? 110 : 70), story ? 42 : 34, 'center');
-    arteTexto(c, min+' min', W/2, y0 + (story ? 260 : 190), 800, story ? 150 : 110);
-    arteTexto(c, sub, W/2, y0 + (story ? 340 : 250), 500, story ? 46 : 38, 'rgba(255,255,255,0.88)');
+    const y0 = (story ? 190 : 60) + fh;
+    arteLogo(c, W/2, y0 + (story ? 110 : 70), story ? 56 : 38, 'center');
+    arteTexto(c, min+' min', W/2, y0 + (story ? 270 : 190), 800, story ? 150 : 110);
+    arteTexto(c, sub, W/2, y0 + (story ? 364 : 250), 500, story ? 54 : 40, 'rgba(255,255,255,0.88)');
     return cv; } });
   artes.push({ nome:'Treino', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
-    arteSombra(c, true); arteHalter(c, W/2, H/2 - 190, 300);
-    arteTexto(c, min+' min', W/2, H/2 + 90, 800, 170);
-    arteTexto(c, sub, W/2, H/2 + 175, 500, 48, 'rgba(255,255,255,0.88)');
+    const story = H>W, z = story ? 1 : 0.7;
+    arteSombra(c, true); arteHalter(c, W/2, H/2 - 190*z, 360*z);
+    arteTexto(c, min+' min', W/2, H/2 + 168*z, 800, 170*Math.max(z, 0.85));
+    arteTexto(c, sub, W/2, H/2 + 269*z, 500, 56*Math.max(z, 0.85), 'rgba(255,255,255,0.88)');
     return cv; } });
   artes.push({ nome:'Data', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
-    const bw = 560, bh = 520, x = (W-bw)/2, y = (H-bh)/2;
+    const z = H>W ? 1 : 0.78, bw = 630*z, bh = 700*z, x = (W-bw)/2, y = (H-bh)/2;
     arteSombra(c, true); c.strokeStyle = '#FFFFFF'; c.lineWidth = 12; c.lineCap = 'round';
-    c.beginPath(); c.roundRect(x, y, bw, bh, 56); c.stroke();
-    [x + bw*0.27, x + bw*0.73].forEach(px=>{ c.beginPath(); c.moveTo(px, y - 34); c.lineTo(px, y + 34); c.stroke(); });
-    c.lineWidth = 8; c.beginPath(); c.moveTo(x, y + bh*0.47); c.lineTo(x + bw, y + bh*0.47); c.stroke();
-    arteHalter(c, W/2, y + bh*0.25, 190);
+    c.beginPath(); c.roundRect(x, y, bw, bh, 64*z); c.stroke();
+    [x + bw*0.2, x + bw*0.8].forEach(px=>{ c.beginPath(); c.moveTo(px, y - 53*z); c.lineTo(px, y + 40*z); c.stroke(); });
+    c.lineWidth = 8; c.beginPath(); c.moveTo(x, y + bh*0.51); c.lineTo(x + bw, y + bh*0.51); c.stroke();
+    arteHalter(c, W/2, y + bh*0.30, 270*z);
     let dia = ''; try{ dia = dt.toLocaleDateString('pt-BR', { weekday:'long' }); }catch(e){}
     let data = ''; try{ data = dt.toLocaleDateString('pt-BR', { day:'numeric', month:'short' }); }catch(e){ data = v.data; }
-    arteTexto(c, dia, W/2, y + bh*0.66, 500, 54);
-    arteTexto(c, data, W/2, y + bh*0.83, 800, 72);
+    arteTexto(c, dia, W/2, y + bh*0.69, 500, 72*z);
+    arteTexto(c, data, W/2, y + bh*0.87, 800, 90*z);
     return cv; } });
   artes.push({ nome:'Concluído', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height;
     arteSombra(c, true);
-    arteEspacado(c, 'TREINO CONCLUÍDO', W/2, H/2 - 150, 40, 14);
-    arteTexto(c, min+' min', W/2, H/2 + 60, 800, 200);
-    arteTexto(c, sub, W/2, H/2 + 150, 500, 50, 'rgba(255,255,255,0.88)');
+    const z = H>W ? 1 : 0.8;
+    arteEspacado(c, 'TREINO CONCLUÍDO', W/2, H/2 - 283*z, 54*z, 17*z);
+    arteTexto(c, min+' min', W/2, H/2 + 14*z, 800, 200*z);
+    arteTexto(c, sub, W/2, H/2 + 150*z, 500, 60*z, 'rgba(255,255,255,0.88)');
     return cv; } });
   return artes;
 }
@@ -9737,35 +10040,35 @@ function artesCorrida(gr, opcoes){
   if(temTrilha) artes.push({ nome:'Trajeto', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
     arteSombra(c, true);
-    arteLogo(c, 90, 140, 46);
+    arteLogo(c, 105, 145, 56);
     const box = story ? { x:170, y:280, w:740, h:900 } : { x:500, y:200, w:500, h:760 };
     arteDesenhaTrilha(c, arteProjecaoTrilha(an.track, box), '#FFFFFF', 14);
-    arteDadosCorrida(c, dados, 90, story ? 1360 : 470, story ? 76 : 70, story ? 36 : 32, story ? 165 : 160);
+    arteDadosCorrida(c, dados, 105, story ? 1360 : 470, story ? 76 : 70, story ? 44 : 36, story ? 172 : 160);
     return cv; } });
   artes.push({ nome:'Números', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
     arteSombra(c, true);
-    const y0 = story ? 560 : 190;
-    arteLogo(c, W/2, y0, 50, 'center');
-    dados.forEach(([k, v], i)=>{ const y = y0 + (story ? 220 : 170) + i*(story ? 250 : 200);
-      arteTexto(c, k, W/2, y, 500, 40, 'rgba(255,255,255,0.85)'); arteTexto(c, v, W/2, y + 100, 800, 92); });
+    const y0 = story ? 500 : 170;
+    arteLogo(c, W/2, y0, 58, 'center');
+    dados.forEach(([k, v], i)=>{ const y = y0 + (story ? 220 : 170) + i*(story ? 290 : 220);
+      arteTexto(c, k, W/2, y, 500, 48, 'rgba(255,255,255,0.85)'); arteTexto(c, v, W/2, y + 100, 800, 92); });
     return cv; } });
   if(splits.length) artes.push({ nome:'Parciais', gerar: async (formato)=>{
     const cv = arteCanvas(formato), c = cv.getContext('2d'), W = cv.width, H = cv.height, story = H>W;
     arteSombra(c, true);
-    arteLogo(c, 90, story ? 160 : 120, 46);
-    const lista = splits.slice(0, story ? 16 : 9);
-    const passo = story ? 74 : 72, topo = story ? Math.max(560, (H - lista.length*passo)/2) : 330;
-    arteTexto(c, 'Parciais por km', 90, topo - 70, 700, 50, '#FFFFFF', 'left');
-    const melhor = Math.min(...lista.map(x=>x.paceSec)), barX = 170, barW = 640;
+    arteLogo(c, 90, story ? 160 : 120, 56);
+    const lista = splits.slice(0, story ? 13 : 9);
+    const passo = story ? 92 : 72, topo = story ? Math.max(560, (H - lista.length*passo)/2) : 330;
+    arteTexto(c, 'Parciais por km', 90, topo - 80, 700, 60, '#FFFFFF', 'left');
+    const melhor = Math.min(...lista.map(x=>x.paceSec)), barX = 205, barW = 670, bh = story ? 50 : 30;
     lista.forEach((sp, i)=>{
       const y = topo + i*passo;
-      arteTexto(c, sp.parcial ? fmtKmMedido(sp.distKm) : String(i+1), 90, y + 14, 700, 34, '#FFFFFF', 'left');
+      arteTexto(c, sp.parcial ? fmtKmMedido(sp.distKm) : String(i+1), 90, y + 15, 700, story ? 42 : 34, '#FFFFFF', 'left');
       arteSombra(c, false);
-      c.fillStyle = 'rgba(255,255,255,0.22)'; c.beginPath(); c.roundRect(barX, y - 12, barW, 30, 15); c.fill();
-      c.fillStyle = '#FFFFFF'; c.beginPath(); c.roundRect(barX, y - 12, Math.max(40, barW*Math.min(1, melhor/sp.paceSec)), 30, 15); c.fill();
+      c.fillStyle = 'rgba(255,255,255,0.22)'; c.beginPath(); c.roundRect(barX, y + 1 - bh/2, barW, bh, bh/2); c.fill();
+      c.fillStyle = '#FFFFFF'; c.beginPath(); c.roundRect(barX, y + 1 - bh/2, Math.max(bh, barW*Math.min(1, melhor/sp.paceSec)), bh, bh/2); c.fill();
       arteSombra(c, true);
-      arteTexto(c, formatPace(sp.paceSec), W - 90, y + 14, 700, 34, '#FFFFFF', 'right');
+      arteTexto(c, formatPace(sp.paceSec), W - 86, y + 15, 700, story ? 42 : 34, '#FFFFFF', 'right');
     });
     return cv; } });
   if(temTrilha) artes.push({ nome:'Mapa', gerar: async (formato)=>{
@@ -9837,14 +10140,16 @@ function arteTrilhaPrivada(track, ocultar){
   if(tot < 0.6) return [];
   return track.filter(p=>(p.distKm||0)>=0.2 && (p.distKm||0)<=tot-0.2);
 }
-function arteRecibo(c, W, H, iconeFn, dia, data){
-  const bw = 380, bh = 470, x = (W-bw)/2, y = (H-bh)/2 - 20;
-  c.strokeStyle = ARTE_TINTA; c.lineWidth = 3;
+// Recibo da NOVA-06: 655 × 802 px com 12 dentes (story); z reduz no quadrado.
+function arteRecibo(c, W, H, z){
+  z = z || 1;
+  const bw = 655*z, bh = 802*z, dente = 39*z, x = (W-bw)/2, y = (H - bh - dente)/2;
+  c.strokeStyle = ARTE_TINTA; c.lineWidth = 4; c.lineJoin = 'miter';
   c.beginPath(); c.moveTo(x, y + bh); c.lineTo(x, y); c.lineTo(x + bw, y); c.lineTo(x + bw, y + bh);
   const dentes = 12, dw = bw/dentes;
-  for(let i=0;i<dentes;i++){ c.lineTo(x + bw - (i+0.5)*dw, y + bh + 22); c.lineTo(x + bw - (i+1)*dw, y + bh); }
+  for(let i=0;i<dentes;i++){ c.lineTo(x + bw - (i+0.5)*dw, y + bh + dente); c.lineTo(x + bw - (i+1)*dw, y + bh); }
   c.stroke();
-  return { x, y, bw, bh };
+  return { x, y, bw, bh, z };
 }
 function artesGaleriaCorrida(gr, opcoes){
   const an = gpsRunAnalysis(gr);
@@ -9856,71 +10161,78 @@ function artesGaleriaCorrida(gr, opcoes){
   const tres = dados.slice(0, 3);
   const A = [];
   const nova = (nome, fn)=>A.push({ nome, gerar: async (formato)=>{ const cv = arteCanvas(formato); const c = cv.getContext('2d'); await fn(c, cv.width, cv.height, cv.height>cv.width); return cv; } });
-  nova('Recibo', async (c, W, H)=>{
-    const r = arteRecibo(c, W, H);
-    await arteDesenhaMarca(c, W/2, r.y + 60, 70, 'center');
-    arteTenis(c, W/2, r.y + 200, 90, ARTE_LARANJA);
-    arteTx(c, dt.dia, W/2, r.y + 330, 800, 60, 'center');
-    arteTx(c, dt.data, W/2, r.y + 385, 500, 30, 'center', arteTinta2());
+  // Marca: o desenho ocupa 84% da altura pedida e começa 9% abaixo do topo (viewBox da LOGO-OFICIAL).
+  nova('Recibo', async (c, W, H, story)=>{
+    const r = arteRecibo(c, W, H, story ? 1 : 0.8), z = r.z;
+    await arteDesenhaMarca(c, W/2, r.y + 88*z, 187*z, 'center');
+    arteTenis(c, W/2, r.y + 402*z, 225*z, ARTE_LARANJA);
+    arteTx(c, dt.dia, W/2, r.y + 618*z, 700, 108*z, 'center');
+    arteTx(c, dt.data, W/2, r.y + 700*z, 500, 52*z, 'center', arteTinta2());
   });
+  // Métricas na lateral: rótulo e valor em duas colunas giradas, lidas de baixo para cima (Ritmo embaixo).
+  const lateral = (()=>{ const d = dados.slice(); const i = d.findIndex(x=>x[0]==='Ritmo'); if(i>0) d.unshift(d.splice(i, 1)[0]); return d; })();
   const colunaLateral = (c, W, H, story)=>{
-    const passo = (story ? 1300 : 860)/Math.max(1, Math.ceil(dados.length/2));
-    const pares = []; for(let i=0;i<dados.length;i+=2) pares.push(dados.slice(i, i+2));
-    pares.forEach((p, i)=>{ p.forEach(([k, v], j)=>{ c.save(); c.translate(W - 130 + j*58, (story ? 1640 : 1000) - i*passo); c.rotate(-Math.PI/2);
-      arteTx(c, k, 0, 0, 500, 26, 'left', arteTinta2()); c.font = `500 26px ${ARTE_FONT}`; const wk = c.measureText(k).width; arteTx(c, v, wk + 18, 0, 800, 30, 'left'); c.restore(); }); });
+    const itens = story ? lateral : lateral.slice(0, 3), z = story ? 1 : 0.8;
+    const passo = story ? 337 : (H - 64 - 330)/Math.max(1, itens.length - 1);
+    itens.forEach(([k, v], i)=>{ const y = H - 64 - i*passo;
+      c.save(); c.translate(W - 192, y); c.rotate(-Math.PI/2); arteTx(c, k, 0, 0, 500, 46*z, 'left'); c.restore();
+      c.save(); c.translate(W - 77, y); c.rotate(-Math.PI/2); arteTx(c, v, 0, 0, 700, 60*z, 'left'); c.restore(); });
   };
-  nova('Métricas laterais', async (c, W, H, story)=>{ await arteDesenhaMarca(c, 90, 110, 70); colunaLateral(c, W, H, story); });
+  nova('Métricas laterais', async (c, W, H, story)=>{ await arteDesenhaMarca(c, 112, 90, 167); colunaLateral(c, W, H, story); });
   if(temRota) nova('Rota e métricas laterais', async (c, W, H, story)=>{
-    await arteDesenhaMarca(c, 90, 110, 70);
-    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:140, y:330, w:620, h:1200 } : { x:120, y:220, w:620, h:700 }), ARTE_LARANJA, 10);
+    await arteDesenhaMarca(c, 112, 90, 167);
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:236, y:287, w:506, h:1255 } : { x:150, y:260, w:560, h:740 }), ARTE_LARANJA, 10);
     colunaLateral(c, W, H, story);
   });
-  const tabela = (c, x, y, w, linhas)=>{
-    linhas.forEach(([k, v], i)=>{ const yy = y + i*56;
-      arteTx(c, k, x, yy, 500, 30); arteTx(c, v, x + w, yy, 700, 30, 'right');
-      c.font = `500 30px ${ARTE_FONT}`; const a = c.measureText(k).width; c.font = `700 30px ${ARTE_FONT}`; const b = c.measureText(v).width;
-      c.fillStyle = ARTE_TINTA; for(let px = x + a + 14; px < x + w - b - 14; px += 12){ c.beginPath(); c.arc(px, yy - 9, 2.2, 0, Math.PI*2); c.fill(); } });
+  // Tabela com pontilhado: fonte 43 px, linhas a cada 65 px, margens 90/95 px.
+  const tabela = (c, x, y, w, linhas, tam, passo)=>{
+    linhas.forEach(([k, v], i)=>{ const yy = y + i*passo;
+      arteTx(c, k, x, yy, 600, tam); arteTx(c, v, x + w, yy, 700, tam, 'right');
+      c.font = `600 ${tam}px ${ARTE_FONT}`; const a = c.measureText(k).width; c.font = `700 ${tam}px ${ARTE_FONT}`; const b = c.measureText(v).width;
+      c.fillStyle = ARTE_TINTA; for(let px = x + a + 18; px < x + w - b - 18; px += 13){ c.beginPath(); c.arc(px, yy - tam*0.12, 2.6, 0, Math.PI*2); c.fill(); } });
   };
   nova('Tabela', async (c, W, H, story)=>{
-    const y0 = story ? H - 300 - dados.length*56 : H - 160 - dados.length*56;
-    await arteDesenhaMarca(c, 90, y0 - 150, 80);
-    tabela(c, 90, y0, W - 180, dados);
+    const z = story ? 1 : 0.85, passo = 65.5*z, y0 = H - (story ? 95 : 80) - (dados.length - 1)*passo;
+    await arteDesenhaMarca(c, 84, y0 - 226*z, 137*z);
+    tabela(c, 90, y0, W - 185, dados, 43*z, passo);
   });
   if(temRota) nova('Rota e tabela', async (c, W, H, story)=>{
-    const y0 = story ? H - 260 - dados.length*56 : H - 120 - dados.length*56;
-    arteDesenhaTrilha(c, arteProjecaoTrilha(track, story ? { x:240, y:220, w:600, h:y0 - 420 } : { x:300, y:60, w:480, h:y0 - 240 }), ARTE_LARANJA, 10);
-    await arteDesenhaMarca(c, 90, y0 - 140, 76);
-    tabela(c, 90, y0, W - 180, dados);
+    const z = story ? 1 : 0.85, passo = 57*z, y0 = H - (story ? 95 : 70) - (dados.length - 1)*passo, yLogo = y0 - 210*z;
+    arteDesenhaTrilha(c, arteProjecaoTrilha(track, { x:300, y:story ? 70 : 40, w:480, h:yLogo - (story ? 100 : 60) }), ARTE_LARANJA, 10);
+    await arteDesenhaMarca(c, 97, yLogo, 137*z);
+    tabela(c, 101, y0, W - 236, dados, 40*z, passo);
   });
-  const empilhadas = async (c, W, H, story, y0)=>{
-    await arteDesenhaMarca(c, W/2, y0, 80, 'center');
-    const passo = story ? 150 : 120;
-    dados.forEach(([k, v], i)=>{ const y = y0 + 160 + i*passo; arteTx(c, k, W/2, y, 600, story ? 34 : 30, 'center'); arteTx(c, v, W/2, y + (story ? 66 : 56), 800, story ? 64 : 54, 'center'); });
+  // Empilhadas: marca 189 px, rótulo 43 px, valor 71 px, 184 px por item, bloco centralizado.
+  const empilhadas = async (c, W, H, story)=>{
+    const alto = 256 + (dados.length - 1)*184 + 76 + 30, z = Math.min(1, (H - 100)/alto), y0 = (H - alto*z)/2;
+    await arteDesenhaMarca(c, W/2, y0 - 17*z, 189*z, 'center');
+    dados.forEach(([k, v], i)=>{ const y = y0 + (256 + i*184)*z; arteTx(c, k, W/2, y, 600, 43*z, 'center'); arteTx(c, v, W/2, y + 76*z, 800, 71*z, 'center'); });
   };
-  nova('Métricas', async (c, W, H, story)=>{ await empilhadas(c, W, H, story, story ? 360 : 70); });
+  nova('Métricas', async (c, W, H, story)=>{ await empilhadas(c, W, H, story); });
   if(temRota) nova('Métricas e rota', async (c, W, H, story)=>{
     arteDesenhaTrilha(c, arteProjecaoTrilha(track, { x:W*0.15, y:H*0.2, w:W*0.7, h:H*0.6 }), ARTE_LARANJA, 10);
-    await empilhadas(c, W, H, story, story ? 360 : 70);
+    await empilhadas(c, W, H, story);
   });
-  nova('Etiquetas', async (c, W, H)=>{
-    const pills = [];
-    pills.push({ marca:true }); pills.push({ t:dt.curta }); pills.push({ tenis:true });
-    tres.concat(dados.slice(3, 4)).forEach(([k, v])=>pills.push({ t:`${k.toUpperCase()} ${v.toUpperCase()}` }));
-    c.font = `600 30px ${ARTE_FONT}`;
-    const larg = (p)=> p.marca ? 140 : p.tenis ? 110 : c.measureText(p.t).width + 56;
-    const linhas = []; let atual = [], lw = 0, maxW = W - 160;
-    pills.forEach(p=>{ const w = larg(p); if(lw + w > maxW && atual.length){ linhas.push(atual); atual = []; lw = 0; } atual.push(p); lw += w + 14; });
+  // Etiquetas contornadas: 138 px de altura, fonte 43 px, rótulo em maiúsculas e valor com a unidade original.
+  nova('Etiquetas', async (c, W, H, story)=>{
+    const z = story ? 1 : 0.8, ph = 138*z, gap = 20*z, fonte = 40*z;
+    const pills = [{ marca:true }, { t:dt.curta }, { tenis:true }];
+    tres.concat(dados.slice(3, 4)).forEach(([k, v])=>pills.push({ t:`${k.toUpperCase()} ${v}` }));
+    c.font = `600 ${fonte}px ${ARTE_FONT}`;
+    const larg = (p)=> p.marca ? 236*z : p.tenis ? 230*z : c.measureText(p.t).width + 100*z;
+    const linhas = []; let atual = [], lw = 0, maxW = W - 76;
+    pills.forEach(p=>{ const w = larg(p); if(lw + w > maxW && atual.length){ linhas.push(atual); atual = []; lw = 0; } atual.push(p); lw += w + gap; });
     if(atual.length) linhas.push(atual);
-    let y = H - 140 - linhas.length*92;
+    let y = H - 123*z - ph - (linhas.length - 1)*(ph + 26*z);
     for(const ln of linhas){
-      const tot = ln.reduce((t,p)=>t + larg(p) + 14, -14); let x = (W - tot)/2;
+      const tot = ln.reduce((t,p)=>t + larg(p) + gap, -gap); let x = (W - tot)/2;
       for(const p of ln){ const w = larg(p);
-        c.strokeStyle = ARTE_TINTA; c.lineWidth = 3; c.beginPath(); c.roundRect(x, y, w, 72, 36); c.stroke();
-        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + 12, 48, 'center');
-        else if(p.tenis) arteTenis(c, x + w/2, y + 36, 44, ARTE_LARANJA);
-        else arteTx(c, p.t, x + w/2, y + 47, 600, 30, 'center');
-        x += w + 14; }
-      y += 92;
+        c.strokeStyle = ARTE_TINTA; c.lineWidth = 5; c.beginPath(); c.roundRect(x, y, w, ph, ph/2); c.stroke();
+        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + ph/2 - 54*z, 100*z, 'center');
+        else if(p.tenis) arteTenis(c, x + w/2, y + ph/2, 120*z, ARTE_LARANJA);
+        else arteTx(c, p.t, x + w/2, y + ph/2 + fonte*0.36, 600, fonte, 'center');
+        x += w + gap; }
+      y += ph + 26*z;
     }
   });
   if(temRota) nova('Rota e métricas', async (c, W, H, story)=>{
@@ -9945,37 +10257,40 @@ function artesGaleriaMusculacao(v){
   const halter = (c, cx, cy, w)=>{ c.save(); const t = document.createElement('canvas'); t.width = w+40; t.height = w+40; const tc = t.getContext('2d');
     arteHalter(tc, t.width/2, t.height/2, w); tc.globalCompositeOperation = 'source-in'; tc.fillStyle = ARTE_LARANJA; tc.fillRect(0, 0, t.width, t.height);
     tc.setTransform(1,0,0,1,0,0); c.translate(cx, cy); c.rotate(-0.5); c.drawImage(t, -t.width/2, -t.height/2); c.restore(); };
-  nova('Recibo', async (c, W, H)=>{
-    const r = arteRecibo(c, W, H);
-    await arteDesenhaMarca(c, W/2, r.y + 60, 70, 'center');
-    halter(c, W/2, r.y + 200, 110);
-    arteTx(c, dt.dia, W/2, r.y + 330, 800, 60, 'center');
-    arteTx(c, dt.data, W/2, r.y + 385, 500, 30, 'center', arteTinta2());
+  nova('Recibo', async (c, W, H, story)=>{
+    const r = arteRecibo(c, W, H, story ? 1 : 0.8), z = r.z;
+    await arteDesenhaMarca(c, W/2, r.y + 88*z, 187*z, 'center');
+    halter(c, W/2, r.y + 402*z, 190*z);
+    arteTx(c, dt.dia, W/2, r.y + 618*z, 700, 108*z, 'center');
+    arteTx(c, dt.data, W/2, r.y + 700*z, 500, 52*z, 'center', arteTinta2());
   });
-  nova('Tempo', async (c, W, H)=>{
-    arteTx(c, 'Tempo', W/2, H/2 - 170, 600, 40, 'center');
-    arteTx(c, min+'min', W/2, H/2 - 80, 800, 96, 'center');
-    halter(c, W/2, H/2 + 60, 180);
-    await arteDesenhaMarca(c, W/2, H/2 + 180, 96, 'center');
+  // Tempo da NOVA-06: rótulo 71 px, valor 135 px, halter laranja e a marca embaixo, em torno do centro.
+  nova('Tempo', async (c, W, H, story)=>{
+    const z = story ? 1 : 0.75;
+    arteTx(c, 'Tempo', W/2, H/2 - 273*z, 700, 71*z, 'center');
+    arteTx(c, min+'min', W/2, H/2 - 127*z, 800, 135*z, 'center');
+    halter(c, W/2, H/2 + 84*z, 300*z);
+    await arteDesenhaMarca(c, W/2, H/2 + 288*z, 181*z, 'center');
   });
-  nova('Etiquetas', async (c, W, H)=>{
-    const pills = [{ marca:true }, { t:dt.curta }, { halter:true }, { t:`TEMPO ${min}MIN` }];
+  nova('Etiquetas', async (c, W, H, story)=>{
+    const z = story ? 1 : 0.8, ph = 138*z, gap = 20*z, fonte = 40*z;
+    const pills = [{ marca:true }, { t:dt.curta }, { halter:true }, { t:`TEMPO ${min}min` }];
     if(v.series) pills.push({ t:`${v.series} SÉRIES` });
-    c.font = `600 30px ${ARTE_FONT}`;
-    const larg = (p)=> p.marca ? 140 : p.halter ? 110 : c.measureText(p.t).width + 56;
-    const tot = pills.reduce((t,p)=>t + larg(p) + 14, -14);
-    const duasLinhas = tot > W - 160;
-    const linhas = duasLinhas ? [pills.slice(0, 3), pills.slice(3)] : [pills];
-    let y = H/2 - linhas.length*46;
+    c.font = `600 ${fonte}px ${ARTE_FONT}`;
+    const larg = (p)=> p.marca ? 236*z : p.halter ? 230*z : c.measureText(p.t).width + 100*z;
+    const linhas = []; let atual = [], lw = 0, maxW = W - 76;
+    pills.forEach(p=>{ const w = larg(p); if(lw + w > maxW && atual.length){ linhas.push(atual); atual = []; lw = 0; } atual.push(p); lw += w + gap; });
+    if(atual.length) linhas.push(atual);
+    let y = H - 123*z - ph - (linhas.length - 1)*(ph + 26*z);
     for(const ln of linhas){
-      const t2 = ln.reduce((t,p)=>t + larg(p) + 14, -14); let x = (W - t2)/2;
+      const t2 = ln.reduce((t,p)=>t + larg(p) + gap, -gap); let x = (W - t2)/2;
       for(const p of ln){ const w = larg(p);
-        c.strokeStyle = ARTE_TINTA; c.lineWidth = 3; c.beginPath(); c.roundRect(x, y, w, 72, 36); c.stroke();
-        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + 12, 48, 'center');
-        else if(p.halter) halter(c, x + w/2, y + 36, 50);
-        else arteTx(c, p.t, x + w/2, y + 47, 600, 30, 'center');
-        x += w + 14; }
-      y += 92;
+        c.strokeStyle = ARTE_TINTA; c.lineWidth = 5; c.beginPath(); c.roundRect(x, y, w, ph, ph/2); c.stroke();
+        if(p.marca) await arteDesenhaMarca(c, x + w/2, y + ph/2 - 54*z, 100*z, 'center');
+        else if(p.halter) halter(c, x + w/2, y + ph/2, 92*z);
+        else arteTx(c, p.t, x + w/2, y + ph/2 + fonte*0.36, 600, fonte, 'center');
+        x += w + gap; }
+      y += ph + 26*z;
     }
   });
   return A;
@@ -10562,10 +10877,12 @@ function setTenisVidaUtil(id, vidaUtil){
 }
 // Recorta em quadrado e reduz a imagem antes de guardar — uma foto de câmera direto passaria de vários
 // MB em base64, o que pesaria demais salva no localStorage.
-function readAndResizeImage(file, size, cb){
+function readAndResizeImage(file, size, cb, erro){
   const reader = new FileReader();
+  if(erro) reader.onerror = ()=>erro();
   reader.onload = (e)=>{
     const img = new Image();
+    if(erro) img.onerror = ()=>erro();
     img.onload = ()=>{
       const canvas = document.createElement('canvas');
       canvas.width = size; canvas.height = size;
@@ -10804,6 +11121,8 @@ const ICONS = {
   home: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg>`,
   play: `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>`,
   fileImport: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M12 18v-6"/><path d="M9.5 14.5L12 12l2.5 2.5"/></svg>`,
+  camera: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7.5 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3.5z"/><circle cx="12" cy="13" r="3.5"/></svg>`,
+  image: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-3.1-3.1a2 2 0 0 0-2.8 0L6 21"/></svg>`,
   dots: `<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>`,
   volumeOn: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a9 9 0 0 1 0 12"/></svg>`,
   users: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.3 2.9-5.5 6.5-5.5s6.5 2.2 6.5 5.5"/><circle cx="17.5" cy="9" r="2.6"/><path d="M17 14.6c2.6.1 4.5 1.9 4.5 5"/></svg>`,
@@ -12888,7 +13207,14 @@ function mrtBarraBlocos(steps){
 async function abrirResumoCorrida(dayKey){
   const prog = (state.corridaProgress||{})[dayKey];
   const rec = prog && prog.gpsRunId ? await gpsDbGet(prog.gpsRunId) : null;
-  if(!rec){ showToast('Esta corrida não tem detalhes salvos'); return; }
+  if(!rec){
+    if(prog && prog.done && await confirmarApp({ titulo:'Corrida sem detalhes', texto:'A gravação desta corrida não está neste aparelho, então não dá para abrir o resumo. Quer excluir o registro? O treino planejado continua.', ok:'Excluir corrida', perigo:true })){
+      await excluirCorridaRealizada(dayKey);
+      if(state.gpsRun && state.gpsRun.progressKey===dayKey) state.gpsRun = null;
+      render(); showToast('Corrida excluída');
+    }
+    return;
+  }
   const entry = state.treinos.find(t=>t.day===dayKey);
   const abbr = dayAbbrevOf(dayKey);
   state.gpsRun = {
@@ -14039,8 +14365,9 @@ function renderTreinoV2Content(){
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
   const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
   const avisoAgenda = (state.weekOffset||0)===0 ? renderAvisoAgenda() : '';
+  const avisoQualidade = renderAvisoQualidadeRemovida();
   void nomeDia;
-  return header + planoBar + weekNav + daylist + avisoAgenda + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
+  return header + planoBar + weekNav + daylist + avisoAgenda + avisoQualidade + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
@@ -14633,8 +14960,10 @@ function abrirMenuExercicio(exId){
     <div class="mrt-menuitem" data-exmenu="descanso"><div class="icon-box">${ICONS.clock}</div><span>Ajustar descanso</span></div>
     <div class="mrt-menuitem" data-exmenu="trocar"><div class="icon-box">${ICONS.swap}</div><span>Trocar exercício</span></div>
     <div class="mrt-menuitem" data-exmenu="ver"><div class="icon-box">${ICONS.eye}</div><span>Ver execução</span></div>
+    ${itemFavoritoMenu(ex.nome)}
     <div class="mrt-menuitem" data-exmenu="remover"><div class="icon-box" style="background:color-mix(in srgb, var(--danger) 16%, transparent);color:var(--danger);">${ICONS.trash}</div><span style="color:var(--danger);">Remover deste dia</span></div>
   `, (sh)=>{
+    sh.querySelectorAll('[data-favmenu]').forEach(el=>{ el.onclick = ()=>{ alternarFavorito(el.getAttribute('data-favmenu')); closeSheet(); }; });
     sh.querySelectorAll('[data-exmenu]').forEach(el=>{
       el.onclick = async ()=>{
         const a = el.getAttribute('data-exmenu');
@@ -15859,6 +16188,8 @@ function abrirAtividadeDaLista(id){
   if(a.livre) return abrirResumoAtividade(a.id);
   if(a.tipo==='musculacao') return a.muscLogId ? abrirMuscHistoryV2(a.muscLogId) : null;
   if(a.gpsRunId && a.sessao) return abrirResumoCorrida(a.sessao.chave);
+  // Corrida do plano registrada à mão (sem gravação): não há resumo; oferece excluir o registro.
+  if(a.sessao && a.sessao.chave) return confirmarExcluirCorrida(a.sessao.chave);
   showToast('Corrida registrada sem gravação');
 }
 function wireProgressoV2(){
@@ -16000,9 +16331,10 @@ function renderEquipamentosV2(){
     <div class="mrt-card" style="padding:14px 16px;">
       <div class="mrt-summarytitle" style="font-size:16px;margin-bottom:6px;">Corrida</div>
       <div class="mrt-togglerow"><div class="icon-box run">${ICONS.run}</div><div class="nm">Esteira</div><div class="mrt-switch ${esteiraLigada?'on':''}" data-equiptoggle="esteira"><i></i></div></div>
-      <label class="mrt-medlabel" for="inRelogio" style="margin-top:12px;">Relógio</label>
+      <label class="mrt-medlabel" for="inRelogio" style="margin-top:12px;">Relógio${relogioApi() ? ' <span style="font-weight:400;opacity:.7;">(preenchido pelo relógio conectado)</span>' : ''}</label>
       <input class="mrt-input" id="inRelogio" list="relogioModelosList" value="${state.equipamentos.relogio||''}" placeholder="ex: Garmin Forerunner 255">
       <datalist id="relogioModelosList">${RELOGIO_MODELOS.map(m=>`<option value="${m}">`).join('')}</datalist>
+      ${relogioGarminCardHtml()}
       <datalist id="tenisModelosList">${TENIS_MODELOS.map(m=>`<option value="${m}">`).join('')}</datalist>
       <div class="mrt-medlabel" style="margin-top:16px;">Tênis</div>
       ${tenis.length ? tenis.map(t=>{
@@ -16053,6 +16385,7 @@ function wireEquipamentosV2(){
   });
   const inRelogio = document.getElementById('inRelogio');
   if(inRelogio) inRelogio.onchange = ()=>{ state.equipamentos.relogio = inRelogio.value.trim(); saveEquipamentos(); };
+  wireRelogioGarmin();
   const add = document.getElementById('btnAddTenis');
   if(add) add.onclick = ()=>{ const v = document.getElementById('inNovoTenis').value.trim(); if(!v){ document.getElementById('inNovoTenis').focus(); return; } addTenis(v); };
   document.querySelectorAll('[data-usetenis]').forEach(el=>{ el.onclick = ()=> setTenisAtivo(el.getAttribute('data-usetenis')); });
@@ -16146,10 +16479,8 @@ function bibFiltrada(){
   });
 }
 function bibCardHtml(e){
-  const fav = (state.favoritos||[]).includes(e.nome);
   return `<div class="mrt-bibcard" data-bibex="${e.nome.replace(/"/g,'&quot;')}">
-    <div class="th">${e.id ? `<img width="56" height="56" loading="lazy" src="${repdbImg(e.id)}" alt="" onerror="repdbFallback(this,'${e.grupo}',56)">` : exThumbIconHtml(e.grupo,56)}
-      <button class="fav ${fav?'on':''}" data-bibfav="${e.nome.replace(/"/g,'&quot;')}" aria-label="Favoritar">${fav?ICONS.starFill:ICONS.star}</button></div>
+    <div class="th">${e.id ? `<img width="56" height="56" loading="lazy" src="${repdbImg(e.id)}" alt="" onerror="repdbFallback(this,'${e.grupo}',56)">` : exThumbIconHtml(e.grupo,56)}</div>
     <div class="nm">${e.nome}</div>
     <span class="tag tag-musc">${e.grupo}</span>
   </div>`;
@@ -16179,7 +16510,6 @@ function renderBibDetalhe(nome){
   if(!e) return '';
   const info = bibInfo(e.nome, e.grupo);
   const tab = state.bibTab || 'musculos';
-  const fav = (state.favoritos||[]).includes(e.nome);
   const req = equipNecessario(e.nome);
   let corpo;
   if(tab==='musculos'){
@@ -16207,7 +16537,7 @@ function renderBibDetalhe(nome){
     <div class="mrt-bibpanel">
       <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;">
         <div style="min-width:0;"><div class="mrt-runtitle" style="font-size:22px;">${e.nome}</div><div style="margin-top:8px;"><span class="tag tag-musc">${e.grupo}</span></div></div>
-        <button class="mrt-favbig ${fav?'on':''}" data-bibfav="${e.nome.replace(/"/g,'&quot;')}" aria-label="Favoritar">${fav?ICONS.starFill:ICONS.star}</button>
+        <button class="fr-bibmenu" data-bibmenu="${e.nome.replace(/"/g,'&quot;')}" aria-label="Opções">${ICONS.dots}</button>
       </div>
       <div class="mrt-abas">${abas.map(([k,l])=>`<button class="${tab===k?'on':''}" data-bibtab="${k}">${l}</button>`).join('')}</div>
       <div class="mrt-abacorpo">${corpo}</div>
@@ -16229,16 +16559,26 @@ function atualizarGradeBiblioteca(){
   if(cnt) cnt.textContent = `${lista.length} exercício${lista.length===1?'':'s'} · por popularidade`;
   if(grid){ grid.innerHTML = lista.length ? lista.map(bibCardHtml).join('') : `<div class="empty-state" style="grid-column:1/-1;"><div class="t">Nada encontrado</div><div class="s">Tente outro termo ou limpe os filtros.</div></div>`; wireBibCards(); }
 }
+// Favoritos: a marcação fica no menu de três pontos (detalhe da Biblioteca e exercício do treino), sem selo na lista.
+function ehFavorito(nome){ return (state.favoritos||[]).includes(nome); }
+function alternarFavorito(nome){
+  state.favoritos = state.favoritos || [];
+  const era = state.favoritos.includes(nome);
+  state.favoritos = era ? state.favoritos.filter(x=>x!==nome) : state.favoritos.concat(nome);
+  saveFavoritos(); hapticLeve();
+  showToast(era ? 'Removido dos favoritos' : 'Adicionado aos favoritos');
+}
+function itemFavoritoMenu(nome){
+  return `<div class="mrt-menuitem" data-favmenu="${nome.replace(/"/g,'&quot;')}"><div class="icon-box">${ICONS.star}</div><span>${ehFavorito(nome) ? 'Remover dos favoritos' : 'Adicionar aos favoritos'}</span></div>`;
+}
+function abrirMenuBiblioteca(nome){
+  openSheet(`<div class="sheet-title">${nome}</div>${itemFavoritoMenu(nome)}`, (sh)=>{
+    sh.querySelectorAll('[data-favmenu]').forEach(el=>{ el.onclick = ()=>{ alternarFavorito(el.getAttribute('data-favmenu')); closeSheet(); render(); }; });
+  });
+}
 function wireBibCards(){
-  document.querySelectorAll('[data-bibfav]').forEach(el=>{
-    el.onclick = (ev)=>{
-      ev.stopPropagation();
-      const n = el.getAttribute('data-bibfav');
-      state.favoritos = state.favoritos || [];
-      state.favoritos = state.favoritos.includes(n) ? state.favoritos.filter(x=>x!==n) : state.favoritos.concat(n);
-      saveFavoritos(); hapticLeve();
-      if(state.bibDetalhe) render(); else if(state.bibGrupo==='Favoritos') atualizarGradeBiblioteca(); else { el.classList.toggle('on'); el.innerHTML = state.favoritos.includes(n) ? ICONS.starFill : ICONS.star; }
-    };
+  document.querySelectorAll('[data-bibmenu]').forEach(el=>{
+    el.onclick = (ev)=>{ ev.stopPropagation(); abrirMenuBiblioteca(el.getAttribute('data-bibmenu')); };
   });
   document.querySelectorAll('[data-bibex]').forEach(el=>{
     el.onclick = ()=>{ state.bibDetalhe = el.getAttribute('data-bibex'); state.bibTab = 'musculos'; render(); };
@@ -16337,6 +16677,38 @@ const FR_PI = {
 const FR_VERSAO_APP = '1.0';
 // Perfil (pacote visual, arte 04): marca + engrenagem, título, cartão com nome/plano/fase e níveis de Corrida e Força,
 // Meu treino, Equipamentos, Minha conta, versão e sair. Todas as linhas abrem telas ou folhas que existem.
+// Foto do perfil: escolher da galeria, tirar foto, remover ou cancelar. Usa o mesmo recorte quadrado do fluxo antigo.
+function frAbrirFotoPerfil(){
+  const foto = state.perfil && state.perfil.foto;
+  openSheet(`<div class="sheet-title">Foto do perfil</div>
+    <div class="mrt-menuitem" data-pffoto="galeria"><div class="icon-box">${ICONS.image}</div><span>Escolher da galeria</span></div>
+    <div class="mrt-menuitem" data-pffoto="camera"><div class="icon-box">${ICONS.camera}</div><span>Tirar foto</span></div>
+    ${foto ? `<div class="mrt-menuitem" data-pffoto="remover"><div class="icon-box">${ICONS.trash}</div><span>Remover foto</span></div>` : ''}
+    <button class="btn-ghost" data-pffoto="cancelar" style="width:100%;margin-top:6px;">Cancelar</button>`, (sh)=>{
+    sh.querySelectorAll('[data-pffoto]').forEach(el=>{ el.onclick = async ()=>{
+      const a = el.getAttribute('data-pffoto');
+      closeSheet();
+      if(a==='galeria' || a==='camera') frEscolherFotoPerfil(a==='camera');
+      else if(a==='remover'){
+        if(!(await confirmarApp({ titulo:'Remover a foto?', ok:'Remover', perigo:true }))) return;
+        state.perfil = { ...state.perfil, foto:'' }; await savePerfil(); render();
+      }
+    }; });
+  });
+}
+function frEscolherFotoPerfil(camera){
+  const i = document.createElement('input'); i.type = 'file'; i.accept = 'image/*';
+  if(camera) i.setAttribute('capture', 'user');
+  i.style.display = 'none'; document.body.appendChild(i);
+  i.onchange = ()=>{
+    const f = i.files && i.files[0]; i.remove();
+    if(!f) return; // cancelou
+    readAndResizeImage(f, 160, async (dataUrl)=>{
+      state.perfil = { ...state.perfil, foto:dataUrl }; await savePerfil(); render();
+    }, ()=>showToast('Não consegui carregar essa foto'));
+  };
+  i.click();
+}
 function renderPerfilV2Content(){
   const nome = state.perfil.nome || '';
   const foto = state.perfil.foto;
@@ -16350,7 +16722,7 @@ function renderPerfilV2Content(){
   const nivel = (acao, icon, titulo, valor)=>`<button class="fr-pnivel" data-pfacao="${acao}"><span class="fr-pic">${icon}</span><span class="tx"><b>${titulo}</b><small>${valor}</small></span>${chev}</button>`;
   const card = `<div class="fr-pcard">
     <div class="fr-pcard-top">
-      <div class="fr-pavatar" style="${foto?`background-image:url('${foto}');`:''}">${foto?'':iniciaisNome()}</div>
+      <button class="fr-pavatar" id="frAvatar" aria-label="Foto do perfil" style="${foto?`background-image:url('${foto}');`:''}">${foto?'':iniciaisNome()}</button>
       <div class="fr-pcard-txt"><div class="nm">${nome||'Sem nome'}</div><div class="s1">${tipoPlano}</div>${phaseParts ? `<div class="s2">${phaseParts.phaseName} · Semana ${phaseParts.weekNumber} de ${phaseParts.totalWeeks}</div>` : ''}</div>
     </div>
     ${(nivelCorrida || nivelForca) ? `<div class="fr-pniveis">
@@ -16360,6 +16732,7 @@ function renderPerfilV2Content(){
   </div>`;
   const row = (attrs, icon, titulo, valor)=>`<button class="fr-prow" ${attrs}><span class="fr-pic">${icon}</span><span class="nm">${titulo}</span>${valor ? `<span class="vl">${valor}</span>` : ''}${chev}</button>`;
   const meuTreino = `<div class="fr-plbl">Meu treino</div><div class="fr-plist">
+    ${state.athleteProfile ? row('data-pfacao="personalizacao"', FR_PI.ajustes, 'Personalização do treino', IA_CONFIG.ativa && IA_CONFIG.publicacaoAutorizada ? (iaPersonalizacaoLigada(state.athleteProfile) ? 'Ligada' : 'Desligada') : 'Em validação') : ''}
     ${phaseParts ? row('data-pfacao="plano"', FR_PI.alvo, 'Plano e objetivo', '') : row('id="mrtRedoDiagBtn"', FR_PI.alvo, 'Criar meu plano', '')}
     ${frTemRespostasDoQuestionario() ? row('data-pfacao="disponibilidade"', ICONS.calendar, 'Disponibilidade', '') : ''}
     ${state.athleteProfile ? row('data-pfacao="lesoes"', ICONS.heart, 'Lesões e limitações', '') : ''}
@@ -16440,7 +16813,10 @@ function wirePerfilV2(){
   if(closeDadosBtn) closeDadosBtn.onclick = ()=>{ state.modalOpen=false; state.modalType=null; render(); };
   const dadosOverlay = document.getElementById('mrtDadosOverlay');
   if(dadosOverlay) dadosOverlay.onclick = (ev)=>{ if(ev.target===ev.currentTarget){ state.modalOpen=false; state.modalType=null; render(); } };
+  const frAvatar = document.getElementById('frAvatar');
+  if(frAvatar) frAvatar.onclick = frAbrirFotoPerfil;
   document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); else if(a==='versoes') frAbrirVersoes();
+    else if(a==='personalizacao'){ if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada){ showToast('Personalização em validação. Seu plano usa o motor do app.'); return; } iaDefinirPersonalizacao(state.athleteProfile, !iaPersonalizacaoLigada(state.athleteProfile)); salvarAthleteProfile(); render(); }
     else if(a==='disponibilidade') frAbrirDisponibilidade(); else if(a==='lesoes') frAbrirLesoes(); else if(a==='ajuda') frAbrirAjuda();
     else if(a==='nivelcorrida' || a==='nivelforca'){ state.tab = 'progresso'; state.progHistorico = false; state.progDetalhe = a==='nivelcorrida' ? 'corrida' : 'musc'; render(); }
     else if(a==='sair'){ confirmarApp({ titulo:'Sair da conta?', texto:'O app continua funcionando, mas salva só neste aparelho até você entrar de novo.', ok:'Sair' }).then(ok=>{ if(ok) auth.signOut().catch(()=>showToast('Não consegui sair da conta agora')); }); }
@@ -16473,7 +16849,11 @@ function renderContaV2(){
     <button class="btn-ghost" style="width:100%;margin-top:6px;text-decoration:underline;" id="btnAuthEsqueciSenha" ${state.authBusy?'disabled':''}>${state.authBusy==='reset'?'Enviando...':'Esqueci minha senha'}</button>`;
 }
 function renderIntegracoesV2(){
-  return ['Garmin','Strava'].map(svc=>`
+  // Garmin: ponte real com o app FORZA RUN do relógio (só no app do iPhone). Strava continua por fazer.
+  const garmin = relogioApi() ? `<div class="mrt-card"><div style="display:flex;align-items:center;gap:12px;">
+      <div class="icon-box run">${ICONS.watch}</div><div style="font-size:16px;font-weight:700;">Garmin</div></div>
+      ${relogioGarminCardHtml()}</div>` : '';
+  return garmin + (relogioApi() ? ['Strava'] : ['Garmin','Strava']).map(svc=>`
     <div class="mrt-card" style="display:flex;align-items:center;gap:12px;">
       <div class="icon-box run">${ICONS.watch}</div>
       <div style="flex:1;min-width:0;"><div style="font-size:16px;font-weight:700;">${svc}</div><div class="mrt-sub" style="margin:2px 0 0;">Não conectado</div></div>
@@ -16481,10 +16861,29 @@ function renderIntegracoesV2(){
     </div>`).join('') + `<div class="mrt-sub" style="text-align:center;margin-top:6px;">A sincronização automática ainda está em desenvolvimento.</div>`;
 }
 function renderSaudeRelogioV2(){
-  return `<div class="empty-state"><div class="icon-box lg">${ICONS.heart}</div>
-    <div class="t">Sem dados do relógio</div>
-    <div class="s">Sono, estresse, frequência cardíaca em repouso e HRV aparecem aqui quando você conectar um relógio.</div>
-    <button class="btn-secondary" data-mrtintegrar="relógio">Conectar relógio</button></div>`;
+  const R = relogioApi();
+  if(!R){
+    return `<div class="empty-state"><div class="icon-box lg">${ICONS.watch}</div>
+      <div class="t">Relógio Garmin</div>
+      <div class="s">O relógio Garmin com o app FORZA RUN se conecta pelo app do iPhone.</div></div>`;
+  }
+  let nCorr = 0, nForca = 0;
+  try{ const it = relogioItensEnviados(relogioMensagemTreinos()); nCorr = it.filter(w=>!w.y).length; nForca = it.filter(w=>w.y==='f').length; }catch(e){}
+  let rec = null; try{ rec = JSON.parse(lsGet(RELOGIO_RECEBIDO_KEY) || 'null'); }catch(e){}
+  const quando = (t)=> new Date(t).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+  return `
+    <div class="mrt-card">${relogioGarminCardHtml()}</div>
+    <div class="mrt-card">
+      <div class="mrt-medlabel">Treinos para o relógio</div>
+      <div class="mrt-sub" style="margin:4px 0;">Corrida: ${nCorr} treino${nCorr===1?'':'s'} · Musculação: ${nForca} dia${nForca===1?'':'s'}</div>
+      <div class="mrt-sub" style="margin:4px 0;">Vão todas as corridas do plano desde segunda (as feitas aparecem como feitas) e a musculação de cada dia da semana. As semanas seguintes entram quando o plano gerar cada uma.</div>
+      ${rec ? `<div class="mrt-sub" style="margin:4px 0;">Última atividade recebida do relógio: ${rec.forca ? 'musculação' : 'corrida'}${rec.titulo ? ' (' + escHtmlRelogio(rec.titulo) + ')' : ''} em ${quando(rec.em)}</div>` : ''}
+    </div>
+    <div class="mrt-card">
+      <div class="mrt-medlabel">Dados de saúde</div>
+      <div class="mrt-sub" style="margin:4px 0;">Estresse, Body Battery e frequência cardíaca do relógio ainda não chegam ao app: dependem de uma atualização do app FORZA RUN no relógio.</div>
+      <div class="mrt-sub" style="margin:4px 0;">Sono e HRV não aparecem aqui: a Garmin não libera esses dados para apps de relógio.</div>
+    </div>`;
 }
 function renderPersonalV2(){
   if(!(state.authUser && !state.viewingClient)){
@@ -16572,6 +16971,8 @@ function renderMaisOpcoesV2(){
     <button class="btn-secondary" style="color:var(--danger);" id="btnApagarTudo">${ICONS.trash} Apagar todos os dados</button>
     <div class="ds-label" style="margin:22px 0 4px;">Avançado</div>
     <div class="ds-list">
+      <button class="ds-row" id="btnDiagnostico"><span class="nm">Diagnóstico<small style="display:block;font-weight:400;color:var(--text-dim);font-size:13px;">${diagLer().length} registro${diagLer().length===1?'':'s'} de erro ou recarga</small></span><span class="chev">${DS_CHEV}</span></button>
+      ${state.diagAberto ? renderDiagnosticoHtml() : ''}
       <button class="ds-row" id="advFit"><span class="nm">Importar corrida do relógio (.fit)</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" id="advFitTreino"><span class="nm">Importar treino estruturado (.fit)</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" id="advModelos"><span class="nm">Modelos salvos</span><span class="chev">${DS_CHEV}</span></button>
@@ -16620,7 +17021,13 @@ function wireSubV2(){
     };
   });
   document.querySelectorAll('[data-perfilgo]').forEach(el=>{ el.onclick = ()=>{ state.subOrigin = 'perfil'; state.tab = el.getAttribute('data-perfilgo'); render(); }; });
-  document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = ()=> showToast(`Integração com ${el.getAttribute('data-mrtintegrar')} ainda não existe no app`); });
+  wireRelogioGarmin();
+  document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = async ()=>{
+    const svc = el.getAttribute('data-mrtintegrar');
+    // "Conectar relógio": abre o Garmin Connect para escolher o relógio (app do iPhone).
+    if((svc==='relógio' || svc==='Garmin') && relogioApi()){ const r = await relogioApi().escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); return; }
+    showToast(`Integração com ${svc} ainda não existe no app`);
+  }; });
   const advFit = document.getElementById('advFit'); if(advFit) advFit.onclick = ()=>document.getElementById('fitInput').click();
   const advFitT = document.getElementById('advFitTreino'); if(advFitT) advFitT.onclick = ()=>document.getElementById('fitWorkoutInput').click();
   const advMod = document.getElementById('advModelos'); if(advMod) advMod.onclick = ()=>{ state.tab = 'meusTreinos'; state.modalType = 'treinoTemplates'; state.modalOpen = true; render(); };
@@ -16677,6 +17084,14 @@ function mostrarResultadoCheckin(){
     <div class="ds-actions"><button class="btn-primary" id="ckOk">Ok</button></div>`, (sh)=>{ sh.querySelector('#ckOk').onclick = closeSheet; });
 }
 // Aviso curto da agenda quando uma mudança manual criou conflito (Aceitar / Manter assim). Nada muda sozinho.
+// Semana exibida em que o ajuste da agenda tirou o treino forte: só informa o motivo (sem ação).
+function renderAvisoQualidadeRemovida(){
+  const hp = state.hybridPlanData;
+  if(!hp || !hp.plan || planoPausado()) return '';
+  const w = hp.plan[(hp.currentWeekIndex||1) - 1 + (state.weekOffset||0)];
+  const a = w && !w.pendente && w.avisoQualidade;
+  return a && a.texto ? `<div class="ds-section"><div class="ds-card fr-avisoqual">${a.texto}</div></div>` : '';
+}
 function renderAvisoAgenda(){
   let sug = null; try{ sug = sugestaoDaAgenda(); }catch(e){ sug = null; }
   if(!sug) return '';
@@ -19011,6 +19426,54 @@ async function iniciarNuvem(){
   auth.onAuthStateChanged(function(user){ aoMudarConta(user); });
 }
 document.addEventListener('click', (e)=>{ const el = e.target && e.target.closest ? e.target.closest('[data-suborigin]') : null; if(el) state.subOrigin = el.getAttribute('data-suborigin'); }, true);
+// Diagnóstico: o iOS às vezes derruba a página do app (memória ou falha interna do WebView) e o app
+// recarrega na tela inicial. Guarda os últimos erros e essas recargas para mostrar em Dados e backup.
+const DIAG_KEY = 'treinoapp:diag', SESSAO_KEY = 'treinoapp:sessaoViva';
+function diagLer(){ try{ return JSON.parse(localStorage.getItem(DIAG_KEY) || '[]'); }catch(e){ return []; } }
+function diagRegistrar(tipo, msg){
+  try{
+    const l = diagLer();
+    l.push({ em:Date.now(), tipo, msg:String(msg == null ? '' : msg).slice(0, 300), tela:(typeof state!=='undefined' && state) ? state.tab : '' });
+    localStorage.setItem(DIAG_KEY, JSON.stringify(l.slice(-20)));
+  }catch(e){}
+}
+window.addEventListener('error', e=>diagRegistrar('erro', (e.message || 'erro') + (e.filename ? ' @' + String(e.filename).split('/').pop() + ':' + e.lineno : '')));
+window.addEventListener('unhandledrejection', e=>{ const r = e.reason; diagRegistrar('promessa', (r && (r.stack || r.message)) || r); });
+function sessaoMarcar(viva){ try{ const ant = JSON.parse(localStorage.getItem(SESSAO_KEY) || 'null') || {}; localStorage.setItem(SESSAO_KEY, JSON.stringify({ viva, em:Date.now(), tab:state.tab, restauradoEm:ant.restauradoEm || 0 })); }catch(e){} }
+// Recarga sem a pessoa fechar o app (a página estava visível há menos de 3 min): registra e reabre na mesma aba.
+// Só uma vez a cada 3 min, para não prender o app numa tela que derruba de novo.
+function sessaoRestaurar(){
+  let ant = null; try{ ant = JSON.parse(localStorage.getItem(SESSAO_KEY) || 'null'); }catch(e){}
+  if(!ant || !ant.viva || Date.now() - ant.em > 180000) return;
+  diagRegistrar('recarga', 'O app recarregou sozinho (tela: ' + (ant.tab || '?') + ')');
+  const abas = ['hoje','meusTreinos','perfil','turma'].concat(SUB_V2_TABS);
+  if(Date.now() - (ant.restauradoEm || 0) < 180000 || !abas.includes(ant.tab) || state.gpsRun || state.workoutSession) return;
+  try{ localStorage.setItem(SESSAO_KEY, JSON.stringify({ ...ant, restauradoEm:Date.now() })); }catch(e){}
+  if(SUB_V2_TABS.includes(ant.tab)) state.subOrigin = 'perfil';
+  state.tab = ant.tab;
+  render();
+}
+function renderDiagnosticoHtml(){
+  const l = diagLer().slice().reverse();
+  const quando = (t)=> new Date(t).toLocaleString('pt-BR',{ day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit', second:'2-digit' });
+  const esc = (x)=> String(x).replace(/[&<>"]/g, c=>({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]));
+  return `<div class="mrt-card" id="diagCard">
+    ${l.length ? l.map(x=>`<div class="mrt-sub" style="margin:6px 0;word-break:break-word;"><b>${quando(x.em)}</b> · ${esc(x.tipo)}${x.tela ? ' · ' + esc(x.tela) : ''}<br>${esc(x.msg)}</div>`).join('') : '<div class="mrt-sub">Nenhum erro registrado.</div>'}
+    <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+      <button class="mrt-pillbtn" id="btnDiagCopiar">Copiar</button>
+      <button class="mrt-pillbtn" id="btnDiagLimpar">Limpar</button>
+    </div></div>`;
+}
+document.addEventListener('click', (e)=>{
+  const el = e.target && e.target.closest ? e.target.closest('#btnDiagnostico,#btnDiagCopiar,#btnDiagLimpar') : null;
+  if(!el) return;
+  if(el.id==='btnDiagnostico'){ state.diagAberto = !state.diagAberto; render(); }
+  else if(el.id==='btnDiagLimpar'){ try{ localStorage.removeItem(DIAG_KEY); }catch(err){} render(); }
+  else if(el.id==='btnDiagCopiar'){
+    const txt = diagLer().map(x=>new Date(x.em).toISOString() + ' ' + x.tipo + ' ' + (x.tela||'') + ' ' + x.msg).join('\n') || 'sem registros';
+    (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(()=>showToast('Diagnóstico copiado')).catch(()=>showToast('Não consegui copiar'));
+  }
+});
 (function bootstrap(){
   const ultima = lerUltimaConta();
   if(ultima){
@@ -19019,6 +19482,16 @@ document.addEventListener('click', (e)=>{ const el = e.target && e.target.closes
   }
   _primeiroInit = init();
   iniciarNuvem();
+  relogioIniciar();
+  _primeiroInit.then(()=>{ sessaoRestaurar(); sessaoMarcar(true); }).catch(()=>{});
+  _primeiroInit.then(()=>relogioEnviarTreinos()).catch(()=>{});
+  { const t = setInterval(()=>{ if(document.visibilityState==='visible') sessaoMarcar(true); }, 15000); if(t && t.unref) t.unref(); } // unref: não prende o Node nos testes
+  document.addEventListener('click', ()=>sessaoMarcar(true), true);
+  window.addEventListener('pagehide', ()=>sessaoMarcar(false));
+  document.addEventListener('visibilitychange', ()=>{
+    sessaoMarcar(document.visibilityState==='visible');
+    if(document.visibilityState==='visible') relogioEnviarTreinos();
+  });
   window.addEventListener('online', ()=>{
     cloudDownUntil = 0;
     if(!firebasePronto){ iniciarNuvem(); return; }

@@ -1,0 +1,273 @@
+{
+  "type": "object",
+  "properties": {
+    "versao": {
+      "type": "string",
+      "enum": [
+        "2"
+      ]
+    },
+    "dias": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "properties": {
+          "dia": {
+            "type": "string",
+            "enum": [
+              "Seg",
+              "Ter",
+              "Qua",
+              "Qui",
+              "Sex",
+              "Sáb",
+              "Dom"
+            ]
+          },
+          "exercicios": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "maxLength": 12
+                },
+                "papel": {
+                  "type": "string",
+                  "enum": [
+                    "base",
+                    "auxiliar",
+                    "isolado"
+                  ]
+                },
+                "series": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "reps": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 30
+                },
+                "rpe": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                },
+                "descansoSeg": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 600
+                }
+              },
+              "required": [
+                "id",
+                "papel",
+                "series",
+                "reps",
+                "rpe",
+                "descansoSeg"
+              ],
+              "propertyOrdering": [
+                "id",
+                "papel",
+                "series",
+                "reps",
+                "rpe",
+                "descansoSeg"
+              ]
+            }
+          }
+        },
+        "required": [
+          "dia",
+          "exercicios"
+        ],
+        "propertyOrdering": [
+          "dia",
+          "exercicios"
+        ]
+      }
+    },
+    "corrida": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "properties": {
+          "dia": {
+            "type": "string",
+            "enum": [
+              "Seg",
+              "Ter",
+              "Qua",
+              "Qui",
+              "Sex",
+              "Sáb",
+              "Dom"
+            ]
+          },
+          "opcao": {
+            "type": "string",
+            "enum": [
+              "LEVE",
+              "REGENERATIVO",
+              "LEVE_STRIDES",
+              "LONGO",
+              "LONGO_PROGRESSIVO",
+              "LONGO_FINAL_M",
+              "QUALIDADE_MOTOR",
+              "I_200",
+              "I_300",
+              "I_400",
+              "I_600",
+              "I_800",
+              "I_1000",
+              "I_1200",
+              "T_CONTINUO",
+              "T_CRUZEIRO_1000",
+              "T_CRUZEIRO_1600",
+              "T_CRUZEIRO_2000",
+              "RITMO_PROVA",
+              "M_BLOCOS",
+              "FARTLEK_1X1",
+              "FARTLEK_2X1",
+              "FARTLEK_PIRAMIDE",
+              "SUBIDAS_CURTAS",
+              "SUBIDAS_LONGAS"
+            ]
+          },
+          "mobilidade": {
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+              "type": "string",
+              "enum": [
+                "tornozelo",
+                "balanco_frontal",
+                "balanco_lateral",
+                "rotacao_quadril",
+                "afundo_rotacao",
+                "ponte_gluteo"
+              ]
+            }
+          },
+          "educativos": {
+            "type": "array",
+            "maxItems": 4,
+            "items": {
+              "type": "string",
+              "enum": [
+                "marcha_joelho",
+                "skip_baixo",
+                "anfersen",
+                "dribbling",
+                "passada_lateral",
+                "skip_alto",
+                "saltito_tornozelo"
+              ]
+            }
+          },
+          "alongamentos": {
+            "type": "array",
+            "maxItems": 5,
+            "items": {
+              "type": "string",
+              "enum": [
+                "panturrilha",
+                "soleo",
+                "posterior",
+                "quadriceps",
+                "flexor_quadril",
+                "gluteo",
+                "adutores"
+              ]
+            }
+          },
+          "strides": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "stridesFim": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 6
+          },
+          "progressao": {
+            "type": "string",
+            "enum": [
+              "manter",
+              "pedir_progressao"
+            ]
+          }
+        },
+        "required": [
+          "dia",
+          "opcao",
+          "mobilidade",
+          "educativos",
+          "alongamentos",
+          "strides",
+          "stridesFim",
+          "progressao"
+        ],
+        "propertyOrdering": [
+          "dia",
+          "opcao",
+          "mobilidade",
+          "educativos",
+          "alongamentos",
+          "strides",
+          "stridesFim",
+          "progressao"
+        ]
+      }
+    },
+    "motivos": {
+      "type": "array",
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "enum": [
+          "manter_plano",
+          "prioridade_muscular",
+          "equilibrio_empurrar_puxar",
+          "variedade",
+          "tempo_disponivel",
+          "reduz_volume_recuperacao",
+          "interferencia_corrida",
+          "aderencia",
+          "progressao_historico",
+          "preferencia_equipamento",
+          "variedade_corrida",
+          "recuperacao_corrida",
+          "historico_corrida",
+          "ritmo_de_prova",
+          "tecnica_corrida",
+          "forca_especifica_corrida",
+          "coordenacao_corrida_musculacao"
+        ]
+      }
+    }
+  },
+  "required": [
+    "versao",
+    "dias",
+    "corrida",
+    "motivos"
+  ],
+  "propertyOrdering": [
+    "versao",
+    "dias",
+    "corrida",
+    "motivos"
+  ]
+}

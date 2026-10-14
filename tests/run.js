@@ -6,6 +6,8 @@ const { spawnSync } = require('child_process');
 const fs = require('fs'), path = require('path');
 const RAIZ = path.resolve(__dirname, '..');
 const semNavegador = process.argv.includes('--sem-navegador');
+const filtro = process.argv.find(a=>a.startsWith('--filtro='));
+const relatorio = process.argv.includes('--relatorio');
 
 const B1_CENARIOS = ['offline-sem-conta', 'offline-com-conta-cache', 'nuvem-falha-nao-sobrescreve', 'migracao-segura', 'pendentes-flush',
   'gps-incremental-resume', 'gps-fim-backup-nuvem', 'gps-baixa-de-outro-aparelho'];
@@ -19,6 +21,10 @@ const testes = [
   { nome: 'matriz de 20 perfis (invariantes)', arq: 'node/legado/matriz.js', args: [RAIZ] },
   { nome: 'planos dourados (20 perfis)', arq: 'node/planos-dourados.test.js' },
   { nome: 'caracterização: motor', arq: 'node/caracterizacao-motor.test.js' },
+  { nome: 'motor intacto (retrato antes do catálogo de corrida)', arq: 'node/motor-intacto.test.js' },
+  { nome: 'catálogo de corrida e opções de sessão', arq: 'node/corrida-catalogo.test.js' },
+  { nome: 'IA: resumo do histórico de corrida', arq: 'node/ia-historico-corrida.test.js' },
+  ...['ia-validador','ia-refino','ia-funcao','ia-worker','ia-v2','ia-v2-servidor','ia-v2-app','ia-v2-regras','ia-v2-exemplos','ia-v2-build'].map(n=>({ nome:'IA: '+n, arq:'node/'+n+'.test.js' })),
   { nome: 'caracterização: treinador', arq: 'node/caracterizacao-treinador.test.js' },
   { nome: 'caracterização: musculação', arq: 'node/caracterizacao-forca.test.js' },
   { nome: 'caracterização: atividade e dados', arq: 'node/caracterizacao-atividade.test.js' },
@@ -34,15 +40,21 @@ const testes = [
   { nome: 'pausar e retomar o plano', arq: 'node/pausa.test.js' },
   { nome: 'lesões e limitações', arq: 'node/lesoes.test.js' },
   { nome: 'encerrar e plano concluído', arq: 'node/encerrar.test.js' },
+  { nome: 'número da semana e aviso de treino forte', arq: 'node/semana-do-plano.test.js' },
+  { nome: 'descarga da musculação (restauração desligada)', arq: 'node/descarga-musculacao.test.js' },
+  { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
+  { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },
+  { nome: 'excluir atividade sem detalhes', arq: 'node/excluir-sem-detalhes.test.js' },
   { nome: 'estilos das telas', arq: 'node/estilos.test.js' },
   { nome: 'esteira (distância por trechos) e voz da musculação', arq: 'node/esteira-voz.test.js' },
 ];
 if (!semNavegador) fs.readdirSync(path.join(__dirname, 'navegador')).filter(f => f.endsWith('.test.js')).sort()
   .forEach(f => testes.push({ nome: 'navegador: ' + f.replace('.test.js', ''), arq: 'navegador/' + f, timeout: 300000 }));
 
-let totalPass = 0, totalFail = 0, arquivosComFalha = [];
+let totalPass = 0, totalFail = 0, arquivosComFalha = [], resultados = [];
 const t0 = Date.now();
 for (const t of testes) {
+  if(filtro && !t.arq.includes(filtro.slice('--filtro='.length))) continue;
   const r = spawnSync(process.execPath, [path.join(__dirname, t.arq), ...(t.args || [])], { cwd: RAIZ, encoding: 'utf8', timeout: t.timeout || 180000, maxBuffer: 64 * 1024 * 1024 });
   const saida = (r.stdout || '') + (r.stderr || '');
   const pass = (saida.match(/^PASS /gm) || []).length, fail = (saida.match(/^FAIL /gm) || []).length;
@@ -54,7 +66,9 @@ for (const t of testes) {
   // Falhas de inicialização/compilação também precisam aparecer, mesmo antes do primeiro PASS/FAIL.
   if (falhou && !fail) saida.trim().split('\n').slice(0, 14).forEach(l => console.log('    ' + l));
   if (falhou) arquivosComFalha.push(t.nome);
+  resultados.push({ arquivo:t.arq, pass, fail, status:r.status, pulou, falhou, falhas:saida.split('\n').filter(l=>/^FAIL /.test(l)) });
 }
 console.log(`\n${totalPass} verificações ok · ${totalFail} falha(s) · ${((Date.now() - t0) / 1000).toFixed(0)} s`);
 if (arquivosComFalha.length) console.log('Com falha: ' + arquivosComFalha.join('; '));
+if(relatorio) fs.writeFileSync(path.join(RAIZ,'docs','ia-v2-testes-resultado.json'),JSON.stringify({totalPass,totalFail,segundos:(Date.now()-t0)/1000,resultados},null,2)+'\n');
 process.exit(totalFail ? 1 : 0);

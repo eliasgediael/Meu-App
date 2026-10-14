@@ -1,0 +1,37 @@
+# Cloudflare Worker do Forza Run (plano Workers Free). NÃO publicado ainda.
+# Segredo (nunca neste arquivo): npx wrangler secret put GEMINI_API_KEY
+# Teste local: copie .dev.vars.exemplo para .dev.vars (ignorado pelo git) e rode npx wrangler dev
+name = "forza-ia"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+compatibility_flags = ["nodejs_compat"]   # crypto.createHash do functions/src/refinar.js
+workers_dev = true
+
+[vars]
+IA_ATIVA = "false"                        # chave geral: "true" só depois do teste aprovado
+GEMINI_MODELO = "gemini-3.5-flash-lite"   # aceito com o esquema sem limites (diagnóstico 2026-10-14); 3.8 Flash dava 503
+GEMINI_NIVEL_PENSAMENTO = ""              # vazio = sem thinkingConfig (como nos testes 2 a 4)
+GEMINI_FORMATO_ESQUEMA = "openapi"        # responseSchema; os limites numéricos e de tamanho saem só do esquema enviado ao Google
+GEMINI_MAX_TOKENS = "8192"                # inclui os tokens de "pensamento"
+FIREBASE_PROJECT_ID = "treino-app-5a07f"
+ORIGENS_PERMITIDAS = "capacitor://localhost,ionic://localhost,http://localhost,https://localhost"
+IA_TIMEOUT_MS = "45000"                   # prazo total do Gemini, somando a nova tentativa
+GEMINI_ESPERA_RETENTATIVA_MS = "2500"     # pausa antes da única nova tentativa (500/503/504/rede)
+GEMINI_NOVA_TENTATIVA = "true"            # "false" = no máximo uma chamada ao Google por pedido
+# Cotas: ajustar pelos números da página de limites do AI Studio (o Google não publica a cota gratuita por modelo).
+IA_LIMITE_DIA_USUARIO = "3"
+IA_LIMITE_DIA_GLOBAL = "15"
+IA_LIMITE_MINUTO_GLOBAL = "4"
+IA_LIMITE_MES_GLOBAL = "450"
+
+[[kv_namespaces]]
+binding = "IA_CACHE"
+id = "PREENCHER_NA_ETAPA_C"               # npx wrangler kv namespace create IA_CACHE
+
+[[durable_objects.bindings]]
+name = "COTAS"
+class_name = "CotaIA"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["CotaIA"]           # plano Free: só Durable Objects com SQLite

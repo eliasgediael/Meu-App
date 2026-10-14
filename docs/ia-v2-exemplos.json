@@ -1,0 +1,469 @@
+[
+  {
+    "perfil": "Fictício 01",
+    "nivelCorrida": "iniciante",
+    "nivelForca": "iniciante",
+    "fonte": "Motor V2 + proposta simulada validada; nenhuma chamada real ao Gemini",
+    "corrida": [
+      {
+        "dia": "Seg",
+        "tipo": "Longão",
+        "opcao": "LONGO",
+        "minutos": 32,
+        "km": 3,
+        "principal": "7 × (1' trote + 2' caminhada) em Z2",
+        "pace": "7:30 ~ 8:19/km",
+        "aquecimento": "6 min em Z1 · caminhada rápida + trote muito leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · caminhada e alongamento passivo"
+      },
+      {
+        "dia": "Qua",
+        "tipo": "Rodagem Leve",
+        "opcao": "LEVE",
+        "minutos": 29,
+        "km": 3,
+        "principal": "6 × (1' trote + 2' caminhada) em Z2",
+        "pace": "7:30 ~ 8:19/km",
+        "aquecimento": "6 min em Z1 · caminhada rápida + trote muito leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · caminhada e alongamento passivo"
+      }
+    ],
+    "musculacao": [
+      {
+        "dia": "Sex",
+        "exercicios": [
+          {
+            "nome": "Leg press 45 graus",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Supino na máquina Smith",
+            "series": "3",
+            "reps": "12",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Puxada frontal na polia",
+            "series": "3",
+            "reps": "12",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Mesa flexora (deitado)",
+            "series": "3",
+            "reps": "12",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Desenvolvimento na máquina",
+            "series": "3",
+            "reps": "12",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "perfil": "Fictício 08",
+    "nivelCorrida": "intermediario",
+    "nivelForca": "intermediario",
+    "fonte": "Motor V2 + proposta simulada validada; nenhuma chamada real ao Gemini",
+    "corrida": [
+      {
+        "dia": "Seg",
+        "tipo": "Intervalado",
+        "opcao": "I_200",
+        "minutos": 39,
+        "km": 6,
+        "principal": "12 × 200 m em Z5 (ritmo R), trote 1' entre",
+        "pace": "4:22 ~ 4:25/km",
+        "aquecimento": "6 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Balanço de perna para frente e para trás (10 de cada lado) · Skipping baixo (2 × 20 m) · Calcanhar no glúteo (2 × 20 m)",
+        "desaquecimento": "5 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Flexor do quadril (afundo parado) (30 s cada lado) · Posterior de coxa em pé (30 s cada lado)"
+      },
+      {
+        "dia": "Ter",
+        "tipo": "Rodagem Leve",
+        "opcao": "LEVE",
+        "minutos": 33,
+        "km": 5.5,
+        "principal": "3,5 km contínuos em Z2",
+        "pace": "5:55 ~ 6:37/km",
+        "aquecimento": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · trote leve, caminhada e alongamento passivo"
+      },
+      {
+        "dia": "Qui",
+        "tipo": "Rodagem Leve",
+        "opcao": "LEVE",
+        "minutos": 33,
+        "km": 5.5,
+        "principal": "3,5 km contínuos em Z2",
+        "pace": "5:55 ~ 6:37/km",
+        "aquecimento": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · trote leve, caminhada e alongamento passivo"
+      },
+      {
+        "dia": "Sáb",
+        "tipo": "Longão",
+        "opcao": "LONGO",
+        "minutos": 63,
+        "km": 10,
+        "principal": "8 km contínuos em Z2",
+        "pace": "5:55 ~ 6:37/km",
+        "aquecimento": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · trote leve, caminhada e alongamento passivo"
+      }
+    ],
+    "musculacao": [
+      {
+        "dia": "Ter",
+        "exercicios": [
+          {
+            "nome": "Supino reto com barra",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Barra fixa (pegada neutra)",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Desenvolvimento na máquina",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Remada cavalinho (T-bar)",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          }
+        ]
+      },
+      {
+        "dia": "Qua",
+        "exercicios": [
+          {
+            "nome": "Agachamento livre com barra",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Ponte de glúteo",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Leg press 45 graus",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          }
+        ]
+      },
+      {
+        "dia": "Sex",
+        "exercicios": [
+          {
+            "nome": "Agachamento livre",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Mesa flexora (deitado)",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Panturrilha no leg press",
+            "series": "3",
+            "reps": "10",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          },
+          {
+            "nome": "Prancha",
+            "series": "3",
+            "reps": "12",
+            "rpe": 6,
+            "descanso": "75s",
+            "carga": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "perfil": "Fictício 10",
+    "nivelCorrida": "iniciante",
+    "nivelForca": "intermediario",
+    "fonte": "Motor V2 + proposta simulada validada; nenhuma chamada real ao Gemini",
+    "corrida": [
+      {
+        "dia": "Seg",
+        "tipo": "Rodagem Leve",
+        "opcao": "LEVE",
+        "minutos": 36,
+        "km": 4,
+        "principal": "3 km contínuos em Z2",
+        "pace": "7:30 ~ 8:19/km",
+        "aquecimento": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
+        "desaquecimento": "5 min em Z1 · trote leve, caminhada e alongamento passivo"
+      }
+    ],
+    "musculacao": [
+      {
+        "dia": "Seg",
+        "exercicios": [
+          {
+            "nome": "Supino reto com barra",
+            "series": "5",
+            "reps": "5",
+            "rpe": 6,
+            "descanso": "120s",
+            "carga": ""
+          },
+          {
+            "nome": "Puxada frontal na polia",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Desenvolvimento na máquina",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Remada curvada com barra",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Elevação lateral no cabo",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Tríceps testa com barra",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          }
+        ]
+      },
+      {
+        "dia": "Ter",
+        "exercicios": [
+          {
+            "nome": "Agachamento livre com barra",
+            "series": "5",
+            "reps": "5",
+            "rpe": 6,
+            "descanso": "120s",
+            "carga": ""
+          },
+          {
+            "nome": "Stiff com barra",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Leg press 45 graus",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Cadeira extensora",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Elevação de panturrilha em pé",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Mesa flexora (deitado)",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          }
+        ]
+      },
+      {
+        "dia": "Qui",
+        "exercicios": [
+          {
+            "nome": "Supino reto com halteres",
+            "series": "5",
+            "reps": "5",
+            "rpe": 6,
+            "descanso": "120s",
+            "carga": ""
+          },
+          {
+            "nome": "Pulldown reto (braço estendido)",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Desenvolvimento na máquina",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Remada curvada com halteres",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Elevação lateral na máquina",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Tríceps testa com halteres",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          }
+        ]
+      },
+      {
+        "dia": "Sex",
+        "exercicios": [
+          {
+            "nome": "Agachamento livre",
+            "series": "5",
+            "reps": "5",
+            "rpe": 6,
+            "descanso": "120s",
+            "carga": ""
+          },
+          {
+            "nome": "Stiff com halteres",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Panturrilha no leg press",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
+            "carga": ""
+          },
+          {
+            "nome": "Cadeira flexora (sentado)",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Elevação de panturrilha sentado",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Mesa flexora (deitado)",
+            "series": "2",
+            "reps": "10",
+            "rpe": 5,
+            "descanso": "60s",
+            "carga": ""
+          }
+        ]
+      }
+    ]
+  }
+]

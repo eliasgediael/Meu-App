@@ -8,6 +8,7 @@ import { Haptics, ImpactStyle, NotificationType } from '@capacitor/haptics';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
 import { KeepAwake } from '@capacitor-community/keep-awake';
+import * as ContratoRelogio from './relogio/garmin-contrato.js';
 // Este plugin não publica um wrapper JS pronto — é registrado direto (é o padrão documentado dele).
 const BackgroundGeolocation = registerPlugin('BackgroundGeolocation');
 // Plugin próprio (plugins/aviso-descanso): abaixa a música de outros apps, toca o sinal e fala o próximo passo.
@@ -24,6 +25,24 @@ async function imagemArte(acao, base64) {
 }
 
 const isNative = () => Capacitor.isNativePlatform();
+
+// Plugin próprio (plugins/relogio-garmin): conversa com o app FORZA RUN do relógio Garmin pelo Garmin Connect.
+// A conversão dos treinos/resultados fica em src/relogio/garmin-contrato.js (testada em Node).
+const RelogioGarmin = registerPlugin('RelogioGarmin');
+const relogio = {
+  ...ContratoRelogio,
+  disponivel: () => Capacitor.getPlatform() === 'ios',
+  async estado() { try { return await RelogioGarmin.estado(); } catch (e) { return { relogios: [], erro: (e && e.message) || String(e) }; } },
+  async escolher() { try { return await RelogioGarmin.escolher(); } catch (e) { return { erro: (e && e.message) || String(e) }; } },
+  async esquecer() { try { return await RelogioGarmin.esquecer(); } catch (e) { return { relogios: [] }; } },
+  // Resolve { enviados, resultados, motivo? }; enviados = 0 quando não há relógio conectado.
+  async enviar(mensagem) { try { return await RelogioGarmin.enviar({ mensagem }); } catch (e) { return { enviados: 0, erro: (e && e.message) || String(e) }; } },
+  // cb({ dados, relogio }) a cada mensagem do relógio; cb2(estado) quando a lista/estado dos relógios muda.
+  ouvir(cb, cb2) {
+    RelogioGarmin.addListener('mensagem', cb).catch(() => {});
+    if (cb2) RelogioGarmin.addListener('relogios', cb2).catch(() => {});
+  },
+};
 
 // BackgroundGeolocation entrega {latitude, longitude, accuracy, time, ...} (sem o wrapper .coords) — a
 // gente adapta aqui pro mesmo formato do GeolocationPosition da Web API, que é o que gpsOnPosition (em
@@ -168,4 +187,4 @@ async function cancelarAvisoDescanso() {
 }
 
 window.NativeBridge = { isNative, watchPosition, clearWatch, requestWakeLock, releaseWakeLock, speak, listarVozesPt, vibrate,
-  vibrarFimDescanso, avisoDescanso, imagemArte, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso };
+  vibrarFimDescanso, avisoDescanso, imagemArte, permissaoAvisos, agendarAvisoDescanso, cancelarAvisoDescanso, relogio };

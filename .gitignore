@@ -6,3 +6,12 @@ Payload/
 
 gifs-fonte/
 _prints/
+
+# Segredos e configuração local do Firebase (emulador) — nunca versionar
+*.local
+functions/.secret.local
+functions/.env.local
+.runtimeconfig.json
+firebase-debug.log
+firestore-debug.log
+ui-debug.log

@@ -70,6 +70,24 @@ jobs:
           "$PB" -c "Add :UIBackgroundModes:0 string location" "$PLIST"
           "$PB" -c "Add :UIBackgroundModes:1 string audio" "$PLIST"
 
+      # Relógio Garmin (plugins/relogio-garmin, Connect IQ Mobile SDK): o Garmin Connect devolve a lista de
+      # relógios abrindo forzarun-ciq:// (precisa bater com urlScheme no plugin) e o SDK consulta gcm-ciq.
+      - name: Relógio Garmin (Connect IQ)
+        run: |
+          PLIST="ios/App/App/Info.plist"
+          PB=/usr/libexec/PlistBuddy
+          "$PB" -c "Delete :CFBundleURLTypes" "$PLIST" 2>/dev/null || true
+          "$PB" -c "Add :CFBundleURLTypes array" "$PLIST"
+          "$PB" -c "Add :CFBundleURLTypes:0 dict" "$PLIST"
+          "$PB" -c "Add :CFBundleURLTypes:0:CFBundleURLName string com.meuritmo.app.relogio" "$PLIST"
+          "$PB" -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes array" "$PLIST"
+          "$PB" -c "Add :CFBundleURLTypes:0:CFBundleURLSchemes:0 string forzarun-ciq" "$PLIST"
+          "$PB" -c "Delete :LSApplicationQueriesSchemes" "$PLIST" 2>/dev/null || true
+          "$PB" -c "Add :LSApplicationQueriesSchemes array" "$PLIST"
+          "$PB" -c "Add :LSApplicationQueriesSchemes:0 string gcm-ciq" "$PLIST"
+          "$PB" -c "Add :NSBluetoothAlwaysUsageDescription string O Forza Run usa o Bluetooth para trocar treinos e corridas com o seu relógio Garmin." "$PLIST"
+          "$PB" -c "Add :NSBluetoothPeripheralUsageDescription string O Forza Run usa o Bluetooth para trocar treinos e corridas com o seu relógio Garmin." "$PLIST"
+
       - name: Tema claro fixo (barra de status com texto escuro mesmo com o iPhone no modo escuro)
         run: |
           PLIST="ios/App/App/Info.plist"
@@ -101,7 +119,7 @@ jobs:
             -configuration Release \
             -sdk iphoneos \
             -destination "generic/platform=iOS" \
-            CODE_SIGNING_ALLOWED=NO \
+            OTHER_LDFLAGS='$(inherited) -ObjC'             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             PROVISIONING_PROFILE_SPECIFIER="" \

@@ -1,0 +1,4 @@
+# Copie este arquivo para worker/.dev.vars (ignorado pelo git) e troque o valor só lá.
+# Em produção a chave vai pelo comando: npx wrangler secret put GEMINI_API_KEY
+GEMINI_API_KEY=COLE_SUA_CHAVE_AQUI
+IA_ATIVA=true

@@ -889,6 +889,7 @@ function montarSessoes(est, prio, freq, dist, ajustes){
       const reservaMusc = m ? Math.max(25, Math.min(m.durMin, minutos - MOTOR_PARAMS.minSessaoCorrida)) : 0;
       const limite = combinada ? Math.max(MOTOR_PARAMS.minSessaoCorrida, Math.min(r.durMin, minutos - reservaMusc)) : minutos;
       rRes = motorMontarCorrida(est, r, limite);
+      if(r.tipo==='qualidade' && rRes.tipoFinal!=='qualidade') semana.qualidadeRebaixada = { dia:d, combinada, limiteMin:Math.round(limite) };
     }
     if(m){
       const usadoRun = rRes ? rRes.sessao.totalMin : 0;
@@ -940,8 +941,11 @@ function validarPlano(est, prio, freq, dist, semana, ajustes){
   // V4 volume semanal
   const runMin = semana.corridaWeek.reduce((t,w)=>t+w.totalMin, 0);
   const v0 = est.corrida.carga.min * (ajustes.volumeFator || 1);
+  // O limite mede a semana contra o volume planejado (alvo × reduções de segurança pedidas), não contra o corte que a
+  // própria correção aplica: senão cada corte baixa o limite junto e a semana nunca cabe (sessões têm duração mínima).
+  const vAlvo = est.corrida.carga.min * (est.corrida.volumeFatorPlanejado || 1);
   if(semana.corridaWeek.length){
-    const limiteVol = Math.max(v0*(1+P.toleranciaVolume)+2, semana.corridaWeek.length*24);
+    const limiteVol = Math.max(vAlvo*(1+P.toleranciaVolume)+2, semana.corridaWeek.length*24);
     if(runMin > limiteVol) E('V4', `volume de corrida ${runMin} min acima de ${Math.round(limiteVol)}`);
     const longa = Math.max(...semana.corridaWeek.map(w=>w.totalMin));
     if(est.corrida.maiorMin && longa > Math.max(est.corrida.maiorMin*(1+P.toleranciaVolume)+3, 25) && est.corrida.situacao!=='parado') E('V4', `sessão de ${longa} min acima da maior corrida recente (${Math.round(est.corrida.maiorMin)} min)`);
@@ -992,7 +996,7 @@ function validarPlano(est, prio, freq, dist, semana, ajustes){
     if(!g.justificativa) E('V10', 'progressão sem justificativa');
     if(est.calibracao[g.modalidade==='corrida' ? 'corrida' : 'musc'] || est.recuperacao.prontidao!=='normal' || est.restricoes.temDorRelevante || est.conservador || prio.tipo==='equilibrado') E('V10', 'progressão em situação que não a permite');
   });
-  if(semana.corridaWeek.length && runMin > Math.max(v0*(1+P.toleranciaVolume)+2, semana.corridaWeek.length*24)) E('V10', 'aumento de volume sem justificativa');
+  if(semana.corridaWeek.length && runMin > Math.max(vAlvo*(1+P.toleranciaVolume)+2, semana.corridaWeek.length*24)) E('V10', 'aumento de volume sem justificativa');
   return { ok:erros.length===0, erros, avisos };
 }
 
@@ -1031,6 +1035,15 @@ function motorSemanasDoPlano(est){
   if(s===null || s===undefined || s<0) return 8;
   if(s>=16) return 16; if(s>=12) return 12; return 8;
 }
+// Descarga da musculação do motor antigo (buildHybridProgressionFactors, perdida na troca para o V2 em 28/09/2026):
+// na 4ª semana de cada bloco as séries caíam para 75%, com piso de 3. Restauração proposta, DESLIGADA até aprovação.
+const MOTOR_DESCARGA_MUSC = { ativa:false, fator:0.75, piso:3 };
+// Fator e piso de séries de uma semana do plano (calibração do V2; descarga do motor antigo quando ligada).
+function fatorSeriesDaSemana(alvo){
+  if(!alvo) return { fator:1, piso:2 };
+  if(MOTOR_DESCARGA_MUSC.ativa && alvo.fase==='Descarga') return { fator:MOTOR_DESCARGA_MUSC.fator, piso:MOTOR_DESCARGA_MUSC.piso };
+  return { fator:alvo.muscSeriesFator || 1, piso:2 };
+}
 function motorTrajetoria(est, prio, semana, totalWeeks, foraDaSemana){
   const c = est.corrida, P = MOTOR_PARAMS;
   const goal = est.objetivo.distanciaKm;
@@ -1061,18 +1074,31 @@ function gerarPlanoSemanal(perfil, opcoes){
   if(opcoes.alvoSemana && opcoes.alvoSemana.corridaMinAlvo>0 && est.corrida && est.corrida.carga){
     est.corrida.carga = { ...est.corrida.carga, min: opcoes.alvoSemana.corridaMinAlvo };
   }
+  // Volume planejado da semana: alvo × reduções pedidas de fora (check-in, pausa, lesão). Os cortes da correção não entram.
+  if(est.corrida) est.corrida.volumeFatorPlanejado = (opcoes.ajustesIniciais && opcoes.ajustesIniciais.volumeFator) || 1;
+  // Os construtores de sessão escolhem a variante de tiro/limiar pelo número da semana do plano (sem alvo: semana 1).
+  if(est.corrida && est.corrida.ctx) est.corrida.ctx.weekNumber = (opcoes.alvoSemana && opcoes.alvoSemana.semana) || 1;
   const prio = definirPrioridade(est);
   let ajustes = { reduzir:0, semQualidade:false, semDobros:false, volumeFator:1, aliviarInferior:false, semProgressao:false, ...(opcoes.ajustesIniciais||{}) };
-  let cons = null, val = null, ciclos = 0;
+  let cons = null, val = null, ciclos = 0, qualidadeRemovida = null;
   const historicoVal = [];
+  // Diagnóstico (testes/auditoria): opcoes.rastrear recebe cada construção validada. Não muda a decisão.
+  const rastro = (etapa, c, v, aj)=>{ if(typeof opcoes.rastrear==='function') try{ opcoes.rastrear({ etapa, ajustes:{ ...aj }, semana:c.semana, validacao:v }); }catch(e){} };
   for(let ciclo=1; ciclo<=3; ciclo++){
     ciclos = ciclo;
     cons = motorConstruir(est, prio, ajustes);
     val = validarPlano(est, prio, cons.freq, cons.dist, cons.semana, ajustes);
+    rastro('ciclo '+ciclo, cons, val, ajustes);
     historicoVal.push({ ciclo, erros:val.erros.map(e=>e.cod+': '+e.detalhe) });
     if(val.ok) break;
     est.log.push({ etapa:6, regra:'correcao', motivo:'validação encontrou erros; ajustando e revalidando', dados:{ ciclo, erros:val.erros } });
+    const antes = ajustes;
     ajustes = motorAjustar(ajustes, val.erros);
+    // O treino forte cabia e saiu só pela correção da agenda (V6/V9): guarda os erros para explicar ao usuário.
+    const agenda = val.erros.filter(e=>e.cod==='V6' || e.cod==='V9');
+    if(!antes.semQualidade && ajustes.semQualidade && motorQualidadePlanejada(cons.semana) && agenda.length && !val.erros.some(e=>e.cod==='V1')){
+      qualidadeRemovida = { erros:agenda, rebaixada:cons.semana.qualidadeRebaixada || null };
+    }
   }
   // Plano reprovado nunca é entregue: tira uma sessão por vez (registrando o motivo) até passar em todas as regras.
   for(let k=0; !val.ok && k<12; k++){
@@ -1080,12 +1106,49 @@ function gerarPlanoSemanal(perfil, opcoes){
     ajustes.reduzir = (ajustes.reduzir||0) + 1;
     cons = motorConstruir(est, prio, ajustes);
     val = validarPlano(est, prio, cons.freq, cons.dist, cons.semana, ajustes);
+    rastro('redução forçada '+(k+1), cons, val, ajustes);
     est.log.push({ etapa:6, regra:'reducao_forcada', motivo:'regra violada: reduz uma sessão e revalida', dados:{ erros:errosAntes, passou:val.ok } });
     if(!cons.semana.sessoes.length) break;
   }
-  return motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal);
+  // Cortes de dose (volume, progressão) ligados durante a correção são revistos com as sessões que ficaram na semana:
+  // se a semana passa em todas as regras sem o corte, ele era motivado só por uma sessão que saiu e é desfeito.
+  if(val.ok){
+    const ini = { volumeFator:1, semProgressao:false, ...(opcoes.ajustesIniciais||{}) };
+    ['volumeFator', 'semProgressao'].forEach(chave=>{
+      if(ajustes[chave]===ini[chave]) return;
+      const teste = { ...ajustes, [chave]:ini[chave] };
+      const c2 = motorConstruir(est, prio, teste);
+      const v2 = validarPlano(est, prio, c2.freq, c2.dist, c2.semana, teste);
+      rastro('revisão do corte '+chave, c2, v2, teste);
+      const qualAntes = cons.semana.sessoes.some(s=>s.modalidade==='corrida' && s.tipo==='qualidade');
+      const qualDepois = c2.semana.sessoes.some(s=>s.modalidade==='corrida' && s.tipo==='qualidade');
+      if(!v2.ok || qualAntes!==qualDepois) return;
+      est.log.push({ etapa:6, regra:'corte_revisto', motivo:'o corte não é necessário com as sessões que ficaram na semana', dados:{ ajuste:chave, de:ajustes[chave], para:ini[chave] } });
+      ajustes = teste; cons = c2; val = v2;
+    });
+  }
+  // Treino forte planejado que não coube no tempo do dia também sai da semana (vira rodagem leve).
+  if(!qualidadeRemovida && cons.semana.qualidadeRebaixada) qualidadeRemovida = { erros:[], rebaixada:cons.semana.qualidadeRebaixada };
+  if(qualidadeRemovida && cons.semana.sessoes.some(s=>s.modalidade==='corrida' && s.tipo==='qualidade')) qualidadeRemovida = null;
+  if(qualidadeRemovida) est.log.push({ etapa:6, regra:'qualidade_removida_pela_agenda', motivo:'o treino forte saiu da semana pelo tempo do dia ou pela correção da distribuição', dados:qualidadeRemovida });
+  return motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qualidadeRemovida);
 }
-function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal){
+function motorQualidadePlanejada(semana){
+  return semana.sessoes.some(s=>s.modalidade==='corrida' && s.tipo==='qualidade') || !!semana.qualidadeRebaixada;
+}
+// Frase curta para o usuário quando o tempo do dia ou a correção da agenda tirou o treino forte da semana.
+function motorTextoQualidadeRemovida(q){
+  const d = q.erros.map(e=>e.detalhe||'').join(' | ');
+  let porque;
+  if(q.rebaixada) porque = q.rebaixada.combinada ? 'no dia em que ele caberia, não sobra tempo junto com a musculação' : 'ele não cabe no tempo que você tem nos seus dias';
+  else if(/estímulos altos/.test(d)) porque = 'nos seus dias, ele ficaria colado a outro treino puxado';
+  else if(/musculação em dias consecutivos|longão adjacente/.test(d)) porque = 'nos seus dias, a musculação ficaria em dias seguidos ou colada ao longão';
+  else if(/dia livre|dias livres/.test(d)) porque = 'nos seus dias, faltaria descanso entre os treinos';
+  else if(/recuperação reduzida/.test(d)) porque = 'sua recuperação está reduzida';
+  else porque = 'nos seus dias, ele entraria em conflito com os outros treinos';
+  return 'Sem treino forte nesta semana: ' + porque + '.';
+}
+function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qualidadeRemovida){
   const { freq, dist, semana } = cons;
   const melhor = dist.melhor;
   const runAt = melhor ? melhor.runAt : {}, muscAt = melhor ? melhor.muscAt : {};
@@ -1114,10 +1177,12 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal){
   semana.descartadas.forEach(x=>alertas.push('sessao_descartada:'+x.modalidade));
   if(!semana.sessoes.length) alertas.push('sem_espaco_para_sessoes');
   val.avisos.forEach(a=>alertas.push(a.cod+':'+a.detalhe));
+  if(qualidadeRemovida) alertas.push('qualidade_removida_pela_agenda');
   const dobros = semana.sessoes.filter(s=>s.combinada).length/2;
   const week = {
     weekNumber:1, phaseLabel:fase, totalWeeks, corridaWeek:semana.corridaWeek, muscPlan:semana.muscPlan, legEasingNotes:semana.legEasingNotes,
     fadiga:tipos.fadiga, periodos, motorV2:true,
+    ...(qualidadeRemovida ? { avisoQualidade:{ motivo:'agenda', causa:qualidadeRemovida.rebaixada ? 'tempo' : 'distribuicao', texto:motorTextoQualidadeRemovida(qualidadeRemovida), erros:qualidadeRemovida.erros.map(e=>e.cod+': '+e.detalhe), ...(qualidadeRemovida.rebaixada ? { dia:qualidadeRemovida.rebaixada.dia } : {}) } } : {}),
   };
   return {
     engineVersion:MOTOR_ENGINE_VERSION, status:'ok', bloqueado:false,
@@ -1140,6 +1205,7 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal){
 async function gerarPrimeiroPlanoV2(opcoes){
   if(!state.athleteProfile) await carregarAthleteProfile();
   const r = gerarPlanoSemanal(state.athleteProfile, opcoes);
+  let perfilIA = state.athleteProfile;
   if(r.bloqueado) return r;
   // Versões do plano: o plano em uso é guardado antes de ser substituído.
   await guardarVersaoDoPlano((opcoes && opcoes.motivoVersao) || 'Plano refeito', (opcoes && opcoes.origemVersao) || 'refazer');
@@ -1165,6 +1231,7 @@ async function gerarPrimeiroPlanoV2(opcoes){
       if(r1 && !r1.bloqueado && r1.semana && ((r1.semana.corridaWeek||[]).length || Object.keys(r1.semana.muscPlan||{}).length)){
         r1.semana.weekNumber = 1; r1.semana.totalWeeks = r.semana.totalWeeks; r1.semana.phaseLabel = r.semana.phaseLabel;
         r.semana = r1.semana; // agenda da semana dos dias que restam; o padrão semanal (sched) continua o da semana cheia
+        perfilIA = parcial;
       }
     }catch(e){ console.warn('[plano] semana 1 parcial: usando a semana cheia', e); }
   }
@@ -1179,6 +1246,7 @@ async function gerarPrimeiroPlanoV2(opcoes){
   state.hybridPlanData = { draft, sched:r.sched, totalWeeks:r.semana.totalWeeks, checkins:{}, foco, dayPicks:r.dayPicks, plan:[r.semana, ...pendentes], startMonday, currentWeekIndex:1, motorV2:true, engineVersion:r.engineVersion, decisoes:r.decisoes, validacao:r.validacao, assessment:montarAssessment(r), estados:estadosDaSemana(1, r.semana.phaseLabel), inicioPlano, materializadaSeg:startMonday, trajetoria:r.trajetoria, calibracao:r.calibracao, confianca:r.confianca };
   try{ registrarAuditoriaDaSemana(); }catch(e){} // agenda em modo auditoria: só registra conflitos
   await saveHybridPlanData();
+  iaPersonalizarSemanaApp(r.semana, opcoes, perfilIA).catch(()=>{});
   return r;
 }
 /* ===== fim MOTOR V2 ===== */
@@ -1186,6 +1254,8 @@ async function gerarPrimeiroPlanoV2(opcoes){
 // O app (script principal) e os testes usam estes nomes como globais.
 Object.assign(globalThis, {
   MOTOR_ENGINE_VERSION,
+  MOTOR_DESCARGA_MUSC,
+  fatorSeriesDaSemana,
   MOTOR_PARAMS,
   MOTOR_NIVEIS,
   MOTOR_FAIXAS,

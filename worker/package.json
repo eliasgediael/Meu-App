@@ -1,0 +1,21 @@
+{
+  "name": "forza-ia-worker",
+  "private": true,
+  "description": "Cloudflare Worker (plano Free) que liga o Forza Run ao Gemini. Não publicado ainda.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "wrangler dev",
+    "verificar": "wrangler deploy --dry-run --outdir .wrangler/dry-run",
+    "test": "node ../tests/node/ia-worker.test.js"
+  },
+  "dependencies": {
+    "jose": "^6.1.0"
+  },
+  "devDependencies": {
+    "wrangler": "^4.40.0"
+  },
+  "allowScripts": {
+    "workerd@1.20261012.1": true
+  }
+}

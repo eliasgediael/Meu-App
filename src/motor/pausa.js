@@ -73,8 +73,8 @@ function gerarSemanaRetomada(n, ajustes, perfilBase){
   const w = r.semana;
   w.weekNumber = n; w.totalWeeks = hp.plan.length;
   if(alvo && alvo.fase) w.phaseLabel = alvo.fase;
-  const f = alvo && alvo.muscSeriesFator;
-  if(f && f!==1) Object.keys(w.muscPlan || {}).forEach(d=>w.muscPlan[d].forEach(e=>{ const s = parseInt(e.series, 10); if(s) e.series = String(Math.max(2, Math.round(s*f))); }));
+  const { fator:f, piso } = fatorSeriesDaSemana(alvo);
+  if(f && f!==1) Object.keys(w.muscPlan || {}).forEach(d=>w.muscPlan[d].forEach(e=>{ const s = parseInt(e.series, 10); if(s) e.series = String(Math.min(s, Math.max(piso, Math.round(s*f)))); }));
   (w.corridaWeek || []).forEach(c=>{ if(ehTipoCorridaChave(c.type)) c.chave = true; });
   return w;
 }

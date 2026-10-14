@@ -67,9 +67,9 @@ function gerarSemanaV2(n){
   const w = r.semana;
   w.weekNumber = n; w.totalWeeks = hp.plan.length;
   if(alvo && alvo.fase) w.phaseLabel = alvo.fase;
-  const f = alvo && alvo.muscSeriesFator;
+  const { fator:f, piso } = fatorSeriesDaSemana(alvo);
   if(f && f!==1){
-    Object.keys(w.muscPlan||{}).forEach(d=>w.muscPlan[d].forEach(e=>{ const s = parseInt(e.series,10); if(s) e.series = String(Math.max(2, Math.round(s*f))); }));
+    Object.keys(w.muscPlan||{}).forEach(d=>w.muscPlan[d].forEach(e=>{ const s = parseInt(e.series,10); if(s) e.series = String(Math.min(s, Math.max(piso, Math.round(s*f)))); }));
   }
   (w.corridaWeek||[]).forEach(c=>{ if(ehTipoCorridaChave(c.type)) c.chave = true; });
   return w;
@@ -104,6 +104,7 @@ async function atualizarSemanaDoPlano(){
       hp.materializadaSeg = segISO;
       try{ registrarAuditoriaDaSemana(); }catch(e){} // agenda em modo auditoria: só registra conflitos
       await saveHybridPlanData();
+      if(hp.motorV2) iaPersonalizarSemanaApp(week, { alvoSemana:(hp.trajetoria||[])[n-1] || null, ajustesIniciais:hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n ? hp.ajusteProximaSemana.ajustes : null }).catch(()=>{});
     }
     return;
   }

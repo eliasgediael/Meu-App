@@ -24,12 +24,14 @@
     "@capacitor/haptics": "^8.0.2",
     "@capacitor/ios": "^8.5.2",
     "@capacitor/local-notifications": "^8.3.1",
-    "aviso-descanso": "file:plugins/aviso-descanso"
+    "aviso-descanso": "file:plugins/aviso-descanso",
+    "relogio-garmin": "file:plugins/relogio-garmin"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.2",
     "esbuild": "^0.28.2",
     "fake-indexeddb": "^6.2.5",
+    "firebase-tools": "^15.33.0",
     "puppeteer-core": "^24.43.1",
     "sharp": "^0.35.4"
   }

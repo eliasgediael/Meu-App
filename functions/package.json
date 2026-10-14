@@ -1,0 +1,12 @@
+{
+  "name": "forza-run-functions",
+  "private": true,
+  "description": "Cloud Functions do Forza Run (personalização da musculação com Gemini). Não instalado nem publicado ainda.",
+  "main": "index.js",
+  "engines": { "node": "22" },
+  "dependencies": {
+    "@google/genai": "^1.0.0",
+    "firebase-admin": "^13.0.0",
+    "firebase-functions": "^6.0.0"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "type": "object",
+  "properties": {
+    "versao": { "type": "string", "enum": ["1"] },
+    "dias": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "items": {
+        "type": "object",
+        "properties": {
+          "dia": { "type": "string", "enum": ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"] },
+          "exercicios": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 8,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": { "type": "string", "maxLength": 12 },
+                "papel": { "type": "string", "enum": ["base", "auxiliar", "isolado"] },
+                "series": { "type": "integer", "minimum": 1, "maximum": 10 },
+                "reps": { "type": "integer", "minimum": 1, "maximum": 30 },
+                "rpe": { "type": "integer", "minimum": 1, "maximum": 10 },
+                "descansoSeg": { "type": "integer", "minimum": 0, "maximum": 600 }
+              },
+              "required": ["id", "papel", "series", "reps", "rpe", "descansoSeg"],
+              "propertyOrdering": ["id", "papel", "series", "reps", "rpe", "descansoSeg"]
+            }
+          }
+        },
+        "required": ["dia", "exercicios"],
+        "propertyOrdering": ["dia", "exercicios"]
+      }
+    },
+    "motivos": {
+      "type": "array",
+      "maxItems": 6,
+      "items": {
+        "type": "string",
+        "enum": [
+          "manter_plano", "prioridade_muscular", "equilibrio_empurrar_puxar", "variedade", "tempo_disponivel",
+          "reduz_volume_recuperacao", "interferencia_corrida", "aderencia", "progressao_historico", "preferencia_equipamento"
+        ]
+      }
+    }
+  },
+  "required": ["versao", "dias", "motivos"],
+  "propertyOrdering": ["versao", "dias", "motivos"]
+}

@@ -1,0 +1,484 @@
+{
+  "totalPass": 2651,
+  "totalFail": 9,
+  "segundos": 262.436,
+  "resultados": [
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 5,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 9,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 5,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 6,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 5,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 11,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 12,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/b1tests.js",
+      "pass": 2,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/e2tests.js",
+      "pass": 29,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/e3tests.js",
+      "pass": 14,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/e4tests.js",
+      "pass": 16,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/descansotest.js",
+      "pass": 14,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/bibtest.js",
+      "pass": 11,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/legado/matriz.js",
+      "pass": 1,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/planos-dourados.test.js",
+      "pass": 13,
+      "fail": 8,
+      "status": 1,
+      "pulou": false,
+      "falhou": true,
+      "falhas": [
+        "FAIL snapshot plano-03 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-06 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-07 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-08 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-09 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-12 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-19 mudou — rode \"npm run comparar\" para ver a diferença",
+        "FAIL snapshot plano-20 mudou — rode \"npm run comparar\" para ver a diferença"
+      ]
+    },
+    {
+      "arquivo": "node/caracterizacao-motor.test.js",
+      "pass": 11,
+      "fail": 1,
+      "status": 1,
+      "pulou": false,
+      "falhou": true,
+      "falhas": [
+        "FAIL snapshot motor-checkin-semanal mudou — rode \"npm run comparar\" para ver a diferença"
+      ]
+    },
+    {
+      "arquivo": "node/motor-intacto.test.js",
+      "pass": 3,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/corrida-catalogo.test.js",
+      "pass": 34,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-historico-corrida.test.js",
+      "pass": 28,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-validador.test.js",
+      "pass": 48,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-refino.test.js",
+      "pass": 37,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-funcao.test.js",
+      "pass": 25,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-worker.test.js",
+      "pass": 161,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-v2.test.js",
+      "pass": 425,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-v2-servidor.test.js",
+      "pass": 26,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-v2-app.test.js",
+      "pass": 24,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/ia-v2-regras.test.js",
+      "pass": 44,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/caracterizacao-treinador.test.js",
+      "pass": 9,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/caracterizacao-forca.test.js",
+      "pass": 6,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/caracterizacao-atividade.test.js",
+      "pass": 20,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/atividades.test.js",
+      "pass": 24,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/contratos.test.js",
+      "pass": 15,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/motores-bloco5.test.js",
+      "pass": 16,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/agenda-auditoria.test.js",
+      "pass": 30,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/adaptacao.test.js",
+      "pass": 14,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/bloco9.test.js",
+      "pass": 25,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/treino-menu.test.js",
+      "pass": 17,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/progresso.test.js",
+      "pass": 35,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/versoes.test.js",
+      "pass": 17,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/pausa.test.js",
+      "pass": 22,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/lesoes.test.js",
+      "pass": 17,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/encerrar.test.js",
+      "pass": 12,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/semana-do-plano.test.js",
+      "pass": 35,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/descarga-musculacao.test.js",
+      "pass": 11,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/relogio-garmin.test.js",
+      "pass": 1160,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/relogio-garmin-app.test.js",
+      "pass": 28,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/excluir-sem-detalhes.test.js",
+      "pass": 5,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/estilos.test.js",
+      "pass": 2,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "node/esteira-voz.test.js",
+      "pass": 6,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/artes-escala.test.js",
+      "pass": 7,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/corridas-independentes.test.js",
+      "pass": 7,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/favoritos-foto-perfil.test.js",
+      "pass": 17,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/historico-correcao-artes.test.js",
+      "pass": 27,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/perfil-configuracoes.test.js",
+      "pass": 11,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/recuperar-corridas.test.js",
+      "pass": 5,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/resumo-corrida.test.js",
+      "pass": 7,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/tenis-recuperadas.test.js",
+      "pass": 9,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    },
+    {
+      "arquivo": "navegador/uso-real.test.js",
+      "pass": 16,
+      "fail": 0,
+      "status": 0,
+      "pulou": false,
+      "falhas": []
+    }
+  ]
+}

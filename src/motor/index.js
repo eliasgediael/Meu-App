@@ -12,3 +12,5 @@ import './versoes.js';
 import './pausa.js';
 import './lesoes.js';
 import './encerrar.js';
+import './corrida-catalogo.js';
+import '../ia/index.js';

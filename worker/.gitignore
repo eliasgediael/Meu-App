@@ -1,0 +1,8 @@
+# Segredos locais do wrangler dev (a chave do Gemini) — nunca versionar
+.dev.vars
+.dev.vars.*
+!.dev.vars.exemplo
+.env
+.env.*
+node_modules/
+.wrangler/
