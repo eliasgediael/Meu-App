@@ -64,8 +64,8 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   S.checkinDiario = {}; S.corridaProgress = {};
   const h = T.renderHojeV2Content();
   const pos = (re) => { const m = re.exec(h); return m ? m.index : -1; };
-  const ordem = [pos(/fr-plano/), pos(/Como você está hoje/), pos(/fr-acao/), pos(/fr-wkicons/), pos(/fr-treinador/), pos(/data-registrarlivre/)];
-  ok(ordem.every(x => x >= 0) && ordem.every((x, i) => i === 0 || x > ordem[i - 1]), 'Início (arte 2): plano → prontidão → próxima ação → semana → treinador → registrar (' + ordem.join(',') + ')');
+  const ordem = [pos(/fr-acao/), pos(/fr-wkicons/), pos(/Como você está hoje/), pos(/fr-plano/), pos(/fr-treinador/), pos(/data-registrarlivre/)];
+  ok(ordem.every(x => x >= 0) && ordem.every((x, i) => i === 0 || x > ordem[i - 1]), 'Início (referência 14/10): sessão → semana → check-in → plano → treinador → registrar (' + ordem.join(',') + ')');
   // boneco: só com musculação no dia (dados reais dos exercícios); corrida sozinha não tem boneco
   const hojeD = T.DAY_ABBR[(new Date().getDay()+6)%7];
   const comMusc = T.muscListForDay(hojeD).length > 0, comCorrida = !!T.treinoEntryForDay(hojeD);

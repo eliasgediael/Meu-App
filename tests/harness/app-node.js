@@ -59,7 +59,8 @@ global.navigator = { userAgent: 'node', geolocation: {}, onLine: true };
 const listeners = {};
 global.addEventListener = (t, f) => { (listeners[t] = listeners[t] || []).push(f); };
 global.document = {
-  getElementById: () => el(), querySelector: () => el(), querySelectorAll: () => [],
+  // Sem DOM real não há folha (sheet) aberta: a releitura dos dados espera folha aberta fechar.
+  getElementById: (id) => id === 'sheetOverlay' ? null : el(), querySelector: () => el(), querySelectorAll: () => [],
   createElement: (t) => t === 'script' ? { tag: 'script', remove: noop } : el(),
   addEventListener: (t, f) => { (listeners['doc:' + t] = listeners['doc:' + t] || []).push(f); },
   head: { appendChild: (s) => { if (s.tag !== 'script') return; setTimeout(() => { if (NET.sdkOnline) { global.firebase = global.firebase || fakeFirebase(); s.onload && s.onload(); } else { s.onerror && s.onerror(); } }, 5); } },

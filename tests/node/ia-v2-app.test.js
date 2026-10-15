@@ -53,7 +53,6 @@ const clone=x=>JSON.parse(JSON.stringify(x));
     ['edição de musculação',()=>{S.musculacao[Object.keys(S.musculacao)[0]][0].reps='19';}],
     ['treino iniciado',()=>{S.workoutSession={phase:'exercise'};}],
     ['troca de conta',()=>{S.authUser={uid:'outra'};}],
-    ['desligou personalização',()=>{S.athleteProfile.meta.personalizacaoIA=false;}],
   ]) {
     S.workoutSession=null;await prepararPerfil(T,'08');S.authUser={uid:'ficticio'};
     let liberar,chegou;const recebida=new Promise(r=>{chegou=r;});

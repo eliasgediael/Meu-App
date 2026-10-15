@@ -2,7 +2,7 @@
 // Contrato: docs/CONTRATO-SYNC.md do projeto garmin-connectiq (v2). Sem dependências do app nem do
 // Capacitor, para poder ser testado em Node e empacotado em www/native-bridge.js.
 
-const MAX_TREINOS = 30;  // o relógio guarda até 30 corridas e 14 musculações (um treino por chave)
+const MAX_TREINOS = Infinity;  // todas as semanas calculadas; páginas limitam memória por mensagem
 const MAX_ETAPAS = 40;   // e no máximo 40 etapas por treino
 // O FR55 tem 128 KB para o app inteiro: uma mensagem de ~1,5 KB ocupa ~7 KB depois de guardada e
 // mensagens acima de ~5 KB esgotam a memória no simulador. 3000 bytes deixam folga para as telas.
@@ -92,16 +92,17 @@ function treinoCompacto(entry) {
 // Padrão: de hoje em diante e sem os feitos. Com desdeISO (ex.: segunda desta semana) e incluirFeitos,
 // vai o plano inteiro a partir dessa data; os feitos levam "ok":1 e o relógio mostra "FEITO".
 function treinosParaRelogio(treinos, opcoes) {
+  opcoes = opcoes || {};
   const hojeISO = opcoes.hojeISO;
-  const desde = new Date((opcoes.desdeISO || hojeISO) + 'T00:00:00');
+  const desde = opcoes.todasSemanas ? null : new Date((opcoes.desdeISO || hojeISO) + 'T00:00:00');
   const feito = opcoes.feito || (() => false);
   const lista = [];
   for (const entry of treinos || []) {
     if (!entry || entry.descanso) continue;
     const ok = feito(entry);
-    if (ok && !opcoes.incluirFeitos) continue;
+    if (ok && !opcoes.incluirFeitos && !opcoes.todasSemanas) continue;
     const d = dataDoDia(entry.day, hojeISO);
-    if (!d || d < desde) continue;
+    if (!d || (desde && d < desde)) continue;
     const c = treinoCompacto(entry);
     if (c) { if (ok) c.ok = 1; lista.push({ d, c }); }
   }
@@ -134,12 +135,13 @@ function mensagemTreinos(lista, forca, maxBytes) {
 function mensagensTreinos(lista, forca, maxBytes, idEnvio) {
   const limite = maxBytes || MAX_BYTES;
   const b = String(idEnvio || Date.now().toString(36)).slice(-8);
-  const base = JSON.stringify({ t: 'w', v: 3, b, pg: 99, pgs: 99, w: [] }).length;
+  const bytes = value => encodeURIComponent(JSON.stringify(value)).replace(/%[0-9A-F]{2}/g, 'x').length;
+  const base = bytes({ t: 'w', v: 3, b, pg: 999999, pgs: 999999, w: [] });
   const paginas = [];
   let atual = [], tam = base;
   for (const item of [...(lista || []), ...(forca || [])]) {
-    const custo = JSON.stringify(item).length + 1;
-    if (base + custo > limite) continue;               // item maior que uma página: não cabe no relógio
+    const custo = bytes(item) + 1;
+    if (base + custo > limite) throw new Error("Treino grande demais para enviar ao Garmin: " + item.id);
     if (tam + custo > limite) { paginas.push(atual); atual = []; tam = base; }
     atual.push(item); tam += custo;
   }
@@ -181,7 +183,7 @@ function forcaCompacta(dia) {
     if (x.img) item.push(String(x.img));
     return item;
   });
-  return { y: 'f', id: 'musc_' + dia.day, k: dia.k, n: String(dia.n || 'Musculação').slice(0, 24), e };
+  return { y: 'f', id: dia.id || ('musc_' + dia.day), k: dia.k, n: String(dia.n || 'Musculação').slice(0, 24), e };
 }
 
 // Resultado de musculação do relógio -> dados para a sessão do histórico do app. null se inválido.
@@ -204,7 +206,7 @@ function registroForcaDoResultado(r) {
   return {
     logId: 'musc_garmin_' + String(r.resultId).replace(/[^A-Za-z0-9_-]/g, '_'),
     resultId: String(r.resultId),
-    day: String(r.workoutId).replace(/^musc_/, ''),
+    day: String(r.workoutId).replace(/^musc_/, '').split('_')[0],
     inicio, fim: inicio != null ? inicio + seg * 1000 : null, seg,
     fcMedia: r.avgHeartRate > 0 ? Math.round(r.avgHeartRate) : null,
     series: exercicios.reduce((n, e) => n + e.sets.length, 0),

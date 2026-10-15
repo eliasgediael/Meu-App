@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Forza Run</title>
 <link rel="icon" href="icon-180.png">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -2440,6 +2440,86 @@ button.fr-pavatar{ border:none; padding:0; cursor:pointer; font-family:inherit; 
 .mrt-pvrrow .p{ color:var(--text); }
 .mrt-pvrrow .r{ font-weight:700; }
 .gps-sum .btn-primary, .gps-sum .btn-secondary{ height:52px; }
+
+/* Pacote de referência 14/10/2026: apresentação sobre os eventos e dados reais. */
+:root{--text-faint:#6b6b6b;--r-input:10px;}
+button,input,select,textarea{font-family:inherit;}
+button{touch-action:manipulation;}
+button:focus-visible,summary:focus-visible,[role="button"]:focus-visible{outline:2px solid var(--text);outline-offset:3px;}
+.btn-primary,.btn-secondary{min-height:50px;border-radius:10px;white-space:normal;}
+.mrt-wex-x,.mrt-weeknavbtn,.mrt-exmenu,.icon-btn,.fr-step button{min-width:44px;min-height:44px;}
+.mrt-greettitle{font-size:28px;line-height:1.2;letter-spacing:-.6px;}
+.mrt-title,.fr-ptitle,.fr-ptitle6{font-size:28px;line-height:1.2;}
+.ds-label,.fr-plbl{color:var(--text-dim);}
+.fr-acao{grid-template-columns:minmax(0,1fr) 80px;border:0;border-radius:0;padding:12px 0;gap:16px;}
+.fr-acao>.fr-acao-ic{grid-column:2;grid-row:1;width:80px;height:80px;}
+.fr-acao-txt{grid-column:1;grid-row:1;}
+.fr-acao-txt .t{font-size:33px;line-height:1.12;letter-spacing:-1px;overflow-wrap:anywhere;}
+.fr-acao-cta{grid-column:1/-1;align-items:stretch;gap:4px;margin-top:12px;}
+.fr-acao-cta .btn-primary.sm{width:100%;height:auto;min-height:52px;}
+.fr-acao-cta .fr-link{align-self:center;min-height:44px;display:flex;align-items:center;}
+.fr-depois{grid-column:1/-1;min-height:52px;text-align:left;}
+.fr-disclosure{border-bottom:1px solid var(--border);margin:8px 0 16px;}
+.fr-disclosure>summary{min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:14px;font-weight:600;cursor:pointer;list-style:none;}
+.fr-disclosure>summary::-webkit-details-marker{display:none;}
+.fr-disclosure>summary::after{content:'›';font-size:22px;flex-shrink:0;}
+.fr-disclosure[open]>summary::after{transform:rotate(90deg);}
+.fr-disclosure-body{padding:0 0 12px;}
+.fr-disclosure-body>.ds-section{margin-top:0;}
+.fr-weeknav{border:0;border-top:1px solid var(--border);border-radius:0;padding:8px 0;margin-bottom:12px;}
+.fr-weekstrip{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:2px;margin:8px 0 24px;}
+.fr-weekday{border:1px solid transparent;border-radius:10px;background:transparent;color:var(--text);padding:8px 0;min-height:80px;display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:8px;}
+.fr-weekday small{font-size:10px;font-weight:500;}
+.fr-weekday b{font-size:17px;}
+.fr-weekday span{font-size:12px;}
+.fr-weekday.today:not(.sel){border-color:var(--text);}
+.fr-weekday.sel{background:var(--text);color:var(--bg);}
+.mrt-muscherorow .fr-bodymap{max-height:150px;}
+.mrt-excard{border:0;border-bottom:1px solid var(--border);border-radius:0;padding:16px 0;}
+.mrt-exname{overflow-wrap:anywhere;line-height:1.35;}
+.fr-pcard,.fr-plist{border-radius:0;border:0;background:var(--bg);}
+.fr-plist{border-top:1px solid var(--border);}
+.fr-prow .nm{white-space:normal;overflow:visible;text-overflow:clip;}
+.fr-prow .vl{flex-shrink:0;}
+.mrt-bibhero{height:190px;}
+.mrt-bibhero img{max-width:220px;}
+.mrt-abas{flex-wrap:wrap;overflow:visible;gap:4px;}
+.mrt-abas button{padding:0 10px;}
+.mrt-muscle-key span{min-height:0!important;padding:0!important;border:0!important;background:none!important;}
+.mrt-muscle-key i{display:inline-block;width:8px!important;height:8px!important;min-width:8px;border-radius:50%;}
+.mrt-wex-hero{position:relative;}
+.mrt-wex-hero>.mrt-exthumb{margin:8px 0;}
+.fr-exercise-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:center;font-size:13px;}
+.fr-exercise-tools .rule{display:none;}
+.fr-exercise-tools .fr-sidebtn{min-height:44px;width:auto;}
+.fr-exercise-tools .label,.fr-exercise-tools .value{font-size:13px;}
+.mrt-current-field .big{font-size:28px;}
+@media(max-width:350px){.mrt-scroll{padding-left:16px;padding-right:16px;}.fr-acao{grid-template-columns:minmax(0,1fr) 64px;}.fr-acao>.fr-acao-ic{width:64px;height:64px;}.fr-acao-txt .t{font-size:29px;}.fr-acao-cta{flex-direction:column;align-items:stretch;}.fr-weekday small{font-size:9px;}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important;}}
+
+/* Campos abrem o editor completo; incrementos ficam no editor, com área de toque adequada. */
+.fr-active-exercise{display:grid;grid-template-columns:minmax(0,1fr) 80px;gap:8px 12px;margin-left:0;margin-right:0;}
+.fr-active-exercise h1{grid-column:1;font-size:25px;line-height:1.12;letter-spacing:-.5px;}
+.fr-active-exercise .mrt-wex-herotags{grid-column:1;margin-top:0;}
+.fr-active-exercise>.mrt-exthumb{grid-column:2;grid-row:1/3;width:80px!important;height:96px!important;}
+.fr-active-exercise>.fr-exercise-tools,.fr-active-exercise>.fr-disclosure{grid-column:1/-1;}
+.fr-active-exercise .tag{height:auto;min-height:24px;padding:4px 8px;font-size:11px;}
+.fr-exercise-tools .fr-sidebtn b{font-size:16px;display:inline;margin-left:4px;}
+.mrt-scroll>.mrt-current-set{margin-left:0;margin-right:0;padding:14px;}
+.mrt-current-set-grid{grid-template-columns:repeat(3,minmax(0,1fr));}
+.mrt-current-field{min-width:0;}
+.mrt-current-field.fr-serie{grid-column:1/-1;display:flex;align-items:center;gap:8px;}
+.mrt-current-field.fr-serie label{margin:0;}
+.mrt-current-field.pse{grid-column:auto;}
+.mrt-current-field button.big{font-size:28px;min-width:44px;padding:4px;}
+.mrt-bibgrid{display:flex;flex-direction:column;gap:0;}
+.mrt-bibcard{width:100%;display:grid;grid-template-columns:56px minmax(0,1fr) 16px;gap:4px 14px;align-items:center;text-align:left;border:0;border-bottom:1px solid var(--border);border-radius:0;padding:14px 0;color:var(--text);background:var(--bg);}
+.mrt-bibcard .th{grid-column:1;grid-row:1/3;width:56px;height:64px;background:var(--bg);}
+.mrt-bibcard .th img{object-fit:contain;}
+.mrt-bibcard .nm{grid-column:2;min-height:0;font-size:14px;overflow-wrap:anywhere;}
+.mrt-bibcard>.tag{grid-column:2;justify-self:start;font-size:11px;}
+.mrt-bibcard::after{content:'›';grid-column:3;grid-row:1/3;font-size:22px;color:var(--text-dim);}
+.mrt-pnivel .tx small,.fr-pnivel .tx small{white-space:normal;overflow:visible;text-overflow:clip;}
 </style>
 </head>
 <body>
@@ -4474,7 +4554,9 @@ document.addEventListener('click', (ev)=>{
 
 
 
-async function init(){
+// opcoes.manterTela: releitura no meio do uso (conta confirmada, internet de volta) mantém a tela atual;
+// só a abertura do app e a troca de contexto (personal/aluna) começam no Início.
+async function init(opcoes){
   await carregarCatalogoExercicios();
   try{
     const t = await window.storage.get('treinos', false);
@@ -4675,7 +4757,7 @@ async function init(){
 
   if(IA_CONFIG.ativa && IA_CONFIG.publicacaoAutorizada && iaRecuperarSemanaAtomica(state, localStorage)) await iaPersistirSemanaApp();
 
-  state.tab = 'hoje';
+  if(!(opcoes && opcoes.manterTela)) state.tab = 'hoje';
   state.modalOpen = false; state.modalType = null;
   render();
   if(state.workoutSession && state.workoutSession.phase==='rest') ensureRestTicking();
@@ -6474,16 +6556,42 @@ function relogioAgendarEnvio(){
 }
 // Todos os treinos para o relógio: corridas do plano desde a segunda desta semana (as feitas vão marcadas)
 // e a musculação de cada dia da semana. Volta as páginas da mensagem (cada uma com até 3000 bytes).
+function relogioCorridasDoPlano(){
+  const mapa = new Map();
+  const hp = state.hybridPlanData, cv = state.corridaVdotData;
+  const plano = hp && hp.plan && hp.plan.length ? hp : cv;
+  if(plano && plano.startMonday){
+    (plano.plan||[]).forEach((w,i)=>{
+      if(!w || w.pendente) return;
+      const segunda = new Date(plano.startMonday+'T12:00:00');
+      segunda.setDate(segunda.getDate()+((w.weekNumber||i+1)-1)*7);
+      (w.corridaWeek || w.days || []).forEach(e=>{
+        const idx = DAY_ABBR.indexOf(e.day); if(idx<0) return;
+        const d = new Date(segunda); d.setDate(d.getDate()+idx);
+        const day = e.day+' '+vdotFormatDDMM(d);
+        mapa.set(day, {...e, day, type:e.type||e.title, origem:plano===hp?'hibrido':'vdotplan'});
+      });
+    });
+  }
+  // Alterações feitas pelo usuário no treino datado têm prioridade sobre o plano.
+  (state.treinos||[]).forEach(e=>{ if(e && e.day) mapa.set(e.day,e); });
+  return [...mapa.values()];
+}
 function relogioMensagemTreinos(){
   const R = relogioApi();
-  const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
-  const segunda = vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')));
-  const corridas = R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito, desdeISO: segunda, incluirFeitos: true });
+  const feito = e=>{ const p=(state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
+  const corridas = R.treinosParaRelogio(relogioCorridasDoPlano(), {hojeISO:todayISO(), feito, todasSemanas:true, incluirFeitos:true});
   return R.mensagensTreinos(corridas, relogioDiasDeForca());
 }
 function relogioItensEnviados(paginas){ return [].concat(...(paginas||[]).map(p=>p.w||[])); }
 // Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
-async function relogioEnviarTreinos(op){
+let _relogioEnvios=Promise.resolve();
+function relogioEnviarTreinos(op){
+  const envio=_relogioEnvios.then(()=>relogioEnviarTreinosInterno(op));
+  _relogioEnvios=envio.catch(()=>{});
+  return envio;
+}
+async function relogioEnviarTreinosInterno(op){
   const R = relogioApi();
   if(!R) return null;
   if(_primeiroInit) await _primeiroInit;
@@ -6527,7 +6635,8 @@ async function relogioImportarResultado(r){
   if(await gpsDbGet(reg.runId)) return true; // já importado (o relógio reenviou antes de receber o "ack")
   const fim = reg.fim || Date.now();
   const dataISO = vdotISODate(new Date(reg.inicio || fim));
-  const entry = reg.day ? (state.treinos||[]).find(t=>t.day===reg.day) : null;
+  const entry = reg.day ? relogioCorridasDoPlano().find(t=>t.day===reg.day) : null;
+  if(entry && !(state.treinos||[]).some(t=>t.day===entry.day)){ state.treinos.push(entry); await saveTreinos(); }
   const prev = entry ? state.corridaProgress[entry.day] : null;
   // Como no GPS do app: se o treino do dia já tem corrida registrada, esta entra como atividade própria.
   const livre = !entry || !!(prev && typeof prev==='object' && prev.done && progressoTemRegistro(prev));
@@ -6558,37 +6667,38 @@ async function relogioImportarResultado(r){
 // Musculação para o relógio: um treino por dia com exercícios nos próximos 7 dias (hoje incluso).
 // Dias desta semana já feitos (algum exercício marcado) não vão. A carga sai da sugestão de progressão.
 function relogioDiasDeForca(){
-  const R = relogioApi();
-  const hoje = new Date(todayISO()+'T00:00:00');
-  const segundaAtual = vdotISODate(vdotMondayOf(hoje));
-  const inicioHibrido = state.hybridPlanData && state.hybridPlanData.startMonday ? state.hybridPlanData.startMonday : null;
-  const out = [];
-  // Todos os dias de musculação da semana, um treino por dia. Dia que já passou e foi feito vai com a data
-  // da semana que vem; dia que já passou sem treino continua nesta semana (dá para fazer atrasado);
-  // feito hoje vai marcado como feito.
-  const seg = new Date(segundaAtual+'T00:00:00');
-  for(let i=0; i<7; i++){
-    const d = new Date(seg); d.setDate(d.getDate()+i);
-    const day = DAY_ABBR[i];
-    let lista = state.musculacao[day] || [];
-    if(!lista.length) continue;
-    const feitoNaSemana = lista.some(e=>e.done);
-    if(feitoNaSemana && d < hoje) d.setDate(d.getDate()+7);
-    if(inicioHibrido && vdotISODate(d) < inicioHibrido) lista = lista.filter(e=>e.modo!=='hibrido');
-    if(!lista.length) continue;
-    const okHoje = feitoNaSemana && vdotISODate(d)===vdotISODate(hoje);
-    const exercicios = lista.map(ex=>{
-      let carga = ex.carga;
-      try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
-      // Imagem do exercício: a mesma que o app mostra (repdbImg resolve ids antigos e mídia incorreta).
-      const im = repdbImg(ex.repdbId);
-      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso,
-        img: im ? im.replace(/^gifs\//, '').replace(/\.webp$/, '') : null };
+  const R = relogioApi(), hp=state.hybridPlanData;
+  const mapa = new Map();
+  const atual=vdotISODate(vdotMondayOf(new Date(todayISO()+'T12:00:00')));
+  function adicionar(segunda, day, lista, semana, ativo){
+    const idx=DAY_ABBR.indexOf(day); if(idx<0 || !lista || !lista.length) return;
+    const d=new Date(segunda+'T12:00:00'); d.setDate(d.getDate()+idx);
+    const iso=vdotISODate(d), k=day+' '+vdotFormatDDMM(d);
+    const exercicios=lista.map((ex,i)=>{
+      let carga=ex.carga;
+      try{const sug=suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga=sug.peso;}catch(e){}
+      const im=repdbImg(ex.repdbId);
+      return {id:ex.id || ('plan_'+iso+'_'+(ex.repdbId||i)), repdbId:ex.repdbId, nome:ex.nome,
+        series:ex.series,reps:ex.reps,carga,descanso:ex.descanso,
+        img:im ? im.replace(/^gifs\//,'').replace(/\.webp$/,'') : null};
     });
-    const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
-    if(c){ if(okHoje) c.ok = 1; out.push({ d:+d, c }); }
+    const c=R.forcaCompacta({id:'musc_'+day+'_'+iso,day,k,n:muscTituloDoDia(day,lista),exercicios});
+    if(!c) return;
+    const concluido=(state.workoutSessionsLog||[]).some(l=>l && l.day===day && l.data===iso);
+    if(concluido || (ativo && lista.some(e=>e.done))) c.ok=1;
+    mapa.set(iso,c);
   }
-  return out.sort((a,b)=>a.d-b.d).map(x=>x.c);
+  if(hp && hp.startMonday){
+    (hp.plan||[]).forEach((w,i)=>{
+      if(!w || w.pendente) return;
+      const d=new Date(hp.startMonday+'T12:00:00');d.setDate(d.getDate()+((w.weekNumber||i+1)-1)*7);
+      const segunda=vdotISODate(d);
+      DAY_ABBR.forEach(day=>adicionar(segunda,day,(w.muscPlan||{})[day],w,false));
+    });
+  }
+  // Fichas editadas/manuais da semana atual prevalecem sobre o plano calculado.
+  DAY_ABBR.forEach(day=>adicionar(atual,day,(state.musculacao||{})[day],null,true));
+  return [...mapa.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(x=>x[1]);
 }
 // Sessão de musculação feita no relógio -> sessão do histórico do app (mesmo formato de finishWorkoutSession),
 // histórico de carga por exercício e "feito" da semana. Retorna true quando o relógio já pode tirar da fila.
@@ -10539,7 +10649,7 @@ function renderWorkoutSession(){
   const elapsedMin = Math.floor((Date.now()-ws.startedAt)/60000);
   const topbar = `
     <div class="mrt-wex-topbar">
-      <button class="mrt-wex-x" data-wexexit>${ICONS.xmark}</button>
+      <button class="mrt-wex-x" data-wexexit aria-label="Opções para sair do treino">${ICONS.xmark}</button>
       <div class="mrt-wex-titles">
         <div class="mrt-wex-title">${muscTituloDoDia(ws.day, list)}</div>
         <div class="fr-wexsub"><b>${ws.doneSeries}</b>/${totalSeriesPlanned} séries · ${elapsedMin} min</div>
@@ -10619,7 +10729,7 @@ function renderWorkoutSession(){
       </div>`).join('')}</div>` : '';
   const ultima = ultimaVezExercicio(ex);
   const recordeAqui = ws.records && ws.records[ex.id];
-  const stepMenosMais = (campo)=>`<div class="fr-step"><button data-wexstep="${campo}" data-d="-1" aria-label="Menos">−</button><i></i><button data-wexstep="${campo}" data-d="1" aria-label="Mais">+</button></div>`;
+  
   const lateral = `${ultima ? `<div class="label">Última vez:</div><div class="value">${ultima}</div><div class="rule"></div>` : ''}
     ${ex.repdbId ? `<button class="fr-sidebtn" data-wexverexec="${repdbImg(ex.repdbId)}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M10 8l6 4-6 4z" fill="currentColor"/></svg><span>Ver execução</span></button>` : ''}
     <button class="fr-sidebtn fr-rest" data-wexdescanso>${ICONS.clock}<span>Descanso<b>${ex.descanso||'90s'}</b></span></button>`;
@@ -10629,7 +10739,7 @@ function renderWorkoutSession(){
       <div class="mrt-scroll">
         ${topbar}
         <div class="mrt-wex-progress" aria-label="${ws.doneSeries} de ${totalSeriesPlanned} séries concluídas"><i style="width:${Math.round((ws.doneSeries/Math.max(1,totalSeriesPlanned))*100)}%"></i></div>
-        <section class="mrt-wex-hero">
+        <section class="mrt-wex-hero fr-active-exercise">
           <h1>${ex.nome}</h1>
           <div class="mrt-wex-herotags">
             <span class="tag tag-musc">${ex.grupo}</span>
@@ -10637,14 +10747,15 @@ function renderWorkoutSession(){
             ${sug.direction==='subir' ? `<span class="tag">↑ subir carga</span>` : sug.direction==='reduzir' ? `<span class="tag">↓ reduzir carga</span>` : ''}
             ${recordeAqui ? `<span class="tag tag-gold">${ICONS.trophy} Recorde</span>` : ''}
           </div>
-          ${muscleMapHtml(ex.nome, lateral)}
+          ${exThumbHtml(ex, 96)}<div class="fr-exercise-tools">${lateral}</div>
+          ${frDisclosure('mapa-execucao', 'Músculos deste exercício', muscleMapHtml(ex.nome))}
         </section>
         <section class="mrt-current-set">
           <div class="mrt-current-set-grid">
             <div class="mrt-current-field fr-serie"><label>Série</label><div class="fr-serienum">${ws.serieIdx+1}<small>/${seriesCount}</small></div></div>
-            <div class="mrt-current-field"><label>Carga (kg)</label><button class="big" data-wexedit="peso">${String(ws.curPeso).replace('.',',')}</button>${stepMenosMais('peso')}</div>
-            <div class="mrt-current-field"><label>Reps</label><button class="big" data-wexedit="reps">${ws.curReps}</button>${stepMenosMais('reps')}</div>
-            <div class="mrt-current-field pse"><label>PSE</label><button class="big ${ws.curPse==null?'faint':''}" data-wexedit="pse">${ws.curPse!=null?ws.curPse:'—'}</button>${stepMenosMais('pse')}</div>
+            <div class="mrt-current-field"><label>Carga (kg)</label><button class="big" data-wexedit="peso">${String(ws.curPeso).replace('.',',')}</button></div>
+            <div class="mrt-current-field"><label>Reps</label><button class="big" data-wexedit="reps">${ws.curReps}</button></div>
+            <div class="mrt-current-field pse"><label>PSE</label><button class="big ${ws.curPse==null?'faint':''}" data-wexedit="pse">${ws.curPse!=null?ws.curPse:'—'}</button></div>
           </div>
           <button class="btn-primary" data-wexconcluir>Concluir série</button>
         </section>
@@ -13529,13 +13640,22 @@ function frProximoTreinoTexto(){
   }
   return null;
 }
+function frDisclosure(id, titulo, corpo){
+  if(!corpo) return '';
+  return `<details class="fr-disclosure" ${state.visualDisclosures && state.visualDisclosures[id]?'open':''} ontoggle="if(this.isConnected){state.visualDisclosures=state.visualDisclosures||{};state.visualDisclosures['${id}']=this.open;}"><summary>${titulo}</summary><div class="fr-disclosure-body">${corpo}</div></details>`;
+}
+function frCheckinInicio(){
+  if(!checkinDiarioPendente()) return '<button class="ds-row" data-abrircheckin="1"><span class="nm">Check-in de hoje registrado · Editar</span><span class="chev">'+DS_CHEV+'</span></button>';
+  return frDisclosure('checkin-inicio','Como você está hoje? · Check-in rápido',renderCheckinCard());
+}
+
 function frProximaAcao(day){
   const sessions = mrtHeroSessions(day);
   const pending = sessions.filter(s=>!s.done);
   const primary = pending[0] || sessions[0];
   if(!primary){
     const prox = frProximoTreinoTexto();
-    return `<div class="ds-section"><div class="ds-label fr-lbl">Próxima ação</div>
+    return `<div class="ds-section"><div class="ds-label fr-lbl">Treino de hoje</div>
       <div class="fr-acao">
         <div class="fr-acao-ic">${ICONS.bed}</div>
         <div class="fr-acao-txt"><div class="t">Descanso hoje</div><div class="s">${prox ? `Depois: ${prox.txt}` : treinoNextWorkoutHint(day)}</div></div>
@@ -13547,7 +13667,7 @@ function frProximaAcao(day){
   // Corrida: valores já têm unidade (min, /km, km). Musculação: contagens precisam do nome (4 exercícios · 12 séries).
   const metricas = primary.metrics.filter(m=>m.v && m.v!=='—')
     .map(m=>{ const v = String(m.v).replace(/(\d)\.(\d)/,'$1,$2'); return /^\d+$/.test(v) ? `${v} ${m.k.toLowerCase()}` : v; }).join(' · ');
-  return `<div class="ds-section"><div class="ds-label fr-lbl">Próxima ação</div>
+  return `<div class="ds-section"><div class="ds-label fr-lbl">Treino de hoje</div>
     <div class="fr-acao">
       <div class="fr-acao-ic">${primary.tipo==='corrida' ? ICONS.run : ICONS.dumbbell}</div>
       <div class="fr-acao-txt">
@@ -13556,10 +13676,10 @@ function frProximaAcao(day){
         ${metricas ? `<div class="m">${metricas}</div>` : ''}
       </div>
       <div class="fr-acao-cta">
-        ${primary.done ? `<span class="fr-feito">${CHECK_SVG} Concluído</span>` : `<button class="btn-primary sm" data-v2start="${primary.tipo}">Começar</button>`}
+        ${primary.done ? `<span class="fr-feito">${CHECK_SVG} Concluído</span>` : `<button class="btn-primary sm" data-v2start="${primary.tipo}">Iniciar ${primary.tipo==='corrida'?'corrida':'musculação'}</button>`}
         <button class="fr-link" data-v2go="${primary.tipo}">Ver no Treino ${FR_ARROW}</button>
       </div>
-      ${secondary ? `<button class="fr-depois" data-v2go="${secondary.tipo}"><span>Depois: ${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
+      ${secondary ? `<button class="fr-depois" data-v2go="${secondary.tipo}"><span>${secondary.done ? 'Concluído: ' : 'Depois: '}${secondary.resumo}</span><span class="chev">${DS_CHEV}</span></button>` : ''}
     </div></div>`;
 }
 function frSemanaIcones(){
@@ -13690,11 +13810,11 @@ function renderHojeV2Content(){
   return greetRow
     + renderPerdidoBanner()
     + (temPlanoOuTreino ? renderAvisoAgenda() : '')
-    + (temPlanoOuTreino ? frCartaoPlano(day) : '')
-    + (temPlanoOuTreino ? renderCheckinCard() : '')
     + (temPlanoOuTreino ? frProximaAcao(day) : temPlanoGerado ? heroHtml : '')
     + (temPlanoOuTreino ? frSemanaIcones() : '')
-    + (temPlanoOuTreino ? frTreinador(day) : '')
+    + (temPlanoOuTreino ? frCheckinInicio() : '')
+    + (temPlanoOuTreino ? frDisclosure('plano-inicio', 'Seu plano', frCartaoPlano(day)) : '')
+    + (temPlanoOuTreino ? frDisclosure('treinador-inicio', 'Sobre a sessão de hoje', frTreinador(day)) : '')
     + (temPlanoOuTreino ? frAtalhos() : '')
     + (finais.length ? `<div class="ds-section"><div class="ds-list">${finais.join('')}</div></div>` : '')
     + qv2CartaoPausa() + mrtDiagnosticoCard();
@@ -14312,6 +14432,10 @@ function renderTreinoV2Content(){
   // Cabeçalho (pacote visual): título, menu "Gerenciar plano" e fase com progresso do plano.
   const header = frTreinoCabecalho(phaseParts) + (planoPausado() ? frCartaoPausado() : '');
   const planoBar = '';
+  const temPlano = !!((state.hybridPlanData && state.hybridPlanData.plan && state.hybridPlanData.plan.length) || (state.corridaVdotData && state.corridaVdotData.plan && state.corridaVdotData.plan.length));
+  const temSessoes = (state.treinos||[]).length || DAY_ABBR.some(d=>(state.musculacao[d]||[]).length);
+  if(!temPlano && !temSessoes) return header + '<div class="empty-state"><div class="t">Treino sem plano</div><div class="s">Crie um plano ou organize sua primeira sessão.</div><button class="btn-primary" data-qv2open="1">Criar meu plano</button><button class="btn-secondary" id="mrtManual">Criar treino manual</button></div>';
+
 
   const relLabel = (state.weekOffset||0)===0 ? 'Esta semana' : (state.weekOffset||0)===1 ? 'Semana que vem' : (state.weekOffset||0)===-1 ? 'Semana passada' : (state.weekOffset>0 ? 'Daqui a '+state.weekOffset+' semanas' : 'Há '+Math.abs(state.weekOffset)+' semanas');
   const weekNav = `
@@ -14339,7 +14463,7 @@ function renderTreinoV2Content(){
     const marca = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
       : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>`
       : (ce && !passado) ? `<button class="fr-ring fr-ringbtn" data-mrtdonecorrida="${d}" aria-label="Marcar corrida como feita"></button>`
-      : `<span class="fr-ring" aria-hidden="true"></span>`;
+      : `<span class="ds-muted">${ce || ml.length ? 'Planejado' : '—'}</span>`;
     const status = (hoje ? `<span class="ds-pill">Hoje</span>` : '') + marca;
     const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length) ? ICONS.bed : ce ? ICONS.run : ICONS.dumbbell;
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
@@ -14367,7 +14491,12 @@ function renderTreinoV2Content(){
   const avisoAgenda = (state.weekOffset||0)===0 ? renderAvisoAgenda() : '';
   const avisoQualidade = renderAvisoQualidadeRemovida();
   void nomeDia;
-  return header + planoBar + weekNav + daylist + avisoAgenda + avisoQualidade + toggle + chips + dayContent + renderOutrasAtividadesDoDia(day);
+  const faixa = '<div class="fr-weekstrip" role="group" aria-label="Dias da semana">'+DAY_ABBR.map(d=>{
+    const sel=d===day, hoje=d===hojeAbbr && (state.weekOffset||0)===0, st=dayStatus(d);
+    return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span>${st==='done'?'✓':st==='none'?'—':'•'}</span></button>`;
+  }).join('')+'</div>';
+  const semanaCompleta=frDisclosure('semana-completa','Ver semana completa',daylist);
+  return header + planoBar + weekNav + faixa + avisoAgenda + avisoQualidade + toggle + chips + dayContent + semanaCompleta + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
@@ -15843,8 +15972,9 @@ function frAtividadesProgresso(){
 // Histórico completo: filtro, semana com marcação dos dias que têm atividade, lista agrupada por data.
 function frHistoricoAtividades(){
   const todas = listarAtividades();
-  const f = state.histFiltro || 'todas';
-  const filtradas = frFiltrarAtividades(todas, f);
+  const f = state.histFiltro==='livres' ? 'todas' : state.histFiltro || 'todas';
+  const origem = state.histOrigem || (state.histFiltro==='livres'?'livres':'todas');
+  const filtradas = todas.filter(a=>(f==='todas' || (f==='forca' ? a.tipo==='musculacao' : a.tipo==='corrida')) && (origem==='todas' || (origem==='livres' ? !!a.livre : !a.livre)));
   const ref = state.histSemana || vdotISODate(vdotMondayOf(new Date()));
   const dRef = new Date(ref+'T12:00:00');
   const mesTit = `${FR_MESES[dRef.getMonth()].charAt(0).toUpperCase()+FR_MESES[dRef.getMonth()].slice(1)} ${dRef.getFullYear()}`;
@@ -15857,9 +15987,11 @@ function frHistoricoAtividades(){
   lista.slice(0, n).forEach(a=>{ if(!atual || atual.data!==a.data){ atual = { data:a.data, itens:[] }; grupos.push(atual); } atual.itens.push(a); });
   const tituloData = (iso)=>{ try{ const s = dataDoISO(iso).toLocaleDateString('pt-BR',{ weekday:'long', day:'numeric', month:'long' }); return s.charAt(0).toUpperCase()+s.slice(1); }catch(e){ return iso; } };
   return `<div class="fr-histhead"><button class="mrt-wex-x" data-histvoltar="1" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">Histórico</div></div>
-    ${frChipsFiltro(f, 'data-histfiltro')}
+    <div class="ds-label">Modalidade</div><div class="fr-filtros" role="group" aria-label="Modalidade">${[['todas','Todas'],['corrida','Corrida'],['forca','Musculação']].map(([k,l])=>`<button class="${f===k?'on':''}" data-histfiltro="${k}" aria-pressed="${f===k}">${l}</button>`).join('')}</div>
+    <div class="ds-label">Origem</div><div class="fr-filtros" role="group" aria-label="Origem">${[['todas','Todas'],['plano','Plano'],['livres','Livres']].map(([k,l])=>`<button class="${origem===k?'on':''}" data-historigem="${k}" aria-pressed="${origem===k}">${l}</button>`).join('')}</div>
     <div class="fr-hmes"><b>${mesTit}</b></div>
     <div class="fr-hsemana"><button class="mrt-weeknavbtn" data-histsem="-7" aria-label="Semana anterior">${ICONS.back}</button><div class="fr-hdias">${dias}</div><button class="mrt-weeknavbtn" data-histsem="7" aria-label="Próxima semana">${ICONS.chevR}</button></div>
+    ${sel ? `<button class="btn-secondary" data-histlimpar="1">Limpar filtro de dia · ${fmtDataCurta(sel)}</button>` : ''}
     ${grupos.length ? grupos.map(g=>`<div class="fr-hgrupo"><div class="fr-hdata">${tituloData(g.data)}</div><div class="fr-ativlist">${g.itens.map(frCartaoAtividade).join('')}</div></div>`).join('')
       : `<div class="fr-progvazio">${sel ? 'Nenhuma atividade neste dia.' : todas.length ? 'Nenhuma atividade neste filtro.' : 'Histórico vazio. Conclua um treino para acompanhar sua evolução.'}</div>`}
     ${lista.length>n ? `<button class="btn-secondary" style="margin:8px 0 16px;" data-histmais="1">Carregar mais atividades</button>` : ''}`;
@@ -16001,19 +16133,19 @@ function frProgressoPrincipal(modo, temCiclo){
       <div class="fr-pevol-seg"><button class="${ev==='corrida'?'on':''}" data-progevol="corrida">Corrida</button><button class="${ev==='musc'?'on':''}" data-progevol="musc">Musculação</button></div></div>
     ${frGraficoBarrasProg(vals, I.baldes.map(x=>x.rot), fmt)}
   </div>`;
-  const ultimas = listarAtividades().slice(0, 3);
+  const ultimas = listarAtividades().filter(a=>a.data>=I.ini && a.data<=I.fim).slice(0, 3);
   const atividades = `<div class="fr-pult">
-    <div class="fr-ptit">Últimas atividades</div>
+    <div class="fr-ptit">Atividades do período</div>
     ${ultimas.length ? `<div class="fr-psub">${ultimas.length===1 ? 'Registro mais recente' : ultimas.length+' registros mais recentes'}</div><div class="fr-ult-lista">${ultimas.map(frUltimaAtividadeCartao).join('')}</div>`
-      : `<div class="fr-progvazio">Nenhuma atividade ainda. Seu primeiro treino aparece aqui.</div>`}
-    ${ultimas.length ? `<button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>` : ''}
+      : `<div class="fr-progvazio">Nenhuma atividade neste período. Consulte o histórico ou registre uma atividade.</div>`}
+    <button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>${!ultimas.length ? '<button class="btn-secondary" data-tabgo="meusTreinos">Ver meu treino</button>' : ''}
   </div>`;
   const linhaAn = (k, ic, t)=>`<button class="fr-plink fr-pan" data-progdet="${k}"><span class="ic">${ic}</span><span>${t}</span>${DS_CHEV}</button>`;
   const analises = `<div class="fr-pult"><div class="fr-ptit">Análises detalhadas</div>
     ${linhaAn('corrida', ICONS.run, 'Corrida')}${linhaAn('musc', ICONS.dumbbell, 'Musculação')}${linhaAn('medidas', ICONS.ruler, 'Medidas corporais')}</div>`;
   const marca = `<div class="fr-pbrand6"><span class="mk">${ARTE_MARCA_SVG('currentColor')}</span><span><b>FORZA</b> RUN</span></div>`;
   const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
-  return `${marca}<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${resumo}${evolucao}${atividades}${analises}`;
+  return `${marca}<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${ultimas.length ? resumo+evolucao : ''}${atividades}${analises}`;
 }
 function frProgressoDetalhe(det, partes){
   const titulo = det==='corrida' ? 'Corrida' : det==='musc' ? 'Musculação' : 'Medidas corporais';
@@ -16080,12 +16212,12 @@ function renderProgressoV2(){
   const dAnt = vdotMondayOf(new Date()); dAnt.setDate(dAnt.getDate()-7);
   const atual = seriesPorEixoNaSemana(segAtual), ant = seriesPorEixoNaSemana(vdotISODate(dAnt));
   const temEq = atual.some(v=>v>0) || ant.some(v=>v>0);
-  const maxEq = Math.max(1, ...atual);
+  const maxEq = Math.max(1, ...atual, ...ant);
   const eqCorpo = temEq ? `
-    ${mrtRadar(EIXOS_MUSC, atual, ant)}
+    
     <div class="mrt-legend" style="justify-content:center;"><span><i style="background:var(--accent);"></i>Esta semana</span><span><i style="background:var(--text-dim);"></i>Semana passada</span></div>
     <div style="margin-top:14px;">${EIXOS_MUSC.map((n,i)=>`
-      <div class="mrt-eqrow"><span class="n">${n}</span><div class="mrt-progress" style="flex:1;"><div class="fill" style="width:${Math.round(atual[i]/maxEq*100)}%;background:var(--accent);"></div></div><span class="v">${atual[i]} séries</span></div>`).join('')}</div>`
+      <div class="mrt-eqrow"><span class="n">${n}</span><div class="mrt-progress" style="flex:1;"><div class="fill" style="width:${Math.round(atual[i]/maxEq*100)}%;background:var(--accent);"></div></div><span class="v">${atual[i]} séries</span></div><div class="mrt-eqrow"><span class="n">Semana passada</span><div class="mrt-progress" style="flex:1;"><div class="fill" style="width:${Math.round(ant[i]/maxEq*100)}%;background:var(--text-dim);"></div></div><span class="v">${ant[i]} séries</span></div>`).join('')}</div>`
     : progVazio('Conclua treinos de musculação pra ver o equilíbrio entre empurrar, puxar, pernas e core.');
   const cardEq = chartCardHtml('musc', ICONS.chart, 'Equilíbrio muscular', 'Séries por padrão de movimento, comparando com a semana passada.', eqCorpo);
 
@@ -16193,6 +16325,8 @@ function abrirAtividadeDaLista(id){
   showToast('Corrida registrada sem gravação');
 }
 function wireProgressoV2(){
+  document.querySelectorAll('[data-historigem]').forEach(el=>{ el.onclick=()=>{if(state.histFiltro==='livres')state.histFiltro='todas';state.histOrigem=el.getAttribute('data-historigem');render();}; });
+  document.querySelectorAll('[data-histlimpar]').forEach(el=>{ el.onclick=()=>{state.histDia=null;render();}; });
   document.querySelectorAll('[data-progperiodo]').forEach(el=>{ el.onclick = ()=>{ state.progPeriodo = el.getAttribute('data-progperiodo'); render(); }; });
   document.querySelectorAll('[data-progmodo]').forEach(el=>{ el.onclick = ()=>{ state.progModo = el.getAttribute('data-progmodo'); render(); }; });
   document.querySelectorAll('[data-progfiltro]').forEach(el=>{ el.onclick = ()=>{ state.progFiltro = el.getAttribute('data-progfiltro'); render(); }; });
@@ -16479,11 +16613,11 @@ function bibFiltrada(){
   });
 }
 function bibCardHtml(e){
-  return `<div class="mrt-bibcard" data-bibex="${e.nome.replace(/"/g,'&quot;')}">
+  return `<button type="button" class="mrt-bibcard" data-bibex="${e.nome.replace(/"/g,'&quot;')}">
     <div class="th">${e.id ? `<img width="56" height="56" loading="lazy" src="${repdbImg(e.id)}" alt="" onerror="repdbFallback(this,'${e.grupo}',56)">` : exThumbIconHtml(e.grupo,56)}</div>
     <div class="nm">${e.nome}</div>
     <span class="tag tag-musc">${e.grupo}</span>
-  </div>`;
+  </button>`;
 }
 function renderBibliotecaV2(){
   if(state.bibDetalhe) return renderBibDetalhe(state.bibDetalhe);
@@ -16513,8 +16647,7 @@ function renderBibDetalhe(nome){
   const req = equipNecessario(e.nome);
   let corpo;
   if(tab==='musculos'){
-    corpo = `<div class="mrt-medlabel">Principais</div><div class="mrt-chips">${(info.prim||[e.grupo]).map(m=>`<span class="tag tag-musc lg">${m}</span>`).join('')}</div>
-      ${info.sec && info.sec.length ? `<div class="mrt-medlabel" style="margin-top:8px;">Auxiliares</div><div class="mrt-chips">${info.sec.map(m=>`<span class="tag lg">${m}</span>`).join('')}</div>` : ''}`;
+    corpo = muscleMapHtml(e.nome);
   }else if(tab==='como'){
     corpo = `<ol class="mrt-passos">${info.passos.map(p=>`<li>${p}</li>`).join('')}</ol>`;
   }else if(tab==='equip'){
@@ -16732,7 +16865,6 @@ function renderPerfilV2Content(){
   </div>`;
   const row = (attrs, icon, titulo, valor)=>`<button class="fr-prow" ${attrs}><span class="fr-pic">${icon}</span><span class="nm">${titulo}</span>${valor ? `<span class="vl">${valor}</span>` : ''}${chev}</button>`;
   const meuTreino = `<div class="fr-plbl">Meu treino</div><div class="fr-plist">
-    ${state.athleteProfile ? row('data-pfacao="personalizacao"', FR_PI.ajustes, 'Personalização do treino', IA_CONFIG.ativa && IA_CONFIG.publicacaoAutorizada ? (iaPersonalizacaoLigada(state.athleteProfile) ? 'Ligada' : 'Desligada') : 'Em validação') : ''}
     ${phaseParts ? row('data-pfacao="plano"', FR_PI.alvo, 'Plano e objetivo', '') : row('id="mrtRedoDiagBtn"', FR_PI.alvo, 'Criar meu plano', '')}
     ${frTemRespostasDoQuestionario() ? row('data-pfacao="disponibilidade"', ICONS.calendar, 'Disponibilidade', '') : ''}
     ${state.athleteProfile ? row('data-pfacao="lesoes"', ICONS.heart, 'Lesões e limitações', '') : ''}
@@ -16744,6 +16876,7 @@ function renderPerfilV2Content(){
     <button class="fr-pequip-card" data-perfilgo="equipamentos"><span class="fr-pic lg">${ICONS.shoe}</span><span class="tx"><b>Tênis</b><small>${tenis ? tenis.nome : 'Cadastrar'}</small>${tenis ? `<small>${String(Math.round(tenis.km||0))} km</small>` : ''}</span>${chev}</button>
     <button class="fr-pequip-card" data-perfilgo="saudeRelogio"><span class="fr-pic lg">${ICONS.watch}</span><span class="tx"><b>Relógio</b><small>${relogio || 'Não conectado'}</small></span>${chev}</button>
   </div>`;
+  const recursos = `<div class="fr-plbl">Recursos</div><div class="fr-plist">${row('data-perfilgo="biblioteca"', ICONS.dumbbell, 'Biblioteca de exercícios', '')}${row('data-perfilgo="integracoes"', ICONS.watch, 'Conexões', '')}${row('data-perfilgo="turma"', ICONS.users, 'Turma', '')}${row('data-perfilgo="equipamentos"', ICONS.dumbbell, 'Equipamentos de musculação e tênis', '')}</div>`;
   const conta = `<div class="fr-plbl">Minha conta</div><div class="fr-plist">
     ${row('id="mrtEditDadosBtn"', ICONS.user, 'Dados pessoais', '')}
     ${row('data-perfilgo="preferencias"', FR_PI.ajustes, 'Preferências', '')}
@@ -16758,7 +16891,7 @@ function renderPerfilV2Content(){
   </div>`;
   const head = `<div class="fr-phead"><div class="fr-pbrand"><b>FORZA</b> RUN</div><button class="fr-pgear" data-perfilgo="preferencias" aria-label="Configurações">${FR_PI.engrenagem}</button></div>
     <div class="fr-ptitle">Perfil</div>`;
-  return `<div class="fr-perfil">${head}${card}${meuTreino}${equip}${conta}${rodape}</div>`;
+  return `<div class="fr-perfil">${head}${card}${meuTreino}${equip}${recursos}${conta}${rodape}</div>`;
 }
 // Disponibilidade: abre o questionário já preenchido direto na pergunta dos dias.
 function frAbrirDisponibilidade(){
@@ -16816,7 +16949,6 @@ function wirePerfilV2(){
   const frAvatar = document.getElementById('frAvatar');
   if(frAvatar) frAvatar.onclick = frAbrirFotoPerfil;
   document.querySelectorAll('[data-pfacao]').forEach(el=>{ el.onclick = ()=>{ const a = el.getAttribute('data-pfacao'); if(a==='plano') frAbrirPlanoCompleto(); else if(a==='historico') frAbrirHistorico(); else if(a==='versoes') frAbrirVersoes();
-    else if(a==='personalizacao'){ if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada){ showToast('Personalização em validação. Seu plano usa o motor do app.'); return; } iaDefinirPersonalizacao(state.athleteProfile, !iaPersonalizacaoLigada(state.athleteProfile)); salvarAthleteProfile(); render(); }
     else if(a==='disponibilidade') frAbrirDisponibilidade(); else if(a==='lesoes') frAbrirLesoes(); else if(a==='ajuda') frAbrirAjuda();
     else if(a==='nivelcorrida' || a==='nivelforca'){ state.tab = 'progresso'; state.progHistorico = false; state.progDetalhe = a==='nivelcorrida' ? 'corrida' : 'musc'; render(); }
     else if(a==='sair'){ confirmarApp({ titulo:'Sair da conta?', texto:'O app continua funcionando, mas salva só neste aparelho até você entrar de novo.', ok:'Sair' }).then(ok=>{ if(ok) auth.signOut().catch(()=>showToast('Não consegui sair da conta agora')); }); }
@@ -16853,12 +16985,7 @@ function renderIntegracoesV2(){
   const garmin = relogioApi() ? `<div class="mrt-card"><div style="display:flex;align-items:center;gap:12px;">
       <div class="icon-box run">${ICONS.watch}</div><div style="font-size:16px;font-weight:700;">Garmin</div></div>
       ${relogioGarminCardHtml()}</div>` : '';
-  return garmin + (relogioApi() ? ['Strava'] : ['Garmin','Strava']).map(svc=>`
-    <div class="mrt-card" style="display:flex;align-items:center;gap:12px;">
-      <div class="icon-box run">${ICONS.watch}</div>
-      <div style="flex:1;min-width:0;"><div style="font-size:16px;font-weight:700;">${svc}</div><div class="mrt-sub" style="margin:2px 0 0;">Não conectado</div></div>
-      <button class="mrt-pillbtn" data-mrtintegrar="${svc}">Conectar</button>
-    </div>`).join('') + `<div class="mrt-sub" style="text-align:center;margin-top:6px;">A sincronização automática ainda está em desenvolvimento.</div>`;
+  return garmin + (!relogioApi() ? '<div class="mrt-card"><h2>Garmin</h2><p>A conexão com o relógio está disponível no app do iPhone, pela ponte nativa Garmin.</p></div>' : '') + '<div class="mrt-card"><h2>Strava</h2><p>Integração ainda em desenvolvimento.</p></div>';
 }
 function renderSaudeRelogioV2(){
   const R = relogioApi();
@@ -19382,11 +19509,13 @@ function initQuandoLivre(){
   if(_initPendente) return;
   // Modal NÃO entra aqui: o de boas-vindas abre sozinho quando os dados ainda não carregaram, e esperar ele
   // fechar faria a pessoa refazer o onboarding antes de os dados da nuvem chegarem.
-  const ocupado = ()=> (state.gpsRun && state.gpsRun.status!=='finished') || state.workoutSession || state.qv2;
+  // Janela ou folha aberta (exceto a de boas-vindas) também espera: a releitura fecharia o que a pessoa está vendo.
+  const ocupado = ()=> (state.gpsRun && state.gpsRun.status!=='finished') || state.workoutSession || state.qv2
+    || (state.modalOpen && state.modalType!=='onboarding') || !!document.getElementById('sheetOverlay');
   const tentar = ()=>{
     if(ocupado()){ _initPendente = setTimeout(tentar, 5000); return; }
     _initPendente = null;
-    Promise.resolve(_primeiroInit).catch(()=>{}).then(()=>init());
+    Promise.resolve(_primeiroInit).catch(()=>{}).then(()=>init({ manterTela:true }));
   };
   _initPendente = setTimeout(tentar, 0);
 }

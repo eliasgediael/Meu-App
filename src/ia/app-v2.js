@@ -1,6 +1,6 @@
 /* Integração assíncrona: a semana do motor já está disponível antes de qualquer leitura GPS/rede. */
 import { IA_CONFIG } from './config.js';
-import { iaRefinarSemanaV2, iaPersonalizacaoLigada } from './refino-v2.js';
+import { iaRefinarSemanaV2 } from './refino-v2.js';
 import { iaCriarChamadaServidor } from './servidor.js';
 import { iaColetarHistoricoCorrida, iaResumoCorrida } from './historico-corrida.js';
 import { iaClone } from './contrato.js';
@@ -81,7 +81,7 @@ function iaRecuperarSemanaAtomica(s, armazenamento){
 async function iaPersistirSemanaApp(){ await Promise.all([saveTreinos(),saveMusc(),saveMuscDayOrigin(),saveHybridPlanData()]); }
 let iaPedidoEmCurso=0;
 async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
-  if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada || !iaPersonalizacaoLigada(state.athleteProfile)) return {origem:'motor',motivo:'ia_desligada'};
+  if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada) return {origem:'motor',motivo:'ia_desligada'};
   if(!state.authUser || state.viewingClient || !navigator.onLine || !IA_CONFIG.servidorUrl || iaTreinoIniciado(state)) return {origem:'motor',motivo:'indisponivel'};
   const seq=++iaPedidoEmCurso, antes=iaRetratoApp(state), hp=state.hybridPlanData;
   if(!hp || hp.pausa || !hp.motorV2 || hp.plan[hp.currentWeekIndex-1]!==semanaMotor) return {origem:'motor',motivo:'semana_mudou'};
@@ -94,7 +94,7 @@ async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
       historico:{historicoCarga:state.historicoCarga,checkins:hp.checkins},online:navigator.onLine,usuario:state.authUser,
       chamarFuncao:iaCriarChamadaServidor({url:IA_CONFIG.servidorUrl,obterToken:()=>auth.currentUser.getIdToken()})});
     if(r.origem!=='ia') return r;
-    if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada || !iaPersonalizacaoLigada(state.athleteProfile) || seq!==iaPedidoEmCurso) return {origem:'motor',motivo:'cancelado'};
+    if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada || seq!==iaPedidoEmCurso) return {origem:'motor',motivo:'cancelado'};
     const candidato=iaPrepararSemanaAtomica(state,r.semana);
     if(!iaCommitSemanaAtomica(state,antes,candidato,localStorage)) return {origem:'motor',motivo:'estado_mudou'};
     await iaPersistirSemanaApp();

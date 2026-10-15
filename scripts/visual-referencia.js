@@ -1,0 +1,29 @@
+const fs=require('fs'),path=require('path');
+const {abrirApp}=require('../tests/harness/navegador');
+(async()=>{const app=await abrirApp();if(!app||app.indisponivel)throw Error(app?.indisponivel||'Sem navegador');try{const dir=path.resolve('artifacts/visual-referencia/'+(process.argv[2]||'atual'));fs.mkdirSync(dir,{recursive:true});const results=[];
+const catalogue=await app.page.browser().newPage();await catalogue.goto('file:///C:/Users/CONTABIL/Downloads/FORZA-RUN-PARA-CLAUDE/index.html',{waitUntil:'load'});await catalogue.screenshot({path:path.join(dir,'catalogo-referencia.png'),fullPage:true});await catalogue.close();
+await app.page.evaluate(()=>{window.__visualBase=JSON.parse(JSON.stringify(state));});
+for(const width of [320,390,430]){await app.page.setViewport({width,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true});for(const [name,tab,extra] of [['inicio','hoje',{}],['treino','meusTreinos',{}],['progresso','progresso',{}],['historico','progresso',{progHistorico:true}],['perfil','perfil',{}],['biblioteca','biblioteca',{}],['conexoes','integracoes',{}],['conta','conta',{}],['preferencias','preferencias',{}],['privacidade','maisOpcoes',{}],['equipamentos','equipamentos',{}],['medidas','medidas',{}]]){await app.page.evaluate(({tab,extra})=>{state.tab=tab;state.progHistorico=false;Object.assign(state,extra);render();},{tab,extra});await new Promise(r=>setTimeout(r,200));await app.page.screenshot({path:path.join(dir,name+'-'+width+'.png'),fullPage:true});results.push({name,width,overflow:await app.page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),errors:app.erros.splice(0)});}}for(const width of [320,390,430]){
+ await app.page.setViewport({width,height:844,deviceScaleFactor:1,isMobile:true,hasTouch:true});
+ const casos=['inicio-duplo','inicio-descanso','treino-musculacao','treino-duplo','semana-completa','semana-anterior','semana-futura','checkin','exercicio-musculos','exercicio-como','execucao','execucao-detalhes','editar-carga','gps-preparar','gps-aguardando','gps-negado','corrida-ativa','corrida-pausada','esteira-preparar','esteira-ativa','esteira-pausada','inicio-sem-plano','treino-sem-plano','progresso-vazio','boas-vindas','questionario'];
+ for(const name of casos){await app.page.evaluate(async name=>{
+ closeSheet();if(workoutRestInterval){clearInterval(workoutRestInterval);workoutRestInterval=null;}if(gpsTickIntervalRef){clearInterval(gpsTickIntervalRef);gpsTickIntervalRef=null;}Object.assign(state,JSON.parse(JSON.stringify(window.__visualBase)));state.modalOpen=false;state.modalType=null;state.qv2=null;state.workoutSession=null;state.gpsRun=null;state.bibDetalhe=null;state.progHistorico=false;state.tab='hoje';state.weekOffset=0;state.visualDisclosures={};
+ const diaM=DAY_ABBR.find(d=>muscListForDay(d).length),diaC=DAY_ABBR.find(d=>treinoEntryForDay(d));
+ if(name==='inicio-duplo')state.selectedDayHoje=DAY_ABBR.find(d=>muscListForDay(d).length&&treinoEntryForDay(d));
+ if(name==='inicio-descanso')state.selectedDayHoje=DAY_ABBR.find(d=>!muscListForDay(d).length&&!treinoEntryForDay(d));
+ if(name.startsWith('treino-')&&!name.includes('sem-plano')){state.tab='meusTreinos';state.selectedDayMusc=state.selectedDayCorrida=name==='treino-duplo'?DAY_ABBR.find(d=>muscListForDay(d).length&&treinoEntryForDay(d)):diaM;state.treinosSubTab='musculacao';}
+ if(name.startsWith('semana-')){state.tab='meusTreinos';state.weekOffset=name==='semana-anterior'?-1:name==='semana-futura'?1:0;if(name==='semana-completa')state.visualDisclosures['semana-completa']=true;}
+ if(name==='checkin')state.visualDisclosures['checkin-inicio']=true;
+ if(name.startsWith('exercicio-')){state.tab='biblioteca';state.bibDetalhe=bibliotecaLista().find(e=>e.grupo==='Peito').nome;state.bibTab=name==='exercicio-como'?'como':'musculos';}
+ if(name.startsWith('execucao')||name==='editar-carga'){startWorkoutSession(diaM);if(name==='execucao-detalhes'){state.wexDetalhesOpen=true;state.visualDisclosures['mapa-execucao']=true;}if(name==='editar-carga'){render();abrirEditorSerie('peso');return;}}
+ if(name.startsWith('gps-')||name.startsWith('corrida-')||name.startsWith('esteira-')){const modo=name.startsWith('esteira-')?'esteira':'gps';state.gpsRun=gpsNewRunState(diaC,treinoEntryForDay(diaC),modo);const gr=state.gpsRun;gr.status=name.endsWith('ativa')?'running':name.endsWith('pausada')?'paused':name==='gps-negado'?'denied':name==='gps-aguardando'?'aguardando':'intro';gr.startedAt=Date.now()-600000;gr.stepStartedAt=Date.now()-60000;gr.lastAccuracy=8;gr.stepKmh=9.6;gr.stepKmhSugerida=9.6;}
+ if(['inicio-sem-plano','treino-sem-plano','progresso-vazio'].includes(name)){state.hybridPlanData=null;state.corridaVdotData=null;state.treinos=[];state.musculacao={};state.workoutSessionsLog=[];state.corridaProgress={};state.atividadesLivres=[];state.tab=name==='treino-sem-plano'?'meusTreinos':name==='progresso-vazio'?'progresso':'hoje';}
+ if(name==='boas-vindas'){state.modalOpen=true;state.modalType='onboarding';}
+ if(name==='questionario'){qv2Abrir();await new Promise(r=>setTimeout(r,50));}
+ render();},name);
+ await new Promise(r=>setTimeout(r,180));await app.page.screenshot({path:path.join(dir,name+'-'+width+'.png'),fullPage:true});
+ results.push({name,width,overflow:await app.page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),errors:app.erros.splice(0)});
+ if(['execucao-detalhes','treino-musculacao','semana-completa','perfil'].includes(name)){await app.page.evaluate(()=>{const sc=document.querySelector('.mrt-scroll');if(sc)sc.scrollTop=sc.scrollHeight;});await app.page.screenshot({path:path.join(dir,name+'-fim-'+width+'.png')});}
+ }
+}
+fs.writeFileSync(path.join(dir,'resultados.json'),JSON.stringify({results,errosInicio:app.errosInicio},null,2));console.log(JSON.stringify({capturas:results.length,overflow:results.filter(r=>r.overflow),erros:results.filter(r=>r.errors.length)}));}finally{await app.fechar();}})().catch(e=>{console.error(e);process.exitCode=1});

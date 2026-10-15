@@ -11,7 +11,7 @@ const { abrirApp, ok } = require('../harness/navegador');
     for (const width of [320, 430]) {
       await page.setViewport({ width, height: 900, deviceScaleFactor: 1, isMobile: true, hasTouch: true });
       await page.evaluate(() => { state.tab = 'perfil'; render(); });
-      ok(await page.$('[data-perfilgo="turma"]') === null, `Perfil ${width}: sem atalho da antiga Turma`);
+      ok(await page.$('[data-perfilgo="turma"]') !== null, `Perfil ${width}: Turma acessível como recurso secundário`);
       await page.click('[aria-label="Configurações"]');
       ok(await page.evaluate(() => state.tab === 'preferencias'), `Perfil ${width}: abre Configurações`);
       ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Configurações ${width}: sem transbordamento horizontal`);
