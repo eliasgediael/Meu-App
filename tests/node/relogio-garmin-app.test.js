@@ -40,7 +40,7 @@ const ponte = {
   ok(paginas.every(m => m.v === 3 && m.pgs === paginas.length && m.b === paginas[0].b && JSON.stringify(m).length <= 3000) && corridas.length > 0,
     'lista completa em páginas v3 de até 3000 bytes, com os treinos de corrida');
   ok(corridas.every(w => !!S.treinos.find(t => t.day === w.id)), 'cada treino de corrida enviado existe no plano');
-  ok(forca.length > 0 && forca.every(f => /^musc_/.test(f.id) && (S.musculacao[f.id.slice(5)] || []).length === f.e.length),
+  ok(forca.length > 0 && forca.every(f => /^musc_/.test(f.id) && (S.musculacao[f.id.slice(5).split('_')[0]] || []).length === f.e.length),
     'musculação de cada dia da semana enviada com os exercícios do app (' + forca.length + ')');
   ok(forca.length === Object.keys(S.musculacao).filter(d => (S.musculacao[d] || []).length).length, 'todos os dias de musculação vão para o relógio');
   ok(forca.every(f => f.e.every(x => !x[3] || /^\d{4}$/.test(x[3]))) && forca.some(f => f.e.some(x => x[3])),
@@ -67,7 +67,7 @@ const ponte = {
   ok(novaLista.some(w => w.id === alvo.id && w.ok === 1), 'lista reenviada com o treino feito marcado como feito');
 
   // Musculação feita no relógio (primeiro dia de força da lista).
-  const fz = forca[0], diaF = fz.id.slice(5);
+  const fz = forca[0], diaF = fz.id.slice(5).split('_')[0];
   const exF = fz.e[0];
   const rf = { schemaVersion: 2, kind: 'strength', resultId: fz.id + '_1791250000', workoutId: fz.id, sessionKey: fz.k, source: 'garmin',
     startedAt: Math.floor(Date.now() / 1000) - 3000, durationSec: 2555, avgHeartRate: 126, sets: 2,

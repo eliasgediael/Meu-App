@@ -6474,16 +6474,42 @@ function relogioAgendarEnvio(){
 }
 // Todos os treinos para o relógio: corridas do plano desde a segunda desta semana (as feitas vão marcadas)
 // e a musculação de cada dia da semana. Volta as páginas da mensagem (cada uma com até 3000 bytes).
+function relogioCorridasDoPlano(){
+  const mapa = new Map();
+  const hp = state.hybridPlanData, cv = state.corridaVdotData;
+  const plano = hp && hp.plan && hp.plan.length ? hp : cv;
+  if(plano && plano.startMonday){
+    (plano.plan||[]).forEach((w,i)=>{
+      if(!w || w.pendente) return;
+      const segunda = new Date(plano.startMonday+'T12:00:00');
+      segunda.setDate(segunda.getDate()+((w.weekNumber||i+1)-1)*7);
+      (w.corridaWeek || w.days || []).forEach(e=>{
+        const idx = DAY_ABBR.indexOf(e.day); if(idx<0) return;
+        const d = new Date(segunda); d.setDate(d.getDate()+idx);
+        const day = e.day+' '+vdotFormatDDMM(d);
+        mapa.set(day, {...e, day, type:e.type||e.title, origem:plano===hp?'hibrido':'vdotplan'});
+      });
+    });
+  }
+  // Alterações feitas pelo usuário no treino datado têm prioridade sobre o plano.
+  (state.treinos||[]).forEach(e=>{ if(e && e.day) mapa.set(e.day,e); });
+  return [...mapa.values()];
+}
 function relogioMensagemTreinos(){
   const R = relogioApi();
-  const feito = (e)=>{ const p = (state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
-  const segunda = vdotISODate(vdotMondayOf(new Date(todayISO()+'T00:00:00')));
-  const corridas = R.treinosParaRelogio(state.treinos||[], { hojeISO: todayISO(), feito, desdeISO: segunda, incluirFeitos: true });
+  const feito = e=>{ const p=(state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
+  const corridas = R.treinosParaRelogio(relogioCorridasDoPlano(), {hojeISO:todayISO(), feito, todasSemanas:true, incluirFeitos:true});
   return R.mensagensTreinos(corridas, relogioDiasDeForca());
 }
 function relogioItensEnviados(paginas){ return [].concat(...(paginas||[]).map(p=>p.w||[])); }
 // Envia os próximos treinos ao relógio. Sem { forcar:true }, não repete a mesma lista antes de 6 h.
-async function relogioEnviarTreinos(op){
+let _relogioEnvios=Promise.resolve();
+function relogioEnviarTreinos(op){
+  const envio=_relogioEnvios.then(()=>relogioEnviarTreinosInterno(op));
+  _relogioEnvios=envio.catch(()=>{});
+  return envio;
+}
+async function relogioEnviarTreinosInterno(op){
   const R = relogioApi();
   if(!R) return null;
   if(_primeiroInit) await _primeiroInit;
@@ -6527,7 +6553,8 @@ async function relogioImportarResultado(r){
   if(await gpsDbGet(reg.runId)) return true; // já importado (o relógio reenviou antes de receber o "ack")
   const fim = reg.fim || Date.now();
   const dataISO = vdotISODate(new Date(reg.inicio || fim));
-  const entry = reg.day ? (state.treinos||[]).find(t=>t.day===reg.day) : null;
+  const entry = reg.day ? relogioCorridasDoPlano().find(t=>t.day===reg.day) : null;
+  if(entry && !(state.treinos||[]).some(t=>t.day===entry.day)){ state.treinos.push(entry); await saveTreinos(); }
   const prev = entry ? state.corridaProgress[entry.day] : null;
   // Como no GPS do app: se o treino do dia já tem corrida registrada, esta entra como atividade própria.
   const livre = !entry || !!(prev && typeof prev==='object' && prev.done && progressoTemRegistro(prev));
@@ -6558,37 +6585,38 @@ async function relogioImportarResultado(r){
 // Musculação para o relógio: um treino por dia com exercícios nos próximos 7 dias (hoje incluso).
 // Dias desta semana já feitos (algum exercício marcado) não vão. A carga sai da sugestão de progressão.
 function relogioDiasDeForca(){
-  const R = relogioApi();
-  const hoje = new Date(todayISO()+'T00:00:00');
-  const segundaAtual = vdotISODate(vdotMondayOf(hoje));
-  const inicioHibrido = state.hybridPlanData && state.hybridPlanData.startMonday ? state.hybridPlanData.startMonday : null;
-  const out = [];
-  // Todos os dias de musculação da semana, um treino por dia. Dia que já passou e foi feito vai com a data
-  // da semana que vem; dia que já passou sem treino continua nesta semana (dá para fazer atrasado);
-  // feito hoje vai marcado como feito.
-  const seg = new Date(segundaAtual+'T00:00:00');
-  for(let i=0; i<7; i++){
-    const d = new Date(seg); d.setDate(d.getDate()+i);
-    const day = DAY_ABBR[i];
-    let lista = state.musculacao[day] || [];
-    if(!lista.length) continue;
-    const feitoNaSemana = lista.some(e=>e.done);
-    if(feitoNaSemana && d < hoje) d.setDate(d.getDate()+7);
-    if(inicioHibrido && vdotISODate(d) < inicioHibrido) lista = lista.filter(e=>e.modo!=='hibrido');
-    if(!lista.length) continue;
-    const okHoje = feitoNaSemana && vdotISODate(d)===vdotISODate(hoje);
-    const exercicios = lista.map(ex=>{
-      let carga = ex.carga;
-      try{ const sug = suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga = sug.peso; }catch(e){}
-      // Imagem do exercício: a mesma que o app mostra (repdbImg resolve ids antigos e mídia incorreta).
-      const im = repdbImg(ex.repdbId);
-      return { id:ex.id, repdbId:ex.repdbId, nome:ex.nome, series:ex.series, reps:ex.reps, carga, descanso:ex.descanso,
-        img: im ? im.replace(/^gifs\//, '').replace(/\.webp$/, '') : null };
+  const R = relogioApi(), hp=state.hybridPlanData;
+  const mapa = new Map();
+  const atual=vdotISODate(vdotMondayOf(new Date(todayISO()+'T12:00:00')));
+  function adicionar(segunda, day, lista, semana, ativo){
+    const idx=DAY_ABBR.indexOf(day); if(idx<0 || !lista || !lista.length) return;
+    const d=new Date(segunda+'T12:00:00'); d.setDate(d.getDate()+idx);
+    const iso=vdotISODate(d), k=day+' '+vdotFormatDDMM(d);
+    const exercicios=lista.map((ex,i)=>{
+      let carga=ex.carga;
+      try{const sug=suggestedForExercise(ex); if(sug && parseFloat(sug.peso)>0) carga=sug.peso;}catch(e){}
+      const im=repdbImg(ex.repdbId);
+      return {id:ex.id || ('plan_'+iso+'_'+(ex.repdbId||i)), repdbId:ex.repdbId, nome:ex.nome,
+        series:ex.series,reps:ex.reps,carga,descanso:ex.descanso,
+        img:im ? im.replace(/^gifs\//,'').replace(/\.webp$/,'') : null};
     });
-    const c = R.forcaCompacta({ day, k: day+' '+vdotFormatDDMM(d), n: muscTituloDoDia(day, lista), exercicios });
-    if(c){ if(okHoje) c.ok = 1; out.push({ d:+d, c }); }
+    const c=R.forcaCompacta({id:'musc_'+day+'_'+iso,day,k,n:muscTituloDoDia(day,lista),exercicios});
+    if(!c) return;
+    const concluido=(state.workoutSessionsLog||[]).some(l=>l && l.day===day && l.data===iso);
+    if(concluido || (ativo && lista.some(e=>e.done))) c.ok=1;
+    mapa.set(iso,c);
   }
-  return out.sort((a,b)=>a.d-b.d).map(x=>x.c);
+  if(hp && hp.startMonday){
+    (hp.plan||[]).forEach((w,i)=>{
+      if(!w || w.pendente) return;
+      const d=new Date(hp.startMonday+'T12:00:00');d.setDate(d.getDate()+((w.weekNumber||i+1)-1)*7);
+      const segunda=vdotISODate(d);
+      DAY_ABBR.forEach(day=>adicionar(segunda,day,(w.muscPlan||{})[day],w,false));
+    });
+  }
+  // Fichas editadas/manuais da semana atual prevalecem sobre o plano calculado.
+  DAY_ABBR.forEach(day=>adicionar(atual,day,(state.musculacao||{})[day],null,true));
+  return [...mapa.entries()].sort((a,b)=>a[0].localeCompare(b[0])).map(x=>x[1]);
 }
 // Sessão de musculação feita no relógio -> sessão do histórico do app (mesmo formato de finishWorkoutSession),
 // histórico de carga por exercício e "feito" da semana. Retorna true quando o relógio já pode tirar da fila.

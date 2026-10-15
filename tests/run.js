@@ -44,6 +44,7 @@ const testes = [
   { nome: 'descarga da musculação (restauração desligada)', arq: 'node/descarga-musculacao.test.js' },
   { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
   { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },
+  { nome: 'Garmin: todas as semanas e paginação UTF-8', arq: 'node/relogio-garmin-semanas.test.js' },
   { nome: 'excluir atividade sem detalhes', arq: 'node/excluir-sem-detalhes.test.js' },
   { nome: 'estilos das telas', arq: 'node/estilos.test.js' },
   { nome: 'esteira (distância por trechos) e voz da musculação', arq: 'node/esteira-voz.test.js' },
