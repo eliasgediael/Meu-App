@@ -31,7 +31,7 @@ async function iaRefinarSemanaV2(entrada){
   try{ ctxC = iaContextoCorridaV2(ctx); }catch(e){ return fim('contexto_corrida_erro'); }
   if(!ctxC.ok) return fim(ctxC.motivo);
   let pedido;
-  try{ pedido = iaMontarPedidoV2(ctx, ctxC, { perfil:entrada.perfil, historico:entrada.historico, historicoCorrida:entrada.historicoCorrida, tipo:entrada.tipo }); }
+  try{ pedido = iaMontarPedidoV2(ctx, ctxC, { perfil:entrada.perfil, historico:entrada.historico, historicoCorrida:entrada.historicoCorrida, tipo:entrada.tipo, semanaAnterior:entrada.semanaAnterior }); }
   catch(e){ return fim('pedido_erro'); }
   let retorno;
   try{ retorno = await iaComTimeout(entrada.chamarFuncao(pedido), entrada.timeoutMs || IA_CONFIG.timeoutMs); }catch(e){ return fim('falha_chamada'); }

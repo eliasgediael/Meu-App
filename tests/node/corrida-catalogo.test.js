@@ -63,7 +63,7 @@ const AJ0 = { reduzir: 0, semQualidade: false, semDobros: false, volumeFator: 1,
     const base = T.validarPlano(est, prio, cons.freq, cons.dist, cons.semana, { ...AJ0 });
     const codsBase = new Set(base.erros.map(e => e.cod));
     const P = Object.fromEntries(Object.entries(est.corrida.paces).map(([k, v]) => [k, v * 86400]));
-    menus[n] = { nivel: est.capacidade.corrida, regime: est.corrida.regime, prova: est.corrida.goalKey, dor: est.restricoes.regioes, prontidao: est.recuperacao.prontidao, dias: {} };
+    menus[n] = { nivel: est.capacidade.corrida, regime: est.corrida.regime, prova: est.corrida.goalKey, dor: est.restricoes.regioes, dorLeve: est.restricoes.dor.every(d => d.intensidade === 'leve'), prontidao: est.recuperacao.prontidao, dias: {} };
     for (const w of cons.semana.corridaWeek) {
       const cdia = G.corridaContextoDoDia(est, cons.semana, w.day, AJ0);
       const menu = G.corridaOpcoesDoDia(est, cdia);
@@ -160,12 +160,14 @@ const AJ0 = { reduzir: 0, semQualidade: false, semDobros: false, volumeFator: 1,
   ok(dorInf.length > 0 && dorInf.every(x => !x.menu.some(id => /SUBIDAS|STRIDES/.test(id))), `dor em membro inferior: sem subidas nem acelerações (${dorInf.length} dias)`);
   const dorSess = Object.entries(exemplos).filter(([n]) => (menus[n].dor || []).some(r => ['joelho', 'tornozelo', 'quadril', 'pe'].includes(r))).flatMap(([, e]) => Object.values(e));
   ok(dorSess.every(s => s.blocos.every(b => !(b.itens || []).some(it => (G.CORRIDA_EDUCATIVOS[it.id] || {}).impacto === 'alto'))), 'dor em membro inferior: nenhum educativo de impacto alto nas sessões');
-  ok(dorInf.every(x => !x.menu.some(id => op(id).qualidade)), 'dor (corrida sem qualidade pelo motor): nenhuma opção de qualidade nem progressiva');
+  // Decisão do usuário (19/10/2026): dor moderada em membro inferior tira o treino forte; dor leve deixa só a versão conservadora.
+  ok(dorInf.filter(x => !x.m.dorLeve).every(x => !x.menu.some(id => op(id).qualidade)), 'dor moderada em membro inferior: nenhuma opção de qualidade nem progressiva');
+  ok(dorInf.filter(x => x.m.dorLeve).every(x => x.menu.every(id => !op(id).qualidade || ['motor', 'limiar', 'fartlek', 'maratona'].includes(op(id).familia))), 'dor leve em membro inferior: treino forte só conservador (limiar/fartlek), sem tiros nem subidas');
   const red = todos().filter(x => x.m.prontidao !== 'normal');
   ok(red.length > 0 && red.every(x => !x.menu.some(id => op(id).prontidaoNormal || op(id).qualidade)), `recuperação reduzida (sono < 6 h): sem acelerações, progressivo, ritmo de prova ou qualidade (${red.length} dias)`);
   ok(todos().every(x => x.menu.every(id => op(id).dia === x.tipoDia)), 'cada dia só oferece opções do seu tipo (qualidade só no dia de qualidade; longão só no longão)');
   ok(Object.values(menus).every(m => Object.values(m.dias).filter(d => d.menu.some(id => op(id).dia === 'qualidade')).length <= 1), 'nunca mais de 1 dia com opções de qualidade na semana');
-  const comQual = todos().filter(x => x.tipoDia === 'qualidade');
+  const comQual = todos().filter(x => x.tipoDia === 'qualidade' && !(x.m.dor || []).length);   // com dor o menu conservador é curto de propósito
   const poucas = comQual.filter(x => x.menu.filter(id => id !== 'QUALIDADE_MOTOR').length < 4);
   ok(comQual.length > 0 && poucas.length === 0, `variedade: todo dia de qualidade tem pelo menos 4 opções além da do motor (${comQual.map(x => x.n + ':' + (x.menu.length - 1)).join(', ')})` + (poucas.length ? ' — poucas: ' + poucas.map(x => x.n).join(',') : ''));
   const leves = Object.entries(exemplos).filter(([n]) => menus[n].regime === 'continuo').flatMap(([, e]) => Object.entries(e)).filter(([k]) => / (LEVE|REGENERATIVO)$/.test(k));

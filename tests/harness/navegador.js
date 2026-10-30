@@ -25,7 +25,7 @@ function servidor() {
       const f = path.join(ROOT, u);
       fs.readFile(f, (e, d) => { if (e) { res.writeHead(404); return res.end(); } res.writeHead(200, { 'Content-Type': TIPOS[path.extname(f)] || 'application/octet-stream' }); res.end(d); });
     });
-    s.listen(0, () => ok(s));
+    s.listen(0, '127.0.0.1', () => ok(s));
   });
 }
 
@@ -49,7 +49,16 @@ async function abrirApp(opts = {}) {
     try { fs.rmSync(perfilDir, { recursive: true, force: true }); } catch (_) { }
     return { indisponivel: `Chrome encontrado, mas não pôde iniciar: ${e.message}` };
   }
+  const fechar = async () => { await browser.close(); s.close(); try { fs.rmSync(perfilDir, { recursive: true, force: true }); } catch (e) { } };
+  try {
   const page = await browser.newPage();
+  if(opts.diagnostico){
+    console.log('DIAG navegador iniciado');
+    page.on('request',r=>console.log('DIAG pedido '+r.resourceType()+' '+new URL(r.url()).hostname));
+    page.on('response',r=>console.log('DIAG resposta '+r.status()+' '+new URL(r.url()).hostname));
+    page.on('domcontentloaded',()=>console.log('DIAG DOM pronto'));
+    page.on('dialog',d=>console.log('DIAG diálogo '+d.type()));
+  }
   // Só o servidor local: recursos externos (Firebase, mapas) não carregam no teste e só atrasavam a abertura.
   await page.setRequestInterception(true);
   page.on('request', (rq) => { const u = rq.url(); if (/^https?:\/\/(localhost|127\.0\.0\.1)[:/]/.test(u) || u.startsWith('data:') || u.startsWith('blob:')) rq.continue(); else rq.abort(); });
@@ -59,7 +68,7 @@ async function abrirApp(opts = {}) {
   const erros = [];
   page.on('pageerror', e => erros.push(String(e.stack || e.message || e).split('\n').slice(0, 3).join(' / ')));
   await page.evaluateOnNewDocument(RELOGIO);
-  const url = `http://localhost:${porta}/`;
+  const url = `http://127.0.0.1:${porta}/`;
   // O app mantém conexões/recursos em segundo plano; esperar networkidle2 torna
   // o teste dependente da rede e pode expirar mesmo com o DOM já utilizável.
   await page.goto(url, { waitUntil: 'domcontentloaded' });
@@ -76,8 +85,11 @@ async function abrirApp(opts = {}) {
   // Erros da inicialização (antes do teste começar) ficam separados: hoje há uma corrida conhecida na abertura
   // (render antes de state.treinos carregar, ver VALIDACAO-PLANO-MESTRE). O teste decide como tratá-los.
   const errosInicio = erros.splice(0);
-  const fechar = async () => { await browser.close(); s.close(); try { fs.rmSync(perfilDir, { recursive: true, force: true }); } catch (e) { } };
   return { page, fechar, erros, errosInicio, url };
+  } catch (e) {
+    await fechar();
+    throw e;
+  }
 }
 const ok = (cond, msg) => { console.log((cond ? 'PASS ' : 'FAIL ') + msg); if (!cond) process.exitCode = 1; };
 module.exports = { abrirApp, ok, espera, CHROME };

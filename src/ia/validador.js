@@ -129,6 +129,10 @@ function iaValidarProposta(ctx, bruto){
     lista.forEach(e=>{ e.sessao = tipo==='lower' ? 'LEG_DAY_HEAVY' : tipo==='full' ? 'FULL_BODY_LIGHT' : 'UPPER_BODY'; e.estimulo = { forma, foco }; });
   });
 
+  // F3b: regra do usuário sobre Leg Day — a IA pode trocar QUAL dia é de perna pesado (com F7), mas não a quantidade.
+  const nLower = diasMotor.filter(d=>tipos[d]==='lower').length, nLowerMotor = diasMotor.filter(d=>ctx.dias[d].tipoMotor==='lower').length;
+  if(nLower!==nLowerMotor) E('F3', `${nLower} dia(s) de perna pesado; o motor definiu ${nLowerMotor}`);
+
   // F6: volume.
   const total = iaTotalSeries(novo);
   if(IA_CONFIG.totalSeriesNaoPassaDoMotor && total>ctx.totalSeriesMotor) E('F6', `total de ${total} séries > ${ctx.totalSeriesMotor} do plano do motor`);

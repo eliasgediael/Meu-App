@@ -88,6 +88,7 @@ function iaValidarCorridaV2(ctx, ctxC, corrida, E){
       if(!iaV2PaceNaZona(g.zona, (r.lo + r.hi)/2, P)) E('R6', `${it.dia}: pace ${g.pace} fora de ${g.zona}`);
     });
     if(est.capacidade.corrida==='iniciante' && s.gpsSteps.some(g=>/Z3|Z4|Z5/.test(g.zona || ''))) E('R8', `${it.dia}: iniciante com etapa em Z3+`);
+    if(typeof motorQualidadeModo==='function' && motorQualidadeModo(est, ctx.ajustes)!=='normal' && s.gpsSteps.some(g=>/Z5/.test(g.zona || ''))) E('R8', `${it.dia}: Z5 com treino forte conservador`);
     if(cd.tipoDia==='longa' && (s.totalMin > cd.ref.totalMin || s.cargaIntensa > cd.ref.carga + 0.05)) E('R9', `${it.dia}: longão acima do longão do motor`);
     sessoes[it.dia] = s; escolhidas[it.dia] = it.opcao;
     somaMin += s.totalMin; cargaSemana += s.cargaIntensa;

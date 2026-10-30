@@ -164,6 +164,9 @@ function corridaOpcaoElegivel(est, id, cdia){
   if(op.provas && !op.provas.includes(c.goalKey)) return { ok:false, motivo:'prova' };
   if(op.soComProva && est.objetivo.tipo!=='prova') return { ok:false, motivo:'sem_prova' };
   if(op.qualidade && !motorQualidadePermitida(est, cdia.ajustes)) return { ok:false, motivo:'qualidade_nao_permitida' };
+  // Treino forte conservador (um "não sei", dor leve em membro inferior): só limiar, fartlek e blocos de maratona.
+  if(op.qualidade && op.dia==='qualidade' && typeof motorQualidadeModo==='function' && motorQualidadeModo(est, cdia.ajustes)!=='normal'
+    && !['motor', 'limiar', 'fartlek', 'maratona'].includes(op.familia)) return { ok:false, motivo:'qualidade_conservadora' };
   if(op.prontidaoNormal && est.recuperacao.prontidao!=='normal') return { ok:false, motivo:'recuperacao' };
   if(op.semDorInferior && ccDorInferior(est)) return { ok:false, motivo:'dor_membro_inferior' };
   if(id==='LEVE_STRIDES' && (cdia.vesperaDeQualidade || cdia.aposPernaPesada || cdia.pernaPesadaNoDia)) return { ok:false, motivo:'recuperacao_entre_sessoes' };
@@ -485,6 +488,7 @@ function ccMontarCom(est, id, cdia, E){
   // Limites que nenhuma opção passa: duração do motor para o dia e carga de intensidade da sessão do motor.
   if(s.totalMin > alvo || s.totalMin < Math.floor(cdia.limiteMin*faixa[0])) return null;
   if(s.cargaIntensa > cdia.ref.carga + 0.05) return null;
+  if(typeof motorQualidadeModo==='function' && motorQualidadeModo(est, cdia.ajustes)!=='normal' && (s.gpsSteps || []).some(g=>/Z5/.test(g.zona || ''))) return null;
   return s;
 }
 

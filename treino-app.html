@@ -780,6 +780,14 @@ input[type=file]{ display:none; }
 .mrt-anat path{ stroke:none; mix-blend-mode:multiply; transition:fill-opacity .18s ease; }
 .mrt-anat path.primary{ fill:#FF5A1F; fill-opacity:.82; }
 .mrt-anat path.secondary{ fill:#FF9A73; fill-opacity:.5; }
+.fr-bibmapa{ margin:0 0 12px; }
+.fr-bibmapa .figs{ display:grid; grid-template-columns:1fr 1fr; gap:4px; align-items:end; }
+.fr-bibmapa .mrt-anat{ max-height:230px; }
+.fr-bibmapa .mrt-anat path{ fill:#FF5A1F; fill-opacity:0; cursor:pointer; pointer-events:all; mix-blend-mode:normal; -webkit-tap-highlight-color:transparent; }
+.fr-bibmapa .mrt-anat path:active{ fill-opacity:.3; }
+.fr-bibmapa .mrt-anat path.on{ fill-opacity:.82; }
+.fr-bibmapa .info{ display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:8px; font-size:14px; }
+.fr-bibmapa .info button{ background:none; border:0; color:var(--accent); font:inherit; font-weight:600; padding:6px 0; }
 .mrt-muscle-meta{ min-width:0; padding-left:14px; border-left:1px solid var(--border); }
 .mrt-muscle-meta .label{ font-size:12px; color:var(--text-dim); margin-bottom:3px; }
 .mrt-muscle-meta .value{ font-size:18px; font-weight:800; line-height:1.2; }
@@ -2472,6 +2480,12 @@ button:focus-visible,summary:focus-visible,[role="button"]:focus-visible{outline
 .fr-weekday small{font-size:10px;font-weight:500;}
 .fr-weekday b{font-size:17px;}
 .fr-weekday span{font-size:12px;}
+.fr-weekday .fr-wdic{width:34px;height:34px;border-radius:50%;background:var(--surface-2);color:var(--text);display:flex;align-items:center;justify-content:center;}
+.fr-weekday .fr-wdic svg{width:17px;height:17px;}
+.fr-weekday .fr-wdic.rest{color:var(--text-dim);}
+.fr-weekday .fr-wdic.done{background:var(--data);color:#fff;}
+.fr-weekday.sel .fr-wdic{background:rgba(255,255,255,.18);color:var(--bg);}
+.fr-weekday.sel .fr-wdic.done{background:var(--bg);color:var(--text);}
 .fr-weekday.today:not(.sel){border-color:var(--text);}
 .fr-weekday.sel{background:var(--text);color:var(--bg);}
 .mrt-muscherorow .fr-bodymap{max-height:150px;}
@@ -2520,6 +2534,22 @@ button:focus-visible,summary:focus-visible,[role="button"]:focus-visible{outline
 .mrt-bibcard>.tag{grid-column:2;justify-self:start;font-size:11px;}
 .mrt-bibcard::after{content:'›';grid-column:3;grid-row:1/3;font-size:22px;color:var(--text-dim);}
 .mrt-pnivel .tx small,.fr-pnivel .tx small{white-space:normal;overflow:visible;text-overflow:clip;}
+.fr-guidance{list-style:none;padding:0;margin:28px 0 24px;}
+.fr-guidance li,.fr-syncrow{padding:18px 0;border-bottom:1px solid var(--border,#e4e4e4);font-size:14px;line-height:1.5;}
+.fr-guidance b{font-weight:600;}
+.fr-guidance p,.fr-syncrow p{color:var(--text-dim);font-size:13px;margin:4px 0 0;}
+.fr-complement .mrt-subhead{align-items:center;}
+.fr-complement-result{text-align:center;padding:32px 8px;}
+.fr-complement-icon{width:62px;height:62px;margin:0 auto 24px;display:grid;place-items:center;border-radius:50%;background:#f2f2f0;}
+.fr-complement-icon svg{width:26px;height:26px;}
+.fr-complement-result h2{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:24px;font-weight:600;line-height:1.2;letter-spacing:-.7px;margin:0 0 18px;}
+.fr-complement-result p{font-size:14px;line-height:1.65;color:var(--text-dim);margin:0 auto 42px;max-width:310px;}
+.fr-complement-result .btn-primary{width:100%;}
+.fr-complement-list{margin-top:24px;border-top:0;}
+.fr-complement-list .ds-row{padding:18px 0;min-height:75px;}
+.fr-complement-list .nm{font-size:14px;font-weight:600;}
+.fr-flat .fr-recovery-input{display:block;width:100%;height:50px;padding:12px;border:1px solid #ddd;border-radius:10px;background:#f7f7f7;font-size:14px;font-weight:500;box-sizing:border-box;}
+.fr-flat .fr-recovery-label{display:block;font-size:14px;font-weight:500;letter-spacing:0;text-transform:none;margin-bottom:6px;}
 </style>
 </head>
 <body>
@@ -4302,6 +4332,7 @@ function qv2Render(){
     return qv2Shell(titulo, corpo, { passo:i+1, total:telas.length, podeVoltar:i>0, botao: ultimo ? 'Concluir' : 'Próximo', desabilitado: !qv2Valido(t.id, R) });
   }
   if(q.fase==='entendi'){
+    if(q.erroGeracao && q.erro) return `<div class="mrt-root"><div class="mrt-scroll"><button class="mrt-wex-x" id="qv2Voltar" aria-label="Voltar">${ICONS.back}</button><div class="fr-complement-result" role="alert" style="padding-top:96px;"><div class="fr-complement-icon" aria-hidden="true">${ICONS.calendar}</div><h2>Não foi possível gerar</h2><p>Suas respostas continuam disponíveis. Tente novamente.</p><button class="btn-primary" id="qv2Prox">Tentar novamente</button><button class="btn-ghost" style="width:100%;min-height:44px;margin-top:8px;" id="qv2Prox2">Revisar respostas</button></div></div></div>`;
     const frases = q.resumo || [];
     const cau = qv2CautelaAtual();
     const precisaCautela = !!(cau && cau.temAlerta && !(cau.modo==='liberado' || cau.modo==='conservador'));
@@ -4397,10 +4428,11 @@ async function qv2Concluir(){
 }
 async function qv2Gerar(){
   const q = state.qv2;
+  q.erroGeracao = false;
   q.fase = 'gerando'; qv2Refresh();
   let r = null;
   try{ r = await gerarPrimeiroPlanoV2(q.revisao ? { motivoVersao:'Questionário revisado', origemVersao:'revisao' } : undefined); }catch(e){ r = null; }
-  if(!r){ q.fase = 'entendi'; q.erro = 'Não consegui montar o plano agora. Tente de novo.'; qv2Refresh(); return; }
+  if(!r){ q.fase = 'entendi'; q.erroGeracao = true; q.erro = 'Não consegui montar o plano agora. Tente de novo.'; qv2Refresh(); return; }
   if(r.bloqueado){
     if(r.status==='avaliacao_em_andamento'){ q.fase = 'pausa'; } else { qv2IrParaCautela(); }
     qv2Refresh(); return;
@@ -4502,7 +4534,7 @@ function qv2Wire(){
       await qv2Gerar();
     }else if(q.fase==='pausa'){ qv2IrParaCautela(); qv2Refresh(); }
   };
-  const prox2 = document.getElementById('qv2Prox2'); if(prox2) prox2.onclick = qv2Sair;
+  const prox2 = document.getElementById('qv2Prox2'); if(prox2) prox2.onclick = ()=>{ if(q.erroGeracao && q.fase==='entendi'){q.erroGeracao=false;q.erro=null;qv2Refresh();}else qv2Sair(); };
   const ver = document.getElementById('qv2VerTreino');
   if(ver) ver.onclick = ()=>{ const off = q.offset||0; state.qv2 = null; const hoje = DAY_ABBR[(new Date().getDay()+6)%7]; state.selectedDayCorrida = state.selectedDayMusc = state.selectedDayHoje = off ? 'Seg' : hoje; state.weekOffset = off; state.tab = 'meusTreinos'; render(); };
   const ini = document.getElementById('qv2VerInicio');
@@ -6793,6 +6825,7 @@ function relogioGarminCardHtml(){
       <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
         <button class="mrt-pillbtn" id="btnRelogioEscolher">${lista.length ? 'Trocar relógio' : 'Escolher relógio'}</button>
         ${lista.length ? `<button class="mrt-pillbtn" id="btnRelogioEnviar">Enviar treinos agora</button>` : ''}
+        ${lista.length && typeof relogioApi().esquecer==='function' ? `<button class="mrt-pillbtn" style="min-height:44px;" id="btnRelogioDesconectar">Desconectar Garmin</button>` : ''}
         ${rota ? `<button class="mrt-pillbtn" id="btnRelogioRemoverRota">Remover percurso</button>` : ''}
       </div>
     </div>`;
@@ -6805,6 +6838,17 @@ function wireRelogioGarmin(){
   if(esc) esc.onclick = async ()=>{ const r = await R.escolher(); if(r && r.erro) showToast('Não consegui abrir o Garmin Connect'); };
   const rem = document.getElementById('btnRelogioRemoverRota');
   if(rem) rem.onclick = ()=> relogioRemoverRota();
+  const desconectar = document.getElementById('btnRelogioDesconectar');
+  if(desconectar) desconectar.onclick = async ()=>{
+    if(!(await confirmarApp({titulo:'Desconectar Garmin',texto:'Interromper a conexão com o Garmin? As atividades já registradas continuam no histórico.',ok:'Desconectar'}))) return;
+    desconectar.disabled=true;
+    try{
+      await R.esquecer();
+      const est=await R.estado();
+      if(!est || est.erro || !Array.isArray(est.relogios) || est.relogios.length) throw new Error('Desconexão não confirmada');
+      _relogioEstado=est; relogioAtualizarModelo(est); render(); showToast('Garmin desconectado');
+    }catch(e){desconectar.disabled=false;showToast('Não foi possível confirmar a desconexão. Tente novamente.');}
+  };
   const env = document.getElementById('btnRelogioEnviar');
   if(env) env.onclick = async ()=>{
     const r = await relogioEnviarTreinos({ forcar:true });
@@ -6960,6 +7004,7 @@ function esteiraIcon(){ return `<svg viewBox="0 0 24 24" fill="none" stroke="cur
 function renderGpsRunScreen(){
   const gr = state.gpsRun;
   if(!gr) return '';
+  if(gr._locationHelp && gr.status==='denied') return renderGpsLocationHelp();
   if(gr.mode==='esteira'){
     if(gr.status==='intro') return renderEsteiraIntro(gr);
     if(gr.status==='finished') return renderGpsSummary(gr);
@@ -7232,13 +7277,26 @@ function renderGpsDenied(gr){
   return `
     <div class="mrt-root">
       <div class="mrt-scroll" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;">
-        <div class="mrt-summarycheck" style="background:var(--gold-soft);color:var(--gold);">${gpsIcon()}</div>
-        <div class="mrt-runtitle" style="font-size:18px;margin:14px 0 6px;">Sem acesso ao GPS</div>
+        <div class="mrt-summarycheck" style="background:#f2f2f0;color:var(--text);">${gpsIcon()}</div>
+        <div class="mrt-runtitle" style="font-size:24px;margin:24px 0 12px;">Localização indisponível</div>
         <div class="mrt-sub" style="margin-bottom:20px;">${msg}</div>
-        <button class="btn-primary" style="width:100%;margin-bottom:10px;" id="gpsBtnRetry">Tentar de novo</button>
-        <button class="btn-secondary" style="width:100%;" id="gpsBtnExitDenied">Cancelar</button>
+        <button class="btn-primary" style="width:100%;margin-bottom:10px;" id="gpsBtnLocationHelp">Ver orientação</button>
+        <button class="btn-secondary" style="width:100%;margin-bottom:10px;" id="gpsBtnRetry">Tentar de novo</button>
+        <button class="btn-ghost" style="width:100%;min-height:44px;" id="gpsBtnDeniedTreadmill">Usar esteira</button>
+        <button class="btn-ghost" style="width:100%;min-height:44px;" id="gpsBtnExitDenied">Voltar</button>
       </div>
     </div>`;
+}
+function renderGpsLocationHelp(){
+  const nativo = !!(window.NativeBridge && window.NativeBridge.isNative && window.NativeBridge.isNative());
+  const passos = nativo
+    ? [['Abra Ajustes do iPhone', 'Encontre Forza Run nas configurações de aplicativos.'], ['Toque em Localização', 'Revise a permissão de localização para registrar a corrida.'], ['Volte ao app', 'Confira o sinal antes de iniciar.']]
+    : [['Abra as permissões deste site', 'Nas configurações do navegador, encontre a permissão de localização.'], ['Permita a localização', 'Confira também se a localização do aparelho está ativada.'], ['Volte ao app', 'Tente novamente em um local aberto para conferir o sinal.']];
+  return `<div class="mrt-root"><div class="mrt-scroll fr-flat fr-complement">
+    <div class="mrt-subhead"><button class="mrt-wex-x" id="gpsLocationHelpBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:24px;font-weight:600;">Revisar localização</div></div>
+    <ol class="fr-guidance">${passos.map(([t,s])=>`<li><b>${t}</b><p>${s}</p></li>`).join('')}</ol>
+    <button class="btn-primary" style="width:100%;" id="gpsLocationHelpPrepare">Voltar à preparação</button>
+  </div></div>`;
 }
 // Faixa de cor na borda indicando dentro/fora da zona de ritmo — mesma comparação do aviso por voz
 // (gpsCheckZoneAlert), só que sempre visível, com texto de apoio (nunca só a cor, pra quem não
@@ -7849,6 +7907,10 @@ function wireGpsRunScreen(){
   if(byId('gpsExitIntro')) byId('gpsExitIntro').onclick = ()=>{ state.gpsRun=null; render(); };
   if(byId('gpsBtnBegin')) byId('gpsBtnBegin').onclick = ()=> gr.mode==='esteira' ? startEsteiraRun(gr.day) : startGpsRun(gr.day);
   if(byId('gpsBtnRetry')) byId('gpsBtnRetry').onclick = ()=> startGpsRun(gr.day);
+  if(byId('gpsBtnLocationHelp')) byId('gpsBtnLocationHelp').onclick = ()=>{ gr._locationHelp=true; render(); };
+  if(byId('gpsLocationHelpBack')) byId('gpsLocationHelpBack').onclick = ()=>{ gr._locationHelp=false; render(); };
+  if(byId('gpsLocationHelpPrepare')) byId('gpsLocationHelpPrepare').onclick = ()=>{ gr._locationHelp=false; gr.status='intro'; render(); };
+  if(byId('gpsBtnDeniedTreadmill')) byId('gpsBtnDeniedTreadmill').onclick = ()=> openEsteiraIntro(gr.day);
   if(byId('gpsBtnExitDenied')) byId('gpsBtnExitDenied').onclick = ()=>{ state.gpsRun=null; render(); };
   if(byId('gpsExitRunning')) byId('gpsExitRunning').onclick = gpsExitRun;
   if(byId('gpsBtnPause')) byId('gpsBtnPause').onclick = ()=> gr.status==='paused' ? gpsResumeRun() : gpsPauseRun();
@@ -8533,15 +8595,15 @@ const HB_MUSC_QTD = { iniciante:5, intermediario:6, avancado:7 };
 // Cada "slot" é uma função do treino (joelho, quadril, unilateral...) com uma lista de preferências (regex sobre o
 // nome sem acento, em ordem) — assim funciona com qualquer equipamento do POOL e respeita o tier do nível.
 const HB_SLOT = {
-  joelho:    { papel:'base',     grupo:'Pernas', from:['Pernas'], pref:{ default:[/agachamento livre/,/agachamento frontal/,/hack/,/leg press/,/smith/,/agachamento/], iniciante:[/leg press/,/hack/,/smith/,/goblet|agachamento com halteres/,/agachamento/] } },
+  joelho:    { papel:'base',     grupo:'Pernas', from:['Pernas'], excluir:/panturrilha/, pref:{ default:[/agachamento livre/,/agachamento frontal/,/hack/,/leg press/,/smith/,/agachamento/], iniciante:[/leg press/,/hack/,/smith/,/goblet|agachamento com halteres/,/agachamento/] } },
   quadril:   { papel:'auxiliar', grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff/,/terra/,/bom dia/,/elevacao de quadril/,/ponte de gluteo/,/flexora/], iniciante:[/flexora/,/hiperextensao/,/ponte de gluteo/] } },
-  unilateral:{ papel:'auxiliar', grupo:'Pernas', from:['Pernas'], pref:{ default:[/bulgaro/,/afundo|passada|step up/,/leg press/,/hack/,/smith/,/agachamento/], iniciante:[/hack/,/smith/,/leg press/,/agachamento/] } },
+  unilateral:{ papel:'auxiliar', grupo:'Pernas', from:['Pernas'], excluir:/panturrilha/, pref:{ default:[/bulgaro/,/afundo|passada|step up/,/leg press/,/hack/,/smith/,/agachamento/], iniciante:[/hack/,/smith/,/leg press/,/agachamento/] } },
   quadrIso:  { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/extensora/,/flexora/] } },
   panturrilha:{ papel:'isolado', grupo:'Pernas', from:['Pernas'], pref:{ default:[/panturrilha/] } },
   posterior: { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/flexora/,/extensora/] } },
   adutora:   { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/abdutora|adutora/,/panturrilha/] } },
   empHoriz:  { papel:'base',     grupo:'Peito',  from:['Peito'], pref:{ default:[/supino reto com barra/,/supino reto com halteres|supino com halteres/,/supino inclinado com halteres/,/supino inclinado com barra/,/supino/], iniciante:[/smith/,/supino com halteres|supino reto com halteres/,/supino/] } },
-  puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/barra fixa/,/puxada/,/pulldown/], iniciante:[/puxada frontal/,/pulldown/] } },
+  puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], excluir:/braco estendido|pullover/, pref:{ default:[/barra fixa/,/puxada/,/pulldown/], iniciante:[/puxada frontal/,/pulldown/] } },
   empVert:   { papel:'auxiliar', grupo:'Ombro',  from:['Ombro'], pref:{ default:[/desenvolvimento militar|desenvolvimento com halteres/,/arnold/,/desenvolvimento/], iniciante:[/desenvolvimento na maquina/,/desenvolvimento/] } },
   puxHoriz:  { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/remada curvada com barra/,/remada curvada com halteres/,/remada cavalinho/,/remada baixa/,/remada unilateral/,/remada na maquina/,/remada/], iniciante:[/remada baixa/,/remada na maquina/,/remada/] } },
   ombroIso:  { papel:'isolado',  grupo:'Ombro',  from:['Ombro'], pref:{ default:[/elevacao lateral/] } },
@@ -8568,12 +8630,21 @@ function buildHybridMuscSession(tipo, nivel, equip, weekTaken, isSafe, opts){
     const regexes = slot.pref[nivel] || slot.pref.default;
     const todos = [];
     slot.from.forEach(g=>(pool[g]||[]).forEach(e=>todos.push({ e, g })));
+    // excluir: nomes que casam com a preferência mas são de outra função (ex.: "panturrilha no leg press" no slot de joelho).
+    const excluido = (e)=>!!(slot.excluir && slot.excluir.test(normalizeNoAccents(e.nome)));
+    // rotacao (opcional, motor V2): escolhe a N-ésima opção válida na ordem de preferência; o exercício base não roda.
+    const ehBase = slot.papel==='base' || (tipo==='full' && idx===0);
+    const rot = (opts && opts.rotacao && !ehBase) ? opts.rotacao : 0;
     const acha = (tiers, evitarPadrao, repetir)=>{
+      const achados = [];
       for(const re of regexes){
-        const c = todos.find(({e})=>re.test(normalizeNoAccents(e.nome)) && tiers.includes(exercicioTier(e)) && isSafe(e.nome) && !taken.has(e.nome) && (repetir || !weekTaken.has(e.nome)) && !(evitarPadrao && padroes.has(padraoMovimento(e.nome))));
-        if(c) return c.e;
+        for(const { e } of todos){
+          if(!(re.test(normalizeNoAccents(e.nome)) && !excluido(e) && tiers.includes(exercicioTier(e)) && isSafe(e.nome) && !taken.has(e.nome) && (repetir || !weekTaken.has(e.nome)) && !(evitarPadrao && padroes.has(padraoMovimento(e.nome))))) continue;
+          if(!rot) return e;
+          if(!achados.includes(e)) achados.push(e);
+        }
       }
-      return null;
+      return achados.length ? achados[rot % achados.length] : null;
     };
     let e = null;
     for(const repetir of [false, true]){
@@ -8583,7 +8654,7 @@ function buildHybridMuscSession(tipo, nivel, equip, weekTaken, isSafe, opts){
     // Sem nada que case (ex.: treino em casa só com peso do corpo): qualquer exercício do grupo que combine com o papel.
     if(!e){
       const composto = slot.papel!=='isolado';
-      const c = todos.filter(({e:x})=>relaxed.includes(exercicioTier(x)) && isSafe(x.nome) && !taken.has(x.nome) && (composto ? isExercicioComposto(x.nome)!==false : isExercicioComposto(x.nome)!==true));
+      const c = todos.filter(({e:x})=>!excluido(x) && relaxed.includes(exercicioTier(x)) && isSafe(x.nome) && !taken.has(x.nome) && (composto ? isExercicioComposto(x.nome)!==false : isExercicioComposto(x.nome)!==true));
       if(c.length) e = c[0].e;
     }
     if(!e) return;
@@ -11036,7 +11107,15 @@ async function exportBackup(){
 async function importBackupFile(file){
   let obj;
   try{ obj = JSON.parse(await file.text()); }catch(e){ showToast('Arquivo inválido'); return; }
-  if(!(await confirmarApp({ titulo:'Importar backup?', texto:'Substitui todos os dados atuais do app pelos do arquivo.', ok:'Importar', perigo:true }))) return;
+  if(!obj || typeof obj!=='object' || Array.isArray(obj)){showToast('Arquivo de backup inválido');return;}
+  const contarLista=(valor)=>{try{const a=typeof valor==='string'?JSON.parse(valor):valor;return Array.isArray(a)?a.length:null;}catch(e){return null;}};
+  const resumo=[];
+  if(Array.isArray(obj[BACKUP_CAMPO_CORRIDAS])){const n=obj[BACKUP_CAMPO_CORRIDAS].filter(gpsEhCorridaSalva).length;resumo.push(`${n} corrida${n===1?'':'s'} GPS`);}
+  for(const [key,singular,plural] of [['workoutSessionsLog','sessão de musculação','sessões de musculação'],['atividadesLivres','atividade livre','atividades livres']]){
+    const n=contarLista(obj[key]);if(n!==null) resumo.push(`${n} ${n===1?singular:plural}`);
+  }
+  const previa=`<p style="overflow-wrap:anywhere;">${escHtmlRelogio(file.name||'Backup selecionado')}</p>${resumo.length?`<p>${resumo.join(' · ')}</p>`:''}<div class="fr-syncrow">Dados atuais do aparelho<br><b>↓ Conteúdo do backup selecionado</b></div><p>Os campos presentes no arquivo substituirão os valores atuais. Corridas GPS são importadas pelo ID, sem excluir outras corridas já salvas.</p>`;
+  if(!(await confirmarApp({ titulo:'Revisar importação', texto:previa, ok:'Confirmar importação' }))) return;
   for(const k of Object.keys(obj)){
     if(k===BACKUP_CAMPO_CORRIDAS) continue;
     try{ await window.storage.set(k, obj[k], false); }catch(e){}
@@ -13051,13 +13130,27 @@ function wirePerfilExtras(){
   const btnAuthEsqueciSenha = document.getElementById('btnAuthEsqueciSenha');
   if(btnAuthEsqueciSenha) btnAuthEsqueciSenha.onclick = ()=>{
     if(state.authBusy) return;
+    if(!UI_V2 || state.treinoV2Escape || state.tab!=='conta'){ enviarResetSenha(); return; }
+    state.authResetEmail = (document.getElementById('inAuthEmail').value||'').trim();
+    state.authScreen = 'recuperar'; state.authError = null; state.authInfo = null;
+    render();
+  };
+  const btnAuthVoltarEntrar = document.getElementById('btnAuthVoltarEntrar');
+  if(btnAuthVoltarEntrar) btnAuthVoltarEntrar.onclick = ()=>{ state.authScreen=null; state.authError=null; state.authInfo=null; render(); };
+  const btnAuthResetSenha = document.getElementById('btnAuthResetSenha');
+  const enviarResetSenha = ()=>{
+    if(state.authBusy) return;
+    const campo = document.getElementById('inAuthEmail');
+    if(!campo.reportValidity()) return;
     const email = (document.getElementById('inAuthEmail').value||'').trim();
+    state.authResetEmail = email;
     state.authError = null; state.authInfo = null;
     if(!email){ state.authError = 'Digita seu e-mail no campo acima primeiro.'; render(); return; }
     state.authBusy = 'reset';
     render();
     auth.sendPasswordResetEmail(email).then(function(){
-      state.authInfo = 'Mandei um e-mail pra você definir uma senha nova. Depois de definir, volta aqui e usa "Entrar".';
+      if(state.tab==='conta' && state.authScreen==='recuperar') state.authScreen = 'senha-enviada';
+      else if(!UI_V2 || state.treinoV2Escape || state.tab!=='conta') state.authInfo = 'Se houver uma conta com esse e-mail, você receberá as instruções para definir uma nova senha.';
     }).catch(function(e){
       state.authError = authErrorMessage(e.code, e.message);
     }).finally(function(){
@@ -13065,6 +13158,7 @@ function wirePerfilExtras(){
       render();
     });
   };
+  if(btnAuthResetSenha) btnAuthResetSenha.onclick = enviarResetSenha;
   const souPersonalToggle = document.getElementById('souPersonalToggle');
   if(souPersonalToggle) souPersonalToggle.onclick = async ()=>{
     if(state.perfil.souPersonal){
@@ -14493,7 +14587,7 @@ function renderTreinoV2Content(){
   void nomeDia;
   const faixa = '<div class="fr-weekstrip" role="group" aria-label="Dias da semana">'+DAY_ABBR.map(d=>{
     const sel=d===day, hoje=d===hojeAbbr && (state.weekOffset||0)===0, st=dayStatus(d);
-    return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span>${st==='done'?'✓':st==='none'?'—':'•'}</span></button>`;
+    return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span class="fr-wdic ${st==='done'?'done':st==='none'?'rest':''}">${st==='done' ? CHECK_SVG : st==='none' ? ICONS.bed : treinoEntryForDay(d) ? ICONS.run : ICONS.dumbbell}</span></button>`;
   }).join('')+'</div>';
   const semanaCompleta=frDisclosure('semana-completa','Ver semana completa',daylist);
   return header + planoBar + weekNav + faixa + avisoAgenda + avisoQualidade + toggle + chips + dayContent + semanaCompleta + renderOutrasAtividadesDoDia(day);
@@ -15664,10 +15758,12 @@ function wireTreinoTemplateActions(){
 /* ============================================================================================
    TELAS SECUNDÁRIAS (V2): Progresso, Comparativo, Medidas, Equipamentos, Biblioteca e as telas do Perfil
    ============================================================================================ */
-const SUB_V2_TABS = ['progresso','comparativo','medidas','equipamentos','biblioteca','conta','integracoes','saudeRelogio','personal','preferencias','maisOpcoes'];
+const SUB_V2_TABS = ['progresso','comparativo','medidas','equipamentos','biblioteca','conta','integracoes','saudeRelogio','personal','preferencias','maisOpcoes','recursos','sincronizacao'];
 const SUB_V2_TITULOS = {
   progresso:'Progresso', comparativo:'Comparativo', medidas:'Medidas corporais', equipamentos:'Equipamentos', biblioteca:'Biblioteca',
   conta:'Conta', integracoes:'Integrações', saudeRelogio:'Saúde do relógio', personal:'Personal trainer', preferencias:'Configurações', maisOpcoes:'Dados e backup',
+  recursos:'Mais recursos',
+  sincronizacao:'Sincronização',
 };
 function subV2Voltar(){
   const dest = state.subOrigin || 'perfil';
@@ -16140,9 +16236,7 @@ function frProgressoPrincipal(modo, temCiclo){
       : `<div class="fr-progvazio">Nenhuma atividade neste período. Consulte o histórico ou registre uma atividade.</div>`}
     <button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>${!ultimas.length ? '<button class="btn-secondary" data-tabgo="meusTreinos">Ver meu treino</button>' : ''}
   </div>`;
-  const linhaAn = (k, ic, t)=>`<button class="fr-plink fr-pan" data-progdet="${k}"><span class="ic">${ic}</span><span>${t}</span>${DS_CHEV}</button>`;
-  const analises = `<div class="fr-pult"><div class="fr-ptit">Análises detalhadas</div>
-    ${linhaAn('corrida', ICONS.run, 'Corrida')}${linhaAn('musc', ICONS.dumbbell, 'Musculação')}${linhaAn('medidas', ICONS.ruler, 'Medidas corporais')}</div>`;
+  const analises = `<div class="fr-pult"><button class="fr-plink" data-proganalises><span>Análises e medidas</span>${DS_CHEV}</button></div>`;
   const marca = `<div class="fr-pbrand6"><span class="mk">${ARTE_MARCA_SVG('currentColor')}</span><span><b>FORZA</b> RUN</span></div>`;
   const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
   return `${marca}<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${ultimas.length ? resumo+evolucao : ''}${atividades}${analises}`;
@@ -16157,6 +16251,7 @@ function frProgressoDetalhe(det, partes){
 }
 function renderProgressoV2(){
   if(state.progHistorico) return frHistoricoAtividades();
+  if(state.progAnalises && !state.progDetalhe) return renderAnalisesV2();
   const temCiclo = !!treinoPhaseParts();
   let modo = state.progModo || 'semana'; if(modo==='ciclo' && !temCiclo) modo = 'semana';
   // Os gráficos detalhados seguem o período escolhido (Semana → 4 semanas, Mês → 3 meses, Ciclo → 1 ano).
@@ -16341,6 +16436,8 @@ function wireProgressoV2(){
   document.querySelectorAll('[data-muschistopen]').forEach(el=>{ el.onclick = ()=> abrirMuscHistoryV2(el.getAttribute('data-muschistopen')); });
   document.querySelectorAll('[data-muschistmenu]').forEach(el=>{ el.onclick = (ev)=>{ ev.stopPropagation(); abrirOpcoesMuscHistoryV2(el.getAttribute('data-muschistmenu')); }; });
   document.querySelectorAll('[data-proghisttodos]').forEach(el=>{ el.onclick = ()=>{ state.progHistTodos = !state.progHistTodos; render(); }; });
+  document.querySelectorAll('[data-proganalises]').forEach(el=>{ el.onclick=()=>{state.progAnalises=true;state.progDetalhe=null;render();}; });
+  document.querySelectorAll('[data-proganalisesvoltar]').forEach(el=>{ el.onclick=()=>{state.progAnalises=false;render();}; });
   document.querySelectorAll('[data-progdet]').forEach(el=>{ el.onclick = ()=>{ const k = el.getAttribute('data-progdet'); state.progDetalhe = state.progDetalhe===k ? null : k; render(); }; });
   document.querySelectorAll('[data-progdetvoltar]').forEach(el=>{ el.onclick = ()=>{ state.progDetalhe = null; render(); }; });
   document.querySelectorAll('[data-progevol]').forEach(el=>{ el.onclick = ()=>{ state.progEvol = el.getAttribute('data-progevol'); render(); }; });
@@ -16609,8 +16706,36 @@ function bibFiltrada(){
     if(f.nivel && f.nivel!=='todos' && e.nivel!==f.nivel) return false;
     if(f.local && f.local!=='todos' && !bibDisponivelNoPerfil(e.nome, f.local)) return false;
     if(f.equip && f.equip!=='todos' && equipamentoTipoDe(e)!==f.equip) return false;
+    // com um músculo escolhido, só entra quem o trabalha como PRINCIPAL (agachamento não aparece em panturrilha)
+    if(state.bibMusculo){
+      if(!muscleRegionsForExercise(e.nome).primary.includes(state.bibMusculo)) return false;
+      // alongamento e cardio só aparecem quando o grupo é escolhido de propósito (salto e alongamento não são "exercício de panturrilha")
+      if((e.grupo==='Alongamento' || e.grupo==='Cardio') && state.bibGrupo!==e.grupo) return false;
+      if(state.bibMusculo==='abs' && e.grupo==='Pernas') return false;   // o catálogo marca "Agachamento livre" com abdômen como principal
+    }
     return true;
   });
+}
+// Escolher o músculo no corpo: o mesmo mapa anatômico do exercício, mas cada região vira um botão de toque.
+const BIB_REGIAO_NOME = {
+  'chest':'Peitoral', 'shoulders':'Ombros', 'rear-shoulders':'Deltoide posterior', 'biceps':'Bíceps', 'triceps':'Tríceps', 'forearms':'Antebraço',
+  'abs':'Abdômen', 'obliques':'Oblíquos', 'upper-back':'Parte superior das costas', 'lats':'Dorsal', 'traps':'Trapézio', 'lower-back':'Lombar',
+  'glutes':'Glúteos', 'quads':'Quadríceps', 'hamstrings':'Posterior de coxa', 'adductors':'Adutores', 'hip-flexors':'Flexores do quadril', 'calves':'Panturrilha'
+};
+function bibMapaFiguraHtml(lado){
+  const f = ANATOMIA[lado];
+  const regiao = (id, pts)=>{ const base = id.replace(/-\d+$/,''); return `<path class="${state.bibMusculo===base?'on':''}" data-bibmusc="${base}" role="button" aria-label="${BIB_REGIAO_NOME[base]||base}" d="${anatomiaCurva(pts)}"/>`; };
+  let corpo = '';
+  Object.entries(f.lados).forEach(([id, pts])=>{ corpo += regiao(id, pts) + regiao(id, pts.map(([x,y])=>[+(2*f.eixo-x).toFixed(1), y])); });
+  Object.entries(f.centro).forEach(([id, pts])=>{ corpo += regiao(id, pts); });
+  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="group" aria-label="${lado==='frente'?'Corpo, vista frontal':'Corpo, vista traseira'}"><image href="gifs/anatomia/${lado}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
+}
+function bibMapaHtml(){
+  const sel = state.bibMusculo;
+  return `<div class="fr-bibmapa">
+    <div class="figs">${bibMapaFiguraHtml('frente')}${bibMapaFiguraHtml('costas')}</div>
+    <div class="info"><span>${sel ? `<b>${BIB_REGIAO_NOME[sel]||sel}</b>` : 'Toque em um músculo'}</span>${sel ? `<button type="button" id="bibMuscLimpar">Limpar</button>` : ''}</div>
+  </div>`;
 }
 function bibCardHtml(e){
   return `<button type="button" class="mrt-bibcard" data-bibex="${e.nome.replace(/"/g,'&quot;')}">
@@ -16630,7 +16755,8 @@ function renderBibliotecaV2(){
   return `
     ${state.bibPick ? `<div class="mrt-card mrt-alertcard" style="font-size:13.5px;">Escolha o exercício que vai <b>substituir</b> o atual.</div>` : ''}
     <div class="mrt-searchbox">${ICONS.search}<input id="bibBusca" type="search" placeholder="Buscar exercício" value="${(state.bibBusca||'').replace(/"/g,'&quot;')}"></div>
-    <div class="mrt-chiprow" style="margin-bottom:12px;">${grupos.map(g=>`<button class="mrt-adjchip ${(state.bibGrupo||'')===g?'on':''}" data-bibgrupo="${g}">${g}</button>`).join('')}</div>
+    <div class="mrt-chiprow" style="margin-bottom:12px;"><button class="mrt-adjchip ${state.bibMapaAberto||state.bibMusculo?'on':''}" id="bibMapaToggle">Por músculo</button>${grupos.map(g=>`<button class="mrt-adjchip ${(state.bibGrupo||'')===g?'on':''}" data-bibgrupo="${g}">${g}</button>`).join('')}</div>
+    ${state.bibMapaAberto||state.bibMusculo ? bibMapaHtml() : ''}
     <div style="display:flex;gap:8px;margin-bottom:10px;">
       <button class="mrt-adjchip ${f.nivel&&f.nivel!=='todos'?'on':''}" id="bibFiltroNivel"><span>Nível: ${nivelTxt}</span>${CHEVRON_SVG}</button>
       <button class="mrt-adjchip ${f.local&&f.local!=='todos'?'on':''}" id="bibFiltroLocal"><span>Local: ${localTxt}</span>${CHEVRON_SVG}</button>
@@ -16724,6 +16850,13 @@ function wireBibliotecaV2(){
   document.querySelectorAll('[data-bibgrupo]').forEach(el=>{
     el.onclick = ()=>{ const g = el.getAttribute('data-bibgrupo'); state.bibGrupo = state.bibGrupo===g ? '' : g; render(); };
   });
+  const tm = document.getElementById('bibMapaToggle');
+  if(tm) tm.onclick = ()=>{ const aberto = state.bibMapaAberto || !!state.bibMusculo; state.bibMapaAberto = !aberto; if(aberto) state.bibMusculo = null; render(); };
+  document.querySelectorAll('[data-bibmusc]').forEach(el=>{
+    el.onclick = ()=>{ const m = el.getAttribute('data-bibmusc'); state.bibMusculo = state.bibMusculo===m ? null : m; state.bibMapaAberto = true; hapticLeve(); render(); };
+  });
+  const ml = document.getElementById('bibMuscLimpar');
+  if(ml) ml.onclick = ()=>{ state.bibMusculo = null; render(); };
   const fn = document.getElementById('bibFiltroNivel');
   if(fn) fn.onclick = ()=>{
     openSheet(`<div class="sheet-title">Nível</div>${[['todos','Todos'],['iniciante','Iniciante'],['intermediario','Intermediário'],['avancado','Avançado']].map(([k,l])=>`<div class="mrt-menuitem" data-bibnivel="${k}"><span>${l}</span></div>`).join('')}`, sh=>{
@@ -16883,6 +17016,7 @@ function renderPerfilV2Content(){
     ${row('data-perfilgo="maisOpcoes"', FR_PI.escudo, 'Privacidade e dados', '')}
     ${(state.perfil.souPersonal || state.viewingClient) ? row('data-perfilgo="personal"', ICONS.users, 'Personal trainer', '') : ''}
     ${row('data-pfacao="ajuda"', FR_PI.ajuda, 'Ajuda e suporte', '')}
+    ${row('data-perfilgo="recursos"', ICONS.users, 'Mais recursos', '')}
   </div>`;
   const rodape = `<div class="fr-prodape">
     <div class="fr-prow fr-prow-plana"><span class="fr-pic sem">${FR_PI.info}</span><span class="nm">Versão do app</span><span class="vl">${FR_VERSAO_APP}</span></div>
@@ -16964,8 +17098,18 @@ function renderContaV2(){
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;"><div class="icon-box">${ICONS.user}</div><div style="min-width:0;"><div style="font-size:15px;font-weight:700;">Conectada</div><div class="mrt-sub" style="margin:2px 0 0;word-break:break-all;">${state.authUser.email}</div></div></div>
       <div class="mrt-sub" style="margin-bottom:14px;">Seus treinos sincronizam entre aparelhos e você pode compartilhar com um personal.</div>
       <button class="btn-secondary" id="btnSignOut">Sair da conta</button>
+      <button class="btn-ghost" style="width:100%;min-height:44px;margin-top:12px;" data-perfilgo="sincronizacao">Ver sincronização</button>
     </div>`;
   }
+  if(state.authScreen==='senha-enviada') return `<div class="fr-complement-result" role="status">
+    <div class="fr-complement-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5h18v14H3zM3 5l9 8 9-8"/></svg></div>
+    <h2>Confira seu e-mail</h2><p>Se houver uma conta com esse e-mail, você receberá as instruções.</p>
+    <button class="btn-primary" id="btnAuthVoltarEntrar">Voltar para entrar</button></div>`;
+  if(state.authScreen==='recuperar') return `<p class="mrt-sub" style="margin-bottom:28px;">Enviaremos um link para redefinir sua senha.</p>
+    <label class="mrt-medlabel fr-recovery-label" for="inAuthEmail">E-mail</label>
+    <input class="mrt-input mrt-input52 fr-recovery-input" type="email" id="inAuthEmail" required autocomplete="email" value="${escHtmlRelogio(state.authResetEmail||'')}">
+    ${state.authError ? `<p role="alert" style="color:var(--danger);font-size:14px;">${escHtmlRelogio(state.authError)}</p>` : ''}
+    <button class="btn-primary" id="btnAuthResetSenha" style="width:100%;margin-top:24px;" ${state.authBusy?'disabled aria-busy="true"':''}>${state.authBusy==='reset'?'Enviando…':'Enviar instruções'}</button>`;
   return `
     <div class="mrt-sub" style="margin:-4px 0 18px;">Entre para sincronizar seus treinos entre aparelhos. O app também funciona sem conta.</div>
     <label class="mrt-medlabel" for="inAuthEmail">E-mail</label>
@@ -16979,6 +17123,23 @@ function renderContaV2(){
       <button class="btn-secondary" id="btnAuthCriarConta" ${state.authBusy?'disabled':''} style="${state.authBusy?'opacity:.6;':''}">${state.authBusy==='criar'?'Criando...':'Criar conta'}</button>
     </div>
     <button class="btn-ghost" style="width:100%;margin-top:6px;text-decoration:underline;" id="btnAuthEsqueciSenha" ${state.authBusy?'disabled':''}>${state.authBusy==='reset'?'Enviando...':'Esqueci minha senha'}</button>`;
+}
+function renderSincronizacaoV2(){
+  const pendentes=Number(cloudStatus.pendingWrites)||0;
+  const conta=!state.authUser ? 'Sem conta conectada' : pendentes ? `${pendentes} gravaç${pendentes===1?'ão pendente':'ões pendentes'}` : cloudStatus.writeOk===false || cloudStatus.readOk===false ? 'Não foi possível concluir a sincronização' : cloudStatus.writeOk===true ? 'Última gravação confirmada na nuvem' : 'Confirmação de gravação ainda indisponível';
+  const linha=(t,s)=>`<div class="fr-syncrow"><b>${t}</b><p>${s}</p></div>`;
+  return `<div class="ds-list">${linha('Neste aparelho',`${listarAtividades().length} atividades disponíveis no histórico`)}${linha('Conta',conta)}${state.authUser && cloudStatus.gpsSync ? linha('Registros GPS',cloudStatus.gpsSync==='ok'?'Última sincronização de GPS concluída':'Sincronização de GPS incompleta') : ''}
+    <button class="ds-row" data-perfilgo="integracoes"><span class="nm">Integrações<small style="display:block;font-size:13px;font-weight:400;color:var(--text-dim);margin-top:4px;">Consulte cada conexão</small></span><span class="chev">${DS_CHEV}</span></button>
+    ${!state.authUser ? '<button class="btn-secondary" style="width:100%;margin-top:24px;" data-perfilgo="conta">Entrar na conta</button>' : ''}</div>`;
+}
+function renderAnalisesV2(){
+  const linha=(k,t,s)=>`<button class="ds-row" data-progdet="${k}"><span class="nm">${t}<small style="display:block;font-size:13px;font-weight:400;color:var(--text-dim);margin-top:4px;">${s}</small></span><span class="chev">${DS_CHEV}</span></button>`;
+  return `<div class="mrt-subhead"><button class="mrt-wex-x" data-proganalisesvoltar aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:24px;font-weight:600;">Análises</div></div>
+    <div class="ds-list fr-complement-list">${linha('corrida','Corrida','Distância e ritmo')}${linha('musc','Musculação','Séries e cargas')}${linha('medidas','Medidas corporais','Histórico e novos registros')}</div>`;
+}
+function renderRecursosV2(){
+  const linha=(tab,t,s)=>`<button class="ds-row" data-recursogo="${tab}"><span class="nm">${t}<small style="display:block;font-size:13px;font-weight:400;color:var(--text-dim);margin-top:4px;">${s}</small></span><span class="chev">${DS_CHEV}</span></button>`;
+  return `<div class="ds-list fr-complement-list">${linha('biblioteca','Biblioteca de exercícios','Consultar movimentos e execução')}${linha('turma','Turma','Grupos disponíveis na conta')}${linha('personal','Personal trainer','Compartilhamento com treinador')}</div>`;
 }
 function renderIntegracoesV2(){
   // Garmin: ponte real com o app FORZA RUN do relógio (só no app do iPhone). Strava continua por fazer.
@@ -17064,6 +17225,7 @@ function renderPreferenciasV2(){
   const ir = (tab, icon, t, s)=>`<button class="ds-row fr-perfilrow" data-perfilgo="${tab}"><span class="fr-ic">${icon}</span><span class="nm">${t}${s ? `<small>${s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
   return `<div class="ds-label fr-plbl">Conta</div><div class="ds-list">
     ${ir('conta', ICONS.user, 'Conta e sincronização', state.authUser ? 'Conectada' : 'Entre para sincronizar')}
+    ${ir('sincronizacao', ICONS.upload, 'Sincronização', 'Estado dos dados neste aparelho e na conta')}
   </div><div class="ds-label fr-plbl">Treino</div><div class="ds-list">
     ${ir('equipamentos', ICONS.shoe, 'Equipamentos', 'Local, tênis e relógio')}
     ${ir('saudeRelogio', ICONS.watch, 'Saúde do relógio', '')}  </div><div class="ds-label fr-plbl">Voz e corrida</div><div class="mrt-card" style="padding:6px 16px;">
@@ -17113,14 +17275,14 @@ function renderSubV2ShellBase(){
   const tab = state.tab;
   const corpo = {
     progresso:renderProgressoV2, comparativo:renderComparativoV2, medidas:renderMedidasV2, equipamentos:renderEquipamentosV2, biblioteca:renderBibliotecaV2,
-    conta:renderContaV2, integracoes:renderIntegracoesV2, saudeRelogio:renderSaudeRelogioV2, personal:renderPersonalV2, preferencias:renderPreferenciasV2, maisOpcoes:renderMaisOpcoesV2,
+    conta:renderContaV2, integracoes:renderIntegracoesV2, saudeRelogio:renderSaudeRelogioV2, personal:renderPersonalV2, preferencias:renderPreferenciasV2, maisOpcoes:renderMaisOpcoesV2, recursos:renderRecursosV2, sincronizacao:renderSincronizacaoV2,
   }[tab]();
   const detalheBib = tab==='biblioteca' && state.bibDetalhe;
-  const titulo = detalheBib ? 'Exercício' : (SUB_V2_TITULOS[tab]||'');
+  const titulo = detalheBib ? 'Exercício' : tab==='conta' && !state.authUser && state.authScreen==='recuperar' ? 'Recuperar senha' : tab==='conta' && !state.authUser && state.authScreen==='senha-enviada' ? '' : (SUB_V2_TITULOS[tab]||'');
   return `
     <div class="mrt-root">
       <div class="mrt-scroll">
-        ${tab==='progresso' ? '' : `<div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:26px;">${titulo}</div></div>`}
+        ${tab==='progresso' ? '' : `<div class="mrt-subhead"><button class="mrt-wex-x" id="mrtSubBack" aria-label="Voltar">${ICONS.back}</button><div class="mrt-title" style="font-size:24px;font-weight:600;">${titulo}</div></div>`}
         ${corpo}
       </div>
       ${renderMrtNav()}
@@ -17131,7 +17293,9 @@ function wireSubV2(){
   const tab = state.tab;
   const back = document.getElementById('mrtSubBack');
   if(back) back.onclick = ()=>{
+    if(tab==='conta' && state.authScreen){ state.authScreen=null; state.authError=null; state.authInfo=null; render(); return; }
     if(tab==='biblioteca' && state.bibDetalhe){ state.bibDetalhe = null; render(); return; }
+    if(state.subOrigin==='recursos'){ state.tab='recursos'; state.subOrigin='perfil'; render(); return; }
     subV2Voltar();
   };
   document.querySelectorAll('[data-tabgo]').forEach(el=>{
@@ -17148,6 +17312,7 @@ function wireSubV2(){
     };
   });
   document.querySelectorAll('[data-perfilgo]').forEach(el=>{ el.onclick = ()=>{ state.subOrigin = 'perfil'; state.tab = el.getAttribute('data-perfilgo'); render(); }; });
+  document.querySelectorAll('[data-recursogo]').forEach(el=>{ el.onclick = ()=>{ state.subOrigin='recursos'; state.tab=el.getAttribute('data-recursogo'); render(); }; });
   wireRelogioGarmin();
   document.querySelectorAll('[data-mrtintegrar]').forEach(el=>{ el.onclick = async ()=>{
     const svc = el.getAttribute('data-mrtintegrar');

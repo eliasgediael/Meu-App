@@ -7,7 +7,7 @@
    sessão de corrida (hb*), o construtor de musculação, o catálogo, o VDOT e a matriz de fadiga que já existiam.
    Regra de conflito: 1 segurança/restrições > 2 disponibilidade real > 3 capacidade atual > 4 objetivo > 5 recuperação > 6 preferências.
    Os números abaixo são PROVISÓRIOS (calibráveis) e ficam todos nesta tabela. */
-const MOTOR_ENGINE_VERSION = '2.1.0';
+const MOTOR_ENGINE_VERSION = '2.2.0';
 const MOTOR_PARAMS = {
   minSlotCorrida:25, minSlotMusc:30, minDobro:55, diaSemInfo:40,
   minSessaoCorrida:20,
@@ -32,6 +32,16 @@ const MOTOR_FAIXAS = {
   parado:['menos1m','1-3m','3-6m','6-12m','mais1a'],
   continuo:['menos5','5-10','10-20','20-30','30-60','mais60'],
   sono:['menos6','6-7','7mais'],
+};
+// Personalização (19/10/2026). Ligado = decidido pelo usuário. Desligado = conflita com uma regra existente e
+// espera decisão (iniciante: Leg Day com 2–3 dias e fartlek leve como treino forte).
+const MOTOR_PERSONALIZACAO = {
+  nivelMuscPorEixos: true,     // nível de musculação por experiência, técnica e frequência (não pelo menor eixo)
+  qualidadeGraduada: true,     // treino forte: avaliação conservadora em vez de bloqueio por um "não sei" ou qualquer dor
+  legDayCom2Dias: true,        // regra do usuário: com 2 ou 3 dias de musculação, 1 Leg Day (intermediário/avançado)
+  variacaoPorBloco: true,      // acessórios mudam a cada bloco de 4 semanas; base fica (progressão de carga)
+  variacaoCorrida: true,       // acelerações numa rodagem leve nas semanas pares (nível intermediário+)
+  iniciante: { legDay:false, fartlekLeve:false },
 };
 function motorNivelMin(a, b){ return MOTOR_NIVEIS[Math.min(MOTOR_NIVEIS.indexOf(a), MOTOR_NIVEIS.indexOf(b))]; }
 function motorClamp(v, lo, hi){ return Math.max(lo, Math.min(hi, v)); }
@@ -137,7 +147,7 @@ function motorLerRestricoes(p, dor, cautela){
   (Array.isArray(orient) ? orient : []).forEach(o=>{
     const s = normalizeNoAccents(String((o && (o.descricao||o.codigo)) || o || ''));
     if(/impacto/.test(s)){ r.semImpacto = true; r.corridaSemQualidade = true; r.volumeCorridaFator = Math.min(r.volumeCorridaFator, 0.7); r.regexBloqueio.push(/salto|escalador|corda|pular|burpee/); r.motivos.push('orientacao_impacto'); }
-    if(/esforco|intens/.test(s)){ r.corridaSemQualidade = true; r.motivos.push('orientacao_esforco'); }
+    if(/esforco|intens/.test(s)){ r.corridaSemQualidade = true; r.orientacaoEsforco = true; r.motivos.push('orientacao_esforco'); }
     if(/acima da cabeca|cabeca/.test(s)){ r.regexBloqueio.push(/desenvolvimento|arnold|pike|remada alta/); r.motivos.push('orientacao_sem_overhead'); }
   });
   const ev = motorGet(p, 'restricoesTreino.evitarExercicios').v || [];
@@ -232,6 +242,37 @@ function motorNivelMusc(m){
   const base = carga && hist ? motorNivelMin(carga, hist) : (carga || hist);
   return { nivel:base, motivo:'frequência limitada pelo histórico' };
 }
+// Musculação por eixos separados (decisão do usuário, 19/10/2026):
+//   experiência (tempo de treino), técnica (padrões dominados) e frequência atual (carga que o corpo já tolera).
+//   estrutura = divisão, quantidade de exercícios e tier: experiência, limitada pela técnica (técnica baixa ainda
+//     permite intermediário, só com o que é guiado: o filtro de padrões dominados continua valendo);
+//   volume = séries: a estrutura, limitada pela frequência atual (+1 nível);
+// Situação "parado" limita pelo tempo parado, como antes; "ocasional" e "nunca" seguem conservadores.
+function motorEixosMusc(m){
+  const N = (i)=>MOTOR_NIVEIS[i];
+  const exp = m.expIdx===null ? null : (m.expIdx===0 ? 0 : m.expIdx<=2 ? 1 : 2);
+  const tec = m.padroesInformados ? (m.padroes.size<=2 ? 0 : m.padroes.size<=5 ? 1 : 2) : null;
+  let freq = m.freq===null ? null : (m.freq<=1 ? 0 : m.freq<=3 ? 1 : 2);
+  if(m.situacao==='nunca') return { experiencia:N(0), tecnica:N(0), frequencia:N(0), estrutura:N(0), volume:N(0), motivo:'nunca treinou' };
+  let teto = 2;
+  if(m.situacao==='parado'){ teto = (m.paradoIdx===null || m.paradoIdx>=3) ? 0 : m.paradoIdx===0 ? 2 : 1; freq = 0; }
+  else if(m.situacao==='ocasional'){ teto = 1; freq = 0; }
+  else if(!m.situacao) teto = 0;
+  const e = exp===null ? null : Math.min(exp, teto), t = tec===null ? null : Math.min(tec, teto);
+  let estrutura;
+  if(e===null && t===null) estrutura = 0;
+  else if(e===null) estrutura = Math.min(t, 1);
+  else {
+    // Técnica baixa ainda permite intermediário só para quem treina com regularidade (ou parou há menos de 1 mês).
+    const bonus = (m.situacao==='regular' || (m.situacao==='parado' && m.paradoIdx===0)) ? 1 : 0;
+    estrutura = Math.min(e, t===null ? 1 : Math.max(t, Math.min(bonus, teto)));
+  }
+  let volume = freq===null ? Math.min(estrutura, 1) : Math.min(estrutura, freq + 1);
+  if(m.situacao==='parado') volume = m.paradoIdx===0 ? estrutura : Math.min(estrutura, 1);   // retomada: a redução de séries continua no esquema
+  if(m.situacao==='ocasional') volume = 0;
+  return { experiencia:e===null ? null : N(e), tecnica:t===null ? null : N(t), frequencia:freq===null ? null : N(freq), estrutura:N(estrutura), volume:N(volume),
+    motivo:'experiência, técnica e frequência avaliadas separadamente' };
+}
 
 function lerEstado(perfil, opcoes){
   opcoes = opcoes || {};
@@ -290,7 +331,11 @@ function lerEstado(perfil, opcoes){
 
   // níveis (regra fechada) — modo conservador ("seguir por conta própria") força iniciante
   const nC = conservador ? { nivel:'iniciante', motivo:'modo conservador (seguir por conta própria)' } : motorNivelCorrida(corr);
-  const nM = conservador ? { nivel:'iniciante', motivo:'modo conservador (seguir por conta própria)' } : motorNivelMusc(musc);
+  let nM;
+  if(conservador) nM = { nivel:'iniciante', motivo:'modo conservador (seguir por conta própria)' };
+  else if(MOTOR_PERSONALIZACAO.nivelMuscPorEixos){ const ex = motorEixosMusc(musc); musc.eixos = ex; nM = { nivel:ex.estrutura, motivo:ex.motivo }; }
+  else nM = motorNivelMusc(musc);
+  if(!musc.eixos) musc.eixos = { experiencia:nM.nivel, tecnica:nM.nivel, frequencia:nM.nivel, estrutura:nM.nivel, volume:nM.nivel, motivo:nM.motivo };
   L('nivel_corrida', nC.motivo, { nivel:nC.nivel, situacao:cSit }); L('nivel_musculacao', nM.motivo, { nivel:nM.nivel, situacao:mSit });
   const capacidade = { corrida:nC.nivel, musc:nM.nivel };
 
@@ -412,7 +457,10 @@ function lerEstado(perfil, opcoes){
   restricoes.motivos.forEach(m=>alertas.push('restricao:'+m));
   if(conservador) alertas.push('cautela_conservador');
   if(semInfoDias) alertas.push('sem_disponibilidade_informada');
+  corr.naoSei = nsC;
+  const alvoS = opcoes.alvoSemana || null;
   return {
+    semanaPlano:(alvoS && alvoS.semana) || 1, fasePlano:(alvoS && alvoS.fase) || null,
     hoje, log, cautela, objetivo, capacidade, corrida:corr, musc, restricoes, equip:motorLerEquipamentos(perfil),
     recuperacao, calibracao, confianca, alertas,
     disp:{ dias, combPref, longaPref, modPref },
@@ -539,7 +587,36 @@ function definirFrequencias(est, prio, ajustes){
 }
 
 /* ---------- descritores de sessão (o que cada sessão é, antes de escolher o conteúdo) ---------- */
-function motorQualidadePermitida(est, ajustes){
+// Modo do treino forte da semana (decisão do usuário, 19/10/2026): avaliação conservadora em vez de bloqueio automático.
+//   'normal'        sessão do objetivo (tiros para 5/10 km, limiar para 21 km, blocos de maratona)
+//   'conservadora'  sem Z5: fartlek moderado ou limiar curto, alternando por semana
+//   'iniciante'     fartlek leve (regra 1 do usuário) — desligado até a decisão sobre o conflito com "iniciante sem qualidade"
+//   null            sem treino forte
+// Dor: forte/em repouso já bloqueia o plano (cautela); moderada em membro inferior tira o treino forte; leve em membro
+// inferior ou moderada na lombar deixam só a versão conservadora; dor em ombro/punho não muda a corrida.
+// "Não sei": uma resposta incerta (ou carga estimada) = conservadora; duas ou mais = sem treino forte.
+function motorQualidadeModo(est, ajustes){
+  if(!MOTOR_PERSONALIZACAO.qualidadeGraduada) return motorQualidadePermitidaV1(est, ajustes) ? 'normal' : null;
+  if(ajustes && ajustes.semQualidade) return null;
+  const c = est.corrida, r = est.restricoes;
+  if(c.regime!=='continuo' || est.conservador || est.recuperacao.prontidao!=='normal') return null;
+  if(r.semImpacto || r.orientacaoEsforco) return null;
+  const dorInf = r.dor.filter(d=>MOTOR_REGIAO_MEMBRO_INFERIOR.includes(d.regiao));
+  if(dorInf.some(d=>d.intensidade!=='leve' || d.emRepouso)) return null;
+  const incerto = Math.max(c.naoSei || 0, (c.carga && c.carga.incerteza) || 0);
+  if(est.capacidade.corrida==='iniciante'){
+    const ok = MOTOR_PERSONALIZACAO.iniciante.fartlekLeve && (c.situacao==='regular' || c.situacao==='ocasional') && !dorInf.length && incerto<2;
+    return ok ? 'iniciante' : null;
+  }
+  if(c.situacao!=='regular') return null;
+  if(incerto>=2) return null;
+  let modo = incerto===1 ? 'conservadora' : 'normal';
+  if(dorInf.length) modo = 'conservadora';
+  if(r.dor.some(d=>d.regiao==='lombar' && d.intensidade!=='leve')) modo = 'conservadora';
+  return modo;
+}
+function motorQualidadePermitida(est, ajustes){ return motorQualidadeModo(est, ajustes)!==null; }
+function motorQualidadePermitidaV1(est, ajustes){
   if(ajustes && ajustes.semQualidade) return false;
   if(est.capacidade.corrida==='iniciante') return false;
   if(est.corrida.situacao!=='regular') return false;
@@ -553,7 +630,8 @@ function motorSessoesCorrida(est, nc, ajustes){
   if(nc<=0) return [];
   const P = MOTOR_PARAMS, c = est.corrida;
   const V0 = c.carga.min * (ajustes.volumeFator || 1);
-  const qual = nc>=3 && motorQualidadePermitida(est, ajustes);
+  const modo = nc>=3 ? motorQualidadeModo(est, ajustes) : null;   // 80/20: treino forte só com 3+ corridas na semana
+  const qual = !!modo;
   const janelaMax = Math.max(...est.disp.dias.filter(d=>d.disponivel && d.minutos>=P.minSlotCorrida).map(d=>d.minutos), P.minSlotCorrida);
   const capLonga = Math.min(c.tetoLonga, janelaMax, c.regime==='run_walk' ? P.tetoRunWalk : Infinity);
   const out = [];
@@ -562,13 +640,13 @@ function motorSessoesCorrida(est, nc, ajustes){
     return out;
   }
   const nLeves = nc - 1 - (qual ? 1 : 0);
-  const Q = qual ? Math.min(50, janelaMax, Math.max(35, V0*0.28)) : 0;
+  const Q = !qual ? 0 : modo==='normal' ? Math.min(50, janelaMax, Math.max(35, V0*0.28)) : Math.min(modo==='iniciante' ? 35 : 40, janelaMax, Math.max(30, V0*0.25));
   let longa = Math.min(V0*P.shareLonga[Math.min(nc,5)], capLonga);
   let leve = (V0 - longa - Q)/nLeves;
   leve = motorClamp(leve, P.minSessaoCorrida, Math.max(P.minSessaoCorrida, Math.min(60, janelaMax, longa*0.9)));
   if(longa < leve*1.15) longa = Math.min(capLonga, Math.round(leve*1.25));
   const longaDura = est.capacidade.corrida!=='iniciante' || longa>=60;
-  if(qual) out.push({ mod:'corrida', tipo:'qualidade', dura:true, durMin:Math.round(Q) });
+  if(qual) out.push({ mod:'corrida', tipo:'qualidade', dura:modo!=='iniciante', durMin:Math.round(Q), qualidadeModo:modo });
   out.push({ mod:'corrida', tipo:'longa', dura:longaDura, durMin:Math.round(longa) });
   for(let i=0;i<nLeves;i++) out.push({ mod:'corrida', tipo:'leve', dura:false, durMin:Math.round(leve) });
   return out;
@@ -576,6 +654,9 @@ function motorSessoesCorrida(est, nc, ajustes){
 function motorQtdExercicios(est, foco){
   const nivel = est.capacidade.musc;
   let q = HB_MUSC_QTD[nivel] || 6;
+  // Volume abaixo da estrutura (frequência atual baixa): 1 exercício a menos que o nível da estrutura.
+  const ex = est.musc && est.musc.eixos;
+  if(ex && MOTOR_NIVEIS.indexOf(ex.volume) < MOTOR_NIVEIS.indexOf(nivel)) q = Math.max(HB_MUSC_QTD.iniciante, q - 1);
   if(foco==='manutencao') q = Math.min(q, 4);
   if(foco==='suporte_corrida') q = Math.min(q, 4);
   return q;
@@ -584,8 +665,15 @@ function motorSessoesMusc(est, prio, nm, ajustes, nDurasCorrida){
   if(nm<=0) return [];
   const nivel = est.capacidade.musc;
   let formas;
-  if(nivel==='iniciante') formas = Array(nm).fill('full');
-  else formas = ({ 1:['full'], 2:['full','full'], 3:['upper','lower','full'], 4:['upper','lower','upper','lower'] })[Math.min(nm,4)];
+  // Regra 2 do usuário: com 2 ou 3 dias, 1 Leg Day; com 4, até 2 (72 h entre eles, garantido pela distribuição).
+  // 1 dia continua corpo inteiro. Iniciante segue corpo inteiro até a decisão sobre o conflito (MOTOR_PERSONALIZACAO.iniciante.legDay).
+  const legDay2 = MOTOR_PERSONALIZACAO.legDayCom2Dias;
+  if(nivel==='iniciante' && !(MOTOR_PERSONALIZACAO.iniciante.legDay && nm>=2)) formas = Array(nm).fill('full');
+  else if(nivel==='iniciante') formas = ['lower', ...Array(nm-1).fill('full')];
+  else formas = ({ 1:['full'], 2: legDay2 ? ['lower','upper'] : ['full','full'], 3:['upper','lower','full'], 4:['upper','lower','upper','lower'] })[Math.min(nm,4)];
+  // Dor moderada em membro inferior ou lombar: sem dia de perna pesado (os exercícios da região já saem pelo filtro).
+  const dorInfMod = est.restricoes.dor.some(d=>(MOTOR_REGIAO_MEMBRO_INFERIOR.includes(d.regiao) || d.regiao==='lombar') && d.intensidade!=='leve');
+  if(dorInfMod) formas = formas.map(f=>f==='lower' ? 'full' : f);
   if(est.recuperacao.prontidao==='reduzida' || ajustes.aliviarInferior){
     // sessões duras em excesso: converte inferior em corpo inteiro
     let duras = nDurasCorrida;
@@ -602,14 +690,14 @@ function motorSessoesMusc(est, prio, nm, ajustes, nDurasCorrida){
 }
 
 /* ---------- ETAPA 4: distribuição ---------- */
-function motorCodigoCorrida(s){ return s.tipo==='longa' ? 'RUN_LONG_RUN' : s.tipo==='qualidade' ? (s.qualidadeKind==='limiar' ? 'RUN_TEMPO_THRESHOLD' : 'RUN_INTERVALS_VO2MAX') : 'RUN_EASY_Z2'; }
+function motorCodigoCorrida(s){ return s.tipo==='longa' ? 'RUN_LONG_RUN' : s.tipo==='qualidade' ? (s.qualidadeKind==='fartlek_leve' ? 'RUN_EASY_Z2' : (s.qualidadeKind==='limiar' || s.qualidadeKind==='conservadora') ? 'RUN_TEMPO_THRESHOLD' : 'RUN_INTERVALS_VO2MAX') : 'RUN_EASY_Z2'; }
 function motorCodigoMusc(s, aliviar){ return s.tipo==='lower' && !aliviar ? 'LEG_DAY_HEAVY' : s.tipo==='upper' ? 'UPPER_BODY' : 'FULL_BODY_LIGHT'; }
 function distribuirSessoes(est, prio, freq, ajustes){
   const P = MOTOR_PARAMS;
   const dias = est.disp.dias.filter(d=>d.disponivel && d.minutos>=Math.min(P.minSlotCorrida, P.minSlotMusc));
   const runs = motorSessoesCorrida(est, freq.corrida, ajustes);
   const goal = est.objetivo.distanciaKm;
-  runs.forEach(s=>{ if(s.tipo==='qualidade') s.qualidadeKind = goal<=10 ? 'intervalado' : 'limiar'; });
+  runs.forEach(s=>{ if(s.tipo==='qualidade') s.qualidadeKind = s.qualidadeModo==='iniciante' ? 'fartlek_leve' : s.qualidadeModo==='conservadora' ? 'conservadora' : goal<=10 ? 'intervalado' : 'limiar'; });
   const nDurasCorrida = runs.filter(s=>s.dura).length;
   const muscs = motorSessoesMusc(est, prio, freq.musc, ajustes, nDurasCorrida);
   const nLower = muscs.filter(s=>s.tipo==='lower').length;
@@ -757,7 +845,7 @@ function motorFamilia(n){
 }
 // Completa a sessão até a quantidade do estímulo quando os "slots" clássicos não acharam exercício (equipamento/restrições/padrões).
 // Nunca passa da quantidade do estímulo: sobrar tempo NÃO adiciona exercício.
-function motorCompletar(sel, sessao, qtd, filtro, pool, nivel){
+function motorCompletar(sel, sessao, qtd, filtro, pool, nivel, rotacao){
   const extras = [];
   if(sel.length>=qtd) return extras;
   const usados = new Set(sel.map(x=>x.e.nome));
@@ -782,7 +870,8 @@ function motorCompletar(sel, sessao, qtd, filtro, pool, nivel){
         return !usados.has(e.nome) && filtro(e.nome) && okGrupo(g, n) && exercicioTier(e)<=maxTier && !familias.has(motorFamilia(n));
       });
       const comp = cands.filter(e=>isExercicioComposto(e.nome)!==false);
-      const pick = (sel.length+extras.length < qtd-1 && comp.length) ? comp[0] : (cands[0] || comp[0]);
+      const r = rotacao || 0;
+      const pick = (sel.length+extras.length < qtd-1 && comp.length) ? comp[r % comp.length] : (cands.length ? cands[r % cands.length] : comp[0]);
       if(pick){ escolhido = { e:pick, papel: isExercicioComposto(pick.nome)===false || ehCore ? 'isolado' : 'auxiliar', grupo:g }; }
     }
     if(!escolhido) break;
@@ -791,9 +880,12 @@ function motorCompletar(sel, sessao, qtd, filtro, pool, nivel){
   }
   return extras;
 }
-function motorEsquema(nivel, papel, foco, retomada, calibracao){
-  const base = (HYBRID_PAPEL_SCHEME[papel] && (HYBRID_PAPEL_SCHEME[papel][nivel] || HYBRID_PAPEL_SCHEME[papel].intermediario)) || HYBRID_PAPEL_SCHEME.auxiliar.intermediario;
+// nivelVolume (opcional): nível do eixo de volume; as séries vêm dele quando é menor que o da estrutura.
+function motorEsquema(nivel, papel, foco, retomada, calibracao, nivelVolume){
+  const tab = (n)=>(HYBRID_PAPEL_SCHEME[papel] && (HYBRID_PAPEL_SCHEME[papel][n] || HYBRID_PAPEL_SCHEME[papel].intermediario)) || HYBRID_PAPEL_SCHEME.auxiliar.intermediario;
+  const base = tab(nivel);
   let { series, reps, rpe, descanso } = base;
+  if(nivelVolume && MOTOR_NIVEIS.indexOf(nivelVolume) < MOTOR_NIVEIS.indexOf(nivel)) series = Math.min(series, tab(nivelVolume).series);
   if(foco==='forca'){
     if(papel==='base'){ series = nivel==='iniciante' ? 3 : 5; reps = 5; rpe = 8; descanso = '120s'; }
     else if(papel==='auxiliar'){ series = 3; reps = 8; rpe = 7; descanso = '90s'; }
@@ -812,13 +904,16 @@ function motorMontarMusc(est, sessao, limiteMin, weekTaken, pool, filtro, contex
   opts.qtd = motorQtdExercicios(est, sessao.foco);
   if(sessao.foco==='suporte_corrida' && sessao.tipo==='full') opts.slots = ['joelho','quadril','unilateral','core'];
   opts.semPadraoRepetido = true;
+  // Variação por bloco de 4 semanas: acessórios e isolados mudam para a próxima opção equivalente; o exercício
+  // base de cada dia não muda (a progressão de carga do forca.js depende dele).
+  if(MOTOR_PERSONALIZACAO.variacaoPorBloco) opts.rotacao = Math.floor(((est.semanaPlano||1) - 1)/4);
   let sel = buildHybridMuscSession(sessao.tipo==='lower' ? 'leg' : sessao.tipo, nivel, pool, weekTaken, filtro, opts);
-  sel = sel.concat(motorCompletar(sel, sessao, opts.qtd, filtro, pool, nivel));
+  sel = sel.concat(motorCompletar(sel, sessao, opts.qtd, filtro, pool, nivel, opts.rotacao || 0));
   sel.forEach(x=>weekTaken.add(x.e.nome));
   if(!sel.length) return { lista:[], duracao:0, cortes:[], vazio:true };
   const retomada = est.musc.situacao==='parado' && (est.musc.paradoIdx===null || est.musc.paradoIdx>=1);
   let lista = sel.map(({ e, papel, grupo })=>{
-    const sch = motorEsquema(nivel, papel, sessao.foco, retomada, est.calibracao.ativa);
+    const sch = motorEsquema(nivel, papel, sessao.foco, retomada, est.calibracao.ativa, est.musc.eixos && est.musc.eixos.volume);
     return { nome:e.nome, series:String(sch.series), reps:String(sch.reps), carga:'', grupo, repdbId:e.id, descanso:sch.descanso, modo:'hibrido', papel, tier:exercicioTier(e), rpe:sch.rpe,
       sessao: sessao.tipo==='lower' ? 'LEG_DAY_HEAVY' : sessao.tipo==='full' ? 'FULL_BODY_LIGHT' : 'UPPER_BODY', estimulo:{ forma:sessao.tipo, foco:sessao.foco },
       orientacaoCarga:'Sem carga definida: escolha uma carga em que sobrem 2–3 repetições.' };
@@ -850,7 +945,11 @@ function motorMontarCorrida(est, sessao, limiteMin){
   let s = null, tipoFinal = sessao.tipo;
   if(sessao.tipo==='qualidade'){
     const longKm = kmFromMinAtPace(Math.max(...[sessao.durMin, 60]), ctx.paces.Es);
-    const tent = sessao.qualidadeKind==='limiar' ? hbQualidadeTempo(ctx, longKm) : hbQualidadeIntervalo(ctx, longKm);
+    const k = sessao.qualidadeKind;
+    // Conservadora: alterna fartlek moderado (semanas ímpares) e limiar curto (pares, 70% do bloco); nunca Z5.
+    const tent = k==='fartlek_leve' ? hbQualidadeFartlek(ctx)
+      : k==='conservadora' ? (ctx.weekNumber%2 ? hbQualidadeFartlek(ctx) : hbQualidadeTempo({ ...ctx, kmFactor:(ctx.kmFactor||1)*0.7 }, longKm))
+      : k==='limiar' ? hbQualidadeTempo(ctx, longKm) : hbQualidadeIntervalo(ctx, longKm);
     if(tent.totalMin <= limiteMin) s = tent; else tipoFinal = 'leve';
   }
   if(!s){
@@ -928,6 +1027,11 @@ function validarPlano(est, prio, freq, dist, semana, ajustes){
   // V1 segurança / restrições
   Object.keys(semana.muscPlan).forEach(d=>semana.muscPlan[d].forEach(e=>{ if(!filtro(e.nome)) E('V1', `exercício não permitido: ${e.nome}`); }));
   semana.corridaWeek.forEach(w=>{ if((w.type==='Intervalado' || w.type==='Limiar' || w.type==='Fartlek Leve') && !motorQualidadePermitida(est, ajustes)) E('V1', `intensidade não permitida: ${w.type}`); });
+  // Treino forte conservador ou de iniciante: nenhuma etapa em Z5; iniciante também sem Z4.
+  const modoQ = motorQualidadeModo(est, ajustes);
+  if(modoQ && modoQ!=='normal') semana.corridaWeek.forEach(w=>(w.gpsSteps||[]).forEach(g=>{
+    if(/Z5/.test(g.zona||'') || (modoQ==='iniciante' && /Z4/.test(g.zona||''))) E('V1', `${w.day}: ${g.zona} não permitido no treino forte ${modoQ}`);
+  }));
   // V2 duração de cada sessão / V3 duração de dobros
   Object.keys(porDia).forEach(d=>{
     const dia = dist.dias.find(x=>x.dia===d); const min = dia ? dia.minutos : P.diaSemInfo;
@@ -1008,12 +1112,40 @@ function motorConstruir(est, prio, ajustes){
     freq = definirFrequencias(est, prio, aj);
     dist = distribuirSessoes(est, prio, freq, aj);
     if(dist.melhor || (freq.corrida+freq.musc)===0) break;
+    // Antes de tirar uma sessão, tenta sem dia de perna pesado (Leg Day vira corpo inteiro): mantém a frequência.
+    if(!aj.aliviarInferior && dist.muscs.some(s=>s.tipo==='lower')){
+      est.log.push({ etapa:4, regra:'leg_day_sem_encaixe', motivo:'nenhuma distribuição válida com dia de perna pesado: tenta corpo inteiro antes de reduzir sessões', dados:{} });
+      aj = { ...aj, aliviarInferior:true };
+      continue;
+    }
     est.log.push({ etapa:4, regra:'reducao_por_inviabilidade', motivo:'nenhuma distribuição válida para as sessões desejadas: reduz uma sessão', dados:{ sessoes:{ corrida:freq.corrida, musc:freq.musc } } });
     aj = { ...aj, reduzir:(aj.reduzir||0)+1 };
   }
   ajustes.reduzir = aj.reduzir;
+  if(aj.aliviarInferior) ajustes.aliviarInferior = true;
   const semana = montarSessoes(est, prio, freq, dist, aj);
+  motorVariarCorrida(est, semana, aj);
   return { freq, dist, semana };
+}
+// Variação da corrida sem mudar volume nem carga (decisão 6): nas semanas pares de construção, a primeira rodagem
+// leve elegível ganha acelerações curtas (opção LEVE_STRIDES do catálogo, que já respeita nível, dor, véspera de
+// qualidade e perna pesada, sem passar da duração do motor). Descarga, polimento e calibração ficam sem.
+function motorVariarCorrida(est, semana, ajustes){
+  if(!MOTOR_PERSONALIZACAO.variacaoCorrida || typeof corridaMontarOpcao!=='function') return;
+  if(est.semanaPlano%2 || /Descarga|Polimento|Retomada|calibra/i.test(est.fasePlano || '')) return;
+  if(est.capacidade.corrida==='iniciante' || est.corrida.regime!=='continuo') return;
+  for(const w of semana.corridaWeek){
+    if(!w.estimulo || w.estimulo.tipo!=='leve') continue;
+    let s = null;
+    try{ s = corridaMontarOpcao(est, 'LEVE_STRIDES', corridaContextoDoDia(est, semana, w.day, ajustes)); }catch(e){ s = null; }
+    if(!s) continue;
+    const novo = { ...s, day:w.day, duracaoMin:s.totalMin, combinada:w.combinada, estimulo:w.estimulo, variacao:'acelerações' };
+    semana.corridaWeek[semana.corridaWeek.indexOf(w)] = novo;
+    const sess = semana.sessoes.find(x=>x.dia===w.day && x.modalidade==='corrida');
+    if(sess){ sess.duracaoMin = s.totalMin; sess.km = s.totalKm; }
+    est.log.push({ etapa:5, regra:'variacao_corrida', motivo:'rodagem leve com acelerações curtas (semana par, sem mudar volume nem carga)', dados:{ dia:w.day } });
+    return;
+  }
 }
 function motorAjustar(ajustes, erros){
   const a = { ...ajustes };
@@ -1254,6 +1386,11 @@ async function gerarPrimeiroPlanoV2(opcoes){
 // O app (script principal) e os testes usam estes nomes como globais.
 Object.assign(globalThis, {
   MOTOR_ENGINE_VERSION,
+  MOTOR_PERSONALIZACAO,
+  motorEixosMusc,
+  motorQualidadeModo,
+  motorQualidadePermitidaV1,
+  motorVariarCorrida,
   MOTOR_DESCARGA_MUSC,
   fatorSeriesDaSemana,
   MOTOR_PARAMS,

@@ -42,6 +42,7 @@ const testes = [
   { nome: 'lesões e limitações', arq: 'node/lesoes.test.js' },
   { nome: 'encerrar e plano concluído', arq: 'node/encerrar.test.js' },
   { nome: 'número da semana e aviso de treino forte', arq: 'node/semana-do-plano.test.js' },
+  { nome: 'personalização motor + IA (eixos, treino forte graduado, Leg Day, variação)', arq: 'node/personalizacao.test.js' },
   { nome: 'descarga da musculação (restauração desligada)', arq: 'node/descarga-musculacao.test.js' },
   { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
   { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },

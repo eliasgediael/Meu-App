@@ -14,7 +14,8 @@ const INSTRUCAO_SISTEMA = [
   '- A soma de séries da semana não pode passar de "regras.totalSeriesSemanaMax": você redistribui, não aumenta.',
   '- No máximo um exercício "base" por dia, e só exercícios compostos podem ser "base".',
   '- Não repita o mesmo exercício nem o mesmo padrão de movimento no mesmo dia.',
-  '- Um dia que o motor marcou como de perna continua sendo de perna. Se "regras.podeCriarDiaDePerna" for false, não leve pernas pesadas para outro dia.',
+  '- Divisão muscular: você pode decidir o que cada dia treina (perna pesada, superiores ou corpo inteiro), mas a quantidade de dias de perna pesada é sempre "regras.diasDePernaPesada".',
+  '  Trocar qual dia é o de perna só vale se "regras.podeCriarDiaDePerna" for true e o novo dia não tiver "corridaDuraPerto" nem corrida no dia.',
   '- Não aumente pernas pesadas em dias com corrida ou com "corridaDuraPerto" verdadeiro.',
   '- A duração estimada (séries x 35 s + descansos + 5 min) precisa caber em "minutosDisponiveis".',
   '- Não defina cargas em kg: a progressão de carga é feita pelo app.',
@@ -60,6 +61,12 @@ const INSTRUCAO_SISTEMA_V2 = INSTRUCAO_SISTEMA + '\n' + [
   'Histórico ausente ou dados_insuficientes não significa desempenho ruim. Nas sessões fortes use blocos executados, não pace médio da corrida inteira.',
   'Fadiga, esforço alto e baixa aderência podem justificar alternativas de menor custo dentro dos limites. Considere a recuperação entre ambas as modalidades.',
   'Melhora consistente pode justificar pedir_progressao somente se corrida.progressaoPermitida; isso é apenas um pedido, nunca aumenta o treino nem muda o VDOT.',
+  'Variação entre semanas ("semana.anterior", "semana.bloco", "semana.semanaNoBloco"):',
+  '- Dentro do mesmo bloco de 4 semanas, mantenha o exercício "base" de cada dia: a progressão de carga depende dele.',
+  '- Não devolva a mesma semana da anterior quando houver alternativa segura e equivalente: varie acessórios e isolados (mesmo grupo, papel e padrão),',
+  '  a faixa de repetições dentro dos limites e as opções de corrida dos menus (rodagem leve, acelerações, tipo de sessão forte), usando o motivo "variedade".',
+  '- Não varie por variar na semana de descarga, na calibração ou quando o histórico mostra queda: aí a prioridade é recuperação.',
+  '- Use "perfil.eixosMusculacao": experiência alta com técnica baixa pede exercícios guiados e progressão técnica; frequência baixa pede menos séries por sessão.',
   'Sem ganho concreto ou sem opção segura, mantenha o motor em ambas as modalidades com manter_plano. A semana inteira será rejeitada se qualquer F0–F9, R0–R9, J1 ou V1–V10 falhar.',
 ].join('\n');
 module.exports = { INSTRUCAO_SISTEMA, INSTRUCAO_SISTEMA_V2 };

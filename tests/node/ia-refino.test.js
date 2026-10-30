@@ -16,8 +16,9 @@ const { carregarAppComIA, prepararPerfil, respostaIdentidade } = require('../har
   const roda = (extra) => T.iaRefinarSemana({ ...base, chamarFuncao: funcao({ resposta: identidade }), ...extra });
   const ficaNoMotor = (r, motivo, msg) => ok(r.origem === 'motor' && r.semana === semanaMotor && r.motivo === motivo, msg + ` (${r.origem}/${r.motivo})`);
 
-  // ---------- desligada por padrão ----------
-  ok(T.IA_CONFIG.ativa === false, 'IA desligada por padrão');
+  // ---------- chave geral desligada: sempre o motor (o app publica com ativa:true, então o teste a desliga) ----------
+  T.IA_CONFIG.ativa = false;
+  ok(T.IA_CONFIG.ativa === false, 'IA desligada quando a chave geral está desligada');
   ficaNoMotor(await roda(), 'ia_desligada', 'desligada: plano do motor, sem chamada');
   ok(chamadas === 0, 'desligada: a função não é chamada');
 

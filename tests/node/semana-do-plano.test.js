@@ -6,7 +6,7 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
 const QUAL = /Intervalado|Limiar/;
 
 (async () => {
-  const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'gerarSemanaV2', 'gerarPlanoSemanal',
+  const T = await carregarApp(['MOTOR_PERSONALIZACAO', 'state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'gerarSemanaV2', 'gerarPlanoSemanal',
     'renderTreinoV2Content', 'HB_INTERVALO_VARIANTS', 'HB_TEMPO_VARIANTS']);
   const S = T.state;
   const preparar = async (n) => {
@@ -36,7 +36,8 @@ const QUAL = /Intervalado|Limiar/;
   ok(qualidade(solta.semana) && qualidade(solta.semana).mainDesc === q03[0].mainDesc, 'sem alvo da semana, usa a variante da semana 1');
 
   // 3. Segurança preservada: quem não tinha treino forte continua sem, e trote/caminhada continua trote/caminhada.
-  for (const n of ['01', '02', '05', '06', '11', '15', '17', '18']) {
+  // 17 (dor leve no tornozelo) passou a ter treino forte conservador por decisão do usuário (19/10/2026); ver personalizacao.test.js.
+  for (const n of ['01', '02', '05', '06', '11', '15', '18']) {
     const ss = await preparar(n);
     ok(!ss.some(qualidade), n + ': continua sem treino forte nas 8 semanas');
   }
@@ -44,7 +45,8 @@ const QUAL = /Intervalado|Limiar/;
   ok(s05.every(w => w.corridaWeek.every(c => /trote \+ .*caminhada/.test(c.mainDesc))), '05: retorno segue em trote/caminhada');
 
   // 4. Aviso: o ajuste da agenda removeu o treino forte (19 e 20) e o usuário vê o motivo na aba Treino.
-  for (const n of ['19', '20']) {
+  // 20 passou a ter o treino forte na semana 1 com a nova divisão (Leg Day): o aviso só vale para o 19.
+  for (const n of ['19']) {
     const ss = await preparar(n);
     const w1 = S.hybridPlanData.plan[0];
     ok(!qualidade(w1) && w1.avisoQualidade && w1.avisoQualidade.motivo === 'agenda' && w1.avisoQualidade.texto, n + ': semana sem treino forte guarda o motivo');
@@ -61,6 +63,9 @@ const QUAL = /Intervalado|Limiar/;
   }
 
   // 6. Corte de dose ligado por uma sessão que saiu da semana é revisto (perfil 20, semana 4 de descarga).
+  // Com o nível de musculação por eixos (19/10/2026) o perfil 20 deixou de ser iniciante e o treino forte cabe; o
+  // cenário do mecanismo é reproduzido com a classificação antiga (menor eixo).
+  T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = false;
   await preparar('20');
   const tr20 = S.hybridPlanData.trajetoria;
   const r20 = T.gerarPlanoSemanal(S.athleteProfile, { alvoSemana: tr20[3] });
@@ -69,6 +74,7 @@ const QUAL = /Intervalado|Limiar/;
   ok(r20.ajustes.volumeFator === 1 && !r20.ajustes.semProgressao && r20.decisoes.some(d => d.regra === 'corte_revisto'), '20 S4: corte de volume revisto com as sessões que ficaram');
   ok(mins(r20) === mins(r20sem1), '20 S4: volume não depende do tiro que saiu (' + mins(r20) + ')');
   ok(r20.ajustes.semQualidade && !qualidade(r20.semana), '20 S4: o treino forte continua fora');
+  T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = true;
   // Corte ainda justificado fica (06, semana 4) e o corte vindo do check-in nunca é desfeito.
   await preparar('06');
   const r06 = T.gerarPlanoSemanal(S.athleteProfile, { alvoSemana: S.hybridPlanData.trajetoria[3] });

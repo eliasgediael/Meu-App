@@ -90,7 +90,8 @@ async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
     const dados={ treinos:state.treinos,corridaProgress:state.corridaProgress,checkins:hp.checkins,checkinsSemanais:hp.checkinsSemanais,checkinDiario:state.checkinDiario,atividadesLivres:state.atividadesLivres,pausa:hp.pausa,hoje:todayISO() };
     const historicoCorrida=await iaComTimeout(iaLerHistoricoGPS(dados,gpsDbGet),IA_CONFIG.timeoutMs);
     if(seq!==iaPedidoEmCurso || antes!==iaRetratoApp(state)) return {origem:'motor',motivo:'estado_mudou'};
-    const r=await iaRefinarSemanaV2({perfil:perfilMotor || iaClone(state.athleteProfile),opcoes,semanaMotor,historicoCorrida,
+    const semanaAnterior=hp.currentWeekIndex>1 ? hp.plan[hp.currentWeekIndex-2] || null : null;
+    const r=await iaRefinarSemanaV2({perfil:perfilMotor || iaClone(state.athleteProfile),opcoes,semanaMotor,historicoCorrida,semanaAnterior,tipo:hp.currentWeekIndex>1 ? 'semanal' : 'inicial',
       historico:{historicoCarga:state.historicoCarga,checkins:hp.checkins},online:navigator.onLine,usuario:state.authUser,
       chamarFuncao:iaCriarChamadaServidor({url:IA_CONFIG.servidorUrl,obterToken:()=>auth.currentUser.getIdToken()})});
     if(r.origem!=='ia') return r;

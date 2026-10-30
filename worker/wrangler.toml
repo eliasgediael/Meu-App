@@ -8,7 +8,7 @@ compatibility_flags = ["nodejs_compat"]   # crypto.createHash do functions/src/r
 workers_dev = true
 
 [vars]
-IA_ATIVA = "false"                        # chave geral: "true" só depois do teste aprovado
+IA_ATIVA = "true"                        # chave geral: "true" só depois do teste aprovado
 GEMINI_MODELO = "gemini-3.5-flash-lite"   # aceito com o esquema sem limites (diagnóstico 2026-10-14); 3.8 Flash dava 503
 GEMINI_NIVEL_PENSAMENTO = ""              # vazio = sem thinkingConfig (como nos testes 2 a 4)
 GEMINI_FORMATO_ESQUEMA = "openapi"        # responseSchema; os limites numéricos e de tamanho saem só do esquema enviado ao Google
@@ -19,14 +19,14 @@ IA_TIMEOUT_MS = "45000"                   # prazo total do Gemini, somando a nov
 GEMINI_ESPERA_RETENTATIVA_MS = "2500"     # pausa antes da única nova tentativa (500/503/504/rede)
 GEMINI_NOVA_TENTATIVA = "true"            # "false" = no máximo uma chamada ao Google por pedido
 # Cotas: ajustar pelos números da página de limites do AI Studio (o Google não publica a cota gratuita por modelo).
-IA_LIMITE_DIA_USUARIO = "3"
-IA_LIMITE_DIA_GLOBAL = "15"
-IA_LIMITE_MINUTO_GLOBAL = "4"
-IA_LIMITE_MES_GLOBAL = "450"
+IA_LIMITE_DIA_USUARIO = "100"
+IA_LIMITE_DIA_GLOBAL = "100000"
+IA_LIMITE_MINUTO_GLOBAL = "10000"
+IA_LIMITE_MES_GLOBAL = "3000000"
 
 [[kv_namespaces]]
 binding = "IA_CACHE"
-id = "PREENCHER_NA_ETAPA_C"               # npx wrangler kv namespace create IA_CACHE
+id = "95d6aa9dfa7d4ddbaf36f167a245c9a8"
 
 [[durable_objects.bindings]]
 name = "COTAS"

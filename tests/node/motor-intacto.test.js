@@ -13,12 +13,12 @@ const FUNCOES_CATALOGO = ['corridaOpcoesDoDia', 'corridaMontarOpcao', 'corridaAq
   const T = await carregarApp(['state', 'qv2Aplicar', 'gerarPlanoSemanal', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'gerarSemanaV2', 'aplicarCheckinSemanalV2']);
   const S = T.state;
   // Espiões: se o catálogo existir, nenhuma das suas funções pode rodar durante a geração normal.
-  const chamadas = {};
+  const chamadas = {}, opcoesMontadas = [];
   FUNCOES_CATALOGO.forEach(n => {
     if (typeof globalThis[n] !== 'function') return;
     const orig = globalThis[n];
     chamadas[n] = 0;
-    globalThis[n] = function (...a) { chamadas[n]++; return orig.apply(this, a); };
+    globalThis[n] = function (...a) { chamadas[n]++; if (n === 'corridaMontarOpcao') opcoesMontadas.push(a[1]); return orig.apply(this, a); };
   });
   const preparar = async (R) => { S.athleteProfile = T.criarAthleteProfile(); S.equipItens = null; S.hybridPlanData = null; S.corridaVdotData = null; S.treinos = []; S.musculacao = {}; await T.qv2Aplicar(R); };
   const semana = (w) => w ? { weekNumber: w.weekNumber, phaseLabel: w.phaseLabel, totalWeeks: w.totalWeeks, pendente: !!w.pendente,
@@ -48,8 +48,10 @@ const FUNCOES_CATALOGO = ['corridaOpcoesDoDia', 'corridaMontarOpcao', 'corridaAq
     }
   }
   conferir('motor-antes-catalogo', out);
-  const usadas = Object.entries(chamadas).filter(([, n]) => n > 0);
-  ok(usadas.length === 0, 'geração normal do plano não chama nenhuma função do catálogo' + (usadas.length ? ' — ' + usadas.map(([k, n]) => k + ' ' + n + 'x').join(', ') : ` (${Object.keys(chamadas).length} funções vigiadas)`));
+  // Desde 19/10/2026 o motor usa UMA opção do catálogo: acelerações numa rodagem leve (variação das semanas pares).
+  // Nenhuma outra opção (tiros, limiar, longão, menus inteiros) é montada pela geração normal do plano.
+  const usadas = Object.entries(chamadas).filter(([k, n]) => n > 0 && !['corridaMontarOpcao', 'corridaContextoDoDia', 'corridaOpcaoElegivel', 'corridaAquecimentoPadrao', 'corridaCargaIntensa'].includes(k));
+  ok(usadas.length === 0 && opcoesMontadas.every(id => id === 'LEVE_STRIDES'), 'geração normal do plano só usa a opção LEVE_STRIDES do catálogo' + (usadas.length ? ' — ' + usadas.map(([k, n]) => k + ' ' + n + 'x').join(', ') : '') + ` (${[...new Set(opcoesMontadas)].join(',') || 'nenhuma'})`);
   semErro();
   process.exit(process.exitCode || 0);
 })();

@@ -3,9 +3,9 @@
 // Os números marcados como provisórios ainda precisam de teste e aprovação antes de valer como regra.
 /* eslint-disable */
 const IA_CONFIG = {
-  ativa: false,
-  publicacaoAutorizada: false,
-  servidorUrl: '',
+  ativa: true,
+  publicacaoAutorizada: true,
+  servidorUrl: 'https://forza-ia.eliasgediael.workers.dev',
   versaoContrato: '1',
   timeoutMs: 25000,
   maxBytesResposta: 24000,

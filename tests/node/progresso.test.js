@@ -36,7 +36,7 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   S.progModo = 'semana'; S.progEvol = 'corrida'; S.progDetalhe = null; S.progHistorico = false;
   const h = T.renderProgressoV2();
   ok(/5 out – 11 out 2026/.test(h) && /5 <small>km<\/small>/.test(h) && /Sessão de força/.test(h), 'período com datas e resumo compacto (km e sessões de força)');
-  ok(/data-progmodo="ciclo"/.test(h) && /data-progevol="musc"/.test(h) && /Atividades do período/.test(h) && /Ver histórico completo/.test(h) && (h.match(/data-progdet="/g) || []).length === 3, 'Semana/Mês/Ciclo, evolução, atividades do período, histórico e 3 análises detalhadas');
+  ok(/data-progmodo="ciclo"/.test(h) && /data-progevol="musc"/.test(h) && /Atividades do período/.test(h) && /Ver histórico completo/.test(h) && /data-proganalises/.test(h), 'Semana/Mês/Ciclo, evolução, atividades do período, histórico e acesso a análises e medidas');
   ok(!/Recuperação/.test(h) && !/fr-progsec/.test(h) && !/data-muschistopen/.test(h), 'página principal sem recuperação, blocos e históricos repetidos');
   ok(!/kg ?×|tonelada|volume total/i.test(h.replace(/Última vez[^<]*/g, '')), 'sem tonelagem no Progresso');
   ok(/Superiores/.test(h), 'nome do treino de força consistente nas últimas atividades');

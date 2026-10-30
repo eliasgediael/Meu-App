@@ -146,7 +146,7 @@ function iaRetomada(est){ return est.musc.situacao==='parado' && (est.musc.parad
 // (inclui retomada, calibração e o fator de séries da semana); repetições e descanso em faixa provisória.
 function iaLimites(ctx, papel, foco){
   const est = ctx.est, nivel = est.capacidade.musc;
-  const esq = motorEsquema(nivel, papel, foco, iaRetomada(est), est.calibracao.ativa);
+  const esq = motorEsquema(nivel, papel, foco, iaRetomada(est), est.calibracao.ativa, est.musc.eixos && est.musc.eixos.volume);
   const C = IA_CONFIG;
   let repsMin = Math.max(C.repsMin, esq.reps - C.repsAbaixo), repsMax = Math.min(C.repsMax, esq.reps + C.repsAcima);
   if(nivel==='iniciante' || iaRetomada(est)) repsMin = Math.max(repsMin, Math.min(C.repsMinIniciante, esq.reps));
@@ -221,6 +221,18 @@ function iaResumoHistorico(historico, itens){
 function iaItemPedido(ctx, e){
   return { id:ctx.autorizados.chavePorNome.get(e.nome), papel:e.papel, series:parseInt(e.series,10), reps:parseInt(e.reps,10), rpe:e.rpe, descansoSeg:parseDescansoSec(e.descanso) };
 }
+// Semana anterior servida (ids do contrato e opção/tipo da corrida), para a IA variar sem repetir e sem perder a
+// progressão. Sem nomes nem datas. semanaAnterior: a semana do plano (hybridPlanData.plan[n-2]).
+function iaResumoSemanaAnterior(ctx, semanaAnterior){
+  if(!semanaAnterior || !semanaAnterior.muscPlan) return null;
+  const chave = ctx.autorizados.chavePorNome;
+  const musculacao = Object.keys(semanaAnterior.muscPlan).filter(d=>IA_DIAS.includes(d)).map(d=>({
+    dia:d, exercicios:(semanaAnterior.muscPlan[d] || []).map(e=>({ id:chave.get(e.nome) || null, papel:e.papel || null, series:parseInt(e.series,10) || null, reps:parseInt(e.reps,10) || null })).filter(x=>x.id),
+  }));
+  const ref = semanaAnterior.iaRefino && semanaAnterior.iaRefino.opcoes || {};
+  const corrida = (semanaAnterior.corridaWeek || []).filter(w=>IA_DIAS.includes(w.day)).map(w=>({ dia:w.day, opcao:ref[w.day] || null, tipo:w.type || null, variacao:w.variacao || null }));
+  return { musculacao, corrida, ajustadaPelaIA:!!semanaAnterior.iaRefino };
+}
 function iaMontarPedido(ctx, opcoes){
   opcoes = opcoes || {};
   const { est } = ctx;
@@ -232,10 +244,13 @@ function iaMontarPedido(ctx, opcoes){
   return {
     versaoContrato: IA_CONFIG.versaoContrato,
     tipo: opcoes.tipo==='semanal' ? 'semanal' : 'inicial',
-    semana: { numero: (alvo && alvo.semana) || 1, fase: (alvo && alvo.fase) || (est.calibracao.ativa ? 'Retomada / calibração' : 'Base') },
+    semana: { numero: (alvo && alvo.semana) || 1, fase: (alvo && alvo.fase) || (est.calibracao.ativa ? 'Retomada / calibração' : 'Base'),
+      bloco: Math.floor((((alvo && alvo.semana) || 1) - 1)/4) + 1, semanaNoBloco: (((alvo && alvo.semana) || 1) - 1)%4 + 1,
+      anterior: iaResumoSemanaAnterior(ctx, opcoes.semanaAnterior) },
     perfil: {
       faixaEtaria: iaFaixaEtaria(perfil),
       nivel: est.capacidade.musc,
+      eixosMusculacao: est.musc.eixos ? { experiencia:est.musc.eixos.experiencia, tecnica:est.musc.eixos.tecnica, frequencia:est.musc.eixos.frequencia, volume:est.musc.eixos.volume } : null,
       objetivo: est.objetivo.tipo || null,
       modalidadePrincipal: ctx.prio.principal || null,
       situacao: est.musc.situacao || null,
@@ -253,6 +268,7 @@ function iaMontarPedido(ctx, opcoes){
     regras: {
       totalSeriesSemanaMax: ctx.totalSeriesMotor,
       maxBasePorDia: 1,
+      diasDePernaPesada: Object.keys(ctx.dias).filter(d=>ctx.dias[d].tipoMotor==='lower').length,
       podeCriarDiaDePerna: est.capacidade.musc!=='iniciante' && !ctx.ajustes.aliviarInferior && est.recuperacao.prontidao!=='reduzida',
       diasFixos: diasMusc,
     },
@@ -265,5 +281,5 @@ function iaMontarPedido(ctx, opcoes){
 export {
   IA_DIAS, IA_PAPEIS, iaClone, iaHashNome, iaChavesDoPool, iaAplicarFatorSeries, iaAssinaturaMusc, iaAssinaturaCorrida, iaContextoDoMotor, iaListaAutorizada, iaInfoDias, iaLimites, iaRetomada,
   iaEhPerna, iaSeriesPernaComposta, iaReferenciaFull, iaTipoPeloConteudo, iaTotalSeries, iaSeriesPorGrupo, iaMaxTier,
-  iaFaixaEtaria, iaResumoHistorico, iaMontarPedido,
+  iaFaixaEtaria, iaResumoHistorico, iaResumoSemanaAnterior, iaMontarPedido,
 };

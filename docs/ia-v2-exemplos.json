@@ -214,17 +214,17 @@
             "carga": ""
           },
           {
-            "nome": "Panturrilha no leg press",
+            "nome": "Prancha",
             "series": "3",
-            "reps": "10",
+            "reps": "12",
             "rpe": 6,
             "descanso": "75s",
             "carga": ""
           },
           {
-            "nome": "Prancha",
+            "nome": "Leg press 45 graus",
             "series": "3",
-            "reps": "12",
+            "reps": "10",
             "rpe": 6,
             "descanso": "75s",
             "carga": ""
@@ -370,7 +370,7 @@
             "carga": ""
           },
           {
-            "nome": "Pulldown reto (braço estendido)",
+            "nome": "Puxada frontal na polia",
             "series": "3",
             "reps": "8",
             "rpe": 6,
@@ -431,14 +431,6 @@
             "carga": ""
           },
           {
-            "nome": "Panturrilha no leg press",
-            "series": "3",
-            "reps": "8",
-            "rpe": 6,
-            "descanso": "90s",
-            "carga": ""
-          },
-          {
             "nome": "Cadeira flexora (sentado)",
             "series": "2",
             "reps": "10",
@@ -460,6 +452,14 @@
             "reps": "10",
             "rpe": 5,
             "descanso": "60s",
+            "carga": ""
+          },
+          {
+            "nome": "Leg press 45 graus",
+            "series": "3",
+            "reps": "8",
+            "rpe": 6,
+            "descanso": "90s",
             "carga": ""
           }
         ]
