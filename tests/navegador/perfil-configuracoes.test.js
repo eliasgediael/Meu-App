@@ -15,11 +15,14 @@ const { abrirApp, ok } = require('../harness/navegador');
       await page.click('[aria-label="Configurações"]');
       ok(await page.evaluate(() => state.tab === 'preferencias'), `Perfil ${width}: abre Configurações`);
       ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Configurações ${width}: sem transbordamento horizontal`);
+      await page.click('[data-prefpag="corrida"]'); await new Promise(r => setTimeout(r, 300));
       const antes = await page.$eval('[data-prefsw="autoPause"]', el => el.getAttribute('aria-checked'));
       await page.click('[data-prefsw="autoPause"]');
       const depois = await page.$eval('[data-prefsw="autoPause"]', el => el.getAttribute('aria-checked'));
       ok(antes !== depois, `Configurações ${width}: pausa automática muda com o toque`);
       await page.click('[data-prefsw="autoPause"]');
+      await page.click('.fr-prefvoltar'); await new Promise(r => setTimeout(r, 300));
+      await page.click('[data-prefpag="dados"]'); await new Promise(r => setTimeout(r, 300));
       await page.click('[data-perfilgo="maisOpcoes"]');
       ok(await page.$('#btnExportBackup') !== null, `Configurações ${width}: acesso real ao backup`);
     }

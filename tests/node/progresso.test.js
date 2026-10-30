@@ -95,8 +95,12 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
   ok(!/Turma/.test(T.renderContaV2()), 'Conta não promete a antiga Turma');
   S.preferencias = { vozKm: false, autoPause: true, aviso: { modo: 'vibracao', volume: 0.7 } };
   S.vozAtiva = false;
-  const cfg = T.renderPreferenciasV2();
-  ok(['Voz e corrida', 'Descanso da musculação', 'Exibição', 'Conta e dados'].every(x => cfg.includes(x)), 'Configurações agrupadas por assunto');
+  // Configurações em páginas: a raiz lista as categorias e cada página tem os controles de antes
+  const raizCfg = (T.state.prefPagina = null, T.renderPreferenciasV2());
+  const ids = ['corrida', 'musculacao', 'equip', 'exibicao', 'conta', 'dados'];
+  const cfg = ids.map(id => (T.state.prefPagina = id, T.renderPreferenciasV2())).join('');
+  T.state.prefPagina = null;
+  ok(['Corrida e voz', 'Musculação', 'Equipamentos e relógio', 'Aparência', 'Conta e sincronização', 'Dados e backup'].every(x => raizCfg.includes(x) && cfg.includes(x)), 'Configurações agrupadas por assunto (raiz com categorias e uma página para cada)');
   ok(/aria-label="Voz nos treinos" aria-checked="false"/.test(cfg) && /aria-label="Voz a cada km" aria-checked="false"/.test(cfg) && /aria-label="Pausa automática na corrida" aria-checked="true"/.test(cfg), 'controles acessíveis refletem as preferências reais');
   ok(!/id="avisoVolume"/.test(cfg) && /id="avisoTestar"/.test(cfg), 'vibração não oferece volume; teste de aviso permanece');
   ok(/data-perfilgo="conta"/.test(cfg) && /data-perfilgo="maisOpcoes"/.test(cfg), 'Configurações mantém acesso à conta e ao backup');

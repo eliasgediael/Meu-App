@@ -962,6 +962,13 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-navplay:active .cir{ transform:scale(.94); }
 .mrt-navplay .cir svg{ width:20px; height:20px; margin-left:2px; }
 .mrt-navplay .lbl{ font-size:11px; font-weight:700; color:var(--text-faint); }
+.fr-prefgrupo{ margin-bottom:24px; }
+.fr-prefroot{ min-height:64px; }
+.fr-prefic{ width:32px; height:32px; border-radius:9px; display:flex; align-items:center; justify-content:center; color:#fff; flex-shrink:0; }
+.fr-prefic svg{ width:18px; height:18px; }
+.fr-prefroot .nm small{ display:block; margin-top:2px; font-size:12.5px; font-weight:400; color:var(--text-dim); }
+.fr-prefvoltar{ display:flex; align-items:center; gap:4px; background:none; border:0; padding:4px 0 10px; font:inherit; font-weight:600; color:var(--text); cursor:pointer; }
+.fr-preftit{ font-size:28px; font-weight:800; letter-spacing:-.01em; margin:0 0 18px; }
 .mrt-scroll{ padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
 .mrt-greetrow{ margin-bottom:20px; }
 .mrt-greettitle{ font-size:26px; font-weight:800; letter-spacing:-0.4px; color:var(--text); }
@@ -3141,6 +3148,12 @@ function muscleClass(id, activation){
 // máscara por região muscular por cima: principal em laranja forte, secundário em laranja claro, resto neutro.
 // Polígonos no espaço 360×1080 da figura; 'lados' são desenhados à esquerda e espelhados no eixo do corpo.
 const ANATOMIA = {"frente":{"eixo":198.7,"lados":{"shoulders":[[115,212],[95,208],[72,220],[58,243],[53,272],[58,302],[74,300],[92,282],[104,258],[112,234]],"chest":[[106,232],[130,212],[160,208],[192,214],[196,240],[194,275],[181,298],[150,303],[116,291],[103,265]],"biceps":[[62,302],[88,292],[102,312],[100,350],[92,384],[78,394],[64,386],[56,350]],"forearms":[[58,394],[92,396],[100,420],[90,470],[72,505],[54,505],[38,480],[36,440],[46,406]],"obliques":[[110,316],[150,318],[156,360],[160,420],[150,446],[126,432],[112,392],[104,352]],"hip-flexors":[[130,458],[158,462],[172,500],[164,508],[142,492]],"quads":[[100,470],[128,456],[156,466],[170,506],[168,560],[176,620],[175,665],[164,700],[140,706],[116,692],[101,652],[94,592],[95,522]],"adductors":[[172,506],[192,508],[197,545],[193,600],[182,640],[176,600],[170,555]],"calves":[[95,745],[112,738],[118,780],[115,840],[104,862],[94,830],[92,790]],"calves-2":[[142,750],[160,745],[168,790],[164,840],[150,860],[140,820],[138,780]]},"centro":{"abs":[[160,312],[198,306],[238,312],[240,360],[236,420],[226,470],[212,500],[199,510],[186,500],[172,470],[162,420],[158,360]]}},"costas":{"eixo":167,"lados":{"rear-shoulders":[[95,212],[62,218],[38,238],[28,268],[32,300],[48,294],[70,270],[98,250]],"upper-back":[[100,234],[124,228],[148,250],[150,298],[120,306],[92,300],[80,286],[86,256]],"lats":[[82,302],[122,304],[150,300],[160,340],[150,392],[132,426],[118,420],[96,380],[84,340]],"triceps":[[40,284],[62,286],[76,312],[74,352],[62,382],[42,380],[30,346],[28,310]],"forearms":[[30,384],[60,384],[66,420],[58,470],[46,505],[28,505],[14,470],[14,422]],"glutes":[[100,450],[130,440],[164,446],[167,482],[161,540],[140,560],[110,556],[92,526],[88,482]],"hamstrings":[[72,562],[100,552],[140,556],[160,566],[158,612],[150,662],[140,700],[120,712],[100,700],[82,660],[72,612]],"calves":[[76,742],[100,722],[120,726],[145,742],[150,790],[140,835],[120,845],[108,826],[90,840],[72,820],[67,780]]},"centro":{"traps":[[152,142],[182,142],[190,170],[250,204],[228,224],[200,238],[184,300],[167,340],[150,300],[134,238],[106,224],[84,204],[144,170]],"lower-back":[[148,352],[186,352],[200,392],[205,440],[167,452],[129,440],[134,392]]}}};
+// Corpo feminino: mesmas regiões, reposicionadas pelo contorno (scripts/adaptar-mascaras-fem.js); imagens frente-fem e costas-fem.
+const ANATOMIA_FEM = {"frente":{"eixo":193.2,"lados":{"shoulders":[[117.9,212],[96.1,208],[80.5,220],[71.3,243],[68.6,272],[71.9,302],[86.4,300],[104.1,282],[112.9,258],[119.4,234]],"chest":[[113.8,232],[132.3,212],[160.1,208],[192,214],[195.6,240],[193.7,275],[181.9,298],[154.1,303],[125.5,291],[112.4,265]],"biceps":[[75.5,302],[100.9,292],[111.9,312],[110.7,350],[101.5,384],[88.8,394],[76.2,386],[72,350]],"forearms":[[70.8,394],[101.6,396],[108.2,420],[97.8,470],[76.9,505],[59.6,505],[47.8,480],[48.4,440],[59.4,406]],"obliques":[[119.1,316],[154.7,318],[160.2,360],[163.2,420],[153.3,446],[131.2,432],[119.6,392],[114.3,352]],"hip-flexors":[[134.9,458],[160.7,462],[172.8,500],[165.5,508],[144.5,492]],"quads":[[107.1,470],[133,456],[158.9,466],[171.3,506],[169.9,560],[176.2,620],[176.1,665],[166.8,700],[145.4,706],[122.4,692],[106.5,652],[99.2,592],[98.4,522]],"adductors":[[173.2,506],[192.4,508],[197.9,545],[193.5,600],[182.5,640],[177.4,600],[171.8,555]],"calves":[[105.4,745],[120.6,738],[124.3,780],[124.3,840],[117.7,862],[104.7,830],[100.8,790]],"calves-2":[[147.2,750],[163.2,745],[169.6,790],[166.7,840],[156,860],[144.7,820],[142.4,780]]},"centro":{"abs":[[163.4,312],[197.1,306],[232.6,312],[234.6,360],[232.8,420],[223.9,470],[211.2,500],[199.2,510],[186.3,500],[173.8,470],[165,420],[161.9,360]]}},"costas":{"eixo":164.4,"lados":{"rear-shoulders":[[93.5,212],[64.6,218],[47,238],[40.7,268],[43.6,300],[59.6,294],[78.2,270],[102.2,250]],"upper-back":[[103.2,234],[124.6,228],[147.3,250],[149.8,298],[122,306],[97.5,300],[88.4,286],[91.8,256]],"lats":[[88.1,302],[124,304],[149.6,300],[158.7,340],[149.3,392],[132.5,426],[119.2,420],[98.8,380],[91.1,340]],"triceps":[[53.1,284],[72.6,286],[82.5,312],[81.9,352],[66.9,382],[48.4,380],[43.1,346],[39,310]],"forearms":[[37.3,384],[65.3,384],[70.6,420],[60.6,470],[47.3,505],[29.7,505],[18.5,470],[22.1,422]],"glutes":[[102.3,450],[130.3,440],[162.4,446],[164.5,482],[163.1,540],[142.6,560],[113.2,556],[95.9,526],[88.1,482]],"hamstrings":[[77.4,562],[103.6,552],[142.4,556],[160.1,566],[158.6,612],[149,662],[139.2,700],[121.5,712],[102.6,700],[85.7,660],[76.6,612]],"calves":[[82.5,742],[103.6,722],[121.6,726],[144,742],[149.2,790],[140.2,835],[122.6,845],[111.3,826],[96.3,840],[78.4,820],[72.6,780]]},"centro":{"traps":[[150.4,142],[180,142],[185.1,170],[244.5,204],[221.2,224],[194.5,238],[180.1,300],[164.9,340],[149.6,300],[134.4,238],[107.3,224],[85.2,204],[144.5,170]],"lower-back":[[148,352],[181.9,352],[195.9,392],[200.6,440],[165.1,452],[129.4,440],[134.4,392]]}}};
+function anatomiaCorpo(lado){
+  const fem = !!(state.perfil && state.perfil.corpo === 'feminino');
+  return { f:(fem ? ANATOMIA_FEM : ANATOMIA)[lado], arq:lado + (fem ? '-fem' : '') };
+}
 function anatomiaCurva(pts){
   // contorno suave (Catmull-Rom fechado) a partir dos pontos da máscara
   const n = pts.length, p = (i)=>pts[(i+n)%n];
@@ -3153,12 +3166,12 @@ function anatomiaCurva(pts){
   return d+'Z';
 }
 function anatomiaFiguraHtml(lado, a, rotulo){
-  const f = ANATOMIA[lado];
+  const { f, arq } = anatomiaCorpo(lado);
   const regiao = (id, pts)=>{ const base = id.replace(/-\d+$/,''); const cls = muscleClass(base, a); return cls==='muscle' ? '' : `<path class="${cls}" data-muscle="${base}" d="${anatomiaCurva(pts)}"/>`; };
   let corpo = '';
   Object.entries(f.lados).forEach(([id, pts])=>{ corpo += regiao(id, pts) + regiao(id, pts.map(([x,y])=>[+(2*f.eixo-x).toFixed(1), y])); });
   Object.entries(f.centro).forEach(([id, pts])=>{ corpo += regiao(id, pts); });
-  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="img" aria-label="${rotulo}"><image href="gifs/anatomia/${lado}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
+  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="img" aria-label="${rotulo}"><image href="gifs/anatomia/${arq}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
 }
 function muscleFrontSvg(a){ return anatomiaFiguraHtml('frente', a, 'Mapa muscular frontal'); }
 function muscleBackSvg(a){ return anatomiaFiguraHtml('costas', a, 'Mapa muscular traseiro'); }
@@ -8995,7 +9008,9 @@ const VDOT_TEST_COEF = {
   '10000':{a:0.805659018769989, b:0.852425654240328},
 };
 function parseClockInput(str){
-  const parts = String(str||'').trim().split(':').map(Number);
+  str = String(str||'').trim();
+  if(/^\d{3,6}$/.test(str)) str = formatarTempoDigitado(str);   // 2430 sem ":" vale 24:30
+  const parts = str.split(':').map(Number);
   if(parts.length<2 || parts.some(isNaN)) return null;
   if(parts.length===2) return parts[0]*60+parts[1];
   return parts[0]*3600+parts[1]*60+parts[2];
@@ -10089,7 +10104,7 @@ function arteHalter(c, cx, cy, w){
 const _anatSemFundo = {};
 async function anatomiaSemFundo(k){
   if(_anatSemFundo[k]) return _anatSemFundo[k];
-  const im = await carregarImagemArte('gifs/anatomia/'+k+'.webp'); if(!im) return null;
+  const im = await carregarImagemArte('gifs/anatomia/'+anatomiaCorpo(k).arq+'.webp'); if(!im) return null;
   const cv = document.createElement('canvas'); cv.width = im.width; cv.height = im.height;
   const c = cv.getContext('2d', { willReadFrequently:true }); c.drawImage(im, 0, 0);
   const d = c.getImageData(0, 0, cv.width, cv.height), px = d.data, W = cv.width, H = cv.height;
@@ -10112,7 +10127,7 @@ async function desenharAnatomiaArte(c, a, x, y, h){
     const tc = t.getContext('2d');
     tc.drawImage(fig, 0, 30, 360, 980, 0, 0, larg, h);
     tc.globalCompositeOperation = 'source-atop';
-    const f = ANATOMIA[k];
+    const f = anatomiaCorpo(k).f;
     const pinta = (id, pts)=>{ const cls = muscleClass(id.replace(/-\d+$/,''), a); if(cls==='muscle') return;
       const p = new Path2D(anatomiaCurva(pts)); tc.save(); tc.translate(0, -30*esc); tc.scale(esc, esc);
       tc.globalCompositeOperation = 'source-atop'; tc.fillStyle = cls.includes('primary') ? 'rgba(255,90,31,0.85)' : 'rgba(255,154,115,0.55)'; tc.fill(p); tc.restore(); };
@@ -14075,6 +14090,39 @@ function navPlayAcao(){
   if(primary.tipo==='musculacao') startWorkoutSession(day); else openGpsIntro(day);
 }
 document.addEventListener('click', (ev)=>{ if(ev.target.closest && ev.target.closest('[data-navplay]')) navPlayAcao(); });
+document.addEventListener('click', (ev)=>{
+  const b = ev.target.closest && ev.target.closest('[data-corpo]');
+  if(!b) return;
+  state.perfil = { ...(state.perfil||{}), corpo: b.getAttribute('data-corpo')==='feminino' ? 'feminino' : 'masculino' };
+  savePerfil(); render();
+});
+// Tempo e pace (mm:ss): o teclado numérico do iPhone não tem ":", então ele entra sozinho. Digitar 2430 vira 24:30,
+// 530 vira 5:30 e 10530 vira 1:05:30. Vale para todo campo cujo exemplo é mm:ss (placeholder "24:30", "5:20", "mm:ss").
+// limitar: ao sair do campo, minutos e segundos de relógio (depois dos primeiros dígitos) nunca passam de 59.
+// Durante a digitação não limita, senão 1999 viraria 15:59 (o 9 cortado mudaria os dígitos que vêm depois).
+function formatarTempoDigitado(v, limitar){
+  const d = String(v||'').replace(/\D/g,'').slice(0,6);
+  if(d.length<=2) return d;
+  const lim = (x)=> limitar ? String(Math.min(59, +x)).padStart(2,'0') : x;
+  if(d.length<=4) return d.slice(0,-2)+':'+lim(d.slice(-2));
+  return d.slice(0,-4)+':'+lim(d.slice(-4,-2))+':'+lim(d.slice(-2));
+}
+const TEMPO_PLACEHOLDER = /^(ex:\s*)?(mm:ss|\d{1,2}:\d{2}(:\d{2})?)$/;
+document.addEventListener('input', (ev)=>{
+  const el = ev.target;
+  if(!el || el.tagName!=='INPUT') return;
+  if(!TEMPO_PLACEHOLDER.test(el.getAttribute('placeholder') || '')) return;
+  if(ev.inputType && ev.inputType.startsWith('delete')) return;   // apagar não reformata (24:3 não vira 2:43)
+  const f = formatarTempoDigitado(el.value);
+  if(f!==el.value) el.value = f;
+  if(el.getAttribute('inputmode')!=='numeric') el.setAttribute('inputmode','numeric');
+}, true);   // captura: o valor já formatado chega aos handlers de cada campo (R.cDesTempo guarda 24:30, não 2430)
+document.addEventListener('focusout', (ev)=>{
+  const el = ev.target;
+  if(!el || el.tagName!=='INPUT' || !TEMPO_PLACEHOLDER.test(el.getAttribute('placeholder') || '')) return;
+  const f = formatarTempoDigitado(el.value, true);
+  if(el.value && f!==el.value){ el.value = f; el.dispatchEvent(new Event('input', { bubbles:true })); }
+});
 /* ---------- Aba Treino (pacote visual): cabeçalho, Gerenciar plano, plano completo, reorganizar semana,
    histórico de mudanças e revisão do questionário. Tudo reaproveita funções e dados que já existem; nada aqui muda
    regra do motor. ---------- */
@@ -16743,12 +16791,12 @@ const BIB_REGIAO_NOME = {
   'glutes':'Glúteos', 'quads':'Quadríceps', 'hamstrings':'Posterior de coxa', 'adductors':'Adutores', 'hip-flexors':'Flexores do quadril', 'calves':'Panturrilha'
 };
 function bibMapaFiguraHtml(lado){
-  const f = ANATOMIA[lado];
+  const { f, arq } = anatomiaCorpo(lado);
   const regiao = (id, pts)=>{ const base = id.replace(/-\d+$/,''); return `<path class="${state.bibMusculo===base?'on':''}" data-bibmusc="${base}" role="button" aria-label="${BIB_REGIAO_NOME[base]||base}" d="${anatomiaCurva(pts)}"/>`; };
   let corpo = '';
   Object.entries(f.lados).forEach(([id, pts])=>{ corpo += regiao(id, pts) + regiao(id, pts.map(([x,y])=>[+(2*f.eixo-x).toFixed(1), y])); });
   Object.entries(f.centro).forEach(([id, pts])=>{ corpo += regiao(id, pts); });
-  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="group" aria-label="${lado==='frente'?'Corpo, vista frontal':'Corpo, vista traseira'}"><image href="gifs/anatomia/${lado}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
+  return `<svg class="mrt-anat" viewBox="0 30 360 980" role="group" aria-label="${lado==='frente'?'Corpo, vista frontal':'Corpo, vista traseira'}"><image href="gifs/anatomia/${arq}.webp" x="0" y="0" width="360" height="1080"/>${corpo}</svg>`;
 }
 function bibMapaHtml(){
   const sel = state.bibMusculo;
@@ -17240,10 +17288,44 @@ async function abrirEscolhaDeVoz(){
     }; });
   });
 }
+// Configurações em páginas (ideia do openGym): a raiz é uma lista de categorias com ícone colorido e cada uma abre uma
+// página. As seções vêm do HTML que já existia (cada uma começa num rótulo), então todos os controles continuam os mesmos.
+const PREF_PAGINAS = [
+  { id:'corrida', t:'Corrida e voz', s:'Voz do treino, voz a cada km, pausa automática', rotulos:['Voz e corrida'], cor:'#34C759', ic:'run' },
+  { id:'musculacao', t:'Musculação', s:'Aviso do fim do descanso', rotulos:['Descanso da musculação'], cor:'#FF9500', ic:'dumbbell' },
+  { id:'equip', t:'Equipamentos e relógio', s:'Local, tênis, relógio', rotulos:['Treino'], cor:'#5856D6', ic:'shoe' },
+  { id:'exibicao', t:'Aparência', s:'Unidades, tema, corpo do mapa muscular', rotulos:['Exibição'], cor:'#AF52DE', ic:'eye' },
+  { id:'conta', t:'Conta e sincronização', s:'Entrar, sincronizar entre aparelhos', rotulos:['Conta'], cor:'#8E8E93', ic:'user' },
+  { id:'dados', t:'Dados e backup', s:'Cópia de segurança e recuperação', rotulos:['Conta e dados'], cor:'#007AFF', ic:'upload' },
+];
+const PREF_GRUPOS = [['corrida','musculacao','equip'],['exibicao'],['conta','dados']];
+function prefSecoes(html){
+  const out = {};
+  html.split(/(?=<div class="ds-label fr-plbl">)/).forEach(sec=>{ const m = sec.match(/^<div class="ds-label fr-plbl">([^<]+)<\/div>/); if(m) out[m[1]] = sec; });
+  return out;
+}
+function prefRender(todo){
+  const pg = PREF_PAGINAS.find(p=>p.id===state.prefPagina);
+  if(!pg){
+    const linha = (p)=>`<button class="ds-row fr-prefroot" data-prefpag="${p.id}"><span class="fr-prefic" style="background:${p.cor}">${ICONS[p.ic]}</span><span class="nm">${p.t}${p.s ? `<small>${p.s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
+    return PREF_GRUPOS.map(g=>`<div class="ds-list fr-prefgrupo">${g.map(id=>linha(PREF_PAGINAS.find(p=>p.id===id))).join('')}</div>`).join('');
+  }
+  const secoes = prefSecoes(todo);
+  const corpo = pg.rotulos.map(r=>(secoes[r] || '').replace(/^<div class="ds-label fr-plbl">[^<]+<\/div>/, '')).join('');
+  return `<button class="fr-prefvoltar" data-prefpag="">${DS_CHEV_VOLTAR} Configurações</button><div class="fr-preftit">${pg.t}</div>${corpo}`;
+}
+const DS_CHEV_VOLTAR = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
+// toque numa categoria ou no voltar; entrar em Configurações pelo Perfil sempre abre a raiz (captura: roda antes do render do Perfil)
+document.addEventListener('click', (ev)=>{
+  const t = ev.target.closest && ev.target.closest('[data-prefpag]');
+  if(t){ state.prefPagina = t.getAttribute('data-prefpag') || null; render(); window.scrollTo(0,0); const sc = document.querySelector('.mrt-scroll'); if(sc) sc.scrollTop = 0; return; }
+  const ir = ev.target.closest && ev.target.closest('[data-perfilgo="preferencias"]');
+  if(ir) state.prefPagina = null;
+}, true);
 function renderPreferenciasV2(){
   const linha = (icon, titulo, ctrl)=>`<div class="mrt-togglerow"><div class="icon-box">${icon}</div><div class="nm">${titulo}</div>${ctrl}</div>`;
   const ir = (tab, icon, t, s)=>`<button class="ds-row fr-perfilrow" data-perfilgo="${tab}"><span class="fr-ic">${icon}</span><span class="nm">${t}${s ? `<small>${s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
-  return `<div class="ds-label fr-plbl">Conta</div><div class="ds-list">
+  const todo = `<div class="ds-label fr-plbl">Conta</div><div class="ds-list">
     ${ir('conta', ICONS.user, 'Conta e sincronização', state.authUser ? 'Conectada' : 'Entre para sincronizar')}
     ${ir('sincronizacao', ICONS.upload, 'Sincronização', 'Estado dos dados neste aparelho e na conta')}
   </div><div class="ds-label fr-plbl">Treino</div><div class="ds-list">
@@ -17263,10 +17345,14 @@ function renderPreferenciasV2(){
   </div><div class="ds-label fr-plbl">Exibição</div><div class="mrt-card" style="padding:6px 16px;">
     ${linha(ICONS.ruler, 'Unidades', `<span class="mrt-sub" style="margin:0;">km · kg</span>`)}
     ${linha(ICONS.eye, 'Tema', `<span class="mrt-sub" style="margin:0;">Claro</span>`)}
+    <div class="mrt-togglerow" style="flex-wrap:wrap;"><div class="icon-box">${ICONS.user}</div><div class="nm">Corpo do mapa muscular</div>
+      <div class="ds-seg" style="width:100%;margin:8px 0 6px;">${[['masculino','Masculino'],['feminino','Feminino']].map(([k,l])=>`<button class="${((state.perfil||{}).corpo||'masculino')===k?'on':''}" data-corpo="${k}">${l}</button>`).join('')}</div>
+    </div>
   </div><div class="ds-label fr-plbl">Conta e dados</div><div class="ds-list">
     <button class="ds-row" data-perfilgo="conta"><span class="nm">Conta e sincronização</span><span class="chev">${DS_CHEV}</span></button>
     <button class="ds-row" data-perfilgo="maisOpcoes"><span class="nm">Dados e backup</span><span class="chev">${DS_CHEV}</span></button>
   </div>`;
+  return prefRender(todo);
 }
 function renderMaisOpcoesV2(){
   // Conta as gravações que não aparecem (uma vez por abertura da tela) e mostra a recuperação só se houver.
