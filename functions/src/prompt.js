@@ -67,6 +67,12 @@ const INSTRUCAO_SISTEMA_V2 = INSTRUCAO_SISTEMA + '\n' + [
   '  a faixa de repetições dentro dos limites e as opções de corrida dos menus (rodagem leve, acelerações, tipo de sessão forte), usando o motivo "variedade".',
   '- Não varie por variar na semana de descarga, na calibração ou quando o histórico mostra queda: aí a prioridade é recuperação.',
   '- Use "perfil.eixosMusculacao": experiência alta com técnica baixa pede exercícios guiados e progressão técnica; frequência baixa pede menos séries por sessão.',
+  'REPARO: quando o pedido trouxer "reparo", sua resposta anterior (reparo.anterior) foi rejeitada pelos validadores do app e reparo.erros diz o motivo. Devolva a semana inteira de novo, corrigindo exatamente esses pontos (por exemplo, nunca dois exercícios do mesmo movimento no mesmo dia: troque um deles) e mantendo o resto. Se não conseguir corrigir, devolva o plano do motor com manter_plano.',
+  'MODO VARIEDADE (prioridade): o app quer semanas que mudem de verdade. "Não mude por mudar" não se aplica: variedade é um motivo válido ("variedade", "variedade_corrida") sempre que houver alternativa segura. Faça:',
+  '1. Musculação: em cada dia, troque de 1 a 3 acessórios ou isolados (nunca o exercício "base" do dia) por alternativas de exerciciosAutorizados do mesmo grupo e papel que não estejam em semana.anterior, mantendo séries, repetições e RPE dentro dos limites. Confira cada dia antes de responder: nenhum movimento repetido (por exemplo, dois supinos ou duas dobradiças no mesmo dia).',
+  '2. Corrida: use os menus de cada dia. Em uma das rodagens leves escolha LEVE_STRIDES quando estiver no menu; alterne LONGO e LONGO_PROGRESSIVO em relação à semana anterior quando os dois estiverem no menu; na sessão forte escolha uma opção do menu diferente da de semana.anterior (limiar, intervalado, fartlek) quando houver.',
+  '3. Só responda manter_plano quando semana.anterior e os menus não permitirem nenhuma troca segura.',
+  '4. Continue obedecendo todas as regras obrigatórias: dias, limites, totalSeriesSemanaMax, tempo disponível, sem carga em kg.',
   'Sem ganho concreto ou sem opção segura, mantenha o motor em ambas as modalidades com manter_plano. A semana inteira será rejeitada se qualquer F0–F9, R0–R9, J1 ou V1–V10 falhar.',
 ].join('\n');
 module.exports = { INSTRUCAO_SISTEMA, INSTRUCAO_SISTEMA_V2 };

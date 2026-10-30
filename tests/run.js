@@ -25,7 +25,7 @@ const testes = [
   { nome: 'motor intacto (retrato antes do catálogo de corrida)', arq: 'node/motor-intacto.test.js' },
   { nome: 'catálogo de corrida e opções de sessão', arq: 'node/corrida-catalogo.test.js' },
   { nome: 'IA: resumo do histórico de corrida', arq: 'node/ia-historico-corrida.test.js' },
-  ...['ia-validador','ia-refino','ia-funcao','ia-worker','ia-v2','ia-v2-servidor','ia-v2-app','ia-v2-regras','ia-v2-exemplos','ia-v2-build'].map(n=>({ nome:'IA: '+n, arq:'node/'+n+'.test.js' })),
+  ...['ia-validador','ia-refino','ia-funcao','ia-worker','ia-v2','ia-v2-servidor','ia-v2-app','ia-variacao-local','ia-reparo','ia-saneamento','ia-v2-regras','ia-v2-exemplos','ia-v2-build'].map(n=>({ nome:'IA: '+n, arq:'node/'+n+'.test.js' })),
   { nome: 'caracterização: treinador', arq: 'node/caracterizacao-treinador.test.js' },
   { nome: 'caracterização: musculação', arq: 'node/caracterizacao-forca.test.js' },
   { nome: 'caracterização: atividade e dados', arq: 'node/caracterizacao-atividade.test.js' },

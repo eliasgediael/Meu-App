@@ -22,7 +22,7 @@ async function carregarAppComIA(nomesApp = [], opts = {}) {
   (0, eval)(H.js + ';\nconfirmarApp=async()=>true;\nshowToast=()=>{};\n' + codigoIA() + ';\nglobalThis.__T={' + nomes.join(',') + '};');
   await espera(opts.espera || 700);
   const T = globalThis.__T;
-  [...NOMES_IA, 'iaContextoCorridaV2', 'iaMontarPedidoV2', 'iaValidarPropostaV2', 'iaValidarCorridaV2', 'iaMontarSemanaFinalV2', 'iaRefinarSemanaV2', 'iaFotoDaSemana', 'iaPodeAplicar', 'iaCriarChamadaServidor', 'iaColetarHistoricoCorrida', 'iaResumoCorrida', 'IA_ESQUEMA_RESPOSTA_V2'].forEach(n => { T[n] = globalThis[n]; });
+  [...NOMES_IA, 'iaContextoCorridaV2', 'iaMontarPedidoV2', 'iaValidarPropostaV2', 'iaValidarCorridaV2', 'iaMontarSemanaFinalV2', 'iaRefinarSemanaV2', 'iaVariarSemanaLocal', 'iaSanearFamilias', 'iaFotoDaSemana', 'iaPodeAplicar', 'iaCriarChamadaServidor', 'iaColetarHistoricoCorrida', 'iaResumoCorrida', 'IA_ESQUEMA_RESPOSTA_V2'].forEach(n => { T[n] = globalThis[n]; });
   return T;
 }
 const perfilQuiz = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });

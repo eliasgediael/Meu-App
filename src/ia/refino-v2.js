@@ -9,6 +9,7 @@ import { iaContextoDoMotor, iaAssinaturaCorrida } from './contrato.js';
 import { iaContextoCorridaV2, iaMontarPedidoV2 } from './contrato-v2.js';
 import { iaValidarPropostaV2, iaMontarSemanaFinalV2 } from './validador-corrida.js';
 import { iaComTimeout } from './refino.js';
+import { iaSanearFamilias } from './saneamento.js';
 
 // entrada: { perfil, opcoes (as do motor), semanaMotor, tipo, historico (musculação), historicoCorrida (iaResumoCorrida),
 //            online, usuario, chamarFuncao(pedido) → Promise<{ resposta }>, timeoutMs? }
@@ -33,15 +34,27 @@ async function iaRefinarSemanaV2(entrada){
   let pedido;
   try{ pedido = iaMontarPedidoV2(ctx, ctxC, { perfil:entrada.perfil, historico:entrada.historico, historicoCorrida:entrada.historicoCorrida, tipo:entrada.tipo, semanaAnterior:entrada.semanaAnterior }); }
   catch(e){ return fim('pedido_erro'); }
+  let reparada = false;
   let retorno;
   try{ retorno = await iaComTimeout(entrada.chamarFuncao(pedido), entrada.timeoutMs || IA_CONFIG.timeoutMs); }catch(e){ return fim('falha_chamada'); }
-  const bruto = retorno && typeof retorno==='object' && 'resposta' in retorno ? retorno.resposta : retorno;
+  const bruto0 = retorno && typeof retorno==='object' && 'resposta' in retorno ? retorno.resposta : retorno;
+  const bruto = iaSanearFamilias(ctx, bruto0);   // dois movimentos iguais no mesmo dia: volta o do motor, em vez de reprovar a semana
   let val;
   try{ val = iaValidarPropostaV2(ctx, ctxC, bruto); }catch(e){ return fim('validacao_erro', { erro:String(e && e.message) }); }
+  // segunda chance (ideia do openGym): a IA recebe a lista de erros e corrige uma vez; depois disso, o motor
+  if(!val.ok && val.erros && val.erros.length && bruto && typeof bruto==='object'){
+    try{
+      const erros = val.erros.slice(0, 8).map(e=>({ cod:String(e.cod || '').slice(0, 6), detalhe:String(e.detalhe || '').slice(0, 240) }));
+      const retorno2 = await iaComTimeout(entrada.chamarFuncao({ ...pedido, reparo:{ erros, anterior:bruto } }), entrada.timeoutMs || IA_CONFIG.timeoutMs);
+      const bruto2 = iaSanearFamilias(ctx, retorno2 && typeof retorno2==='object' && 'resposta' in retorno2 ? retorno2.resposta : retorno2);
+      const val2 = iaValidarPropostaV2(ctx, ctxC, bruto2);
+      if(val2.ok){ val = val2; reparada = true; }
+    }catch(e){ /* sem segunda chance: segue o motor */ }
+  }
   if(!val.ok) return fim('validacao_reprovada', { erros:val.erros });
   let semana;
   try{ semana = iaMontarSemanaFinalV2(ctx, ctxC, semanaMotor, val); }catch(e){ return fim('montagem_erro'); }
-  return { semana, origem:'ia', motivo:'ok', avisos:val.avisos, corrida:{ opcoes:val.corrida.escolhidas, minutos:val.corrida.somaMin, minutosMotor:val.corrida.somaMotor,
+  return { semana, origem:'ia', motivo:reparada ? 'ok_reparada' : 'ok', avisos:val.avisos, corrida:{ opcoes:val.corrida.escolhidas, minutos:val.corrida.somaMin, minutosMotor:val.corrida.somaMotor,
     carga:val.corrida.cargaSemana, cargaMotor:val.corrida.cargaMotor, pedidoProgressao:val.corrida.progressao }, volumeMusc:val.musc ? val.musc.volume : null, motivos:val.motivos };
 }
 

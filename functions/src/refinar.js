@@ -15,7 +15,7 @@ const CONFIG_PADRAO = {
   limiteMesGlobal: 3000,        // chamadas por mês somando todos os usuários
   maxBytesPedido: 90000,
   maxOutputTokens: 4096,
-  temperatura: 0.3,
+  temperatura: 0.7,
   timeoutMs: 25000,
   cacheHoras: 24,
 };
@@ -40,13 +40,18 @@ function conferirPedido(pedido, maxBytes) {
   if (Buffer.byteLength(txt, 'utf8') > maxBytes) throw new ErroFuncao('invalid-argument', 'pedido grande demais');
   const permitidos = ['versaoContrato', 'tipo', 'semana', 'perfil', 'dias', 'regras', 'planoMotor', 'exerciciosAutorizados', 'historico'];
   const v2 = pedido.versaoContrato === '2';
-  if (v2) permitidos.push('corrida', 'catalogo');
+  if (v2) permitidos.push('corrida', 'catalogo', 'reparo');
   Object.keys(pedido).forEach(k => { if (!permitidos.includes(k)) throw new ErroFuncao('invalid-argument', 'campo não previsto: ' + k); });
   if (!v2 && pedido.versaoContrato !== '1') throw new ErroFuncao('failed-precondition', 'versão de contrato não suportada');
   if (!Array.isArray(pedido.exerciciosAutorizados) || (!v2 && !pedido.exerciciosAutorizados.length) || pedido.exerciciosAutorizados.length > 400) throw new ErroFuncao('invalid-argument', 'lista de exercícios inválida');
   if (!Array.isArray(pedido.dias) || (!v2 && !pedido.dias.length) || pedido.dias.length > 7 || pedido.dias.some(d => !d || !DIAS.includes(d.dia))) throw new ErroFuncao('invalid-argument', 'dias inválidos');
   if (/"(nome|email|e-mail|uid|nascimento|foto|peso|altura|telefone|gps|latitude|longitude|pontos|rota)"\s*:/i.test(JSON.stringify({ perfil: pedido.perfil, historico: pedido.historico, corrida: pedido.corrida }))) {
     throw new ErroFuncao('invalid-argument', 'dado pessoal não permitido no pedido');
+  }
+  if (pedido.reparo !== undefined) {
+    // segunda chance: a resposta anterior foi rejeitada pelos validadores do app; só texto curto e o JSON anterior, nada pessoal
+    const r = pedido.reparo;
+    if (!v2 || !r || typeof r !== 'object' || !Array.isArray(r.erros) || r.erros.length > 12 || r.erros.some(e => !e || typeof e.cod !== 'string' || e.cod.length > 6 || typeof e.detalhe !== 'string' || e.detalhe.length > 240) || !r.anterior || typeof r.anterior !== 'object') throw new ErroFuncao('invalid-argument', 'reparo inválido');
   }
   if (v2) {
     if (/"(regioesDeDor|dor|dorForte|frequenciaCardiaca)"\s*:/i.test(txt)) throw new ErroFuncao('invalid-argument', 'saúde não permitida no contrato v2');

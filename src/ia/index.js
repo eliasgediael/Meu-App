@@ -13,5 +13,7 @@ import * as refinoV2 from './refino-v2.js';
 import * as servidor from './servidor.js';
 import * as aplicar from './aplicar.js';
 import * as appV2 from './app-v2.js';
+import * as variacaoLocal from './variacao-local.js';
+import * as saneamento from './saneamento.js';
 
-Object.assign(globalThis, { IA_CONFIG, ...consentimento, ...contrato, ...validador, ...refino, ...historicoCorrida, ...contratoV2, ...validadorV2, ...refinoV2, ...servidor, ...aplicar, ...appV2 });
+Object.assign(globalThis, { IA_CONFIG, ...consentimento, ...contrato, ...validador, ...refino, ...historicoCorrida, ...contratoV2, ...validadorV2, ...refinoV2, ...servidor, ...aplicar, ...appV2, ...variacaoLocal, ...saneamento });
