@@ -53,6 +53,11 @@ const { abrirApp, ok, espera } = require('../harness/navegador');
     await espera(300);
     await page.click('#bibMapaToggle'); await espera(300);
     ok(await page.evaluate(() => state.bibMusculo === null && !state.bibMapaAberto) && await page.$('.fr-bibmapa') === null, 'Fechar o mapa também limpa o músculo');
+    // catálogo: o agachamento livre e a cadeira (wall sit) não são exercícios de abdômen
+    const agach = await page.evaluate(() => ['Agachamento livre', 'Cadeira (wall sit)'].map(n => ({ n, r: muscleRegionsForExercise(n), p: musculoPrincipalDe(n), b: bibInfo(n, 'Pernas').prim[0] })));
+    ok(agach.every(x => x.r.primary.join() === 'quads' && x.p === 'Quadríceps' && !x.r.primary.includes('abs') && (x.n !== 'Agachamento livre' || x.b === 'Quadríceps')), 'Agachamento livre e wall sit: músculo principal é o quadríceps (' + agach.map(x => x.p).join(', ') + ')');
+    await page.evaluate(() => { state.bibMusculo = 'abs'; state.bibGrupo = ''; render(); });
+    ok(await page.evaluate(() => !bibFiltrada().some(e => /agachamento|wall sit/i.test(e.nome))), 'Abdômen: sem agachamento nem wall sit');
     ok(app.erros.length === 0, 'biblioteca por músculo: sem erros de execução' + (app.erros.length ? ': ' + app.erros[0] : ''));
   } finally { await app.fechar(); }
 })().catch(e => { console.error('FAIL ' + e.stack); process.exitCode = 1; });

@@ -3130,8 +3130,14 @@ const MUSCLE_REGION_ALIASES = {
   'panturrilha':['calves'], 'sóleo':['calves'], 'estabilizadores do tornozelo':['calves'],
   'tornozelos':['calves'], 'pés':['calves']
 };
+// O agachamento livre e a cadeira (wall sit) do motor usam o registro "potty squat" do catálogo (animação), cujo músculo
+// principal vem como Abdômen. Para o mapa muscular e a Biblioteca, valem os músculos certos deles.
+const MUSCULO_CORRIGIDO = {
+  'Agachamento livre': { musculoPrim:'Quadríceps', musculosSec:['Glúteos','Posterior de coxa','Core'] },
+  'Cadeira (wall sit)': { musculoPrim:'Quadríceps', musculosSec:['Glúteos','Panturrilha'] },
+};
 function muscleRegionsForExercise(nome){
-  const item = exercicioPorNome(nome), cat = item && item.cat;
+  const item = exercicioPorNome(nome), ov = MUSCULO_CORRIGIDO[nome], cat = ((item && item.cat) || ov) ? { ...((item && item.cat) || {}), ...(ov || {}) } : null;
   if(!cat) return { primary:[], secondary:[], primaryLabel:'Sem dados', secondaryLabel:'' };
   const expand = (labels)=> [...new Set(labels.flatMap(label=>MUSCLE_REGION_ALIASES[String(label||'').toLocaleLowerCase('pt-BR')]||[]))];
   return {
@@ -3289,7 +3295,7 @@ function nivelMuscAtual(){ const hp = state.hybridPlanData; return (hp && hp.dra
 function tiersPermitidos(nivel){ return nivel==='iniciante' ? [1,2] : nivel==='intermediario' ? [1,2] : [1,2,3]; }
 // Alternativas pro mesmo grupo muscular, compatíveis com o local escolhido e com o nível — prioriza o mesmo tipo de
 // movimento (composto x isolado) e um padrão diferente do que já está no dia.
-function musculoPrincipalDe(nome){ const it = exercicioPorNome(nome); return it && it.cat ? it.cat.musculoPrim : null; }
+function musculoPrincipalDe(nome){ if(MUSCULO_CORRIGIDO[nome]) return MUSCULO_CORRIGIDO[nome].musculoPrim; const it = exercicioPorNome(nome); return it && it.cat ? it.cat.musculoPrim : null; }
 function equipamentoTipoDe(e){
   const eq = e.cat ? e.cat.equipamento : null;
   if(eq) return /Máquina|Trenó|Smith|Polia/.test(eq) ? 'maquina' : eq==='Peso corporal' ? 'corpo' : 'livre';
@@ -16743,7 +16749,7 @@ const BIB_INFO = [
 const BIB_PADRAO = { prim:null, sec:[], passos:['Ajuste o equipamento ou a posição inicial antes de começar.','Mantenha a coluna neutra e o abdômen contraído.','Faça o movimento de forma controlada, sem balançar.','Respire: expire no esforço e inspire na volta.','Comece leve e aumente a carga só quando a execução estiver perfeita.'] };
 function bibInfo(nome, grupo){
   const it = exercicioPorNome(nome);
-  if(it && it.cat && it.cat.passos && it.cat.passos.length) return { prim:[it.cat.musculoPrim], sec:it.cat.musculosSec||[], passos:it.cat.passos };
+  if(it && it.cat && it.cat.passos && it.cat.passos.length){ const m = { ...it.cat, ...(MUSCULO_CORRIGIDO[nome] || {}) }; return { prim:[m.musculoPrim], sec:m.musculosSec||[], passos:it.cat.passos }; }
   const n = normalizeNoAccents(nome);
   const hit = BIB_INFO.find(x=>x.re.test(n));
   if(hit) return hit;
