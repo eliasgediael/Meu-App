@@ -957,6 +957,11 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-navbtn .lbl{ font-size:11px; font-weight:700; }
 .mrt-navbtn.active{ color:var(--accent); }
 .mrt-navbtn svg{ width:22px; height:22px; }
+.mrt-navplay{ background:none; border:none; padding:0 8px; min-width:64px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; font-family:inherit; color:var(--text); -webkit-tap-highlight-color:transparent; }
+.mrt-navplay .cir{ width:44px; height:44px; border-radius:50%; background:var(--text); color:var(--bg); display:flex; align-items:center; justify-content:center; transition:transform .12s ease; }
+.mrt-navplay:active .cir{ transform:scale(.94); }
+.mrt-navplay .cir svg{ width:20px; height:20px; margin-left:2px; }
+.mrt-navplay .lbl{ font-size:11px; font-weight:700; color:var(--text-faint); }
 .mrt-scroll{ padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
 .mrt-greetrow{ margin-bottom:20px; }
 .mrt-greettitle{ font-size:26px; font-weight:800; letter-spacing:-0.4px; color:var(--text); }
@@ -14051,10 +14056,25 @@ function renderMrtNav(){
     { id:'progresso', icon:ICONS.chart, label:'Progresso' },
     { id:'perfil', icon:ICONS.user, label:'Perfil' },
   ];
-  return `<div class="mrt-nav">
-    ${items.map(it=>`<button class="mrt-navbtn ${mrtNavAtivo()===it.id?'active':''}" data-tabgo="${it.id}" data-suborigin="nav"><span class="pill">${it.icon}</span><span class="lbl">${it.label}</span></button>`).join('')}
-  </div>`;
+  const btn = it=>`<button class="mrt-navbtn ${mrtNavAtivo()===it.id?'active':''}" data-tabgo="${it.id}" data-suborigin="nav"><span class="pill">${it.icon}</span><span class="lbl">${it.label}</span></button>`;
+  // Botão de play no meio: começa o treino de hoje que ainda não foi feito (ideia do openGym, desenho do Forza).
+  const play = `<button class="mrt-navplay" data-navplay="1" aria-label="Iniciar o treino de hoje"><span class="cir">${NAV_PLAY_SVG}</span><span class="lbl">Iniciar</span></button>`;
+  return `<div class="mrt-nav">${items.slice(0,2).map(btn).join('')}${play}${items.slice(2).map(btn).join('')}</div>`;
 }
+const NAV_PLAY_SVG = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.4-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>';
+// Toca no play: corrida ou musculação do dia, a que ainda não foi feita (a mesma regra do botão "Iniciar" do Início).
+function navPlayAcao(){
+  if(state.viewingClient) return;
+  const day = DAY_ABBR[(new Date().getDay()+6)%7];
+  state.weekOffset = 0;
+  const sessions = mrtHeroSessions(day);
+  const primary = sessions.find(s=>!s.done);
+  if(!primary){ showToast(sessions.length ? 'O treino de hoje já foi concluído.' : 'Hoje é dia de descanso.'); return; }
+  state.selectedDayHoje = state.selectedDayMusc = state.selectedDayCorrida = day;
+  hapticLeve();
+  if(primary.tipo==='musculacao') startWorkoutSession(day); else openGpsIntro(day);
+}
+document.addEventListener('click', (ev)=>{ if(ev.target.closest && ev.target.closest('[data-navplay]')) navPlayAcao(); });
 /* ---------- Aba Treino (pacote visual): cabeçalho, Gerenciar plano, plano completo, reorganizar semana,
    histórico de mudanças e revisão do questionário. Tudo reaproveita funções e dados que já existem; nada aqui muda
    regra do motor. ---------- */
