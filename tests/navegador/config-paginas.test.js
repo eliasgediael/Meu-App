@@ -14,6 +14,22 @@ const { abrirApp, ok, espera } = require('../harness/navegador');
     ok(await page.evaluate(() => state.prefPagina === null) && await page.$('.mrt-switch') === null, 'Entrar pelo Perfil abre sempre a raiz, sem controles soltos');
     ok(await page.$$eval('.fr-prefic', l => l.length === 6 && l.every(x => x.querySelector('svg'))), 'Cada categoria tem ícone colorido');
 
+    // busca
+    ok(await page.$('#prefBusca') !== null, 'Raiz: campo de busca');
+    await page.type('#prefBusca', 'voz'); await espera(300);
+    const achados = await page.$$eval('#prefBuscaRes .fr-prefroot', l => l.map(b => b.querySelector('.nm').firstChild.textContent.trim()));
+    ok(achados.includes('Voz nos treinos') && achados.includes('Voz do treino') && achados.length >= 3, 'Busca "voz": ' + achados.join(' | '));
+    ok(await page.$$eval('.fr-prefgrupo', l => l.every(g => g.style.display === 'none')), 'Com busca, as categorias somem');
+    await page.$eval('#prefBusca', e => { e.value = ''; }); await page.type('#prefBusca', 'feminino'); await espera(300);
+    ok(await page.$eval('#prefBuscaRes', e => /Corpo do mapa muscular/.test(e.textContent)), 'Busca "feminino" acha o corpo do mapa muscular');
+    await page.click('#prefBuscaRes [data-prefpag]'); await espera(300);
+    ok(await page.evaluate(() => state.prefPagina === 'exibicao') && await page.$('[data-corpo]') !== null, 'Tocar no resultado abre a página certa');
+    await page.click('.fr-prefvoltar'); await espera(300);
+    await page.type('#prefBusca', 'zzzz'); await espera(300);
+    ok(await page.$eval('#prefBuscaRes', e => /Nada encontrado/.test(e.textContent)), 'Busca sem resultado avisa');
+    await page.$eval('#prefBusca', e => { e.value = ''; e.dispatchEvent(new Event('input', { bubbles: true })); }); await espera(200);
+    ok(await page.$$eval('.fr-prefgrupo', l => l.every(g => g.style.display === '')), 'Busca vazia volta às categorias');
+
     // Corrida e voz
     await page.click('[data-prefpag="corrida"]'); await espera(400);
     ok(await page.$('#mrtPrefVoz') !== null && await page.$('[data-escolhervoz]') !== null && await page.$('.fr-prefvoltar') !== null, 'Corrida e voz: voz, escolha de voz e botão voltar');

@@ -7220,7 +7220,7 @@ function renderGpsIntro(gr){
         <div class="fr-gpsintro-c">
           <div class="mrt-title" style="font-size:34px;">Corrida com GPS</div>
           <div class="fr-gpsintro-ic">${ICONS.pin}</div>
-          <div class="fr-gpsintro-t">Permita o acesso à localização para acompanhar distância, ritmo e rota em tempo real.</div>
+          <div class="fr-gpsintro-t">Permita a localização para medir distância, ritmo e rota.</div>
           <div class="fr-gpsintro-s">${nativo ? 'Pode bloquear a tela durante a corrida. Só não feche o app.' : 'Mantenha esta tela aberta durante a corrida.'}</div>
         </div>
         <button class="btn-primary" style="margin:12px 0 20px;" id="gpsBtnBegin">Começar</button>
@@ -9439,6 +9439,12 @@ function logSetsHistory(key, sets){
 function topSetWeight(entry){
   if(entry.sets && entry.sets.length) return Math.max(...entry.sets.map(s=>parseFloat(s.peso)||0));
   return parseFloat(entry.carga)||0;
+}
+// 1RM estimado (Epley: peso × (1 + reps/30)) da melhor série do histórico; só séries de 1 a 12 repetições e com carga.
+function estimar1RM(hist){
+  let melhor = 0;
+  (hist || []).forEach(h=>{ (h.sets || []).forEach(x=>{ const p = parseFloat(x.peso) || 0, r = parseInt(x.reps, 10) || 0; if(p>0 && r>=1 && r<=12) melhor = Math.max(melhor, p * (1 + r/30)); }); });
+  return melhor ? Math.round(melhor*2)/2 : 0;
 }
 function setsSummaryText(entry){
   if(entry.sets && entry.sets.length) return entry.sets.map(s=>`${s.peso}kg${s.reps?'×'+s.reps:''}`).join(', ');
@@ -14997,7 +15003,7 @@ function renderTreinoV2Musc(day, phaseParts){
   const totalSeries = list.reduce((s,ex)=>s+(parseInt(ex.series,10)||0), 0);
   const allDone = list.every(e=>e.done);
   const titulo = muscTituloDoDia(day, listaTotal);
-  const rotulo = 'MUSCULAÇÃO' + (phaseParts ? ` · SEMANA ${phaseParts.weekNumber}` : '');
+  const rotulo = 'MUSCULAÇÃO';
   const gruposHoje = new Set(list.map(e=>e.grupo));
   const summary = `
     <div class="mrt-card">
@@ -16307,13 +16313,14 @@ function frProgressoPrincipal(modo, temCiclo){
   const atividades = `<div class="fr-pult">
     <div class="fr-ptit">Atividades do período</div>
     ${ultimas.length ? `<div class="fr-psub">${ultimas.length===1 ? 'Registro mais recente' : ultimas.length+' registros mais recentes'}</div><div class="fr-ult-lista">${ultimas.map(frUltimaAtividadeCartao).join('')}</div>`
-      : `<div class="fr-progvazio">Nenhuma atividade neste período. Consulte o histórico ou registre uma atividade.</div>`}
-    <button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>${!ultimas.length ? '<button class="btn-secondary" data-tabgo="meusTreinos">Ver meu treino</button>' : ''}
+      : `<div class="fr-progvazio">Nenhuma atividade neste período.</div>`}
+    <button class="fr-plink" data-proghistorico="1"><span>Ver histórico completo</span>${DS_CHEV}</button>
   </div>`;
   const analises = `<div class="fr-pult"><button class="fr-plink" data-proganalises><span>Análises e medidas</span>${DS_CHEV}</button></div>`;
   const marca = `<div class="fr-pbrand6"><span class="mk">${ARTE_MARCA_SVG('currentColor')}</span><span><b>FORZA</b> RUN</span></div>`;
   const seg = `<div class="fr-seg3" role="tablist">${FR_PROG_MODOS.filter(([k])=>k!=='ciclo' || temCiclo).map(([k,l])=>`<button class="${modo===k?'on':''}" data-progmodo="${k}" role="tab" aria-selected="${modo===k}">${l}</button>`).join('')}</div>`;
-  return `${marca}<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${ultimas.length ? resumo+evolucao : ''}${atividades}${analises}`;
+  void marca;
+  return `<div class="fr-ptitle6">Progresso</div>${seg}<div class="fr-pdatas">${frRotuloIntervalo(I.ini, I.fim)}</div>${ultimas.length ? resumo+evolucao : ''}${atividades}${analises}`;
 }
 function frProgressoDetalhe(det, partes){
   const titulo = det==='corrida' ? 'Corrida' : det==='musc' ? 'Musculação' : 'Medidas corporais';
@@ -16861,10 +16868,11 @@ function renderBibDetalhe(nome){
     else{
       const pts = hist.map(h=>({ label:fmtDataCurta(h.data), y:topSetWeight(h), tip:`${fmtDataCurta(h.data)}: ${topSetWeight(h)} kg` })).filter(p=>p.y>0);
       const rec = Math.max(...hist.map(h=>topSetWeight(h)));
-      corpo = `<div class="mrt-cmprow" style="border:none;padding-top:0;"><span>Recorde</span><b class="up">${rec} kg</b></div>${pts.length?mrtLineChart(pts,{ color:'var(--accent)', formatY:v=>v+'kg', ref: rec>0?{ y:rec, label:'Recorde' }:null }):''}`;
+      const rm = estimar1RM(hist);
+      corpo = `<div class="mrt-cmprow" style="border:none;padding-top:0;"><span>Recorde</span><b class="up">${rec} kg</b></div>${rm ? `<div class="mrt-cmprow" style="border:none;padding-top:0;"><span>1RM estimado</span><b>${String(rm).replace('.',',')} kg</b></div>` : ''}${pts.length?mrtLineChart(pts,{ color:'var(--accent)', formatY:v=>v+'kg', ref: rec>0?{ y:rec, label:'Recorde' }:null }):''}`;
     }
   }
-  const abas = [['musculos','Músculos'],['como','Como fazer'],['equip','Equipamento'],['hist','Meu histórico']];
+  const abas = [['musculos','Músculos'],['como','Como fazer'],['equip','Equipamento'],['hist','Histórico']];
   return `
     <div class="mrt-bibhero">${e.id ? `<img width="240" height="240" src="${repdbImg(e.id)}" alt="" onerror="repdbFallback(this,'${e.grupo}',120)">` : exThumbIconHtml(e.grupo,120)}</div>
     <div class="mrt-bibpanel">
@@ -17059,7 +17067,7 @@ function renderPerfilV2Content(){
   const nivelForca = (ass && ass.strengthLevel) || (hp && hp.draft && hp.draft.nivelMusc) || null;
   const tipoPlano = !phaseParts ? 'Sem plano' : (hp && hp.plan && hp.plan.length) ? 'Plano híbrido' : 'Plano de corrida';
   const chev = `<span class="fr-pchev">${DS_CHEV}</span>`;
-  const nivel = (acao, icon, titulo, valor)=>`<button class="fr-pnivel" data-pfacao="${acao}"><span class="fr-pic">${icon}</span><span class="tx"><b>${titulo}</b><small>${valor}</small></span>${chev}</button>`;
+  const nivel = (acao, icon, titulo, valor)=>`<button class="fr-pnivel" data-pfacao="${acao}"><span class="fr-pic">${icon}</span><span class="tx"><b>${titulo}</b><small>${valor}</small></span></button>`;
   const card = `<div class="fr-pcard">
     <div class="fr-pcard-top">
       <button class="fr-pavatar" id="frAvatar" aria-label="Foto do perfil" style="${foto?`background-image:url('${foto}');`:''}">${foto?'':iniciaisNome()}</button>
@@ -17305,6 +17313,26 @@ const PREF_PAGINAS = [
   { id:'dados', t:'Dados e backup', s:'Cópia de segurança e recuperação', rotulos:['Conta e dados'], cor:'#007AFF', ic:'upload' },
 ];
 const PREF_GRUPOS = [['corrida','musculacao','equip'],['exibicao'],['conta','dados']];
+const PREF_BUSCA = [
+  ['Voz nos treinos', 'corrida', 'voz falar áudio narração'],
+  ['Voz do treino', 'corrida', 'voz feminina masculina escolher'],
+  ['Voz a cada km', 'corrida', 'quilômetro anúncio ritmo'],
+  ['Pausa automática na corrida', 'corrida', 'parar pausar semáforo'],
+  ['Aviso do fim do descanso', 'musculacao', 'descanso bipe vibração volume timer intervalo'],
+  ['Equipamentos', 'equip', 'tênis local academia casa halteres'],
+  ['Saúde do relógio', 'equip', 'garmin relógio conectar'],
+  ['Unidades', 'exibicao', 'quilômetros quilos km kg'],
+  ['Tema', 'exibicao', 'claro escuro aparência'],
+  ['Corpo do mapa muscular', 'exibicao', 'masculino feminino corpo figura anatomia'],
+  ['Conta e sincronização', 'conta', 'entrar login sair nuvem sincronizar ia'],
+  ['Sincronização', 'conta', 'nuvem aparelhos estado'],
+  ['Dados e backup', 'dados', 'exportar importar recuperar cópia segurança'],
+];
+function prefBuscar(q){
+  const n = normalizeNoAccents(String(q || '')).trim();
+  if(!n) return [];
+  return PREF_BUSCA.filter(([t, , kw])=>normalizeNoAccents(t + ' ' + kw).includes(n));
+}
 function prefSecoes(html){
   const out = {};
   html.split(/(?=<div class="ds-label fr-plbl">)/).forEach(sec=>{ const m = sec.match(/^<div class="ds-label fr-plbl">([^<]+)<\/div>/); if(m) out[m[1]] = sec; });
@@ -17314,7 +17342,8 @@ function prefRender(todo){
   const pg = PREF_PAGINAS.find(p=>p.id===state.prefPagina);
   if(!pg){
     const linha = (p)=>`<button class="ds-row fr-prefroot" data-prefpag="${p.id}"><span class="fr-prefic" style="background:${p.cor}">${ICONS[p.ic]}</span><span class="nm">${p.t}${p.s ? `<small>${p.s}</small>` : ''}</span><span class="chev">${DS_CHEV}</span></button>`;
-    return PREF_GRUPOS.map(g=>`<div class="ds-list fr-prefgrupo">${g.map(id=>linha(PREF_PAGINAS.find(p=>p.id===id))).join('')}</div>`).join('');
+    return `<div class="mrt-searchbox" style="margin-bottom:18px;">${ICONS.search}<input id="prefBusca" type="search" placeholder="Buscar nas configurações" autocomplete="off"></div><div id="prefBuscaRes" class="ds-list"></div>`
+      + PREF_GRUPOS.map(g=>`<div class="ds-list fr-prefgrupo">${g.map(id=>linha(PREF_PAGINAS.find(p=>p.id===id))).join('')}</div>`).join('');
   }
   const secoes = prefSecoes(todo);
   const corpo = pg.rotulos.map(r=>(secoes[r] || '').replace(/^<div class="ds-label fr-plbl">[^<]+<\/div>/, '')).join('');
@@ -17322,6 +17351,16 @@ function prefRender(todo){
 }
 const DS_CHEV_VOLTAR = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 18l-6-6 6-6"/></svg>';
 // toque numa categoria ou no voltar; entrar em Configurações pelo Perfil sempre abre a raiz (captura: roda antes do render do Perfil)
+document.addEventListener('input', (ev)=>{
+  if(!ev.target || ev.target.id!=='prefBusca') return;
+  const achados = prefBuscar(ev.target.value), res = document.getElementById('prefBuscaRes');
+  const consulta = !!ev.target.value.trim();
+  document.querySelectorAll('.fr-prefgrupo').forEach(g=>{ g.style.display = consulta ? 'none' : ''; });
+  if(!res) return;
+  res.innerHTML = !consulta ? '' : achados.length
+    ? achados.map(([t, id])=>{ const p = PREF_PAGINAS.find(x=>x.id===id); return `<button class="ds-row fr-prefroot" data-prefpag="${id}"><span class="fr-prefic" style="background:${p.cor}">${ICONS[p.ic]}</span><span class="nm">${t}<small>${p.t}</small></span><span class="chev">${DS_CHEV}</span></button>`; }).join('')
+    : '<div class="mrt-sub" style="padding:8px 2px;">Nada encontrado.</div>';
+});
 document.addEventListener('click', (ev)=>{
   const t = ev.target.closest && ev.target.closest('[data-prefpag]');
   if(t){ state.prefPagina = t.getAttribute('data-prefpag') || null; render(); window.scrollTo(0,0); const sc = document.querySelector('.mrt-scroll'); if(sc) sc.scrollTop = 0; return; }
