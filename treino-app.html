@@ -8634,6 +8634,15 @@ const HB_SLOT = {
   triceps:   { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/triceps/] } },
   biceps:    { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/rosca direta/,/rosca/] } },
   core:      { papel:'isolado',  grupo:'Core',   from:['Core'], pref:{ default:[/prancha/,/abdominal/] } },
+  // slots dos dias por região (empurrar / puxar / pernas A e B): só mudam a escolha dentro do mesmo catálogo
+  peitoAux:  { papel:'auxiliar', grupo:'Peito',  from:['Peito'], pref:{ default:[/mergulho nas paralelas/,/flexao diamante/,/pullover/,/flexao de braco/], iniciante:[/flexao de braco/,/peck deck/] } },
+  peitoIso:  { papel:'isolado',  grupo:'Peito',  from:['Peito'], pref:{ default:[/crucifixo inclinado/,/crossover/,/crucifixo/,/peck deck/] } },
+  puxBase:   { papel:'base',     grupo:'Costas', from:['Costas'], excluir:/braco estendido|pullover/, pref:{ default:[/remada curvada com barra/,/barra fixa/,/remada cavalinho/,/remada curvada com halteres/,/puxada/], iniciante:[/puxada frontal/,/remada baixa/] } },
+  tricepsB:  { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/pulley/,/frances/,/coice/,/triceps/] } },
+  bicepsB:   { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/martelo/,/scott/,/rosca no cabo/,/concentrada/,/rosca/] } },
+  ombroPost: { papel:'isolado',  grupo:'Ombro',  from:['Ombro'], pref:{ default:[/crucifixo inverso/,/remada alta/] } },
+  costasIso: { papel:'isolado',  grupo:'Costas', from:['Costas'], pref:{ default:[/encolhimento/,/pulldown reto/] } },
+  dobradica: { papel:'base',     grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff com barra/,/stiff/,/terra com barra/,/elevacao de quadril/,/flexora/], iniciante:[/flexora/,/elevacao de quadril/] } },
 };
 const HB_SESSAO_SLOTS = {
   leg:   ['joelho','quadril','unilateral','quadrIso','panturrilha','posterior','adutora'],

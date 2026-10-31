@@ -83,9 +83,8 @@ const SEIS = ['01', '03', '04', '08', '10', '15'];
     ok(JSON.stringify(base(ws[0])) === JSON.stringify(base(ws[4])), '04: exercício base de cada dia igual entre blocos (progressão de carga)');
     ok(acess(ws[0]) === acess(ws[2]) && acess(ws[0]) !== acess(ws[4]), '04: acessórios iguais dentro do bloco e diferentes no bloco seguinte');
     const { ws: w08 } = await semanas('08');
-    ok(!!w08[1].corridaWeek.find(c => c.variacao) && !w08[0].corridaWeek.find(c => c.variacao) && !w08[3].corridaWeek.find(c => c.variacao), '08: acelerações só nas semanas pares de construção (sem na semana 1 e na descarga)');
-    const v = w08[1].corridaWeek.find(c => c.variacao), m = w08[0].corridaWeek.find(c => c.day === v.day);
-    ok(v.totalMin <= m.totalMin + 1 && (v.cargaIntensa || 0) === 0, '08: acelerações sem aumentar duração nem carga de intensidade');
+    ok(!!w08[1].corridaWeek.find(c => c.variacao) && !w08[0].corridaWeek.find(c => c.variacao) && !w08[3].corridaWeek.find(c => c.variacao), '08: corrida varia a partir da semana 2 (sem variação na semana 1 e na descarga)');
+    ok(new Set(w08.slice(0, 3).map(w => w.corridaWeek.map(c => c.variacao || c.type).join('|'))).size === 3, '08: as três primeiras semanas têm corridas diferentes');
   }
 
   // ---------- 5) IA (simulada): varia exercícios e corrida dentro dos menus e passa na validação ----------

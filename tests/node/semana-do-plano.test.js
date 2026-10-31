@@ -24,7 +24,8 @@ const QUAL = /Intervalado|Limiar/;
   ok(q08.every(Boolean), '08: todas as semanas têm a sessão de tiro');
   const metros08 = q08.map(q => +(/× (\d+)m/.exec(q.mainDesc) || [])[1]);
   const esperado10k = s08.map((w, i) => T.HB_INTERVALO_VARIANTS[10][i % 4].m);
-  ok(JSON.stringify(metros08) === JSON.stringify(esperado10k), '08: o tiro segue a variante da semana (' + metros08.join(', ') + ')');
+  const semVariacao = s08.map((w, i) => !(w.corridaWeek || []).some(c => c.variacao && c.estimulo && c.estimulo.tipo === 'qualidade'));
+  ok(metros08.every((m, i) => !semVariacao[i] || m === esperado10k[i]), '08: sem variação do catálogo, o tiro segue a variante da semana (' + metros08.join(', ') + ')');
   ok(new Set(q08.map(q => q.mainDesc)).size >= 3, '08: o tiro muda ao longo do plano');
 
   const s03 = await preparar('03');

@@ -48,10 +48,10 @@ const FUNCOES_CATALOGO = ['corridaOpcoesDoDia', 'corridaMontarOpcao', 'corridaAq
     }
   }
   conferir('motor-antes-catalogo', out);
-  // Desde 19/10/2026 o motor usa UMA opção do catálogo: acelerações numa rodagem leve (variação das semanas pares).
-  // Nenhuma outra opção (tiros, limiar, longão, menus inteiros) é montada pela geração normal do plano.
+  // Desde 31/10/2026 o motor gira as opções do catálogo (rotação MOTOR_ROTACAO_CORRIDA) a partir da semana 2.
+  // Nenhuma outra opção fora da rotação (menus inteiros) é montada pela geração normal do plano.
   const usadas = Object.entries(chamadas).filter(([k, n]) => n > 0 && !['corridaMontarOpcao', 'corridaContextoDoDia', 'corridaOpcaoElegivel', 'corridaAquecimentoPadrao', 'corridaCargaIntensa'].includes(k));
-  ok(usadas.length === 0 && opcoesMontadas.every(id => id === 'LEVE_STRIDES'), 'geração normal do plano só usa a opção LEVE_STRIDES do catálogo' + (usadas.length ? ' — ' + usadas.map(([k, n]) => k + ' ' + n + 'x').join(', ') : '') + ` (${[...new Set(opcoesMontadas)].join(',') || 'nenhuma'})`);
+  ok(usadas.length === 0 && opcoesMontadas.every(id => ['LEVE_STRIDES','REGENERATIVO','LONGO_PROGRESSIVO','LONGO_FINAL_M','FARTLEK_2X1','T_CRUZEIRO_1600','I_800','FARTLEK_PIRAMIDE','T_CONTINUO','I_400','SUBIDAS_CURTAS','I_1000','RITMO_PROVA'].includes(id)), 'geração normal do plano só usa opções da rotação de corrida do motor (semana 1 = sessões do motor)' + (usadas.length ? ' — ' + usadas.map(([k, n]) => k + ' ' + n + 'x').join(', ') : '') + ` (${[...new Set(opcoesMontadas)].join(',') || 'nenhuma'})`);
   semErro();
   process.exit(process.exitCode || 0);
 })();
