@@ -10,12 +10,13 @@ function iaCriarChamadaServidor(opcoes){
   const fetchFn = (opcoes && opcoes.fetch) || ((...a)=>fetch(...a));
   return async function chamarFuncao(pedido){
     if(!/^https:\/\/[a-z0-9.-]+(:\d+)?$/i.test(url) && !/^http:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(url)) throw new Error('servidor_sem_url');
-    if(typeof obterToken!=='function') throw new Error('servidor_sem_login');
-    const token = await obterToken();
-    if(!token || typeof token!=='string') throw new Error('servidor_sem_login');
+    let token = null;
+    if(typeof obterToken==='function'){ try{ token = await obterToken(); }catch(e){ token = null; } }
+    const dispositivo = opcoes && opcoes.dispositivo;
+    if(!(token && typeof token==='string') && !/^[A-Za-z0-9_-]{16,64}$/.test(dispositivo || '')) throw new Error('servidor_sem_login');
     const r = await fetchFn(url + '/refinar', {
       method:'POST',
-      headers:{ 'Content-Type':'application/json', 'Authorization':'Bearer ' + token },
+      headers:{ 'Content-Type':'application/json', ...(token ? { 'Authorization':'Bearer ' + token } : { 'X-Forza-Dispositivo':dispositivo }) },
       body: JSON.stringify({ consentimento:true, pedido }),
     });
     let j = null;

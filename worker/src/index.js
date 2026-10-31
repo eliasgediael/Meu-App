@@ -33,7 +33,7 @@ function cabecalhosCors(origem, env) {
   if (origem && origensPermitidas(env).includes(origem)) {
     h['Access-Control-Allow-Origin'] = origem;
     h['Access-Control-Allow-Methods'] = 'POST, GET, OPTIONS';
-    h['Access-Control-Allow-Headers'] = 'Authorization, Content-Type';
+    h['Access-Control-Allow-Headers'] = 'Authorization, Content-Type, X-Forza-Dispositivo';
     h['Access-Control-Max-Age'] = '600';
   }
   return h;
@@ -63,11 +63,17 @@ async function atender(request, env, dependencias) {
   if (!ativa) { registrar(503, { codigo: 'unavailable', motivo: 'desligada' }); return erro('unavailable', 'personalização por IA desligada', cors); }
   if (!env.GEMINI_API_KEY && !dep.chamarGemini) { registrar(503, { codigo: 'unavailable', motivo: 'segredo ausente' }); return erro('unavailable', 'IA indisponível', cors); }
 
-  // 1) Login
+  // 1) Quem pede: login (token do Firebase) ou, sem login, o ID aleatório do aparelho. As cotas globais seguram qualquer abuso.
   let auth;
   try {
-    const verificar = dep.verificarToken || criarVerificadorFirebase({ projectId: env.FIREBASE_PROJECT_ID });
-    auth = await verificar(request.headers.get('Authorization'));
+    const cab = request.headers.get('Authorization');
+    const disp = request.headers.get('X-Forza-Dispositivo');
+    if (!cab && /^[A-Za-z0-9_-]{16,64}$/.test(disp || '')) {
+      auth = { uid: 'd:' + disp, token: { firebase: { sign_in_provider: 'dispositivo' } } };
+    } else {
+      const verificar = dep.verificarToken || criarVerificadorFirebase({ projectId: env.FIREBASE_PROJECT_ID });
+      auth = await verificar(cab);
+    }
   } catch (e) {
     registrar(401, { codigo: 'unauthenticated', motivo: (e && e.motivo) || 'erro' });
     return erro('unauthenticated', 'login necessário', cors);

@@ -79,10 +79,18 @@ function iaRecuperarSemanaAtomica(s, armazenamento){
   } catch(e) { return false; }
 }
 async function iaPersistirSemanaApp(){ await Promise.all([saveTreinos(),saveMusc(),saveMuscDayOrigin(),saveHybridPlanData()]); }
+// ID aleatório do aparelho: identifica o pedido à IA quando não há login. Não contém dado pessoal.
+function iaIdDispositivo(){
+  try {
+    let id=localStorage.getItem('forza:iaDispositivo');
+    if(!/^[A-Za-z0-9_-]{16,64}$/.test(id || '')){ id=Array.from(crypto.getRandomValues(new Uint8Array(18)),b=>b.toString(36).padStart(2,'0')).join('').slice(0,32); localStorage.setItem('forza:iaDispositivo',id); }
+    return id;
+  } catch(e) { return 'sem-armazenamento-local'; }
+}
 let iaPedidoEmCurso=0;
 async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
   if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada) return {origem:'motor',motivo:'ia_desligada'};
-  if(!state.authUser || state.viewingClient || !navigator.onLine || !IA_CONFIG.servidorUrl || iaTreinoIniciado(state)) return {origem:'motor',motivo:'indisponivel'};
+  if(state.viewingClient || !navigator.onLine || !IA_CONFIG.servidorUrl || iaTreinoIniciado(state)) return {origem:'motor',motivo:'indisponivel'};
   const seq=++iaPedidoEmCurso, antes=iaRetratoApp(state), hp=state.hybridPlanData;
   if(!hp || hp.pausa || !hp.motorV2 || hp.plan[hp.currentWeekIndex-1]!==semanaMotor) return {origem:'motor',motivo:'semana_mudou'};
   if(!iaAgendaDoMotorIntacta(state,semanaMotor)) return {origem:'motor',motivo:'usuario_alterou'};
@@ -92,8 +100,8 @@ async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
     if(seq!==iaPedidoEmCurso || antes!==iaRetratoApp(state)) return {origem:'motor',motivo:'estado_mudou'};
     const semanaAnterior=hp.currentWeekIndex>1 ? hp.plan[hp.currentWeekIndex-2] || null : null;
     const r=await iaRefinarSemanaV2({perfil:perfilMotor || iaClone(state.athleteProfile),opcoes,semanaMotor,historicoCorrida,semanaAnterior,tipo:hp.currentWeekIndex>1 ? 'semanal' : 'inicial',
-      historico:{historicoCarga:state.historicoCarga,checkins:hp.checkins},online:navigator.onLine,usuario:state.authUser,
-      chamarFuncao:iaCriarChamadaServidor({url:IA_CONFIG.servidorUrl,obterToken:()=>auth.currentUser.getIdToken()})});
+      historico:{historicoCarga:state.historicoCarga,checkins:hp.checkins},online:navigator.onLine,usuario:state.authUser || {uid:iaIdDispositivo()},
+      chamarFuncao:iaCriarChamadaServidor({url:IA_CONFIG.servidorUrl,obterToken:()=>state.authUser && auth.currentUser ? auth.currentUser.getIdToken() : null,dispositivo:iaIdDispositivo()})});
     if(r.origem!=='ia') return r;
     if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada || seq!==iaPedidoEmCurso) return {origem:'motor',motivo:'cancelado'};
     const candidato=iaPrepararSemanaAtomica(state,r.semana);

@@ -155,6 +155,16 @@ const pedidoBase = (n = 0) => ({
     t(A.JWKS_FIREBASE === 'https://www.googleapis.com/service_accounts/v1/jwk/securetoken@system.gserviceaccount.com', 'auth: chaves públicas oficiais do Firebase (securetoken)');
     let erroProjeto = false; try { A.criarVerificadorFirebase({ projectId: '' }); } catch (e) { erroProjeto = true; }
     t(erroProjeto, 'auth: sem FIREBASE_PROJECT_ID o verificador não é criado');
+    // sem login: o ID aleatório do aparelho basta; ID malformado ou token inválido junto continuam recusados
+    const gd = geminiFalso(identidade);
+    const d = await chamar(amb, { tk: null, headers: { 'X-Forza-Dispositivo': 'abcdefghijklmnop1234' }, gemini: gd });
+    t(d.status === 200 && d.j.resposta, `auth: aparelho sem login aceito (${d.status})`);
+    const gd2 = geminiFalso(identidade);
+    const dRuim = await chamar(amb, { tk: null, headers: { 'X-Forza-Dispositivo': 'curto' }, gemini: gd2 });
+    t(dRuim.status === 401 && gd2.chamadas === 0, 'auth: ID de aparelho malformado → 401');
+    const gd3 = geminiFalso(identidade);
+    const dTk = await chamar(amb, { tk: 'abc.def.ghi', headers: { 'X-Forza-Dispositivo': 'abcdefghijklmnop1234' }, gemini: gd3 });
+    t(dTk.status === 401 && gd3.chamadas === 0, 'auth: token inválido não é salvo pelo ID do aparelho');
   }
 
   // ================= 2. Consentimento e pedido =================
