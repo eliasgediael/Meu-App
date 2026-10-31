@@ -148,9 +148,19 @@ function corridaContextoDoDia(est, semana, dia, ajustes){
     limiteMin: entry.totalMin,                         // nunca passa da duração que o motor deu ao dia
     vesperaDeQualidade: !!(corridaEm(prox) && corridaEm(prox).estimulo && corridaEm(prox).estimulo.tipo==='qualidade'),
     aposPernaPesada: pernaPesada(ant), pernaPesadaNoDia: pernaPesada(dia),
+    aposQualidade: !!(corridaEm(ant) && corridaEm(ant).estimulo && corridaEm(ant).estimulo.tipo==='qualidade'),
     ajustes: ajustes || {},
     sessaoMotor: entry,
   };
+}
+
+/* ---------- teto de carga intensa do dia ---------- */
+// Longão com final mais rápido (progressivo, ritmo de maratona) pode ter um pouco de Z3 no fim, mas só longe de outro treino forte:
+// sem qualidade no dia anterior ou seguinte e sem perna pesada colada. Os demais dias nunca passam da carga do motor.
+const CORRIDA_LONGAO_FOLGA = 15;
+function corridaCargaTeto(cdia){
+  const folga = cdia.tipoDia==='longa' && !cdia.vesperaDeQualidade && !cdia.aposQualidade && !cdia.aposPernaPesada && !cdia.pernaPesadaNoDia ? CORRIDA_LONGAO_FOLGA : 0;
+  return cdia.ref.carga + 0.05 + folga;
 }
 
 /* ---------- elegibilidade ---------- */
@@ -167,6 +177,8 @@ function corridaOpcaoElegivel(est, id, cdia){
   // Treino forte conservador (um "não sei", dor leve em membro inferior): só limiar, fartlek e blocos de maratona.
   if(op.qualidade && op.dia==='qualidade' && typeof motorQualidadeModo==='function' && motorQualidadeModo(est, cdia.ajustes)!=='normal'
     && !['motor', 'limiar', 'fartlek', 'maratona'].includes(op.familia)) return { ok:false, motivo:'qualidade_conservadora' };
+  // Longão com final acelerado conta como treino forte: só com o modo normal de qualidade.
+  if(op.dia==='longa' && op.qualidade && typeof motorQualidadeModo==='function' && motorQualidadeModo(est, cdia.ajustes)!=='normal') return { ok:false, motivo:'qualidade_conservadora' };
   if(op.prontidaoNormal && est.recuperacao.prontidao!=='normal') return { ok:false, motivo:'recuperacao' };
   if(op.semDorInferior && ccDorInferior(est)) return { ok:false, motivo:'dor_membro_inferior' };
   if(id==='LEVE_STRIDES' && (cdia.vesperaDeQualidade || cdia.aposPernaPesada || cdia.pernaPesadaNoDia)) return { ok:false, motivo:'recuperacao_entre_sessoes' };
@@ -350,7 +362,7 @@ function ccPrincipal(est, id, orcMin, cdia){
     return { desc, pace:ctx.easyPace, zona:'Z2', km:kBruto, min:minFromKmAtPace(kBruto, meio), gps:[{ name:op.familia==='longo' ? 'Longão' : 'Principal', km:k, pace:ctx.easyPace, zona:'Z2', desc, tipo:'distancia' }] };
   }
   // ---- qualidade: escolhe o MAIOR número de repetições que cabe nos minutos e na carga do motor ----
-  const cargaMax = cdia.ref.carga + 0.05;
+  const cargaMax = corridaCargaTeto(cdia);
   const melhor = (montar, nMin, nMax)=>{
     for(let n=nMax; n>=nMin; n--){
       const r = montar(n);
@@ -487,7 +499,7 @@ function ccMontarCom(est, id, cdia, E){
   const s = ccMontar(est, id, cdia, { aquecMin, desaqMin, escolhas:E, principal:pr, objetivo:objetivoFinal });
   // Limites que nenhuma opção passa: duração do motor para o dia e carga de intensidade da sessão do motor.
   if(s.totalMin > alvo || s.totalMin < Math.floor(cdia.limiteMin*faixa[0])) return null;
-  if(s.cargaIntensa > cdia.ref.carga + 0.05) return null;
+  if(s.cargaIntensa > corridaCargaTeto(cdia)) return null;
   if(typeof motorQualidadeModo==='function' && motorQualidadeModo(est, cdia.ajustes)!=='normal' && (s.gpsSteps || []).some(g=>/Z5/.test(g.zona || ''))) return null;
   return s;
 }
@@ -509,6 +521,6 @@ function corridaBlocosDetalhados(sessao){ return (sessao && Array.isArray(sessao
 
 Object.assign(globalThis, {
   CORRIDA_CATALOGO_VERSAO, CORRIDA_MOBILIDADE, CORRIDA_EDUCATIVOS, CORRIDA_ALONGAMENTOS, CORRIDA_STRIDES, CORRIDA_OPCOES, CORRIDA_OBJETIVOS,
-  corridaCargaIntensa, corridaContextoDoDia, corridaOpcaoElegivel, corridaAquecimentoPadrao, corridaMontarOpcao, corridaOpcoesDoDia, corridaBlocosDetalhados,
+  corridaCargaIntensa, corridaCargaTeto, corridaContextoDoDia, corridaOpcaoElegivel, corridaAquecimentoPadrao, corridaMontarOpcao, corridaOpcoesDoDia, corridaBlocosDetalhados,
   corridaItensPermitidos, CORRIDA_OPCAO_DO_MOTOR, ccConferirEscolhas,
 });

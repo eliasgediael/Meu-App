@@ -103,7 +103,8 @@ const AJ0 = { reduzir: 0, semQualidade: false, semDobros: false, volumeFator: 1,
           if (!zonaOk(g.zona, m, P)) problemas.zona.push(`${tag}: ${g.name} ${g.pace} fora de ${g.zona}`);
         });
         // carga de intensidade nunca acima da sessão do motor
-        if (s.cargaIntensa > cdia.ref.carga + 0.05) problemas.carga.push(`${tag}: carga ${s.cargaIntensa} > motor ${cdia.ref.carga}`);
+        const teto = cdia.ref.carga + 0.05 + (cdia.tipoDia === 'longa' && !cdia.vesperaDeQualidade && !cdia.aposQualidade && !cdia.aposPernaPesada && !cdia.pernaPesadaNoDia ? 15 : 0);   // folga do longão acelerado
+        if (s.cargaIntensa > teto) problemas.carga.push(`${tag}: carga ${s.cargaIntensa} > motor ${cdia.ref.carga}`);
         // repetições dentro das tabelas
         const op = G.CORRIDA_OPCOES[id];
         if (op.reps) {

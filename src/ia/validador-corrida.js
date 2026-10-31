@@ -45,7 +45,7 @@ function iaValidarCorridaV2(ctx, ctxC, corrida, E){
     const x = ctxC.dias[it.dia];
     if(!x) return;
     const cd = x.cdia, op = CORRIDA_OPCOES[it.opcao];
-    somaMotor += cd.ref.totalMin; cargaMotor += cd.ref.carga;
+    somaMotor += cd.ref.totalMin; cargaMotor += corridaCargaTeto(cd) - 0.05;
     // R2
     if(!x.menu.includes(it.opcao)){ E('R2', `${it.dia}: opção ${it.opcao} fora do menu do dia`); return; }
     if(it.progressao==='pedir_progressao'){ if(!ctxC.progressaoPermitida) E('R2', `${it.dia}: progressão pedida quando o motor não permite`); else progressao.push(it.dia); }
@@ -69,7 +69,7 @@ function iaValidarCorridaV2(ctx, ctxC, corrida, E){
     const fx = iaV2Faixa(it.opcao);
     if(s.totalMin > Math.floor(cd.limiteMin*fx[1]) || s.totalMin < Math.floor(cd.limiteMin*fx[0])) E('R3', `${it.dia}: ${s.totalMin} min fora da faixa (${cd.limiteMin} min do motor)`);
     // R5 por sessão
-    if(s.cargaIntensa > cd.ref.carga + 0.05) E('R5', `${it.dia}: carga ${s.cargaIntensa} acima da do motor (${cd.ref.carga})`);
+    if(s.cargaIntensa > corridaCargaTeto(cd)) E('R5', `${it.dia}: carga ${s.cargaIntensa} acima da do motor (${cd.ref.carga})`);
     if(op.reps){
       const reps = s.gpsSteps.filter(g=>/^(Tiro|Limiar|Subida|Ritmo de prova) \d+\//.test(g.name)).length;
       const max = op.reps[1] + (est.capacidade.corrida==='avancado' && op.familia!=='subidas' ? 1 : 0);
@@ -89,7 +89,7 @@ function iaValidarCorridaV2(ctx, ctxC, corrida, E){
     });
     if(est.capacidade.corrida==='iniciante' && s.gpsSteps.some(g=>/Z3|Z4|Z5/.test(g.zona || ''))) E('R8', `${it.dia}: iniciante com etapa em Z3+`);
     if(typeof motorQualidadeModo==='function' && motorQualidadeModo(est, ctx.ajustes)!=='normal' && s.gpsSteps.some(g=>/Z5/.test(g.zona || ''))) E('R8', `${it.dia}: Z5 com treino forte conservador`);
-    if(cd.tipoDia==='longa' && (s.totalMin > cd.ref.totalMin || s.cargaIntensa > cd.ref.carga + 0.05)) E('R9', `${it.dia}: longão acima do longão do motor`);
+    if(cd.tipoDia==='longa' && (s.totalMin > cd.ref.totalMin || s.cargaIntensa > corridaCargaTeto(cd))) E('R9', `${it.dia}: longão acima do longão do motor`);
     sessoes[it.dia] = s; escolhidas[it.dia] = it.opcao;
     somaMin += s.totalMin; cargaSemana += s.cargaIntensa;
   });

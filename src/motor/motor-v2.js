@@ -693,10 +693,12 @@ function motorSessoesMusc(est, prio, nm, ajustes, nDurasCorrida){
   // Dor moderada em membro inferior ou lombar: sem dia de perna pesado (os exercícios da região já saem pelo filtro).
   const dorInfMod = est.restricoes.dor.some(d=>(MOTOR_REGIAO_MEMBRO_INFERIOR.includes(d.regiao) || d.regiao==='lombar') && d.intensidade!=='leve');
   if(dorInfMod) formas = formas.map(f=>f==='lower' ? 'full' : f);
-  if(est.recuperacao.prontidao==='reduzida' || ajustes.aliviarInferior){
+  // Alívio parcial (aliviarN): só as últimas N pernas pesadas viram corpo inteiro; a primeira se mantém quando a semana comporta.
+  const nLowers = formas.filter(f=>f==='lower').length;
+  if(est.recuperacao.prontidao==='reduzida' || ajustes.aliviarInferior || ajustes.aliviarN){
     // sessões duras em excesso: converte inferior em corpo inteiro
-    let duras = nDurasCorrida;
-    formas = formas.map(f=>{ if(f==='lower'){ if(duras>=2 || ajustes.aliviarInferior){ return 'full'; } duras++; } return f; });
+    let duras = nDurasCorrida, kLower = 0;
+    formas = formas.map(f=>{ if(f==='lower'){ const k = kLower++; if(ajustes.aliviarInferior || k >= nLowers - (ajustes.aliviarN || 0)) return 'full'; if(est.recuperacao.prontidao==='reduzida'){ if(duras>=2) return 'full'; duras++; } } return f; });
   }
   const principalMusc = prio.principal==='musculacao';
   const focoBase = principalMusc ? (est.objetivo.tipo==='forca' ? 'forca' : 'hipertrofia')
@@ -1134,8 +1136,9 @@ function motorConstruir(est, prio, ajustes){
     if(dist.melhor || (freq.corrida+freq.musc)===0) break;
     // Antes de tirar uma sessão, tenta sem dia de perna pesado (Leg Day vira corpo inteiro): mantém a frequência.
     if(!aj.aliviarInferior && dist.muscs.some(s=>s.tipo==='lower')){
-      est.log.push({ etapa:4, regra:'leg_day_sem_encaixe', motivo:'nenhuma distribuição válida com dia de perna pesado: tenta corpo inteiro antes de reduzir sessões', dados:{} });
-      aj = { ...aj, aliviarInferior:true };
+      est.log.push({ etapa:4, regra:'leg_day_sem_encaixe', motivo:'nenhuma distribuição válida com dia de perna pesado: troca um dia de perna por corpo inteiro (um por vez) antes de reduzir sessões', dados:{} });
+      const restantes = dist.muscs.filter(s=>s.tipo==='lower').length;
+      aj = restantes>1 ? { ...aj, aliviarN:(aj.aliviarN || 0) + 1 } : { ...aj, aliviarInferior:true, aliviarN:0 };
       continue;
     }
     est.log.push({ etapa:4, regra:'reducao_por_inviabilidade', motivo:'nenhuma distribuição válida para as sessões desejadas: reduz uma sessão', dados:{ sessoes:{ corrida:freq.corrida, musc:freq.musc } } });
@@ -1189,7 +1192,7 @@ function motorAjustar(ajustes, erros){
   if(cods.has('V1')) a.semQualidade = true;
   if(cods.has('V3')) a.semDobros = true;
   if(cods.has('V4')) a.volumeFator = (a.volumeFator||1)*0.9;
-  if(cods.has('V6') || cods.has('V9')){ if(!a.aliviarInferior) a.aliviarInferior = true; else if(!a.semQualidade) a.semQualidade = true; else a.reduzir = (a.reduzir||0)+1; }
+  if(cods.has('V6') || cods.has('V9')){ if(!a.aliviarInferior && (a.aliviarN || 0) < 1) a.aliviarN = 1; else if(!a.aliviarInferior) a.aliviarInferior = true; else if(!a.semQualidade) a.semQualidade = true; else a.reduzir = (a.reduzir||0)+1; }
   if(cods.has('V10')) a.semProgressao = true;
   if(cods.has('V2') || cods.has('V5') || cods.has('V7')) a.reduzir = (a.reduzir||0)+1;
   return a;

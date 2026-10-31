@@ -88,7 +88,17 @@ function iaIdDispositivo(){
   } catch(e) { return 'sem-armazenamento-local'; }
 }
 let iaPedidoEmCurso=0;
+// Guarda o resultado da última tentativa para o aviso discreto da aba Treino (sem dados pessoais).
 async function iaPersonalizarSemanaApp(semanaMotor, opcoes, perfilMotor){
+  const r=await iaPersonalizarSemanaInterna(semanaMotor, opcoes, perfilMotor);
+  try {
+    state.iaUltimo={ semana:semanaMotor && semanaMotor.weekNumber, origem:r.origem, motivo:r.motivo || null, dia:todayISO() };
+    localStorage.setItem('forza:iaUltimo',JSON.stringify(state.iaUltimo));
+    if(r.origem!=='ia' && typeof render==='function') render();
+  } catch(e) { /* aviso é opcional */ }
+  return r;
+}
+async function iaPersonalizarSemanaInterna(semanaMotor, opcoes, perfilMotor){
   if(!IA_CONFIG.ativa || !IA_CONFIG.publicacaoAutorizada) return {origem:'motor',motivo:'ia_desligada'};
   if(state.viewingClient || !navigator.onLine || !IA_CONFIG.servidorUrl || iaTreinoIniciado(state)) return {origem:'motor',motivo:'indisponivel'};
   const seq=++iaPedidoEmCurso, antes=iaRetratoApp(state), hp=state.hybridPlanData;

@@ -8625,7 +8625,7 @@ const HB_SLOT = {
   quadrIso:  { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/extensora/,/flexora/] } },
   panturrilha:{ papel:'isolado', grupo:'Pernas', from:['Pernas'], pref:{ default:[/panturrilha/] } },
   posterior: { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/flexora/,/extensora/] } },
-  adutora:   { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/abdutora|adutora/,/panturrilha/] } },
+  adutora:   { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/abdutora|adutora/] } },
   empHoriz:  { papel:'base',     grupo:'Peito',  from:['Peito'], pref:{ default:[/supino reto com barra/,/supino reto com halteres|supino com halteres/,/supino inclinado com halteres/,/supino inclinado com barra/,/supino/], iniciante:[/smith/,/supino com halteres|supino reto com halteres/,/supino/] } },
   puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], excluir:/braco estendido|pullover/, pref:{ default:[/barra fixa/,/puxada/,/pulldown/], iniciante:[/puxada frontal/,/pulldown/] } },
   empVert:   { papel:'auxiliar', grupo:'Ombro',  from:['Ombro'], pref:{ default:[/desenvolvimento militar|desenvolvimento com halteres/,/arnold/,/desenvolvimento/], iniciante:[/desenvolvimento na maquina/,/desenvolvimento/] } },
@@ -14679,12 +14679,23 @@ function renderTreinoV2Content(){
     return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span class="fr-wdic ${st==='done'?'done':st==='none'?'rest':''}">${st==='done' ? CHECK_SVG : st==='none' ? ICONS.bed : treinoEntryForDay(d) ? ICONS.run : ICONS.dumbbell}</span></button>`;
   }).join('')+'</div>';
   const semanaCompleta=frDisclosure('semana-completa','Ver semana completa',daylist);
-  return header + planoBar + weekNav + faixa + avisoAgenda + avisoQualidade + toggle + chips + dayContent + semanaCompleta + renderOutrasAtividadesDoDia(day);
+  return header + planoBar + weekNav + faixa + renderAvisoIA() + avisoAgenda + avisoQualidade + toggle + chips + dayContent + semanaCompleta + renderOutrasAtividadesDoDia(day);
 }
 // Mapa do corpo (SVG simples, frente + costas) com os grupos do treino do dia acesos em turquesa. Usa só o
 // campo "grupo" que a biblioteca de exercícios já informa — não é um dado novo.
 // Boneco realista com os músculos do treino do dia: principal de qualquer exercício = laranja forte,
 // só secundário = laranja claro (mesmas máscaras da tela de execução).
+// Uma linha discreta: diz se a IA refinou a semana ou por que ficou o plano do motor.
+function renderAvisoIA(){
+  if((state.weekOffset||0)!==0) return '';
+  let u = state.iaUltimo;
+  if(!u){ try{ u = JSON.parse(localStorage.getItem('forza:iaUltimo') || 'null'); }catch(e){ u = null; } }
+  const hp = state.hybridPlanData;
+  if(!u || !hp || !hp.motorV2 || u.semana!==hp.currentWeekIndex) return '';
+  const m = { falha_chamada:'IA sem resposta', fallback_app:'IA sem resposta', indisponivel:'IA indisponível agora', validacao_reprovada:'IA reprovada na validação', cautela:'semana conservadora, sem IA', ia_desligada:'IA desligada', offline:'sem internet' };
+  const txt = u.origem==='ia' ? 'Semana refinada pela IA' : 'Plano do motor · ' + (m[u.motivo] || u.motivo || 'sem IA');
+  return `<div class="mrt-sub" style="margin:-12px 0 14px;">${txt}</div>`;
+}
 function mapaMuscularDoDia(list){
   const prim = new Set(), sec = new Set();
   list.forEach(e=>{ const a = muscleRegionsForExercise(e.nome); a.primary.forEach(r=>prim.add(r)); a.secondary.forEach(r=>sec.add(r)); });
