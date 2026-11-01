@@ -750,6 +750,22 @@ function distribuirSessoes(est, prio, freq, ajustes){
       if(est.capacidade.musc==='iniciante' && muscD && muscN) cost += 10000;
       if(est.capacidade.musc==='iniciante' && ((runD && runD.tipo==='longa' && muscN) || (muscD && runN && runN.tipo==='longa'))) cost += 10000;
     });
+    // Espalhamento da semana: corridas e musculações não ficam coladas, perna/corpo inteiro não antecede o longão,
+    // e não sobram vários dias vazios seguidos.
+    ordem.forEach(d=>{
+      const runD = runAt[d], runN = runAt[nx(d)], muscD = muscAt[d], muscN = muscAt[nx(d)];
+      if(runD && runN) cost += (runD.tipo==='qualidade' || runN.tipo==='qualidade' || runD.tipo==='longa' || runN.tipo==='longa') ? 12 : 6;
+      if(muscD && muscN) cost += (muscD.tipo==='lower' || muscN.tipo==='lower') ? 8 : 5;
+      if(muscD && (muscD.tipo==='lower' || muscD.tipo==='full') && runN && runN.tipo==='longa') cost += 25;
+      if(muscD && muscD.tipo==='lower' && runN && runN.tipo==='qualidade') cost += 15;
+      if(runD && runD.tipo==='longa' && muscN && muscN.tipo==='lower') cost += 10;
+    });
+    let vazios = 0;
+    for(let k=0;k<14;k++){
+      const d = ordem[k%7];
+      if(!(runAt[d]||muscAt[d]) && dias.some(x=>x.dia===d && x.disponivel!==false)){ vazios++; if(vazios>2 && k>=7) cost += 6; }
+      else vazios = 0;
+    }
     dias.forEach(d=>{
       const r = runAt[d.dia], m = muscAt[d.dia];
       if(r && (r.tipo==='longa' || r.tipo==='rodagem')){

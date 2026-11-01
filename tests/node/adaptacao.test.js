@@ -45,10 +45,11 @@ const copia = (x) => JSON.parse(JSON.stringify(x));
 
   // overlays do dia (ajuste feito pela escada do treinador fica com o original guardado)
   S.hybridPlanData = copia(hp0);
-  const op = T.opcoesAjuste('Seg').find(o => /Reduzir/.test(o.titulo));
+  const diaCorrida = ((S.hybridPlanData.plan[0].corridaWeek || [])[0] || {}).day || 'Seg';   // o dia da primeira corrida muda com a distribuição da semana
+  const op = T.opcoesAjuste(diaCorrida).find(o => /Reduzir/.test(o.titulo));
   if (op) await op.aplicar();
   const ov = T.overlaysDoDia();
-  ok(op && ov.some(o => o.modalidade === 'corrida' && o.dia === 'Seg' && o.original && o.atual), 'ajuste do dia aparece como overlay com original e atual');
+  ok(op && ov.some(o => o.modalidade === 'corrida' && o.dia === diaCorrida && o.original && o.atual), 'ajuste do dia aparece como overlay com original e atual');
 
   semErro();
   process.exit(process.exitCode || 0);

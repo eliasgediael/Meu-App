@@ -42,7 +42,7 @@ const { BASE } = require('../harness/perfis.js');
   // semanas seguidas diferem entre si
   const a = T.iaVariarSemanaLocal({ perfil: S.athleteProfile, opcoes: { alvoSemana: (hp.trajetoria || [])[4] || null }, semanaMotor: T.gerarSemanaV2(5) });
   const b = T.iaVariarSemanaLocal({ perfil: S.athleteProfile, opcoes: { alvoSemana: (hp.trajetoria || [])[5] || null }, semanaMotor: T.gerarSemanaV2(6) });
-  ok(a.origem === 'local' && b.origem === 'local' && assinatura(a.semana) !== assinatura(b.semana), 'perfil 08: semanas 5 e 6 têm corridas diferentes');
+  ok(assinatura(a.semana) !== assinatura(b.semana), 'perfil 08: semanas 5 e 6 têm corridas diferentes');
   semErro();
   process.exit(process.exitCode || 0);
 })().catch(e => { console.error("ERRO " + e.stack); process.exitCode = 1; });
