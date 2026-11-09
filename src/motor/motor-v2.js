@@ -25,6 +25,12 @@ const MOTOR_PARAMS = {
   toleranciaVolume:0.10, reducaoDorModerada:0.8, reducaoSonoReduzido:0.9,
   vdotPadrao:{ iniciante:30, intermediario:40, avancado:50 },
   passoSemanal:0.08, validadeDesempenhoDias:92,
+  // Histórico real de corrida (Etapa 1). Valores iniciais, calibráveis.
+  tetoLongoProva:{ '5':[60,75,90], '10':[75,90,105], '21.0975':[105,120,135], '42.195':[150,165,180] },   // min: iniciante/intermediário/avançado
+  shareLongaMax:{ 2:0.60, 3:0.50, 4:0.42, 5:0.36 },                       // fração do volume semanal que o longão pode ocupar (com histórico)
+  crescimentoLongo:1.15, reducaoLongoDescarga:0.8,                         // longão <= 115% do de referência; semana de alívio <= 80%
+  volumeRefProva:{ '21.0975':{ iniciante:200, intermediario:280, avancado:360 }, '42.195':{ iniciante:300, intermediario:400, avancado:480 } },   // min/semana, só meia e maratona
+  aumentoVolumeNivel:0.10,                                                 // intermediário e avançado: teto de volume no máximo +10% sobre o de hoje
   minutosPorExercicio:4.6, aquecimentoMusc:5, tetoRunWalk:40,
 };
 const MOTOR_NIVEIS = ['iniciante','intermediario','avancado'];
@@ -275,8 +281,22 @@ function motorEixosMusc(m){
     motivo:'experiência, técnica e frequência avaliadas separadamente' };
 }
 
+// Teto semanal de volume de meia/maratona: iniciante usa a tabela por prova; intermediário e avançado no máximo +10% sobre o teto atual.
+function motorTetoVolumeProva(goal, nivel, base){
+  const vrp = MOTOR_PARAMS.volumeRefProva[String(goal)];
+  if(!vrp) return base;
+  const alvo = vrp[nivel];
+  return nivel==='iniciante' ? Math.max(base, alvo) : Math.min(Math.max(base, alvo), base*(1+MOTOR_PARAMS.aumentoVolumeNivel));
+}
+function motorPerfilComHistorico(perfil, h){
+  if(!h || !(h.minutosSemana>0)) return perfil;
+  const p = JSON.parse(JSON.stringify(perfil));
+  athleteSetPath(p, 'estadoAtual.corrida.carga.observada.minutosSemana', criarDado(h.minutosSemana, 'observado', 'alta'));
+  return p;
+}
 function lerEstado(perfil, opcoes){
   opcoes = opcoes || {};
+  perfil = motorPerfilComHistorico(perfil, opcoes.historicoCorrida);
   const hoje = opcoes.hoje ? new Date(opcoes.hoje) : new Date();
   const log = [];
   const L = (regra, motivo, dados)=>log.push({ etapa:1, regra, motivo, dados });
@@ -374,9 +394,26 @@ function lerEstado(perfil, opcoes){
   if(recuperacao.prontidao==='reduzida') L('sono_reduzido', 'sono <6 h: recuperação reduzida (sem progressão, menos volume e sem sessões duras em excesso)', {});
   if(sonoIdx===null) L('sono_desconhecido', 'sono desconhecido: prontidão normal com confiança menor', {});
 
+  // histórico real de corrida: só vale com prontidão normal, sem dor relevante, sem impacto limitado e fora do modo conservador
+  const hist = opcoes.historicoCorrida || null;
+  corr.usaHistorico = false;
+  if(hist && hist.minutosSemana>0){
+    const permitido = !conservador && recuperacao.prontidao==='normal' && !restricoes.temDorRelevante && !restricoes.semImpacto && corr.situacao!=='nunca';
+    L(permitido ? 'historico_corrida' : 'historico_corrida_ignorado', permitido ? 'carga e maior corrida vêm do que foi feito' : 'dor, sono reduzido, modo conservador ou impacto limitado: histórico não sobe carga nem longão', { minutosSemana:hist.minutosSemana, maiorMin30d:hist.maiorMin30d, registros:hist.registros });
+    if(permitido){
+      const ref = opcoes.longoRefPlano>0 ? opcoes.longoRefPlano : hist.maiorMin30d;
+      const descarga = !!(opcoes.alvoSemana && opcoes.alvoSemana.fase==='Descarga' && opcoes.longoRefPlano>0);
+      corr.usaHistorico = true;
+      corr.maiorMinDeclarada = corr.maiorMin;
+      corr.maiorMin = Math.max(corr.maiorMin || 0, hist.maiorMin30d);
+      corr.longoRef = ref; corr.longoRefFonte = opcoes.longoRefPlano>0 ? 'plano_anterior' : 'historico_30d';
+      corr.tetoCrescimentoLongo = Math.round(ref * (descarga ? MOTOR_PARAMS.reducaoLongoDescarga : MOTOR_PARAMS.crescimentoLongo));
+    }else corr.minutosObservados = null;
+  }
   // carga inicial de corrida (o que provavelmente se sustenta AGORA; nunca um salto sobre o declarado)
   const V = MOTOR_PARAMS;
-  const vref = V.volumeRef[capacidade.corrida]*fatorD;
+  let vref = V.volumeRef[capacidade.corrida]*fatorD;
+  if(corr.usaHistorico) vref = motorTetoVolumeProva(goal, capacidade.corrida, vref);
   const sessPad = V.sessaoPadrao[capacidade.corrida];
   let v0, fonte, incerteza = 0;
   if(corr.situacao==='nunca'){ v0 = 2*V.sessaoPadrao.iniciante; fonte='nunca_corri'; }
@@ -407,6 +444,12 @@ function lerEstado(perfil, opcoes){
   // teto da corrida longa: nunca acima da maior corrida recente (sem salto), do teto do nível nem de nada que a carga não sustente
   const tetoL = V.tetoLongo[capacidade.corrida] + (goal>=21 ? V.tetoLongoDistancia : 0);
   corr.tetoLonga = corr.maiorMin ? Math.min(tetoL, Math.max(corr.maiorMin, V.minSessaoCorrida)) : tetoL;
+  if(corr.usaHistorico){
+    // com histórico: teto por nível e distância (só com prova informada), limitado a 115% do longão de referência
+    const tp = V.tetoLongoProva[String(goal)];
+    const tNivel = (objetivo.distanciaInformada && tp) ? tp[MOTOR_NIVEIS.indexOf(capacidade.corrida)] : tetoL;
+    corr.tetoLonga = Math.min(tNivel, Math.max(corr.tetoCrescimentoLongo, V.minSessaoCorrida));
+  }
   // contexto dos construtores de sessão (reuso de hbMontarSessao/hbSessao*)
   const goalKey = String(goal);
   corr.goalKey = goalKey;
@@ -649,7 +692,7 @@ function motorSessoesCorrida(est, nc, ajustes){
   }
   const nLeves = nc - 1 - (qual ? 1 : 0);
   const Q = !qual ? 0 : modo==='normal' ? Math.min(50, janelaMax, Math.max(35, V0*0.28)) : Math.min(modo==='iniciante' ? 35 : 40, janelaMax, Math.max(30, V0*0.25));
-  let longa = Math.min(V0*P.shareLonga[Math.min(nc,5)], capLonga);
+  let longa = Math.min(V0*(c.usaHistorico ? P.shareLongaMax : P.shareLonga)[Math.min(nc,5)], capLonga);
   let leve = (V0 - longa - Q)/nLeves;
   leve = motorClamp(leve, P.minSessaoCorrida, Math.max(P.minSessaoCorrida, Math.min(60, janelaMax, longa*0.9)));
   if(longa < leve*1.15) longa = Math.min(capLonga, Math.round(leve*1.25));
@@ -1090,7 +1133,8 @@ function validarPlano(est, prio, freq, dist, semana, ajustes){
     const limiteVol = Math.max(vAlvo*(1+P.toleranciaVolume)+2, semana.corridaWeek.length*24);
     if(runMin > limiteVol) E('V4', `volume de corrida ${runMin} min acima de ${Math.round(limiteVol)}`);
     const longa = Math.max(...semana.corridaWeek.map(w=>w.totalMin));
-    if(est.corrida.maiorMin && longa > Math.max(est.corrida.maiorMin*(1+P.toleranciaVolume)+3, 25) && est.corrida.situacao!=='parado') E('V4', `sessão de ${longa} min acima da maior corrida recente (${Math.round(est.corrida.maiorMin)} min)`);
+    const limiteLonga = est.corrida.usaHistorico ? Math.max(est.corrida.tetoCrescimentoLongo+3, 25) : (est.corrida.maiorMin ? Math.max(est.corrida.maiorMin*(1+P.toleranciaVolume)+3, 25) : Infinity);
+    if(est.corrida.maiorMin && longa > limiteLonga && est.corrida.situacao!=='parado') E('V4', `sessão de ${longa} min acima da maior corrida recente (${Math.round(est.corrida.maiorMin)} min)`);
     if(runMin < v0*(1-P.toleranciaVolume)-5) A('V4', `volume de corrida ${runMin} min abaixo do de partida (${Math.round(v0)} min): limite de disponibilidade/sessões`);
   }
   // V5 frequência
@@ -1234,7 +1278,8 @@ function fatorSeriesDaSemana(alvo){
 function motorTrajetoria(est, prio, semana, totalWeeks, foraDaSemana){
   const c = est.corrida, P = MOTOR_PARAMS;
   const goal = est.objetivo.distanciaKm;
-  const teto = c.situacao==='parado' ? (c.volumeHistorico || c.carga.volumeRef) : c.carga.volumeRef*1.0;
+  let teto = c.situacao==='parado' ? (c.volumeHistorico || c.carga.volumeRef) : c.carga.volumeRef*1.0;
+  if(c.situacao!=='parado' && !est.conservador && est.recuperacao.prontidao==='normal' && !est.restricoes.temDorRelevante) teto = motorTetoVolumeProva(goal, est.capacidade.corrida, teto);
   const acel = (c.situacao==='parado' && c.histNivel!=='iniciante') ? 1.5 : 1;
   const taperN = est.objetivo.semanasAteProva!==null ? (VDOT_TAPER_WEEKS_BY_GOAL[goal] || 1) : 0;
   let v = c.carga.min; const out = [];
@@ -1390,6 +1435,7 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qua
 }
 // Integração com o app: gera o primeiro plano a partir de state.athleteProfile e grava no mesmo formato do plano híbrido atual.
 async function gerarPrimeiroPlanoV2(opcoes){
+  { const oh = motorOpcoesHistorico(null, 1); if(oh.historicoCorrida) opcoes = { ...(opcoes || {}), ...oh }; }
   if(!state.athleteProfile) await carregarAthleteProfile();
   const r = gerarPlanoSemanal(state.athleteProfile, opcoes);
   let perfilIA = state.athleteProfile;

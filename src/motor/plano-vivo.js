@@ -61,7 +61,7 @@ function gerarSemanaV2(n){
   const alvo = (hp.trajetoria||[])[n-1] || null;
   const aj = (hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n) ? hp.ajusteProximaSemana.ajustes : null;
   let r;
-  try{ r = gerarPlanoSemanal(state.athleteProfile, { alvoSemana:alvo, ajustesIniciais:aj }); }
+  try{ r = gerarPlanoSemanal(state.athleteProfile, { alvoSemana:alvo, ajustesIniciais:aj, ...motorOpcoesHistorico(hp, n) }); }
   catch(e){ console.warn('[plano] não consegui gerar a semana', n, e); return null; }
   if(!r || r.bloqueado || !r.semana) return null;
   const w = r.semana;
@@ -104,7 +104,7 @@ async function atualizarSemanaDoPlano(){
       hp.materializadaSeg = segISO;
       try{ registrarAuditoriaDaSemana(); }catch(e){} // agenda em modo auditoria: só registra conflitos
       await saveHybridPlanData();
-      if(hp.motorV2) iaPersonalizarSemanaApp(week, { alvoSemana:(hp.trajetoria||[])[n-1] || null, ajustesIniciais:hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n ? hp.ajusteProximaSemana.ajustes : null }).catch(()=>{});
+      if(hp.motorV2) iaPersonalizarSemanaApp(week, { alvoSemana:(hp.trajetoria||[])[n-1] || null, ajustesIniciais:hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n ? hp.ajusteProximaSemana.ajustes : null, ...motorOpcoesHistorico(hp, n) }).catch(()=>{});
     }
     return;
   }
