@@ -1310,6 +1310,8 @@ function gerarPlanoSemanal(perfil, opcoes){
   opcoes = opcoes || {};
   const est = lerEstado(perfil, opcoes);
   if(est.cautela.bloqueado) return motorDescricaoBloqueio(est);
+  // Portão de meta (só informa, não altera o plano): viabilidade da meta com a carga de hoje, calculada no plano inicial.
+  if(!opcoes.alvoSemana){ try{ est.viabilidade = motorViabilidadeDoEstado(est); }catch(e){ console.warn('[portão de meta] viabilidade não calculada', e); est.viabilidade = null; } }
   // Semana N do plano vivo: o volume de corrida vem da trajetória calculada na semana 1 (progressão,
   // descarga, polimento) em vez da carga inicial.
   if(opcoes.alvoSemana && opcoes.alvoSemana.corridaMinAlvo>0 && est.corrida && est.corrida.carga){
@@ -1434,6 +1436,7 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qua
   return {
     engineVersion:MOTOR_ENGINE_VERSION, status:'ok', bloqueado:false,
     ...(est.objetivo.prova ? { prova:est.objetivo.prova, avisoPrazo:provaAvisoPrazo(est.objetivo.prova) } : {}),
+    ...(est.viabilidade ? { viabilidade:est.viabilidade } : {}),
     semana:week,
     sessoes:semana.sessoes, cortes:semana.cortes, descartadas:semana.descartadas,
     descanso:DAY_ABBR.filter(d=>!corridaDays.includes(d) && !muscDays.includes(d)),
@@ -1554,6 +1557,7 @@ Object.assign(globalThis, {
   motorAjustar,
   motorDescricaoBloqueio,
   motorSemanasDoPlano,
+  motorTetoVolumeProva,
   motorTrajetoria,
   gerarPlanoSemanal,
   motorEmpacotar,

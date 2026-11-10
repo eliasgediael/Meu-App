@@ -47,6 +47,7 @@ const testes = [
   { nome: 'histórico real de corrida no motor (Etapa 1)', arq: 'node/historico-corrida.test.js' },
   { nome: 'histórico curto de corrida (2 a 3 semanas)', arq: 'node/historico-curto.test.js' },
   { nome: 'data da prova alinhada ao plano (Etapa 2)', arq: 'node/data-prova.test.js' },
+  { nome: 'portão de meta: viabilidade no motor (Etapa 3)', arq: 'node/portao-meta.test.js' },
   { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },
   { nome: 'relógio Garmin dentro do app', arq: 'node/relogio-garmin-app.test.js' },
   { nome: 'Garmin: todas as semanas e paginação UTF-8', arq: 'node/relogio-garmin-semanas.test.js' },

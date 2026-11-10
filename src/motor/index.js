@@ -4,6 +4,7 @@
 import './motor-v2.js';
 import './historico-corrida.js';
 import './data-prova.js';
+import './portao-meta.js';
 import './plano-vivo.js';
 import './forca.js';
 import './atividades.js';
