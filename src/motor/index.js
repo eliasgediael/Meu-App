@@ -3,6 +3,7 @@
 // As funções usam, na hora em que são chamadas, os globais do script principal (state, DAY_ABBR, catálogo etc.).
 import './motor-v2.js';
 import './historico-corrida.js';
+import './data-prova.js';
 import './plano-vivo.js';
 import './forca.js';
 import './atividades.js';

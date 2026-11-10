@@ -4,7 +4,7 @@ const { carregarApp, ok, semErro } = require('../harness/carregar.js');
 const { BASE, D7 } = require('../harness/perfis.js');
 
 const DIAS = { Ter: { on: true, min: 60 }, Qui: { on: true, min: 60 }, Sáb: { on: true, min: 60 }, Dom: { on: true, min: 200 } };
-const MARATONA_INIC = { obj: 'prova', dist: 42.195, data: '2027-01-28', semData: false, cSit: 'regular', cExp: '3-6m', cFreq: 2, cMaior: '5', mSit: 'nunca', local: 'academia', dias: DIAS };
+const MARATONA_INIC = { obj: 'prova', dist: 42.195, data: '2027-01-21', semData: false, cSit: 'regular', cExp: '3-6m', cFreq: 2, cMaior: '5', mSit: 'nunca', local: 'academia', dias: DIAS };
 // 4 semanas reais crescentes (min): 3 corridas por semana, o longão no domingo.
 const HIST = [['2026-09-08', 25], ['2026-09-10', 25], ['2026-09-13', 40], ['2026-09-15', 25], ['2026-09-17', 25], ['2026-09-20', 45],
   ['2026-09-22', 25], ['2026-09-24', 25], ['2026-09-27', 50], ['2026-09-29', 25], ['2026-10-01', 25], ['2026-10-04', 55]];

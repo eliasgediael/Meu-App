@@ -315,7 +315,9 @@ function lerEstado(perfil, opcoes){
   const dataProva = motorGet(perfil, 'objetivos.prova.data').v;
   let semanasAteProva = null;
   if(tipo==='prova' && dataProva){ const d = new Date(dataProva+'T00:00:00'); if(!isNaN(d)) semanasAteProva = Math.floor((d - hoje)/(7*86400000)); }
-  const objetivo = { tipo:tipo || null, distanciaKm:goal, distanciaInformada:dist!==null, dataProva:dataProva||null, semanasAteProva };
+  // Data de prova válida no futuro: o plano se alinha à data (src/motor/data-prova.js). Sem ela, tudo como sempre foi.
+  const prova = (tipo==='prova' && dataProva) ? provaAlinhar(dataProva, hoje, goal) : null;
+  const objetivo = { tipo:tipo || null, distanciaKm:goal, distanciaInformada:dist!==null, dataProva:dataProva||null, semanasAteProva, ...(prova ? { prova } : {}) };
 
   // corrida
   const cSit = motorSituacao(motorGet(perfil, 'estadoAtual.corrida.situacao').v);
@@ -1264,6 +1266,7 @@ function motorDescricaoBloqueio(est){
   return { engineVersion:MOTOR_ENGINE_VERSION, status: c.motivo==='avaliacao_em_andamento' ? 'avaliacao_em_andamento' : 'cautela_pendente', bloqueado:true, motivo:c.motivo, cautela:c, decisoes:est.log, validacao:{ ok:false, bloqueada:true, motivo:c.motivo, erros:[], avisos:[] }, semana:null };
 }
 function motorSemanasDoPlano(est){
+  if(est.objetivo.prova) return est.objetivo.prova.semanasPlano;
   const s = est.objetivo.semanasAteProva;
   if(s===null || s===undefined || s<0) return 8;
   if(s>=16) return 16; if(s>=12) return 12; return 8;
@@ -1283,19 +1286,23 @@ function motorTrajetoria(est, prio, semana, totalWeeks, foraDaSemana){
   let teto = c.situacao==='parado' ? (c.volumeHistorico || c.carga.volumeRef) : c.carga.volumeRef*1.0;
   if(c.situacao!=='parado' && !est.conservador && est.recuperacao.prontidao==='normal' && !est.restricoes.temDorRelevante) teto = motorTetoVolumeProva(goal, est.capacidade.corrida, teto);
   const acel = (c.situacao==='parado' && c.histNivel!=='iniciante') ? 1.5 : 1;
-  const taperN = est.objetivo.semanasAteProva!==null ? (VDOT_TAPER_WEEKS_BY_GOAL[goal] || 1) : 0;
+  const pv = est.objetivo.prova || null;   // plano alinhado à data da prova
+  const taperN = pv ? pv.polimento : (est.objetivo.semanasAteProva!==null ? (VDOT_TAPER_WEEKS_BY_GOAL[goal] || 1) : 0);
+  const taperPct = pv ? PROVA_POLIMENTO_PCT : VDOT_TAPER_PCT;
   let v = c.carga.min; const out = [];
   for(let w=1; w<=totalWeeks; w++){
     const pos = ((w-1)%4)+1;
     let fase = est.calibracao.ativa && w<=2 ? 'Retomada / calibração' : (pos===4 ? 'Descarga' : (w<=4 ? 'Base' : 'Construção'));
+    if(pv && pv.curto) fase = 'Manutenção';
     let vol;
     if(w===1) vol = v;
     else if(est.calibracao.ativa && w===2) vol = v;
     else if(pos===4) vol = v*0.75;
+    else if(pv && pv.curto) vol = v;   // prazo curto: manutenção, sem progressão
     else { v = Math.min(v*(1+P.passoSemanal*acel), Math.max(teto, v)); vol = v; }
-    if(taperN && w > totalWeeks - taperN){ const pct = (VDOT_TAPER_PCT[taperN] || [])[w-(totalWeeks-taperN)-1]; fase = 'Polimento'; if(pct!==undefined) vol = v*(1+pct/100); }
+    if(taperN && w > totalWeeks - taperN){ const pct = (taperPct[taperN] || [])[w-(totalWeeks-taperN)-1]; fase = 'Polimento'; if(pct!==undefined) vol = v*(1+pct/100); }
     const alternancia = (foraDaSemana && foraDaSemana.length && w%2===0) ? { priorizar:foraDaSemana.slice(), motivo:'ficou fora da semana anterior por falta de espaço' } : null;
-    out.push({ semana:w, fase, alternancia, corridaMinAlvo:Math.round(vol), muscSeriesFator: est.calibracao.ativa && w<=2 ? 0.85 : 1, progressao: w>1 && vol>c.carga.min*1.001 ? 'volume_gradual' : 'manter', nota: w===1 ? 'semana 1: sem aumento sobre a carga inicial' : '' });
+    out.push({ semana:w, fase, alternancia, corridaMinAlvo:Math.round(vol), muscSeriesFator: est.calibracao.ativa && w<=2 ? 0.85 : 1, progressao: w>1 && vol>c.carga.min*1.001 ? 'volume_gradual' : 'manter', nota: w===1 ? 'semana 1: sem aumento sobre a carga inicial' : '', ...(pv && !pv.alemDoPlano && w===totalWeeks ? { prova:{ iso:pv.iso, dia:pv.dia, diaIdx:pv.diaIdx, km:goal } } : {}) });
   }
   return out;
 }
@@ -1365,6 +1372,12 @@ function gerarPlanoSemanal(perfil, opcoes){
   if(!qualidadeRemovida && cons.semana.qualidadeRebaixada) qualidadeRemovida = { erros:[], rebaixada:cons.semana.qualidadeRebaixada };
   if(qualidadeRemovida && cons.semana.sessoes.some(s=>s.modalidade==='corrida' && s.tipo==='qualidade')) qualidadeRemovida = null;
   if(qualidadeRemovida) est.log.push({ etapa:6, regra:'qualidade_removida_pela_agenda', motivo:'o treino forte saiu da semana pelo tempo do dia ou pela correção da distribuição', dados:qualidadeRemovida });
+  // Semana da prova: a sessão Prova entra no dia certo e o resto da semana fica de descanso.
+  { const pv = est.objetivo.prova, a = opcoes.alvoSemana;
+    if(pv && !pv.alemDoPlano && (a ? !!a.prova : pv.semanasPlano===1)){
+      provaAplicarNaSemana(cons.semana, est, pv);
+      est.log.push({ etapa:6, regra:'semana_da_prova', motivo:'prova na data marcada: sessão Prova no dia e descanso depois', dados:{ data:pv.iso, dia:pv.dia, distanciaKm:pv.distanciaKm } });
+    } }
   return motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qualidadeRemovida);
 }
 function motorQualidadePlanejada(semana){
@@ -1420,6 +1433,7 @@ function motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qua
   };
   return {
     engineVersion:MOTOR_ENGINE_VERSION, status:'ok', bloqueado:false,
+    ...(est.objetivo.prova ? { prova:est.objetivo.prova, avisoPrazo:provaAvisoPrazo(est.objetivo.prova) } : {}),
     semana:week,
     sessoes:semana.sessoes, cortes:semana.cortes, descartadas:semana.descartadas,
     descanso:DAY_ABBR.filter(d=>!corridaDays.includes(d) && !muscDays.includes(d)),
