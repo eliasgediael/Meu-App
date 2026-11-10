@@ -85,6 +85,36 @@ const POLIMENTO = { 5: 1, 10: 1, 21.0975: 2, 42.195: 3 };
     }
   }
 
+  // ---- semana da prova: só rodagens leves e curtas, volume não passa do da semana anterior ----
+  const somaMin = w => (w.corridaWeek || []).reduce((t, c) => t + (c.totalMin || 0), 0);
+  function checarSemanaDaProva(g, nome) {
+    const n = g.hp.plan.length, w = g.semanas[n - 1], i = idx(((w.corridaWeek || []).find(c => c.type === 'Prova') || {}).day);
+    const pv = w.corridaWeek.find(c => c.type === 'Prova'), outras = w.corridaWeek.filter(c => c.type !== 'Prova');
+    ok(!!pv, nome + ': tem a Prova');
+    ok(outras.every(c => c.type === 'Rodagem Leve'), nome + ': sem limiar, intervalado nem longão na semana da prova (' + outras.map(c => c.type).join(',') + ')');
+    ok(outras.length <= 3 && outras.every(c => c.totalMin <= 25), nome + ': no máximo 3 rodagens de até 25 min (' + outras.map(c => c.totalMin).join(',') + ')');
+    const pico = g.hp.trajetoria[n - 1].prova.picoMin, soma = outras.reduce((t, c) => t + c.totalMin, 0);
+    ok(soma <= pico * 0.25 + 0.001, nome + ': corridas fora a Prova somam ' + soma + ' min, no máximo 25% do pico (' + pico + ')');
+    ok(outras.every(c => idx(c.day) < i - 1), nome + ': nenhuma corrida na véspera nem no dia da prova além da Prova');
+    ok(!w.corridaWeek.some(c => idx(c.day) === i - 1 && c.totalMin > 20), nome + ': véspera com no máximo 20 min');
+    if (n > 1) {
+      const ant = somaMin(g.semanas[n - 2]), tot = somaMin(w);
+      ok(pv.totalMin > ant ? soma < ant : tot <= ant, nome + ': volume da semana (' + tot + ') não passa do da anterior (' + ant + ')' + (pv.totalMin > ant ? ' / sem a Prova ' + soma + ' < ' + ant : ''));
+    }
+  }
+  {
+    const g = await gerar(perfil(21.0975, dataProva(10, 6)));   // meia, prova em 13/12 (domingo), 10 semanas
+    ok(g.hp.plan.length === 10, 'meia 13/12: 10 semanas');
+    ok(!g.semanas[9].corridaWeek.some(c => /Limiar|Intervalado|Longão/.test(c.type)), 'meia 13/12: semana da prova sem Limiar');
+    checarSemanaDaProva(g, 'meia 13/12');
+  }
+  for (const dist of [5, 10, 21.0975, 42.195]) {
+    for (const diaK of [1, 4, 5]) {
+      const g = await gerar(perfil(dist, dataProva(12, diaK)));
+      checarSemanaDaProva(g, dist + ' km, prova ' + TODOS[diaK]);
+    }
+  }
+
   // ---- prova nesta mesma semana (plano de 1 semana) ----
   {
     const data = dataProva(1, 5); // sábado desta semana

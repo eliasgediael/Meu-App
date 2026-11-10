@@ -66,18 +66,42 @@ function provaSessaoCorrida(est, pv){
   };
 }
 // Semana da prova: sessão Prova no dia, véspera sem corrida, musculação fora dos 2 dias antes e depois da prova, descanso depois.
-function provaAplicarNaSemana(semana, est, pv){
+// As corridas que sobram antes da prova são só rodagens leves e curtas (regras em PROVA_SEMANA):
+// nenhuma sessão de qualidade nem longão; no máximo 3 rodagens de até 25 min; soma de até 25% do pico semanal de volume;
+// o volume total da semana (com a Prova) não passa do da semana anterior; quando a Prova sozinha já passa disso
+// (meia e maratona), a soma sem a Prova fica abaixo da semana anterior. A véspera e o dia da prova ficam sem outra corrida.
+const PROVA_SEMANA = { maxRodagens:3, maxMinRodagem:25, fracaoPico:0.25 };
+function provaAplicarNaSemana(semana, est, pv, ctx){
+  ctx = ctx || {};
   const idx = pv.diaIdx;
   const ordem = d=>DAY_ABBR.indexOf(d);
-  semana.corridaWeek = (semana.corridaWeek || []).filter(w=>ordem(w.day) < idx-1);
+  const antes = (semana.corridaWeek || []).filter(w=>ordem(w.day) < idx-1).sort((a, b)=>ordem(a.day) - ordem(b.day));
   const prova = provaSessaoCorrida(est, pv);
-  semana.corridaWeek.push(prova);
-  semana.corridaWeek.sort((a, b)=>ordem(a.day) - ordem(b.day));
+  const tetos = [];
+  if(ctx.picoMin>0) tetos.push(PROVA_SEMANA.fracaoPico * ctx.picoMin);
+  if(ctx.anteriorMin>0) tetos.push(prova.totalMin <= ctx.anteriorMin ? ctx.anteriorMin - prova.totalMin : ctx.anteriorMin - 1);
+  const permitido = tetos.length ? Math.max(0, Math.min(...tetos)) : PROVA_SEMANA.maxRodagens * PROVA_SEMANA.maxMinRodagem;
+  const piso = MOTOR_PARAMS.minSessaoCorrida;
+  let n = Math.min(PROVA_SEMANA.maxRodagens, antes.length), dur = 0;
+  for(; n>0; n--){ dur = Math.min(PROVA_SEMANA.maxMinRodagem - 2, Math.floor(permitido/n) - 2); if(dur>=piso) break; }
+  const dias = [];
+  for(let k=0; k<n; k++) dias.push(antes[n===1 ? Math.floor((antes.length-1)/2) : Math.round(k*(antes.length-1)/(n-1))].day);
+  const leves = [];
+  dias.forEach(d=>{
+    const r = motorMontarCorrida(est, { tipo:'rodagem', dura:false, durMin:dur }, PROVA_SEMANA.maxMinRodagem);
+    const s = r.sessao;
+    s.duracaoMin = s.totalMin; s.combinada = null; s.estimulo = { tipo:'leve', dura:false };
+    leves.push({ day:d, ...s });
+  });
+  // a soma pode passar um pouco do teto por arredondamento do construtor: tira rodagens até caber
+  while(leves.length && leves.reduce((t, x)=>t + x.totalMin, 0) > permitido) leves.pop();
+  semana.corridaWeek = [...leves, prova].sort((a, b)=>ordem(a.day) - ordem(b.day));
   const musc = {};
   Object.keys(semana.muscPlan || {}).forEach(d=>{ if(ordem(d) < idx-2) musc[d] = semana.muscPlan[d]; });
   semana.muscPlan = musc;
-  semana.sessoes = (semana.sessoes || []).filter(s=>s.modalidade==='corrida' ? ordem(s.dia) < idx-1 : ordem(s.dia) < idx-2);
+  semana.sessoes = (semana.sessoes || []).filter(s=>s.modalidade!=='corrida' && ordem(s.dia) < idx-2);
+  leves.forEach(x=>semana.sessoes.push({ dia:x.day, modalidade:'corrida', tipo:'leve', duracaoMin:x.totalMin, combinada:false, dura:false, km:x.totalKm }));
   semana.sessoes.push({ dia:pv.dia, modalidade:'corrida', tipo:'prova', duracaoMin:prova.duracaoMin, combinada:false, dura:true, km:prova.totalKm });
   return semana;
 }
-Object.assign(globalThis, { PROVA_SEMANAS, PROVA_POLIMENTO_SEMANAS, PROVA_POLIMENTO_PCT, provaAlinhar, provaAvisoPrazo, provaSessaoCorrida, provaAplicarNaSemana });
+Object.assign(globalThis, { PROVA_SEMANA, PROVA_SEMANAS, PROVA_POLIMENTO_SEMANAS, PROVA_POLIMENTO_PCT, provaAlinhar, provaAvisoPrazo, provaSessaoCorrida, provaAplicarNaSemana });

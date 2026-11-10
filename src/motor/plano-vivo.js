@@ -61,7 +61,14 @@ function gerarSemanaV2(n){
   const alvo = (hp.trajetoria||[])[n-1] || null;
   const aj = (hp.ajusteProximaSemana && hp.ajusteProximaSemana.semana===n) ? hp.ajusteProximaSemana.ajustes : null;
   let r;
-  try{ r = gerarPlanoSemanal(state.athleteProfile, { alvoSemana:alvo, ajustesIniciais:aj, ...motorOpcoesHistorico(hp, n) }); }
+  // Semana da prova: o volume dela não passa do que a semana anterior realmente tem (soma das corridas já geradas).
+  let anteriorProva = null;
+  if(alvo && alvo.prova && n>1){
+    let ant = hp.plan[n-2];
+    if(!ant || ant.pendente){ try{ ant = gerarSemanaV2(n-1); }catch(e){ ant = null; } }
+    if(ant && ant.corridaWeek) anteriorProva = ant.corridaWeek.reduce((t, c)=>t + (c.totalMin || 0), 0);
+  }
+  try{ r = gerarPlanoSemanal(state.athleteProfile, { alvoSemana:alvo, ajustesIniciais:aj, ...(anteriorProva>0 ? { provaAnteriorMin:anteriorProva } : {}), ...motorOpcoesHistorico(hp, n) }); }
   catch(e){ console.warn('[plano] não consegui gerar a semana', n, e); return null; }
   if(!r || r.bloqueado || !r.semana) return null;
   const w = r.semana;

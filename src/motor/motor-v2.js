@@ -1302,7 +1302,7 @@ function motorTrajetoria(est, prio, semana, totalWeeks, foraDaSemana){
     else { v = Math.min(v*(1+P.passoSemanal*acel), Math.max(teto, v)); vol = v; }
     if(taperN && w > totalWeeks - taperN){ const pct = (taperPct[taperN] || [])[w-(totalWeeks-taperN)-1]; fase = 'Polimento'; if(pct!==undefined) vol = v*(1+pct/100); }
     const alternancia = (foraDaSemana && foraDaSemana.length && w%2===0) ? { priorizar:foraDaSemana.slice(), motivo:'ficou fora da semana anterior por falta de espaço' } : null;
-    out.push({ semana:w, fase, alternancia, corridaMinAlvo:Math.round(vol), muscSeriesFator: est.calibracao.ativa && w<=2 ? 0.85 : 1, progressao: w>1 && vol>c.carga.min*1.001 ? 'volume_gradual' : 'manter', nota: w===1 ? 'semana 1: sem aumento sobre a carga inicial' : '', ...(pv && !pv.alemDoPlano && w===totalWeeks ? { prova:{ iso:pv.iso, dia:pv.dia, diaIdx:pv.diaIdx, km:goal } } : {}) });
+    out.push({ semana:w, fase, alternancia, corridaMinAlvo:Math.round(vol), muscSeriesFator: est.calibracao.ativa && w<=2 ? 0.85 : 1, progressao: w>1 && vol>c.carga.min*1.001 ? 'volume_gradual' : 'manter', nota: w===1 ? 'semana 1: sem aumento sobre a carga inicial' : '', ...(pv && !pv.alemDoPlano && w===totalWeeks ? { prova:{ iso:pv.iso, dia:pv.dia, diaIdx:pv.diaIdx, km:goal, picoMin:Math.round(Math.max(v, ...out.filter(t=>t.fase!=='Polimento').map(t=>t.corridaMinAlvo))), anteriorMin:out.length ? out[out.length-1].corridaMinAlvo : null } } : {}) });
   }
   return out;
 }
@@ -1375,7 +1375,7 @@ function gerarPlanoSemanal(perfil, opcoes){
   // Semana da prova: a sessão Prova entra no dia certo e o resto da semana fica de descanso.
   { const pv = est.objetivo.prova, a = opcoes.alvoSemana;
     if(pv && !pv.alemDoPlano && (a ? !!a.prova : pv.semanasPlano===1)){
-      provaAplicarNaSemana(cons.semana, est, pv);
+      provaAplicarNaSemana(cons.semana, est, pv, { picoMin:a && a.prova ? a.prova.picoMin : null, anteriorMin:opcoes.provaAnteriorMin>0 ? opcoes.provaAnteriorMin : (a && a.prova ? a.prova.anteriorMin : null) });
       est.log.push({ etapa:6, regra:'semana_da_prova', motivo:'prova na data marcada: sessão Prova no dia e descanso depois', dados:{ data:pv.iso, dia:pv.dia, distanciaKm:pv.distanciaKm } });
     } }
   return motorEmpacotar(est, prio, cons, val, ajustes, ciclos, historicoVal, qualidadeRemovida);
