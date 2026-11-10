@@ -577,7 +577,9 @@ function definirFrequencias(est, prio, ajustes){
   };
   let nc = desejo('corrida'), nm = desejo('musc');
   // a corrida não comporta mais sessões do que a carga sustenta (cada uma precisa ser executável)
-  const ncMax = Math.max(1, Math.floor(est.corrida.carga.min/P.minSessaoCorrida));
+  let ncMax = Math.max(1, Math.floor(est.corrida.carga.min/P.minSessaoCorrida));
+  // com histórico válido a carga tem piso de 2 sessões mínimas x 0,9 (lerEstado): não deixa a semana com uma corrida só quando esse piso já cobre 2 sessões
+  if(est.corrida.usaHistorico && est.corrida.carga.min >= 2*P.minSessaoCorrida*0.9) ncMax = Math.max(ncMax, 2);
   if(nc>ncMax){ log.push({ etapa:3, regra:'sessoes_x_volume', motivo:'carga não sustenta mais sessões executáveis', dados:{ desejadas:nc, max:ncMax } }); nc = ncMax; }
   let capPrev = null;
   const diasMusc = est.disp.dias.filter(d=>d.disponivel && d.minutos>=P.minSlotMusc).length;

@@ -1,4 +1,4 @@
-// Histórico real de corrida para o Motor V2 (Etapa 1): minutos por semana (últimas 4 semanas) e maior corrida dos
+// Histórico real de corrida para o Motor V2 (Etapa 1): minutos por semana (média das semanas que o histórico cobre, de 2 a 4) e maior corrida dos
 // últimos 30 dias, a partir do que foi FEITO com registro (state.corridaProgress) e das atividades livres de corrida.
 // Função pura: sem histórico suficiente devolve null e o motor se comporta exatamente como antes.
 const HIST_CORRIDA = { diasVolume:28, diasLongo:30, minRegistros:3, minSemanas:2, minPorKmSemTempo:6.5 };
@@ -23,7 +23,7 @@ function historicoCorridaReal(progresso, atividades, hoje){
     const min = (a.tempoSeg||0)/60 || (a.distKm||0)*HIST_CORRIDA.minPorKmSemTempo;
     itens.push({ data:a.data, min });
   });
-  let total = 0, maior = 0, registros = 0; const semanas = new Set();
+  let total = 0, maior = 0, registros = 0; const semanas = new Set(); let primeira = null, ultima = null;
   itens.forEach(it=>{
     const d = new Date(String(it.data).slice(0,10) + 'T00:00:00');
     if(isNaN(d) || !(it.min>0)) return;
@@ -34,10 +34,18 @@ function historicoCorridaReal(progresso, atividades, hoje){
       total += it.min; registros++;
       const seg = new Date(d); seg.setDate(seg.getDate() - ((seg.getDay()+6)%7));
       semanas.add(seg.getFullYear()+'-'+seg.getMonth()+'-'+seg.getDate());
+      if(primeira===null || seg<primeira) primeira = seg;
+      if(ultima===null || seg>ultima) ultima = seg;
     }
   });
   if(registros < HIST_CORRIDA.minRegistros || semanas.size < HIST_CORRIDA.minSemanas || !(maior>0)) return null;
-  return { minutosSemana: Math.round(total/(HIST_CORRIDA.diasVolume/7)), maiorMin30d: Math.round(maior), registros, semanas: semanas.size };
+  // Semanas cobertas: da semana da primeira corrida registrada até a última semana completa (ou a atual, se já tem corrida
+  // registrada nela), no mínimo 2 e no máximo 4. A semana atual sem registro ainda não conta (está só começando).
+  const segAtual = new Date(base); segAtual.setDate(segAtual.getDate() - ((segAtual.getDay()+6)%7));
+  const segAnterior = new Date(segAtual); segAnterior.setDate(segAnterior.getDate() - 7);
+  const fim = ultima > segAnterior ? ultima : segAnterior;
+  const cobertas = Math.min(4, Math.max(2, Math.round((fim - primeira)/(7*86400000)) + 1));
+  return { minutosSemana: Math.round(total/cobertas), semanasCobertas: cobertas, maiorMin30d: Math.round(maior), registros, semanas: semanas.size };
 }
 
 // Maior longão (min) da semana planejada.
