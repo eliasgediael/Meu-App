@@ -319,7 +319,7 @@
    {
     "etapa": 1,
     "regra": "nivel_musculacao",
-    "motivo": "treina às vezes",
+    "motivo": "experiência, técnica e frequência avaliadas separadamente",
     "dados": {
      "nivel": "iniciante",
      "situacao": "ocasional"
@@ -986,7 +986,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Hiperextensão lombar",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
        "reps": "12",
@@ -1006,7 +1006,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Ponte de glúteo",
+       "nome": "Superman",
        "grupo": "Costas",
        "series": "3",
        "reps": "12",
@@ -1105,7 +1105,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Hiperextensão lombar",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
        "reps": "12",
@@ -1125,7 +1125,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Ponte de glúteo",
+       "nome": "Superman",
        "grupo": "Costas",
        "series": "3",
        "reps": "12",
@@ -1224,7 +1224,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Hiperextensão lombar",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
        "reps": "12",
@@ -1244,7 +1244,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Ponte de glúteo",
+       "nome": "Superman",
        "grupo": "Costas",
        "series": "3",
        "reps": "12",
@@ -1343,7 +1343,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Hiperextensão lombar",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
        "reps": "12",
@@ -1363,7 +1363,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Ponte de glúteo",
+       "nome": "Superman",
        "grupo": "Costas",
        "series": "3",
        "reps": "12",

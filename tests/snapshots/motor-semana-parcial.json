@@ -90,14 +90,14 @@
    "semana1": {
     "fase": "Base",
     "corrida": [
-     "Seg:Intervalado:39min",
      "Ter:Rodagem Leve:33min",
-     "Qui:Rodagem Leve:33min",
+     "Qua:Rodagem Leve:33min",
+     "Qui:Intervalado:39min",
      "Sáb:Longão:63min"
     ],
     "musc": [
-     "Ter:4ex:12séries",
-     "Qua:3ex:9séries",
+     "Seg:3ex:9séries",
+     "Qua:4ex:12séries",
      "Sex:4ex:12séries"
     ]
    }
@@ -127,11 +127,12 @@
      "Qua:Rodagem Leve:33min",
      "Qui:Intervalado:39min",
      "Sex:Rodagem Leve:33min",
-     "Sáb:Longão:63min"
+     "Sáb:Longão:48min"
     ],
     "musc": [
      "Qua:4ex:12séries",
-     "Sex:4ex:12séries"
+     "Sex:4ex:12séries",
+     "Sáb:4ex:12séries"
     ]
    }
   },
@@ -187,15 +188,15 @@
    "semana1": {
     "fase": "Base",
     "corrida": [
-     "Seg:Rodagem Leve:60min",
-     "Ter:Limiar:51min",
-     "Qua:Rodagem Leve:60min",
+     "Seg:Limiar:51min",
+     "Ter:Rodagem Leve:60min",
      "Qui:Rodagem Leve:60min",
+     "Sex:Rodagem Leve:60min",
      "Sáb:Longão:112min"
     ],
     "musc": [
-     "Seg:5ex:15séries",
-     "Qui:5ex:15séries"
+     "Qua:3ex:9séries",
+     "Sex:4ex:12séries"
     ]
    }
   },
@@ -204,15 +205,15 @@
    "semana1": {
     "fase": "Base",
     "corrida": [
-     "Ter:Rodagem Leve:60min",
-     "Qua:Limiar:51min",
-     "Qui:Rodagem Leve:60min",
+     "Ter:Limiar:51min",
+     "Qua:Rodagem Leve:60min",
      "Sex:Rodagem Leve:60min",
+     "Sáb:Rodagem Leve:60min",
      "Dom:Longão:112min"
     ],
     "musc": [
-     "Ter:5ex:15séries",
-     "Sex:5ex:15séries"
+     "Qui:3ex:9séries",
+     "Sáb:4ex:12séries"
     ]
    }
   },
@@ -221,15 +222,15 @@
    "semana1": {
     "fase": "Base",
     "corrida": [
-     "Qua:Rodagem Leve:60min",
-     "Qui:Limiar:51min",
+     "Qua:Limiar:51min",
+     "Qui:Rodagem Leve:60min",
      "Sex:Rodagem Leve:60min",
      "Sáb:Rodagem Leve:60min",
      "Dom:Longão:112min"
     ],
     "musc": [
-     "Qua:5ex:15séries",
-     "Sex:5ex:15séries"
+     "Qui:4ex:12séries",
+     "Sáb:4ex:12séries"
     ]
    }
   },
@@ -240,8 +241,8 @@
     "corrida": [
      "Qui:Limiar:51min",
      "Sex:Rodagem Leve:60min",
-     "Sáb:Longão:120min",
-     "Dom:Rodagem Leve:60min"
+     "Sáb:Rodagem Leve:60min",
+     "Dom:Longão:120min"
     ],
     "musc": []
    }

@@ -353,7 +353,7 @@
     ],
     "Sex": [
      {
-      "nome": "Panturrilha no leg press",
+      "nome": "Agachamento hack",
       "grupo": "Pernas",
       "series": "2",
       "reps": "10",
@@ -373,7 +373,7 @@
       "sessao": "FULL_BODY_LIGHT"
      },
      {
-      "nome": "Pulldown reto (braço estendido)",
+      "nome": "Puxada frontal na polia",
       "grupo": "Costas",
       "series": "2",
       "reps": "12",
@@ -419,7 +419,7 @@
    {
     "etapa": 1,
     "regra": "nivel_musculacao",
-    "motivo": "parado há 6 meses ou mais (ou tempo desconhecido)",
+    "motivo": "experiência, técnica e frequência avaliadas separadamente",
     "dados": {
      "nivel": "iniciante",
      "situacao": "parado"
@@ -655,7 +655,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -675,7 +675,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -854,7 +854,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -874,7 +874,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1053,7 +1053,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1073,7 +1073,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1116,8 +1116,8 @@
       "day": "Seg",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 2.5,
-      "totalMin": 23,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -1128,7 +1128,7 @@
        },
        {
         "name": "Principal",
-        "km": 1.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1252,7 +1252,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1272,7 +1272,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1429,7 +1429,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1451,7 +1451,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1471,7 +1471,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1481,7 +1481,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1628,7 +1628,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1650,7 +1650,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1670,7 +1670,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1680,7 +1680,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1827,7 +1827,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1849,7 +1849,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1869,7 +1869,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1879,7 +1879,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -2026,7 +2026,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -2048,7 +2048,7 @@
      ],
      "Sex": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -2068,7 +2068,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -2078,7 +2078,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",

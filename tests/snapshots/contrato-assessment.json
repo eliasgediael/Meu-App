@@ -1,9 +1,9 @@
 {
  "15": {
   "versao": 1,
-  "engineVersion": "2.1.0",
+  "engineVersion": "2.2.0",
   "measuredAt": "2026-10-05",
-  "strengthLevel": "iniciante",
+  "strengthLevel": "intermediario",
   "runLevel": "intermediario",
   "strengthConfidence": "alta",
   "runConfidence": "alta",
@@ -68,7 +68,7 @@
  },
  "01": {
   "versao": 1,
-  "engineVersion": "2.1.0",
+  "engineVersion": "2.2.0",
   "measuredAt": "2026-10-05",
   "strengthLevel": "iniciante",
   "runLevel": "iniciante",
@@ -133,7 +133,7 @@
  },
  "03": {
   "versao": 1,
-  "engineVersion": "2.1.0",
+  "engineVersion": "2.2.0",
   "measuredAt": "2026-10-05",
   "strengthLevel": "iniciante",
   "runLevel": "avancado",

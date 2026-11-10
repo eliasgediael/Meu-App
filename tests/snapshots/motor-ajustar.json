@@ -44,8 +44,9 @@
   "semQualidade": false,
   "semDobros": false,
   "volumeFator": 1,
-  "aliviarInferior": true,
-  "semProgressao": false
+  "aliviarInferior": false,
+  "semProgressao": false,
+  "aliviarN": 1
  },
  "V7": {
   "reduzir": 1,
@@ -68,8 +69,9 @@
   "semQualidade": false,
   "semDobros": false,
   "volumeFator": 1,
-  "aliviarInferior": true,
-  "semProgressao": false
+  "aliviarInferior": false,
+  "semProgressao": false,
+  "aliviarN": 1
  },
  "V10": {
   "reduzir": 0,

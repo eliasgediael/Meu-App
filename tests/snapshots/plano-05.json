@@ -358,7 +358,7 @@
     ],
     "Sáb": [
      {
-      "nome": "Panturrilha no leg press",
+      "nome": "Agachamento hack",
       "grupo": "Pernas",
       "series": "2",
       "reps": "10",
@@ -378,7 +378,7 @@
       "sessao": "FULL_BODY_LIGHT"
      },
      {
-      "nome": "Pulldown reto (braço estendido)",
+      "nome": "Puxada frontal na polia",
       "grupo": "Costas",
       "series": "2",
       "reps": "12",
@@ -424,7 +424,7 @@
    {
     "etapa": 1,
     "regra": "nivel_musculacao",
-    "motivo": "parado; histórico limitado pelo tempo parado",
+    "motivo": "experiência, técnica e frequência avaliadas separadamente",
     "dados": {
      "nivel": "iniciante",
      "situacao": "parado"
@@ -660,7 +660,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -680,7 +680,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -859,7 +859,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -879,7 +879,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1058,7 +1058,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1078,7 +1078,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1257,7 +1257,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1277,7 +1277,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1434,7 +1434,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1456,7 +1456,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1476,7 +1476,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1486,7 +1486,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1633,7 +1633,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1655,7 +1655,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1675,7 +1675,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1685,7 +1685,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1832,7 +1832,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -1854,7 +1854,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -1874,7 +1874,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -1884,7 +1884,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -2031,7 +2031,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Cadeira flexora (sentado)",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",
@@ -2053,7 +2053,7 @@
      ],
      "Sáb": [
       {
-       "nome": "Panturrilha no leg press",
+       "nome": "Agachamento hack",
        "grupo": "Pernas",
        "series": "2",
        "reps": "10",
@@ -2073,7 +2073,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Pulldown reto (braço estendido)",
+       "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "2",
        "reps": "12",
@@ -2083,7 +2083,7 @@
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Cadeira flexora (sentado)",
+       "nome": "Hiperextensão lombar",
        "grupo": "Pernas",
        "series": "2",
        "reps": "12",

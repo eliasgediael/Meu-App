@@ -6,12 +6,20 @@
  "mudou": {
   "Seg": {
    "antes": {
-    "corrida": "Intervalado:6.5km:39min",
-    "musc": null
+    "corrida": null,
+    "musc": [
+     "Agachamento livre com barra 3x8",
+     "Leg press 45 graus 3x10",
+     "Cadeira extensora 3x12"
+    ]
    },
    "depois": {
-    "corrida": "Corrida Regenerativa:5km:33min",
-    "musc": null
+    "corrida": null,
+    "musc": [
+     "Agachamento livre com barra 2x8",
+     "Leg press 45 graus 2x10",
+     "Cadeira extensora 2x12"
+    ]
    }
   }
  }

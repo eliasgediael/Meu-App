@@ -2,9 +2,9 @@
  "perdidos": [
   {
    "dia": "Seg",
-   "mod": "corrida",
-   "titulo": "Intervalado · 6,5 km",
-   "chave": true
+   "mod": "musc",
+   "titulo": "Musculação",
+   "chave": false
   },
   {
    "dia": "Ter",
@@ -13,9 +13,9 @@
    "chave": false
   },
   {
-   "dia": "Ter",
-   "mod": "musc",
-   "titulo": "Musculação",
+   "dia": "Qua",
+   "mod": "corrida",
+   "titulo": "Rodagem Leve · 5,5 km",
    "chave": false
   },
   {
@@ -27,12 +27,12 @@
  ],
  "remarcado": {
   "dia": "Seg",
-  "mod": "corrida"
+  "mod": "musc"
  },
  "mudou": {},
  "depoisLista": [
   "Ter:corrida",
-  "Ter:musc",
+  "Qua:corrida",
   "Qua:musc"
  ],
  "diario": []

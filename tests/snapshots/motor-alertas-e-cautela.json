@@ -33,14 +33,14 @@
   "semana": {
    "fase": "Base",
    "corrida": [
-    "Seg:Intervalado:39min",
     "Ter:Rodagem Leve:33min",
-    "Qui:Rodagem Leve:33min",
+    "Qua:Rodagem Leve:33min",
+    "Qui:Intervalado:39min",
     "Sáb:Longão:63min"
    ],
    "musc": [
-    "Ter:4ex:12séries",
-    "Qua:3ex:9séries",
+    "Seg:3ex:9séries",
+    "Qua:4ex:12séries",
     "Sex:4ex:12séries"
    ]
   }

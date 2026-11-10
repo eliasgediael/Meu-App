@@ -9,21 +9,21 @@
   "razao": 0
  },
  "intervalado_hoje": {
-  "pernas": "moderada",
+  "pernas": "baixa",
   "geral": "baixa",
-  "nivelPernas": 1,
+  "nivelPernas": 0,
   "nivelGeral": 0,
   "tendencia": "subindo",
-  "pontosPernas": 40,
+  "pontosPernas": 10,
   "razao": 1
  },
  "intervalado_hoje_muito_dificil": {
-  "pernas": "alta",
-  "geral": "moderada",
-  "nivelPernas": 2,
-  "nivelGeral": 1,
+  "pernas": "baixa",
+  "geral": "baixa",
+  "nivelPernas": 0,
+  "nivelGeral": 0,
   "tendencia": "subindo",
-  "pontosPernas": 56,
+  "pontosPernas": 14,
   "razao": 1
  },
  "leg_day_ontem_9_series": {

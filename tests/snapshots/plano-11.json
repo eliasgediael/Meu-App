@@ -3,7 +3,7 @@
  "semana1": {
   "capacidade": {
    "corrida": "iniciante",
-   "musc": "iniciante"
+   "musc": "intermediario"
   },
   "prioridade": {
    "tipo": "equilibrado",
@@ -21,11 +21,11 @@
   },
   "resumo": {
    "sessoesCorrida": 2,
-   "sessoesMusculacao": 1,
+   "sessoesMusculacao": 2,
    "diasDeTreino": 2,
-   "dobros": 1,
-   "corridaMin": 60,
-   "musculacaoMin": 29,
+   "dobros": 2,
+   "corridaMin": 54,
+   "musculacaoMin": 64,
    "volumePartidaCorrida": 60
   },
   "sched": {
@@ -34,13 +34,14 @@
     "Qui"
    ],
    "muscDays": [
+    "Ter",
     "Qui"
    ],
    "longaoDay": "Ter"
   },
   "dayPicks": {
    "Seg": "descanso",
-   "Ter": "corrida",
+   "Ter": "ambos",
    "Qua": "descanso",
    "Qui": "ambos",
    "Sex": "descanso",
@@ -54,15 +55,13 @@
    "Sáb",
    "Dom"
   ],
-  "alertas": [
-   "musculacao_reduzida_por_espaco"
-  ],
+  "alertas": [],
   "ajustes": {
-   "reduzir": 1,
+   "reduzir": 0,
    "semQualidade": false,
    "semDobros": false,
    "volumeFator": 1,
-   "aliviarInferior": false,
+   "aliviarInferior": true,
    "semProgressao": false
   },
   "validacao": {
@@ -157,10 +156,20 @@
     "dia": "Ter",
     "modalidade": "corrida",
     "tipo": "longa",
-    "duracaoMin": 33,
-    "combinada": false,
+    "duracaoMin": 27,
+    "combinada": true,
     "dura": false,
-    "km": 3.5
+    "km": 3
+   },
+   {
+    "dia": "Ter",
+    "modalidade": "musculacao",
+    "tipo": "upper",
+    "foco": "hipertrofia",
+    "duracaoMin": 32,
+    "combinada": true,
+    "dura": false,
+    "exercicios": 6
    },
    {
     "dia": "Qui",
@@ -176,10 +185,10 @@
     "modalidade": "musculacao",
     "tipo": "full",
     "foco": "hipertrofia",
-    "duracaoMin": 29,
+    "duracaoMin": 32,
     "combinada": true,
     "dura": false,
-    "exercicios": 5
+    "exercicios": 6
    }
   ],
   "cortes": [],
@@ -194,8 +203,8 @@
      "day": "Ter",
      "type": "Longão",
      "sessao": "RUN_LONG_RUN",
-     "totalKm": 3.5,
-     "totalMin": 33,
+     "totalKm": 3,
+     "totalMin": 27,
      "chave": false,
      "steps": [
       {
@@ -206,7 +215,7 @@
       },
       {
        "name": "Principal",
-       "km": 2.5,
+       "km": 2,
        "pace": "7:30 ~ 8:19/km",
        "zona": "Z2"
       },
@@ -248,14 +257,76 @@
     }
    ],
    "musc": {
-    "Qui": [
+    "Ter": [
      {
-      "nome": "Leg press 45 graus",
-      "grupo": "Pernas",
+      "nome": "Supino na máquina Smith",
+      "grupo": "Peito",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Puxada frontal na polia",
+      "grupo": "Costas",
       "series": "3",
       "reps": "10",
       "carga": "",
-      "descanso": "90s",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Desenvolvimento na máquina",
+      "grupo": "Ombro",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Remada cavalinho (T-bar)",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Elevação lateral no cabo",
+      "grupo": "Ombro",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Tríceps testa com barra",
+      "grupo": "Braço",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     }
+    ],
+    "Qui": [
+     {
+      "nome": "Agachamento livre",
+      "grupo": "Pernas",
+      "series": "4",
+      "reps": "8",
+      "carga": "",
+      "descanso": "75s",
       "tier": 1,
       "sessao": "FULL_BODY_LIGHT"
      },
@@ -263,9 +334,9 @@
       "nome": "Supino na máquina Smith",
       "grupo": "Peito",
       "series": "3",
-      "reps": "12",
+      "reps": "10",
       "carga": "",
-      "descanso": "90s",
+      "descanso": "75s",
       "tier": 2,
       "sessao": "FULL_BODY_LIGHT"
      },
@@ -273,19 +344,19 @@
       "nome": "Puxada frontal na polia",
       "grupo": "Costas",
       "series": "3",
-      "reps": "12",
+      "reps": "10",
       "carga": "",
-      "descanso": "90s",
+      "descanso": "75s",
       "tier": 1,
       "sessao": "FULL_BODY_LIGHT"
      },
      {
-      "nome": "Mesa flexora (deitado)",
+      "nome": "Ponte de glúteo",
       "grupo": "Pernas",
       "series": "3",
-      "reps": "12",
+      "reps": "10",
       "carga": "",
-      "descanso": "90s",
+      "descanso": "75s",
       "tier": 1,
       "sessao": "FULL_BODY_LIGHT"
      },
@@ -293,9 +364,19 @@
       "nome": "Desenvolvimento na máquina",
       "grupo": "Ombro",
       "series": "3",
-      "reps": "12",
+      "reps": "10",
       "carga": "",
-      "descanso": "90s",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "FULL_BODY_LIGHT"
+     },
+     {
+      "nome": "Remada baixa no cabo",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "75s",
       "tier": 1,
       "sessao": "FULL_BODY_LIGHT"
      }
@@ -316,9 +397,9 @@
    {
     "etapa": 1,
     "regra": "nivel_musculacao",
-    "motivo": "frequência limitada pelo histórico",
+    "motivo": "experiência, técnica e frequência avaliadas separadamente",
     "dados": {
-     "nivel": "iniciante",
+     "nivel": "intermediario",
      "situacao": "regular"
     }
    },
@@ -371,31 +452,9 @@
    },
    {
     "etapa": 4,
-    "regra": "reducao_por_inviabilidade",
-    "motivo": "nenhuma distribuição válida para as sessões desejadas: reduz uma sessão",
-    "dados": {
-     "sessoes": {
-      "corrida": 2,
-      "musc": 2
-     }
-    }
-   },
-   {
-    "etapa": 3,
-    "regra": "preserva_frequencia_por_prioridade",
-    "motivo": "mais sessões desejadas que espaço (dias + combinações seguras)",
-    "dados": {
-     "desejadas": {
-      "corrida": 2,
-      "musc": 2
-     },
-     "final": {
-      "corrida": 2,
-      "musc": 1
-     },
-     "capacidadeSessoes": 3,
-     "principal": "corrida"
-    }
+    "regra": "leg_day_sem_encaixe",
+    "motivo": "nenhuma distribuição válida com dia de perna pesado: troca um dia de perna por corpo inteiro (um por vez) antes de reduzir sessões",
+    "dados": {}
    },
    {
     "etapa": 3,
@@ -404,12 +463,12 @@
     "dados": {
      "sessoes": {
       "corrida": 2,
-      "musc": 1
+      "musc": 2
      },
      "diasUteis": 2,
      "maxDiasTreino": 2,
-     "dobrosMin": 1,
-     "dobrosPermitidos": 1,
+     "dobrosMin": 2,
+     "dobrosPermitidos": 2,
      "dobroProibido": null
     }
    },
@@ -418,9 +477,9 @@
     "regra": "distribuicao",
     "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
     "dados": {
-     "custo": 29,
+     "custo": 31,
      "avaliadas": 2,
-     "dobros": 1,
+     "dobros": 2,
      "conflito": false
     }
    }
@@ -434,13 +493,14 @@
     "Qui"
    ],
    "muscDays": [
+    "Ter",
     "Qui"
    ],
    "longaoDay": "Ter"
   },
   "dayPicks": {
    "Seg": "descanso",
-   "Ter": "corrida",
+   "Ter": "ambos",
    "Qua": "descanso",
    "Qui": "ambos",
    "Sex": "descanso",
@@ -458,8 +518,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 3.5,
-      "totalMin": 33,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -470,7 +530,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -512,14 +572,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada cavalinho (T-bar)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -527,9 +649,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -537,19 +659,19 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -557,9 +679,19 @@
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -575,11 +707,11 @@
     "corrida": [
      {
       "day": "Ter",
-      "type": "Longão",
-      "sessao": "RUN_LONG_RUN",
-      "totalKm": 4,
-      "totalMin": 36,
-      "chave": true,
+      "type": "Rodagem Leve",
+      "sessao": "RUN_EASY_Z2",
+      "totalKm": 3,
+      "totalMin": 27,
+      "chave": false,
       "steps": [
        {
         "name": "Aquecimento",
@@ -589,7 +721,7 @@
        },
        {
         "name": "Principal",
-        "km": 3,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -603,11 +735,11 @@
      },
      {
       "day": "Qui",
-      "type": "Rodagem Leve",
-      "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 29,
-      "chave": false,
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 3,
+      "totalMin": 27,
+      "chave": true,
       "steps": [
        {
         "name": "Aquecimento",
@@ -617,7 +749,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -631,14 +763,14 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
+       "nome": "Agachamento livre",
        "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
+       "series": "4",
+       "reps": "8",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -646,9 +778,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -656,19 +788,19 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -676,11 +808,83 @@
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada cavalinho (T-bar)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "FULL_BODY_LIGHT"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
       }
      ]
     },
@@ -696,8 +900,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 4.5,
-      "totalMin": 39,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -708,7 +912,7 @@
        },
        {
         "name": "Principal",
-        "km": 3.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -724,8 +928,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 32,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -736,7 +940,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -750,14 +954,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada cavalinho (T-bar)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -765,9 +1031,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -775,29 +1041,39 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
-       "series": "2",
-       "reps": "12",
+       "series": "3",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -816,7 +1092,7 @@
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
       "totalKm": 3,
-      "totalMin": 29,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -869,14 +1145,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada cavalinho (T-bar)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com barra",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -884,9 +1222,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -894,19 +1232,19 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
-       "nome": "Mesa flexora (deitado)",
+       "nome": "Ponte de glúteo",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -914,9 +1252,19 @@
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -934,8 +1282,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 4.5,
-      "totalMin": 42,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -946,7 +1294,7 @@
        },
        {
         "name": "Principal",
-        "km": 3.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -962,8 +1310,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 32,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -974,7 +1322,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -988,14 +1336,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1003,9 +1413,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1013,9 +1423,9 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1023,19 +1433,29 @@
        "nome": "Mesa flexora (deitado)",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
-       "series": "2",
-       "reps": "12",
+       "series": "3",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada na máquina",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -1053,8 +1473,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 5,
-      "totalMin": 45,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -1065,7 +1485,7 @@
        },
        {
         "name": "Principal",
-        "km": 4,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1081,8 +1501,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 32,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -1093,7 +1513,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1107,14 +1527,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1122,9 +1604,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1132,9 +1614,9 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1142,19 +1624,29 @@
        "nome": "Mesa flexora (deitado)",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
-       "series": "2",
-       "reps": "12",
+       "series": "3",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada na máquina",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -1172,8 +1664,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 5,
-      "totalMin": 45,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -1184,7 +1676,7 @@
        },
        {
         "name": "Principal",
-        "km": 4,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1200,8 +1692,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 32,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -1212,7 +1704,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1226,14 +1718,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1241,9 +1795,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1251,9 +1805,9 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1261,19 +1815,29 @@
        "nome": "Mesa flexora (deitado)",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
       {
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
-       "series": "2",
-       "reps": "12",
+       "series": "3",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada na máquina",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }
@@ -1291,8 +1855,8 @@
       "day": "Ter",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 4,
-      "totalMin": 36,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": true,
       "steps": [
        {
@@ -1303,7 +1867,7 @@
        },
        {
         "name": "Principal",
-        "km": 3,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1319,8 +1883,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 3.5,
-      "totalMin": 30,
+      "totalKm": 3,
+      "totalMin": 27,
       "chave": false,
       "steps": [
        {
@@ -1331,7 +1895,7 @@
        },
        {
         "name": "Principal",
-        "km": 2.5,
+        "km": 2,
         "pace": "7:30 ~ 8:19/km",
         "zona": "Z2"
        },
@@ -1345,14 +1909,76 @@
      }
     ],
     "musc": {
-     "Qui": [
+     "Ter": [
       {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
+       "nome": "Supino na máquina Smith",
+       "grupo": "Peito",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Puxada frontal na polia",
+       "grupo": "Costas",
        "series": "3",
        "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Desenvolvimento na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Tríceps testa com halteres",
+       "grupo": "Braço",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Qui": [
+      {
+       "nome": "Agachamento livre",
+       "grupo": "Pernas",
+       "series": "4",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1360,9 +1986,9 @@
        "nome": "Supino na máquina Smith",
        "grupo": "Peito",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 2,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1370,9 +1996,9 @@
        "nome": "Puxada frontal na polia",
        "grupo": "Costas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1380,9 +2006,9 @@
        "nome": "Mesa flexora (deitado)",
        "grupo": "Pernas",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       },
@@ -1390,9 +2016,19 @@
        "nome": "Desenvolvimento na máquina",
        "grupo": "Ombro",
        "series": "3",
-       "reps": "12",
+       "reps": "10",
        "carga": "",
-       "descanso": "90s",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "FULL_BODY_LIGHT"
+      },
+      {
+       "nome": "Remada na máquina",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
        "sessao": "FULL_BODY_LIGHT"
       }

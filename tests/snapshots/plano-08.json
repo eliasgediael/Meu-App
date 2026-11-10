@@ -30,22 +30,22 @@
   },
   "sched": {
    "corridaDays": [
-    "Seg",
     "Ter",
+    "Qua",
     "Qui",
     "Sáb"
    ],
    "muscDays": [
-    "Ter",
+    "Seg",
     "Qua",
     "Sex"
    ],
    "longaoDay": "Sáb"
   },
   "dayPicks": {
-   "Seg": "corrida",
-   "Ter": "ambos",
-   "Qua": "musc",
+   "Seg": "musc",
+   "Ter": "corrida",
+   "Qua": "ambos",
    "Qui": "corrida",
    "Sex": "musc",
    "Sáb": "corrida",
@@ -153,34 +153,6 @@
   "sessoes": [
    {
     "dia": "Seg",
-    "modalidade": "corrida",
-    "tipo": "qualidade",
-    "duracaoMin": 39,
-    "combinada": false,
-    "dura": true,
-    "km": 6.5
-   },
-   {
-    "dia": "Ter",
-    "modalidade": "corrida",
-    "tipo": "leve",
-    "duracaoMin": 33,
-    "combinada": true,
-    "dura": false,
-    "km": 5.5
-   },
-   {
-    "dia": "Ter",
-    "modalidade": "musculacao",
-    "tipo": "upper",
-    "foco": "suporte_corrida",
-    "duracaoMin": 22,
-    "combinada": true,
-    "dura": false,
-    "exercicios": 4
-   },
-   {
-    "dia": "Qua",
     "modalidade": "musculacao",
     "tipo": "lower",
     "foco": "suporte_corrida",
@@ -190,7 +162,7 @@
     "exercicios": 3
    },
    {
-    "dia": "Qui",
+    "dia": "Ter",
     "modalidade": "corrida",
     "tipo": "leve",
     "duracaoMin": 33,
@@ -199,9 +171,37 @@
     "km": 5.5
    },
    {
+    "dia": "Qua",
+    "modalidade": "corrida",
+    "tipo": "leve",
+    "duracaoMin": 33,
+    "combinada": true,
+    "dura": false,
+    "km": 5.5
+   },
+   {
+    "dia": "Qua",
+    "modalidade": "musculacao",
+    "tipo": "upper",
+    "foco": "suporte_corrida",
+    "duracaoMin": 22,
+    "combinada": true,
+    "dura": false,
+    "exercicios": 4
+   },
+   {
+    "dia": "Qui",
+    "modalidade": "corrida",
+    "tipo": "qualidade",
+    "duracaoMin": 39,
+    "combinada": false,
+    "dura": true,
+    "km": 6.5
+   },
+   {
     "dia": "Sex",
     "modalidade": "musculacao",
-    "tipo": "full",
+    "tipo": "upper",
     "foco": "suporte_corrida",
     "duracaoMin": 22,
     "combinada": false,
@@ -226,34 +226,6 @@
    "totalWeeks": 8,
    "pendente": false,
    "corrida": [
-    {
-     "day": "Seg",
-     "type": "Intervalado",
-     "sessao": "RUN_INTERVALS_VO2MAX",
-     "totalKm": 6.5,
-     "totalMin": 39,
-     "chave": false,
-     "steps": [
-      {
-       "name": "Aquecimento",
-       "km": 1.5,
-       "pace": "5:55 ~ 6:37/km",
-       "zona": "Z1"
-      },
-      {
-       "name": "Principal",
-       "km": 4,
-       "pace": "4:42 ~ 4:45/km",
-       "zona": "Z5"
-      },
-      {
-       "name": "Desaquecimento",
-       "km": 1,
-       "pace": "5:55 ~ 6:37/km",
-       "zona": "Z1"
-      }
-     ]
-    },
     {
      "day": "Ter",
      "type": "Rodagem Leve",
@@ -283,7 +255,7 @@
      ]
     },
     {
-     "day": "Qui",
+     "day": "Qua",
      "type": "Rodagem Leve",
      "sessao": "RUN_EASY_Z2",
      "totalKm": 5.5,
@@ -301,6 +273,34 @@
        "km": 3.5,
        "pace": "5:55 ~ 6:37/km",
        "zona": "Z2"
+      },
+      {
+       "name": "Desaquecimento",
+       "km": 1,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      }
+     ]
+    },
+    {
+     "day": "Qui",
+     "type": "Intervalado",
+     "sessao": "RUN_INTERVALS_VO2MAX",
+     "totalKm": 6.5,
+     "totalMin": 39,
+     "chave": false,
+     "steps": [
+      {
+       "name": "Aquecimento",
+       "km": 1.5,
+       "pace": "5:55 ~ 6:37/km",
+       "zona": "Z1"
+      },
+      {
+       "name": "Principal",
+       "km": 4,
+       "pace": "4:42 ~ 4:45/km",
+       "zona": "Z5"
       },
       {
        "name": "Desaquecimento",
@@ -340,22 +340,44 @@
     }
    ],
    "musc": {
-    "Ter": [
+    "Seg": [
      {
-      "nome": "Supino reto com barra",
-      "grupo": "Peito",
+      "nome": "Agachamento livre com barra",
+      "grupo": "Pernas",
       "series": "3",
       "reps": "8",
       "carga": "",
       "descanso": "75s",
       "tier": 2,
-      "sessao": "UPPER_BODY"
+      "sessao": "LEG_DAY_HEAVY"
      },
      {
-      "nome": "Barra fixa (pegada neutra)",
-      "grupo": "Costas",
+      "nome": "Leg press 45 graus",
+      "grupo": "Pernas",
       "series": "3",
       "reps": "10",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     },
+     {
+      "nome": "Cadeira extensora",
+      "grupo": "Pernas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 1,
+      "sessao": "LEG_DAY_HEAVY"
+     }
+    ],
+    "Qua": [
+     {
+      "nome": "Supino reto com barra",
+      "grupo": "Peito",
+      "series": "3",
+      "reps": "8",
       "carga": "",
       "descanso": "75s",
       "tier": 2,
@@ -372,88 +394,66 @@
       "sessao": "UPPER_BODY"
      },
      {
-      "nome": "Remada cavalinho (T-bar)",
-      "grupo": "Costas",
+      "nome": "Mergulho nas paralelas (peito)",
+      "grupo": "Peito",
       "series": "3",
       "reps": "10",
       "carga": "",
       "descanso": "75s",
       "tier": 2,
       "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Elevação lateral no cabo",
+      "grupo": "Ombro",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
      }
     ],
-    "Qua": [
+    "Sex": [
      {
-      "nome": "Agachamento livre com barra",
-      "grupo": "Pernas",
+      "nome": "Barra fixa (pegada neutra)",
+      "grupo": "Costas",
       "series": "3",
       "reps": "8",
       "carga": "",
       "descanso": "75s",
       "tier": 2,
-      "sessao": "LEG_DAY_HEAVY"
+      "sessao": "UPPER_BODY"
      },
      {
-      "nome": "Ponte de glúteo",
-      "grupo": "Pernas",
-      "series": "3",
-      "reps": "10",
-      "carga": "",
-      "descanso": "75s",
-      "tier": 1,
-      "sessao": "LEG_DAY_HEAVY"
-     },
-     {
-      "nome": "Leg press 45 graus",
-      "grupo": "Pernas",
-      "series": "3",
-      "reps": "10",
-      "carga": "",
-      "descanso": "75s",
-      "tier": 1,
-      "sessao": "LEG_DAY_HEAVY"
-     }
-    ],
-    "Sex": [
-     {
-      "nome": "Agachamento livre",
-      "grupo": "Pernas",
-      "series": "3",
-      "reps": "8",
-      "carga": "",
-      "descanso": "75s",
-      "tier": 1,
-      "sessao": "FULL_BODY_LIGHT"
-     },
-     {
-      "nome": "Mesa flexora (deitado)",
-      "grupo": "Pernas",
-      "series": "3",
-      "reps": "10",
-      "carga": "",
-      "descanso": "75s",
-      "tier": 1,
-      "sessao": "FULL_BODY_LIGHT"
-     },
-     {
-      "nome": "Panturrilha no leg press",
-      "grupo": "Pernas",
-      "series": "3",
-      "reps": "10",
-      "carga": "",
-      "descanso": "75s",
-      "tier": 1,
-      "sessao": "FULL_BODY_LIGHT"
-     },
-     {
-      "nome": "Prancha",
-      "grupo": "Core",
+      "nome": "Crucifixo inverso com halteres",
+      "grupo": "Ombro",
       "series": "3",
       "reps": "12",
       "carga": "",
       "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Encolhimento com barra",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "12",
+      "carga": "",
+      "descanso": "75s",
+      "tier": 2,
+      "sessao": "UPPER_BODY"
+     },
+     {
+      "nome": "Remada baixa no cabo",
+      "grupo": "Costas",
+      "series": "3",
+      "reps": "10",
+      "carga": "",
+      "descanso": "75s",
       "tier": 1,
-      "sessao": "FULL_BODY_LIGHT"
+      "sessao": "UPPER_BODY"
      }
     ]
    },
@@ -472,7 +472,7 @@
    {
     "etapa": 1,
     "regra": "nivel_musculacao",
-    "motivo": "frequência limitada pelo histórico",
+    "motivo": "experiência, técnica e frequência avaliadas separadamente",
     "dados": {
      "nivel": "intermediario",
      "situacao": "regular"
@@ -530,8 +530,8 @@
     "regra": "distribuicao",
     "motivo": "menor custo entre as atribuições válidas (fadiga, espaçamento, janela, combinação)",
     "dados": {
-     "custo": 78,
-     "avaliadas": 2520,
+     "custo": 92,
+     "avaliadas": 1440,
      "dobros": 1,
      "conflito": false
     }
@@ -542,22 +542,22 @@
   "totalWeeks": 8,
   "sched": {
    "corridaDays": [
-    "Seg",
     "Ter",
+    "Qua",
     "Qui",
     "Sáb"
    ],
    "muscDays": [
-    "Ter",
+    "Seg",
     "Qua",
     "Sex"
    ],
    "longaoDay": "Sáb"
   },
   "dayPicks": {
-   "Seg": "corrida",
-   "Ter": "ambos",
-   "Qua": "musc",
+   "Seg": "musc",
+   "Ter": "corrida",
+   "Qua": "ambos",
    "Qui": "corrida",
    "Sex": "musc",
    "Sáb": "corrida",
@@ -571,34 +571,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": false,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -627,7 +599,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 5.5,
@@ -645,6 +617,34 @@
         "km": 3.5,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 6.5,
+      "totalMin": 39,
+      "chave": false,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
        },
        {
         "name": "Desaquecimento",
@@ -684,22 +684,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -716,88 +738,66 @@
        "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Remada cavalinho (T-bar)",
-       "grupo": "Costas",
+       "nome": "Mergulho nas paralelas (peito)",
+       "grupo": "Peito",
        "series": "3",
        "reps": "10",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
       }
      ],
-     "Qua": [
+     "Sex": [
       {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
+       "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
        "series": "3",
        "reps": "12",
        "carga": "",
        "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com barra",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
+       "sessao": "UPPER_BODY"
       }
      ]
     },
@@ -810,34 +810,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -866,7 +838,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 5.5,
@@ -890,6 +862,50 @@
         "km": 1,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 6.5,
+      "totalMin": 44,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Mobilidade e educativos",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 225
+       },
+       {
+        "name": "Principal",
+        "km": 4,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
        }
       ]
      },
@@ -923,22 +939,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -955,88 +993,66 @@
        "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Remada cavalinho (T-bar)",
-       "grupo": "Costas",
+       "nome": "Mergulho nas paralelas (peito)",
+       "grupo": "Peito",
        "series": "3",
        "reps": "10",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
       }
      ],
-     "Qua": [
+     "Sex": [
       {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
+       "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
        "series": "3",
        "reps": "12",
        "carga": "",
        "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com barra",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
+       "sessao": "UPPER_BODY"
       }
      ]
     },
@@ -1049,34 +1065,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -1105,39 +1093,27 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 5.5,
-      "totalMin": 33,
+      "totalKm": 3.5,
+      "totalMin": 24,
       "chave": false,
       "steps": [
        {
-        "name": "Aquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
         "name": "Principal",
         "km": 3.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z2"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
+        "pace": "6:37 ~ 7:07/km",
+        "zona": "Z1/Z2"
        }
       ]
      },
      {
-      "day": "Sáb",
-      "type": "Longão",
-      "sessao": "RUN_LONG_RUN",
-      "totalKm": 10,
-      "totalMin": 63,
+      "day": "Qui",
+      "type": "Limiar",
+      "sessao": "RUN_TEMPO_THRESHOLD",
+      "totalKm": 6,
+      "totalMin": 41,
       "chave": true,
       "steps": [
        {
@@ -1147,37 +1123,125 @@
         "zona": "Z1"
        },
        {
+        "name": "Mobilidade e educativos",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 225
+       },
+       {
         "name": "Principal",
-        "km": 8,
+        "km": 2.5,
+        "pace": "5:06 ~ 5:09/km",
+        "zona": "Z4"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 2.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 8.5,
+      "totalMin": 60,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Mobilidade",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 105
+       },
+       {
+        "name": "Longão em Z2",
+        "km": 6.5,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z2"
        },
        {
-        "name": "Desaquecimento",
+        "name": "Final em ritmo de maratona",
         "km": 1,
+        "pace": "5:29 ~ 5:32/km",
+        "zona": "Z3"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
        }
       ]
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -1194,88 +1258,66 @@
        "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Remada cavalinho (T-bar)",
-       "grupo": "Costas",
+       "nome": "Mergulho nas paralelas (peito)",
+       "grupo": "Peito",
        "series": "3",
        "reps": "10",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
       }
      ],
-     "Qua": [
+     "Sex": [
       {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
+       "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
        "series": "3",
        "reps": "12",
        "carga": "",
        "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com barra",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
+       "sessao": "UPPER_BODY"
       }
      ]
     },
@@ -1288,34 +1330,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -1344,7 +1358,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 4,
@@ -1362,6 +1376,34 @@
         "km": 2,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4.5,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
        },
        {
         "name": "Desaquecimento",
@@ -1401,22 +1443,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Cadeira extensora",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -1433,88 +1497,66 @@
        "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Remada cavalinho (T-bar)",
-       "grupo": "Costas",
+       "nome": "Mergulho nas paralelas (peito)",
+       "grupo": "Peito",
        "series": "3",
        "reps": "10",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral no cabo",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
       }
      ],
-     "Qua": [
+     "Sex": [
       {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
+       "sessao": "UPPER_BODY"
       },
       {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
        "series": "3",
        "reps": "12",
        "carga": "",
        "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com barra",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Remada baixa no cabo",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
        "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
+       "sessao": "UPPER_BODY"
       }
      ]
     },
@@ -1527,34 +1569,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -1583,7 +1597,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 5.5,
@@ -1607,6 +1621,50 @@
         "km": 1,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 5.5,
+      "totalMin": 39,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Mobilidade e educativos",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 225
+       },
+       {
+        "name": "Principal",
+        "km": 3.5,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
        }
       ]
      },
@@ -1640,22 +1698,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -1672,6 +1752,58 @@
        "sessao": "UPPER_BODY"
       },
       {
+       "nome": "Flexão diamante",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
        "nome": "Remada cavalinho (T-bar)",
        "grupo": "Costas",
        "series": "3",
@@ -1680,80 +1812,6 @@
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
-      }
-     ],
-     "Qua": [
-      {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
-       "series": "3",
-       "reps": "12",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
       }
      ]
     },
@@ -1766,34 +1824,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -1822,7 +1852,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 5.5,
@@ -1846,6 +1876,50 @@
         "km": 1,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 6,
+      "totalMin": 44,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Mobilidade e educativos",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 225
+       },
+       {
+        "name": "Principal",
+        "km": 3.5,
+        "pace": "esforço 8 de 10",
+        "zona": "Z4/Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
        }
       ]
      },
@@ -1879,22 +1953,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -1911,6 +2007,58 @@
        "sessao": "UPPER_BODY"
       },
       {
+       "nome": "Flexão diamante",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
        "nome": "Remada cavalinho (T-bar)",
        "grupo": "Costas",
        "series": "3",
@@ -1919,80 +2067,6 @@
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
-      }
-     ],
-     "Qua": [
-      {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
-       "series": "3",
-       "reps": "12",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
       }
      ]
     },
@@ -2005,34 +2079,6 @@
     "pendente": false,
     "corrida": [
      {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
-     {
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
@@ -2061,39 +2107,27 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 5.5,
-      "totalMin": 33,
+      "totalKm": 3.5,
+      "totalMin": 24,
       "chave": false,
       "steps": [
        {
-        "name": "Aquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
         "name": "Principal",
         "km": 3.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z2"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
+        "pace": "6:37 ~ 7:07/km",
+        "zona": "Z1/Z2"
        }
       ]
      },
      {
-      "day": "Sáb",
-      "type": "Longão",
-      "sessao": "RUN_LONG_RUN",
-      "totalKm": 10,
-      "totalMin": 63,
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7.5,
+      "totalMin": 49,
       "chave": true,
       "steps": [
        {
@@ -2103,37 +2137,125 @@
         "zona": "Z1"
        },
        {
+        "name": "Mobilidade e educativos",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 225
+       },
+       {
         "name": "Principal",
-        "km": 8,
+        "km": 5,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
+       }
+      ]
+     },
+     {
+      "day": "Sáb",
+      "type": "Longão",
+      "sessao": "RUN_LONG_RUN",
+      "totalKm": 8.5,
+      "totalMin": 60,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 0.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Mobilidade",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 105
+       },
+       {
+        "name": "Longão em Z2",
+        "km": 6.5,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z2"
        },
        {
-        "name": "Desaquecimento",
+        "name": "Final em ritmo de maratona",
         "km": 1,
+        "pace": "5:29 ~ 5:32/km",
+        "zona": "Z3"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 0.5,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z1"
+       },
+       {
+        "name": "Alongamento (opcional)",
+        "km": 0,
+        "pace": "",
+        "zona": "",
+        "tipo": "tempo",
+        "metaSeg": 180
        }
       ]
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -2150,6 +2272,58 @@
        "sessao": "UPPER_BODY"
       },
       {
+       "nome": "Flexão diamante",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
        "nome": "Remada cavalinho (T-bar)",
        "grupo": "Costas",
        "series": "3",
@@ -2158,80 +2332,6 @@
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
-      }
-     ],
-     "Qua": [
-      {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
-       "series": "3",
-       "reps": "12",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
       }
      ]
     },
@@ -2243,34 +2343,6 @@
     "totalWeeks": 8,
     "pendente": false,
     "corrida": [
-     {
-      "day": "Seg",
-      "type": "Intervalado",
-      "sessao": "RUN_INTERVALS_VO2MAX",
-      "totalKm": 6.5,
-      "totalMin": 39,
-      "chave": true,
-      "steps": [
-       {
-        "name": "Aquecimento",
-        "km": 1.5,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       },
-       {
-        "name": "Principal",
-        "km": 4,
-        "pace": "4:42 ~ 4:45/km",
-        "zona": "Z5"
-       },
-       {
-        "name": "Desaquecimento",
-        "km": 1,
-        "pace": "5:55 ~ 6:37/km",
-        "zona": "Z1"
-       }
-      ]
-     },
      {
       "day": "Ter",
       "type": "Rodagem Leve",
@@ -2300,7 +2372,7 @@
       ]
      },
      {
-      "day": "Qui",
+      "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
       "totalKm": 4,
@@ -2318,6 +2390,34 @@
         "km": 2,
         "pace": "5:55 ~ 6:37/km",
         "zona": "Z2"
+       },
+       {
+        "name": "Desaquecimento",
+        "km": 1,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       }
+      ]
+     },
+     {
+      "day": "Qui",
+      "type": "Intervalado",
+      "sessao": "RUN_INTERVALS_VO2MAX",
+      "totalKm": 7,
+      "totalMin": 42,
+      "chave": true,
+      "steps": [
+       {
+        "name": "Aquecimento",
+        "km": 1.5,
+        "pace": "5:55 ~ 6:37/km",
+        "zona": "Z1"
+       },
+       {
+        "name": "Principal",
+        "km": 4.5,
+        "pace": "4:42 ~ 4:45/km",
+        "zona": "Z5"
        },
        {
         "name": "Desaquecimento",
@@ -2357,22 +2457,44 @@
      }
     ],
     "musc": {
-     "Ter": [
+     "Seg": [
       {
-       "nome": "Supino reto com barra",
-       "grupo": "Peito",
+       "nome": "Agachamento livre com barra",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
-       "sessao": "UPPER_BODY"
+       "sessao": "LEG_DAY_HEAVY"
       },
       {
-       "nome": "Barra fixa (pegada neutra)",
-       "grupo": "Costas",
+       "nome": "Leg press 45 graus",
+       "grupo": "Pernas",
        "series": "3",
        "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      },
+      {
+       "nome": "Mesa flexora (deitado)",
+       "grupo": "Pernas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "LEG_DAY_HEAVY"
+      }
+     ],
+     "Qua": [
+      {
+       "nome": "Supino reto com barra",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "8",
        "carga": "",
        "descanso": "75s",
        "tier": 2,
@@ -2389,6 +2511,58 @@
        "sessao": "UPPER_BODY"
       },
       {
+       "nome": "Flexão diamante",
+       "grupo": "Peito",
+       "series": "3",
+       "reps": "10",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Elevação lateral na máquina",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 1,
+       "sessao": "UPPER_BODY"
+      }
+     ],
+     "Sex": [
+      {
+       "nome": "Barra fixa (pegada neutra)",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "8",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Crucifixo inverso com halteres",
+       "grupo": "Ombro",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
+       "nome": "Encolhimento com halteres",
+       "grupo": "Costas",
+       "series": "3",
+       "reps": "12",
+       "carga": "",
+       "descanso": "75s",
+       "tier": 2,
+       "sessao": "UPPER_BODY"
+      },
+      {
        "nome": "Remada cavalinho (T-bar)",
        "grupo": "Costas",
        "series": "3",
@@ -2397,80 +2571,6 @@
        "descanso": "75s",
        "tier": 2,
        "sessao": "UPPER_BODY"
-      }
-     ],
-     "Qua": [
-      {
-       "nome": "Agachamento livre com barra",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 2,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Ponte de glúteo",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      },
-      {
-       "nome": "Leg press 45 graus",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "LEG_DAY_HEAVY"
-      }
-     ],
-     "Sex": [
-      {
-       "nome": "Agachamento livre",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "8",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Mesa flexora (deitado)",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Panturrilha no leg press",
-       "grupo": "Pernas",
-       "series": "3",
-       "reps": "10",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
-      },
-      {
-       "nome": "Prancha",
-       "grupo": "Core",
-       "series": "3",
-       "reps": "12",
-       "carga": "",
-       "descanso": "75s",
-       "tier": 1,
-       "sessao": "FULL_BODY_LIGHT"
       }
      ]
     },

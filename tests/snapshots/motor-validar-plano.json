@@ -14,7 +14,6 @@
  "V3_duas_duras_no_mesmo_dia": {
   "ok": false,
   "erros": [
-   "V3: Seg: 78 min > 75 min disponíveis",
    "V3: Seg: duas sessões duras no mesmo dia",
    "V3: Seg: inferior pesado combinado com corrida"
   ],
@@ -32,7 +31,7 @@
  "V5_corrida_acima_do_teto": {
   "ok": false,
   "erros": [
-   "V4: volume de corrida 324 min acima de 200",
+   "V4: volume de corrida 300 min acima de 200",
    "V5: corrida 8x acima do teto do nível",
    "V10: aumento de volume sem justificativa"
   ],
@@ -51,31 +50,36 @@
  "V7_sem_equipamento": {
   "ok": false,
   "erros": [
-   "V1: exercício não permitido: Supino reto com barra",
-   "V1: exercício não permitido: Barra fixa (pegada neutra)",
-   "V1: exercício não permitido: Desenvolvimento na máquina",
-   "V1: exercício não permitido: Remada cavalinho (T-bar)",
    "V1: exercício não permitido: Agachamento livre com barra",
    "V1: exercício não permitido: Leg press 45 graus",
-   "V1: exercício não permitido: Mesa flexora (deitado)",
-   "V1: exercício não permitido: Panturrilha no leg press",
-   "V7: equipamento indisponível para Supino reto com barra: barra,banco",
-   "V7: equipamento indisponível para Barra fixa (pegada neutra): barrafixa",
-   "V7: equipamento indisponível para Desenvolvimento na máquina: maquinas",
-   "V7: equipamento indisponível para Remada cavalinho (T-bar): maquinas",
+   "V1: exercício não permitido: Cadeira extensora",
+   "V1: exercício não permitido: Supino reto com barra",
+   "V1: exercício não permitido: Desenvolvimento na máquina",
+   "V1: exercício não permitido: Mergulho nas paralelas (peito)",
+   "V1: exercício não permitido: Elevação lateral no cabo",
+   "V1: exercício não permitido: Barra fixa (pegada neutra)",
+   "V1: exercício não permitido: Crucifixo inverso com halteres",
+   "V1: exercício não permitido: Encolhimento com barra",
+   "V1: exercício não permitido: Remada baixa no cabo",
    "V7: equipamento indisponível para Agachamento livre com barra: barra",
    "V7: equipamento indisponível para Leg press 45 graus: legpress",
-   "V7: equipamento indisponível para Mesa flexora (deitado): extensora",
-   "V7: equipamento indisponível para Panturrilha no leg press: legpress"
+   "V7: equipamento indisponível para Cadeira extensora: extensora",
+   "V7: equipamento indisponível para Supino reto com barra: barra,banco",
+   "V7: equipamento indisponível para Desenvolvimento na máquina: maquinas",
+   "V7: equipamento indisponível para Mergulho nas paralelas (peito): paralelas",
+   "V7: equipamento indisponível para Elevação lateral no cabo: cabos",
+   "V7: equipamento indisponível para Barra fixa (pegada neutra): barrafixa",
+   "V7: equipamento indisponível para Crucifixo inverso com halteres: halteres,banco",
+   "V7: equipamento indisponível para Encolhimento com barra: barra",
+   "V7: equipamento indisponível para Remada baixa no cabo: cabos"
   ],
   "avisos": []
  },
  "V9_duras_em_dias_seguidos": {
   "ok": false,
   "erros": [
-   "V3: Ter: 94 min > 75 min disponíveis",
-   "V9: Seg/Ter: estímulos altos em dias consecutivos",
-   "V9: Ter/Qua: estímulos altos em dias consecutivos"
+   "V3: Ter: inferior pesado combinado com corrida",
+   "V9: Seg/Ter: estímulos altos em dias consecutivos"
   ],
   "avisos": []
  },
