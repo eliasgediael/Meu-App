@@ -73780,7 +73780,7 @@
       "semana": 5,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 324,
+      "corridaMinAlvo": 350,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -73789,7 +73789,7 @@
       "semana": 6,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 324,
+      "corridaMinAlvo": 356,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -73798,7 +73798,7 @@
       "semana": 7,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 324,
+      "corridaMinAlvo": 356,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -73807,7 +73807,7 @@
       "semana": 8,
       "fase": "Descarga",
       "alternancia": null,
-      "corridaMinAlvo": 243,
+      "corridaMinAlvo": 267,
       "muscSeriesFator": 1,
       "progressao": "manter",
       "nota": ""
@@ -79821,13 +79821,13 @@
        "modo": "hibrido",
        "warmupDesc": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "5 km contínuos em Z2",
+       "mainDesc": "6,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 7,
-       "totalMin": 38,
+       "totalKm": 8.5,
+       "totalMin": 45,
        "steps": [
         {
          "name": "Aquecimento",
@@ -79838,10 +79838,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2"
+         "desc": "6,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -79862,10 +79862,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2",
+         "desc": "6,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -79877,7 +79877,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 38,
+       "duracaoMin": 45,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -79902,13 +79902,13 @@
        "modo": "hibrido",
        "warmupDesc": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "5 km contínuos em Z2",
+       "mainDesc": "6,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 7,
-       "totalMin": 38,
+       "totalKm": 8.5,
+       "totalMin": 45,
        "steps": [
         {
          "name": "Aquecimento",
@@ -79919,10 +79919,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2"
+         "desc": "6,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -79943,10 +79943,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2",
+         "desc": "6,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -79958,7 +79958,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 38,
+       "duracaoMin": 45,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -79975,13 +79975,13 @@
        "modo": "hibrido",
        "warmupDesc": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "5 km contínuos em Z2",
+       "mainDesc": "6,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 7,
-       "totalMin": 38,
+       "totalKm": 8.5,
+       "totalMin": 45,
        "steps": [
         {
          "name": "Aquecimento",
@@ -79992,10 +79992,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2"
+         "desc": "6,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -80016,10 +80016,10 @@
         },
         {
          "name": "Principal",
-         "km": 5,
+         "km": 6.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "5 km contínuos em Z2",
+         "desc": "6,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -80031,7 +80031,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 38,
+       "duracaoMin": 45,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -80147,13 +80147,13 @@
        "modo": "hibrido",
        "warmupDesc": "6 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "11 km contínuos em Z2",
+       "mainDesc": "11,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 13,
-       "totalMin": 73,
+       "totalKm": 13.5,
+       "totalMin": 75,
        "steps": [
         {
          "name": "Aquecimento",
@@ -80164,10 +80164,10 @@
         },
         {
          "name": "Principal",
-         "km": 11,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "11 km contínuos em Z2"
+         "desc": "11,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -80188,10 +80188,10 @@
         },
         {
          "name": "Longão",
-         "km": 11,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "11 km contínuos em Z2",
+         "desc": "11,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -80203,7 +80203,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 73,
+       "duracaoMin": 75,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -119985,7 +119985,7 @@
       "semana": 2,
       "fase": "Base",
       "alternancia": null,
-      "corridaMinAlvo": 378,
+      "corridaMinAlvo": 405,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -119994,7 +119994,7 @@
       "semana": 3,
       "fase": "Base",
       "alternancia": null,
-      "corridaMinAlvo": 378,
+      "corridaMinAlvo": 416,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -120003,7 +120003,7 @@
       "semana": 4,
       "fase": "Descarga",
       "alternancia": null,
-      "corridaMinAlvo": 284,
+      "corridaMinAlvo": 312,
       "muscSeriesFator": 1,
       "progressao": "manter",
       "nota": ""
@@ -120012,7 +120012,7 @@
       "semana": 5,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 378,
+      "corridaMinAlvo": 416,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -120021,7 +120021,7 @@
       "semana": 6,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 378,
+      "corridaMinAlvo": 416,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -120030,7 +120030,7 @@
       "semana": 7,
       "fase": "Construção",
       "alternancia": null,
-      "corridaMinAlvo": 378,
+      "corridaMinAlvo": 416,
       "muscSeriesFator": 1,
       "progressao": "volume_gradual",
       "nota": ""
@@ -120039,7 +120039,7 @@
       "semana": 8,
       "fase": "Descarga",
       "alternancia": null,
-      "corridaMinAlvo": 284,
+      "corridaMinAlvo": 312,
       "muscSeriesFator": 1,
       "progressao": "manter",
       "nota": ""
@@ -121350,14 +121350,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -121377,17 +121377,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -121427,18 +121427,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -121492,11 +121492,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -121531,9 +121531,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -122348,13 +122348,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 21.5,
-       "totalMin": 112,
+       "totalKm": 23,
+       "totalMin": 120,
        "steps": [
         {
          "name": "Aquecimento",
@@ -122365,10 +122365,10 @@
         },
         {
          "name": "Principal",
-         "km": 19.5,
+         "km": 21,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
+         "desc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -122389,10 +122389,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 13.5,
+         "km": 15,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "13,5 km em Z2",
+         "desc": "15 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -122412,7 +122412,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 112,
+       "duracaoMin": 120,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -122705,13 +122705,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -122722,10 +122722,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -122746,10 +122746,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -122761,7 +122761,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -122778,13 +122778,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -122795,10 +122795,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -122819,10 +122819,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -122834,7 +122834,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -122851,13 +122851,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -122868,10 +122868,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -122892,10 +122892,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -122907,7 +122907,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -122932,13 +122932,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10 km em Z2 + 4 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 16,
-       "totalMin": 84,
+       "totalKm": 18,
+       "totalMin": 94,
        "steps": [
         {
          "name": "Aquecimento",
@@ -122949,10 +122949,10 @@
         },
         {
          "name": "Principal",
-         "km": 14,
+         "km": 16,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10 km em Z2 + 4 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -122973,18 +122973,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10,
+         "km": 11,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10 km em Z2",
+         "desc": "11 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Ritmo de maratona",
-         "km": 4,
+         "km": 5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "4 km em ritmo de prova",
+         "desc": "5 km em ritmo de prova",
          "tipo": "distancia"
         },
         {
@@ -122996,7 +122996,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 84,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -123832,13 +123832,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 21.5,
-       "totalMin": 112,
+       "totalKm": 23,
+       "totalMin": 120,
        "steps": [
         {
          "name": "Aquecimento",
@@ -123849,10 +123849,10 @@
         },
         {
          "name": "Principal",
-         "km": 19.5,
+         "km": 21,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
+         "desc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -123873,10 +123873,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 13.5,
+         "km": 15,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "13,5 km em Z2",
+         "desc": "15 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -123896,7 +123896,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 112,
+       "duracaoMin": 120,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -124533,14 +124533,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -124560,17 +124560,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -124610,18 +124610,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -124675,11 +124675,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -124714,9 +124714,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -125548,13 +125548,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 21.5,
-       "totalMin": 112,
+       "totalKm": 23,
+       "totalMin": 120,
        "steps": [
         {
          "name": "Aquecimento",
@@ -125565,10 +125565,10 @@
         },
         {
          "name": "Principal",
-         "km": 19.5,
+         "km": 21,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "13,5 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
+         "desc": "15 km em Z2 + 6 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -125589,10 +125589,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 13.5,
+         "km": 15,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "13,5 km em Z2",
+         "desc": "15 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -125612,7 +125612,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 112,
+       "duracaoMin": 120,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -125905,13 +125905,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -125922,10 +125922,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -125946,10 +125946,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -125961,7 +125961,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -125978,13 +125978,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -125995,10 +125995,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -126019,10 +126019,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -126034,7 +126034,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -126051,13 +126051,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 50,
+       "totalKm": 11,
+       "totalMin": 56,
        "steps": [
         {
          "name": "Aquecimento",
@@ -126068,10 +126068,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -126092,10 +126092,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -126107,7 +126107,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 50,
+       "duracaoMin": 56,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -126132,13 +126132,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10 km em Z2 + 4 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 16,
-       "totalMin": 84,
+       "totalKm": 18,
+       "totalMin": 94,
        "steps": [
         {
          "name": "Aquecimento",
@@ -126149,10 +126149,10 @@
         },
         {
          "name": "Principal",
-         "km": 14,
+         "km": 16,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10 km em Z2 + 4 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -126173,18 +126173,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10,
+         "km": 11,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10 km em Z2",
+         "desc": "11 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Ritmo de maratona",
-         "km": 4,
+         "km": 5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "4 km em ritmo de prova",
+         "desc": "5 km em ritmo de prova",
          "tipo": "distancia"
         },
         {
@@ -126196,7 +126196,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 84,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -154469,14 +154469,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -154496,17 +154496,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -154546,18 +154546,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -154611,11 +154611,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -154650,9 +154650,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -155420,14 +155420,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -155447,17 +155447,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -155497,18 +155497,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -155562,11 +155562,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -155601,9 +155601,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -156371,14 +156371,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -156398,17 +156398,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -156448,18 +156448,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -156513,11 +156513,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -156552,9 +156552,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -157113,13 +157113,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -157130,10 +157130,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -157154,10 +157154,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -157169,7 +157169,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -157187,30 +157187,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -157218,17 +157218,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -157254,13 +157254,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -157271,10 +157271,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -157295,10 +157295,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -157310,7 +157310,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -157328,14 +157328,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -157355,17 +157355,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -157405,18 +157405,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -157470,11 +157470,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -157509,9 +157509,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -158092,13 +158092,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -158109,10 +158109,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -158133,10 +158133,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -158148,7 +158148,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -158166,30 +158166,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -158197,17 +158197,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -158233,13 +158233,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -158250,10 +158250,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -158274,10 +158274,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -158289,7 +158289,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -158307,14 +158307,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -158334,17 +158334,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -158384,18 +158384,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -158449,11 +158449,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -158488,9 +158488,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -159071,13 +159071,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -159088,10 +159088,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -159112,10 +159112,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -159127,7 +159127,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -159145,30 +159145,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -159176,17 +159176,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -159212,13 +159212,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -159229,10 +159229,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -159253,10 +159253,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -159268,7 +159268,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -159286,14 +159286,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -159313,17 +159313,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -159363,18 +159363,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -159428,11 +159428,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -159467,9 +159467,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -160259,14 +160259,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -160286,17 +160286,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -160336,18 +160336,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -160401,11 +160401,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -160440,9 +160440,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -161210,14 +161210,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -161237,17 +161237,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -161287,18 +161287,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -161352,11 +161352,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -161391,9 +161391,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -162161,14 +162161,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 19,
-       "totalMin": 108,
-       "kmEstimado": 19.08,
+       "totalKm": 20.5,
+       "totalMin": 116,
+       "kmEstimado": 20.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -162188,17 +162188,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2"
+         "desc": "16,5 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona"
+         "desc": "3 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -162238,18 +162238,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "15,5 km em Z2",
+         "desc": "16,5 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2.5,
+         "km": 3,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2,5 km em ritmo de maratona",
+         "desc": "3 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -162303,11 +162303,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 97.35705250125189,
-         "km": 18,
+         "min": 105.1729601620219,
+         "km": 19.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "15,5 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "16,5 km em Z2 + 3 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -162342,9 +162342,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 11.4,
+       "cargaIntensa": 13.7,
        "day": "Sáb",
-       "duracaoMin": 108,
+       "duracaoMin": 116,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -162903,13 +162903,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -162920,10 +162920,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -162944,10 +162944,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -162959,7 +162959,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -162977,30 +162977,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -163008,17 +163008,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -163044,13 +163044,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -163061,10 +163061,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -163085,10 +163085,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -163100,7 +163100,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -163118,14 +163118,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -163145,17 +163145,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -163195,18 +163195,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -163260,11 +163260,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -163299,9 +163299,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -163882,13 +163882,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -163899,10 +163899,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -163923,10 +163923,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -163938,7 +163938,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -163956,30 +163956,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -163987,17 +163987,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -164023,13 +164023,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -164040,10 +164040,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -164064,10 +164064,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -164079,7 +164079,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -164097,14 +164097,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -164124,17 +164124,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -164174,18 +164174,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -164239,11 +164239,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -164278,9 +164278,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -164861,13 +164861,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -164878,10 +164878,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -164902,10 +164902,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -164917,7 +164917,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -164935,30 +164935,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 8,
+       "totalMin": 46,
+       "kmEstimado": 8,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -164966,17 +164966,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 46.40191557897281,
+         "km": 8,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "8 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 46,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -165002,13 +165002,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8,5 km contínuos em Z2",
+       "mainDesc": "9,5 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10.5,
-       "totalMin": 54,
+       "totalKm": 11.5,
+       "totalMin": 59,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165019,10 +165019,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2"
+         "desc": "9,5 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -165043,10 +165043,10 @@
         },
         {
          "name": "Principal",
-         "km": 8.5,
+         "km": 9.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8,5 km contínuos em Z2",
+         "desc": "9,5 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -165058,7 +165058,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 54,
+       "duracaoMin": 59,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -165076,14 +165076,14 @@
        "modo": "hibrido",
        "warmupDesc": "3 min de trote leve em Z1 · Mobilidade de tornozelo (10 avanços do joelho sobre o pé, cada lado) · Rotação de quadril (abrir e fechar o portão) (8 de cada lado)",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)",
+       "mainDesc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "3 min em Z1 · trote leve e caminhada · Panturrilha na parede (30 s cada lado) · Posterior de coxa em pé (30 s cada lado) · Glúteo e piriforme (figura 4) (30 s cada lado)",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 15.5,
-       "totalMin": 89,
-       "kmEstimado": 15.58,
+       "totalKm": 16.5,
+       "totalMin": 94,
+       "kmEstimado": 16.58,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165103,17 +165103,17 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2"
+         "desc": "13 km em Z2"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona"
+         "desc": "2,5 km em ritmo de maratona"
         },
         {
          "name": "Desaquecimento",
@@ -165153,18 +165153,18 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 12.5,
+         "km": 13,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "12,5 km em Z2",
+         "desc": "13 km em Z2",
          "tipo": "distancia"
         },
         {
          "name": "Final em ritmo de maratona",
-         "km": 2,
+         "km": 2.5,
          "pace": "4:32 ~ 4:35/km",
          "zona": "Z3",
-         "desc": "2 km em ritmo de maratona",
+         "desc": "2,5 km em ritmo de maratona",
          "tipo": "distancia"
         },
         {
@@ -165218,11 +165218,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 78.44066594573867,
-         "km": 14.5,
+         "min": 83.48145388282288,
+         "km": 15.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "12,5 km em Z2 + 2 km finais acelerando até o ritmo de maratona (4:32/km)"
+         "desc": "13 km em Z2 + 2,5 km finais acelerando até o ritmo de maratona (4:32/km)"
         },
         {
          "fase": "desaquecimento",
@@ -165257,9 +165257,9 @@
         }
        ],
        "catalogoVersao": 1,
-       "cargaIntensa": 9.1,
+       "cargaIntensa": 11.4,
        "day": "Sáb",
-       "duracaoMin": 89,
+       "duracaoMin": 94,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -165510,13 +165510,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165527,10 +165527,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -165551,10 +165551,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -165566,7 +165566,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -165583,13 +165583,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165600,10 +165600,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -165624,10 +165624,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -165639,7 +165639,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -165665,30 +165665,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -165696,17 +165696,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qui",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -165724,13 +165724,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165741,10 +165741,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -165765,10 +165765,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -165788,7 +165788,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -165807,14 +165807,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -165825,10 +165825,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -165859,10 +165859,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -165960,11 +165960,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -165988,7 +165988,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Dom",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -166216,13 +166216,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -166233,10 +166233,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -166257,10 +166257,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -166272,7 +166272,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -166289,13 +166289,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -166306,10 +166306,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -166330,10 +166330,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -166345,7 +166345,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -166371,30 +166371,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -166402,17 +166402,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qui",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -166430,13 +166430,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -166447,10 +166447,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -166471,10 +166471,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -166494,7 +166494,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -166513,14 +166513,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -166531,10 +166531,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -166565,10 +166565,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -166666,11 +166666,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -166694,7 +166694,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Dom",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -166922,13 +166922,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -166939,10 +166939,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -166963,10 +166963,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -166978,7 +166978,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -166995,13 +166995,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167012,10 +167012,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -167036,10 +167036,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -167051,7 +167051,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -167077,30 +167077,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -167108,17 +167108,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qui",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -167136,13 +167136,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167153,10 +167153,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -167177,10 +167177,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -167200,7 +167200,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -167219,14 +167219,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167237,10 +167237,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -167271,10 +167271,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -167372,11 +167372,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -167400,7 +167400,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Dom",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -167630,14 +167630,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167648,10 +167648,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -167682,10 +167682,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -167783,11 +167783,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -167811,7 +167811,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Seg",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -167837,13 +167837,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167854,10 +167854,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -167878,10 +167878,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -167893,7 +167893,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -167911,30 +167911,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -167942,17 +167942,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -167970,13 +167970,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -167987,10 +167987,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -168011,10 +168011,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -168026,7 +168026,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -168043,13 +168043,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -168060,10 +168060,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -168084,10 +168084,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -168107,7 +168107,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -168359,14 +168359,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -168377,10 +168377,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -168411,10 +168411,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -168512,11 +168512,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -168540,7 +168540,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Seg",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -168566,13 +168566,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -168583,10 +168583,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -168607,10 +168607,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -168622,7 +168622,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -168640,30 +168640,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -168671,17 +168671,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -168699,13 +168699,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -168716,10 +168716,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -168740,10 +168740,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -168755,7 +168755,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -168772,13 +168772,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -168789,10 +168789,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -168813,10 +168813,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -168836,7 +168836,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",
@@ -169088,14 +169088,14 @@
        "modo": "hibrido",
        "warmupDesc": "5 min de trote leve em Z1",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7,5 km contínuos em Z2",
+       "mainDesc": "8 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "4 × 20 s acelerando de forma solta (sem sprint), 60 s caminhando entre · 3 min em Z1 · trote leve e caminhada",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 9.5,
-       "totalMin": 52,
-       "kmEstimado": 9.59,
+       "totalKm": 10,
+       "totalMin": 56,
+       "kmEstimado": 10.35,
        "steps": [
         {
          "name": "Aquecimento",
@@ -169106,10 +169106,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "name": "Acelerações",
@@ -169140,10 +169140,10 @@
         },
         {
          "name": "Principal",
-         "km": 7.5,
+         "km": 8,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2",
+         "desc": "8 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -169241,11 +169241,11 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 39,
-         "km": 7.441489129395817,
+         "min": 43,
+         "km": 8.204718783692824,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "7,5 km contínuos em Z2"
+         "desc": "8 km contínuos em Z2"
         },
         {
          "fase": "strides",
@@ -169269,7 +169269,7 @@
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Seg",
-       "duracaoMin": 52,
+       "duracaoMin": 56,
        "combinada": {
         "ordem": "corrida_antes"
        },
@@ -169295,13 +169295,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -169312,10 +169312,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -169336,10 +169336,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -169351,7 +169351,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -169369,30 +169369,30 @@
        "modo": "hibrido",
        "warmupDesc": "",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+       "mainDesc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
        "mainPace": "5:33 ~ 6:03/km",
        "cooldownDesc": "",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z1/Z2",
-       "totalKm": 7,
-       "totalMin": 41,
-       "kmEstimado": 7,
+       "totalKm": 7.5,
+       "totalMin": 44,
+       "kmEstimado": 7.5,
        "steps": [
         {
          "name": "Principal",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "gpsSteps": [
         {
          "name": "Regenerativo",
-         "km": 7,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem",
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem",
          "tipo": "distancia"
         }
        ],
@@ -169400,17 +169400,17 @@
         {
          "fase": "principal",
          "titulo": "Principal",
-         "min": 40.60167613160122,
-         "km": 7,
+         "min": 43.501795855287014,
+         "km": 7.5,
          "pace": "5:33 ~ 6:03/km",
          "zona": "Z1/Z2",
-         "desc": "7 km bem leves (Z1/Z2), mais devagar que a rodagem"
+         "desc": "7,5 km bem leves (Z1/Z2), mais devagar que a rodagem"
         }
        ],
        "catalogoVersao": 1,
        "cargaIntensa": 0,
        "day": "Qua",
-       "duracaoMin": 41,
+       "duracaoMin": 44,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -169428,13 +169428,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "8 km contínuos em Z2",
+       "mainDesc": "9 km contínuos em Z2",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2",
-       "totalKm": 10,
-       "totalMin": 53,
+       "totalKm": 11,
+       "totalMin": 57,
        "steps": [
         {
          "name": "Aquecimento",
@@ -169445,10 +169445,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2"
+         "desc": "9 km contínuos em Z2"
         },
         {
          "name": "Desaquecimento",
@@ -169469,10 +169469,10 @@
         },
         {
          "name": "Principal",
-         "km": 8,
+         "km": 9,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "8 km contínuos em Z2",
+         "desc": "9 km contínuos em Z2",
          "tipo": "distancia"
         },
         {
@@ -169484,7 +169484,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 53,
+       "duracaoMin": 57,
        "combinada": null,
        "estimulo": {
         "tipo": "leve",
@@ -169501,13 +169501,13 @@
        "modo": "hibrido",
        "warmupDesc": "5 min em Z1 · trote leve e mobilidade de quadril e tornozelo",
        "warmupPace": "4:56 ~ 5:33/km",
-       "mainDesc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
+       "mainDesc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)",
        "mainPace": "4:56 ~ 5:33/km",
        "cooldownDesc": "5 min em Z1 · trote leve, caminhada e alongamento passivo",
        "cooldownPace": "4:56 ~ 5:33/km",
        "zonaFC": "Z2/Z3",
-       "totalKm": 17.5,
-       "totalMin": 91,
+       "totalKm": 18.5,
+       "totalMin": 96,
        "steps": [
         {
          "name": "Aquecimento",
@@ -169518,10 +169518,10 @@
         },
         {
          "name": "Principal",
-         "km": 15.5,
+         "km": 16.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2/Z3",
-         "desc": "10,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
+         "desc": "11,5 km em Z2 + 5 km finais em ritmo de maratona (4:32/km)"
         },
         {
          "name": "Desaquecimento",
@@ -169542,10 +169542,10 @@
         },
         {
          "name": "Longão em Z2",
-         "km": 10.5,
+         "km": 11.5,
          "pace": "4:56 ~ 5:33/km",
          "zona": "Z2",
-         "desc": "10,5 km em Z2",
+         "desc": "11,5 km em Z2",
          "tipo": "distancia"
         },
         {
@@ -169565,7 +169565,7 @@
          "tipo": "distancia"
         }
        ],
-       "duracaoMin": 91,
+       "duracaoMin": 96,
        "combinada": null,
        "estimulo": {
         "tipo": "longa",

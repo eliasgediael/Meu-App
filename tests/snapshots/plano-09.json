@@ -90,7 +90,7 @@
     "semana": 2,
     "fase": "Base",
     "alternancia": null,
-    "corridaMinAlvo": 378,
+    "corridaMinAlvo": 405,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -99,7 +99,7 @@
     "semana": 3,
     "fase": "Base",
     "alternancia": null,
-    "corridaMinAlvo": 378,
+    "corridaMinAlvo": 416,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -108,7 +108,7 @@
     "semana": 4,
     "fase": "Descarga",
     "alternancia": null,
-    "corridaMinAlvo": 284,
+    "corridaMinAlvo": 312,
     "muscSeriesFator": 1,
     "progressao": "manter",
     "nota": ""
@@ -117,7 +117,7 @@
     "semana": 5,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 378,
+    "corridaMinAlvo": 416,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -126,7 +126,7 @@
     "semana": 6,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 378,
+    "corridaMinAlvo": 416,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -135,7 +135,7 @@
     "semana": 7,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 378,
+    "corridaMinAlvo": 416,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -144,7 +144,7 @@
     "semana": 8,
     "fase": "Descarga",
     "alternancia": null,
-    "corridaMinAlvo": 284,
+    "corridaMinAlvo": 312,
     "muscSeriesFator": 1,
     "progressao": "manter",
     "nota": ""
@@ -900,8 +900,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 19,
-      "totalMin": 108,
+      "totalKm": 20.5,
+      "totalMin": 116,
       "chave": true,
       "steps": [
        {
@@ -920,13 +920,13 @@
        },
        {
         "name": "Longão em Z2",
-        "km": 15.5,
+        "km": 16.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
        {
         "name": "Final em ritmo de maratona",
-        "km": 2.5,
+        "km": 3,
         "pace": "4:32 ~ 4:35/km",
         "zona": "Z3"
        },
@@ -1159,8 +1159,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 21.5,
-      "totalMin": 112,
+      "totalKm": 23,
+      "totalMin": 120,
       "chave": true,
       "steps": [
        {
@@ -1171,7 +1171,7 @@
        },
        {
         "name": "Principal",
-        "km": 19.5,
+        "km": 21,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2/Z3"
        },
@@ -1300,8 +1300,8 @@
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -1312,7 +1312,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -1328,8 +1328,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -1340,7 +1340,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -1356,8 +1356,8 @@
       "day": "Sex",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -1368,7 +1368,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -1384,8 +1384,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 16,
-      "totalMin": 84,
+      "totalKm": 18,
+      "totalMin": 94,
       "chave": true,
       "steps": [
        {
@@ -1396,7 +1396,7 @@
        },
        {
         "name": "Principal",
-        "km": 14,
+        "km": 16,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2/Z3"
        },
@@ -1621,8 +1621,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 21.5,
-      "totalMin": 112,
+      "totalKm": 23,
+      "totalMin": 120,
       "chave": true,
       "steps": [
        {
@@ -1633,7 +1633,7 @@
        },
        {
         "name": "Principal",
-        "km": 19.5,
+        "km": 21,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2/Z3"
        },
@@ -1850,8 +1850,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 19,
-      "totalMin": 108,
+      "totalKm": 20.5,
+      "totalMin": 116,
       "chave": true,
       "steps": [
        {
@@ -1870,13 +1870,13 @@
        },
        {
         "name": "Longão em Z2",
-        "km": 15.5,
+        "km": 16.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
        {
         "name": "Final em ritmo de maratona",
-        "km": 2.5,
+        "km": 3,
         "pace": "4:32 ~ 4:35/km",
         "zona": "Z3"
        },
@@ -2109,8 +2109,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 21.5,
-      "totalMin": 112,
+      "totalKm": 23,
+      "totalMin": 120,
       "chave": true,
       "steps": [
        {
@@ -2121,7 +2121,7 @@
        },
        {
         "name": "Principal",
-        "km": 19.5,
+        "km": 21,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2/Z3"
        },
@@ -2250,8 +2250,8 @@
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -2262,7 +2262,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2278,8 +2278,8 @@
       "day": "Qui",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -2290,7 +2290,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2306,8 +2306,8 @@
       "day": "Sex",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 9.5,
-      "totalMin": 50,
+      "totalKm": 11,
+      "totalMin": 56,
       "chave": false,
       "steps": [
        {
@@ -2318,7 +2318,7 @@
        },
        {
         "name": "Principal",
-        "km": 7.5,
+        "km": 9,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2334,8 +2334,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 16,
-      "totalMin": 84,
+      "totalKm": 18,
+      "totalMin": 94,
       "chave": true,
       "steps": [
        {
@@ -2346,7 +2346,7 @@
        },
        {
         "name": "Principal",
-        "km": 14,
+        "km": 16,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2/Z3"
        },

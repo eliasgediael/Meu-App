@@ -128,7 +128,7 @@
     "semana": 5,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 324,
+    "corridaMinAlvo": 350,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -137,7 +137,7 @@
     "semana": 6,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 324,
+    "corridaMinAlvo": 356,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -146,7 +146,7 @@
     "semana": 7,
     "fase": "Construção",
     "alternancia": null,
-    "corridaMinAlvo": 324,
+    "corridaMinAlvo": 356,
     "muscSeriesFator": 1,
     "progressao": "volume_gradual",
     "nota": ""
@@ -155,7 +155,7 @@
     "semana": 8,
     "fase": "Descarga",
     "alternancia": null,
-    "corridaMinAlvo": 243,
+    "corridaMinAlvo": 267,
     "muscSeriesFator": 1,
     "progressao": "manter",
     "nota": ""
@@ -2435,8 +2435,8 @@
       "day": "Seg",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 7,
-      "totalMin": 38,
+      "totalKm": 8.5,
+      "totalMin": 45,
       "chave": false,
       "steps": [
        {
@@ -2447,7 +2447,7 @@
        },
        {
         "name": "Principal",
-        "km": 5,
+        "km": 6.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2463,8 +2463,8 @@
       "day": "Ter",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 7,
-      "totalMin": 38,
+      "totalKm": 8.5,
+      "totalMin": 45,
       "chave": false,
       "steps": [
        {
@@ -2475,7 +2475,7 @@
        },
        {
         "name": "Principal",
-        "km": 5,
+        "km": 6.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2491,8 +2491,8 @@
       "day": "Qua",
       "type": "Rodagem Leve",
       "sessao": "RUN_EASY_Z2",
-      "totalKm": 7,
-      "totalMin": 38,
+      "totalKm": 8.5,
+      "totalMin": 45,
       "chave": false,
       "steps": [
        {
@@ -2503,7 +2503,7 @@
        },
        {
         "name": "Principal",
-        "km": 5,
+        "km": 6.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
@@ -2547,8 +2547,8 @@
       "day": "Sáb",
       "type": "Longão",
       "sessao": "RUN_LONG_RUN",
-      "totalKm": 13,
-      "totalMin": 73,
+      "totalKm": 13.5,
+      "totalMin": 75,
       "chave": true,
       "steps": [
        {
@@ -2559,7 +2559,7 @@
        },
        {
         "name": "Principal",
-        "km": 11,
+        "km": 11.5,
         "pace": "4:56 ~ 5:33/km",
         "zona": "Z2"
        },
