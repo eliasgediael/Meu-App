@@ -15,6 +15,9 @@ const SEIS = ['01', '03', '04', '08', '10', '15'];
     return { p, hp, ws };
   };
 
+  // Integração com a pasta FORZA RUN: o nível por eixos fica DESLIGADO por padrão (o nível vem da experiência). Estes blocos ligam a regra de eixos para conferir que ela continua funcionando.
+  T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = true;
+
   // ---------- 1) nível de musculação por eixos ----------
   {
     const est = async (n, extra) => { S.athleteProfile = T.criarAthleteProfile(); await T.qv2Aplicar({ ...BASE, ...PERFIS.find(x => x[0].startsWith(n))[1], ...(extra || {}) }); return T.lerEstado(S.athleteProfile, {}); };
@@ -30,6 +33,7 @@ const SEIS = ['01', '03', '04', '08', '10', '15'];
     ok(e01.capacidade.musc === 'iniciante', '01: nunca treinou = iniciante');
   }
 
+  T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = false;   // volta ao padrão da integração (nível pela experiência)
   // ---------- 2) treino forte graduado ----------
   {
     const modo = async (n, extra) => { S.athleteProfile = T.criarAthleteProfile(); await T.qv2Aplicar({ ...BASE, ...PERFIS.find(x => x[0].startsWith(n))[1], ...(extra || {}) }); return T.motorQualidadeModo(T.lerEstado(S.athleteProfile, {}), {}); };
@@ -70,18 +74,21 @@ const SEIS = ['01', '03', '04', '08', '10', '15'];
     ok(legDays, `${n}: Leg Day dentro da regra (1 com 2–3 dias, até 2 com 4; iniciante sem)`);
   }
   {
+    T.MOTOR_PERSONALIZACAO.enfasePorDia = true; T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = true;
     const { ws } = await semanas('18');
     const f = Object.values(ws[0].muscPlan).map(l => l[0].sessao).sort();
     ok(JSON.stringify(f) === JSON.stringify(['LEG_DAY_HEAVY', 'UPPER_BODY']), '18 (intermediário, 2 dias): 1 Leg Day + superiores (antes: 2 corpo inteiro)');
+    T.MOTOR_PERSONALIZACAO.enfasePorDia = false; T.MOTOR_PERSONALIZACAO.nivelMuscPorEixos = false;
   }
 
   // ---------- 4) variação justificada ----------
   {
     const { ws } = await semanas('04');
     const base = (w) => Object.fromEntries(Object.entries(w.muscPlan).map(([d, l]) => [d, l.filter(e => e.papel === 'base').map(e => e.nome).join()]));
-    const acess = (w) => Object.values(w.muscPlan).flat().filter(e => e.papel !== 'base').map(e => e.nome).sort().join();
+    const acess = (w) => Object.values(w.muscPlan).flat().filter(e => e.papel !== 'base' && !e.preenchido).map(e => e.nome).sort().join();
     ok(JSON.stringify(base(ws[0])) === JSON.stringify(base(ws[4])), '04: exercício base de cada dia igual entre blocos (progressão de carga)');
-    ok(acess(ws[0]) === acess(ws[2]) && acess(ws[0]) !== acess(ws[4]), '04: acessórios iguais dentro do bloco e diferentes no bloco seguinte');
+    // Integração com a pasta FORZA RUN: a rotação de acessórios é a da etapa 3 (âncora fixa, acessórios giram por bloco, com 'evitar ontem'); dentro do bloco os acessórios podem mudar com o tempo do dia.
+    ok(acess(ws[0]) !== acess(ws[4]), '04: acessórios do bloco seguinte diferentes dos do primeiro bloco');
     const { ws: w08 } = await semanas('08');
     ok(!!w08[1].corridaWeek.find(c => c.variacao) && !w08[0].corridaWeek.find(c => c.variacao) && !w08[3].corridaWeek.find(c => c.variacao), '08: corrida varia a partir da semana 2 (sem variação na semana 1 e na descarga)');
     ok(new Set(w08.slice(0, 3).map(w => w.corridaWeek.map(c => c.variacao || c.type).join('|'))).size === 3, '08: as três primeiras semanas têm corridas diferentes');

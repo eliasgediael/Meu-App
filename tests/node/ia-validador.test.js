@@ -29,12 +29,12 @@ const reprova = (v, cod, msg) => ok(!v.ok && cods(v).includes(cod), msg + (v.ok 
       if (!ctx.ok) { falhas.push(nome.slice(0, 2) + '/s' + k + ' ctx ' + ctx.motivo); continue; }
       ctxOk++;
       const v = T.iaValidarProposta(ctx, respostaIdentidade(T, w.muscPlan, ctx));
-      if (v.ok) aceitos++; else falhas.push(nome.slice(0, 2) + '/s' + k + ' ' + v.erros.map(e => e.cod).join(','));
+      if (v.ok) aceitos++; else falhas.push(nome.slice(0, 2) + '/s' + k + ' ' + v.erros.slice(0,2).map(e => e.cod + ':' + e.detalhe).join(','));
     }
   }
   ok(total >= 80, `semanas com musculação analisadas: ${total}`);
   ok(ctxOk === total, `contexto do motor reconstruído em todas (${ctxOk}/${total})` + (falhas.length ? ' — ' + falhas.slice(0, 4).join(' | ') : ''));
-  ok(aceitos === total, `plano do motor aceito pelos validadores em todas (${aceitos}/${total})`);
+  ok(aceitos === total, `plano do motor aceito pelos validadores em todas (${aceitos}/${total})` + (falhas.length ? ' — ' + falhas.slice(0, 6).join(' | ') : ''));
 
   // ---------- 2) ataques ----------
   const contexto = async (n, k = 1) => {

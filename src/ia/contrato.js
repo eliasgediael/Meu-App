@@ -33,6 +33,12 @@ function iaAssinaturaCorrida(corridaWeek){
   return JSON.stringify((corridaWeek || []).map(w=>[w.day, w.type, w.totalMin]));
 }
 
+// Erros do validarPlano que contam para a IA: os de conteúdo da musculação que o motor já aceitou na semana, e o V14 (tempo), não contam.
+function iaErrosDoMotor(ctx, erros){
+  return erros.filter(e=>!(MOTOR_COD_CONTEUDO.test(e.cod) && (e.cod==='V14' || (ctx.conteudoAceito && ctx.conteudoAceito.has(e.cod+'|'+e.detalhe)))));
+}
+Object.assign(globalThis, { iaErrosDoMotor });
+
 // Reconstrói o contexto interno da semana (estado, prioridade, frequências, distribuição, sessões) refazendo a
 // construção final do motor com os mesmos ajustes. Se a reconstrução não bater exatamente com o plano entregue,
 // devolve ok:false e a IA não é usada.
@@ -40,14 +46,9 @@ function iaContextoDoMotor(perfil, opcoes, semanaServida){
   opcoes = opcoes || {};
   const r = gerarPlanoSemanal(perfil, opcoes);
   if(!r || r.bloqueado || !r.semana) return { ok:false, motivo:'motor_bloqueado' };
-  const est = lerEstado(perfil, opcoes);
+  // Mesma preparação do início de gerarPlanoSemanal (motor-v2.js): bloco, deload, âncoras e o teto de sessões que a semana usou.
+  const est = motorPrepararEstado(perfil, { ...opcoes, _teto4:!!r.teto4 });
   if(est.cautela.bloqueado) return { ok:false, motivo:'motor_bloqueado' };
-  // Mesmas preparações do início de gerarPlanoSemanal (motor-v2.js).
-  if(opcoes.alvoSemana && opcoes.alvoSemana.corridaMinAlvo>0 && est.corrida && est.corrida.carga){
-    est.corrida.carga = { ...est.corrida.carga, min: opcoes.alvoSemana.corridaMinAlvo };
-  }
-  if(est.corrida) est.corrida.volumeFatorPlanejado = (opcoes.ajustesIniciais && opcoes.ajustesIniciais.volumeFator) || 1;
-  if(est.corrida && est.corrida.ctx) est.corrida.ctx.weekNumber = (opcoes.alvoSemana && opcoes.alvoSemana.semana) || 1;
   const prio = definirPrioridade(est);
   const ajustes = iaClone(r.ajustes);
   const cons = motorConstruir(est, prio, { ...ajustes });
@@ -55,11 +56,14 @@ function iaContextoDoMotor(perfil, opcoes, semanaServida){
     return { ok:false, motivo:'reconstrucao_divergente' };
   }
   const val = validarPlano(est, prio, cons.freq, cons.dist, cons.semana, ajustes);
-  if(!val.ok) return { ok:false, motivo:'motor_reprovado' };
+  // Erros só de conteúdo da musculação (V11–V15) o motor já tratou por seed e entregou com aviso (motorRefinarConteudo): não reprovam aqui.
+  if(val.erros.some(e=>!MOTOR_COD_CONTEUDO.test(e.cod))) return { ok:false, motivo:'motor_reprovado' };
   const fs = fatorSeriesDaSemana(opcoes.alvoSemana || null);
   const muscServido = iaAplicarFatorSeries(cons.semana.muscPlan, fs);
   if(semanaServida && iaAssinaturaMusc(semanaServida.muscPlan)!==iaAssinaturaMusc(muscServido)) return { ok:false, motivo:'semana_servida_divergente' };
-  const ctx = { ok:true, r, est, prio, freq:cons.freq, dist:cons.dist, semana:cons.semana, ajustes, fatorSemana:fs, muscServido, opcoes };
+  // Erros de conteúdo (V11–V15) que o motor já tinha na semana entregue (mantidos com aviso): a IA não é reprovada por eles, só pelos novos.
+  const conteudoAceito = new Set(val.erros.filter(e=>MOTOR_COD_CONTEUDO.test(e.cod)).map(e=>e.cod+'|'+e.detalhe));
+  const ctx = { ok:true, r, est, prio, conteudoAceito, freq:cons.freq, dist:cons.dist, semana:cons.semana, ajustes, fatorSemana:fs, muscServido, opcoes };
   ctx.autorizados = iaListaAutorizada(ctx);
   if(!ctx.autorizados.ok) return { ok:false, motivo:ctx.autorizados.motivo };
   ctx.dias = iaInfoDias(ctx);
@@ -134,7 +138,7 @@ function iaInfoDias(ctx){
       limiteMin: minutos - (run ? run.totalMin : 0),
       perto: durosCorrida.some(x=>dist2(x,d)<=2),
       corrida: runSess ? { tipo: runSess.tipo==='longa' ? 'longa' : runSess.tipo==='qualidade' ? 'qualidade' : 'leve', dura: !!runSess.dura } : null,
-      qtdMax: motorQtdExercicios(est, foco),
+      qtdMax: Math.max(motorQtdExercicios(est, foco), semana.muscPlan[d].length),   // o preenchimento de tempo do motor pode passar da quantidade padrão
       qtdMotor: semana.muscPlan[d].length,
       combinada: semana.muscPlan[d][0] ? (semana.muscPlan[d][0].combinada || null) : null,
     };
@@ -146,12 +150,13 @@ function iaRetomada(est){ return est.musc.situacao==='parado' && (est.musc.parad
 // (inclui retomada, calibração e o fator de séries da semana); repetições e descanso em faixa provisória.
 function iaLimites(ctx, papel, foco){
   const est = ctx.est, nivel = est.capacidade.musc;
-  const esq = motorEsquema(nivel, papel, foco, iaRetomada(est), est.calibracao.ativa, est.musc.eixos && est.musc.eixos.volume);
+  const esq = motorEsquema(nivel, papel, foco, iaRetomada(est), est.calibracao.musc, est.musc.eixos && est.musc.eixos.volume);
   const C = IA_CONFIG;
   let repsMin = Math.max(C.repsMin, esq.reps - C.repsAbaixo), repsMax = Math.min(C.repsMax, esq.reps + C.repsAcima);
   if(nivel==='iniciante' || iaRetomada(est)) repsMin = Math.max(repsMin, Math.min(C.repsMinIniciante, esq.reps));
   return {
-    seriesMin: C.seriesMin, seriesMax: Math.max(C.seriesMin, iaSeriesComFator(esq.series, ctx.fatorSemana)),
+    seriesMin: (est.bloco && est.bloco.deload) ? 1 : C.seriesMin,   // semana de deload do motor: -1 série (mínimo 1)
+    seriesMax: Math.max(C.seriesMin, iaSeriesComFator(esq.series, ctx.fatorSemana)),
     repsMin, repsMax,
     rpeMin: C.rpeMin, rpeMax: esq.rpe,
     descansoMin: (foco==='forca' && papel==='base') ? C.descansoMinForcaBaseSeg : C.descansoMinSeg, descansoMax: C.descansoMaxSeg,

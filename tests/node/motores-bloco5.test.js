@@ -22,7 +22,7 @@ const perfil = (n) => ({ ...BASE, ...PERFIS.find(p => p[0].startsWith(n))[1] });
 
   // ProgressionDecision
   const ex = { nome: 'Supino reto com barra', grupo: 'Peito', series: '3', reps: '10', carga: '40', repdbId: '0025' };
-  const casos = { sem: null, subir: [{ peso: 40, reps: 10, pse: 7 }], reduzir: [{ peso: 40, reps: 10, pse: 9.5 }], manter: [{ peso: 40, reps: 9 }] };
+  const casos = { sem: null, subir: [{ peso: 40, reps: 10, pse: 7 }], reduzir: [{ peso: 40, reps: 6, pse: 9.5 }], manter: [{ peso: 40, reps: 9 }] };
   const acoes = {};
   for (const [k, sets] of Object.entries(casos)) {
     S.historicoCarga = sets ? { '0025': [{ data: '2026-10-01', sets }] } : {};

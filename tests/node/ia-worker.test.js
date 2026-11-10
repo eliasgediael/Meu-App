@@ -397,7 +397,7 @@ const pedidoBase = (n = 0) => ({
       'esquema para o Google: tipos, obrigatórios, ordem e todas as opções fixas mantidos (igual ao Teste 4)');
     const exL = ESQ_LOCAL.properties.dias.items.properties.exercicios.items.properties;
     t(exL.series.minimum === 1 && exL.series.maximum === 10 && exL.reps.maximum === 30 && exL.rpe.maximum === 10 && exL.descansoSeg.maximum === 600 && exL.id.maxLength === 12
-      && ESQ_LOCAL.properties.dias.minItems === 1 && ESQ_LOCAL.properties.dias.maxItems === 7 && ESQ_LOCAL.properties.dias.items.properties.exercicios.maxItems === 8 && ESQ_LOCAL.properties.motivos.maxItems === 6,
+      && ESQ_LOCAL.properties.dias.minItems === 1 && ESQ_LOCAL.properties.dias.maxItems === 7 && ESQ_LOCAL.properties.dias.items.properties.exercicios.maxItems === 10 && ESQ_LOCAL.properties.motivos.maxItems === 6,
       'esquema local (functions/src/esquema-resposta.json) continua com TODOS os limites');
     const naoMexe = JSON.stringify(ESQ_LOCAL); G.esquemaParaGoogle(ESQ_LOCAL, 'openapi'); G.esquemaParaGoogle(ESQ_LOCAL, 'json');
     t(JSON.stringify(ESQ_LOCAL) === naoMexe, 'gerar o esquema do Google não altera o esquema local');

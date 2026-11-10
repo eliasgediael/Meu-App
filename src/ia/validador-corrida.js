@@ -148,7 +148,7 @@ function iaValidarPropostaV2(ctx, ctxC, bruto){
   semana.corridaWeek = semana.corridaWeek.map(w=>{ const s = corr.sessoes[w.day]; return s ? { ...w, ...iaClone(s), day:w.day, duracaoMin:s.totalMin } : w; });
   semana.sessoes = semana.sessoes.map(x=>{ const s = x.modalidade==='corrida' ? corr.sessoes[x.dia] : null; return s ? { ...x, duracaoMin:s.totalMin, km:s.totalKm } : x; });
   const v = validarPlano(ctx.est, ctx.prio, ctx.freq, ctx.dist, semana, ctx.ajustes);
-  v.erros.forEach(e=>E('R7', `${e.cod}: ${e.detalhe}`));
+  iaErrosDoMotor(ctx, v.erros).forEach(e=>E('R7', `${e.cod}: ${e.detalhe}`));
   if(erros.length) return falhou();
   return { ok:true, erros, avisos:(musc ? musc.avisos : []), musc, corrida:corr, motivos:resp.motivos.slice(), semanaConjunta:semana };
 }

@@ -1,7 +1,6 @@
 // Histórico curto de corrida (2 ou 3 semanas): a média por semana divide pelas semanas que o histórico cobre (2 a 4),
 // e com histórico válido a semana não fica com uma corrida só quando a carga já cobre 2 sessões mínimas.
 // Só usa ok() (nunca snapshot). Hoje congelado = segunda 05/10/2026.
-const crypto = require('crypto');
 const { carregarApp, ok, semErro } = require('../harness/carregar.js');
 const { BASE, D7 } = require('../harness/perfis.js');
 
@@ -10,14 +9,11 @@ const DEZ_K = { obj: 'prova', dist: 10, semData: true, cSit: 'regular', cExp: '1
 const HIST2 = [['2026-09-21', 30], ['2026-09-24', 35], ['2026-09-29', 30], ['2026-10-03', 50]];
 const HIST3 = [['2026-09-14', 30], ['2026-09-17', 35], ['2026-09-22', 30], ['2026-09-24', 30], ['2026-09-29', 30], ['2026-10-03', 50]];
 const HOJE = new Date('2026-10-05T10:00:00-03:00');
-// Hash do plano completo (plan + trajetoria, sem os ids, que vêm do relógio real) do perfil DEZ_K sem histórico,
-// calculado no commit 63cdcfc (antes desta correção).
-const HASH_SEM_HISTORICO = 'c5d475cbff6570b1a837fb82f412e5fc20c10792404518f9576063816d6f52b6';
 function progresso(lista) { const o = {}; lista.forEach(([d, m], i) => { o['r' + i] = { done: true, data: d, tempo: m + ':00', km: String(Math.round(m / 6.5)) }; }); return o; }
 const longoDe = w => Math.max(0, ...((w && w.corridaWeek) || []).filter(c => c.type === 'Longão').map(c => c.totalMin || 0));
 
 (async () => {
-  const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'gerarSemanaV2', 'historicoCorridaReal']);
+  const T = await carregarApp(['state', 'qv2Aplicar', 'criarAthleteProfile', 'gerarPrimeiroPlanoV2', 'gerarSemanaV2', 'historicoCorridaReal', 'motorOpcoesHistorico']);
   const S = T.state;
   async function gerar(R, hist) {
     S.athleteProfile = T.criarAthleteProfile(); S.equipItens = null; S.hybridPlanData = null; S.corridaVdotData = null; S.treinos = []; S.musculacao = {};
@@ -55,12 +51,11 @@ const longoDe = w => Math.max(0, ...((w && w.corridaWeek) || []).filter(c => c.t
   const w1max = Math.max(...g.semanas[0].corridaWeek.map(c => c.totalMin || 0));
   ok(w1max <= 57.5 + 1, 'semana 1: nenhuma corrida passa de 115% da maior (' + w1max + ' min)');
 
-  // sem histórico o plano é idêntico ao de antes (hash do plano completo sem os ids)
+  // sem histórico o motor não recebe nada do histórico (o plano sai como sem a feature); a comparação por hash da corrida deixou de valer
+  // na integração com a musculação da pasta FORZA RUN, porque o nível e as sessões de musculação mudam em que dias a corrida cai.
   const s = await gerar(DEZ_K, null);
-  const limpo = JSON.stringify({ plan: s.hp.plan, trajetoria: s.hp.trajetoria }).replace(/"id":"[a-z0-9]+",?/g, '');
-  const hash = crypto.createHash('sha256').update(limpo).digest('hex');
-  
-  ok(hash === HASH_SEM_HISTORICO, 'sem histórico: plano idêntico ao anterior (hash ' + hash.slice(0, 12) + ')');
+  ok(JSON.stringify(T.motorOpcoesHistorico(s.hp, 1)) === '{}', 'sem histórico: nenhuma opção de histórico chega ao motor');
+  ok(s.r.log === undefined || !JSON.stringify(s.r.log).includes('historico_corrida'), 'sem histórico: o motor não registra uso de histórico');
   semErro();
   process.exit(process.exitCode || 0);
 })();

@@ -1115,6 +1115,7 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-detailsbody{ margin-top:14px; text-align:center; }
 .mrt-detailsbody .mrt-exthumb{ display:block; margin:0 auto 14px; }
 .mrt-detailsbody .mrt-passos{ text-align:left; }
+.mrt-aviso{ margin:0 0 12px; padding:10px 12px; border-radius:10px; background:var(--gold-soft); color:var(--gold); font-size:13.5px; font-weight:600; text-align:left; }
 .mrt-lastline b{ color:var(--text); font-weight:700; }
 .mrt-restring{ position:relative; width:200px; height:200px; margin:6px auto 8px; }
 .mrt-restring svg{ position:absolute; inset:0; width:100%; height:100%; }
@@ -2999,23 +3000,23 @@ const POOL = {
     Peito: [{nome:'Supino reto com barra',id:'0025',nivel:'intermediario'},{nome:'Supino reto com halteres',id:'0289',nivel:'intermediario'},{nome:'Supino inclinado com halteres',id:'0314',nivel:'intermediario'},{nome:'Supino inclinado com barra',id:'0047',nivel:'intermediario'},{nome:'Supino declinado com barra',id:'0033',nivel:'avancado'},{nome:'Supino declinado com halteres',id:'0301',nivel:'intermediario'},{nome:'Supino na máquina Smith',id:'0748',nivel:'iniciante'},{nome:'Crucifixo com halteres',id:'0308',nivel:'intermediario'},{nome:'Crucifixo inclinado com halteres',id:'0319',nivel:'intermediario'},{nome:'Crossover no cabo',id:'1270',nivel:'intermediario'},{nome:'Peck deck (voador na máquina)',id:'0596',nivel:'iniciante'},{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'},{nome:'Mergulho nas paralelas (peito)',id:'0251',nivel:'intermediario'},{nome:'Pullover com halter',id:'0375',nivel:'intermediario'},{nome:'Supino pegada fechada',id:'0030',nivel:'intermediario'}],
     Costas: [{nome:'Puxada frontal na polia',id:'0198',nivel:'iniciante'},{nome:'Barra fixa (pegada neutra)',id:'0651',nivel:'intermediario'},{nome:'Barra fixa supinada',id:'1326',nivel:'intermediario'},{nome:'Remada curvada com barra',id:'0027',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada baixa no cabo',id:'0861',nivel:'iniciante'},{nome:'Remada cavalinho (T-bar)',id:'1349',nivel:'intermediario'},{nome:'Remada na máquina',id:'0581',nivel:'iniciante'},{nome:'Levantamento terra com barra',id:'0032',nivel:'avancado'},{nome:'Levantamento terra sumô',id:'0117',nivel:'avancado'},{nome:'Stiff com barra',id:'0116',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Hiperextensão lombar',id:'0489',nivel:'iniciante'},{nome:'Encolhimento com barra',id:'0095',nivel:'iniciante'},{nome:'Encolhimento com halteres',id:'0406',nivel:'iniciante'},{nome:'Pulldown reto (braço estendido)',id:'0238',nivel:'iniciante'},{nome:'Bom dia (good morning)',id:'0044',nivel:'avancado'}],
     Pernas: [{nome:'Agachamento livre com barra',id:'0043',nivel:'intermediario'},{nome:'Agachamento com halteres (goblet)',id:'1760',nivel:'iniciante'},{nome:'Agachamento frontal com barra',id:'0042',nivel:'avancado'},{nome:'Agachamento sumô na máquina Smith',id:'3142',nivel:'intermediario'},{nome:'Agachamento búlgaro com halteres',id:'0410',nivel:'avancado'},{nome:'Agachamento com salto',id:'0514',nivel:'avancado'},{nome:'Leg press 45 graus',id:'0739',nivel:'iniciante'},{nome:'Cadeira extensora',id:'0585',nivel:'iniciante'},{nome:'Mesa flexora (deitado)',id:'0586',nivel:'iniciante'},{nome:'Cadeira flexora (sentado)',id:'0599',nivel:'iniciante'},{nome:'Afundo com halteres',id:'0336',nivel:'intermediario'},{nome:'Passada (afundo caminhando)',id:'1460',nivel:'intermediario'},{nome:'Afundo com barra',id:'0054',nivel:'avancado'},{nome:'Passada reversa com halteres',id:'0381',nivel:'intermediario'},{nome:'Elevação de panturrilha em pé',id:'0605',nivel:'iniciante'},{nome:'Elevação de panturrilha sentado',id:'0594',nivel:'iniciante'},{nome:'Cadeira adutora',id:'0598',nivel:'iniciante'},{nome:'Cadeira abdutora',id:'0597',nivel:'iniciante'},{nome:'Step up com halteres',id:'0431',nivel:'intermediario'},{nome:'Agachamento hack',id:'0743',nivel:'intermediario'},{nome:'Elevação de quadril com barra',id:'1409',nivel:'intermediario'},{nome:'Agachamento na máquina Smith',id:'0770',nivel:'iniciante'},{nome:'Panturrilha no leg press',id:'1391',nivel:'iniciante'}],
-    Ombro: [{nome:'Desenvolvimento com halteres sentado',id:'0405',nivel:'intermediario'},{nome:'Desenvolvimento militar sentado com barra',id:'0091',nivel:'intermediario'},{nome:'Desenvolvimento Arnold',id:'2137',nivel:'intermediario'},{nome:'Desenvolvimento na máquina',id:'0587',nivel:'iniciante'},{nome:'Elevação lateral com halteres',id:'0334',nivel:'iniciante'},{nome:'Elevação lateral no cabo',id:'0178',nivel:'iniciante'},{nome:'Elevação frontal com halteres',id:'0310',nivel:'iniciante'},{nome:'Elevação frontal com barra',id:'0041',nivel:'iniciante'},{nome:'Crucifixo inverso com halteres',id:'0380',nivel:'intermediario'},{nome:'Remada alta com barra',id:'0120',nivel:'intermediario'},{nome:'Remada alta com halteres',id:'0437',nivel:'iniciante'},{nome:'Elevação lateral na máquina',id:'0584',nivel:'iniciante'}],
+    Ombro: [{nome:'Desenvolvimento com halteres sentado',id:'0405',nivel:'intermediario'},{nome:'Desenvolvimento militar sentado com barra',id:'0091',nivel:'intermediario'},{nome:'Desenvolvimento Arnold',id:'2137',nivel:'intermediario'},{nome:'Desenvolvimento na máquina',id:'0587',nivel:'iniciante'},{nome:'Elevação lateral com halteres',id:'0334',nivel:'iniciante'},{nome:'Elevação lateral no cabo',id:'0178',nivel:'iniciante'},{nome:'Elevação frontal com halteres',id:'0310',nivel:'iniciante'},{nome:'Crucifixo inverso com halteres',id:'0380',nivel:'intermediario'},{nome:'Remada alta com barra',id:'0120',nivel:'intermediario'},{nome:'Remada alta com halteres',id:'0437',nivel:'iniciante'},{nome:'Elevação lateral na máquina',id:'0584',nivel:'iniciante'}],
     'Braço': [{nome:'Rosca direta com barra',id:'0031',nivel:'iniciante'},{nome:'Rosca direta com halteres',id:'0294',nivel:'iniciante'},{nome:'Rosca alternada com halteres',id:'0285',nivel:'iniciante'},{nome:'Rosca martelo',id:'0313',nivel:'iniciante'},{nome:'Rosca Scott com barra',id:'0070',nivel:'intermediario'},{nome:'Rosca concentrada',id:'0297',nivel:'iniciante'},{nome:'Rosca no cabo',id:'0868',nivel:'iniciante'},{nome:'Rosca inversa com barra',id:'0080',nivel:'intermediario'},{nome:'Tríceps testa com barra',id:'0061',nivel:'intermediario'},{nome:'Tríceps testa com halteres',id:'0351',nivel:'intermediario'},{nome:'Tríceps francês com barra',id:'0092',nivel:'intermediario'},{nome:'Tríceps no pulley barra reta',id:'0201',nivel:'iniciante'},{nome:'Tríceps no pulley corda',id:'0200',nivel:'iniciante'},{nome:'Tríceps coice com halter',id:'0333',nivel:'intermediario'},{nome:'Mergulho no banco (tríceps)',id:'0129',nivel:'iniciante'},{nome:'Rosca de punho',id:'0126',nivel:'iniciante'},{nome:'Rosca de punho inversa',id:'0082',nivel:'iniciante'},{nome:'Tríceps coice no cabo',id:'1728',nivel:'intermediario'}],
     Core: [{nome:'Abdominal tradicional (crunch)',id:'0274',nivel:'iniciante'},{nome:'Abdominal infra (elevação de pernas deitado)',id:'0620',nivel:'iniciante'},{nome:'Elevação de pernas na barra',id:'0472',nivel:'intermediario'},{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Abdominal no cabo',id:'0175',nivel:'iniciante'},{nome:'Rotação russa (russian twist)',id:'0687',nivel:'intermediario'},{nome:'Escalador (mountain climber)',id:'0630',nivel:'intermediario'}],
   },
   halteres: {
     Peito: [{nome:'Supino com halteres',id:'0289',nivel:'iniciante'},{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Crucifixo com halteres',id:'0308',nivel:'intermediario'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'}],
     Costas: [{nome:'Remada unilateral com halter',id:'0292',nivel:'intermediario'},{nome:'Remada curvada com halteres',id:'0293',nivel:'intermediario'},{nome:'Superman',id:null,nivel:'iniciante'}],
-    Pernas: [{nome:'Agachamento com halteres',id:'0413',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'}],
+    Pernas: [{nome:'Agachamento com halteres',id:'0413',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Stiff com halteres',id:'1459',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'},{nome:'Panturrilha em pé com halteres',id:'0417',nivel:'iniciante'},{nome:'Levantamento terra com halteres',id:'0300',nivel:'avancado'}],
     Ombro: [{nome:'Desenvolvimento com halteres',id:'0405',nivel:'intermediario'},{nome:'Elevação lateral',id:'0334',nivel:'iniciante'},{nome:'Elevação frontal',id:'0310',nivel:'iniciante'},{nome:'Arnold press',id:'2137',nivel:'intermediario'}],
     'Braço': [{nome:'Rosca direta com halteres',id:'0294',nivel:'iniciante'},{nome:'Rosca martelo',id:'0313',nivel:'iniciante'},{nome:'Tríceps francês',id:'0092',nivel:'intermediario'},{nome:'Tríceps unilateral',id:'0333',nivel:'intermediario'}],
     Core: [{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'}],
   },
   corpo: {
     Peito: [{nome:'Flexão de braço',id:'0662',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'},{nome:'Flexão fechada',id:'0259',nivel:'iniciante'},{nome:'Flexão arqueiro',id:null,nivel:'avancado'}],
-    Costas: [{nome:'Superman',id:null,nivel:'iniciante'},{nome:'Barra fixa',id:'0651',nivel:'intermediario'},{nome:'Barra fixa negativa',id:'0652',nivel:'intermediario'},{nome:'Ponte de glúteo',id:'3013',nivel:'iniciante'}],
-    Pernas: [{nome:'Agachamento livre',id:'3119',nivel:'iniciante'},{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'},{nome:'Cadeira (wall sit)',id:null,nivel:'iniciante'}],
-    Ombro: [{nome:'Flexão pike',id:'3662',nivel:'intermediario'},{nome:'Cão-prancha dinâmico',id:'3665',nivel:'iniciante'}],
+    Costas: [{nome:'Superman',id:null,nivel:'iniciante'},{nome:'Remada invertida',id:'0499',nivel:'iniciante'},{nome:'Barra fixa',id:'0651',nivel:'intermediario'},{nome:'Barra fixa negativa',id:'0652',nivel:'intermediario'},{nome:'Ponte de glúteo',id:'3013',nivel:'iniciante'}],
+    Pernas: [{nome:'Afundo (avanço)',id:'1460',nivel:'intermediario'},{nome:'Agachamento búlgaro',id:'0410',nivel:'avancado'},{nome:'Cadeira (wall sit)',id:null,nivel:'iniciante'}],
+    Ombro: [],
     'Braço': [{nome:'Flexão fechada',id:'0259',nivel:'iniciante'},{nome:'Mergulho no banco',id:'0814',nivel:'iniciante'},{nome:'Flexão diamante',id:'0283',nivel:'intermediario'}],
     Core: [{nome:'Prancha',id:null,nivel:'iniciante'},{nome:'Abdominal tradicional',id:'0274',nivel:'iniciante'},{nome:'Elevação de pernas',id:'0620',nivel:'intermediario'},{nome:'Prancha lateral',id:'3544',nivel:'intermediario'},{nome:'Escalador',id:'0630',nivel:'intermediario'}],
   },
@@ -4133,7 +4134,7 @@ function qv2Valido(id, R){
     case 'mrot': return ok(R.mExp) && (!qv2Ativo(R.mSit) || ok(R.mFreq)) && (R.mSit!=='parado' || ok(R.mParado));
     case 'mpad': return (R.mPadroes||[]).length>0;
     case 'local': return ok(R.local);
-    case 'dias': return Object.keys(R.dias||{}).some(d=>R.dias[d] && R.dias[d].on && ok(R.dias[d].min));
+    case 'dias': return Object.keys(R.dias||{}).some(d=>R.dias[d] && R.dias[d].on);
     case 'comb': return ok(R.comb);
     case 'dor': return R.dor===true || R.dor===false;
     case 'dordet': return (R.dorRegioes||[]).length>0 && ok(R.dorInt) && (R.dorRep===true || R.dorRep===false);
@@ -4184,10 +4185,10 @@ function qv2Corpo(id, R){
     }
     case 'mpad': return { titulo:R.mSit==='parado' ? 'Quais movimentos você fazia com segurança?' : 'Quais movimentos você faz com segurança?', corpo:`<div class="qv2-chips">${QV2_PAD.map(([v,l])=>qv2Chip('mPadroes', v, l, (R.mPadroes||[]).includes(v), true)).join('')}${qv2Chip('mPadroes','nenhum','Nenhum',(R.mPadroes||[]).includes('nenhum'),true)}</div>` };
     case 'local': return { titulo:'Onde você treina musculação?', corpo:QV2_LOCAL.map(([v,l])=>qv2Op('local', v, l, R.local===v)).join('') };
-    case 'dias': return { titulo:'Em que dias você pode treinar?', corpo:`<div class="mrt-sub" style="margin-bottom:14px;">Marque o dia e quanto tempo você tem.</div>` + DAY_ABBR.map(d=>{
+    case 'dias': return { titulo:'Em que dias você pode treinar?', corpo:`<div class="mrt-sub" style="margin-bottom:14px;">Marque os dias em que você pode treinar.</div>` + DAY_ABBR.map(d=>{
       const x = R.dias[d] || {};
       return `<div class="qv2-dia"><button class="mrt-adjchip qv2-diabtn ${x.on?'on':''}" data-qv2dia="${d}">${d}</button>
-        ${x.on ? `<div class="qv2-mins">${QV2_MINUTOS.map(m=>qv2Chip('min_'+d, m, m+' min', x.min===m, false, 'n')).join('')}${qv2Chip('min_'+d,'varia','Varia',x.min==='varia')}</div>` : ''}</div>`; }).join('') };
+        </div>`; }).join('') };
     case 'comb': return { titulo:'Corrida e musculação no mesmo dia?', corpo:QV2_COMB.map(([v,l])=>qv2Op('comb', v, l, R.comb===v)).join('') };
     case 'dor': return { titulo:'Tem dor ou lesão que atrapalhe o treino agora?', corpo:qv2Op('dor','true','Sim',R.dor===true,'b') + qv2Op('dor','false','Não',R.dor===false,'b') };
     case 'dordet': return { titulo:'Sobre a dor', corpo:`${qv2Sec('Onde?')}<div class="qv2-chips">${QV2_REG.map(([v,l])=>qv2Chip('dorRegioes', v, l, (R.dorRegioes||[]).includes(v), true)).join('')}</div>
@@ -4264,7 +4265,7 @@ async function qv2Aplicar(R){
   }
   // semana
   const porDia = {};
-  DAY_ABBR.forEach(d=>{ const x = R.dias[d]; porDia[d] = (x && x.on) ? { disponivel:true, minutos:(typeof x.min==='number' ? x.min : null) } : { disponivel:false, minutos:null }; });
+  DAY_ABBR.forEach(d=>{ const x = R.dias[d]; porDia[d] = (x && x.on) ? { disponivel:true, minutos:(typeof x.min==='number' ? x.min : 60) } : { disponivel:false, minutos:null }; });
   definirAthleteDisponibilidade(p, porDia, { origem:'informado', confianca:'alta', forcar:true });
   S('disponibilidade.combinacao.preferencia', R.comb);
   // dor (restrição de treino) e sinais de alerta (cautela) — blocos separados
@@ -8619,15 +8620,15 @@ const HB_MUSC_QTD = { iniciante:5, intermediario:6, avancado:7 };
 // Cada "slot" é uma função do treino (joelho, quadril, unilateral...) com uma lista de preferências (regex sobre o
 // nome sem acento, em ordem) — assim funciona com qualquer equipamento do POOL e respeita o tier do nível.
 const HB_SLOT = {
-  joelho:    { papel:'base',     grupo:'Pernas', from:['Pernas'], excluir:/panturrilha/, pref:{ default:[/agachamento livre/,/agachamento frontal/,/hack/,/leg press/,/smith/,/agachamento/], iniciante:[/leg press/,/hack/,/smith/,/goblet|agachamento com halteres/,/agachamento/] } },
+  joelho:    { papel:'base',     grupo:'Pernas', from:['Pernas'], pref:{ default:[/agachamento livre com barra/,/goblet|agachamento com halteres/,/agachamento frontal/,/hack/,/^leg press/,/smith/,/agachamento livre/,/agachamento/], iniciante:[/^leg press/,/hack/,/smith/,/goblet|agachamento com halteres/,/agachamento/] } },
   quadril:   { papel:'auxiliar', grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff/,/terra/,/bom dia/,/elevacao de quadril/,/ponte de gluteo/,/flexora/], iniciante:[/flexora/,/hiperextensao/,/ponte de gluteo/] } },
-  unilateral:{ papel:'auxiliar', grupo:'Pernas', from:['Pernas'], excluir:/panturrilha/, pref:{ default:[/bulgaro/,/afundo|passada|step up/,/leg press/,/hack/,/smith/,/agachamento/], iniciante:[/hack/,/smith/,/leg press/,/agachamento/] } },
+  unilateral:{ papel:'auxiliar', grupo:'Pernas', from:['Pernas'], pref:{ default:[/bulgaro/,/afundo|passada|step up/,/^leg press/,/hack/,/smith/,/agachamento/], iniciante:[/hack/,/smith/,/^leg press/,/agachamento/] } },
   quadrIso:  { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/extensora/,/flexora/] } },
   panturrilha:{ papel:'isolado', grupo:'Pernas', from:['Pernas'], pref:{ default:[/panturrilha/] } },
   posterior: { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/flexora/,/extensora/] } },
   adutora:   { papel:'isolado',  grupo:'Pernas', from:['Pernas'], pref:{ default:[/abdutora|adutora/] } },
   empHoriz:  { papel:'base',     grupo:'Peito',  from:['Peito'], pref:{ default:[/supino reto com barra/,/supino reto com halteres|supino com halteres/,/supino inclinado com halteres/,/supino inclinado com barra/,/supino/], iniciante:[/smith/,/supino com halteres|supino reto com halteres/,/supino/] } },
-  puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], excluir:/braco estendido|pullover/, pref:{ default:[/barra fixa/,/puxada/,/pulldown/], iniciante:[/puxada frontal/,/pulldown/] } },
+  puxVert:   { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/barra fixa/,/puxada/,/^pulldown(?!.*estendido)/], iniciante:[/puxada frontal/,/^pulldown(?!.*estendido)/] } },
   empVert:   { papel:'auxiliar', grupo:'Ombro',  from:['Ombro'], pref:{ default:[/desenvolvimento militar|desenvolvimento com halteres/,/arnold/,/desenvolvimento/], iniciante:[/desenvolvimento na maquina/,/desenvolvimento/] } },
   puxHoriz:  { papel:'auxiliar', grupo:'Costas', from:['Costas'], pref:{ default:[/remada curvada com barra/,/remada curvada com halteres/,/remada cavalinho/,/remada baixa/,/remada unilateral/,/remada na maquina/,/remada/], iniciante:[/remada baixa/,/remada na maquina/,/remada/] } },
   ombroIso:  { papel:'isolado',  grupo:'Ombro',  from:['Ombro'], pref:{ default:[/elevacao lateral/] } },
@@ -8636,74 +8637,104 @@ const HB_SLOT = {
   core:      { papel:'isolado',  grupo:'Core',   from:['Core'], pref:{ default:[/prancha/,/abdominal/] } },
   // slots dos dias por região (empurrar / puxar / pernas A e B): só mudam a escolha dentro do mesmo catálogo
   peitoAux:  { papel:'auxiliar', grupo:'Peito',  from:['Peito'], pref:{ default:[/mergulho nas paralelas/,/flexao diamante/,/pullover/,/flexao de braco/], iniciante:[/flexao de braco/,/peck deck/] } },
-  peitoIso:  { papel:'isolado',  grupo:'Peito',  from:['Peito'], pref:{ default:[/crucifixo inclinado/,/crossover/,/crucifixo/,/peck deck/] } },
   puxBase:   { papel:'base',     grupo:'Costas', from:['Costas'], excluir:/braco estendido|pullover/, pref:{ default:[/remada curvada com barra/,/barra fixa/,/remada cavalinho/,/remada curvada com halteres/,/puxada/], iniciante:[/puxada frontal/,/remada baixa/] } },
   tricepsB:  { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/pulley/,/frances/,/coice/,/triceps/] } },
   bicepsB:   { papel:'isolado',  grupo:'Braço',  from:['Braço'], pref:{ default:[/martelo/,/scott/,/rosca no cabo/,/concentrada/,/rosca/] } },
   ombroPost: { papel:'isolado',  grupo:'Ombro',  from:['Ombro'], pref:{ default:[/crucifixo inverso/,/remada alta/] } },
   costasIso: { papel:'isolado',  grupo:'Costas', from:['Costas'], pref:{ default:[/encolhimento/,/pulldown reto/] } },
   dobradica: { papel:'base',     grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff com barra/,/stiff/,/terra com barra/,/elevacao de quadril/,/flexora/], iniciante:[/flexora/,/elevacao de quadril/] } },
+  // Split de 5 sessões (Upper, Lower, Push, Pull, Legs): slots só do Push, Pull e Legs.
+  puxVertBase:{ papel:'base',     grupo:'Costas', from:['Costas'], pref:{ default:[/barra fixa/,/puxada/,/^pulldown(?!.*estendido)/] } },
+  trapezio:  { papel:'isolado',  grupo:'Costas', from:['Costas'], pref:{ default:[/encolhimento com barra/,/encolhimento com halteres/] } },
+  peitoIso:  { papel:'isolado',  grupo:'Peito',  from:['Peito'], pref:{ default:[/crucifixo com halteres/,/crucifixo inclinado/,/peck deck|voador/,/crossover/,/crucifixo/] } },
+  empFlex:   { papel:'auxiliar', grupo:'Peito',  from:['Peito'], pref:{ default:[/flexao de braco/,/flexao diamante/,/flexao fechada/] } },
+  quadrilBase:{ papel:'base',    grupo:'Pernas', from:['Costas','Pernas'], pref:{ default:[/stiff/,/terra/,/bom dia/,/elevacao de quadril/,/ponte de gluteo/,/flexora/] } },
+  joelhoAux: { papel:'auxiliar', grupo:'Pernas', from:['Pernas'], pref:{ default:[/^leg press/,/hack/,/goblet|agachamento com halteres/,/smith/,/agachamento/] } },
 };
 const HB_SESSAO_SLOTS = {
   leg:   ['joelho','quadril','unilateral','quadrIso','panturrilha','posterior','adutora'],
   upper: ['empHoriz','puxVert','empVert','puxHoriz','ombroIso','triceps','biceps'],
   full:  ['joelho','empHoriz','puxVert','quadril','empVert','puxHoriz','core'],
+  push:  ['empHoriz','empVert','peitoIso','ombroIso','triceps','empFlex'],
+  pull:  ['puxVertBase','puxHoriz','trapezio','biceps','core'],
+  legs:  ['quadrilBase','joelhoAux','unilateral','quadrIso','posterior','panturrilha','adutora'],
 };
+// Full body: quando a quantidade corta slots, a seleção segue esta prioridade (pernas, empurrar, remada, quadril, core, puxada vertical, ombro) e a exibição mantém a ordem de HB_SESSAO_SLOTS.full.
+const HB_PRIORIDADE_FULL = ['joelho','empHoriz','puxHoriz','quadril','core','puxVert','empVert'];
 // Uma sessão inteira (Leg Day / Superiores / Full body) — sem repetir exercício no dia, sem repetir o mesmo padrão
 // de movimento quando há alternativa, e preferindo o que ainda não apareceu em outros dias da semana.
 function buildHybridMuscSession(tipo, nivel, equip, weekTaken, isSafe, opts){
   const pool = (equip && typeof equip==='object') ? equip : (POOL[equip] || POOL.academia);
   const allowed = nivel==='iniciante' ? [1] : nivel==='intermediario' ? [1,2] : [1,2,3];
-  const relaxed = nivel==='iniciante' ? [1,2] : allowed;
-  const slots = ((opts && opts.slots) || HB_SESSAO_SLOTS[tipo]).slice(0, (opts && opts.qtd) || HB_MUSC_QTD[nivel] || 6);
+  const relaxed = allowed;   // iniciante: só tier 1, sem relaxar (Parte 2, item f)
+  const qtdSlots = (opts && opts.qtd) || HB_MUSC_QTD[nivel] || 6;
+  const slots = (opts && opts.slots) ? opts.slots.slice(0, qtdSlots)
+    : tipo==='full' ? HB_SESSAO_SLOTS.full.filter(k=>HB_PRIORIDADE_FULL.slice(0, qtdSlots).includes(k))
+    : HB_SESSAO_SLOTS[tipo].slice(0, qtdSlots);
   const taken = new Set(), padroes = new Set();
   const out = [];
   slots.forEach((slotKey, idx)=>{
     const slot = HB_SLOT[slotKey];
-    const regexes = slot.pref[nivel] || slot.pref.default;
+    let regexes = slot.pref[nivel] || slot.pref.default;
+    // Rotação de acessórios (etapa 3): nas semanas 2+ do bloco os slots que não são o principal giram a ordem de preferência.
+    const rot = (opts && opts.rot) || 0;
+    if(rot>0 && slot.papel!=='base' && regexes.length>1){ const k = rot % regexes.length; regexes = regexes.slice(k).concat(regexes.slice(0, k)); }
     const todos = [];
     slot.from.forEach(g=>(pool[g]||[]).forEach(e=>todos.push({ e, g })));
-    // excluir: nomes que casam com a preferência mas são de outra função (ex.: "panturrilha no leg press" no slot de joelho).
+    if(opts && opts.seed && slot.papel!=='base') motorEmbaralhar(todos, opts.seed*131 + idx*17 + String(tipo).length);
+    const evitarOntem = (opts && opts.evitar && slot.papel!=='isolado') ? opts.evitar : null;
+    const evitarPad = (opts && opts.evitarPadroes && slot.papel!=='isolado') ? opts.evitarPadroes : null;
     const excluido = (e)=>!!(slot.excluir && slot.excluir.test(normalizeNoAccents(e.nome)));
-    // rotacao (opcional, motor V2): escolhe a N-ésima opção válida na ordem de preferência; o exercício base não roda.
-    const ehBase = slot.papel==='base' || (tipo==='full' && idx===0);
-    const rot = (opts && opts.rotacao && !ehBase) ? opts.rotacao : 0;
-    const acha = (tiers, evitarPadrao, repetir)=>{
-      const achados = [];
+    const acha = (tiers, evitarPadrao, repetir, comEv)=>{
       for(const re of regexes){
-        for(const { e } of todos){
-          if(!(re.test(normalizeNoAccents(e.nome)) && !excluido(e) && tiers.includes(exercicioTier(e)) && isSafe(e.nome) && !taken.has(e.nome) && (repetir || !weekTaken.has(e.nome)) && !(evitarPadrao && padroes.has(padraoMovimento(e.nome))))) continue;
-          if(!rot) return e;
-          if(!achados.includes(e)) achados.push(e);
-        }
+        const c = todos.find(({e})=>re.test(normalizeNoAccents(e.nome)) && !excluido(e) && tiers.includes(exercicioTier(e)) && isSafe(e.nome) && !taken.has(e.nome) && (repetir || slotKey==='joelho' || !weekTaken.has(e.nome)) && !(comEv && evitarOntem && evitarOntem.has(e.nome)) && !(comEv && evitarPad && evitarPad.has(padraoMovimento(e.nome))) && !(evitarPadrao && padroes.has(padraoMovimento(e.nome))));
+        if(c) return c.e;
       }
-      return achados.length ? achados[rot % achados.length] : null;
+      return null;
     };
     let e = null;
-    for(const repetir of [false, true]){
-      e = acha(allowed, true, repetir) || acha(allowed, false, repetir) || acha(relaxed, true, repetir) || acha(relaxed, false, repetir);
-      if(e) break;
+    // Âncora do bloco (etapa 3): o exercício principal da semana 1 do bloco volta travado neste slot.
+    if(opts && opts.ancora && opts.ancora.slot===slotKey){
+      const c = todos.find(({e:x})=>x.nome===opts.ancora.nome && allowed.includes(exercicioTier(x)) && isSafe(x.nome) && !taken.has(x.nome));
+      if(c) e = c.e;
+    }
+    if(!e) for(const comEv of [true, false]){
+      for(const repetir of [false, true]){
+        e = acha(allowed, true, repetir, comEv) || acha(allowed, false, repetir, comEv) || acha(relaxed, true, repetir, comEv) || acha(relaxed, false, repetir, comEv);
+        if(e) break;
+      }
+      if(e || !(evitarOntem || evitarPad)) break;
     }
     // Sem nada que case (ex.: treino em casa só com peso do corpo): qualquer exercício do grupo que combine com o papel.
     if(!e){
       const composto = slot.papel!=='isolado';
       const c = todos.filter(({e:x})=>!excluido(x) && relaxed.includes(exercicioTier(x)) && isSafe(x.nome) && !taken.has(x.nome) && (composto ? isExercicioComposto(x.nome)!==false : isExercicioComposto(x.nome)!==true));
-      if(c.length) e = c[0].e;
+      const livreSem = c.filter(x=>!weekTaken.has(x.e.nome) && !(evitarOntem && evitarOntem.has(x.e.nome)) && !(evitarPad && evitarPad.has(padraoMovimento(x.e.nome))));
+      const livreOnt = c.filter(x=>!(evitarOntem && evitarOntem.has(x.e.nome)));
+      const ordem = livreSem.length ? livreSem : livreOnt.length ? livreOnt : c;
+      if(ordem.length) e = ordem[0].e;
     }
     if(!e) return;
     if(opts && opts.semPadraoRepetido && padroes.has(padraoMovimento(e.nome))) return;   // não repete o mesmo padrão de movimento na sessão
     taken.add(e.nome); weekTaken.add(e.nome); padroes.add(padraoMovimento(e.nome));
     // No full body só o primeiro é "base"; os compostos seguintes são auxiliares e o core fecha como isolado.
     const papel = tipo==='full' ? (idx===0 ? 'base' : slot.papel==='isolado' ? 'isolado' : 'auxiliar') : slot.papel;
-    out.push({ e, papel, grupo:slot.grupo });
+    out.push({ e, papel, grupo:slot.grupo, slot:slotKey });
   });
   return out;
+}
+// Embaralhamento determinístico (mulberry32): seed 0 não embaralha; seeds 1..10 variam a escolha dentro da mesma regex.
+function motorEmbaralhar(arr, seed){
+  let a = seed>>>0;
+  const rnd = ()=>{ a = (a + 0x6D2B79F5)>>>0; let t = a; t = Math.imul(t ^ (t>>>15), t | 1); t ^= t + Math.imul(t ^ (t>>>7), t | 61); return ((t ^ (t>>>14))>>>0)/4294967296; };
+  for(let i=arr.length-1; i>0; i--){ const j = Math.floor(rnd()*(i+1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  return arr;
 }
 // Agrupa variações do mesmo movimento (barra fixa / barra fixa supinada / puxada = "puxada vertical") pra
 // o auxiliar não virar só uma cópia do base.
 function padraoMovimento(nome){
   const n = normalizeNoAccents(nome);
-  const mapa = [['agachamento','agachamento'],['hack','agachamento'],['leg press','leg press'],['afundo','unilateral perna'],['passada','unilateral perna'],['step up','unilateral perna'],['terra','dobradica'],['stiff','dobradica'],['bom dia','dobradica'],['elevacao de quadril','quadril'],['ponte','quadril'],['supino','supino'],['flexao','flexao'],['mergulho','mergulho'],['desenvolvimento','desenvolvimento'],['arnold','desenvolvimento'],['remada','remada'],['puxada','puxada vertical'],['pulldown','puxada vertical'],['barra fixa','puxada vertical'],['crossover','crucifixo'],['crucifixo','crucifixo'],['peck deck','crucifixo'],['voador','crucifixo']];
+  const mapa = [['panturrilha','panturrilha'],['flexora','flexora'],['extensora','extensora'],['adutora','adutora/abdutora'],['abdutora','adutora/abdutora'],['prancha','core'],['abdominal','core'],['crunch','core'],['escalador','core'],['elevacao de pernas','core'],['russa','core'],['dead bug','core'],['hiperextensao','lombar'],['superman','lombar'],['agachamento','agachamento'],['hack','agachamento'],['leg press','leg press'],['afundo','unilateral perna'],['passada','unilateral perna'],['step up','unilateral perna'],['terra','dobradica'],['stiff','dobradica'],['bom dia','dobradica'],['elevacao de quadril','quadril'],['ponte','quadril'],['supino','supino'],['flexao','flexao'],['mergulho','mergulho'],['desenvolvimento','desenvolvimento'],['arnold','desenvolvimento'],['remada','remada'],['puxada','puxada vertical'],['pulldown','puxada vertical'],['barra fixa','puxada vertical'],['crossover','crucifixo'],['crucifixo','crucifixo'],['peck deck','crucifixo'],['voador','crucifixo']];
   const hit = mapa.find(([k])=>n.includes(k));
   return hit ? hit[1] : n;
 }
@@ -10874,7 +10905,7 @@ function renderWorkoutSession(){
         <section class="mrt-wex-hero" style="margin-top:4px;">
           ${(sug.direction && sug.peso) ? `<div class="mrt-lastline">Hoje: <b>${String(sug.peso).replace('.',',')} kg × ${sug.reps}</b> · ${sug.motivo}</div>` : ''}
           <button class="mrt-detailstoggle ${state.wexDetalhesOpen?'open':''}" data-wexdetalhes>Detalhes do exercício ${ICONS.chevR}</button>
-          ${state.wexDetalhesOpen ? (()=>{ const info = bibInfo(ex.nome, ex.grupo); return `<div class="mrt-detailsbody">${exThumbHtml(ex, 180)}<ol class="mrt-passos">${(info.passos||[]).map(p=>`<li>${p}</li>`).join('')}</ol></div>`; })() : ''}
+          ${state.wexDetalhesOpen ? (()=>{ const info = bibInfo(ex.nome, ex.grupo); const av = exercicioAviso(ex.nome); return `<div class="mrt-detailsbody">${exThumbHtml(ex, 180)}${av ? `<div class="mrt-aviso">${av}</div>` : ''}<ol class="mrt-passos">${(info.passos||[]).map(p=>`<li>${p}</li>`).join('')}</ol></div>`; })() : ''}
         </section>
         ${completedRows ? `<section class="mrt-card mrt-future-sets"><div class="mrt-blocklabel" style="margin-top:0;">Séries concluídas</div><table class="mrt-wex-table"><thead><tr><th>Série</th><th>Carga</th><th>Reps</th><th>PSE</th><th></th></tr></thead><tbody>${completedRows}</tbody></table></section>` : ''}
         ${futureRows ? `<section class="mrt-future-sets fr-next"><div class="mrt-blocklabel" style="margin-top:0;">Próximas séries</div><table class="mrt-wex-table"><tbody>${futureRows}</tbody></table></section>` : ''}
@@ -16774,6 +16805,13 @@ const BIB_INFO = [
     passos:['Deite com o haltere seguro acima do peito.','Leve o peso para trás da cabeça com os braços quase estendidos.','Sinta o alongamento do peito e das costas.','Retorne em arco até a posição inicial.'] },
 ];
 const BIB_PADRAO = { prim:null, sec:[], passos:['Ajuste o equipamento ou a posição inicial antes de começar.','Mantenha a coluna neutra e o abdômen contraído.','Faça o movimento de forma controlada, sem balançar.','Respire: expire no esforço e inspire na volta.','Comece leve e aumente a carga só quando a execução estiver perfeita.'] };
+// Ressalvas por exercício, mostradas na execução e na biblioteca.
+const EXERCICIO_AVISO = [[/^remada invertida/, 'Precisa de mesa firme ou barra baixa.']];
+function exercicioAviso(nome){
+  const n = normalizeNoAccents(nome);
+  const hit = EXERCICIO_AVISO.find(([re])=>re.test(n));
+  return hit ? hit[1] : null;
+}
 function bibInfo(nome, grupo){
   const it = exercicioPorNome(nome);
   if(it && it.cat && it.cat.passos && it.cat.passos.length){ const m = { ...it.cat, ...(MUSCULO_CORRIGIDO[nome] || {}) }; return { prim:[m.musculoPrim], sec:m.musculosSec||[], passos:it.cat.passos }; }
@@ -16876,7 +16914,8 @@ function renderBibDetalhe(nome){
   if(tab==='musculos'){
     corpo = muscleMapHtml(e.nome);
   }else if(tab==='como'){
-    corpo = `<ol class="mrt-passos">${info.passos.map(p=>`<li>${p}</li>`).join('')}</ol>`;
+    const av = exercicioAviso(e.nome);
+    corpo = `${av ? `<div class="mrt-aviso">${av}</div>` : ''}<ol class="mrt-passos">${info.passos.map(p=>`<li>${p}</li>`).join('')}</ol>`;
   }else if(tab==='equip'){
     corpo = req.map(id=>{ const it = EQUIP_ITENS.find(x=>x.id===id); const ok = equipLigado(id); return `<div class="mrt-togglerow"><div class="icon-box ${ok?'':'gold'}">${ICONS.dumbbell}</div><div class="nm">${it?it.nome:id}</div><span class="tag ${ok?'tag-done':'tag-gold'}">${ok?'no seu local':'não tem'}</span></div>`; }).join('');
   }else{

@@ -91,12 +91,12 @@ function iaValidarProposta(ctx, bruto){
       if(x.papel==='base'){ bases++; if(!it.composto && !(doMotor && doMotor.papel==='base')) E('F2', `${dia}: ${it.nome} não pode ser exercício base`); }
       const L = iaLimites(ctx, x.papel, info.foco);
       if(x.series<L.seriesMin || x.series>L.seriesMax) E('F2', `${dia}: ${it.nome} com ${x.series} séries (faixa ${L.seriesMin}–${L.seriesMax})`);
-      if(x.reps<L.repsMin || x.reps>L.repsMax) E('F2', `${dia}: ${it.nome} com ${x.reps} reps (faixa ${L.repsMin}–${L.repsMax})`);
+      if(motorEhIsometrico(it.nome) ? (x.reps<10 || x.reps>90) : (x.reps<L.repsMin || x.reps>L.repsMax)) E('F2', `${dia}: ${it.nome} com ${x.reps} reps (faixa ${L.repsMin}–${L.repsMax})`);
       if(x.rpe<L.rpeMin || x.rpe>L.rpeMax) E('F2', `${dia}: ${it.nome} com RPE ${x.rpe} (faixa ${L.rpeMin}–${L.rpeMax})`);
       if(x.descansoSeg<L.descansoMin || x.descansoSeg>L.descansoMax) E('F2', `${dia}: ${it.nome} com descanso ${x.descansoSeg}s (faixa ${L.descansoMin}–${L.descansoMax}s)`);
       lista.push({
         id: doMotor ? doMotor.id : 'ia' + Date.now().toString(36) + Math.random().toString(36).slice(2,6), done:false,
-        nome: it.nome, series:String(x.series), reps:String(x.reps), carga:'', grupo:it.grupo, repdbId: it.e.id || null, descanso:x.descansoSeg+'s',
+        nome: it.nome, series:String(x.series), reps: motorEhIsometrico(it.nome) ? x.reps + ' s' : String(x.reps), ...(motorEhIsometrico(it.nome) ? { isometrico:true } : {}), carga:'', grupo:it.grupo, repdbId: it.e.id || null, descanso:x.descansoSeg+'s',
         modo:'hibrido', papel:x.papel, tier:it.tier, rpe:x.rpe, orientacaoCarga:IA_ORIENTACAO_CARGA, combinada: info.combinada ? iaClone(info.combinada) : null,
       });
     });
@@ -149,7 +149,7 @@ function iaValidarProposta(ctx, bruto){
   const sessoes = ctx.semana.sessoes.map(s=>s.modalidade!=='musculacao' ? s : { ...s, tipo:tipos[s.dia], dura:tipos[s.dia]==='lower', duracaoMin:duracao[s.dia], exercicios:novo[s.dia].length });
   const semanaNova = { ...ctx.semana, muscPlan:novo, sessoes };
   const v = validarPlano(est, ctx.prio, ctx.freq, ctx.dist, semanaNova, ctx.ajustes);
-  v.erros.forEach(e=>E(e.cod, e.detalhe));
+  iaErrosDoMotor(ctx, v.erros).forEach(e=>E(e.cod, e.detalhe));
   if(erros.length) return falhou();
   return { ok:true, erros, avisos, muscPlan:novo, tipos, duracao, motivos:resp.motivos.slice(), volume:{ total, porGrupo, motor:ctx.seriesPorGrupoMotor } };
 }

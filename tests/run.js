@@ -46,6 +46,7 @@ const testes = [
   { nome: 'descarga da musculação (restauração desligada)', arq: 'node/descarga-musculacao.test.js' },
   { nome: 'histórico real de corrida no motor (Etapa 1)', arq: 'node/historico-corrida.test.js' },
   { nome: 'histórico curto de corrida (2 a 3 semanas)', arq: 'node/historico-curto.test.js' },
+  { nome: 'musculação da pasta FORZA RUN (etapas 1 a 6)', arq: 'node/musculacao-forza.test.js', timeout: 600000 },
   { nome: 'data da prova alinhada ao plano (Etapa 2)', arq: 'node/data-prova.test.js' },
   { nome: 'portão de meta: viabilidade no motor (Etapa 3)', arq: 'node/portao-meta.test.js' },
   { nome: 'ponte com o relógio Garmin', arq: 'node/relogio-garmin.test.js' },

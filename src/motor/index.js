@@ -6,6 +6,7 @@ import './historico-corrida.js';
 import './data-prova.js';
 import './portao-meta.js';
 import './plano-vivo.js';
+import './progressao-dupla.js';
 import './forca.js';
 import './atividades.js';
 import './contratos.js';
