@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
 <title>Forza Run</title>
 <link rel="icon" href="icon-180.png">
 <link rel="apple-touch-icon" href="icon-180.png">
@@ -15538,7 +15538,7 @@ function abrirEditorHyrox(id, inicial){
     <div class="sheet-sub">Um bloco por linha. Com tempo (5 min, 1:30, 45 s) o relógio avança sozinho. Corrida com km também. Sem tempo é livre: você toca START. Use "3x" na frente para repetir (ex.: 3x SkiErg 3 min).</div>
     <input class="ds-input" id="hxNome" placeholder="Nome (ex.: Aula de terça)" value="${esc(nome0)}">
     <div class="ds-chiprow wrap" style="margin-top:10px;">${chips.map((c,i)=>`<button class="ds-chip" data-hxchip="${i}">${c}</button>`).join('')}</div>
-    <textarea id="hxTexto" rows="9" style="width:100%;box-sizing:border-box;font:inherit;line-height:1.4;border-radius:12px;border:none;background:var(--surface-2);padding:12px 14px;color:var(--text);" placeholder="SkiErg 5 min&#10;Descanso 1 min&#10;Corrida 1 km&#10;Sled Push&#10;Wall Balls">${esc(texto0)}</textarea>
+    <textarea id="hxTexto" rows="9" style="width:100%;box-sizing:border-box;font-family:inherit;font-size:16px;line-height:1.4;border-radius:12px;border:none;background:var(--surface-2);padding:12px 14px;color:var(--text);" placeholder="SkiErg 5 min&#10;Descanso 1 min&#10;Corrida 1 km&#10;Sled Push&#10;Wall Balls">${esc(texto0)}</textarea>
     <div id="hxPrev" class="ds-muted" style="margin:8px 0 4px;line-height:1.5;"></div>
     <div class="ds-actions">
       <button class="btn-primary" id="hxSalvar">Salvar e enviar ao relógio</button>
@@ -20160,7 +20160,7 @@ function renderModal(){
         <h3>${editingAt ? 'Editar atividade' : 'Nova atividade'} · ${state.selectedDayOutros}</h3>
         <div class="field"><label>Nome da atividade</label><input type="text" id="inNomeAt" value="${editingAt?editingAt.nome:''}" placeholder="Muay Thai" autofocus></div>
         <div class="field"><label>Duração</label><input type="text" id="inDuracao" value="${editingAt?(editingAt.duracao||''):''}" placeholder="1h"></div>
-        <div class="field"><label>Treino / notas (opcional)</label><textarea id="inNotas" rows="7" style="width:100%;box-sizing:border-box;font:inherit;line-height:1.4;" placeholder="Ex.: o treino que o coach passou, um exercício por linha">${editingAt?String(editingAt.notas||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'):''}</textarea></div>
+        <div class="field"><label>Treino / notas (opcional)</label><textarea id="inNotas" rows="7" style="width:100%;box-sizing:border-box;font-family:inherit;font-size:16px;line-height:1.4;" placeholder="Ex.: o treino que o coach passou, um exercício por linha">${editingAt?String(editingAt.notas||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'):''}</textarea></div>
         <div class="modal-actions"><button class="secondary" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Salvar</button></div>
       </div>
     </div>`;
