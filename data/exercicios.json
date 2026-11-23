@@ -8165,5 +8165,74 @@
    "Desça devagar e repita."
   ],
   "origemMidia": "Gym visual"
+ },
+ {
+  "id": "0979",
+  "nome": "Pallof press com elástico",
+  "nomeEn": "band horizontal pallof press",
+  "grupo": "Core",
+  "musculoPrim": "Abdômen",
+  "musculosSec": [
+   "Oblíquos",
+   "Ombros"
+  ],
+  "equipamento": "Elástico",
+  "apelidos": [
+   "pallof press",
+   "pallof"
+  ],
+  "passos": [
+   "Prenda o elástico na altura do peito e fique de lado para o ponto de fixação, com os pés na largura dos ombros.",
+   "Segure o elástico com as duas mãos junto ao peito, com o abdômen contraído.",
+   "Estenda os braços à frente sem deixar o tronco girar.",
+   "Segure um instante e volte as mãos ao peito de forma controlada. Repita e troque de lado."
+  ],
+  "origemMidia": "exercises-gifs"
+ },
+ {
+  "id": "0993",
+  "nome": "Crucifixo inverso com elástico",
+  "nomeEn": "band reverse fly",
+  "grupo": "Ombro",
+  "musculoPrim": "Deltoide posterior",
+  "musculosSec": [
+   "Costas",
+   "Trapézio"
+  ],
+  "equipamento": "Elástico",
+  "apelidos": [
+   "band pull-apart",
+   "abertura com elástico"
+  ],
+  "passos": [
+   "Fique em pé com o elástico seguro nas duas mãos, braços estendidos à frente na altura dos ombros.",
+   "Afaste as mãos abrindo os braços para os lados, juntando as escápulas.",
+   "Segure um instante com o elástico na altura do peito.",
+   "Volte devagar à posição inicial."
+  ],
+  "origemMidia": "exercises-gifs"
+ },
+ {
+  "id": "1775",
+  "nome": "Prancha lateral com adução do quadril",
+  "nomeEn": "side plank hip adduction",
+  "grupo": "Core",
+  "musculoPrim": "Adutores",
+  "musculosSec": [
+   "Oblíquos",
+   "Abdômen"
+  ],
+  "equipamento": "Peso corporal",
+  "apelidos": [
+   "copenhagen plank",
+   "prancha copenhagen"
+  ],
+  "passos": [
+   "Deite de lado e apoie o antebraço no chão, com o cotovelo abaixo do ombro.",
+   "Apoie a perna de cima em um banco ou no chão à frente e mantenha a de baixo solta.",
+   "Eleve o quadril formando uma linha reta e suba a perna de baixo em direção à de cima.",
+   "Segure pelo tempo desejado, desça com controle e repita do outro lado."
+  ],
+  "origemMidia": "exercises-gifs"
  }
 ]
