@@ -4814,6 +4814,17 @@ async function init(opcoes){
 
   if(IA_CONFIG.ativa && IA_CONFIG.publicacaoAutorizada && iaRecuperarSemanaAtomica(state, localStorage)) await iaPersistirSemanaApp();
 
+  // Plano Hyrox do Elias: instala sozinho na primeira abertura desta versão (uma vez; marca para não repetir).
+  try{
+    if(!state.viewingClient && Array.isArray(state.treinos) && window.NativeBridge && NativeBridge.relogio){   // só no app do iPhone
+      const f = await window.storage.get('hyroxAutoInstalado', false);
+      if(!(f && f.value)){
+        aplicarPlanoHyrox();
+        await window.storage.set('hyroxAutoInstalado', '1', false);
+      }
+    }
+  }catch(e){}
+
   if(!(opcoes && opcoes.manterTela)) state.tab = 'hoje';
   state.modalOpen = false; state.modalType = null;
   render();
@@ -14679,13 +14690,20 @@ function renderTreinoV2Content(){
     if(ce && ml.length){ nome = `${ce.type||'Corrida'} + ${muscTituloDoDia(d, ml)}`; meta = 'Corrida + musculação'; }
     else if(ce){ nome = ce.type||'Corrida'; meta = 'Corrida'+(ce.totalKm?' · '+String(fmtKm(ce.totalKm)).replace('.',','):''); }
     else if(ml.length){ nome = muscTituloDoDia(d, ml); meta = 'Musculação · '+ml.length+' exercício'+(ml.length===1?'':'s'); }
+    // Outras atividades (boxe, aula de Hyrox...) também contam: antes o dia só com atividade aparecia como "Descanso".
+    const ou = (state.outros[d]||[]).filter(a=>a && a.nome);
+    const nomesOu = ou.map(a=>String(a.nome).replace(/[&<>]/g,'')).join(' + ');
+    if(ou.length){
+      if(nome) meta += ' + ' + nomesOu;
+      else { nome = nomesOu; meta = 'Atividade'+(ou[0].duracao?' · '+String(ou[0].duracao).replace(/[&<>]/g,''):''); }
+    }
     if(antesDoInicioDoPlano(d)){ nome = null; }
     const marca = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
       : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>`
       : (ce && !passado) ? `<button class="fr-ring fr-ringbtn" data-mrtdonecorrida="${d}" aria-label="Marcar corrida como feita"></button>`
-      : `<span class="ds-muted">${ce || ml.length ? 'Planejado' : '—'}</span>`;
+      : `<span class="ds-muted">${ce || ml.length || ou.length ? 'Planejado' : '—'}</span>`;
     const status = (hoje ? `<span class="ds-pill">Hoje</span>` : '') + marca;
-    const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length) ? ICONS.bed : ce ? ICONS.run : ICONS.dumbbell;
+    const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length && !ou.length) ? ICONS.bed : ce ? ICONS.run : ml.length ? ICONS.dumbbell : ICONS.calendar;
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate fr-daydate"><span>${d.toUpperCase()}</span><b>${frDiaMes(d)}</b></div>
       <div class="fr-dayic">${icone}</div>
@@ -14713,7 +14731,7 @@ function renderTreinoV2Content(){
   void nomeDia;
   const faixa = '<div class="fr-weekstrip" role="group" aria-label="Dias da semana">'+DAY_ABBR.map(d=>{
     const sel=d===day, hoje=d===hojeAbbr && (state.weekOffset||0)===0, st=dayStatus(d);
-    return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span class="fr-wdic ${st==='done'?'done':st==='none'?'rest':''}">${st==='done' ? CHECK_SVG : st==='none' ? ICONS.bed : treinoEntryForDay(d) ? ICONS.run : ICONS.dumbbell}</span></button>`;
+    return `<button class="fr-weekday ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}" aria-pressed="${sel}" aria-label="${DAY_FULLNAME[d]||d}, ${dayDateLabel(d)}${hoje?', hoje':''}, ${st==='done'?'concluído':st==='none'?'descanso':'planejado'}"><small>${d.toUpperCase()}</small><b>${parseInt(frDiaMes(d),10)}</b><span class="fr-wdic ${st==='done'?'done':st==='none'?'rest':''}">${st==='done' ? CHECK_SVG : st==='none' ? ICONS.bed : treinoEntryForDay(d) ? ICONS.run : muscListForDay(d).length ? ICONS.dumbbell : ICONS.calendar}</span></button>`;
   }).join('')+'</div>';
   const semanaCompleta=frDisclosure('semana-completa','Ver semana completa',daylist);
   return header + planoBar + weekNav + faixa + renderAvisoIA() + avisoAgenda + avisoQualidade + toggle + chips + dayContent + semanaCompleta + renderOutrasAtividadesDoDia(day);
@@ -15398,6 +15416,12 @@ function planoHyroxInstalado(){ return (state.muscTemplates||[]).some(t=>t.id===
 async function instalarPlanoHyrox(){
   const ok = await confirmarApp({ titulo:'Instalar plano Hyrox?', texto:'Substitui a musculação de Segunda, Quarta e Sexta pelas rotinas A, B e C, e adiciona as atividades da semana (boxe, aulas de Hyrox) e 8 semanas de corrida: tiros na sexta e corrida longa no domingo. Outras atividades que você já criou são mantidas.', ok:'Instalar' });
   if(!ok) return;
+  aplicarPlanoHyrox();
+  closeSheet(); state.tab = 'musculacao'; state.selectedDayMusc = 'Seg'; render(); hapticLeve(); showToast('Plano Hyrox instalado');
+}
+// Grava o plano (rotinas, atividades, corridas agendadas) sem confirmação nem tela. Usado ao instalar e na
+// primeira abertura do app (o plano já vem pronto, uma vez só; depois o que você editar fica como está).
+function aplicarPlanoHyrox(){
   state.muscTemplates = state.muscTemplates || [];
   HYROX_ROTINAS.forEach(r=>{
     const tpl = { id:r.id, tipo:r.tipo, hyrox:true, exercicios:r.exercicios.map((e,i)=>({ ...e, id:'ex'+r.id+i })), createdAt:Date.now(), updatedAt:Date.now() };
@@ -15416,7 +15440,6 @@ async function instalarPlanoHyrox(){
   hyroxAgendarCorrida();
   state.isDemo = false;
   saveMusc(); saveMuscDayOrigin(); saveMuscTemplates(); saveOutros(); saveTreinoTemplates(); saveTreinos();
-  closeSheet(); state.tab = 'musculacao'; state.selectedDayMusc = 'Seg'; render(); hapticLeve(); showToast('Plano Hyrox instalado');
 }
 function abrirPlanoHyrox(){
   const linha = (d, t, s)=>`<div class="ds-row"><span class="nm">${d} · ${t}</span><span class="aside">${s}</span></div>`;
@@ -15602,8 +15625,22 @@ function renderOutrasAtividadesDoDia(day){
   const iso = dataDoDiaExibido(day);
   const lista = atividadesLivresDoDia(iso);
   const hoje = (state.weekOffset||0)===0 && day===hojeAbbr();
-  if(!lista.length && !hoje) return '';
-  return `<div class="ds-section fr-outras">
+  // Atividades planejadas do dia (boxe, aula de Hyrox...): nome, duração e o treino/notas, que dá pra editar na hora.
+  const planej = ((state.outros||{})[day]||[]).filter(a=>a && a.nome);
+  const esc = s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const blocoPlanej = `<div class="ds-section fr-outras">
+    <div class="ds-label" style="margin-bottom:6px;">Atividades do dia</div>
+    <div class="ds-list">
+      ${planej.map(a=>`<div class="ds-row" style="align-items:flex-start;gap:10px;">
+        <button class="fr-ring fr-ringbtn" data-oact-done="${a.id}" aria-label="Marcar como feito">${a.done?CHECK_SVG:''}</button>
+        <span class="nm" style="flex:1;min-width:0;${a.done?'opacity:.6;':''}">${esc(a.nome)}${a.duracao?`<small>${esc(a.duracao)}</small>`:''}${a.notas?`<div style="white-space:pre-line;margin-top:6px;font-size:14px;font-weight:400;opacity:.85;">${esc(a.notas)}</div>`:''}</span>
+        <button class="ex-edit" data-oact-edit="${a.id}" aria-label="Editar">${ICONS.pencil}</button>
+        <button class="ex-edit" data-oact-del="${a.id}" aria-label="Excluir" style="font-size:16px;">×</button>
+      </div>`).join('')}
+      <button class="ds-row" data-oact-add="${day}">${ICONS.plus}<span class="nm">Adicionar atividade</span><span class="chev">${DS_CHEV}</span></button>
+    </div></div>`;
+  if(!lista.length && !hoje) return planej.length ? blocoPlanej : '';
+  return blocoPlanej + `<div class="ds-section fr-outras">
     <div class="ds-label" style="margin-bottom:6px;">Outras atividades do dia</div>
     <div class="ds-list">
       ${lista.map(a=>`<button class="ds-row" data-abriratividade="${a.id}">${a.tipo==='caminhada' ? ICONS.shoe : ICONS.run}<span class="nm">${TIPOS_ATIVIDADE_LIVRE[a.tipo] || 'Atividade'}<small>${rotuloAtividade(a)}</small></span><span class="chev">${DS_CHEV}</span></button>${hoje ? renderSugestaoVinculo(a) : ''}`).join('')}
@@ -15981,6 +16018,12 @@ function wireTreinoV2(){
   wireSugestaoVinculo();
   document.querySelectorAll('[data-abriratividade]').forEach(el=>{ el.onclick = ()=> abrirResumoAtividade(el.getAttribute('data-abriratividade')); });
   document.querySelectorAll('[data-registrarlivre]').forEach(el=>{ el.onclick = escolherAtividadeLivre; });
+  // Atividades planejadas do dia (state.outros): marcar feito, editar o treino/notas, excluir, adicionar.
+  const diaAtiv = ()=> state.selectedDayMusc || DAY_ABBR[(new Date().getDay()+6)%7];
+  document.querySelectorAll('[data-oact-done]').forEach(el=>{ el.onclick = ()=> toggleAtividadeDone(diaAtiv(), el.getAttribute('data-oact-done')); });
+  document.querySelectorAll('[data-oact-edit]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = diaAtiv(); state.editingAtId = el.getAttribute('data-oact-edit'); state.modalType = 'outros'; state.modalOpen = true; render(); }; });
+  document.querySelectorAll('[data-oact-add]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = el.getAttribute('data-oact-add'); state.editingAtId = null; state.modalType = 'outros'; state.modalOpen = true; render(); }; });
+  document.querySelectorAll('[data-oact-del]').forEach(el=>{ el.onclick = async ()=>{ const ok = await confirmarApp({ titulo:'Excluir atividade?', texto:'Ela some deste dia.', ok:'Excluir' }); if(ok) delAtividade(diaAtiv(), el.getAttribute('data-oact-del')); }; });
   document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
   document.querySelectorAll('[data-corrigirrun]').forEach(el=>{ el.onclick = ()=> abrirCorrigirCorrida(el.getAttribute('data-corrigirrun')); });
   document.querySelectorAll('[data-excluirrun]').forEach(el=>{ el.onclick = ()=> confirmarExcluirCorrida(el.getAttribute('data-excluirrun')); });

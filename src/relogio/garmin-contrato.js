@@ -132,21 +132,40 @@ function mensagemTreinos(lista, forca, maxBytes) {
 
 // Lista completa em páginas de até maxBytes (o relógio junta as páginas e só troca a lista quando todas
 // chegam). Corridas primeiro, depois musculação; cada página: {t:'w', v:3, b, pg, pgs, w:[...]}.
-function mensagensTreinos(lista, forca, maxBytes, idEnvio) {
+// hyrox (opcional): treinos Hyrox em blocos ({y:'h',...}); com ele cada página leva "hv":1 e o relógio
+// substitui a lista de treinos Hyrox (lista vazia limpa). Sem ele o relógio mantém a lista guardada.
+function mensagensTreinos(lista, forca, maxBytes, idEnvio, hyrox) {
   const limite = maxBytes || MAX_BYTES;
   const b = String(idEnvio || Date.now().toString(36)).slice(-8);
   const bytes = value => encodeURIComponent(JSON.stringify(value)).replace(/%[0-9A-F]{2}/g, 'x').length;
-  const base = bytes({ t: 'w', v: 3, b, pg: 999999, pgs: 999999, w: [] });
+  const base = bytes(hyrox ? { t: 'w', v: 3, hv: 1, b, pg: 999999, pgs: 999999, w: [] } : { t: 'w', v: 3, b, pg: 999999, pgs: 999999, w: [] });
   const paginas = [];
   let atual = [], tam = base;
-  for (const item of [...(lista || []), ...(forca || [])]) {
+  for (const item of [...(lista || []), ...(forca || []), ...(hyrox || [])]) {
     const custo = bytes(item) + 1;
     if (base + custo > limite) throw new Error("Treino grande demais para enviar ao Garmin: " + item.id);
     if (tam + custo > limite) { paginas.push(atual); atual = []; tam = base; }
     atual.push(item); tam += custo;
   }
   paginas.push(atual);
-  return paginas.map((w, pg) => ({ t: 'w', v: 3, b, pg, pgs: paginas.length, w }));
+  return paginas.map((w, pg) => (hyrox ? { t: 'w', v: 3, hv: 1, b, pg, pgs: paginas.length, w } : { t: 'w', v: 3, b, pg, pgs: paginas.length, w }));
+}
+
+// ---------- Hyrox em blocos ----------
+// Bloco do app { nome, tipo: 't'|'d'|'o', valor } -> [nome, tipo, valor?]. Treino -> { y:'h', id, n, b }.
+// 't' = segundos (avança sozinho), 'd' = metros (avança sozinho), 'o' = livre (START conclui).
+const MAX_BLOCOS_HYROX = 30;
+function hyroxCompacto(t) {
+  if (!t || !Array.isArray(t.blocos) || !t.blocos.length || t.blocos.length > MAX_BLOCOS_HYROX) return null;
+  const b = [];
+  for (const x of t.blocos) {
+    const nome = String(x && x.nome || '').trim().slice(0, 20);
+    if (!nome) return null;
+    if (x.tipo === 'o') b.push([nome, 'o']);
+    else if ((x.tipo === 't' || x.tipo === 'd') && x.valor > 0) b.push([nome, x.tipo, Math.round(x.valor)]);
+    else return null;
+  }
+  return { y: 'h', id: String(t.id), n: String(t.nome || 'Hyrox').slice(0, 20), b };
 }
 
 // ---------- Musculação ----------
@@ -290,7 +309,7 @@ function mensagemRemoverRota() { return { t: 'route', clear: true }; }
 
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
-  treinosParaRelogio, mensagemTreinos, mensagensTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
+  treinosParaRelogio, mensagemTreinos, mensagensTreinos, hyroxCompacto, mensagemAck, registroDoResultado, MAX_BYTES,
   MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
   MAX_PONTOS_ROTA, MAX_BYTES_ROTA, rotaCompacta, mensagemRemoverRota,
 };
