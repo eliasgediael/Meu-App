@@ -3,7 +3,7 @@ const { carregarApp, ok } = require('../harness/carregar.js');
 const C = require('../../src/relogio/garmin-contrato.js');
 
 (async () => {
-  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox', 'hyroxParseValor', 'hyroxImg', 'HYROX_ESTACOES']);
+  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox', 'hyroxParseValor', 'hyroxImg', 'HYROX_ESTACOES', 'renderTreinoV2Content', 'renderTreinoV2Hyrox', 'aplicarPlanoHyrox', 'diaTemHyrox']);
   const p = T.hyroxParseTexto;
   const b = p('SkiErg 5 min\nDescanso 1:30\nCorrida 1 km\nSled Push\n3x Wall Balls 45 s\nBurpee Broad Jump 80 m\n\n- Remo livre');
   const nomes = b.map(x => x.nome + '|' + x.tipo + '|' + x.valor);
@@ -38,4 +38,21 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(T.HYROX_ESTACOES.every(e => fs.existsSync(__dirname + '/../../gifs/' + e.id + '.webp')), 'as 8 estações têm imagem no pacote');
   const det = C.hyroxCompacto({ id: 'h', nome: 'n', blocos: [{ nome: 'Wall Balls', tipo: 'o', valor: 0, det: '100 reps' }] });
   ok(det.b[0][0] === 'Wall Balls 100 reps', 'detalhe vai no nome do bloco livre: ' + det.b[0][0]);
+  // Aba Hyrox no dia, ao lado de Musculação e Corrida
+  const S = T.state; S.weekOffset = 0;
+  T.aplicarPlanoHyrox();
+  S.hyroxTreinos = [{ id: 'hxA', nome: 'Aula de terça', dias: ['Ter', 'Sex'], blocos: [{ nome: 'SkiErg', tipo: 't', valor: 300, det: '' }, { nome: 'Sled Pull', tipo: 'o', valor: 0, det: '' }] }];
+  ok(T.diaTemHyrox('Ter') && T.diaTemHyrox('Sex') && T.diaTemHyrox('Dom') && !T.diaTemHyrox('Sáb'), 'dia tem Hyrox: WOD ou aula de Hyrox planejada');
+  S.treinosSubTab = 'hyrox'; S.selectedDayMusc = 'Ter';
+  const ter = T.renderTreinoV2Content();
+  ok(/data-hxwod-edit="hxA"/.test(ter) && ter.includes('gifs/9001.webp') && ter.includes('gifs/9003.webp'), 'terça mostra o WOD com a imagem de cada estação');
+  ok(!/data-mrtsub/.test(ter), 'terça só tem Hyrox: sem seletor');
+  S.selectedDayMusc = 'Sex';
+  const sex = T.renderTreinoV2Content();
+  ok(/data-mrtsub="musculacao"/.test(sex) && /data-mrtsub="corrida"/.test(sex) && /data-mrtsub="hyrox"/.test(sex), 'sexta tem as 3 abas lado a lado: Musculação, Corrida e Hyrox');
+  ok(/data-hxwod-edit="hxA"/.test(sex), 'aba Hyrox ativa mostra o WOD na sexta');
+  S.treinosSubTab = 'corrida';
+  ok(!/data-hxwod-edit/.test(T.renderTreinoV2Content()), 'aba Corrida não mostra o WOD');
+  S.selectedDayMusc = 'Qui';
+  ok(/Montar WOD do dia/.test(T.renderTreinoV2Content()), 'quinta (aula sem WOD) oferece montar o WOD');
 })().catch(e => { console.log('FALHOU', e); process.exit(1); });

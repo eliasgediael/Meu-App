@@ -1043,6 +1043,7 @@ button.mrt-excheck svg{ width:12px; height:12px; color:var(--on-accent); }
 .mrt-togglebtn.active{ background:var(--surface-2); color:var(--text); }
 .mrt-togglebtn.active.musc{ color:var(--musc); }
 .mrt-togglebtn.active.run{ color:var(--run); }
+.mrt-togglebtn.active.hyrox{ color:var(--accent); }
 .mrt-chiprow{ display:flex; gap:6px; margin-bottom:14px; overflow-x:auto; scrollbar-width:none; }
 .mrt-chiprow::-webkit-scrollbar{ display:none; }
 .mrt-adjchip{ display:inline-flex; align-items:center; gap:5px; height:38px; padding:0 10px; border-radius:var(--r-pill); border:1.5px solid var(--border); background:var(--surface); color:var(--text); font-family:inherit; font-size:12.5px; font-weight:600; cursor:pointer; white-space:nowrap; flex-shrink:0; }
@@ -14658,6 +14659,31 @@ function frRevisarQuestionario(){
   state.qv2.revisao = true;
   render();
 }
+
+// WODs Hyrox que caem em um dia da semana (o treino guarda os dias em "dias").
+function hyroxDoDia(day){ return (state.hyroxTreinos||[]).filter(t=>t && (t.dias||[]).includes(day)); }
+// O dia tem aba Hyrox quando tem WOD montado ou uma aula de Hyrox planejada.
+function diaTemHyrox(day){ return hyroxDoDia(day).length>0 || ((state.outros||{})[day]||[]).some(a=>a && /hyrox/i.test(a.nome||'')); }
+function hyroxThumb(img, rotulo, px){
+  const p = px || 56;
+  return `<div style="width:${p}px;height:${p}px;border-radius:10px;background:#fff;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(128,128,128,.25);">${img ? `<img src="${img}" alt="" style="width:100%;height:100%;object-fit:contain;">` : `<span style="color:#555;font-size:10px;font-weight:700;">${rotulo||''}</span>`}</div>`;
+}
+// Aba "Hyrox" do dia (ao lado de Musculação e Corrida): o WOD em blocos, com a imagem de cada estação.
+function renderTreinoV2Hyrox(day){
+  const esc = s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  const lista = hyroxDoDia(day);
+  const cards = lista.map(t=>`<div class="ds-section">
+    <div class="ds-label" style="margin-bottom:6px;">${esc(t.nome)}${hyroxDuracaoTotal(t.blocos||[]) ? ' · '+hyroxDuracaoTotal(t.blocos||[]) : ''}</div>
+    <div class="ds-list">
+      ${(t.blocos||[]).map((b,i)=>`<div class="ds-row" style="gap:12px;">${hyroxThumb(hyroxImg(b.nome), /^corr/i.test(b.nome)?'CORRIDA':/^desc/i.test(b.nome)?'DESCANSO':'', 48)}<span class="nm">${i+1}. ${esc(b.nome)}<small>${esc(hyroxTextoValor(b) || 'livre')}</small></span></div>`).join('')}
+    </div>
+    <div class="ds-actions">
+      <button class="btn-secondary" data-hxwod-edit="${t.id}">Editar WOD</button>
+      <button class="btn-primary" data-hxwod-send="1">Enviar ao relógio</button>
+    </div></div>`).join('');
+  const vazio = lista.length ? '' : '<div class="ds-muted" style="padding:6px 0 14px;line-height:1.5;">Ainda não tem WOD para este dia. Monte o treino que o professor passou: escolha as estações pela imagem, ponha o tempo ou deixe livre, e ele vai para o relógio.</div>';
+  return vazio + cards + `<div class="ds-section"><div class="ds-list"><button class="ds-row" data-hxwod-new="${day}">${ICONS.plus}<span class="nm">${lista.length ? 'Novo WOD para este dia' : 'Montar WOD do dia'}</span><span class="chev">${DS_CHEV}</span></button></div></div>`;
+}
 function renderTreinoV2Content(){
   // Dados ainda carregando na abertura do app: mostra o estado de carregamento em vez de quebrar.
   if(!Array.isArray(state.treinos)) return frTreinoCabecalho(null) + `<div class="fr-carregando">Carregando seus treinos…</div>`;
@@ -14698,8 +14724,12 @@ function renderTreinoV2Content(){
     else if(ml.length){ nome = muscTituloDoDia(d, ml); meta = 'Musculação · '+ml.length+' exercício'+(ml.length===1?'':'s'); }
     // Outras atividades (boxe, aula de Hyrox...) também contam: antes o dia só com atividade aparecia como "Descanso".
     const ou = (state.outros[d]||[]).filter(a=>a && a.nome);
-    const nomesOu = ou.map(a=>String(a.nome).replace(/[&<>]/g,'')).join(' + ');
-    if(ou.length){
+    const wods = hyroxDoDia(d);
+    let itensOu = ou.map(a=>String(a.nome).replace(/[&<>]/g,''));
+    if(wods.length) itensOu = itensOu.filter(n=>!/hyrox/i.test(n)).concat(wods.map(w=>String(w.nome).replace(/[&<>]/g,'')));
+    const nomesOu = itensOu.join(' + ');
+    const temOu = itensOu.length>0;
+    if(temOu){
       if(nome) meta += ' + ' + nomesOu;
       else { nome = nomesOu; meta = 'Atividade'+(ou[0].duracao?' · '+String(ou[0].duracao).replace(/[&<>]/g,''):''); }
     }
@@ -14707,9 +14737,9 @@ function renderTreinoV2Content(){
     const marca = st==='done' ? `<span class="ds-done" aria-label="Concluído">${CHECK_SVG}</span>`
       : (st==='pending' && passado) ? `<span class="ds-muted">Não feito</span>`
       : (ce && !passado) ? `<button class="fr-ring fr-ringbtn" data-mrtdonecorrida="${d}" aria-label="Marcar corrida como feita"></button>`
-      : `<span class="ds-muted">${ce || ml.length || ou.length ? 'Planejado' : '—'}</span>`;
+      : `<span class="ds-muted">${ce || ml.length || temOu ? 'Planejado' : '—'}</span>`;
     const status = (hoje ? `<span class="ds-pill">Hoje</span>` : '') + marca;
-    const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length && !ou.length) ? ICONS.bed : ce ? ICONS.run : ml.length ? ICONS.dumbbell : ICONS.calendar;
+    const icone = antesDoInicioDoPlano(d) || (!ce && !ml.length && !temOu) ? ICONS.bed : ce ? ICONS.run : ml.length ? ICONS.dumbbell : ICONS.calendar;
     return `<div class="ds-dayrow ${sel?'sel':''} ${hoje?'today':''}" data-mrtday="${d}">
       <div class="ds-daydate fr-daydate"><span>${d.toUpperCase()}</span><b>${frDiaMes(d)}</b></div>
       <div class="fr-dayic">${icone}</div>
@@ -14721,17 +14751,19 @@ function renderTreinoV2Content(){
   const nomeDia = `<div class="ds-dayhead">${DAY_FULLNAME[day]||day}</div>`;
 
   // Seletor Musculação | Corrida só quando o dia tem os dois; com um só, mostra direto o que existe.
-  const temC = !!treinoEntryForDay(day), temM = muscListForDay(day).length>0;
-  let sub = state.treinosSubTab==='corrida' ? 'corrida' : 'musculacao';
-  if(temC && !temM) sub = 'corrida'; else if(temM && !temC) sub = 'musculacao';
-  const toggle = (temC && temM) ? `
+  const temC = !!treinoEntryForDay(day), temM = muscListForDay(day).length>0, temH = diaTemHyrox(day);
+  // Abas: Musculação | Corrida | Hyrox, só as que o dia tem; com uma só, mostra direto.
+  const abas = [temM && 'musculacao', temC && 'corrida', temH && 'hyrox'].filter(Boolean);
+  let sub = abas.includes(state.treinosSubTab) ? state.treinosSubTab : (abas[0] || 'musculacao');
+  const toggle = abas.length>=2 ? `
     <div class="mrt-toggle">
-      <button class="mrt-togglebtn musc ${sub==='musculacao'?'active':''}" data-mrtsub="musculacao">${ICONS.dumbbell} Musculação</button>
-      <button class="mrt-togglebtn run ${sub==='corrida'?'active':''}" data-mrtsub="corrida">${ICONS.run} Corrida</button>
+      ${abas.includes('musculacao') ? `<button class="mrt-togglebtn musc ${sub==='musculacao'?'active':''}" data-mrtsub="musculacao">${ICONS.dumbbell} Musculação</button>` : ''}
+      ${abas.includes('corrida') ? `<button class="mrt-togglebtn run ${sub==='corrida'?'active':''}" data-mrtsub="corrida">${ICONS.run} Corrida</button>` : ''}
+      ${abas.includes('hyrox') ? `<button class="mrt-togglebtn hyrox ${sub==='hyrox'?'active':''}" data-mrtsub="hyrox">${ICONS.kettlebell || ICONS.dumbbell} Hyrox</button>` : ''}
     </div>` : '';
 
   const chips = (sub==='musculacao' && temM) ? renderTreinoAjustes(day) : '';
-  const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : renderTreinoV2Corrida(day, phaseParts);
+  const dayContent = sub==='musculacao' ? renderTreinoV2Musc(day, phaseParts) : sub==='hyrox' ? renderTreinoV2Hyrox(day) : renderTreinoV2Corrida(day, phaseParts);
   const avisoAgenda = (state.weekOffset||0)===0 ? renderAvisoAgenda() : '';
   const avisoQualidade = renderAvisoQualidadeRemovida();
   void nomeDia;
@@ -15513,7 +15545,7 @@ function abrirTreinosHyrox(){
     <div class="sheet-title">Treinos Hyrox</div>
     <div class="sheet-sub">Monte a aula do dia em blocos. Eles aparecem no relógio em Hyrox, e o relógio guia por tempo ou deixa livre.</div>
     <div class="ds-list">
-      ${lista.map(t=>`<button class="ds-row" data-hxedit="${t.id}"><span class="nm">${String(t.nome).replace(/[&<>]/g,'')}<small>${(t.blocos||[]).length} blocos${hyroxDuracaoTotal(t.blocos||[]) ? ' · '+hyroxDuracaoTotal(t.blocos||[]) : ''}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}
+      ${lista.map(t=>`<button class="ds-row" data-hxedit="${t.id}"><span class="nm">${String(t.nome).replace(/[&<>]/g,'')}<small>${(t.blocos||[]).length} blocos${hyroxDuracaoTotal(t.blocos||[]) ? ' · '+hyroxDuracaoTotal(t.blocos||[]) : ''}${(t.dias||[]).length ? ' · '+t.dias.join(' ') : ' · sem dia'}</small></span><span class="chev">${DS_CHEV}</span></button>`).join('')}
       <button class="ds-row" data-hxnovo="1">${ICONS.plus}<span class="nm">Novo treino Hyrox</span><span class="chev">${DS_CHEV}</span></button>
     </div>
     <div class="ds-actions">
@@ -15521,7 +15553,7 @@ function abrirTreinosHyrox(){
       <button class="btn-ghost" id="hxFechar">Fechar</button>
     </div>`, (sh)=>{
     sh.querySelectorAll('[data-hxedit]').forEach(el=>{ el.onclick = ()=>abrirEditorHyrox(el.getAttribute('data-hxedit')); });
-    sh.querySelector('[data-hxnovo]').onclick = ()=>abrirEditorHyrox(null);
+    sh.querySelector('[data-hxnovo]').onclick = ()=>abrirEditorHyrox(null, { dias:[state.selectedDayMusc || DAY_ABBR[(new Date().getDay()+6)%7]] });
     sh.querySelector('#hxFechar').onclick = ()=>closeSheet();
     const env = sh.querySelector('#hxEnviar');
     if(env) env.onclick = async ()=>{ const r = await relogioEnviarTreinos({ forcar:true }); showToast(r && r.enviados>0 ? 'Enviado ao relógio' : 'Relógio não conectado'); };
@@ -15550,6 +15582,7 @@ function abrirEditorHyrox(id, inicial){
   const t = id ? (state.hyroxTreinos||[]).find(x=>x.id===id) : null;
   let nome0 = t ? t.nome : ((inicial && inicial.nome) || '');
   let blocos = t ? (t.blocos||[]).map(b=>({ ...b })) : (inicial && inicial.texto ? hyroxParseTexto(inicial.texto) : []);
+  let dias = t ? (t.dias||[]).slice() : ((inicial && inicial.dias) || []).slice();
   let modo = 'lista';
   const esc = s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
   const thumb = (img, rotulo)=>`<div style="width:56px;height:56px;border-radius:10px;background:#fff;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(128,128,128,.25);">${img ? `<img src="${img}" alt="" style="width:100%;height:100%;object-fit:contain;">` : `<span style="color:#555;font-size:11px;font-weight:700;">${rotulo||''}</span>`}</div>`;
@@ -15585,6 +15618,8 @@ function abrirEditorHyrox(id, inicial){
       <div class="sheet-title">${t ? 'Editar' : 'Novo'} treino Hyrox</div>
       <div class="sheet-sub">Monte o WOD do dia. Em cada bloco escreva o tempo (5 min, 1:30, 45 s) ou o km da corrida. Em branco = livre: no relógio você toca START para passar.</div>
       <input class="ds-input" id="hxNome" placeholder="Nome (ex.: Aula de terça)" value="${esc(nome0)}">
+      <div class="ds-label" style="margin:12px 0 6px;">Dias em que aparece</div>
+      <div class="ds-chiprow wrap">${DAY_ABBR.map(d=>`<button class="ds-chip ${dias.includes(d)?'on':''}" data-hxdia="${d}">${d}</button>`).join('')}</div>
       <div id="hxLista" style="margin-top:8px;">
         ${blocos.length ? blocos.map((b,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(128,128,128,.2);">
           ${thumb(hyroxImg(b.nome), /^corr/i.test(b.nome)?'CORRIDA':/^desc/i.test(b.nome)?'DESCANSO':'')}
@@ -15604,6 +15639,7 @@ function abrirEditorHyrox(id, inicial){
         <button class="btn-ghost" id="hxCancelar">Cancelar</button>
       </div>`;
     const guardaNome = ()=>{ const i = sh.querySelector('#hxNome'); if(i) nome0 = i.value; };
+    sh.querySelectorAll('[data-hxdia]').forEach(el=>{ el.onclick = ()=>{ guardaNome(); const d = el.getAttribute('data-hxdia'); dias = dias.includes(d) ? dias.filter(x=>x!==d) : dias.concat(d).sort((a,b)=>DAY_ABBR.indexOf(a)-DAY_ABBR.indexOf(b)); pintar(); }; });
     sh.querySelectorAll('[data-hxval]').forEach(el=>{ el.onchange = ()=>{
       const i = +el.getAttribute('data-hxval'), b = blocos[i];
       Object.assign(b, hyroxParseValor(el.value, /corr|trote|tiro|run/i.test(b.nome)));
@@ -15614,7 +15650,7 @@ function abrirEditorHyrox(id, inicial){
     sh.querySelectorAll('[data-hxdown]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-hxdown'); if(i<blocos.length-1) mover(i, i+1); }; });
     sh.querySelectorAll('[data-hxdel]').forEach(el=>{ el.onclick = ()=>{ guardaNome(); blocos.splice(+el.getAttribute('data-hxdel'), 1); pintar(); }; });
     sh.querySelector('#hxAdd').onclick = ()=>{ guardaNome(); modo = 'escolher'; pintar(); };
-    sh.querySelector('#hxCancelar').onclick = ()=>abrirTreinosHyrox();
+    sh.querySelector('#hxCancelar').onclick = ()=>closeSheet();
     const ex = sh.querySelector('#hxExcluir');
     if(ex) ex.onclick = async ()=>{ const ok = await confirmarApp({ titulo:'Excluir treino Hyrox?', texto:'Ele sai do app e do relógio.', ok:'Excluir' }); if(!ok) return; state.hyroxTreinos = state.hyroxTreinos.filter(x=>x.id!==t.id); await saveHyroxTreinos(); relogioEnviarTreinos({ forcar:true }); abrirTreinosHyrox(); };
     sh.querySelector('#hxSalvar').onclick = async ()=>{
@@ -15623,16 +15659,19 @@ function abrirEditorHyrox(id, inicial){
       if(!blocos.length){ showToast('Adicione pelo menos um bloco'); return; }
       const nome = (sh.querySelector('#hxNome').value || '').trim() || 'Treino Hyrox';
       state.hyroxTreinos = state.hyroxTreinos || [];
-      if(t){ Object.assign(t, { nome, blocos }); }
+      if(t){ Object.assign(t, { nome, blocos, dias }); }
       else {
         if(state.hyroxTreinos.length >= 6){ showToast('O relógio guarda até 6 treinos Hyrox. Exclua um.'); return; }
-        state.hyroxTreinos.push({ id:'hx'+Date.now().toString(36), nome, blocos });
+        state.hyroxTreinos.push({ id:'hx'+Date.now().toString(36), nome, blocos, dias });
       }
       await saveHyroxTreinos();
       hapticLeve();
       const r = relogioApi() ? await relogioEnviarTreinos({ forcar:true }) : null;
       showToast(r && r.enviados>0 ? 'Salvo e enviado ao relógio' : 'Salvo. Vai ao relógio quando ele conectar');
-      abrirTreinosHyrox();
+      closeSheet();
+      // Vai direto para o dia do WOD, na aba Hyrox.
+      if(dias.length){ state.tab = 'musculacao'; state.selectedDayMusc = dias.includes(state.selectedDayMusc) ? state.selectedDayMusc : dias[0]; state.treinosSubTab = 'hyrox'; }
+      render();
     };
   };
   pintar();
@@ -16196,7 +16235,10 @@ function wireTreinoV2(){
   const diaAtiv = ()=> state.selectedDayMusc || DAY_ABBR[(new Date().getDay()+6)%7];
   document.querySelectorAll('[data-oact-done]').forEach(el=>{ el.onclick = ()=> toggleAtividadeDone(diaAtiv(), el.getAttribute('data-oact-done')); });
   document.querySelectorAll('[data-oact-edit]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = diaAtiv(); state.editingAtId = el.getAttribute('data-oact-edit'); state.modalType = 'outros'; state.modalOpen = true; render(); }; });
-  document.querySelectorAll('[data-oact-hx]').forEach(el=>{ el.onclick = ()=>{ const a = (state.outros[diaAtiv()]||[]).find(x=>x.id===el.getAttribute('data-oact-hx')); if(a) abrirEditorHyrox(null, { nome: a.nome+' '+diaAtiv() }); }; });
+  document.querySelectorAll('[data-oact-hx]').forEach(el=>{ el.onclick = ()=>{ const a = (state.outros[diaAtiv()]||[]).find(x=>x.id===el.getAttribute('data-oact-hx')); if(a) abrirEditorHyrox(null, { nome: a.nome+' '+diaAtiv(), dias:[diaAtiv()] }); }; });
+  document.querySelectorAll('[data-hxwod-edit]').forEach(el=>{ el.onclick = ()=>abrirEditorHyrox(el.getAttribute('data-hxwod-edit')); });
+  document.querySelectorAll('[data-hxwod-new]').forEach(el=>{ el.onclick = ()=>abrirEditorHyrox(null, { nome:'WOD '+el.getAttribute('data-hxwod-new'), dias:[el.getAttribute('data-hxwod-new')] }); });
+  document.querySelectorAll('[data-hxwod-send]').forEach(el=>{ el.onclick = async ()=>{ const r = relogioApi() ? await relogioEnviarTreinos({ forcar:true }) : null; showToast(r && r.enviados>0 ? 'Enviado ao relógio' : 'Relógio não conectado agora. Vai quando conectar'); }; });
   document.querySelectorAll('[data-oact-add]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = el.getAttribute('data-oact-add'); state.editingAtId = null; state.modalType = 'outros'; state.modalOpen = true; render(); }; });
   document.querySelectorAll('[data-oact-del]').forEach(el=>{ el.onclick = async ()=>{ const ok = await confirmarApp({ titulo:'Excluir atividade?', texto:'Ela some deste dia.', ok:'Excluir' }); if(ok) delAtividade(diaAtiv(), el.getAttribute('data-oact-del')); }; });
   document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
