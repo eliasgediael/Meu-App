@@ -6651,11 +6651,27 @@ function relogioCorridasDoPlano(){
   (state.treinos||[]).forEach(e=>{ if(e && e.day) mapa.set(e.day,e); });
   return [...mapa.values()];
 }
+// Atividades planejadas da semana (boxe, aula de Hyrox, Hyrox de domingo...) viram um treino livre de um bloco:
+// no relógio você abre, toca START para começar e START de novo para concluir (o FIT fica gravado).
+// Dia que já tem WOD montado não repete a aula de Hyrox.
+function relogioAtividadesDaSemana(){
+  const itens = [];
+  DAY_ABBR.forEach(d=>{
+    const temWod = hyroxDoDia(d).length>0;
+    ((state.outros||{})[d]||[]).forEach((a,k)=>{
+      if(!a || !a.nome || /descanso/i.test(a.nome)) return;
+      if(temWod && /hyrox/i.test(a.nome)) return;
+      itens.push({ id:'at_'+d+'_'+k, nome:d+' '+a.nome, blocos:[{ nome:String(a.nome).slice(0,20), tipo:'o', valor:0, det:'' }] });
+    });
+  });
+  return itens;
+}
 function relogioMensagemTreinos(){
   const R = relogioApi();
   const feito = e=>{ const p=(state.corridaProgress||{})[e.day]; return !!(p && (p===true || p.done)); };
   const corridas = R.treinosParaRelogio(relogioCorridasDoPlano(), {hojeISO:todayISO(), feito, todasSemanas:true, incluirFeitos:true});
-  const hx = (state.hyroxTreinos||[]).map(t=>R.hyroxCompacto ? R.hyroxCompacto(t) : null).filter(Boolean);
+  // Tudo que está planejado vai ao relógio: corridas, musculação, WODs Hyrox e as demais atividades da semana.
+  const hx = [...(state.hyroxTreinos||[]), ...relogioAtividadesDaSemana()].map(t=>R.hyroxCompacto ? R.hyroxCompacto(t) : null).filter(Boolean);
   return R.mensagensTreinos(corridas, relogioDiasDeForca(), undefined, undefined, hx);
 }
 function relogioItensEnviados(paginas){ return [].concat(...(paginas||[]).map(p=>p.w||[])); }

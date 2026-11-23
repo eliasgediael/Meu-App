@@ -3,7 +3,7 @@ const { carregarApp, ok } = require('../harness/carregar.js');
 const C = require('../../src/relogio/garmin-contrato.js');
 
 (async () => {
-  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox', 'hyroxParseValor', 'hyroxImg', 'HYROX_ESTACOES', 'renderTreinoV2Content', 'renderTreinoV2Hyrox', 'aplicarPlanoHyrox', 'diaTemHyrox']);
+  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox', 'hyroxParseValor', 'hyroxImg', 'HYROX_ESTACOES', 'renderTreinoV2Content', 'renderTreinoV2Hyrox', 'aplicarPlanoHyrox', 'diaTemHyrox', 'relogioAtividadesDaSemana', 'relogioMensagemTreinos']);
   const p = T.hyroxParseTexto;
   const b = p('SkiErg 5 min\nDescanso 1:30\nCorrida 1 km\nSled Push\n3x Wall Balls 45 s\nBurpee Broad Jump 80 m\n\n- Remo livre');
   const nomes = b.map(x => x.nome + '|' + x.tipo + '|' + x.valor);
@@ -55,4 +55,11 @@ const C = require('../../src/relogio/garmin-contrato.js');
   ok(!/data-hxwod-edit/.test(T.renderTreinoV2Content()), 'aba Corrida não mostra o WOD');
   S.selectedDayMusc = 'Qui';
   ok(/Montar WOD do dia/.test(T.renderTreinoV2Content()), 'quinta (aula sem WOD) oferece montar o WOD');
+  // Tudo vai ao relógio: atividades da semana viram treino livre; dia com WOD não repete a aula de Hyrox
+  S.hyroxTreinos = [{ id: 'hxA', nome: 'Aula de terça', dias: ['Ter'], blocos: [{ nome: 'SkiErg', tipo: 't', valor: 300, det: '' }] }];
+  const at = T.relogioAtividadesDaSemana().map(x => x.nome);
+  ok(at.includes('Seg Boxe e Muay Thai') && at.includes('Qua Boxe e Muay Thai') && at.includes('Qui Aula de Hyrox') && at.includes('Dom Hyrox'), 'atividades da semana vão ao relógio: ' + at.join(' | '));
+  ok(!at.includes('Ter Aula de Hyrox') && !at.some(n => /Descanso/.test(n)), 'terça tem WOD: não repete a aula; descanso não vai');
+  const itemAt = C.hyroxCompacto(T.relogioAtividadesDaSemana()[0]);
+  ok(itemAt && itemAt.y === 'h' && itemAt.b.length === 1 && itemAt.b[0][1] === 'o', 'atividade vira treino livre de 1 bloco');
 })().catch(e => { console.log('FALHOU', e); process.exit(1); });
