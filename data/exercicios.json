@@ -8234,5 +8234,189 @@
    "Segure pelo tempo desejado, desça com controle e repita do outro lado."
   ],
   "origemMidia": "exercises-gifs"
+ },
+ {
+  "id": "9001",
+  "nome": "SkiErg",
+  "nomeEn": "skierg",
+  "grupo": "Cardio",
+  "musculoPrim": "Dorsais",
+  "musculosSec": [
+   "Tríceps",
+   "Core",
+   "Pernas"
+  ],
+  "equipamento": "Máquina",
+  "apelidos": [
+   "ski erg",
+   "ski"
+  ],
+  "passos": [
+   "Fique de frente para a máquina, pés na largura dos ombros, e segure as duas alças no alto.",
+   "Puxe as alças para baixo com os braços e o tronco, flexionando quadril e joelhos.",
+   "Volte as mãos acima da cabeça de forma controlada e repita em ritmo constante."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9002",
+  "nome": "Sled Push",
+  "nomeEn": "sled push",
+  "grupo": "Pernas",
+  "musculoPrim": "Quadríceps",
+  "musculosSec": [
+   "Glúteos",
+   "Ombros",
+   "Core"
+  ],
+  "equipamento": "Trenó",
+  "apelidos": [
+   "empurrar trenó",
+   "sled"
+  ],
+  "passos": [
+   "Segure o trenó nas hastes com os braços estendidos e o tronco inclinado à frente.",
+   "Empurre com passadas curtas e fortes, mantendo as costas retas.",
+   "Continue até completar a distância (50 m na prova)."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9003",
+  "nome": "Sled Pull",
+  "nomeEn": "sled pull",
+  "grupo": "Costas",
+  "musculoPrim": "Dorsais",
+  "musculosSec": [
+   "Bíceps",
+   "Glúteos",
+   "Pernas"
+  ],
+  "equipamento": "Trenó",
+  "apelidos": [
+   "puxar trenó",
+   "sled drag"
+  ],
+  "passos": [
+   "Fique de frente para o trenó e segure a corda com as duas mãos.",
+   "Puxe a corda mão sobre mão, inclinando o tronco para trás e mantendo os pés firmes.",
+   "Continue até o trenó chegar até você (50 m na prova)."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9004",
+  "nome": "Burpee Broad Jump",
+  "nomeEn": "burpee broad jump",
+  "grupo": "Cardio",
+  "musculoPrim": "Corpo todo",
+  "musculosSec": [
+   "Peito",
+   "Pernas",
+   "Core"
+  ],
+  "equipamento": "Peso corporal",
+  "apelidos": [
+   "burpee",
+   "salto em distância"
+  ],
+  "passos": [
+   "Faça um burpee: agache, apoie as mãos, estenda as pernas e desça o peito ao chão.",
+   "Levante-se e salte para a frente o mais longe possível, com os dois pés.",
+   "Repita a sequência até completar a distância (80 m na prova)."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9005",
+  "nome": "Remo (ergômetro)",
+  "nomeEn": "rowing machine",
+  "grupo": "Costas",
+  "musculoPrim": "Dorsais",
+  "musculosSec": [
+   "Pernas",
+   "Bíceps",
+   "Core"
+  ],
+  "equipamento": "Máquina",
+  "apelidos": [
+   "remo",
+   "rowing",
+   "concept2"
+  ],
+  "passos": [
+   "Sente na máquina, pés presos e joelhos dobrados, segurando o puxador.",
+   "Empurre com as pernas, incline o tronco para trás e puxe o puxador até o abdômen.",
+   "Volte na ordem inversa: braços, tronco e pernas. Repita em ritmo constante."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9006",
+  "nome": "Farmers Carry",
+  "nomeEn": "farmers carry",
+  "grupo": "Pernas",
+  "musculoPrim": "Antebraço",
+  "musculosSec": [
+   "Trapézio",
+   "Core",
+   "Pernas"
+  ],
+  "equipamento": "Halteres",
+  "apelidos": [
+   "farmers",
+   "caminhada do fazendeiro hyrox"
+  ],
+  "passos": [
+   "Segure um implemento pesado em cada mão (24 kg cada na prova masculina).",
+   "Fique ereto, ombros para trás e abdômen firme.",
+   "Caminhe com passos rápidos e controlados até completar a distância (200 m na prova)."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9007",
+  "nome": "Sandbag Lunges",
+  "nomeEn": "sandbag lunges",
+  "grupo": "Pernas",
+  "musculoPrim": "Quadríceps",
+  "musculosSec": [
+   "Glúteos",
+   "Core"
+  ],
+  "equipamento": "Peso adicional",
+  "apelidos": [
+   "avanço com sandbag",
+   "lunges"
+  ],
+  "passos": [
+   "Apoie o sandbag nos ombros (20 kg na prova masculina) e fique ereto.",
+   "Dê um passo à frente e desça até o joelho de trás quase tocar o chão.",
+   "Suba empurrando com a perna da frente e troque de perna. Siga até completar a distância (100 m na prova)."
+  ],
+  "origemMidia": "Hyrox"
+ },
+ {
+  "id": "9008",
+  "nome": "Wall Balls",
+  "nomeEn": "wall balls",
+  "grupo": "Pernas",
+  "musculoPrim": "Quadríceps",
+  "musculosSec": [
+   "Ombros",
+   "Glúteos",
+   "Core"
+  ],
+  "equipamento": "Bola medicinal",
+  "apelidos": [
+   "wall ball",
+   "arremesso na parede"
+  ],
+  "passos": [
+   "Fique de frente para a parede segurando a bola junto ao peito.",
+   "Agache até a coxa ficar paralela ao chão.",
+   "Suba explosivamente e arremesse a bola no alvo (3 m). Pegue e repita (100 repetições na prova)."
+  ],
+  "origemMidia": "Hyrox"
  }
 ]

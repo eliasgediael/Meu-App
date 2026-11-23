@@ -3,7 +3,7 @@ const { carregarApp, ok } = require('../harness/carregar.js');
 const C = require('../../src/relogio/garmin-contrato.js');
 
 (async () => {
-  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox']);
+  const T = await carregarApp(['state', 'hyroxParseTexto', 'hyroxFmtBloco', 'abrirEditorHyrox', 'abrirTreinosHyrox', 'hyroxParseValor', 'hyroxImg', 'HYROX_ESTACOES']);
   const p = T.hyroxParseTexto;
   const b = p('SkiErg 5 min\nDescanso 1:30\nCorrida 1 km\nSled Push\n3x Wall Balls 45 s\nBurpee Broad Jump 80 m\n\n- Remo livre');
   const nomes = b.map(x => x.nome + '|' + x.tipo + '|' + x.valor);
@@ -27,4 +27,15 @@ const C = require('../../src/relogio/garmin-contrato.js');
   const antiga = C.mensagensTreinos([], [], undefined, 'abc');
   ok(antiga[0].hv === undefined, 'sem hyrox o formato é o de sempre');
   ok(C.hyroxCompacto({ id: 'x', nome: 'n', blocos: [] }) === null, 'sem blocos = inválido');
+  const pv = T.hyroxParseValor;
+  ok(JSON.stringify(pv('5 min', false)) === '{"tipo":"t","valor":300,"det":""}', 'valor 5 min = 300 s');
+  ok(JSON.stringify(pv('', false)) === '{"tipo":"o","valor":0,"det":""}' && pv('livre', false).tipo === 'o', 'vazio ou "livre" = livre');
+  ok(pv('1 km', true).tipo === 'd' && pv('1 km', true).valor === 1000, 'corrida com km conta distância');
+  ok(pv('50 m', false).tipo === 'o' && pv('50 m', false).det === '50 m', 'estação com metros fica livre e guarda o detalhe');
+  ok(pv('100 reps', false).tipo === 'o' && pv('100 reps', false).det === '100 reps', '100 reps vira detalhe');
+  ok(T.hyroxImg('Sled Pull') === 'gifs/9003.webp' && T.hyroxImg('Wall Balls') === 'gifs/9008.webp' && T.hyroxImg('Remo') === 'gifs/9005.webp' && T.hyroxImg('Descanso') === null, 'imagem de cada estação');
+  const fs = require('fs');
+  ok(T.HYROX_ESTACOES.every(e => fs.existsSync(__dirname + '/../../gifs/' + e.id + '.webp')), 'as 8 estações têm imagem no pacote');
+  const det = C.hyroxCompacto({ id: 'h', nome: 'n', blocos: [{ nome: 'Wall Balls', tipo: 'o', valor: 0, det: '100 reps' }] });
+  ok(det.b[0][0] === 'Wall Balls 100 reps', 'detalhe vai no nome do bloco livre: ' + det.b[0][0]);
 })().catch(e => { console.log('FALHOU', e); process.exit(1); });

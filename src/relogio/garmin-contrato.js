@@ -159,7 +159,8 @@ function hyroxCompacto(t) {
   if (!t || !Array.isArray(t.blocos) || !t.blocos.length || t.blocos.length > MAX_BLOCOS_HYROX) return null;
   const b = [];
   for (const x of t.blocos) {
-    const nome = String(x && x.nome || '').trim().slice(0, 20);
+    // Bloco livre com detalhe ("100 reps", "50 m"): o detalhe vai junto do nome, que é o que o relógio mostra.
+    const nome = (String(x && x.nome || '').trim() + (x && x.tipo === 'o' && x.det ? ' ' + String(x.det).trim() : '')).trim().slice(0, 20);
     if (!nome) return null;
     if (x.tipo === 'o') b.push([nome, 'o']);
     else if ((x.tipo === 't' || x.tipo === 'd') && x.valor > 0) b.push([nome, x.tipo, Math.round(x.valor)]);

@@ -15527,43 +15527,106 @@ function abrirTreinosHyrox(){
     if(env) env.onclick = async ()=>{ const r = await relogioEnviarTreinos({ forcar:true }); showToast(r && r.enviados>0 ? 'Enviado ao relógio' : 'Relógio não conectado'); };
   });
 }
+// Estações do Hyrox com imagem (ids do catálogo 9001-9008). Corrida e Descanso entram sem imagem.
+const HYROX_ESTACOES = [
+  { nome:'SkiErg', id:'9001' }, { nome:'Sled Push', id:'9002' }, { nome:'Sled Pull', id:'9003' }, { nome:'Burpee Broad Jump', id:'9004' },
+  { nome:'Remo', id:'9005' }, { nome:'Farmers Carry', id:'9006' }, { nome:'Sandbag Lunges', id:'9007' }, { nome:'Wall Balls', id:'9008' },
+];
+function hyroxImg(nome){
+  const n = String(nome||'').toLowerCase();
+  const e = HYROX_ESTACOES.find(x=>n.startsWith(x.nome.toLowerCase())) || (/^remo/.test(n) ? HYROX_ESTACOES[4] : null);
+  return e ? 'gifs/'+e.id+'.webp' : null;
+}
+// Valor do bloco digitado ("5 min", "1:30", "45 s", "1 km", "100 reps", "livre"). Distância só vale para corrida (GPS).
+function hyroxParseValor(txt, corrida){
+  const t = String(txt||'').trim();
+  if(!t || /^livre$/i.test(t)) return { tipo:'o', valor:0, det:'' };
+  const b = hyroxParseTexto('Corrida '+t)[0];
+  if(!b || b.tipo === 'o' || (b.tipo === 'd' && !corrida)) return { tipo:'o', valor:0, det:t.slice(0,12) };
+  return { tipo:b.tipo, valor:b.valor, det:'' };
+}
+function hyroxTextoValor(b){ return b.tipo === 'o' ? (b.det || '') : hyroxFmtBloco(b); }
 function abrirEditorHyrox(id, inicial){
   const t = id ? (state.hyroxTreinos||[]).find(x=>x.id===id) : null;
-  const nome0 = t ? t.nome : ((inicial && inicial.nome) || '');
-  const texto0 = t ? t.texto : ((inicial && inicial.texto) || '');
+  let nome0 = t ? t.nome : ((inicial && inicial.nome) || '');
+  let blocos = t ? (t.blocos||[]).map(b=>({ ...b })) : (inicial && inicial.texto ? hyroxParseTexto(inicial.texto) : []);
+  let modo = 'lista';
   const esc = s=>String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
-  const chips = ['SkiErg','Sled Push','Sled Pull','Burpee Broad Jump','Remo','Farmers Carry','Sandbag Lunges','Wall Balls','Corrida 1 km','Descanso 1 min'];
-  openSheet(`
-    <div class="sheet-title">${t ? 'Editar' : 'Novo'} treino Hyrox</div>
-    <div class="sheet-sub">Um bloco por linha. Com tempo (5 min, 1:30, 45 s) o relógio avança sozinho. Corrida com km também. Sem tempo é livre: você toca START. Use "3x" na frente para repetir (ex.: 3x SkiErg 3 min).</div>
-    <input class="ds-input" id="hxNome" placeholder="Nome (ex.: Aula de terça)" value="${esc(nome0)}">
-    <div class="ds-chiprow wrap" style="margin-top:10px;">${chips.map((c,i)=>`<button class="ds-chip" data-hxchip="${i}">${c}</button>`).join('')}</div>
-    <textarea id="hxTexto" rows="9" style="width:100%;box-sizing:border-box;font-family:inherit;font-size:16px;line-height:1.4;border-radius:12px;border:none;background:var(--surface-2);padding:12px 14px;color:var(--text);" placeholder="SkiErg 5 min&#10;Descanso 1 min&#10;Corrida 1 km&#10;Sled Push&#10;Wall Balls">${esc(texto0)}</textarea>
-    <div id="hxPrev" class="ds-muted" style="margin:8px 0 4px;line-height:1.5;"></div>
-    <div class="ds-actions">
-      <button class="btn-primary" id="hxSalvar">Salvar e enviar ao relógio</button>
-      ${t ? '<button class="btn-ghost" id="hxExcluir" style="color:var(--danger,#d33);">Excluir treino</button>' : ''}
-      <button class="btn-ghost" id="hxCancelar">Cancelar</button>
-    </div>`, (sh)=>{
-    const ta = sh.querySelector('#hxTexto'), prev = sh.querySelector('#hxPrev');
-    const atualizar = ()=>{
-      const b = hyroxParseTexto(ta.value);
-      prev.innerHTML = b.length ? b.map((x,i)=>(i+1)+'. '+esc(x.nome)+' · '+hyroxFmtBloco(x)).join('<br>') + '<br><b>'+b.length+' blocos</b>'+(hyroxDuracaoTotal(b)?' · '+hyroxDuracaoTotal(b):'') : 'Nenhum bloco ainda.';
-    };
-    ta.oninput = atualizar; atualizar();
-    sh.querySelectorAll('[data-hxchip]').forEach(el=>{ el.onclick = ()=>{ ta.value = (ta.value.trim() ? ta.value.replace(/\s+$/,'')+'\n' : '') + chips[+el.getAttribute('data-hxchip')]; atualizar(); }; });
+  const thumb = (img, rotulo)=>`<div style="width:56px;height:56px;border-radius:10px;background:#fff;flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;border:1px solid rgba(128,128,128,.25);">${img ? `<img src="${img}" alt="" style="width:100%;height:100%;object-fit:contain;">` : `<span style="color:#555;font-size:11px;font-weight:700;">${rotulo||''}</span>`}</div>`;
+  const sh = openSheet('', null);
+  const pintar = ()=>{
+    if(modo === 'escolher'){
+      sh.innerHTML = `<div class="sheet-handle"></div>
+        <div class="sheet-title">Adicionar bloco</div>
+        <div class="sheet-sub">Toque na estação para colocar no treino.</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+          ${HYROX_ESTACOES.map((e,i)=>`<button class="ds-row" data-hxadd="${i}" style="flex-direction:column;align-items:center;gap:6px;padding:10px;height:auto;">${thumb('gifs/'+e.id+'.webp')}<span class="nm" style="text-align:center;">${e.nome}</span></button>`).join('')}
+          <button class="ds-row" data-hxadd="corrida" style="flex-direction:column;align-items:center;gap:6px;padding:10px;height:auto;">${thumb(null,'CORRIDA')}<span class="nm" style="text-align:center;">Corrida</span></button>
+          <button class="ds-row" data-hxadd="descanso" style="flex-direction:column;align-items:center;gap:6px;padding:10px;height:auto;">${thumb(null,'DESCANSO')}<span class="nm" style="text-align:center;">Descanso</span></button>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:12px;">
+          <input class="ds-input" id="hxOutro" placeholder="Outro exercício (digite o nome)" style="flex:1;">
+          <button class="btn-secondary" id="hxOutroAdd" style="white-space:nowrap;">Adicionar</button>
+        </div>
+        <div class="ds-actions"><button class="btn-ghost" id="hxVoltar">Voltar</button></div>`;
+      const inserir = (b)=>{ blocos.push(b); modo = 'lista'; pintar(); };
+      sh.querySelectorAll('[data-hxadd]').forEach(el=>{ el.onclick = ()=>{
+        const k = el.getAttribute('data-hxadd');
+        if(k === 'corrida') inserir({ nome:'Corrida', tipo:'d', valor:1000, det:'' });
+        else if(k === 'descanso') inserir({ nome:'Descanso', tipo:'t', valor:60, det:'' });
+        else inserir({ nome:HYROX_ESTACOES[+k].nome, tipo:'o', valor:0, det:'' });
+      }; });
+      sh.querySelector('#hxOutroAdd').onclick = ()=>{ const n = sh.querySelector('#hxOutro').value.trim(); if(n) inserir({ nome:n.slice(0,20), tipo:'o', valor:0, det:'' }); };
+      sh.querySelector('#hxVoltar').onclick = ()=>{ modo = 'lista'; pintar(); };
+      return;
+    }
+    const total = hyroxDuracaoTotal(blocos);
+    sh.innerHTML = `<div class="sheet-handle"></div>
+      <div class="sheet-title">${t ? 'Editar' : 'Novo'} treino Hyrox</div>
+      <div class="sheet-sub">Monte o WOD do dia. Em cada bloco escreva o tempo (5 min, 1:30, 45 s) ou o km da corrida. Em branco = livre: no relógio você toca START para passar.</div>
+      <input class="ds-input" id="hxNome" placeholder="Nome (ex.: Aula de terça)" value="${esc(nome0)}">
+      <div id="hxLista" style="margin-top:8px;">
+        ${blocos.length ? blocos.map((b,i)=>`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid rgba(128,128,128,.2);">
+          ${thumb(hyroxImg(b.nome), /^corr/i.test(b.nome)?'CORRIDA':/^desc/i.test(b.nome)?'DESCANSO':'')}
+          <div style="flex:1;min-width:0;"><div style="font-weight:600;">${i+1}. ${esc(b.nome)}</div>
+            <input class="ds-input" data-hxval="${i}" value="${esc(hyroxTextoValor(b))}" placeholder="livre" style="height:36px;font-size:16px;margin-top:4px;"></div>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <button class="ex-edit" data-hxup="${i}" ${i===0?'disabled':''} aria-label="Subir">↑</button>
+            <button class="ex-edit" data-hxdown="${i}" ${i===blocos.length-1?'disabled':''} aria-label="Descer">↓</button></div>
+          <button class="ex-edit" data-hxdel="${i}" aria-label="Remover" style="font-size:18px;">×</button>
+        </div>`).join('') : '<div class="ds-muted" style="padding:14px 0;">Nenhum bloco ainda. Toque em "Adicionar bloco".</div>'}
+      </div>
+      ${blocos.length ? `<div class="ds-muted" style="margin:8px 0;">${blocos.length} blocos${total ? ' · '+total : ''}</div>` : ''}
+      <div class="ds-actions">
+        <button class="btn-secondary" id="hxAdd">+ Adicionar bloco</button>
+        <button class="btn-primary" id="hxSalvar">Salvar e enviar ao relógio</button>
+        ${t ? '<button class="btn-ghost" id="hxExcluir" style="color:var(--danger,#d33);">Excluir treino</button>' : ''}
+        <button class="btn-ghost" id="hxCancelar">Cancelar</button>
+      </div>`;
+    const guardaNome = ()=>{ const i = sh.querySelector('#hxNome'); if(i) nome0 = i.value; };
+    sh.querySelectorAll('[data-hxval]').forEach(el=>{ el.onchange = ()=>{
+      const i = +el.getAttribute('data-hxval'), b = blocos[i];
+      Object.assign(b, hyroxParseValor(el.value, /corr|trote|tiro|run/i.test(b.nome)));
+      guardaNome(); pintar();
+    }; });
+    const mover = (i, j)=>{ guardaNome(); [blocos[i], blocos[j]] = [blocos[j], blocos[i]]; pintar(); };
+    sh.querySelectorAll('[data-hxup]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-hxup'); if(i>0) mover(i, i-1); }; });
+    sh.querySelectorAll('[data-hxdown]').forEach(el=>{ el.onclick = ()=>{ const i = +el.getAttribute('data-hxdown'); if(i<blocos.length-1) mover(i, i+1); }; });
+    sh.querySelectorAll('[data-hxdel]').forEach(el=>{ el.onclick = ()=>{ guardaNome(); blocos.splice(+el.getAttribute('data-hxdel'), 1); pintar(); }; });
+    sh.querySelector('#hxAdd').onclick = ()=>{ guardaNome(); modo = 'escolher'; pintar(); };
     sh.querySelector('#hxCancelar').onclick = ()=>abrirTreinosHyrox();
     const ex = sh.querySelector('#hxExcluir');
     if(ex) ex.onclick = async ()=>{ const ok = await confirmarApp({ titulo:'Excluir treino Hyrox?', texto:'Ele sai do app e do relógio.', ok:'Excluir' }); if(!ok) return; state.hyroxTreinos = state.hyroxTreinos.filter(x=>x.id!==t.id); await saveHyroxTreinos(); relogioEnviarTreinos({ forcar:true }); abrirTreinosHyrox(); };
     sh.querySelector('#hxSalvar').onclick = async ()=>{
-      const blocos = hyroxParseTexto(ta.value);
-      if(!blocos.length){ showToast('Escreva pelo menos um bloco'); return; }
+      guardaNome();
+      sh.querySelectorAll('[data-hxval]').forEach(el=>{ const b = blocos[+el.getAttribute('data-hxval')]; if(b) Object.assign(b, hyroxParseValor(el.value, /corr|trote|tiro|run/i.test(b.nome))); });
+      if(!blocos.length){ showToast('Adicione pelo menos um bloco'); return; }
       const nome = (sh.querySelector('#hxNome').value || '').trim() || 'Treino Hyrox';
       state.hyroxTreinos = state.hyroxTreinos || [];
-      if(t){ Object.assign(t, { nome, texto:ta.value, blocos }); }
+      if(t){ Object.assign(t, { nome, blocos }); }
       else {
         if(state.hyroxTreinos.length >= 6){ showToast('O relógio guarda até 6 treinos Hyrox. Exclua um.'); return; }
-        state.hyroxTreinos.push({ id:'hx'+Date.now().toString(36), nome, texto:ta.value, blocos });
+        state.hyroxTreinos.push({ id:'hx'+Date.now().toString(36), nome, blocos });
       }
       await saveHyroxTreinos();
       hapticLeve();
@@ -15571,7 +15634,8 @@ function abrirEditorHyrox(id, inicial){
       showToast(r && r.enviados>0 ? 'Salvo e enviado ao relógio' : 'Salvo. Vai ao relógio quando ele conectar');
       abrirTreinosHyrox();
     };
-  });
+  };
+  pintar();
 }
 // "Criar treino" (menu ⋯ da tela Treino): o que criar para o dia escolhido.
 function abrirCriarTreino(){
@@ -15744,7 +15808,7 @@ function renderOutrasAtividadesDoDia(day){
       ${planej.map(a=>`<div class="ds-row" style="align-items:flex-start;gap:10px;">
         <button class="fr-ring fr-ringbtn" data-oact-done="${a.id}" aria-label="Marcar como feito">${a.done?CHECK_SVG:''}</button>
         <span class="nm" style="flex:1;min-width:0;${a.done?'opacity:.6;':''}">${esc(a.nome)}${a.duracao?`<small>${esc(a.duracao)}</small>`:''}${a.notas?`<div style="white-space:pre-line;margin-top:6px;font-size:14px;font-weight:400;opacity:.85;">${esc(a.notas)}</div>`:''}</span>
-        ${/hyrox/i.test(a.nome) ? `<button class="ds-chip" data-oact-hx="${a.id}" style="height:30px;font-size:12px;">Relógio</button>` : ''}<button class="ex-edit" data-oact-edit="${a.id}" aria-label="Editar">${ICONS.pencil}</button>
+        ${/hyrox/i.test(a.nome) ? `<button class="ds-chip" data-oact-hx="${a.id}" style="height:30px;font-size:12px;">Montar WOD</button>` : ''}<button class="ex-edit" data-oact-edit="${a.id}" aria-label="Editar">${ICONS.pencil}</button>
         <button class="ex-edit" data-oact-del="${a.id}" aria-label="Excluir" style="font-size:16px;">×</button>
       </div>`).join('')}
       <button class="ds-row" data-oact-add="${day}">${ICONS.plus}<span class="nm">Adicionar atividade</span><span class="chev">${DS_CHEV}</span></button>
@@ -16132,7 +16196,7 @@ function wireTreinoV2(){
   const diaAtiv = ()=> state.selectedDayMusc || DAY_ABBR[(new Date().getDay()+6)%7];
   document.querySelectorAll('[data-oact-done]').forEach(el=>{ el.onclick = ()=> toggleAtividadeDone(diaAtiv(), el.getAttribute('data-oact-done')); });
   document.querySelectorAll('[data-oact-edit]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = diaAtiv(); state.editingAtId = el.getAttribute('data-oact-edit'); state.modalType = 'outros'; state.modalOpen = true; render(); }; });
-  document.querySelectorAll('[data-oact-hx]').forEach(el=>{ el.onclick = ()=>{ const a = (state.outros[diaAtiv()]||[]).find(x=>x.id===el.getAttribute('data-oact-hx')); if(a) abrirEditorHyrox(null, { nome: a.nome+' '+diaAtiv(), texto: a.notas && !/^\d|h[–-]/.test(a.notas) ? a.notas : '' }); }; });
+  document.querySelectorAll('[data-oact-hx]').forEach(el=>{ el.onclick = ()=>{ const a = (state.outros[diaAtiv()]||[]).find(x=>x.id===el.getAttribute('data-oact-hx')); if(a) abrirEditorHyrox(null, { nome: a.nome+' '+diaAtiv() }); }; });
   document.querySelectorAll('[data-oact-add]').forEach(el=>{ el.onclick = ()=>{ state.selectedDayOutros = el.getAttribute('data-oact-add'); state.editingAtId = null; state.modalType = 'outros'; state.modalOpen = true; render(); }; });
   document.querySelectorAll('[data-oact-del]').forEach(el=>{ el.onclick = async ()=>{ const ok = await confirmarApp({ titulo:'Excluir atividade?', texto:'Ela some deste dia.', ok:'Excluir' }); if(ok) delAtividade(diaAtiv(), el.getAttribute('data-oact-del')); }; });
   document.querySelectorAll('[data-sharerun]').forEach(el=>{ el.onclick = ()=> compartilharCorridaDoDia(el.getAttribute('data-sharerun')); });
@@ -20160,7 +20224,7 @@ function renderModal(){
         <h3>${editingAt ? 'Editar atividade' : 'Nova atividade'} · ${state.selectedDayOutros}</h3>
         <div class="field"><label>Nome da atividade</label><input type="text" id="inNomeAt" value="${editingAt?editingAt.nome:''}" placeholder="Muay Thai" autofocus></div>
         <div class="field"><label>Duração</label><input type="text" id="inDuracao" value="${editingAt?(editingAt.duracao||''):''}" placeholder="1h"></div>
-        <div class="field"><label>Treino / notas (opcional)</label><textarea id="inNotas" rows="7" style="width:100%;box-sizing:border-box;font-family:inherit;font-size:16px;line-height:1.4;" placeholder="Ex.: o treino que o coach passou, um exercício por linha">${editingAt?String(editingAt.notas||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'):''}</textarea></div>
+        <div class="field"><label>Notas (opcional)</label><input type="text" id="inNotas" value="${editingAt?(editingAt.notas||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'):''}" placeholder="Sparring leve"></div>
         <div class="modal-actions"><button class="secondary" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Salvar</button></div>
       </div>
     </div>`;
