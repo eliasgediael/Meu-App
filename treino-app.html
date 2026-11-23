@@ -10655,7 +10655,7 @@ function abrirAjusteFoto(foto, aoTerminar){
 }
 async function abrirSeletorArtes(titulo, artesBase, info){
   let formato = 'story', sel = 0, prontas = [], foto = null;
-  const op = { tinta:'claro', ocultarInicioFim:false };
+  const op = { tinta:'claro', ocultarInicioFim:false, fundo:'solido' };   // solido: PNG com fundo (não sai preto/vazio no iPhone); transparente: arte para colar no story
   const temRota = !!(info && info.track && info.track.length>=2);
   const lista = ()=>{
     const base = typeof artesBase==='function' ? artesBase(op) : artesBase;
@@ -10668,7 +10668,11 @@ async function abrirSeletorArtes(titulo, artesBase, info){
     prontas = [];
     ARTE_TINTA = op.tinta==='escuro' ? '#111111' : '#FFFFFF';
     for(const a of lista()){
-      try{ const cv = await a.gerar(formato); if(!cv) continue;
+      try{ let cv = await a.gerar(formato); if(!cv) continue;
+        if(op.fundo==='solido'){   // arte transparente + texto branco virava tela preta nas Fotos/compartilhar: assenta num fundo sólido
+          const plano = document.createElement('canvas'); plano.width = cv.width; plano.height = cv.height;
+          const pc = plano.getContext('2d'); pc.fillStyle = op.tinta==='escuro' ? '#FFFFFF' : '#111111'; pc.fillRect(0, 0, plano.width, plano.height); pc.drawImage(cv, 0, 0); cv = plano;
+        }
         const blob = await new Promise(r=>cv.toBlob(r, 'image/png')); if(blob) prontas.push({ nome:a.nome, blob, url:URL.createObjectURL(blob) }); }
       catch(e){ console.warn('[arte]', a.nome, e); }
     }
@@ -10677,6 +10681,7 @@ async function abrirSeletorArtes(titulo, artesBase, info){
   const montar = ()=>openSheet(`
     <div class="sheet-title" style="text-align:center;">${titulo}</div>
     <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:4px 0 10px;"><button class="${formato==='story'?'on':''}" data-arfmt="story">Story</button><button class="${formato==='quadrado'?'on':''}" data-arfmt="quadrado">Quadrada</button></div>
+    <div class="ds-seg" style="grid-template-columns:1fr 1fr;margin:0 0 10px;"><button class="${op.fundo==='solido'?'on':''}" data-arfundo="solido">Com fundo</button><button class="${op.fundo==='transparente'?'on':''}" data-arfundo="transparente">Transparente</button></div>
     ${typeof artesBase==='function' ? `<div class="fr-arteops">
       <div class="ds-seg" style="grid-template-columns:1fr 1fr;"><button class="${op.tinta==='claro'?'on':''}" data-artinta="claro">Texto claro</button><button class="${op.tinta==='escuro'?'on':''}" data-artinta="escuro">Texto escuro</button></div>
       ${temRota ? `<button class="fr-arteprivo" data-arpriv role="switch" aria-checked="${op.ocultarInicioFim}"><span>Ocultar início e fim</span><span class="mrt-switch ${op.ocultarInicioFim?'on':''}"><i></i></span></button>` : ''}
@@ -10692,6 +10697,7 @@ async function abrirSeletorArtes(titulo, artesBase, info){
     sh.querySelectorAll('[data-arte]').forEach(el=>{ el.onclick = ()=>{ sel = +el.getAttribute('data-arte'); sh.querySelectorAll('[data-arte]').forEach(b=>b.classList.toggle('on', b===el)); }; });
     sh.querySelectorAll('[data-arfmt]').forEach(el=>{ el.onclick = async ()=>{ const f = el.getAttribute('data-arfmt'); if(f===formato) return; formato = f; prontas = []; montar(); await gerar(); montar(); }; });
     const regerarOp = async ()=>{ sel = 0; prontas = []; montar(); await gerar(); montar(); };
+    sh.querySelectorAll('[data-arfundo]').forEach(el=>{ el.onclick = async ()=>{ const f = el.getAttribute('data-arfundo'); if(f===op.fundo) return; op.fundo = f; await regerarOp(); }; });
     sh.querySelectorAll('[data-artinta]').forEach(el=>{ el.onclick = async ()=>{ const t = el.getAttribute('data-artinta'); if(t===op.tinta) return; op.tinta = t; await regerarOp(); }; });
     const priv = sh.querySelector('[data-arpriv]');
     if(priv) priv.onclick = async ()=>{ op.ocultarInicioFim = !op.ocultarInicioFim; await regerarOp(); };
@@ -15280,6 +15286,97 @@ function abrirRotina(templateId){
     };
   });
 }
+/* ---------- Plano Hyrox (híbrido: musculação + luta + aulas de Hyrox + tiros + simulado) ---------- */
+// Plano fechado com o treinador (conversa de semana completa). Instala 3 rotinas de musculação (A/B/C) nos dias
+// Seg/Qua/Sex, as atividades dos outros dias (boxe/Muay Thai, aula de Hyrox, simulado) e 2 treinos de corrida
+// salvos (tiros e longão leve). Tudo marcado com hyrox:true / ids fixos, então instalar de novo não duplica.
+const HYROX_EX = (nome, grupo, repdbId, series, reps, descSeg, nota)=>({ nome, grupo, repdbId, series:String(series), reps:String(reps), carga:'', descanso:descSeg+'s', nota:nota||'' });
+const HYROX_ROTINAS = [
+  { id:'hyrox-musc-a', dia:'Seg', tipo:'Hyrox · Musculação A – Puxar', exercicios:[
+    HYROX_EX('Barra fixa','Costas','0652',3,'6-8',120,'Sobrar 2 reps. Sem barra: puxada no pulley.'),
+    HYROX_EX('Remada unilateral com halter (serrote)','Costas','0292',3,'8',120,'Sobrar 2 reps.'),
+    HYROX_EX('Face pull','Ombro',null,3,'12-15',60,'Cabo na altura do rosto.'),
+    HYROX_EX('Prancha','Core',null,3,'45 s',60,'') ] },
+  { id:'hyrox-musc-b', dia:'Qua', tipo:'Hyrox · Musculação B – Empurrar (opcional)', exercicios:[
+    HYROX_EX('Supino inclinado com halteres','Peito','0314',3,'8',120,'Sobrar 2 reps. Primeiro treino a cortar se o ombro reclamar.'),
+    HYROX_EX('Desenvolvimento com halteres sentado','Ombro','0405',3,'8-10',90,'Sobrar 2 reps.'),
+    HYROX_EX('Tríceps na polia (corda)','Braço','0200',3,'12',60,''),
+    HYROX_EX('Prancha lateral','Core',null,3,'30 s por lado',60,'') ] },
+  { id:'hyrox-musc-c', dia:'Sex', tipo:'Hyrox · Musculação C – Perna (depois dos tiros)', exercicios:[
+    HYROX_EX('Agachamento livre com barra','Pernas','0043',4,'5',150,'Carga alta, sobrar 1–2 reps, nunca até a falha.'),
+    HYROX_EX('Levantamento terra romeno com barra','Pernas','0085',3,'6-8',120,'Sobrar 1–2 reps.'),
+    HYROX_EX('Agachamento búlgaro com halteres','Pernas','0410',3,'6-8 por perna',90,'Sobrar 1–2 reps.'),
+    HYROX_EX('Panturrilha em pé na máquina','Pernas','0605',3,'10-12',60,'') ] },
+];
+const HYROX_OUTROS = {
+  Seg:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação A antes (17h45). Sem perna hoje.' }],
+  Ter:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
+  Qua:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação B (opcional) antes, 17h45. Sem perna hoje.' }],
+  Qui:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
+  Sex:[{ nome:'Tiros de 1 km (antes da perna)', duracao:'1h', notas:'17h30. Sempre tiro primeiro, perna depois. Treino de corrida "Hyrox · Tiros 5 x 1 km" está em Meus treinos.' }],
+  Sáb:[{ nome:'Descanso total', duracao:'', notas:'Sem treino.' }],
+  Dom:[{ nome:'Hyrox', duracao:'', notas:'8h. Logo em seguida, 10–12 km leves, RPE 4–5 (dá pra conversar). Semanas 1–3: +1 km por semana até 14 km.' }],
+};
+function _hyroxBloco(kind, dur, valor){ const b = { id:newBlockId(), isGroup:false, ...newStepFields(kind) }; if(dur==='time'){ b.durType='time'; b.m=String(valor); } else { b.durType='km'; b.km=String(valor); } return b; }
+function hyroxTreinosCorrida(){
+  const tiros = { id:newBlockId(), isGroup:true, reps:'5', steps:[ { id:newBlockId(), ...newStepFields('continua'), durType:'km', km:'1' }, { id:newBlockId(), ...newStepFields('recup'), durType:'time', m:'2' } ] };
+  const mk = (id, tipo, blocks, obj)=>{
+    const steps = blocks.map(blockToStep);
+    const km = steps.reduce((s,x)=>s+x.km,0), min = steps.reduce((s,x)=>s+x.min,0);
+    return { id, hyrox:true, tipo, steps: steps.map(s=>({ name:s.name, km:Math.round(s.km*100)/100, pace:s.pace, desc:s.desc })), builderBlocks:blocks,
+      totalKm: km ? Math.round(km*10)/10 : '', totalMin: min ? Math.round(min) : null, cor:inferCorTipo(tipo), objetivo: obj || inferObjetivo(tipo), createdAt:Date.now() };
+  };
+  return [
+    mk('hyrox-tiros', 'Hyrox · Tiros 5 x 1 km', [ _hyroxBloco('aquec','time',12), tiros, _hyroxBloco('desaq','time',8) ], 'Tiros de 1 km em RPE 8/10 (ritmo de prova de Hyrox), 2 min de trote entre cada. Depois do teste de 3 km, use o pace dele.'),
+    mk('hyrox-longao', 'Hyrox · Corrida longa leve (domingo)', [ _hyroxBloco('continua','km',10) ], 'Leve, RPE 4–5/10, dá pra conversar. Logo depois do simulado. +1 km por semana até 14 km; semana 4 de cada bloco: -30%.'),
+  ];
+}
+function planoHyroxInstalado(){ return (state.muscTemplates||[]).some(t=>t.id==='hyrox-musc-a'); }
+async function instalarPlanoHyrox(){
+  const ok = await confirmarApp({ titulo:'Instalar plano Hyrox?', texto:'Substitui a musculação de Segunda, Quarta e Sexta pelas rotinas A, B e C, e adiciona as atividades da semana (boxe, aulas, tiros, simulado). Outras atividades que você já criou são mantidas.', ok:'Instalar' });
+  if(!ok) return;
+  state.muscTemplates = state.muscTemplates || [];
+  HYROX_ROTINAS.forEach(r=>{
+    const tpl = { id:r.id, tipo:r.tipo, hyrox:true, exercicios:r.exercicios.map((e,i)=>({ ...e, id:'ex'+r.id+i })), createdAt:Date.now(), updatedAt:Date.now() };
+    const i = state.muscTemplates.findIndex(t=>t.id===r.id);
+    if(i>-1) state.muscTemplates[i] = tpl; else state.muscTemplates.push(tpl);
+    state.musculacao[r.dia] = tpl.exercicios.map(e=>({ ...e, id:'ex'+Date.now().toString(36)+Math.random().toString(36).slice(2,5), done:false }));
+    markMuscDayFromTemplate(r.dia, tpl);
+  });
+  state.outros = state.outros || {};
+  Object.keys(HYROX_OUTROS).forEach(d=>{
+    const base = (state.outros[d]||[]).filter(a=>!a.hyrox);
+    state.outros[d] = [ ...base, ...HYROX_OUTROS[d].map((a,i)=>({ id:'hx'+d+i+Date.now().toString(36), done:false, hyrox:true, ...a })) ];
+  });
+  state.treinoTemplates = state.treinoTemplates || [];
+  hyroxTreinosCorrida().forEach(t=>{ const i = state.treinoTemplates.findIndex(x=>x.id===t.id); if(i>-1) state.treinoTemplates[i] = t; else state.treinoTemplates.push(t); });
+  saveMusc(); saveMuscDayOrigin(); saveMuscTemplates(); saveOutros(); saveTreinoTemplates();
+  closeSheet(); state.tab = 'musculacao'; state.selectedDayMusc = 'Seg'; render(); hapticLeve(); showToast('Plano Hyrox instalado');
+}
+function abrirPlanoHyrox(){
+  const linha = (d, t, s)=>`<div class="ds-row"><span class="nm">${d} · ${t}</span><span class="aside">${s}</span></div>`;
+  openSheet(`
+    <div class="sheet-title">Plano Hyrox</div>
+    <div class="sheet-sub">Híbrido: Hyrox em primeiro, corrida forte. Esforço por RPE (0–10) até o teste de 3 km definir os paces.</div>
+    <div class="ds-list">
+      ${linha('Seg','Musculação A (puxar) + Boxe/Muay Thai','17h45 + 18h30')}
+      ${linha('Ter','Aula de Hyrox','20h')}
+      ${linha('Qua','Musculação B (opcional) + Boxe/Muay Thai','17h45 + 18h30')}
+      ${linha('Qui','Aula de Hyrox','20h')}
+      ${linha('Sex','Tiros 5 × 1 km + Musculação C (perna)','17h30')}
+      ${linha('Sáb','Descanso total','—')}
+      ${linha('Dom','Hyrox + 10–12 km leves','8h')}
+    </div>
+    <div class="ds-muted" style="margin-top:12px;line-height:1.5;">Progressão em blocos de 4 semanas: semanas 1–3 sobe a carga quando completar todas as reps sobrando 2 (+2,5 a 5 kg nos compostos, +1 a 2 kg nos halteres) e +1 km por semana no domingo, até 14 km. Semana 4: −30% de carga, séries, tiros e km.
+    <br>Cortes se o cansaço acumular: 1) musculação de quarta, 2) trote antes do Hyrox, 3) perna de sexta com 3 séries.</div>
+    <div class="ds-actions">
+      <button class="btn-primary" id="hxInstalar">${planoHyroxInstalado() ? 'Reinstalar plano' : 'Instalar no app'}</button>
+      <button class="btn-ghost" id="hxFechar">Fechar</button>
+    </div>`, (sh)=>{
+    sh.querySelector('#hxInstalar').onclick = ()=>instalarPlanoHyrox();
+    sh.querySelector('#hxFechar').onclick = ()=>closeSheet();
+  });
+}
 // "Criar treino" (menu ⋯ da tela Treino): o que criar para o dia escolhido.
 function abrirCriarTreino(){
   const day = state.selectedDayMusc || hojeAbbr();
@@ -15291,6 +15388,7 @@ function abrirCriarTreino(){
       <button class="ds-row" data-criar="musc"><span class="nm">Musculação</span><span class="aside">exercícios do dia</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" data-criar="rotina"><span class="nm">Rotina de musculação</span><span class="aside">modelo para reutilizar</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" data-criar="plano"><span class="nm">Plano corrida + musculação</span><span class="aside">o treinador monta</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="hyrox"><span class="nm">Plano Hyrox</span><span class="aside">semana pronta</span><span class="chev">${DS_CHEV}</span></button>
     </div>`, (sh)=>{
     sh.querySelectorAll('[data-criar]').forEach(el=>{ el.onclick = ()=>{
       const a = el.getAttribute('data-criar');
@@ -15298,6 +15396,7 @@ function abrirCriarTreino(){
       if(a==='corrida'){ state.selectedDayCorrida = day; state.treinoV2Escape = true; openCorridaBuilder(day); state.modalType='editCorrida'; state.modalOpen = true; render(); }
       else if(a==='musc'){ state.selectedDayMusc = day; abrirEditorExercicio({ modo:'dia', day }); }
       else if(a==='rotina'){ state.rotinaDraft = null; abrirRotina(null); }
+      else if(a==='hyrox'){ abrirPlanoHyrox(); }
       else qv2Abrir();
     }; });
   });
