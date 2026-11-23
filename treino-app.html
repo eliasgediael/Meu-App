@@ -15293,47 +15293,110 @@ function abrirRotina(templateId){
 const HYROX_EX = (nome, grupo, repdbId, series, reps, descSeg, nota)=>({ nome, grupo, repdbId, series:String(series), reps:String(reps), carga:'', descanso:descSeg+'s', nota:nota||'' });
 const HYROX_ROTINAS = [
   { id:'hyrox-musc-a', dia:'Seg', tipo:'Hyrox · Musculação A – Puxar', exercicios:[
-    HYROX_EX('Barra fixa','Costas','0652',3,'6-8',120,'Sobrar 2 reps. Sem barra: puxada no pulley.'),
-    HYROX_EX('Remada unilateral com halter (serrote)','Costas','0292',3,'8',120,'Sobrar 2 reps.'),
-    HYROX_EX('Face pull','Ombro',null,3,'12-15',60,'Cabo na altura do rosto.'),
-    HYROX_EX('Prancha','Core',null,3,'45 s',60,'') ] },
+    HYROX_EX('Barra fixa','Costas','0652',4,'6-8',15,'A1 · bi-set com hollow hold. Com lastro se passar de 10 reps. Sobrar 1–2 reps. Aquecer: band pull-apart 2x15 e escápula na barra 2x10.'),
+    HYROX_EX('Hollow hold','Core',null,4,'30 s',120,'A2 · descanso de 2 min depois do par. Core anti-extensão.'),
+    HYROX_EX('Remada curvada com barra','Costas','0027',4,'8',15,'B1 · bi-set com Pallof press. Sobrar 1–2 reps.'),
+    HYROX_EX('Pallof press','Core',null,3,'10 por lado',90,'B2 · descanso de 90 s depois do par. Core anti-rotação.'),
+    HYROX_EX('Remada unilateral com halter (serrote)','Costas','0292',3,'10 por lado',15,'C1 · bi-set com face pull. Sobrar 1–2 reps.'),
+    HYROX_EX('Face pull','Ombro',null,3,'15',90,'C2 · descanso de 90 s depois do par. Saúde do ombro.'),
+    HYROX_EX('Farmer carry pesado','Pegada','2133',3,'40 m',15,'D1 · bi-set com rosca martelo. Pegada e core (estação do Hyrox).'),
+    HYROX_EX('Rosca martelo','Braço','0313',3,'10',90,'D2 · descanso de 90 s depois do par.') ] },
   { id:'hyrox-musc-b', dia:'Qua', tipo:'Hyrox · Musculação B – Empurrar (opcional)', exercicios:[
-    HYROX_EX('Supino inclinado com halteres','Peito','0314',3,'8',120,'Sobrar 2 reps. Primeiro treino a cortar se o ombro reclamar.'),
-    HYROX_EX('Desenvolvimento com halteres sentado','Ombro','0405',3,'8-10',90,'Sobrar 2 reps.'),
-    HYROX_EX('Tríceps na polia (corda)','Braço','0200',3,'12',60,''),
-    HYROX_EX('Prancha lateral','Core',null,3,'30 s por lado',60,'') ] },
+    HYROX_EX('Supino reto (barra ou halter)','Peito','0025',4,'6-8',15,'A1 · bi-set com dead bug. Treino opcional: primeiro a cortar se o ombro reclamar. Sobrar 1–2 reps. Aquecer: rotação externa com elástico 2x15, flexão lenta 1x10.'),
+    HYROX_EX('Dead bug','Core','0276',4,'10 por lado',120,'A2 · descanso de 2 min depois do par.'),
+    HYROX_EX('Desenvolvimento com halteres sentado','Ombro','0405',3,'8',15,'B1 · bi-set com band pull-apart. Sobrar 1–2 reps.'),
+    HYROX_EX('Band pull-apart','Ombro',null,3,'15',90,'B2 · descanso de 90 s depois do par. Equilíbrio do ombro.'),
+    HYROX_EX('Paralelas (ou flexão com carga)','Peito','0251',3,'8-10',15,'C1 · bi-set com elevação lateral. Sobrar 1–2 reps.'),
+    HYROX_EX('Elevação lateral com halteres','Ombro','0334',3,'12-15',90,'C2 · descanso de 90 s depois do par.'),
+    HYROX_EX('Tríceps na polia (corda)','Braço','0200',3,'12',15,'D1 · bi-set com prancha lateral.'),
+    HYROX_EX('Prancha lateral','Core',null,3,'30 s por lado',60,'D2 · descanso de 60 s depois do par.') ] },
   { id:'hyrox-musc-c', dia:'Sex', tipo:'Hyrox · Musculação C – Perna (depois dos tiros)', exercicios:[
-    HYROX_EX('Agachamento livre com barra','Pernas','0043',4,'5',150,'Carga alta, sobrar 1–2 reps, nunca até a falha.'),
-    HYROX_EX('Levantamento terra romeno com barra','Pernas','0085',3,'6-8',120,'Sobrar 1–2 reps.'),
-    HYROX_EX('Agachamento búlgaro com halteres','Pernas','0410',3,'6-8 por perna',90,'Sobrar 1–2 reps.'),
-    HYROX_EX('Panturrilha em pé na máquina','Pernas','0605',3,'10-12',60,'') ] },
+    HYROX_EX('Agachamento livre com barra','Pernas','0043',4,'5',150,'A · descanso de 2–3 min. Carga alta, sobrar 1–2 reps, nunca até a falha. Sempre depois dos tiros.'),
+    HYROX_EX('Levantamento terra romeno com barra','Pernas','0085',3,'6-8',15,'B1 · bi-set com Copenhagen plank. Sobrar 1–2 reps.'),
+    HYROX_EX('Copenhagen plank','Adutores',null,3,'20 s por lado',120,'B2 · descanso de 2 min depois do par. Adutores: chute e prevenção de lesão.'),
+    HYROX_EX('Agachamento búlgaro com halteres','Pernas','0410',3,'6-8 por perna',15,'C1 · bi-set com panturrilha. Sobrar 1–2 reps.'),
+    HYROX_EX('Panturrilha em pé na máquina','Pernas','0605',3,'10-12',90,'C2 · descanso de 90 s depois do par. Pesada.'),
+    HYROX_EX('Avanço andando com sandbag','Pernas','1460',2,'20 m',15,'D1 · bi-set com flexora. Estação sandbag lunges do Hyrox. Primeiro bloco a cortar se o cansaço acumular.'),
+    HYROX_EX('Flexora (ou nórdico assistido)','Pernas','0599',3,'6-8',90,'D2 · descanso de 90 s depois do par. Posterior, prevenção de lesão.') ] },
 ];
 const HYROX_OUTROS = {
   Seg:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação A antes (17h45). Sem perna hoje.' }],
   Ter:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
   Qua:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação B (opcional) antes, 17h45. Sem perna hoje.' }],
   Qui:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
-  Sex:[{ nome:'Tiros de 1 km (antes da perna)', duracao:'1h', notas:'17h30. Sempre tiro primeiro, perna depois. Treino de corrida "Hyrox · Tiros 5 x 1 km" está em Meus treinos.' }],
   Sáb:[{ nome:'Descanso total', duracao:'', notas:'Sem treino.' }],
-  Dom:[{ nome:'Hyrox', duracao:'', notas:'8h. Logo em seguida, 10–12 km leves, RPE 4–5 (dá pra conversar). Semanas 1–3: +1 km por semana até 14 km.' }],
+  Dom:[{ nome:'Hyrox', duracao:'', notas:'8h. Logo em seguida, a corrida longa leve (aba Corrida).' }],
 };
 function _hyroxBloco(kind, dur, valor){ const b = { id:newBlockId(), isGroup:false, ...newStepFields(kind) }; if(dur==='time'){ b.durType='time'; b.m=String(valor); } else { b.durType='km'; b.km=String(valor); } return b; }
+// Progressão de 8 semanas do plano: tiros de sexta e corrida longa de domingo.
+const HYROX_TIROS_SEM = [
+  { n:5, km:'1',   rm:'2', rs:'',   zona:'Z5 · RPE 8' },
+  { n:6, km:'0.8', rm:'1', rs:'30', zona:'Z5 · RPE 8–9' },
+  { n:6, km:'1',   rm:'2', rs:'',   zona:'Z5 · RPE 8' },
+  { n:3, km:'1',   rm:'2', rs:'',   zona:'Z5 · RPE 8', leve:true },
+  { n:3, km:'2',   rm:'2', rs:'',   zona:'Z4 · RPE 7' },
+  { n:6, km:'1',   rm:'1', rs:'30', zona:'Z5 · RPE 8' },
+  { n:4, km:'1.5', rm:'2', rs:'',   zona:'Z4–Z5 · RPE 7–8' },
+  { teste:true, leve:true },
+];
+const HYROX_LONGAO_SEM = [
+  { km:10, nota:'Z2 inteiro.' }, { km:11, nota:'Z2 inteiro.' }, { km:12, nota:'Z2 inteiro.' },
+  { km:8, nota:'Semana leve. Z2 inteiro.' }, { km:12, nota:'Z2 inteiro.' },
+  { km:13, nota:'Z2, últimos 2 km em Z3 (RPE 6).' }, { km:14, nota:'Z2, últimos 3 km em Z3 (RPE 6).' },
+  { km:10, nota:'Semana leve. Z2 inteiro.' },
+];
+const HYROX_AQUEC_TXT = 'Aquecimento: 10–12 min de trote em Z2, educativos 2x20 m (skipping alto, anfersen, passada saltada) e 4 acelerações de 80 m (RPE 7–8), voltando caminhando. ';
+function _hyroxCampos(tipo, blocks, obj){
+  const steps = blocks.map(blockToStep);
+  const km = steps.reduce((s,x)=>s+x.km,0), min = steps.reduce((s,x)=>s+x.min,0);
+  return { steps: steps.map(s=>({ name:s.name, km:Math.round(s.km*100)/100, pace:s.pace, desc:s.desc })), builderBlocks:blocks,
+    totalKm: km ? Math.round(km*10)/10 : '', totalMin: min ? Math.round(min) : null, cor:inferCorTipo(tipo), objetivo: obj || inferObjetivo(tipo) };
+}
+function hyroxTirosSemana(w){
+  const s = HYROX_TIROS_SEM[w-1];
+  if(s.teste){
+    const tipo = 'Hyrox · Teste de 3 km (semana '+w+')';
+    return { tipo, ..._hyroxCampos(tipo, [ _hyroxBloco('aquec','time',12), _hyroxBloco('continua','km',3), _hyroxBloco('desaq','time',8) ],
+      'Esteira com 1% de inclinação, descansado (nunca depois de perna ou Hyrox). 3 km no ritmo mais forte que você sustenta até o fim. Anote o tempo total e o pace médio: com eles o app calcula os paces de cada zona. '+HYROX_AQUEC_TXT) };
+  }
+  const rec = { id:newBlockId(), ...newStepFields('recup'), durType:'time', m:s.rm, s:s.rs };
+  const grupo = { id:newBlockId(), isGroup:true, reps:String(s.n), steps:[ { id:newBlockId(), ...newStepFields('continua'), durType:'km', km:s.km }, rec ] };
+  const dist = s.km==='0.8' ? '800 m' : s.km.replace('.',',')+' km';
+  const tipo = 'Hyrox · Tiros '+s.n+' x '+dist+' (semana '+w+')';
+  const recTxt = s.rs ? s.rm+' min '+s.rs+' s' : s.rm+' min';
+  return { tipo, ..._hyroxCampos(tipo, [ _hyroxBloco('aquec','time',12), grupo, _hyroxBloco('desaq','time',8) ],
+    s.n+' tiros de '+dist+' em '+s.zona+', com '+recTxt+' de trote entre cada.'+(s.leve?' Semana leve.':'')+' Sexta: sempre tiro primeiro, perna depois. Depois do teste de 3 km, use o pace dele. '+HYROX_AQUEC_TXT+'Desaquecimento: 8–10 min de trote em Z1.') };
+}
+function hyroxLongaoSemana(w){
+  const s = HYROX_LONGAO_SEM[w-1];
+  const tipo = 'Hyrox · Corrida longa leve '+s.km+' km (semana '+w+')';
+  return { tipo, ..._hyroxCampos(tipo, [ _hyroxBloco('continua','km',s.km) ], s.nota+' Logo depois do Hyrox, sem descanso longo (treina correr cansado, como na prova). Se passar de 75 min, leve água ou gel.') };
+}
 function hyroxTreinosCorrida(){
-  const tiros = { id:newBlockId(), isGroup:true, reps:'5', steps:[ { id:newBlockId(), ...newStepFields('continua'), durType:'km', km:'1' }, { id:newBlockId(), ...newStepFields('recup'), durType:'time', m:'2' } ] };
-  const mk = (id, tipo, blocks, obj)=>{
-    const steps = blocks.map(blockToStep);
-    const km = steps.reduce((s,x)=>s+x.km,0), min = steps.reduce((s,x)=>s+x.min,0);
-    return { id, hyrox:true, tipo, steps: steps.map(s=>({ name:s.name, km:Math.round(s.km*100)/100, pace:s.pace, desc:s.desc })), builderBlocks:blocks,
-      totalKm: km ? Math.round(km*10)/10 : '', totalMin: min ? Math.round(min) : null, cor:inferCorTipo(tipo), objetivo: obj || inferObjetivo(tipo), createdAt:Date.now() };
-  };
   return [
-    mk('hyrox-tiros', 'Hyrox · Tiros 5 x 1 km', [ _hyroxBloco('aquec','time',12), tiros, _hyroxBloco('desaq','time',8) ], 'Tiros de 1 km em RPE 8/10 (ritmo de prova de Hyrox), 2 min de trote entre cada. Depois do teste de 3 km, use o pace dele.'),
-    mk('hyrox-longao', 'Hyrox · Corrida longa leve (domingo)', [ _hyroxBloco('continua','km',10) ], 'Leve, RPE 4–5/10, dá pra conversar. Logo depois do simulado. +1 km por semana até 14 km; semana 4 de cada bloco: -30%.'),
+    { id:'hyrox-tiros', hyrox:true, createdAt:Date.now(), ...hyroxTirosSemana(1), tipo:'Hyrox · Tiros 5 x 1 km' },
+    { id:'hyrox-longao', hyrox:true, createdAt:Date.now(), ...hyroxLongaoSemana(1), tipo:'Hyrox · Corrida longa leve (domingo)' },
   ];
+}
+// Agenda as 8 semanas (tiros na sexta, longão no domingo), a partir da semana atual. Dias que já passaram ficam de fora.
+function hyroxAgendarCorrida(){
+  const hoje = new Date(); hoje.setHours(0,0,0,0);
+  const seg = new Date(hoje); seg.setDate(seg.getDate() - ((seg.getDay()+6)%7));
+  state.treinos = (state.treinos||[]).filter(t=>!t.hyrox);
+  const por = (w, off, abbr, campos)=>{
+    const d = new Date(seg); d.setDate(d.getDate() + (w-1)*7 + off);
+    if(d < hoje) return;
+    const dia = abbr+' '+vdotFormatDDMM(d);
+    const i = state.treinos.findIndex(t=>t.day===dia);
+    const { tipo, ...resto } = campos;
+    const reg = { day:dia, type:tipo, hyrox:true, ...resto, warmupDesc:'', warmupPace:'', mainDesc:'', mainPace:'', cooldownDesc:'', cooldownPace:'' };
+    if(i>-1) state.treinos[i] = reg; else state.treinos.push(reg);
+  };
+  for(let w=1; w<=8; w++){ por(w, 4, 'Sex', hyroxTirosSemana(w)); por(w, 6, 'Dom', hyroxLongaoSemana(w)); }
 }
 function planoHyroxInstalado(){ return (state.muscTemplates||[]).some(t=>t.id==='hyrox-musc-a'); }
 async function instalarPlanoHyrox(){
-  const ok = await confirmarApp({ titulo:'Instalar plano Hyrox?', texto:'Substitui a musculação de Segunda, Quarta e Sexta pelas rotinas A, B e C, e adiciona as atividades da semana (boxe, aulas, tiros, simulado). Outras atividades que você já criou são mantidas.', ok:'Instalar' });
+  const ok = await confirmarApp({ titulo:'Instalar plano Hyrox?', texto:'Substitui a musculação de Segunda, Quarta e Sexta pelas rotinas A, B e C, e adiciona as atividades da semana (boxe, aulas de Hyrox) e 8 semanas de corrida: tiros na sexta e corrida longa no domingo. Outras atividades que você já criou são mantidas.', ok:'Instalar' });
   if(!ok) return;
   state.muscTemplates = state.muscTemplates || [];
   HYROX_ROTINAS.forEach(r=>{
@@ -15350,7 +15413,9 @@ async function instalarPlanoHyrox(){
   });
   state.treinoTemplates = state.treinoTemplates || [];
   hyroxTreinosCorrida().forEach(t=>{ const i = state.treinoTemplates.findIndex(x=>x.id===t.id); if(i>-1) state.treinoTemplates[i] = t; else state.treinoTemplates.push(t); });
-  saveMusc(); saveMuscDayOrigin(); saveMuscTemplates(); saveOutros(); saveTreinoTemplates();
+  hyroxAgendarCorrida();
+  state.isDemo = false;
+  saveMusc(); saveMuscDayOrigin(); saveMuscTemplates(); saveOutros(); saveTreinoTemplates(); saveTreinos();
   closeSheet(); state.tab = 'musculacao'; state.selectedDayMusc = 'Seg'; render(); hapticLeve(); showToast('Plano Hyrox instalado');
 }
 function abrirPlanoHyrox(){
@@ -18123,7 +18188,7 @@ function renderHoje(){
           </div>
         </div>
         ${open ? `<div class="phase-body" style="padding-left:14px;display:flex;justify-content:space-between;align-items:center;">
-          <span>${o.notas||'—'}</span>
+          <span style="white-space:pre-line;min-width:0;">${String(o.notas||'—').replace(/&/g,'&amp;').replace(/</g,'&lt;')}</span>
           <span style="display:flex;gap:14px;">
             <button class="ex-edit" data-editat="${o.id}" data-day="${day}">${ICONS.pencil}</button>
             <button class="ex-edit" data-delat="${o.id}" data-day="${day}" style="font-size:16px;">×</button>
@@ -19941,7 +20006,7 @@ function renderModal(){
         <h3>${editingAt ? 'Editar atividade' : 'Nova atividade'} · ${state.selectedDayOutros}</h3>
         <div class="field"><label>Nome da atividade</label><input type="text" id="inNomeAt" value="${editingAt?editingAt.nome:''}" placeholder="Muay Thai" autofocus></div>
         <div class="field"><label>Duração</label><input type="text" id="inDuracao" value="${editingAt?(editingAt.duracao||''):''}" placeholder="1h"></div>
-        <div class="field"><label>Notas (opcional)</label><input type="text" id="inNotas" value="${editingAt?(editingAt.notas||''):''}" placeholder="Sparring leve"></div>
+        <div class="field"><label>Treino / notas (opcional)</label><textarea id="inNotas" rows="7" style="width:100%;box-sizing:border-box;font:inherit;line-height:1.4;" placeholder="Ex.: o treino que o coach passou, um exercício por linha">${editingAt?String(editingAt.notas||'').replace(/&/g,'&amp;').replace(/</g,'&lt;'):''}</textarea></div>
         <div class="modal-actions"><button class="secondary" id="modalCancel">Cancelar</button><button class="primary" id="modalSave">Salvar</button></div>
       </div>
     </div>`;
