@@ -286,9 +286,59 @@ function rotaCompacta(pontos, opcoes) {
 }
 function mensagemRemoverRota() { return { t: 'route', clear: true }; }
 
+// ---------- Hyrox (app FORZA HYROX do relógio, outro app Connect IQ) ----------
+// Treino em blocos montado no celular: { id, n, b:[{ n:'SkiErg', k:'t'|'d'|'o', v }] }.
+// k: t = tempo (v em segundos, avança sozinho), d = distância (v em metros, só corrida), o = livre (START conclui).
+// No relógio: {"y":"h","id":..,"n":..,"b":[[nome,"t"|"d"|"o",valor?], ...]}.
+const MAX_TREINOS_HYROX = 12, MAX_BLOCOS_HYROX = 30;
+const ESTACOES_HYROX = ['SkiErg', 'Sled Push', 'Sled Pull', 'Burpee Jump', 'Remo', 'Farmers Carry', 'Lunges', 'Wall Balls', 'Descanso', 'Outro'];
+
+function hyroxCompacto(t) {
+  const blocos = ((t && t.b) || []).filter(Boolean);
+  if (!t || !t.id || !blocos.length || blocos.length > MAX_BLOCOS_HYROX) return null;
+  const b = [];
+  for (const x of blocos) {
+    const nome = String(x.n || '').trim().slice(0, 20);
+    if (!nome) return null;
+    if (x.k === 'o') { b.push([nome, 'o']); continue; }
+    const v = Math.round(Number(x.v));
+    if ((x.k !== 't' && x.k !== 'd') || !(v > 0)) return null;
+    b.push([nome, x.k, v]);
+  }
+  return { y: 'h', id: String(t.id).slice(-16), n: String(t.n || 'Hyrox').slice(0, 24), b };
+}
+
+// Lista completa em páginas de até maxBytes; o relógio só troca a lista quando todas as páginas chegam.
+function mensagensHyrox(treinos, maxBytes, idEnvio) {
+  const limite = maxBytes || MAX_BYTES;
+  const b = String(idEnvio || Date.now().toString(36)).slice(-8);
+  const base = JSON.stringify({ t: 'w', v: 3, b, pg: 99, pgs: 99, hv: 1, w: [] }).length;
+  const paginas = [];
+  let atual = [], tam = base;
+  for (const t of (treinos || []).slice(0, MAX_TREINOS_HYROX)) {
+    const item = hyroxCompacto(t);
+    if (!item) continue;
+    const custo = JSON.stringify(item).length + 1;
+    if (base + custo > limite) continue;               // treino maior que uma página: não cabe no relógio
+    if (tam + custo > limite) { paginas.push(atual); atual = []; tam = base; }
+    atual.push(item); tam += custo;
+  }
+  paginas.push(atual);
+  return paginas.map((w, pg) => ({ t: 'w', v: 3, b, pg, pgs: paginas.length, hv: 1, w }));
+}
+
+// Prova completa: 8 x (corrida de 1 km + estação), estações na ordem oficial, todas livres (START conclui).
+function provaHyrox() {
+  const est = ['SkiErg', 'Sled Push', 'Sled Pull', 'Burpee Jump', 'Remo', 'Farmers Carry', 'Lunges', 'Wall Balls'];
+  const b = [];
+  est.forEach((e) => { b.push({ n: 'Corrida', k: 'd', v: 1000 }); b.push({ n: e, k: 'o' }); });
+  return { id: 'hx_prova', n: 'Prova Hyrox', b };
+}
+
 module.exports = {
   MAX_TREINOS, MAX_ETAPAS, faixaRitmo, dataDoDia, tipoDaEtapa, etapaCompacta, treinoCompacto,
   treinosParaRelogio, mensagemTreinos, mensagensTreinos, mensagemAck, registroDoResultado, MAX_BYTES,
   MAX_EXERCICIOS, MAX_SERIES, descansoSeg, forcaCompacta, registroForcaDoResultado,
   MAX_PONTOS_ROTA, MAX_BYTES_ROTA, rotaCompacta, mensagemRemoverRota,
+  MAX_TREINOS_HYROX, MAX_BLOCOS_HYROX, ESTACOES_HYROX, hyroxCompacto, mensagensHyrox, provaHyrox,
 };

@@ -36,7 +36,8 @@ const relogio = {
   async escolher() { try { return await RelogioGarmin.escolher(); } catch (e) { return { erro: (e && e.message) || String(e) }; } },
   async esquecer() { try { return await RelogioGarmin.esquecer(); } catch (e) { return { relogios: [] }; } },
   // Resolve { enviados, resultados, motivo? }; enviados = 0 quando não há relógio conectado.
-  async enviar(mensagem) { try { return await RelogioGarmin.enviar({ mensagem }); } catch (e) { return { enviados: 0, erro: (e && e.message) || String(e) }; } },
+  // app = 'hyrox' manda ao app FORZA HYROX do relógio; sem app, ao FORZA RUN.
+  async enviar(mensagem, app) { try { return await RelogioGarmin.enviar({ mensagem, app }); } catch (e) { return { enviados: 0, erro: (e && e.message) || String(e) }; } },
   // cb({ dados, relogio }) a cada mensagem do relógio; cb2(estado) quando a lista/estado dos relógios muda.
   ouvir(cb, cb2) {
     RelogioGarmin.addListener('mensagem', cb).catch(() => {});

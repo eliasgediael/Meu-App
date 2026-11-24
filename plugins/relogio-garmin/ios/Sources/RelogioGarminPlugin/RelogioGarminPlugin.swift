@@ -24,6 +24,8 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
 
     /// Id do app no manifest.xml do projeto Connect IQ (ad7a412961d14e91bcff3e12b826d604).
     private static let appUUID = UUID(uuidString: "ad7a4129-61d1-4e91-bcff-3e12b826d604")!
+    /// Id do app FORZA HYROX (projeto Garmin Hyrox, manifest.xml: 5b1f3c7e8a2d4e6f9c0b1a2d3e4f5a6b).
+    private static let hyroxUUID = UUID(uuidString: "5b1f3c7e-8a2d-4e6f-9c0b-1a2d3e4f5a6b")!
     /// Precisa ser igual ao CFBundleURLSchemes adicionado no Info.plist (workflow ios-build.yml).
     private static let urlScheme = "forzarun-ciq"
     private static let chaveAparelhos = "relogioGarmin.aparelhos"
@@ -68,6 +70,8 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
             call.reject("mensagem ausente")
             return
         }
+        // "app": "hyrox" manda ao app FORZA HYROX; sem "app", ao FORZA RUN.
+        let destino = (call.options["app"] as? String) == "hyrox" ? Self.hyroxUUID : Self.appUUID
         DispatchQueue.main.async {
             let alvos = self.aparelhos.filter { ConnectIQ.sharedInstance().getDeviceStatus($0) == .connected }
             if alvos.isEmpty {
@@ -79,7 +83,7 @@ public class RelogioGarminPlugin: CAPPlugin, CAPBridgedPlugin, IQUIOverrideDeleg
             let grupo = DispatchGroup()
             for aparelho in alvos {
                 grupo.enter()
-                let app = IQApp(uuid: Self.appUUID, store: Self.appUUID, device: aparelho)
+                let app = IQApp(uuid: destino, store: destino, device: aparelho)
                 ConnectIQ.sharedInstance().sendMessage(mensagem, to: app, progress: nil) { resultado in
                     if resultado == .success { enviados += 1 }
                     resultados.append(["relogio": aparelho.friendlyName ?? "", "resultado": NSStringFromSendMessageResult(resultado) ?? ""])

@@ -14901,6 +14901,198 @@ function abrirRotina(templateId){
     };
   });
 }
+/* ---------- Plano Hyrox (híbrido: musculação + luta + aulas de Hyrox + tiros + simulado) ---------- */
+// Plano fechado com o treinador (conversa de semana completa). Instala 3 rotinas de musculação (A/B/C) nos dias
+// Seg/Qua/Sex, as atividades dos outros dias (boxe/Muay Thai, aula de Hyrox, simulado) e 2 treinos de corrida
+// salvos (tiros e longão leve). Tudo marcado com hyrox:true / ids fixos, então instalar de novo não duplica.
+const HYROX_EX = (nome, grupo, repdbId, series, reps, descSeg, nota)=>({ nome, grupo, repdbId, series:String(series), reps:String(reps), carga:'', descanso:descSeg+'s', nota:nota||'' });
+const HYROX_ROTINAS = [
+  { id:'hyrox-musc-a', dia:'Seg', tipo:'Hyrox · Musculação A – Puxar', exercicios:[
+    HYROX_EX('Barra fixa','Costas','0652',3,'6-8',120,'Sobrar 2 reps. Sem barra: puxada no pulley.'),
+    HYROX_EX('Remada unilateral com halter (serrote)','Costas','0292',3,'8',120,'Sobrar 2 reps.'),
+    HYROX_EX('Face pull','Ombro',null,3,'12-15',60,'Cabo na altura do rosto.'),
+    HYROX_EX('Prancha','Core',null,3,'45 s',60,'') ] },
+  { id:'hyrox-musc-b', dia:'Qua', tipo:'Hyrox · Musculação B – Empurrar (opcional)', exercicios:[
+    HYROX_EX('Supino inclinado com halteres','Peito','0314',3,'8',120,'Sobrar 2 reps. Primeiro treino a cortar se o ombro reclamar.'),
+    HYROX_EX('Desenvolvimento com halteres sentado','Ombro','0405',3,'8-10',90,'Sobrar 2 reps.'),
+    HYROX_EX('Tríceps na polia (corda)','Braço','0200',3,'12',60,''),
+    HYROX_EX('Prancha lateral','Core',null,3,'30 s por lado',60,'') ] },
+  { id:'hyrox-musc-c', dia:'Sex', tipo:'Hyrox · Musculação C – Perna (depois dos tiros)', exercicios:[
+    HYROX_EX('Agachamento livre com barra','Pernas','0043',4,'5',150,'Carga alta, sobrar 1–2 reps, nunca até a falha.'),
+    HYROX_EX('Levantamento terra romeno com barra','Pernas','0085',3,'6-8',120,'Sobrar 1–2 reps.'),
+    HYROX_EX('Agachamento búlgaro com halteres','Pernas','0410',3,'6-8 por perna',90,'Sobrar 1–2 reps.'),
+    HYROX_EX('Panturrilha em pé na máquina','Pernas','0605',3,'10-12',60,'') ] },
+];
+const HYROX_OUTROS = {
+  Seg:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação A antes (17h45). Sem perna hoje.' }],
+  Ter:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
+  Qua:[{ nome:'Boxe e Muay Thai', duracao:'1h10', notas:'18h30–19h40. Musculação B (opcional) antes, 17h45. Sem perna hoje.' }],
+  Qui:[{ nome:'Aula de Hyrox', duracao:'1h', notas:'20h–21h. Opcional antes: trote leve 20–30 min, RPE 3–4.' }],
+  Sex:[{ nome:'Tiros de 1 km (antes da perna)', duracao:'1h', notas:'17h30. Sempre tiro primeiro, perna depois. Treino de corrida "Hyrox · Tiros 5 x 1 km" está em Meus treinos.' }],
+  Sáb:[{ nome:'Descanso total', duracao:'', notas:'Sem treino.' }],
+  Dom:[{ nome:'Hyrox', duracao:'', notas:'8h. Logo em seguida, 10–12 km leves, RPE 4–5 (dá pra conversar). Semanas 1–3: +1 km por semana até 14 km.' }],
+};
+function _hyroxBloco(kind, dur, valor){ const b = { id:newBlockId(), isGroup:false, ...newStepFields(kind) }; if(dur==='time'){ b.durType='time'; b.m=String(valor); } else { b.durType='km'; b.km=String(valor); } return b; }
+function hyroxTreinosCorrida(){
+  const tiros = { id:newBlockId(), isGroup:true, reps:'5', steps:[ { id:newBlockId(), ...newStepFields('continua'), durType:'km', km:'1' }, { id:newBlockId(), ...newStepFields('recup'), durType:'time', m:'2' } ] };
+  const mk = (id, tipo, blocks, obj)=>{
+    const steps = blocks.map(blockToStep);
+    const km = steps.reduce((s,x)=>s+x.km,0), min = steps.reduce((s,x)=>s+x.min,0);
+    return { id, hyrox:true, tipo, steps: steps.map(s=>({ name:s.name, km:Math.round(s.km*100)/100, pace:s.pace, desc:s.desc })), builderBlocks:blocks,
+      totalKm: km ? Math.round(km*10)/10 : '', totalMin: min ? Math.round(min) : null, cor:inferCorTipo(tipo), objetivo: obj || inferObjetivo(tipo), createdAt:Date.now() };
+  };
+  return [
+    mk('hyrox-tiros', 'Hyrox · Tiros 5 x 1 km', [ _hyroxBloco('aquec','time',12), tiros, _hyroxBloco('desaq','time',8) ], 'Tiros de 1 km em RPE 8/10 (ritmo de prova de Hyrox), 2 min de trote entre cada. Depois do teste de 3 km, use o pace dele.'),
+    mk('hyrox-longao', 'Hyrox · Corrida longa leve (domingo)', [ _hyroxBloco('continua','km',10) ], 'Leve, RPE 4–5/10, dá pra conversar. Logo depois do simulado. +1 km por semana até 14 km; semana 4 de cada bloco: -30%.'),
+  ];
+}
+function planoHyroxInstalado(){ return (state.muscTemplates||[]).some(t=>t.id==='hyrox-musc-a'); }
+async function instalarPlanoHyrox(){
+  const ok = await confirmarApp({ titulo:'Instalar plano Hyrox?', texto:'Substitui a musculação de Segunda, Quarta e Sexta pelas rotinas A, B e C, e adiciona as atividades da semana (boxe, aulas, tiros, simulado). Outras atividades que você já criou são mantidas.', ok:'Instalar' });
+  if(!ok) return;
+  state.muscTemplates = state.muscTemplates || [];
+  HYROX_ROTINAS.forEach(r=>{
+    const tpl = { id:r.id, tipo:r.tipo, hyrox:true, exercicios:r.exercicios.map((e,i)=>({ ...e, id:'ex'+r.id+i })), createdAt:Date.now(), updatedAt:Date.now() };
+    const i = state.muscTemplates.findIndex(t=>t.id===r.id);
+    if(i>-1) state.muscTemplates[i] = tpl; else state.muscTemplates.push(tpl);
+    state.musculacao[r.dia] = tpl.exercicios.map(e=>({ ...e, id:'ex'+Date.now().toString(36)+Math.random().toString(36).slice(2,5), done:false }));
+    markMuscDayFromTemplate(r.dia, tpl);
+  });
+  state.outros = state.outros || {};
+  Object.keys(HYROX_OUTROS).forEach(d=>{
+    const base = (state.outros[d]||[]).filter(a=>!a.hyrox);
+    state.outros[d] = [ ...base, ...HYROX_OUTROS[d].map((a,i)=>({ id:'hx'+d+i+Date.now().toString(36), done:false, hyrox:true, ...a })) ];
+  });
+  state.treinoTemplates = state.treinoTemplates || [];
+  hyroxTreinosCorrida().forEach(t=>{ const i = state.treinoTemplates.findIndex(x=>x.id===t.id); if(i>-1) state.treinoTemplates[i] = t; else state.treinoTemplates.push(t); });
+  saveMusc(); saveMuscDayOrigin(); saveMuscTemplates(); saveOutros(); saveTreinoTemplates();
+  closeSheet(); state.tab = 'musculacao'; state.selectedDayMusc = 'Seg'; render(); hapticLeve(); showToast('Plano Hyrox instalado');
+}
+function abrirPlanoHyrox(){
+  const linha = (d, t, s)=>`<div class="ds-row"><span class="nm">${d} · ${t}</span><span class="aside">${s}</span></div>`;
+  openSheet(`
+    <div class="sheet-title">Plano Hyrox</div>
+    <div class="sheet-sub">Híbrido: Hyrox em primeiro, corrida forte. Esforço por RPE (0–10) até o teste de 3 km definir os paces.</div>
+    <div class="ds-list">
+      ${linha('Seg','Musculação A (puxar) + Boxe/Muay Thai','17h45 + 18h30')}
+      ${linha('Ter','Aula de Hyrox','20h')}
+      ${linha('Qua','Musculação B (opcional) + Boxe/Muay Thai','17h45 + 18h30')}
+      ${linha('Qui','Aula de Hyrox','20h')}
+      ${linha('Sex','Tiros 5 × 1 km + Musculação C (perna)','17h30')}
+      ${linha('Sáb','Descanso total','—')}
+      ${linha('Dom','Hyrox + 10–12 km leves','8h')}
+    </div>
+    <div class="ds-muted" style="margin-top:12px;line-height:1.5;">Progressão em blocos de 4 semanas: semanas 1–3 sobe a carga quando completar todas as reps sobrando 2 (+2,5 a 5 kg nos compostos, +1 a 2 kg nos halteres) e +1 km por semana no domingo, até 14 km. Semana 4: −30% de carga, séries, tiros e km.
+    <br>Cortes se o cansaço acumular: 1) musculação de quarta, 2) trote antes do Hyrox, 3) perna de sexta com 3 séries.</div>
+    <div class="ds-actions">
+      <button class="btn-primary" id="hxInstalar">${planoHyroxInstalado() ? 'Reinstalar plano' : 'Instalar no app'}</button>
+      <button class="btn-ghost" id="hxFechar">Fechar</button>
+    </div>`, (sh)=>{
+    sh.querySelector('#hxInstalar').onclick = ()=>instalarPlanoHyrox();
+    sh.querySelector('#hxFechar').onclick = ()=>closeSheet();
+  });
+}
+/* ---------- Treino Hyrox no relógio (app FORZA HYROX do Garmin) ---------- */
+// Treinos em blocos (corrida e estações) montados aqui e enviados ao app FORZA HYROX do relógio.
+// Bloco: { n, k:'t'|'d'|'o', v } — t = tempo (s, avança sozinho), d = distância (m, só corrida), o = livre (START conclui).
+const HYROX_RELOGIO_KEY = 'hyroxTreinosRelogio';
+let _hxDraft = null;
+function hyroxRelogioLista(){ return lsLista(HYROX_RELOGIO_KEY); }
+function hyroxRelogioGravar(l){ lsGravarLista(HYROX_RELOGIO_KEY, l); }
+async function hyroxRelogioEnviar(){
+  const R = relogioApi();
+  if(!R){ showToast('O envio ao relógio só funciona no app do iPhone'); return; }
+  const lista = hyroxRelogioLista();
+  if(!lista.length){ showToast('Crie um treino Hyrox primeiro'); return; }
+  const paginas = R.mensagensHyrox(lista);
+  const enviados = [].concat(...paginas.map(p=>p.w)).length;
+  if(!enviados){ showToast('Nenhum treino cabe no relógio (máx. 30 blocos)'); return; }
+  let r = null;
+  for(const pg of paginas){ r = await R.enviar(pg, 'hyrox'); if(!(r && r.enviados>0)) break; }
+  if(r && r.enviados>0){ showToast(enviados+' treino(s) enviado(s) ao relógio'); hapticLeve(); }
+  else showToast(r && r.motivo==='desconectado' ? 'Relógio desconectado. Abra o Garmin Connect.' : (r && r.motivo==='sem_relogio' ? 'Escolha o relógio em Configurações > Relógio' : 'Não consegui enviar. Veja se o app FORZA HYROX está no relógio.'));
+}
+function abrirHyroxRelogio(){
+  const lista = hyroxRelogioLista();
+  const R = relogioApi();
+  const linhas = lista.map((t,i)=>`<button class="ds-row" data-hxed="${i}"><span class="nm">${escHtmlRelogio(t.n)}</span><span class="aside">${t.b.length} blocos</span><span class="chev">${DS_CHEV}</span></button>`).join('');
+  openSheet(`
+    <div class="sheet-title">Treino Hyrox no relógio</div>
+    <div class="sheet-sub">Monte os blocos aqui e envie para o app FORZA HYROX do Garmin. No relógio o START avança para o próximo bloco.</div>
+    <div class="ds-list">${linhas || '<div class="ds-muted" style="padding:8px 0;">Nenhum treino ainda.</div>'}</div>
+    <div class="ds-actions">
+      <button class="btn-primary" id="hxEnviar" ${lista.length ? '' : 'disabled'}>Enviar ao relógio</button>
+      <button class="btn-secondary" id="hxNovo">Novo treino</button>
+      <button class="btn-secondary" id="hxProva">${lista.some(t=>t.id==='hx_prova') ? 'Restaurar' : 'Adicionar'} Prova Hyrox (8 × 1 km + estação)</button>
+      <button class="btn-ghost" id="hxFechar">Fechar</button>
+    </div>
+    ${R ? '' : '<div class="ds-muted" style="margin-top:8px;">Neste aparelho o envio ao relógio não está disponível (só no app do iPhone).</div>'}`, (sh)=>{
+    sh.querySelectorAll('[data-hxed]').forEach(el=>{ el.onclick = ()=>{ _hxDraft = JSON.parse(JSON.stringify(lista[+el.getAttribute('data-hxed')])); abrirHyroxEditor(); }; });
+    sh.querySelector('#hxEnviar').onclick = async ()=>{ await hyroxRelogioEnviar(); };
+    sh.querySelector('#hxNovo').onclick = ()=>{ _hxDraft = { id:'hx_'+Date.now().toString(36), n:'Aula de Hyrox', b:[{ n:'SkiErg', k:'o' }] }; abrirHyroxEditor(); };
+    sh.querySelector('#hxProva').onclick = ()=>{
+      const est = ['SkiErg','Sled Push','Sled Pull','Burpee Jump','Remo','Farmers Carry','Lunges','Wall Balls'];
+      const b = []; est.forEach(e=>{ b.push({ n:'Corrida', k:'d', v:1000 }); b.push({ n:e, k:'o' }); });
+      const l = hyroxRelogioLista().filter(t=>t.id!=='hx_prova'); l.push({ id:'hx_prova', n:'Prova Hyrox', b });
+      hyroxRelogioGravar(l); abrirHyroxRelogio();
+    };
+    sh.querySelector('#hxFechar').onclick = ()=>closeSheet();
+  });
+}
+function abrirHyroxEditor(){
+  const d = _hxDraft;
+  const nomes = ['Corrida','SkiErg','Sled Push','Sled Pull','Burpee Jump','Remo','Farmers Carry','Lunges','Wall Balls','Descanso','Outro'];
+  const bloco = (b,i)=>{
+    const corrida = b.n==='Corrida';
+    const unidade = b.k==='t' ? 'min' : (b.k==='d' ? 'm' : '');
+    const val = b.k==='t' ? (b.v/60) : (b.v||'');
+    return `<div class="ds-row" style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+      <span style="width:22px;opacity:.6;">${i+1}</span>
+      <select class="mrt-input" data-hxn="${i}" style="flex:1;min-width:110px;">${nomes.map(n=>`<option ${n===b.n?'selected':''}>${n}</option>`).join('')}</select>
+      <select class="mrt-input" data-hxk="${i}" style="width:96px;"><option value="o" ${b.k==='o'?'selected':''}>Livre</option><option value="t" ${b.k==='t'?'selected':''}>Tempo</option>${corrida ? `<option value="d" ${b.k==='d'?'selected':''}>Distância</option>` : ''}</select>
+      ${b.k==='o' ? '' : `<input class="mrt-input" data-hxv="${i}" inputmode="decimal" value="${val}" style="width:64px;" placeholder="${unidade}"><span style="opacity:.6;">${unidade}</span>`}
+      <button class="btn-ghost" data-hxdel="${i}" aria-label="Remover bloco">✕</button>
+    </div>`;
+  };
+  openSheet(`
+    <div class="sheet-title">Treino Hyrox</div>
+    <input class="mrt-input" id="hxNome" value="${escHtmlRelogio(d.n)}" maxlength="24" placeholder="Nome do treino" style="width:100%;margin:6px 0 10px;">
+    <div class="ds-list">${d.b.map(bloco).join('')}</div>
+    <div class="ds-muted" style="margin:8px 0;">Livre = você aperta START no relógio ao terminar. Tempo = o relógio avança sozinho (contagem regressiva). Distância = só na corrida, com GPS. Máx. 30 blocos.</div>
+    <div class="ds-actions">
+      <button class="btn-secondary" id="hxAddCorrida">+ Corrida 1 km</button>
+      <button class="btn-secondary" id="hxAddEstacao">+ Estação</button>
+      <button class="btn-primary" id="hxSalvar">Salvar</button>
+      <button class="btn-ghost" id="hxExcluir">Excluir treino</button>
+      <button class="btn-ghost" id="hxVoltar">Voltar</button>
+    </div>`, (sh)=>{
+    const lerNome = ()=>{ const n = sh.querySelector('#hxNome').value.trim(); if(n) d.n = n.slice(0,24); };
+    sh.querySelectorAll('[data-hxn]').forEach(el=>{ el.onchange = ()=>{ lerNome(); const b = d.b[+el.getAttribute('data-hxn')]; b.n = el.value; if(b.n!=='Corrida' && b.k==='d'){ b.k = 'o'; delete b.v; } abrirHyroxEditor(); }; });
+    sh.querySelectorAll('[data-hxk]').forEach(el=>{ el.onchange = ()=>{ lerNome(); const b = d.b[+el.getAttribute('data-hxk')]; b.k = el.value; b.v = b.k==='t' ? 300 : (b.k==='d' ? 1000 : undefined); abrirHyroxEditor(); }; });
+    sh.querySelectorAll('[data-hxv]').forEach(el=>{ el.oninput = ()=>{
+      const b = d.b[+el.getAttribute('data-hxv')]; const n = parseFloat(String(el.value).replace(',','.')) || 0;
+      b.v = b.k==='t' ? Math.round(n*60) : Math.round(n);
+    }; });
+    sh.querySelectorAll('[data-hxdel]').forEach(el=>{ el.onclick = ()=>{ lerNome(); d.b.splice(+el.getAttribute('data-hxdel'),1); abrirHyroxEditor(); }; });
+    sh.querySelector('#hxAddCorrida').onclick = ()=>{ lerNome(); if(d.b.length<30) d.b.push({ n:'Corrida', k:'d', v:1000 }); abrirHyroxEditor(); };
+    sh.querySelector('#hxAddEstacao').onclick = ()=>{ lerNome(); if(d.b.length<30) d.b.push({ n:'SkiErg', k:'o' }); abrirHyroxEditor(); };
+    sh.querySelector('#hxVoltar').onclick = ()=>{ _hxDraft = null; abrirHyroxRelogio(); };
+    sh.querySelector('#hxExcluir').onclick = async ()=>{
+      if(!(await confirmarApp({ titulo:'Excluir este treino?', perigo:true, ok:'Excluir' }))) return;
+      hyroxRelogioGravar(hyroxRelogioLista().filter(t=>t.id!==d.id)); _hxDraft = null; abrirHyroxRelogio();
+    };
+    sh.querySelector('#hxSalvar').onclick = ()=>{
+      lerNome();
+      const R2 = relogioApi();
+      if(!d.b.length){ showToast('Adicione ao menos um bloco'); return; }
+      if(d.b.some(b=>b.k!=='o' && !(b.v>0))){ showToast('Preencha tempo ou distância dos blocos'); return; }
+      if(R2 && !R2.hyroxCompacto(d)){ showToast('Treino inválido'); return; }
+      const l = hyroxRelogioLista(); const i = l.findIndex(t=>t.id===d.id);
+      if(i>-1) l[i] = d; else l.push(d);
+      hyroxRelogioGravar(l); _hxDraft = null; showToast('Treino salvo'); abrirHyroxRelogio();
+    };
+  });
+}
 // "Criar treino" (menu ⋯ da tela Treino): o que criar para o dia escolhido.
 function abrirCriarTreino(){
   const day = state.selectedDayMusc || hojeAbbr();
@@ -14912,6 +15104,8 @@ function abrirCriarTreino(){
       <button class="ds-row" data-criar="musc"><span class="nm">Musculação</span><span class="aside">exercícios do dia</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" data-criar="rotina"><span class="nm">Rotina de musculação</span><span class="aside">modelo para reutilizar</span><span class="chev">${DS_CHEV}</span></button>
       <button class="ds-row" data-criar="plano"><span class="nm">Plano corrida + musculação</span><span class="aside">o treinador monta</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="hyrox"><span class="nm">Plano Hyrox</span><span class="aside">semana pronta</span><span class="chev">${DS_CHEV}</span></button>
+      <button class="ds-row" data-criar="hyroxrel"><span class="nm">Treino Hyrox no relógio</span><span class="aside">blocos para o Garmin</span><span class="chev">${DS_CHEV}</span></button>
     </div>`, (sh)=>{
     sh.querySelectorAll('[data-criar]').forEach(el=>{ el.onclick = ()=>{
       const a = el.getAttribute('data-criar');
@@ -14919,6 +15113,8 @@ function abrirCriarTreino(){
       if(a==='corrida'){ state.selectedDayCorrida = day; state.treinoV2Escape = true; openCorridaBuilder(day); state.modalType='editCorrida'; state.modalOpen = true; render(); }
       else if(a==='musc'){ state.selectedDayMusc = day; abrirEditorExercicio({ modo:'dia', day }); }
       else if(a==='rotina'){ state.rotinaDraft = null; abrirRotina(null); }
+      else if(a==='hyrox'){ abrirPlanoHyrox(); }
+      else if(a==='hyroxrel'){ abrirHyroxRelogio(); }
       else qv2Abrir();
     }; });
   });
